@@ -1,0 +1,12 @@
+<section>
+	<div>
+		This is a topic, id: {{topicID}}
+	</div>
+	<div>
+		<ul>
+			<li ng-repeat="thisPost in posts">
+				<a href="#/post/{{thisPost.postID}}">{{thisPost.postContent}}</a>
+			</li>
+		</ul>
+	</div>
+</section>

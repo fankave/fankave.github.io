@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" ng-app="Forum">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>Forum</title>
+	<meta name="description" content="Forum">
+	<meta name="author" content="Ahmed & Samyukta">
+
+	<script src="lib/angular/angular.js"></script>
+	<script src="lib/angular/angular-route.js"></script>
+	<script src="js/Forum.js"></script>
+	<script src="js/controllers/TopicController.js"></script>
+	<script src="js/controllers/PostController.js"></script>
+	<script src="js/services/NetworkService.js"></script>
+</head>
+
+<body>
+	<div>
+		<h1>Forum</h1>
+	</div>
+	<div ng-view>
+	</div>
+</body>
+
+</html>
