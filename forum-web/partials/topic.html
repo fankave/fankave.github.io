@@ -9,4 +9,14 @@
 			</li>
 		</ul>
 	</div>
+	<div>
+	<button ng-click="getTopic()"> getTopicDetails</button>
+	</div>
+	<div>
+		<ul>
+			<li ng-repeat="thisData in service.data">
+				<p>{{thisData}}</p>
+			</li>
+		</ul>
+	</div>
 </section>

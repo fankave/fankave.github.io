@@ -5,4 +5,7 @@ function initTopicController($scope, $routeParams, networkService)
 {
 	$scope.topicID = $routeParams.topicID;
 	$scope.posts = networkService.getPostsForTopicID();
+	
+	$scope.service = networkService;
+	    
 }
