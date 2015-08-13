@@ -5,4 +5,9 @@ function initPostController($scope, $routeParams, networkService)
 {
 	$scope.postID = $routeParams.postID;
 	$scope.replies = networkService.getRepliesForPostID();
+
+	$scope.backToTopicButtonTapped = function()
+	{
+		window.location = "#/topic/0";
+	}
 }

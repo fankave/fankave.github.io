@@ -1,11 +1,19 @@
 <section>
-	<div>
-		<a href="#/topic/0">Back</a>
-	</div>
-	<div>
-		This is a post, id: {{postID}}
-	</div>
-	<div>
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<span><button id="backToTopicButton" class="btn btn-default" ng-click="backToTopicButtonTapped()">Back</button></span>
+			<span> Post: {{postID}} </span>
+		</div>
+	</nav>
+
+	
+	<div class="container">
+		<div>
+			This is a post, id: {{postID}}
+		</div>
+
+		<hr/>
+		
 		<ul>
 			<li ng-repeat="thisReply in replies">
 				{{thisReply.replyContent}}

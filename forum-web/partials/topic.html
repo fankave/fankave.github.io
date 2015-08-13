@@ -1,22 +1,30 @@
 <section>
-	<div>
-		This is a topic, id: {{topicID}}
-	</div>
-	<div>
-		<ul>
-			<li ng-repeat="thisPost in posts">
-				<a href="#/post/{{thisPost.postID}}">{{thisPost.postContent}}</a>
-			</li>
-		</ul>
-	</div>
-	<div>
-	<button ng-click="getTopic()"> getTopicDetails</button>
-	</div>
-	<div>
-		<ul>
-			<li ng-repeat="thisData in service.data">
-				<p>{{thisData}}</p>
-			</li>
-		</ul>
+	<nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+       	Score Card View
+      </div>
+    </nav>
+
+
+    <div class="container">
+    	<div> Topic Details </div>
+	    <hr/>
+		<div>
+			<ul>
+				<li ng-repeat="thisPost in posts">
+					<a href="#/post/{{thisPost.postID}}">{{thisPost.postContent}}</a>
+				</li>
+			</ul>
+		</div>
+		<div>
+		<button ng-click="getTopic()"> getTopicDetails</button>
+		</div>
+		<div>
+			<ul>
+				<li ng-repeat="thisData in service.data">
+					<p>{{thisData}}</p>
+				</li>
+			</ul>
+		</div>
 	</div>
 </section>
