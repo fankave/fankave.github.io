@@ -7,8 +7,11 @@
 
 
     <div class="container">
+
     	<div> Topic Details </div>
+
 	    <hr/>
+
 		<div>
 			<ul>
 				<li ng-repeat="thisPost in posts">
@@ -16,9 +19,11 @@
 				</li>
 			</ul>
 		</div>
+
 		<div>
-		<button ng-click="getTopic()"> getTopicDetails</button>
+			<button ng-click="getTopic()"> getTopicDetails</button>
 		</div>
+
 		<div>
 			<ul>
 				<li ng-repeat="thisData in service.data">
@@ -26,5 +31,12 @@
 				</li>
 			</ul>
 		</div>
+
+		<footer class="footer" style="position:fixed; bottom:0; padding:5px; background-color:white;">
+	        <div class="form-group">
+	        	<input placeholder="Comment..." class="form-control" type="text">
+	        </div>
+		</footer>
+		
 	</div>
 </section>
