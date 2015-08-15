@@ -4,6 +4,7 @@ topicModule.controller("TopicController", ["$scope", "$routeParams", "networkSer
 function initTopicController($scope, $routeParams, networkService,DataService, TopicService)
 {
 	$scope.init = function() {
+		console.log("initialized network");
 		networkService.init();
 	      };
 	$scope.topicID = $routeParams.topicID;
