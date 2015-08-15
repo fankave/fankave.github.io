@@ -4,19 +4,17 @@ networkModule.factory("networkService",["$websocket","DataService",initNetworkSe
 function initNetworkService($websocket,DataService)
 {
 	var ws = $websocket('ws://107.178.223.208/ws?userId=1&sessionId=dac24379&accessToken=7uFF3QGh-84=/');
-	var varTopicParams = {"rid": "requestID",
+	var varTopicParams = {"rid": "topic",
             "timestamp": new Date().getTime(),
             "method": "GET",
             "uri": "\/v1.0\/topic\/show\/53c167f17040001d"};
-	var varCommentParams = {"rid": "requestID",
+	var varCommentParams = {"rid": "comment",
 		      "timestamp": new Date().getTime(),
 		      "method": "GET",
 		      "uri": encodeURI("/v1.0/topic/comments/list/53c167f17040001d")};
 	//Websocket callbacks below
 	ws.onOpen(function() {
 		console.log("Socket Connected");
-		ws.send(JSON.stringify(varTopicParams));
-		ws.send(JSON.stringify(varCommentParams));
     });
 	
 	ws.onClose(function(evt) {
@@ -27,15 +25,16 @@ function initNetworkService($websocket,DataService)
   	  console.log("OnMessage");
   	  console.log(evt.data);
   	  var responseJson = JSON.parse(evt.data);
-  	  DataService.data.push(evt.data);
-//  	var type = responseJson.data.type;
-//	  if(type != undefined && type =="topic"){
-//		  console.log("Got Topic");
-//		  DataService.topic = responseJson;
-//	  }else{
-//		  console.log("Got Comments ...TODO");
-//	  	  DataService.data.push(responseJson);
-//	  };
+  	  DataService.data.push(responseJson);
+  	  var type = responseJson.rid;
+	  if(type != undefined && type =="topic"){
+		  console.log("Got Topic");
+		  DataService.setTopic(responseJson);
+		  console.log("TOPIC: "+DataService.topic);
+	  }else{
+		  console.log("Got Comments ...TODO");
+	  	  DataService.setComments(responseJson);
+	  };
     });
     
     ws.onError(function(evt) {
@@ -95,10 +94,12 @@ function initNetworkService($websocket,DataService)
 	}
 
 	return{
-		topic: DataService.topic,
 		comments: DataService.comments,
 		data: DataService.data,
 		send:function(message) { ws.send(message);},
+		init:function(message) { ws.send(JSON.stringify(varTopicParams));
+								 ws.send(JSON.stringify(varCommentParams));
+								 },
 		getPostsForTopicID:getPostsForTopicID,
 		getRepliesForPostID:getRepliesForPostID
 	}

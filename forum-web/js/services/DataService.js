@@ -1,11 +1,13 @@
-networkModule.factory('DataService', function () {
+networkModule.service('DataService', function (TopicService) {
     var data = [];
-    var topic;
-    var comments;
+    var _comments = [];
+    
     return {
-        topic: topic,
-        comments: comments,
-        data:data
+        comments: _comments,
+        data:data,
+    setComments:function(commentsData) { _comments.push(commentsData);},
+    setTopic:function(topicData) { TopicService.setTopic(topicData);
+	}
     };
    
 });

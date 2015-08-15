@@ -1,22 +1,43 @@
 <section>
-	<div>
-		This is a topic, id: {{topicID}}
+	<nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+       	Score Card View
+      </div>
+    </nav>
+
+
+    <div class="container">
+
+    	<div> Topic Details </div>
+
+	    <hr/>
+
+		<div>
+			<ul>
+				<li ng-repeat="thisPost in posts">
+					<a href="#/post/{{thisPost.postID}}">{{thisPost.postContent}}</a>
+				</li>
+			</ul>
+		</div>
+
+		<div>
+			<button ng-click="getTopic()"> getTopicDetails</button>
+		</div>
+
+		<div>
+			<ul>
+				<li ng-repeat="thisData in service.data">
+					<p>{{thisData}}</p>
+				</li>
+			</ul>
+		</div>
+
+		<footer class="footer" style="position:fixed; bottom:0; padding:5px; background-color:white;">
+	        <div class="form-group">
+	        	<input placeholder="Comment..." class="form-control" type="text">
+	        </div>
+		</footer>
+
 	</div>
-	<div>
-		<ul>
-			<li ng-repeat="thisPost in posts">
-				<a href="#/post/{{thisPost.postID}}">{{thisPost.postContent}}</a>
-			</li>
-		</ul>
-	</div>
-	<div>
-	<button ng-click="getTopic()"> getTopicDetails</button>
-	</div>
-	<div>
-		<ul>
-			<li ng-repeat="thisData in service.data">
-				<p>{{thisData}}</p>
-			</li>
-		</ul>
-	</div>
+	
 </section>
