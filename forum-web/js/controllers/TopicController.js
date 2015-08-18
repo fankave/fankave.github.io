@@ -13,15 +13,26 @@ function initTopicController($scope, $routeParams, networkService,DataService, T
 	$scope.service = DataService;
 
 	var updateTopic = function(){
-		$scope.topic = TopicService.topic();
-		$scope.title = $scope.topic.data.content.title;
-		$scope.sections = $scope.topic.data.content.sections;
+		$scope.topic = TopicService.getTopic();
+		$scope.title = TopicService.getTitle();
+		
+		var sectionType = TopicService.getSectionType();
+		if(sectionType == "html")
+			$scope.html = TopicService.getHtml();
+		else if(sectionType == "media")
+			$scope.media = TopicService.getMedia();
+		else if(sectionType == "tweet")
+			$scope.tweet = TopicService.getTweet();
+		else if(sectionType == "ogp")
+			$scope.ogp = TopicService.getOgp();
+		else if(sectionType == "link")
+			$scope.link = TopicService.getLink();
 
 		console.log("updated topic" +$scope.title);
-		console.log("updated sections" +$scope.sections);
+		console.log("updated type" +sectionType);
 	};
 	var updateComments = function(){
-		$scope.comments = CommentService.comments();
+		$scope.comments = CommentService.comments().data.results;
 		console.log("updated comments" +$scope.comments);
 	};
 
