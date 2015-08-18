@@ -1,4 +1,6 @@
 networkModule.service('TopicService', function () {
+	
+	var TOPIC_BASE_URI = "/v1.0/topic/show/";
 	//TODO temp, holding Topic JSON
 	var _topic;
 	
@@ -53,9 +55,17 @@ networkModule.service('TopicService', function () {
 		console.log("TYPE : "+ _topic.data.content.sections[0].type);
 		notifyObservers();
 	}
+	
+	function getTopicRequest(topicId){
+		var uri = TOPIC_BASE_URI+topicId;
+		
+		return  varTopicParams = {"rid": "topic",
+	            "timestamp": new Date().getTime(),
+	            "method": "GET",
+	            "uri": encodeURI(uri)};
+	}
 
 	return {
-		getTopicServiceInstance : function(){return this;},
 		getTopic: function(){return _topic ;},
 		getSectionType: function(sectionNumber){ 
 			//TODO check for section length
@@ -71,6 +81,7 @@ networkModule.service('TopicService', function () {
 		getOgp:function(){return _ogp},
 		getLink:function(){return _link},
 		
+		getTopicRequest:getTopicRequest,
 		setTopic:setTopicData,
 		registerObserverCallback:function(callback){
 			//register an observer
