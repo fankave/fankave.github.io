@@ -8,21 +8,37 @@
 		Topic Details 
 	</div>
 
-    <hr/
 
 	<div>
-		<div ng-repeat="thisPost in posts" class="postRow">
+		<div ng-repeat="thisPost in posts" class="row postRow">
+			<!-- <a href="#/post/{{thisPoist.postID}}"> -->
+				<span class="postAuthorPhoto">
+					<a href="#" class="thumbnail myThumbnail">
+	  					<img src="img/emptyThumbnail.png" alt="">
+				    </a>
+				</span>
 
-			<span class="postAuthorPhoto">
-				<a href="#" class="thumbnail myThumbnail">
-  					<img src="img/emptyThumbnail.png" alt="">
-			    </a>
-			</span>
+				<span class="post">
+					<div class="row">
+						<span class="postUsername">
+							user name
+						</span>
+						<span class="timestamp">
+							3m
+						</span>
+					</div>
 
-			<span class="postContent">
-				content
-			</span>
+					<div class="row postContent">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit asdij sdij sidj sidj sijd s sdj sidjs jdsi disa dij dij sidjs djis disj dijsi dsjdi sji dsidj isjd isjd isjdi sidj sijd isjdi sjidjs idj sijd sidisj disj 
+					</div>
 
+					<div class="row sharingButtonsRow">
+						<button class="btn">Like</button>
+						<button class="btn">Comment</button>
+						<button class="btn">More</button>
+					</div>
+				</span>
+			<!-- </a> -->
 		</div>
 	</div>
 	

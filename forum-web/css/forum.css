@@ -1,4 +1,12 @@
-body
+/*
+ * Forum CSS
+ *
+ */
+
+
+ /* Page-level / body */
+
+ body
 { 
     padding-top: 7em; 
     background-color:#EEEEEE;
@@ -9,6 +17,9 @@ body
 {
 	background-color: white;
 }
+
+
+/* Header / Nav Bars */
 
 #header
 {
@@ -24,41 +35,84 @@ body
      height:100%;
 }
 
+
+/* Topic Details */
+
 #topicDetails
 {
-	background-color:gray;
-	min-height:3em;
+	/*background-color:gray;*/
+	min-height:4em;
 	margin:0px;
+	padding:20px;
 }
 
-.post {
-	height:140px;
-	background-color:red;
-}
+
+/* Post */
 
 .postRow
 {
 	font-size:3em;
-	min-height:5em;
+	/*max-height:4.4em;*/
 	background-color: white;
 	margin:2px;
 	border-bottom: 1px dotted gray;
 }
 
-.postAuthorPhoto
+.postAuthorPhoto /* left-side of each post row */
 {
-	width: 20%;
-	/*background-color: blue;*/
+	width: 15%;
 	float:left;
+	padding:10px;
+}
+
+.post /* entire right-side of each post row */
+{
+	width: 85%;
+	background-color: /*purple*/;
+	float:right;
+	min-height: 3em;
+	padding:10px;
+}
+
+.postUsername
+{
+	font-size: 0.5em;
+	float:left;
+	color: rgb(166, 189, 207);
+	width:80%;
+	padding-left:5px;
+}
+
+.timestamp
+{
+	font-size: 0.5em;
+	float:right;
+	color: rgb(166, 189, 207);
+	width:20%;
+	text-align: right;
+	padding-right:5px;
 }
 
 .postContent
 {
-	width: 80%;
-	background-color: /*purple*/;
-	float:right;
-	min-height: 5em;
+	/*float:clear;*/
+	/*background-color: gray;*/
+	padding-left: 5px;
+	padding-right: 5px;
+	font-size: 0.5em;
 }
+
+.sharingButtonsRow
+{
+	float:right;
+	padding-right:5px;
+	font-size:0.8em;
+	/*background-color:gray;*/
+	padding-right:15px;
+}
+
+
+/* Text Field */
 
 #textEntryField
 {
