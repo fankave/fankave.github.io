@@ -1,35 +1,45 @@
 <section>
-	<nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-       	Score Card View
-      </div>
+    
+	<nav class="navbar navbar-fixed-top" id="header">
+       	<h2>Score Card</h2>
     </nav>
 
+	<div id="topicDetails" class="row"> 
+		Topic Details 
+	</div>
 
-    <div class="container">
+    <hr/
 
-    	<div> Topic Details </div>
+	<div>
+		<div ng-repeat="thisPost in posts" class="postRow">
 
-	    <hr/>
+			<span class="postAuthorPhoto">
+				<a href="#" class="thumbnail myThumbnail">
+  					<img src="img/emptyThumbnail.png" alt="">
+			    </a>
+			</span>
 
-		<div>
-			<ul>
-				<li ng-repeat="thisPost in posts">
-					<a href="#/post/{{thisPost.postID}}">{{thisPost.postContent}}</a>
-				</li>
-			</ul>
+			<span class="postContent">
+				content
+			</span>
+
 		</div>
-		
-		<div>
-		<p>  TopicTitle :{{title}}</p>
-			<button ng-click="init()"> getTopicDetails</button>
-		</div>
-
-		<footer class="footer" style="position:fixed; bottom:0; padding:5px; background-color:white;">
-	        <div class="form-group">
-	        	<input placeholder="Comment..." class="form-control" type="text">
-	        </div>
-		</footer>
 	</div>
 	
+	<hr/>
+
+	<div>
+		<p>  TopicTitle :{{title}}</p>
+		<button ng-click="init()"> getTopicDetails</button>
+	</div>
+
+	<!--footer class="footer" id="textEntryField">
+        <div class="form-group">
+        	<input placeholder="Comment..." class="form-control" type="text">
+        </div>
+	</footer-->
+	
 </section>
+
+
+<!-- <a href="#/post/{{thisPost.postID}}">{{thisPost.postContent}}</a> -->
