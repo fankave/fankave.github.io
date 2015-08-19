@@ -23,11 +23,139 @@
 
 #header
 {
-	min-height: 7em;
+	height: 7em;
 	text-align:center;
-	background-color:red;
+	/*background-color:red;*/
 	color:white;
 }
+
+
+/* Score Card */
+
+#scoreCardCanvas
+{
+	text-align:center;
+	/*background-color:black;*/
+	color:white;
+	float:left;
+}
+
+#scoreCardContent
+{
+	width:100%;
+	height:100%;
+	position:absolute;
+	/*background-color:gray;*/
+}
+
+#scoreCardTitlesRow
+{
+	/*background:rgba(0, 0, 0, 0.3);*/
+	/*margin:5px;*/
+	height:25%;
+}
+
+#scoreCardDataRow
+{
+	/*background-color:rgba(0, 0, 0, 0.3);*/
+	/*width:100%;*/
+	/*margin:5px;*/
+	height:75%;
+}
+
+#leftTeamSpan
+{
+	width:50%;
+	float:left;
+	font-size:1.3em;
+}
+
+
+#rightTeamSpan
+{
+	width:50%;
+	float:right;
+	font-size:1.3em;
+}
+
+
+#leftTeamLogo
+{
+	width:25%;
+	height:80%;
+	float:left;
+	/*background-color:rgba(255, 255, 255, 0.3);*/
+	/*margin:5px;*/
+	text-align: right;
+}
+
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+#leftTeamScore
+{
+	width:15%;
+	height:80%;
+	float:left;
+	font-size:2.5em;
+	/*background-color:rgba(255, 255, 0, 0.3);*/
+	margin-bottom:10px;
+	line-height:160%;
+	text-align: right;
+	/*margin:5px;*/
+	/*display: table-cell; */
+	/*vertical-align: middle*/
+}
+
+
+.teamLogo
+{
+	max-width:50%;
+	vertical-align: middle;
+	text-align: right;
+}
+
+#gameTime
+{
+	float:left;
+	/*background-color:rgba(255, 255, 255, 0.3);*/
+	width:20%;
+	height:80%;
+	font-size:1.2em;
+	line-height:180%;
+	/*margin:5px;*/
+	vertical-align: middle;
+}
+
+#rightTeamScore
+{
+	width:15%;
+	height:80%;
+	float:left;
+	font-size:2.5em;
+	/*background-color:rgba(255, 255, 255, 0.3);*/
+	line-height:160%;
+	/*margin:5px;*/
+	vertical-align: middle;
+	text-align:left;
+}
+
+#rightTeamLogo
+{
+	width:25%;
+	height:80%;
+	float:left;
+	/*background-color:rgba(255, 255, 255, 0.3);*/
+	text-align: left;
+	/*margin:5px;*/
+}
+
+
+/* */
+
 
 #backToTopicButton
 {

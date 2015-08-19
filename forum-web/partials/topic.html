@@ -1,7 +1,45 @@
 <section>
     
 	<nav class="navbar navbar-fixed-top" id="header">
-       	<h2>Score Card</h2>
+       	<canvas id="scoreCardCanvas" width="1" height="1">
+   		</canvas>
+   		<div id="scoreCardContent">
+
+   			<div id="scoreCardTitlesRow" class="row">
+				<span id="leftTeamSpan">
+					<b>Seahawks</b>
+				</span>
+				<span id="rightTeamSpan">
+					<b>49ers</b>
+				</span>
+			</div>
+
+			<div id="scoreCardDataRow" class="row">
+				<span id="leftTeamLogo">
+					<span class="helper"></span>
+					<img src="img/seahawks.png" class="teamLogo"/>
+				</span>
+				<span id="leftTeamScore">
+					35
+				</span>
+				<span id="gameTime">
+					<div>
+						QTR 4
+					</div>
+					<div>
+						02:45
+					</div>
+				</span>
+				<span id="rightTeamScore">
+					17
+				</span>
+				<span id="rightTeamLogo">
+					<span class="helper"></span>
+					<img src="img/49ers.png" class="teamLogo"/>
+				</span>
+			</div>
+
+   		</div>
     </nav>
 
 	<div id="topicDetails" class="row"> 

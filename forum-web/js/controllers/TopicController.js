@@ -42,5 +42,5 @@ function initTopicController($scope, $routeParams, networkService,DataService, T
 	TopicService.registerObserverCallback(updateTopic);
 	CommentService.registerObserverCallback(updateComments);
 
-
+	renderScoreCard();
 }
