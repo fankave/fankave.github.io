@@ -1,6 +1,8 @@
 networkModule.service('CommentService', function () {
 	var LIST_COMMENTS_URI = "/v1.0/topic/comments/list/"
 	var POST_COMMENT_URI="/v1.0/comment/create";
+	var LIKE_COMMENT_URI = "/v1.0/comment/like/";
+	var UNLIKE_COMMENT_URI = "/v1.0/comment/unlike/";
 	
 	var _comments;
 	
@@ -49,6 +51,24 @@ networkModule.service('CommentService', function () {
 		}};
 	}
 	
+	function likeCommentRequest(){
+		return  varLikeParams = {"rid": "comment",
+	            "timestamp": new Date().getTime(),
+	            "method": "POST",
+	            "uri": encodeURI(LIKE_COMMENT_URI + _id)};
+		
+
+	}
+	
+	function unlikeCommentRequest(){
+		return  varLikeParams = {"rid": "topic",
+	            "timestamp": new Date().getTime(),
+	            "method": "POST",
+	            "uri": encodeURI(UNLIKE_COMMENT_URI + _id)};
+		
+
+	}
+	
 	function setComments(commentsData) {
 		_comments = commentsData.data.results;
 	
@@ -58,6 +78,9 @@ networkModule.service('CommentService', function () {
 	return {
 		comments: function(){return _comments ;},
 		setComments:setComments,
+		postCommentRequest:postCommentRequest,
+		likeCommentRequest:likeCommentRequest,
+		unlikeCommentRequest:unlikeCommentRequest,
 		registerObserverCallback:function(callback){
 			//register an observer
 			console.log("comments callback registered");

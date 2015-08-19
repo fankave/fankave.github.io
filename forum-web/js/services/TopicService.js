@@ -1,6 +1,8 @@
-networkModule.service('TopicService', function () {
+networkModule.service('TopicService', function (DateUtilityService) {
 	
 	var TOPIC_BASE_URI = "/v1.0/topic/show/";
+	var LIKE_TOPIC_URI = "/v1.0/topic/like/";
+	var UNLIKE_TOPIC_URI = "/v1.0/topic/unlike/";
 	//TODO temp, holding Topic JSON
 	var _topic;
 	var _id;
@@ -25,6 +27,7 @@ networkModule.service('TopicService', function () {
 	var _createdAt;
 	var _topicSubType;
 	var _options;
+	var _metrics;
 	
 	var observerCallbacks = [];
 
@@ -52,10 +55,11 @@ networkModule.service('TopicService', function () {
 		_tweet = _topic.data.content.sections[0].tweet;
 		_link = _topic.data.content.sections[0].link;
 		
-		_liked = _topic.data.content.liked;
-		_createdAt = _topic.data.content.createdAt;
-		_topicSubType = _topic.data.content.topicType;
-		_options = _topic.data.content.options;
+		_liked = _topic.data.liked;
+		_createdAt = DateUtilityService.getTimeSince(_topic.data.createdAt);
+		_topicSubType = _topic.data.topicType;
+		_options = _topic.data.options;
+		_metrics = _topic.data.metrics;
 
 		console.log("LENGTH : "+_sectionLength);
 		console.log("TYPE : "+ _topic.data.content.sections[0].type);
@@ -69,6 +73,24 @@ networkModule.service('TopicService', function () {
 	            "timestamp": new Date().getTime(),
 	            "method": "GET",
 	            "uri": encodeURI(uri)};
+	}
+	
+	function likeTopicRequest(){
+		return  varLikeParams = {"rid": "topic",
+	            "timestamp": new Date().getTime(),
+	            "method": "POST",
+	            "uri": encodeURI(LIKE_TOPIC_URI + _id)};
+		
+
+	}
+	
+	function unlikeTopicRequest(){
+		return  varLikeParams = {"rid": "topic",
+	            "timestamp": new Date().getTime(),
+	            "method": "POST",
+	            "uri": encodeURI(UNLIKE_TOPIC_URI + _id)};
+		
+
 	}
 
 	return {
@@ -86,7 +108,12 @@ networkModule.service('TopicService', function () {
 		getTweet:function(){return _tweet},
 		getOgp:function(){return _ogp},
 		getLink:function(){return _link},
+		getTimeCreatedAt:function(){return _createdAt},
+		getLiked:function(){return _liked},
+		getMetrics:function(){return _metrics},
 		
+		getLikeTopicRequest:likeTopicRequest,
+		getUnlikeTopicRequest:unlikeTopicRequest,
 		getTopicRequest:getTopicRequest,
 		setTopic:setTopicData,
 		registerObserverCallback:function(callback){
