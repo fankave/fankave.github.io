@@ -95,6 +95,7 @@ networkModule.service('TopicService', function (DateUtilityService) {
 
 	return {
 		getTopic: function(){return _topic ;},
+		getTopicId: function(){return _id ;},
 		getSectionType: function(sectionNumber){ 
 			//TODO check for section length
 			if(sectionNumber == undefined )
