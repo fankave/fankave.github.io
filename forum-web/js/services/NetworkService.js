@@ -38,7 +38,6 @@ function initNetworkService($websocket,DataService)
 	  if(type != undefined && type =="topic"){
 		  console.log("Got Topic");
 		  DataService.setTopic(responseJson);
-		  console.log("TOPIC: "+DataService.topic);
 	  }else{
 		  console.log("Got Comments ...TODO");
 	  	  DataService.setComments(responseJson);
@@ -104,7 +103,7 @@ function initNetworkService($websocket,DataService)
 	return{
 		comments: DataService.comments,
 		data: DataService.data,
-		send:function(message) { ws.send(message);},
+		send:function(message) { ws.send(JSON.stringify(message));},
 		init:function(message) { ws.send(JSON.stringify(varTopicParams));
 								 ws.send(JSON.stringify(varCommentParams));
 								 },

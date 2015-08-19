@@ -1,8 +1,14 @@
 networkModule.service('TopicService', function () {
+	
+	var TOPIC_BASE_URI = "/v1.0/topic/show/";
 	//TODO temp, holding Topic JSON
 	var _topic;
+	var _id;
 	
 	var _title;
+	var _author;
+	var _owner;
+	var _lang;
 	
 	
 	//Content Sections
@@ -15,10 +21,10 @@ networkModule.service('TopicService', function () {
 	var _ogp;
 	var _link;
 
-	var liked;
-	var createdAt;
-	var topicSubType;
-	var options;
+	var _liked;
+	var _createdAt;
+	var _topicSubType;
+	var _options;
 	
 	var observerCallbacks = [];
 
@@ -32,9 +38,11 @@ networkModule.service('TopicService', function () {
 	function setTopicData(topicData) 
 	{
 		_topic = topicData;
+		_id = _topic.id;
 		_title = _topic.data.content.title;
-		var sections = [];
-		sections = _topic.data.content.sections;
+		_author = _topic.data.author;
+		_owner = _topic.owner;
+		_lang = _topic.data.lang;
 		_sectionLength = _topic.data.content.sections.length;
 		_sectionType = _topic.data.content.sections[0].type;
 		//TODO support for multiple sections here
@@ -53,9 +61,17 @@ networkModule.service('TopicService', function () {
 		console.log("TYPE : "+ _topic.data.content.sections[0].type);
 		notifyObservers();
 	}
+	
+	function getTopicRequest(topicId){
+		var uri = TOPIC_BASE_URI+topicId;
+		
+		return  varTopicParams = {"rid": "topic",
+	            "timestamp": new Date().getTime(),
+	            "method": "GET",
+	            "uri": encodeURI(uri)};
+	}
 
 	return {
-		getTopicServiceInstance : function(){return this;},
 		getTopic: function(){return _topic ;},
 		getSectionType: function(sectionNumber){ 
 			//TODO check for section length
@@ -71,6 +87,7 @@ networkModule.service('TopicService', function () {
 		getOgp:function(){return _ogp},
 		getLink:function(){return _link},
 		
+		getTopicRequest:getTopicRequest,
 		setTopic:setTopicData,
 		registerObserverCallback:function(callback){
 			//register an observer

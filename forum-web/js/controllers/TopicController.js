@@ -4,8 +4,11 @@ topicModule.controller("TopicController", ["$scope", "$routeParams", "networkSer
 function initTopicController($scope, $routeParams, networkService,DataService, TopicService, CommentService)
 {
 	$scope.init = function() {
-		console.log("initialized network");
-		networkService.init();
+//		console.log("initialized network");
+//		networkService.init();
+		//TODO: Pass $routeParams.topicID to this to fetch TopicID from URL
+		networkService.send(TopicService.getTopicRequest("53ccf184c0c00002"));
+		networkService.send(CommentService.getCommentsRequest("53ccf184c0c00002"));
 	};
 	$scope.topicID = $routeParams.topicID;
 	$scope.posts = networkService.getPostsForTopicID();
