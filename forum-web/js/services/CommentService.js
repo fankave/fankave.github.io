@@ -3,7 +3,7 @@ networkModule.service('CommentService', function (DateUtilityService) {
 	var POST_COMMENT_URI="/v1.0/comment/create";
 	var LIKE_COMMENT_URI = "/v1.0/comment/like/";
 	var UNLIKE_COMMENT_URI = "/v1.0/comment/unlike/";
-	
+	var observerCallbacks = [];
 	var _comments = [];
 	var _commentObject = {
 		id:"",
@@ -44,23 +44,46 @@ networkModule.service('CommentService', function (DateUtilityService) {
 	
 		notifyObservers();
 	}
-//	var _author;
-//	var _owner;
-//	var lang;
-//	var photo
-//	
-//	var _sectionType;
-//	
-//	var _html;
-//	var _media;
-//	var _tweet;
-//	var _ogp;
-//	var _link;
-//
-//	var liked;
-//	var createdAt;
 	
-	var observerCallbacks = [];
+	function updateComment(commentData){
+		//if comments ID exist, update it 
+		//else append to existing list
+		for(i=0;i<_comments.length;i++){
+			if(_comments[i].id == commentData.id){
+				//update
+				_comments[i].id = commentsdata.id;
+				_comments[i].author = commentsdata.author;
+				_comments[i].owner = commentsdata.owner;
+				_comments[i].photo = commentsdata.photo;
+				_comments[i].type = commentsdata.content.sections[0].type;
+				_comments[i].html = commentsdata.content.sections[0].html;
+				_comments[i].media = commentsdata.content.sections[0].media;
+				_comments[i].tweet = commentsdata.content.sections[0].tweet;
+				_comments[i].ogp = commentsdata.content.sections[0].ogp;
+				_comments[i].link = commentsdata.content.sections[0].link;
+				_comments[i].metrics = commentsdata.metrics;
+				_comments[i].createdAt = DateUtilityService.getTimeSince(commentsdata.createdAt);
+				
+			}
+			else{
+				_comments.push(commentData)
+			}
+		}
+	}
+	
+	function removeComment(commentData){
+		for(i=0;i<_comments.length;i++){
+			if(_comments[i].id == commentData.id){
+				//remove element
+				_comments.splice(i,1);
+			}
+		}
+		
+	}
+		
+
+	
+	
 	//call this when you know 'comments' has been changed
 	var notifyObservers = function(){
 		angular.forEach(observerCallbacks, function(callback){
@@ -112,6 +135,8 @@ networkModule.service('CommentService', function (DateUtilityService) {
 	return {
 		comments: function(){return _comments ;},
 		setComments:setComments,
+		updateComment:updateComment,
+		removeComment:removeComment,
 		postCommentRequest:postCommentRequest,
 		likeCommentRequest:likeCommentRequest,
 		unlikeCommentRequest:unlikeCommentRequest,

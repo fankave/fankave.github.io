@@ -55,10 +55,10 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 		$scope.createdAt = TopicService.getTimeCreatedAt();
 		$scope.metrics = TopicService.getMetrics();
 
-		console.log("updated topic" +$scope.title);
-		console.log("updated type" +sectionType);
-		console.log("updated time" +$scope.createdAt);
-		console.log("updated metrics" +$scope.metrics.likes);
+		console.log("updated topic :" +$scope.title);
+		console.log("updated type :" +sectionType);
+		console.log("updated time :" +$scope.createdAt);
+		console.log("updated metrics :" +$scope.metrics.likes);
 	};
 	var updateComments = function(){
 		$scope.commentsArray = CommentService.comments();
@@ -88,5 +88,5 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 	TopicService.registerObserverCallback(updateTopic);
 	CommentService.registerObserverCallback(updateComments);
 
-	renderScoreCard();
+	//renderScoreCard();
 }
