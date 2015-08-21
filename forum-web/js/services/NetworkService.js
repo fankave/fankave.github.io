@@ -3,23 +3,16 @@ networkModule.factory("networkService",["$websocket","DataService",initNetworkSe
 
 function initNetworkService($websocket,DataService)
 {
-	//old url - ws://107.178.223.208/ws?userId=1&sessionId=dac24379&accessToken=7uFF3QGh-84=/
-	//old topic id - 53c167f17040001d
+	var OLD_URI = 'ws://107.178.223.208/ws?userId=1&sessionId=dac24379&accessToken=7uFF3QGh-84=/';
+	//var OLD_STATIC_TOPIC_ID = "53c167f17040001d";
 	
-	//new url  - ws://104.197.8.198/ws?userId=37&sessionId=3950cd16&accessToken=NrRwUQTzWEU=/
+	var NEW_URI = 'ws://104.197.8.198/ws?userId=37&sessionId=3950cd16&accessToken=NrRwUQTzWEU=/';
 	//new topicID 
-	//53ccf152c5000001
-	//53ccf184c0c00002
+	//var NEW_STATIC_TOPIC_ID1 = 53ccf152c5000001;
+	//var NEW_STATIC_TOPIC_ID2 = 53ccf184c0c00002;
 	
-	var ws = $websocket('ws://104.197.8.198/ws?userId=37&sessionId=3950cd16&accessToken=NrRwUQTzWEU=/');
-	var varTopicParams = {"rid": "topic",
-            "timestamp": new Date().getTime(),
-            "method": "GET",
-            "uri": "\/v1.0\/topic\/show\/53ccf152c5000001"};
-	var varCommentParams = {"rid": "comment",
-		      "timestamp": new Date().getTime(),
-		      "method": "GET",
-		      "uri": encodeURI("/v1.0/topic/comments/list/53ccf152c5000001")};
+	var ws = $websocket(NEW_URI);
+	
 	//Websocket callbacks below
 	ws.onOpen(function() {
 		console.log("Socket Connected");
@@ -36,10 +29,16 @@ function initNetworkService($websocket,DataService)
   	  DataService.data.push(responseJson);
   	  var type = responseJson.rid;
 	  if(type != undefined && type =="topic"){
-		  console.log("Got Topic");
+		  if(responseJson.push)
+			  //handle push
+		  else
 		  DataService.setTopic(responseJson);
+		  console.log("Got Topic");
 	  }else{
 		  console.log("Got Comments ...TODO");
+		  if(responseJson.push)
+			  //handle push
+		  else
 	  	  DataService.setComments(responseJson);
 	  };
     });

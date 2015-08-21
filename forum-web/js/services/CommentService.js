@@ -1,11 +1,49 @@
-networkModule.service('CommentService', function () {
+networkModule.service('CommentService', function (DateUtilityService) {
 	var LIST_COMMENTS_URI = "/v1.0/topic/comments/list/"
 	var POST_COMMENT_URI="/v1.0/comment/create";
 	var LIKE_COMMENT_URI = "/v1.0/comment/like/";
 	var UNLIKE_COMMENT_URI = "/v1.0/comment/unlike/";
 	
-	var _comments;
+	var _comments = [];
+	var _commentObject = {
+		id:"",
+		author:"",
+		owner:"",
+		photo:"",
+		type:"",
+		html:"",
+		media:"",
+		tweet:"",
+		ogp:"",
+		limk:"",
+		metrics:"",
+		createdAt:""
+		
+	};
 	
+	function setComments(commentsData) {
+		var commentsdata = commentsData.data.results;
+		var len = commentsdata.length;
+		var tempComment = {};
+		for(i=0;i<len;i++){
+			tempComment.id = commentsdata[i].id;
+			tempComment.author = commentsdata[i].author;
+			tempComment.owner = commentsdata[i].owner;
+			tempComment.photo = commentsdata[i].photo;
+			tempComment.type = commentsdata[i].content.sections[0].type;
+			tempComment.html = commentsdata[i].content.sections[0].html;
+			tempComment.media = commentsdata[i].content.sections[0].media;
+			tempComment.tweet = commentsdata[i].content.sections[0].tweet;
+			tempComment.ogp = commentsdata[i].content.sections[0].ogp;
+			tempComment.link = commentsdata[i].content.sections[0].link;
+			tempComment.metrics = commentsdata[i].metrics;
+			tempComment.createdAt = DateUtilityService.getTimeSince(commentsdata[i].createdAt);
+			_comments.push(tempComment);
+		}
+		
+	
+		notifyObservers();
+	}
 //	var _author;
 //	var _owner;
 //	var lang;
@@ -69,11 +107,7 @@ networkModule.service('CommentService', function () {
 
 	}
 	
-	function setComments(commentsData) {
-		_comments = commentsData.data.results;
-	
-		notifyObservers();
-	}
+
 
 	return {
 		comments: function(){return _comments ;},

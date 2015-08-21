@@ -10,8 +10,8 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 //		console.log("initialized network");
 //		networkService.init();
 		//TODO: Pass $routeParams.topicID to this to fetch TopicID from URL
-		networkService.send(TopicService.getTopicRequest("53ccf184c0c00002"));
-		networkService.send(CommentService.getCommentsRequest("53ccf184c0c00002"));
+		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
+		networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
 	};
 	
 	$scope.postComment = function(commentData) {
@@ -61,8 +61,28 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 		console.log("updated metrics" +$scope.metrics.likes);
 	};
 	var updateComments = function(){
-		$scope.comments = CommentService.comments().data.results;
-		console.log("updated comments" +$scope.comments);
+		$scope.commentsArray = CommentService.comments();
+		//TODO: check with ahmed, these values could be individual scope var.
+//		var len = commentsdata.length;
+//		$scope.commentsArray = [];
+//		
+//		var tempComment = {};
+//		for(i=0;i<len;i++){
+//			tempComment.id = commentsdata[i].id;
+//			tempComment.author = commentsdata[i].author;
+//			tempComment.owner = commentsdata[i].owner;
+//			tempComment.photo = commentsdata[i].photo;
+//			tempComment.type = commentsdata[i].type;
+//			tempComment.html = commentsdata[i].html;
+//			tempComment.media = commentsdata[i].media;
+//			tempComment.tweet = commentsdata[i].tweet;
+//			tempComment.ogp = commentsdata[i].ogp;
+//			tempComment.link = commentsdata[i].link;
+//			tempComment.metrics = commentsdata[i].metrics;
+//			tempComment.createdAt = commentsdata[i].createdAt;
+//			$scope.commentsArray.push(tempComment);
+//		}
+		console.log("updated comments" +$scope.commentsArray);
 	};
 
 	TopicService.registerObserverCallback(updateTopic);
