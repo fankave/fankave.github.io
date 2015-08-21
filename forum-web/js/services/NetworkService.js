@@ -29,15 +29,17 @@ function initNetworkService($websocket,DataService)
   	  DataService.data.push(responseJson);
   	  var type = responseJson.rid;
 	  if(type != undefined && type =="topic"){
-		  if(responseJson.push)
+		  if(responseJson.push){
 			  //handle push
+		  }
 		  else
 		  DataService.setTopic(responseJson);
 		  console.log("Got Topic");
 	  }else{
 		  console.log("Got Comments ...TODO");
-		  if(responseJson.push)
+		  if(responseJson.push){
 			  //handle push
+		  }
 		  else
 	  	  DataService.setComments(responseJson);
 	  };
