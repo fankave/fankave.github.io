@@ -10,7 +10,7 @@
 { 
     padding-top: 7em; 
     background-color:#EEEEEE;
-    padding-bottom:5em;
+    padding-bottom:4em;
 }
 
 .container
@@ -27,6 +27,8 @@
 	text-align:center;
 	/*background-color:red;*/
 	color:white;
+
+	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 
@@ -204,7 +206,7 @@
 
 .postUsername
 {
-	font-size: 0.5em;
+	font-size: 0.4em;
 	float:left;
 	color: rgb(166, 189, 207);
 	width:80%;
@@ -213,7 +215,7 @@
 
 .timestamp
 {
-	font-size: 0.5em;
+	font-size: 0.4em;
 	float:right;
 	color: rgb(166, 189, 207);
 	width:20%;
@@ -227,7 +229,36 @@
 	/*background-color: gray;*/
 	padding-left: 5px;
 	padding-right: 5px;
-	font-size: 0.5em;
+	font-size: 0.4em;
+	margin-bottom:1em;
+}
+
+.postPhoto
+{
+	/*max-width: 100%;*/
+	width:100%;
+	margin-top:0.2em;
+}
+
+.video
+{
+	position:relative;
+	width:100%;
+	margin-top:0.2em;
+}
+
+.postVideo
+{
+	position:relative;
+	/*float:clear;*/
+}
+
+.playVideoButton
+{
+	position:absolute;
+	/*left:0;*/
+	/*top:0;*/
+	float:left;
 }
 
 .sharingButtonsRow
@@ -237,6 +268,8 @@
 	font-size:0.8em;
 	/*background-color:gray;*/
 	padding-right:15px;
+	font-size:0.4em;
+	margin-bottom:0.6em;
 }
 
 

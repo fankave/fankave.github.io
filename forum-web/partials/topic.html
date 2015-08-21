@@ -48,50 +48,60 @@
 
 
 	<div>
-		<div ng-repeat="thisPost in posts" class="row postRow">
+		<div ng-repeat="thisPost in posts" ng-switch="thisPost.postType" class="row postRow">
 			<!-- <a href="#/post/{{thisPoist.postID}}"> -->
 				<span class="postAuthorPhoto">
 					<a href="#" class="thumbnail myThumbnail">
-	  					<img src="img/emptyThumbnail.png" alt="">
+	  					<img src="img/staticUsers/{{thisPost.postAuthorPhoto}}" alt="">
 				    </a>
 				</span>
 
 				<span class="post">
 					<div class="row">
 						<span class="postUsername">
-							user name
+							{{thisPost.postAuthorName}}
 						</span>
 						<span class="timestamp">
 							3m
 						</span>
 					</div>
 
+					<div ng-switch-when="photo" class="row postPhoto">
+						<img src="img/{{thisPost.photo}}"/>
+					</div>
+
+					<div ng-switch-when="video" class="row video">
+						<div class="roww">
+							<img src="img/{{thisPost.video}}"/ class="postVideo">
+						</div>
+					</div>
+
 					<div class="row postContent">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit asdij sdij sidj sidj sijd s sdj sidjs jdsi disa dij dij sidjs djis disj dijsi dsjdi sji dsidj isjd isjd isjdi sidj sijd isjdi sjidjs idj sijd sidisj disj 
+						{{thisPost.postContent}} 
 					</div>
 
 					<div class="row sharingButtonsRow">
-						<button class="btn">Like</button>
-						<button class="btn">Comment</button>
-						<button class="btn">More</button>
+						<button class="btn-link"><img src="img/like_small.png"/><b> 13</b></button>
+						<button class="btn-link"><img src="img/comment_small.png"/><b> 19</b></button>
+						<button class="btn-link"><img src="img/more_small.png"/></button>
 					</div>
 				</span>
 			<!-- </a> -->
 		</div>
 	</div>
 	
-	<hr/>
+	<!--hr/-->
 
-	<div>
+	<!--div>
 		<p>  TopicTitle :{{title}}</p>
 		<button ng-click="init()"> getTopicDetails</button>
-	</div>
+	</div-->
 
-	<!--footer class="footer" id="textEntryField">
+	<footer class="footer" id="textEntryField">
         <div class="form-group">
         	<input placeholder="Comment..." class="form-control" type="text">
         </div>
-	</footer-->
+	</footer>
 	
 </section>
 

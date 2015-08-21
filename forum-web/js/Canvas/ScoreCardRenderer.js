@@ -38,7 +38,7 @@ function renderScoreCard()
     var maxImageWidth = canvasWidth / 5
 	leftImage.addEventListener("load", function()
 	{
-		console.log("left image loaded: " + leftImage.width + " x " + leftImage.height);
+		// console.log("left image loaded: " + leftImage.width + " x " + leftImage.height);
   		// execute drawImage statements here
 
   		var ratio = 1
@@ -56,7 +56,7 @@ function renderScoreCard()
 	leftImage.src = 'img/seahawks.png'; // Set source path
 
 	
-	console.log("dpr: " + dpr);
+	// console.log("dpr: " + dpr);
 }
 
 $(document).ready( function()

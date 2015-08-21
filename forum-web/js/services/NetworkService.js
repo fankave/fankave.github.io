@@ -50,28 +50,90 @@ function initNetworkService($websocket,DataService)
     
 	function getPostsForTopicID()
 	{
-		return [
-					{
-						"postID":"0",
-						"postContent":"post 1"
-					},
-					{
-						"postID":"1",
-						"postContent":"post 2"
-					},
-					{
-						"postID":"2",
-						"postContent":"post 3"
-					},
-					{
-						"postID":"3",
-						"postContent":"post 4"
-					},
-					{
-						"postID":"4",
-						"postContent":"post 5"
-					}
-				];
+		var staticPosts = [];
+		var loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris";
+		var postTypes = ["text", "text", "text", "photo", "video"];
+		var postAuthors = [
+							{
+								"photo":"ana.png",
+								"name":"Ana"
+							},
+							{
+								"photo":"arod.png",
+								"name":"A-Rod"
+							},
+							{
+								"photo":"cristiano.png",
+								"name":"Crisitano"
+							},
+							{
+								"photo":"derek.png",
+								"name":"Derek"
+							},
+							{
+								"photo":"dwayne.png",
+								"name":"Dwayne"
+							},
+							{
+								"photo":"erin.png",
+								"name":"Erin"
+							},
+							{
+								"photo":"jordan.png",
+								"name":"Michael"
+							},
+							{
+								"photo":"lebron.png",
+								"name":"Lebron"
+							},
+							{
+								"photo":"lionel.png",
+								"name":"Lionel"
+							},
+							{
+								"photo":"maria.png",
+								"name":"Maria"
+							}
+						];
+			var fakePhotos = ["fakePhoto1.jpg", "fakePhoto2.jpg", "fakePhoto3.jpg", "fakePhoto4.jpg", "fakePhoto5.jpg", "fakePhoto6.jpg"];
+			var usedFakePhotos = 0;
+
+			var fakeVideos = ["fakeVideo1.jpg", "fakeVideo2.jpg", "fakeVideo3.jpg"];
+			var usedFakeVideos = 0;
+
+		for(var i = 0 ; i < 20 ; i++)
+		{
+			var fakePost = new Object();
+			fakePost.postID = i;
+			var minimumCharacterCount = 20
+			var randomCharacterCount = minimumCharacterCount + Math.round(Math.random() * (loremIpsum.length - minimumCharacterCount));
+			// console.log("random character count: " + randomCharacterCount);
+			var loremIpsumSubstring = loremIpsum.substring(0, randomCharacterCount);
+			console.log("-> " + loremIpsumSubstring);
+			fakePost.postContent = loremIpsumSubstring
+			var postType = postTypes[Math.floor(Math.random() * postTypes.length)];
+			fakePost.postType = postType;
+			if(postType == "photo")
+			{
+				var fakePhoto = fakePhotos[usedFakePhotos % fakePhotos.length];
+				fakePost.photo = fakePhoto;
+				usedFakePhotos++;
+			}
+			else if(postType == "video")
+			{
+				var fakeVideo = fakeVideos[usedFakeVideos % fakeVideos.length];
+				fakePost.video = fakeVideo;
+				usedFakeVideos++;
+			}
+
+			var author = postAuthors[i % postAuthors.length];
+			fakePost.postAuthorPhoto = author.photo;
+			fakePost.postAuthorName = author.name;
+			// console.log("fake post " + i + " :  " + JSON.stringify(fakePost));
+
+			staticPosts.push(fakePost);
+		}
+		return staticPosts
 	}
 
 	function getRepliesForPostID()
