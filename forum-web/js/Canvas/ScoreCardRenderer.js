@@ -15,13 +15,30 @@ function renderScoreCard()
 	var canvasHeight = $(container).height();
     sCC.attr('height', canvasHeight);
 
+    var centerPoint = canvasWidth / 2
+    var centerOffset = centerPoint * 0.1
     // draw bkgd (left team)
+
+    ctx.beginPath();
     ctx.fillStyle = "rgb(5, 43, 93)";
-    ctx.fillRect (0, 0, canvasWidth / 2, canvasHeight);
+    // ctx.fillRect (0, 0, canvasWidth / 2, canvasHeight);
+    ctx.moveTo(0, 0);
+    ctx.lineTo(centerPoint + centerOffset, 0);
+    ctx.lineTo(centerPoint - centerOffset, canvasHeight);
+    ctx.lineTo(0, canvasHeight);
+    ctx.lineTo(0, 0);
+     ctx.fill();
 
     // draw bkgd (right team)
+    ctx.beginPath();
     ctx.fillStyle = "rgb(167, 2, 15)";
-    ctx.fillRect (canvasWidth / 2, 0, canvasWidth / 2, canvasHeight);
+    // ctx.fillRect (canvasWidth / 2, 0, canvasWidth / 2, canvasHeight);
+    ctx.moveTo(centerPoint + centerOffset, 0);
+    ctx.lineTo(canvasWidth, 0);
+    ctx.lineTo(canvasWidth, canvasHeight);
+    ctx.lineTo(centerPoint - centerOffset, canvasHeight);
+    ctx.lineTo(centerPoint + centerOffset, 0);
+    ctx.fill();
 
     // draw team names
     ctx.fillStyle = "rgb(255, 255, 255)";

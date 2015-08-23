@@ -64,7 +64,7 @@ function initNetworkService($websocket,DataService)
 							},
 							{
 								"photo":"cristiano.png",
-								"name":"Crisitano"
+								"name":"Cristiano"
 							},
 							{
 								"photo":"derek.png",
@@ -109,7 +109,7 @@ function initNetworkService($websocket,DataService)
 			var randomCharacterCount = minimumCharacterCount + Math.round(Math.random() * (loremIpsum.length - minimumCharacterCount));
 			// console.log("random character count: " + randomCharacterCount);
 			var loremIpsumSubstring = loremIpsum.substring(0, randomCharacterCount);
-			console.log("-> " + loremIpsumSubstring);
+			// console.log("-> " + loremIpsumSubstring);
 			fakePost.postContent = loremIpsumSubstring
 			var postType = postTypes[Math.floor(Math.random() * postTypes.length)];
 			fakePost.postType = postType;
@@ -129,6 +129,10 @@ function initNetworkService($websocket,DataService)
 			var author = postAuthors[i % postAuthors.length];
 			fakePost.postAuthorPhoto = author.photo;
 			fakePost.postAuthorName = author.name;
+
+			fakePost.likeCount = Math.floor(Math.random() * 100);
+			fakePost.commentCount = Math.floor(Math.random() * 500);
+			
 			// console.log("fake post " + i + " :  " + JSON.stringify(fakePost));
 
 			staticPosts.push(fakePost);

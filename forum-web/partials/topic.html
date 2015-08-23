@@ -43,21 +43,35 @@
     </nav>
 
 	<div id="topicDetails" class="row"> 
-		Topic Details 
+		<div>
+			<b>NFC West Showdown!</b>
+		</div>
+		<div id="topicDescriptionBody">
+			First time the Seahawks and the 49ers play this season, let's go niners!
+		</div>
+		<div class="topicSharingButtonsRow">
+			<button class="btn-link topic-social-btn"><img src="img/likeButton-2x_.png"/> 13</button>
+			<button class="btn-link topic-social-btn"><img src="img/commentButton-2x_.png"/> 19</button>
+			<button class="btn-link topic-social-btn"><img src="img/moreButton-2x_.png"/></button>
+		</div>
 	</div>
 
 
+	<ul class="nav nav-pills nav-justified">
+			<li role="presentation" class="active"><a>Posts</a></li>
+			<li role="presentation"><a>Tweets</a></li>
+	</ul>
+
 	<div>
 		<div ng-repeat="thisPost in posts" ng-switch="thisPost.postType" class="row postRow">
-			<!-- <a href="#/post/{{thisPoist.postID}}"> -->
 				<span class="postAuthorPhoto">
-					<a href="#" class="thumbnail myThumbnail">
-	  					<img src="img/staticUsers/{{thisPost.postAuthorPhoto}}" alt="">
+					<a href="#" class="thumbnail">
+	  					<img ng-src="img/staticUsers/{{thisPost.postAuthorPhoto}}" alt="" class="userPhoto">
 				    </a>
 				</span>
 
 				<span class="post">
-					<div class="row">
+					<div class="roww">
 						<span class="postUsername">
 							{{thisPost.postAuthorName}}
 						</span>
@@ -66,24 +80,22 @@
 						</span>
 					</div>
 
-					<div ng-switch-when="photo" class="row postPhoto">
-						<img src="img/{{thisPost.photo}}"/>
+					<div ng-switch-when="photo">
+						<img ng-src="img/{{thisPost.photo}}" class="postPhoto"/>
 					</div>
 
-					<div ng-switch-when="video" class="row video">
-						<div class="roww">
-							<img src="img/{{thisPost.video}}"/ class="postVideo">
-						</div>
+					<div ng-switch-when="video">
+						<img ng-src="img/{{thisPost.video}}" class="postVideo"/>
 					</div>
 
-					<div class="row postContent">
+					<div class="postContent">
 						{{thisPost.postContent}} 
 					</div>
 
-					<div class="row sharingButtonsRow">
-						<button class="btn-link"><img src="img/like_small.png"/><b> 13</b></button>
-						<button class="btn-link"><img src="img/comment_small.png"/><b> 19</b></button>
-						<button class="btn-link"><img src="img/more_small.png"/></button>
+					<div class="sharingButtonsRow">
+						<button class="btn-link social-btn"><img src="img/likeButton-2x.png"/> {{thisPost.likeCount}}</button>
+						<button class="btn-link social-btn"><img src="img/commentButton-2x.png"/> {{thisPost.commentCount}}</button>
+						<button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button>
 					</div>
 				</span>
 			<!-- </a> -->
