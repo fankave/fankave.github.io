@@ -95,8 +95,77 @@ function initNetworkService($websocket,DataService)
 			var fakeVideos = ["fakeVideo1.jpg", "fakeVideo2.jpg", "fakeVideo3.jpg"];
 			var usedFakeVideos = 0;
 
-		for(var i = 0 ; i < 20 ; i++)
+			var peelDemoData = [
+									{
+										"type":"photo",
+										"postContent":"Will this be the year Kaep teaches Sherman a lesson or will Kaep get schooled again?",
+										"postMedia":"fakePhoto1.jpg"
+									},
+									{
+										"type":"video",
+										"postContent":"Remember Kyle Williams - for some reason, I am having recurring nightmares about him again - weird but true:(",
+										"postMedia":"fakeVideo1.jpg"
+									},
+									{
+										"type":"photo",
+										"postContent":"Will Kaep be given a free reign to do whatever he wants? Please don't make him a pocket passer because HE IS NOT ONE",
+										"postMedia":"fakePhoto2.jpg"
+									},
+									{
+										"type":"video",
+										"postContent":"Running back of the 9ers this season truly scares the hell out of me - thoughts?",
+										"postMedia":"fakeVideo2.jpg"
+									},
+									{
+										"type":"video",
+										"postContent":"Will our defense save us again? We have seen that this offense needs lot of help:(",
+										"postMedia":"fakeVideo3.jpg"
+									},
+									{
+										"type":"photo",
+										"postContent":"Can't wait for this game - gets me want to kick Seahawks every time we play them",
+										"postMedia":"fakePhoto3.jpg"
+									},
+									{
+										"type":"text",
+										"postContent":"Jimmy Graham is going to be such a formidable match-up for our secondary. Not sure if we have the personnel to cover him. Hate the fact that the saehawks offense just got whole lot better this year",
+										"postMedia":""
+									},
+									{
+										"type":"text",
+										"postContent":"From contenders to last in the league - reasons for our free fall down the ranks",
+										"postMedia":""
+									},
+									{
+										"type":"text",
+										"postContent":"One more drubbing - when are we going to be good again?",
+										"postMedia":""
+									},
+									{
+										"type":"text",
+										"postContent":"How do we always fuck up the second half? It is always the take of two halves with us this year. Sucks",
+										"postMedia":""
+									},
+									{
+										"type":"text",
+										"postContent":"Are you fuckin kidding me - how did we miss that tackle? Why do we keep messing up defensively during 3rd and long? That is the 5th 3rd and long conversion for the Hawks.. Come on DDDDD",
+										"postMedia":""
+									},
+									{
+										"type":"text",
+										"postContent":"Time to talk about the next season already? Sure nothing is going to change and we are going to suck again.. ",
+										"postMedia":""
+									},
+									{
+										"type":"text",
+										"postContent":"We miss Aldon Smith so much - we absolutely don't have an edge rusher.. what a jack-ass.. blew away so much second chances:(",
+										"postMedia":""
+									}
+								]
+
+		for(var i = 0 ; i < peelDemoData.length ; i++)
 		{
+			var peelPost = peelDemoData[i];
 			var fakePost = new Object();
 			fakePost.postID = i;
 			var minimumCharacterCount = 20
@@ -104,32 +173,40 @@ function initNetworkService($websocket,DataService)
 			// console.log("random character count: " + randomCharacterCount);
 			var loremIpsumSubstring = loremIpsum.substring(0, randomCharacterCount);
 			// console.log("-> " + loremIpsumSubstring);
-			fakePost.postContent = loremIpsumSubstring
-			var postType = postTypes[Math.floor(Math.random() * postTypes.length)];
+			fakePost.postContent = peelPost.postContent;//loremIpsumSubstring
+			var postType = peelPost.type;//postTypes[Math.floor(Math.random() * postTypes.length)];
 			fakePost.postType = postType;
 			if(postType == "photo")
 			{
 				var fakePhoto = fakePhotos[usedFakePhotos % fakePhotos.length];
 				fakePost.photo = fakePhoto;
+				// peelPost.photo = peelPost.postMedia
 				usedFakePhotos++;
 			}
 			else if(postType == "video")
 			{
 				var fakeVideo = fakeVideos[usedFakeVideos % fakeVideos.length];
 				fakePost.video = fakeVideo;
+				// peelPost.video = peelPost.postMedia
 				usedFakeVideos++;
 			}
 
 			var author = postAuthors[i % postAuthors.length];
 			fakePost.postAuthorPhoto = author.photo;
+			peelPost.postAuthorPhoto = author.photo;
 			fakePost.postAuthorName = author.name;
+			peelPost.postAuthorName = author.name;
 
 			fakePost.likeCount = Math.floor(Math.random() * 100);
+			peelPost.likeCount = Math.floor(Math.random() * 100);
 			fakePost.commentCount = Math.floor(Math.random() * 500);
+			peelPost.commentCount = Math.floor(Math.random() * 500);
 			
 			// console.log("fake post " + i + " :  " + JSON.stringify(fakePost));
+			console.log("fake post " + i + " :  " + JSON.stringify(peelPost));
 
-			staticPosts.push(fakePost);
+			// staticPosts.push(fakePost);
+			staticPosts.push(peelPost);
 		}
 		return staticPosts
 	}
