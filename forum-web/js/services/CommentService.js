@@ -1,4 +1,4 @@
-networkModule.service('CommentService', function (DateUtilityService) {
+networkModule.factory('CommentService', function (DateUtilityService) {
 	var LIST_COMMENTS_URI = "/v1.0/topic/comments/list/"
 	var POST_COMMENT_URI="/v1.0/comment/create";
 	var LIKE_COMMENT_URI = "/v1.0/comment/like/";
@@ -23,24 +23,26 @@ networkModule.service('CommentService', function (DateUtilityService) {
 	
 	function setComments(commentsData) {
 		var commentsdata = commentsData.data.results;
-		var len = commentsdata.length;
-		var tempComment = {};
-		for(i=0;i<len;i++){
-			tempComment.id = commentsdata[i].id;
-			tempComment.author = commentsdata[i].author;
-			tempComment.owner = commentsdata[i].owner;
-			tempComment.photo = commentsdata[i].photo;
-			tempComment.type = commentsdata[i].content.sections[0].type;
-			tempComment.html = commentsdata[i].content.sections[0].html;
-			tempComment.media = commentsdata[i].content.sections[0].media;
-			tempComment.tweet = commentsdata[i].content.sections[0].tweet;
-			tempComment.ogp = commentsdata[i].content.sections[0].ogp;
-			tempComment.link = commentsdata[i].content.sections[0].link;
-			tempComment.metrics = commentsdata[i].metrics;
-			tempComment.createdAt = DateUtilityService.getTimeSince(commentsdata[i].createdAt);
-			_comments.push(tempComment);
-		}
-		
+		_comments = commentsData.data.results;
+//		var len = commentsdata.length;
+//		for(i=0;i<len;i++){
+//			_commentObject.id = commentsdata[i].id;
+//			_commentObject.author = commentsdata[i].author;
+//			_commentObject.owner = commentsdata[i].owner;
+//			_commentObject.photo = commentsdata[i].photo;
+//			_commentObject.type = commentsdata[i].content.sections[0].type;
+//			_commentObject.html = commentsdata[i].content.sections[0].html;
+//			_commentObject.media = commentsdata[i].content.sections[0].media;
+//			_commentObject.tweet = commentsdata[i].content.sections[0].tweet;
+//			_commentObject.ogp = commentsdata[i].content.sections[0].ogp;
+//			_commentObject.link = commentsdata[i].content.sections[0].link;
+//			_commentObject.metrics = commentsdata[i].metrics;
+//			_commentObject.createdAt = DateUtilityService.getTimeSince(commentsdata[i].createdAt);
+//			console.log("Comments in comment Service"+_commentObject.html );
+//			_comments.push(_commentObject);
+//			console.log("Comments in comment Service"+_comments[i].html );
+//		}
+//		
 	
 		notifyObservers();
 	}
@@ -133,7 +135,9 @@ networkModule.service('CommentService', function (DateUtilityService) {
 
 
 	return {
-		comments: function(){return _comments ;},
+		comments: function(){console.log("getting comments :" +_comments[0].content.sections[0].html);
+		return _comments },
+		
 		setComments:setComments,
 		updateComment:updateComment,
 		removeComment:removeComment,
