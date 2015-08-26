@@ -44,14 +44,14 @@
 
 	<div id="topicDetails" class="row"> 
 		<div>
-			<b>NFC West Showdown!</b>
+			<b>{{topicTitle}}</b>
 		</div>
 		<div id="topicDescriptionBody">
-			First time the Seahawks and the 49ers play this season, let's go niners!
+			{{topicDescHtml}}
 		</div>
 		<div class="topicSharingButtonsRow">
-			<button class="btn-link topic-social-btn"><img src="img/likeButton-2x_.png"/> 13</button>
-			<button class="btn-link topic-social-btn"><img src="img/commentButton-2x_.png"/> 19</button>
+			<button class="btn-link topic-social-btn"><img src="img/likeButton-2x_.png"/> {{likesCount}}</button>
+			<button class="btn-link topic-social-btn"><img src="img/commentButton-2x_.png"/> {{commentsCount}}</button>
 			<button class="btn-link topic-social-btn"><img src="img/moreButton-2x_.png"/></button>
 		</div>
 	</div>
@@ -63,10 +63,10 @@
 	</ul>
 
 	<div>
-		<div ng-repeat="thisPost in posts" ng-switch="thisPost.type" class="row postRow">
+		<div ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.type" class="row postRow">
 				<span class="postAuthorPhoto">
 					<a href="#" class="thumbnail">
-	  					<img ng-src="img/staticUsers/{{thisPost.postAuthorPhoto}}" alt="" class="userPhoto">
+	  					<img ng-src="{{thisPost.postAuthorPhoto}}" alt="" class="userPhoto">
 				    </a>
 				</span>
 
@@ -76,7 +76,7 @@
 							{{thisPost.postAuthorName}}
 						</span>
 						<span class="timestamp">
-							3m
+							{{thisPost.postTimestamp}}
 						</span>
 					</div>
 
@@ -89,12 +89,14 @@
 					</div>
 
 					<div class="postContent">
-						{{thisPost.postContent}} 
+						<!-- <span class="postContentHtml"> -->
+							{{thisPost.html}} 
+						<!-- </span> -->
 					</div>
 
 					<div class="sharingButtonsRow">
 						<button class="btn-link social-btn"><img src="img/likeButton-2x.png"/> {{thisPost.likeCount}}</button>
-						<button class="btn-link social-btn"><img src="img/commentButton-2x.png"/> {{thisPost.commentCount}}</button>
+						<button class="btn-link social-btn"><img src="img/commentButton-2x.png"/> {{thisPost.replyCount}}</button>
 						<button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button>
 					</div>
 				</span>
@@ -104,14 +106,16 @@
 	
 	<!--hr/-->
 
-	<!--div>
+	<div>
 		<p>  TopicTitle :{{title}}</p>
 		<button ng-click="init()"> getTopicDetails</button>
-	</div-->
+	</div>
 
 	<footer class="footer" id="textEntryField">
-        <div class="form-group">
-        	<input placeholder="Comment..." class="form-control" type="text">
+        <div class="form-group" >
+        <form ng-submit="postComment(commentText)">
+        	<input placeholder="Comment..." class="form-control" ng-model="commentText" type="text">
+        	</form>
         </div>
 	</footer>
 	

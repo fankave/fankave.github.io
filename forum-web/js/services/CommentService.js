@@ -43,7 +43,7 @@ networkModule.factory('CommentService', function (DateUtilityService) {
 //			console.log("Comments in comment Service"+_comments[i].html );
 //		}
 //		
-	
+	if(_comments!= undefined && _comments.length>0)
 		notifyObservers();
 	}
 	
@@ -102,6 +102,8 @@ networkModule.factory('CommentService', function (DateUtilityService) {
 	}
 	
 	function postCommentRequest(topicId, commentData){
+		var commentHtml = "<!DOCTYPE html><html><body>" + commentData + "</body></html>";
+				
 		var createCommentParams =
 			   {"rid": "comment",
 	            "timestamp": new Date().getTime(),
@@ -112,6 +114,7 @@ networkModule.factory('CommentService', function (DateUtilityService) {
 	            		"content": {"sections":[{"type":"html","html":commentData}]},
 	            		"topicId": topicId,
 		}};
+		return createCommentParams;
 	}
 	
 	function likeCommentRequest(){
@@ -135,7 +138,7 @@ networkModule.factory('CommentService', function (DateUtilityService) {
 
 
 	return {
-		comments: function(){console.log("getting comments :" +_comments[0].content.sections[0].html);
+		comments: function(){
 		return _comments },
 		
 		setComments:setComments,
