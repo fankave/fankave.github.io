@@ -3,6 +3,8 @@ topicModule.controller("TopicController", ["$scope", "$routeParams", "networkSer
 
 function initTopicController($scope, $routeParams, networkService,TopicService, CommentService,DateUtilityService)
 {
+	$scope.pageClass = 'page-topic';
+	
 	$scope.topicID = $routeParams.topicID;
 	$scope.posts = networkService.getPostsForTopicID();
 	

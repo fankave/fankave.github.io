@@ -59,7 +59,7 @@
 
 	<ul class="nav nav-pills nav-justified">
 			<li role="presentation" class="active"><a>Posts</a></li>
-			<li role="presentation"><a>Tweets</a></li>
+			<li role="presentation"><a href="#/post/0">Tweets</a></li>
 	</ul>
 
 	<div>
@@ -100,16 +100,16 @@
 						<button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button>
 					</div>
 				</span>
-			<!-- </a> -->
+			</a>
 		</div>
 	</div>
-	
 	<!--hr/-->
 
 	<div>
 		<p>  TopicTitle :{{title}}</p>
 		<button ng-click="init()"> getTopicDetails</button>
 	</div>
+
 
 	<footer class="footer" id="textEntryField">
         <div class="form-group" >
@@ -120,6 +120,3 @@
 	</footer>
 	
 </section>
-
-
-<!-- <a href="#/post/{{thisPost.postID}}">{{thisPost.postContent}}</a> -->

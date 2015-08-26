@@ -3,6 +3,8 @@ postModule.controller("PostController", ["$scope", "$routeParams", "networkServi
 
 function initPostController($scope, $routeParams, networkService, TopicService)
 {
+	$scope.pageClass = 'page-post';
+	
 	$scope.postID = $routeParams.postID;
 	$scope.replies = networkService.getRepliesForPostID();
 

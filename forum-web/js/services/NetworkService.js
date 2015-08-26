@@ -42,53 +42,57 @@ function initNetworkService($websocket,DataService)
   	  console.log("OnError:"+evt.data);
     });
     
+
+    var postAuthors = [
+						{
+							"photo":"ana.png",
+							"name":"Ana"
+						},
+						{
+							"photo":"arod.png",
+							"name":"A-Rod"
+						},
+						{
+							"photo":"cristiano.png",
+							"name":"Cristiano"
+						},
+						{
+							"photo":"derek.png",
+							"name":"Derek"
+						},
+						{
+							"photo":"dwayne.png",
+							"name":"Dwayne"
+						},
+						{
+							"photo":"erin.png",
+							"name":"Erin"
+						},
+						{
+							"photo":"jordan.png",
+							"name":"Michael"
+						},
+						{
+							"photo":"lebron.png",
+							"name":"Lebron"
+						},
+						{
+							"photo":"lionel.png",
+							"name":"Lionel"
+						},
+						{
+							"photo":"maria.png",
+							"name":"Maria"
+						}
+					];
+
+	var loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris";
+	var postTypes = ["text", "text", "text", "photo", "video"];
+
 	function getPostsForTopicID()
 	{
 		var staticPosts = [];
-		var loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris";
-		var postTypes = ["text", "text", "text", "photo", "video"];
-		var postAuthors = [
-							{
-								"photo":"ana.png",
-								"name":"Ana"
-							},
-							{
-								"photo":"arod.png",
-								"name":"A-Rod"
-							},
-							{
-								"photo":"cristiano.png",
-								"name":"Cristiano"
-							},
-							{
-								"photo":"derek.png",
-								"name":"Derek"
-							},
-							{
-								"photo":"dwayne.png",
-								"name":"Dwayne"
-							},
-							{
-								"photo":"erin.png",
-								"name":"Erin"
-							},
-							{
-								"photo":"jordan.png",
-								"name":"Michael"
-							},
-							{
-								"photo":"lebron.png",
-								"name":"Lebron"
-							},
-							{
-								"photo":"lionel.png",
-								"name":"Lionel"
-							},
-							{
-								"photo":"maria.png",
-								"name":"Maria"
-							}
-						];
+		
 			var fakePhotos = ["fakePhoto1.jpg", "fakePhoto2.jpg", "fakePhoto3.jpg", "fakePhoto4.jpg", "fakePhoto5.jpg", "fakePhoto6.jpg"];
 			var usedFakePhotos = 0;
 
@@ -203,7 +207,7 @@ function initNetworkService($websocket,DataService)
 			peelPost.commentCount = Math.floor(Math.random() * 500);
 			
 			// console.log("fake post " + i + " :  " + JSON.stringify(fakePost));
-			console.log("fake post " + i + " :  " + JSON.stringify(peelPost));
+			// console.log("fake post " + i + " :  " + JSON.stringify(peelPost));
 
 			// staticPosts.push(fakePost);
 			staticPosts.push(peelPost);
@@ -213,6 +217,7 @@ function initNetworkService($websocket,DataService)
 
 	function getRepliesForPostID()
 	{
+		/*
 		return [
 					{
 						"replyID":"0",
@@ -235,6 +240,33 @@ function initNetworkService($websocket,DataService)
 						"replyContent":"reply E"
 					}
 				]
+				*/
+
+		var fakeReplies = [];
+		for(var i = 0 ; i < 10 ; i++)
+		{
+			var fakeReply = new Object();
+			fakeReply.postID = i;
+			var minimumCharacterCount = 20
+			var randomCharacterCount = minimumCharacterCount + Math.round(Math.random() * (loremIpsum.length - minimumCharacterCount));
+			// console.log("random character count: " + randomCharacterCount);
+			var loremIpsumSubstring = loremIpsum.substring(0, randomCharacterCount);
+			// console.log("-> " + loremIpsumSubstring);
+			fakeReply.replyContent = loremIpsumSubstring
+			fakeReply.replyType = "text";
+
+			var author = postAuthors[i % postAuthors.length];
+			fakeReply.postAuthorPhoto = author.photo;
+			fakeReply.postAuthorName = author.name;
+
+			fakeReply.likeCount = Math.floor(Math.random() * 100);
+			fakeReply.commentCount = Math.floor(Math.random() * 500);
+
+			// staticPosts.push(fakePost);
+			fakeReplies.push(fakeReply);
+		}
+
+		return fakeReplies
 	}
 
 	return{
