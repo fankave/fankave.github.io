@@ -12,6 +12,7 @@
 	<!-- CSS -->
 	<link rel="stylesheet" href="css/bootstrapCSS/bootstrap.css">
 	<link rel="stylesheet" href="css/forum.css">
+	<link rel="stylesheet" href="css/forumAnimations.css">
 
 	<!-- jQuery -->
 	<script src="lib/jQuery/jQuery.js"></script>
@@ -20,6 +21,7 @@
 	<script src="lib/angular/angular.js"></script>
 	<script src="lib/angular/angular-route.js"></script>
 	<script src="lib/angular/angular-websocket.js"></script>
+	<script src="lib/angular/angular-animate.js"></script>
 
 	<!-- Forum-related Javascript -->
 	<script src="js/Forum.js"></script>
@@ -35,7 +37,7 @@
 
 <body>
 	<div class="containerr">
-		<div ng-view>
+		<div class="page {{pageClass}}" ng-view>
 		</div>
 	</div>
 

@@ -59,15 +59,17 @@
 
 	<ul class="nav nav-pills nav-justified">
 			<li role="presentation" class="active"><a>Posts</a></li>
-			<li role="presentation"><a>Tweets</a></li>
+			<li role="presentation"><a href="#/post/0">Tweets</a></li>
 	</ul>
 
 	<div>
 		<div ng-repeat="thisPost in posts" ng-switch="thisPost.type" class="row postRow">
+			<a href="#/post/0">
+			
 				<span class="postAuthorPhoto">
-					<a href="#" class="thumbnail">
+					<div class="thumbnail">
 	  					<img ng-src="img/staticUsers/{{thisPost.postAuthorPhoto}}" alt="" class="userPhoto">
-				    </a>
+				    </div>
 				</span>
 
 				<span class="post">
@@ -98,16 +100,9 @@
 						<button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button>
 					</div>
 				</span>
-			<!-- </a> -->
+			</a>
 		</div>
 	</div>
-	
-	<!--hr/-->
-
-	<!--div>
-		<p>  TopicTitle :{{title}}</p>
-		<button ng-click="init()"> getTopicDetails</button>
-	</div-->
 
 	<footer class="footer" id="textEntryField">
         <div class="form-group">
@@ -116,6 +111,3 @@
 	</footer>
 	
 </section>
-
-
-<!-- <a href="#/post/{{thisPost.postID}}">{{thisPost.postContent}}</a> -->
