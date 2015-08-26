@@ -6,7 +6,7 @@ function initNetworkService($websocket,DataService)
 	var OLD_URI = 'ws://107.178.223.208/ws?userId=1&sessionId=dac24379&accessToken=7uFF3QGh-84=/';
 	//var OLD_STATIC_TOPIC_ID = "53c167f17040001d";
 	
-	var NEW_URI = 'ws://104.197.8.198/ws?userId=37&sessionId=3950cd16&accessToken=NrRwUQTzWEU=/';
+	var NEW_URI = 'ws://104.197.8.198/ws?userId=187&sessionId=ab3da08d&accessToken=yC3_OqImR7U=/';
 	//new topicID 
 	//var NEW_STATIC_TOPIC_ID1 = 53ccf152c5000001;
 	//var NEW_STATIC_TOPIC_ID2 = 53ccf184c0c00002;
