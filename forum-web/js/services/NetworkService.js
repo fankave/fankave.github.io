@@ -26,7 +26,6 @@ function initNetworkService($websocket,DataService)
   	  console.log("OnMessage");
   	  console.log(evt.data);
   	  var responseJson = JSON.parse(evt.data);
-  	  DataService.data.push(responseJson);
   	  var type = responseJson.rid;
 	  if(type != undefined && type =="topic"){
 		  DataService.setTopic(responseJson);
@@ -270,12 +269,10 @@ function initNetworkService($websocket,DataService)
 	}
 
 	return{
-		comments: DataService.comments,
-		data: DataService.data,
 		send:function(message) { ws.send(JSON.stringify(message));},
-		init:function(message) { ws.send(JSON.stringify(varTopicParams));
-								 ws.send(JSON.stringify(varCommentParams));
-								 },
+//		init:function(message) { ws.send(JSON.stringify(varTopicParams));
+//								 ws.send(JSON.stringify(varCommentParams));
+//								 },
 		getPostsForTopicID:getPostsForTopicID,
 		getRepliesForPostID:getRepliesForPostID
 	}

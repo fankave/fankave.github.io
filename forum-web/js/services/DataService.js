@@ -1,10 +1,11 @@
 networkModule.service('DataService', function (TopicService, CommentService) {
-    var data = [];
-    var _comments = [];
-    
+   
     function delegateSetComments(commentsData) 
     { 
-    	if(commentsData.push){
+    	if(commentsData.error){
+    		console.log("Comments Error message from network :"+commentsData.error);
+    	}
+    	else if(commentsData.push){
     		if(commentsData.method == "UPSERT")
     			CommentService.updateComment();
     		else if(commentsData.method == "REMOVE")
@@ -16,7 +17,10 @@ networkModule.service('DataService', function (TopicService, CommentService) {
     
     function delegateSetTopic(topicData)
     {
-    	if(topicData.push){
+    	if(topicData.error){
+    		console.log("Topic Error message from network :"+topicData.error);
+    	}
+    	else if(topicData.push){
     		if(topicData.method == "UPSERT")
     			TopicService.updateTopic();
     		else if(topicData.method == "REMOVE")
@@ -27,10 +31,8 @@ networkModule.service('DataService', function (TopicService, CommentService) {
     }
     
     return {
-        comments: _comments,
-        data:data,
-    setComments:delegateSetComments,
-    setTopic:delegateSetTopic
+        setComments:delegateSetComments,
+        setTopic:delegateSetTopic
     };
    
 });
