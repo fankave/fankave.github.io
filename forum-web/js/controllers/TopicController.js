@@ -1,7 +1,7 @@
 var topicModule = angular.module("TopicModule", ["NetworkModule"]);
-topicModule.controller("TopicController", ["$scope", "$routeParams", "networkService", "TopicService","CommentService", "DateUtilityService",initTopicController]);
+topicModule.controller("TopicController", ["$scope", "$routeParams", "networkService", "TopicService","CommentService",initTopicController]);
 
-function initTopicController($scope, $routeParams, networkService,TopicService, CommentService,DateUtilityService)
+function initTopicController($scope, $routeParams, networkService,TopicService, CommentService)
 {
 	$scope.pageClass = 'page-topic';
 	
@@ -27,9 +27,10 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 //		  networkService.send(JSON.stringify(varPushParams));
 	};
 	
-	$scope.postComment = function(commentData) {
-		console.log("postComment Invoked"+ commentData);
-		networkService.send(CommentService.postCommentRequest($scope.topicID, commentData));
+	$scope.postComment = function(commentText) {
+		console.log("postComment Invoked"+ commentText);
+		networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
+		$scope.commentText = "";
 	};
 	
 	$scope.likeTopic = function() {
@@ -83,21 +84,21 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 		
 		$scope.commentsArray = [];
 		
-		var tempComment = {};
 		for(i=0;i<len;i++){
+			var tempComment = {};
 			tempComment.id = commentsdata[i].id;
 			tempComment.postAuthorName = commentsdata[i].author.name;
 
 			tempComment.postAuthorPhoto = commentsdata[i].author.photo;
 			tempComment.owner = commentsdata[i].owner;
-			tempComment.type = commentsdata[i].content.sections[0].type;
-			tempComment.html = commentsdata[i].content.sections[0].html;
-			tempComment.media = commentsdata[i].content.sections[0].media;
-			tempComment.tweet = commentsdata[i].content.sections[0].tweet;
-			tempComment.ogp = commentsdata[i].content.sections[0].ogp;
-			tempComment.link = commentsdata[i].content.sections[0].link;
+			tempComment.type = commentsdata[i].type;
+			tempComment.html = commentsdata[i].html;
+			tempComment.media = commentsdata[i].media;
+			tempComment.tweet = commentsdata[i].tweet;
+			tempComment.ogp = commentsdata[i].ogp;
+			tempComment.link = commentsdata[i].link;
 			tempComment.metrics = commentsdata[i].metrics;
-			tempComment.postTimestamp = DateUtilityService.getTimeSince(commentsdata[i].createdAt);
+			tempComment.postTimestamp = commentsdata[i].createdAt;
 			$scope.commentsArray.push(tempComment);
 			console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);
 			console.log(i +" : updated comments author name: " +$scope.commentsArray[i].postAuthorName);

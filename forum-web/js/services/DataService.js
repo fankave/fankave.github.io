@@ -11,8 +11,13 @@ networkModule.service('DataService', function (TopicService, CommentService) {
     		else if(commentsData.method == "REMOVE")
     			CommentService.removeComment();	
     	}
-    	else
-    	CommentService.setComments(commentsData);
+    	else {
+    		if(commentsData.method == "POST")
+    		CommentService.appendToComments(commentsData);
+    		else
+    		CommentService.setComments(commentsData);
+
+    	}
     }
     
     function delegateSetTopic(topicData)

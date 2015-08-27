@@ -22,30 +22,55 @@ networkModule.factory('CommentService', function (DateUtilityService) {
 	};
 	
 	function setComments(commentsData) {
-		var commentsdata = commentsData.data.results;
-		_comments = commentsData.data.results;
-//		var len = commentsdata.length;
-//		for(i=0;i<len;i++){
-//			_commentObject.id = commentsdata[i].id;
-//			_commentObject.author = commentsdata[i].author;
-//			_commentObject.owner = commentsdata[i].owner;
-//			_commentObject.photo = commentsdata[i].photo;
-//			_commentObject.type = commentsdata[i].content.sections[0].type;
-//			_commentObject.html = commentsdata[i].content.sections[0].html;
-//			_commentObject.media = commentsdata[i].content.sections[0].media;
-//			_commentObject.tweet = commentsdata[i].content.sections[0].tweet;
-//			_commentObject.ogp = commentsdata[i].content.sections[0].ogp;
-//			_commentObject.link = commentsdata[i].content.sections[0].link;
-//			_commentObject.metrics = commentsdata[i].metrics;
-//			_commentObject.createdAt = DateUtilityService.getTimeSince(commentsdata[i].createdAt);
-//			console.log("Comments in comment Service"+_commentObject.html );
-//			_comments.push(_commentObject);
-//			console.log("Comments in comment Service"+_comments[i].html );
-//		}
-//		
-	if(_comments!= undefined && _comments.length>0)
+		tempCommentsData = commentsData.data.results;
+		if(tempCommentsData!= undefined && tempCommentsData.length>0)
+			var len = tempCommentsData.length;
+			for(i=0;i<len;i++){
+				var _commentObject = {};
+				_commentObject.id = tempCommentsData[i].id;
+				_commentObject.author = tempCommentsData[i].author;
+				_commentObject.owner = tempCommentsData[i].owner;
+				_commentObject.photo = tempCommentsData[i].author.photo;
+				_commentObject.type = tempCommentsData[i].content.sections[0].type;
+				_commentObject.html = tempCommentsData[i].content.sections[0].html;
+				_commentObject.media = tempCommentsData[i].content.sections[0].media;
+				_commentObject.tweet = tempCommentsData[i].content.sections[0].tweet;
+				_commentObject.ogp = tempCommentsData[i].content.sections[0].ogp;
+				_commentObject.link = tempCommentsData[i].content.sections[0].link;
+				_commentObject.metrics = tempCommentsData[i].metrics;
+				_commentObject.createdAt = DateUtilityService.getTimeSince(tempCommentsData[i].createdAt);
+				if(_commentObject.id != undefined && _commentObject.html != undefined)
+				_comments.push(_commentObject);
+				console.log("Comments in set comment Service"+_comments[i].html );
+			}
 		notifyObservers();
 	}
+	
+	function appendToComments(postCommentData) {
+		tempPostedComment = postCommentData.data;
+		if(tempCommentsData!= undefined){
+				var _commentObject = {};
+				_commentObject.id = tempPostedComment.id;
+				_commentObject.author = tempPostedComment.author;
+				_commentObject.owner = tempPostedComment.owner;
+				_commentObject.photo = tempPostedComment.author.photo;
+				_commentObject.type = tempPostedComment.content.sections[0].type;
+				_commentObject.html = tempPostedComment.content.sections[0].html;
+				_commentObject.media = tempPostedComment.content.sections[0].media;
+				_commentObject.tweet = tempPostedComment.content.sections[0].tweet;
+				_commentObject.ogp = tempPostedComment.content.sections[0].ogp;
+				_commentObject.link = tempPostedComment.content.sections[0].link;
+				_commentObject.metrics = tempPostedComment.metrics;
+				_commentObject.createdAt = DateUtilityService.getTimeSince(tempPostedComment.createdAt);
+				if(_commentObject.id != undefined && _commentObject.html != undefined)
+				_comments.unshift(_commentObject);
+				console.log("appendToComments CommentService"+_commentObject.html );
+			}
+		notifyObservers();
+	}
+	
+	
+	
 	
 	function updateComment(commentData){
 		//if comments ID exist, update it 
@@ -65,12 +90,12 @@ networkModule.factory('CommentService', function (DateUtilityService) {
 				_comments[i].link = commentsdata.content.sections[0].link;
 				_comments[i].metrics = commentsdata.metrics;
 				_comments[i].createdAt = DateUtilityService.getTimeSince(commentsdata.createdAt);
-				
-			}
-			else{
-				_comments.push(commentData)
+				return;
 			}
 		}
+		_comments.push(commentData);
+		//notifyObservers();
+		console.log("In Comment Service update comment");
 	}
 	
 	function removeComment(commentData){
@@ -143,6 +168,7 @@ networkModule.factory('CommentService', function (DateUtilityService) {
 		
 		setComments:setComments,
 		updateComment:updateComment,
+		appendToComments:appendToComments,
 		removeComment:removeComment,
 		postCommentRequest:postCommentRequest,
 		likeCommentRequest:likeCommentRequest,
