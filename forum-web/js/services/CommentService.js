@@ -41,7 +41,7 @@ networkModule.factory('CommentService', function (DateUtilityService) {
 				_commentObject.createdAt = DateUtilityService.getTimeSince(tempCommentsData[i].createdAt);
 				if(_commentObject.id != undefined && _commentObject.html != undefined)
 				_comments.push(_commentObject);
-				console.log("Comments in set comment Service"+_comments[i].html );
+				console.log("Comments in set comment Service"+_commentObject.html );
 			}
 		notifyObservers();
 	}
