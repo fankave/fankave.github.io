@@ -39,9 +39,9 @@ networkModule.factory('CommentService', function (DateUtilityService) {
 				_commentObject.link = tempCommentsData[i].content.sections[0].link;
 				_commentObject.metrics = tempCommentsData[i].metrics;
 				_commentObject.createdAt = DateUtilityService.getTimeSince(tempCommentsData[i].createdAt);
-				if(_commentObject.id != undefined && _commentObject.html != undefined)
+				if(_commentObject.id != undefined)
 				_comments.push(_commentObject);
-				console.log("Comments in set comment Service"+_commentObject.html );
+				console.log("Comments in set comment Service type:"+_commentObject.type + "  " +_commentObject.html );
 			}
 		notifyObservers();
 	}

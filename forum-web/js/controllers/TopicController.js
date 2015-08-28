@@ -101,6 +101,8 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 			tempComment.postTimestamp = commentsdata[i].createdAt;
 			$scope.commentsArray.push(tempComment);
 			console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);
+			if($scope.commentsArray[i].type == "media")
+				console.log(i +" : updated comments media : " +$scope.commentsArray[i].media[0].url);
 			console.log(i +" : updated comments author name: " +$scope.commentsArray[i].postAuthorName);
 			console.log(i +" : updated comments author photo: " +$scope.commentsArray[i].postAuthorPhoto);
 			

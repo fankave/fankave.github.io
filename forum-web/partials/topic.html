@@ -63,7 +63,7 @@
 	</ul>
 
 	<div>
-		<div ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.type" class="row postRow">
+		<div ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.media[0].mediaType" class="row postRow">
 				<span class="postAuthorPhoto">
 					<a href="#" class="thumbnail">
 	  					<img ng-src="{{thisPost.postAuthorPhoto}}" alt="" class="userPhoto">
@@ -80,11 +80,11 @@
 						</span>
 					</div>
 
-					<div ng-switch-when="photo">
-						<img ng-src="img/{{thisPost.postMedia}}" class="postPhoto"/>
+					<div ng-switch-when="image/jpeg">
+						<img ng-src="img/{{thisPost.media[0].url}}" class="postPhoto"/>
 					</div>
 
-					<div ng-switch-when="video">
+					<div ng-switch-when="video/mp4">
 						<img ng-src="img/{{thisPost.postMedia}}" class="postVideo"/>
 					</div>
 
