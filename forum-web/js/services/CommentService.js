@@ -37,7 +37,7 @@ networkModule.factory('CommentService', function (DateUtilityService) {
 				if(_commentObject.type == "media"){
 					var tempMedia = _commentObject.media[0];
 					//if Video update
-					_commentObject.mediaType = tempMedia.mediaType;
+					_commentObject.mediaType = tempMedia.mediaType.substring(5,0);
 					if(_commentObject.mediaType =="video"){
 						_commentObject.mediaThumbUrl = tempMedia.thumbUrl;
 					}
@@ -75,7 +75,7 @@ networkModule.factory('CommentService', function (DateUtilityService) {
 				if(_commentObject.type == "media"){
 					var tempMedia = _commentObject.media[0];
 					//if Video update
-					_commentObject.mediaType = tempMedia.mediaType;
+					_commentObject.mediaType = tempMedia.mediaType.substring(5,0);
 					if(_commentObject.mediaType =="video"){
 						_commentObject.mediaThumbUrl = tempMedia.thumbUrl;
 					}

@@ -86,33 +86,18 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 
 		for(i=0;i<len;i++){
 			var tempComment = {};
-			tempComment.id = commentsdata[i].id;
-			tempComment.postAuthorName = commentsdata[i].author.name;
-
+			tempComment = commentsdata[i];
+			
+			if(commentsdata[i].mediaAspect16x9 != undefined)
+				tempComment.mediaAspectFeed = commentsdata[i].mediaAspect16x9
+			else if(commentsdata[i].mediaAspect1x1 != undefined)
+				tempComment.mediaAspectFeed = commentsdata[i].mediaAspect1x1
+			else if(commentsdata[i].mediaAspect2x1 != undefined)
+				tempComment.mediaAspectFeed = commentsdata[i].mediaAspect2x1
+			
+				tempComment.postAuthorName = commentsdata[i].author.name;
 			tempComment.postAuthorPhoto = commentsdata[i].author.photo;
-			tempComment.owner = commentsdata[i].owner;
-			tempComment.type = commentsdata[i].type;
-			tempComment.html = commentsdata[i].html;
-			//TODO : video/Image update
-			if(tempComment.type == "media"){
-				tempComment.mediaType = commentsdata[i].mediaType;
-				if(tempComment.mediaType == "video")
-					{
-						tempComment.mediaThumbUrl = commentsdata[i].mediaThumbUrl;
-					}
-				tempComment.mediaUrl = commentsdata[i].mediaUrl;
-				tempComment.mediaAspectFull = commentsdata[i].mediaAspectFull;
-				//TODO  UI to use just one var
-				tempComment.mediaAspect16x9 = commentsdata[i].mediaAspect16x9;
-				tempComment.mediaAspect1x1 = commentsdata[i].mediaAspect1x1;
-				tempComment.mediaAspect2x1 = commentsdata[i].mediaAspect2x1;
-				
-			}
-
-//			tempComment.tweet = commentsdata[i].tweet;
-//			tempComment.ogp = commentsdata[i].ogp;
-//			tempComment.link = commentsdata[i].link;
-			tempComment.metrics = commentsdata[i].metrics;
+			
 			tempComment.postTimestamp = commentsdata[i].createdAt;
 			$scope.commentsArray.push(tempComment);
 			console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);
