@@ -98,10 +98,11 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 				tempComment.mediaType = commentsdata[i].mediaType;
 				if(tempComment.mediaType == "video")
 					{
-					tempComment.mediaThumbUrl = commentsdata[i].mediaThumbUrl;
+						tempComment.mediaThumbUrl = commentsdata[i].mediaThumbUrl;
 					}
 				tempComment.mediaUrl = commentsdata[i].mediaUrl;
 				tempComment.mediaAspectFull = commentsdata[i].mediaAspectFull;
+				//TODO  UI to use just one var
 				tempComment.mediaAspect16x9 = commentsdata[i].mediaAspect16x9;
 				tempComment.mediaAspect1x1 = commentsdata[i].mediaAspect1x1;
 				tempComment.mediaAspect2x1 = commentsdata[i].mediaAspect2x1;

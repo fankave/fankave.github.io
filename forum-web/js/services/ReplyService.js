@@ -23,52 +23,56 @@ networkModule.factory('ReplyService', function (DateUtilityService) {
 		
 	};
 	
+	function setReplyHelper(tempReplyData,len){
+		for(i=0;i<len;i++){
+			var _replyObject = {};
+			_replyObject.id = tempReplyData[i].id;
+			_replyObject.author = tempReplyData[i].author;
+			_replyObject.owner = tempReplyData[i].owner;
+			_replyObject.photo = tempReplyData[i].author.photo;
+			_replyObject.type = tempReplyData[i].content.sections[0].type;
+			_replyObject.html = tempReplyData[i].content.sections[0].html;
+			_replyObject.media = tempReplyData[i].content.sections[0].media;
+			if(_replyObject.type == "media"){
+				var tempMedia = _replyObject.media[0];
+				//if Video update
+				_replyObject.mediaType = tempMedia.mediaType;
+				if(_replyObject.mediaType =="video"){
+					_replyObject.mediaThumbUrl = tempMedia.thumbUrl;
+				}
+				_replyObject.mediaUrl = tempMedia.url;
+				_replyObject.mediaAspectFull = tempMedia.sizes.full;
+				_replyObject.mediaAspect16x9 = tempMedia.sizes["16:9"];
+				_replyObject.mediaAspect1x1 = tempMedia.sizes["1:1"];
+				_replyObject.mediaAspect2x1 = tempMedia.sizes["2:1"];
+				
+				
+			}
+			_replyObject.tweet = tempReplyData[i].content.sections[0].tweet;
+			_replyObject.ogp = tempReplyData[i].content.sections[0].ogp;
+			_replyObject.link = tempReplyData[i].content.sections[0].link;
+			_replyObject.metrics = tempReplyData[i].metrics;
+			_replyObject.createdAt = DateUtilityService.getTimeSince(tempReplyData[i].createdAt);
+			if(_replyObject.id != undefined && _replyObject.html != undefined)
+			_replies.push(_replyObject);
+			console.log("ReplService in setReplies reply:"+_replies[i].html );
+		}
+	}
+	
 	function setReplies(replyData) {
 		tempReplyData = replyData.data.results;
-		if(tempReplyData!= undefined && tempReplyData.length>0)
-			var len = tempReplyData.length;
-			for(i=0;i<len;i++){
-				var _replyObject = {};
-				_replyObject.id = tempReplyData[i].id;
-				_replyObject.author = tempReplyData[i].author;
-				_replyObject.owner = tempReplyData[i].owner;
-				_replyObject.photo = tempReplyData[i].author.photo;
-				_replyObject.type = tempReplyData[i].content.sections[0].type;
-				_replyObject.html = tempReplyData[i].content.sections[0].html;
-				_replyObject.media = tempReplyData[i].content.sections[0].media;
-				_replyObject.tweet = tempReplyData[i].content.sections[0].tweet;
-				_replyObject.ogp = tempReplyData[i].content.sections[0].ogp;
-				_replyObject.link = tempReplyData[i].content.sections[0].link;
-				_replyObject.metrics = tempReplyData[i].metrics;
-				_replyObject.createdAt = DateUtilityService.getTimeSince(tempReplyData[i].createdAt);
-				if(_replyObject.id != undefined && _replyObject.html != undefined)
-				_replies.push(_replyObject);
-				console.log("ReplService in setReplies reply:"+_replies[i].html );
-			}
+		if(tempReplyData!= undefined && tempReplyData.length>0){
+			setReplyHelper(tempReplyData, tempReplyData.length);
 		notifyObservers();
+		}
 	}
 	
 	function appendToReplies(postReplyData) {
 		tempPostedReply = postReplyData.data;
 		if(tempReplysData!= undefined){
-				var _replyObject = {};
-				_replyObject.id = tempPostedReply.id;
-				_replyObject.author = tempPostedReply.author;
-				_replyObject.owner = tempPostedReply.owner;
-				_replyObject.photo = tempPostedReply.author.photo;
-				_replyObject.type = tempPostedReply.content.sections[0].type;
-				_replyObject.html = tempPostedReply.content.sections[0].html;
-				_replyObject.media = tempPostedReply.content.sections[0].media;
-				_replyObject.tweet = tempPostedReply.content.sections[0].tweet;
-				_replyObject.ogp = tempPostedReply.content.sections[0].ogp;
-				_replyObject.link = tempPostedReply.content.sections[0].link;
-				_replyObject.metrics = tempPostedReply.metrics;
-				_replyObject.createdAt = DateUtilityService.getTimeSince(tempPostedReply.createdAt);
-				if(_replyObject.id != undefined && _replyObject.html != undefined)
-				_relies.unshift(_replyObject);
-				console.log("ReplyService appendToReplys "+_replyObject.html );
-			}
-		notifyObservers();
+			setReplyHelper(tempPostedReply, 1);
+			notifyObservers();
+		}
 	}
 	
 	
@@ -87,6 +91,21 @@ networkModule.factory('ReplyService', function (DateUtilityService) {
 				_replies[i].type = replyData.content.sections[0].type;
 				_replies[i].html = replyData.content.sections[0].html;
 				_replies[i].media = replyData.content.sections[0].media;
+				if(_replies[i].type == "media"){
+					var tempMedia = _replies[i].media[0];
+					//if Video update
+					_replies[i].mediaType = tempMedia.mediaType;
+					if(_replies[i].mediaType =="video"){
+						_replies[i].mediaThumbUrl = tempMedia.thumbUrl;
+					}
+					_replies[i].mediaUrl = tempMedia.url;
+					_replies[i].mediaAspectFull = tempMedia.sizes.full;
+					_replies[i].mediaAspect16x9 = tempMedia.sizes["16:9"];
+					_replies[i].mediaAspect1x1 = tempMedia.sizes["1:1"];
+					_replies[i].mediaAspect2x1 = tempMedia.sizes["2:1"];
+					
+					
+				}
 				_replies[i].tweet = replyData.content.sections[0].tweet;
 				_replies[i].ogp = replyData.content.sections[0].ogp;
 				_replies[i].link = replyData.content.sections[0].link;
@@ -95,8 +114,7 @@ networkModule.factory('ReplyService', function (DateUtilityService) {
 				return;
 			}
 		}
-		_replies.push(replyData);
-		//notifyObservers();
+		appendToReplies(replyData);
 		console.log("ReplyService updateReply");
 	}
 	
@@ -168,7 +186,7 @@ networkModule.factory('ReplyService', function (DateUtilityService) {
 		replys: function(){
 		return _replys },
 		
-		setReplys:setReplys,
+		setReplies:setReplies,
 		updateReply:updateReply,
 		appendToReplies:appendToReplies,
 		removeReply:removeReply,

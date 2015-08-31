@@ -1,4 +1,4 @@
-networkModule.service('DataService', function (TopicService, CommentService) {
+networkModule.service('DataService', function (TopicService, CommentService, ReplyService) {
    
     function delegateSetComments(commentsData) 
     { 
@@ -35,9 +35,25 @@ networkModule.service('DataService', function (TopicService, CommentService) {
     	TopicService.setTopic(topicData)
     }
     
+    function delegateSetReplies(replyData)
+    {
+    	if(replyData.error){
+    		console.log("Topic Error message from network :"+topicData.error);
+    	}
+    	else if(replyData.push){
+    		if(replyData.method == "UPSERT")
+    			ReplyService.updateReply();
+    		else if(replyData.method == "REMOVE")
+    			ReplyService.removeReply();
+    	}
+    	else
+    		ReplyService.setReplies(replyData)
+    }
+    
     return {
+        setTopic:delegateSetTopic,
         setComments:delegateSetComments,
-        setTopic:delegateSetTopic
+        setReplies:delegateSetReplies
     };
    
 });

@@ -21,57 +21,82 @@ networkModule.factory('CommentService', function (DateUtilityService) {
 		
 	};
 	
-	function setCommentHelper(tempCommentsData, len){
-		for(i=0;i<len;i++){
-			var _commentObject = {};
-			_commentObject.id = tempCommentsData[i].id;
-			_commentObject.author = tempCommentsData[i].author;
-			_commentObject.owner = tempCommentsData[i].owner;
-			_commentObject.photo = tempCommentsData[i].author.photo;
-			_commentObject.type = tempCommentsData[i].content.sections[0].type;
-			_commentObject.html = tempCommentsData[i].content.sections[0].html;
-			_commentObject.media = tempCommentsData[i].content.sections[0].media;
-			if(_commentObject.type == "media"){
-				var tempMedia = _commentObject.media[0];
-				//if Video update
-				_commentObject.mediaType = tempMedia.mediaType;
-				if(_commentObject.mediaType =="video"){
-					_commentObject.mediaThumbUrl = tempMedia.thumbUrl;
-				}
-				_commentObject.mediaUrl = tempMedia.url;
-				_commentObject.mediaAspectFull = tempMedia.sizes.full;
-				_commentObject.mediaAspect16x9 = tempMedia.sizes["16:9"];
-				_commentObject.mediaAspect1x1 = tempMedia.sizes["1:1"];
-				_commentObject.mediaAspect2x1 = tempMedia.sizes["2:1"];
-				
-				
-			}
-			_commentObject.tweet = tempCommentsData[i].content.sections[0].tweet;
-			_commentObject.ogp = tempCommentsData[i].content.sections[0].ogp;
-			_commentObject.link = tempCommentsData[i].content.sections[0].link;
-			_commentObject.metrics = tempCommentsData[i].metrics;
-			_commentObject.createdAt = DateUtilityService.getTimeSince(tempCommentsData[i].createdAt);
-			if(_commentObject.id != undefined)
-			_comments.push(_commentObject);
-			console.log("Comments in set comment Service type:"+_commentObject.type + "  " +_commentObject.html );
-		}
-	}
-	
 	function setComments(commentsData) {
 		tempCommentsData = commentsData.data.results;
-		if(tempCommentsData!= undefined && tempCommentsData.length>0){
-			setCommentHelper(tempCommentsData, tempCommentsData.length);
-			notifyObservers();
-		}
+		if(tempCommentsData!= undefined && tempCommentsData.length>0)
+			var len = tempCommentsData.length;
+			for(i=0;i<len;i++){
+				var _commentObject = {};
+				_commentObject.id = tempCommentsData[i].id;
+				_commentObject.author = tempCommentsData[i].author;
+				_commentObject.owner = tempCommentsData[i].owner;
+				_commentObject.photo = tempCommentsData[i].author.photo;
+				_commentObject.type = tempCommentsData[i].content.sections[0].type;
+				_commentObject.html = tempCommentsData[i].content.sections[0].html;
+				_commentObject.media = tempCommentsData[i].content.sections[0].media;
+				if(_commentObject.type == "media"){
+					var tempMedia = _commentObject.media[0];
+					//if Video update
+					_commentObject.mediaType = tempMedia.mediaType;
+					if(_commentObject.mediaType =="video"){
+						_commentObject.mediaThumbUrl = tempMedia.thumbUrl;
+					}
+					_commentObject.mediaUrl = tempMedia.url;
+					_commentObject.mediaAspectFull = tempMedia.sizes.full;
+					_commentObject.mediaAspect16x9 = tempMedia.sizes["16:9"];
+					_commentObject.mediaAspect1x1 = tempMedia.sizes["1:1"];
+					_commentObject.mediaAspect2x1 = tempMedia.sizes["2:1"];
+					
+					
+				}
+				_commentObject.tweet = tempCommentsData[i].content.sections[0].tweet;
+				_commentObject.ogp = tempCommentsData[i].content.sections[0].ogp;
+				_commentObject.link = tempCommentsData[i].content.sections[0].link;
+				_commentObject.metrics = tempCommentsData[i].metrics;
+				_commentObject.createdAt = DateUtilityService.getTimeSince(tempCommentsData[i].createdAt);
+				if(_commentObject.id != undefined)
+				_comments.push(_commentObject);
+				console.log("Comments in set comment Service type:"+_commentObject.type + "  " +_commentObject.html );
+			}
+		notifyObservers();
 	}
 	
 	function appendToComments(postCommentData) {
 		tempPostedComment = postCommentData.data;
-		if(tempPostedComment!= undefined){
-			setCommentHelper(tempPostedComment, 1);
-			notifyObservers();
+		if(tempCommentsData!= undefined){
+				var _commentObject = {};
+				_commentObject.id = tempPostedComment.id;
+				_commentObject.author = tempPostedComment.author;
+				_commentObject.owner = tempPostedComment.owner;
+				_commentObject.photo = tempPostedComment.author.photo;
+				_commentObject.type = tempPostedComment.content.sections[0].type;
+				_commentObject.html = tempPostedComment.content.sections[0].html;
+				_commentObject.media = tempPostedComment.content.sections[0].media;
+				if(_commentObject.type == "media"){
+					var tempMedia = _commentObject.media[0];
+					//if Video update
+					_commentObject.mediaType = tempMedia.mediaType;
+					if(_commentObject.mediaType =="video"){
+						_commentObject.mediaThumbUrl = tempMedia.thumbUrl;
+					}
+					_commentObject.mediaUrl = tempMedia.url;
+					_commentObject.mediaAspectFull = tempMedia.sizes.full;
+					_commentObject.mediaAspect16x9 = tempMedia.sizes["16:9"];
+					_commentObject.mediaAspect1x1 = tempMedia.sizes["1:1"];
+					_commentObject.mediaAspect2x1 = tempMedia.sizes["2:1"];
+					
+					
+				}
+				_commentObject.tweet = tempPostedComment.content.sections[0].tweet;
+				_commentObject.ogp = tempPostedComment.content.sections[0].ogp;
+				_commentObject.link = tempPostedComment.content.sections[0].link;
+				_commentObject.metrics = tempPostedComment.metrics;
+				_commentObject.createdAt = DateUtilityService.getTimeSince(tempPostedComment.createdAt);
+				if(_commentObject.id != undefined && _commentObject.html != undefined)
+				_comments.unshift(_commentObject);
+				console.log("appendToComments CommentService"+_commentObject.html );
 			}
-		
+		notifyObservers();
 	}
 	
 	
