@@ -95,13 +95,17 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 			tempComment.html = commentsdata[i].html;
 			//TODO : video/Image update
 			if(tempComment.type == "media"){
-				tempComment.media = commentsdata[i].media;
-				tempComment.mediaType = commentsdata[i].media[0].mediaType;
-				tempComment.mediaUrl = commentsdata[i].media[0].url;
-				tempComment.mediaAspectFull = commentsdata[i].media[0].sizes.full;
-				tempComment.mediaAspect16x9 = commentsdata[i].media[0].sizes["16:9"];
-				tempComment.mediaAspect1x1 = commentsdata[i].media[0].sizes["1:1"];
-				tempComment.mediaAspect2x1 = commentsdata[i].media[0].sizes["2:1"];
+				tempComment.mediaType = commentsdata[i].mediaType;
+				if(tempComment.mediaType == "video")
+					{
+					tempComment.mediaThumbUrl = commentsdata[i].mediaThumbUrl;
+					}
+				tempComment.mediaUrl = commentsdata[i].mediaUrl;
+				tempComment.mediaAspectFull = commentsdata[i].mediaAspectFull;
+				tempComment.mediaAspect16x9 = commentsdata[i].mediaAspect16x9;
+				tempComment.mediaAspect1x1 = commentsdata[i].mediaAspect1x1;
+				tempComment.mediaAspect2x1 = commentsdata[i].mediaAspect2x1;
+				
 			}
 
 //			tempComment.tweet = commentsdata[i].tweet;
