@@ -34,17 +34,19 @@ networkModule.factory('CommentService', function (DateUtilityService) {
 				_commentObject.type = tempCommentsData[i].content.sections[0].type;
 				_commentObject.html = tempCommentsData[i].content.sections[0].html;
 				_commentObject.media = tempCommentsData[i].content.sections[0].media;
-				if(_commentObject.media == "media"){
+				if(_commentObject.type == "media"){
+					var tempMedia = _commentObject.media[0];
 					//if Video update
-					_commentObject.mediaType = _commentObject.media[0].type;
+					_commentObject.mediaType = tempMedia.mediaType;
 					if(_commentObject.mediaType =="video"){
-						_commentObject.mediaThumbUrl = _commentObject.media[0].thumbUrl;
+						_commentObject.mediaThumbUrl = tempMedia.thumbUrl;
 					}
-					_commentObject.mediaUrl = _commentObject.media[0].url;
-					_commentObject.mediaAspectFull = _commentObject.media[0].sizes.full;
-					_commentObject.mediaAspect16x9 = _commentObject.media[0].sizes["16:9"];
-					_commentObject.mediaAspect1x1 = _commentObject.media[0].sizes["1:1"];
-					_commentObject.mediaAspect2x1 = _commentObject.media[0].sizes["2:1"];
+					_commentObject.mediaUrl = tempMedia.url;
+					_commentObject.mediaAspectFull = tempMedia.sizes.full;
+					_commentObject.mediaAspect16x9 = tempMedia.sizes["16:9"];
+					_commentObject.mediaAspect1x1 = tempMedia.sizes["1:1"];
+					_commentObject.mediaAspect2x1 = tempMedia.sizes["2:1"];
+					
 					
 				}
 				_commentObject.tweet = tempCommentsData[i].content.sections[0].tweet;
