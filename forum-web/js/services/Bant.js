@@ -1,4 +1,4 @@
-networkModule.factory('Bant', function () {
+networkModule.factory('Bant', function (DateUtilityService) {
 	var type;
 	var id;
 	var author;
@@ -11,20 +11,42 @@ networkModule.factory('Bant', function () {
 	var liked;
 	var createdAt;
 	
-	function Bant(tData){
-		this.type = tdata.type;
-		this.id = tdata.id;
-		this.author = tdata.author;
-		this.owner = tdata.owner;
-		this.lang = tdata.lang;
-		this.content = tdata.content;
-		this.media = tdata.media;
-		this.hidden = tdata.hidden;
-		this.rank = tdata.rank;
-		this.liked = tdata.liked;
-		this.createdAt = tdata.createdAt;
+	function Bant(tempCommentsData){
+		var _commentObject = {};
+		_commentObject.id = tempCommentsData.id;
+		_commentObject.author = tempCommentsData.author;
+		_commentObject.owner = tempCommentsData.owner;
+		_commentObject.sectionsLength = tempCommentsData.content.sections.length;
+		for(j=0;j<_commentObject.sectionsLength;j++){
+			_commentObject.type = tempCommentsData.content.sections[j].type;
+			_commentObject.html = tempCommentsData.content.sections[j].html;
+			_commentObject.media = tempCommentsData.content.sections[j].media;
+			if(_commentObject.type == "media"){
+				var tempMedia = _commentObject.media[0];
+				//if Video update
+				_commentObject.mediaType = tempMedia.mediaType.substring(5,0);
+				if(_commentObject.mediaType =="video"){
+					_commentObject.mediaThumbUrl = tempMedia.thumbUrl;
+				}
+				_commentObject.mediaUrl = tempMedia.url;
+				_commentObject.mediaAspectFull = tempMedia.sizes.full;
+				_commentObject.mediaAspect16x9 = tempMedia.sizes["16:9"];
+				_commentObject.mediaAspect1x1 = tempMedia.sizes["1:1"];
+				_commentObject.mediaAspect2x1 = tempMedia.sizes["2:1"];
+
+
+			}
+			_commentObject.tweet = tempCommentsData.content.sections[j].tweet;
+			_commentObject.ogp = tempCommentsData.content.sections[j].ogp;
+			_commentObject.link = tempCommentsData.content.sections[j].link;
+		}
+		_commentObject.metrics = tempCommentsData.metrics;
+		_commentObject.createdAt = DateUtilityService.getTimeSince(tempCommentsData.createdAt);
+		
+		return _commentObject;
 		
 	}
+
     return {
         bant: Bant
     };

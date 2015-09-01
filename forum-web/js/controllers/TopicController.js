@@ -87,7 +87,12 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 		for(i=0;i<len;i++){
 			var tempComment = {};
 			tempComment = commentsdata[i];
+			tempComment.postAuthorName = commentsdata[i].author.name;
+			tempComment.postAuthorPhoto = commentsdata[i].author.photo;
 			
+			tempComment.postTimestamp = commentsdata[i].createdAt;
+			
+			var sectionsLength = tempComment.sectionsLength;
 			if(commentsdata[i].mediaAspect16x9 != undefined)
 				tempComment.mediaAspectFeed = commentsdata[i].mediaAspect16x9
 			else if(commentsdata[i].mediaAspect1x1 != undefined)
@@ -95,10 +100,7 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 			else if(commentsdata[i].mediaAspect2x1 != undefined)
 				tempComment.mediaAspectFeed = commentsdata[i].mediaAspect2x1
 			
-				tempComment.postAuthorName = commentsdata[i].author.name;
-			tempComment.postAuthorPhoto = commentsdata[i].author.photo;
-			
-			tempComment.postTimestamp = commentsdata[i].createdAt;
+				
 			$scope.commentsArray.push(tempComment);
 			console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);
 			if($scope.commentsArray[i].type == "media"){
