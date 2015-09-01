@@ -19,9 +19,11 @@ networkModule.factory('Bant', function (DateUtilityService) {
 		_commentObject.sectionsLength = tempCommentsData.content.sections.length;
 		for(j=0;j<_commentObject.sectionsLength;j++){
 			_commentObject.type = tempCommentsData.content.sections[j].type;
+			if(_commentObject.type == "html")
 			_commentObject.html = tempCommentsData.content.sections[j].html;
-			_commentObject.media = tempCommentsData.content.sections[j].media;
+			
 			if(_commentObject.type == "media"){
+				_commentObject.media = tempCommentsData.content.sections[j].media;
 				var tempMedia = _commentObject.media[0];
 				//if Video update
 				_commentObject.mediaType = tempMedia.mediaType.substring(5,0);

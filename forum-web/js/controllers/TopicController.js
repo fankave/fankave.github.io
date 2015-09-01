@@ -9,9 +9,6 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 	$scope.posts = networkService.getPostsForTopicID();
 
 	$scope.init = function() {
-//		console.log("initialized network");
-//		networkService.init();
-		//TODO: Pass $routeParams.topicID to this to fetch TopicID from URL
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
 		networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
 		//TODO: add watch for Push, test once API starts working from server, currently broken - aug 25th, tuesday
@@ -91,8 +88,7 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 			tempComment.postAuthorPhoto = commentsdata[i].author.photo;
 			
 			tempComment.postTimestamp = commentsdata[i].createdAt;
-			
-			var sectionsLength = tempComment.sectionsLength;
+		
 			if(commentsdata[i].mediaAspect16x9 != undefined)
 				tempComment.mediaAspectFeed = commentsdata[i].mediaAspect16x9
 			else if(commentsdata[i].mediaAspect1x1 != undefined)
