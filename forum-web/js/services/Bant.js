@@ -10,7 +10,7 @@ networkModule.factory('Bant', function (DateUtilityService) {
 	var rank;
 	var liked;
 	var createdAt;
-	
+
 	function Bant(tempCommentsData){
 		var _commentObject = {};
 		_commentObject.id = tempCommentsData.id;
@@ -20,8 +20,8 @@ networkModule.factory('Bant', function (DateUtilityService) {
 		for(j=0;j<_commentObject.sectionsLength;j++){
 			_commentObject.type = tempCommentsData.content.sections[j].type;
 			if(_commentObject.type == "html")
-			_commentObject.html = tempCommentsData.content.sections[j].html;
-			
+				_commentObject.html = tempCommentsData.content.sections[j].html;
+
 			if(_commentObject.type == "media"){
 				_commentObject.media = tempCommentsData.content.sections[j].media;
 				var tempMedia = _commentObject.media[0];
@@ -44,13 +44,13 @@ networkModule.factory('Bant', function (DateUtilityService) {
 		}
 		_commentObject.metrics = tempCommentsData.metrics;
 		_commentObject.createdAt = DateUtilityService.getTimeSince(tempCommentsData.createdAt);
-		
+
 		return _commentObject;
-		
+
 	}
 
-    return {
-        bant: Bant
-    };
-   
+	return {
+		bant: Bant
+	};
+
 });

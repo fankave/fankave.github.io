@@ -1,22 +1,22 @@
 networkModule.service('TopicService', function (DateUtilityService) {
-	
+
 	var TOPIC_BASE_URI = "/v1.0/topic/show/";
 	var LIKE_TOPIC_URI = "/v1.0/topic/like/";
 	var UNLIKE_TOPIC_URI = "/v1.0/topic/unlike/";
 	//TODO temp, holding Topic JSON
 	var _topic;
 	var _id;
-	
+
 	var _title;
 	var _author;
 	var _owner;
 	var _lang;
-	
-	
+
+
 	//Content Sections
 	var _sectionLenght;
 	var _sectionType;
-	
+
 	var _html;
 	var _media;
 	var _tweet;
@@ -28,7 +28,7 @@ networkModule.service('TopicService', function (DateUtilityService) {
 	var _topicSubType;
 	var _options;
 	var _metrics;
-	
+
 	var observerCallbacks = [];
 
 	//call this when you know 'foo' has been changed
@@ -37,7 +37,7 @@ networkModule.service('TopicService', function (DateUtilityService) {
 			callback();
 		});
 	};
-	
+
 	function setTopicData(topicData) 
 	{
 		_topic = topicData;
@@ -54,7 +54,7 @@ networkModule.service('TopicService', function (DateUtilityService) {
 		_ogp = _topic.data.content.sections[0].ogp;
 		_tweet = _topic.data.content.sections[0].tweet;
 		_link = _topic.data.content.sections[0].link;
-		
+
 		_liked = _topic.data.liked;
 		_createdAt = DateUtilityService.getTimeSince(_topic.data.createdAt);
 		_topicSubType = _topic.data.topicType;
@@ -65,31 +65,31 @@ networkModule.service('TopicService', function (DateUtilityService) {
 		console.log("TYPE : "+ _topic.data.content.sections[0].type);
 		notifyObservers();
 	}
-	
+
 	function getTopicRequest(topicId){
 		var uri = TOPIC_BASE_URI+topicId;
-		
+
 		return  varTopicParams = {"rid": "topic",
-	            "timestamp": new Date().getTime(),
-	            "method": "GET",
-	            "uri": encodeURI(uri)};
+				"timestamp": new Date().getTime(),
+				"method": "GET",
+				"uri": encodeURI(uri)};
 	}
-	
+
 	function likeTopicRequest(){
 		return  varLikeParams = {"rid": "topic",
-	            "timestamp": new Date().getTime(),
-	            "method": "POST",
-	            "uri": encodeURI(LIKE_TOPIC_URI + _id)};
-		
+				"timestamp": new Date().getTime(),
+				"method": "POST",
+				"uri": encodeURI(LIKE_TOPIC_URI + _id)};
+
 
 	}
-	
+
 	function unlikeTopicRequest(){
 		return  varLikeParams = {"rid": "topic",
-	            "timestamp": new Date().getTime(),
-	            "method": "POST",
-	            "uri": encodeURI(UNLIKE_TOPIC_URI + _id)};
-		
+				"timestamp": new Date().getTime(),
+				"method": "POST",
+				"uri": encodeURI(UNLIKE_TOPIC_URI + _id)};
+
 
 	}
 
@@ -99,9 +99,9 @@ networkModule.service('TopicService', function (DateUtilityService) {
 		getSectionType: function(sectionNumber){ 
 			//TODO check for section length
 			if(sectionNumber == undefined )
-			return _topic.data.content.sections[0].type;
-		else
-			return _topic.data.content.sections[sectionNumber].type
+				return _topic.data.content.sections[0].type;
+			else
+				return _topic.data.content.sections[sectionNumber].type
 		},
 		getTitle:function(){ return _title;},
 		getHtml:function(){return _html},
@@ -112,7 +112,7 @@ networkModule.service('TopicService', function (DateUtilityService) {
 		getTimeCreatedAt:function(){return _createdAt},
 		getLiked:function(){return _liked},
 		getMetrics:function(){return _metrics},
-		
+
 		getLikeTopicRequest:likeTopicRequest,
 		getUnlikeTopicRequest:unlikeTopicRequest,
 		getTopicRequest:getTopicRequest,
