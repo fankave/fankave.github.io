@@ -75,8 +75,8 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	function postReplyRequest(topicId, replyData){
 		var ReplyHtml = "<!DOCTYPE html><html><body>" + replyData + "</body></html>";
 
-		var createReplyParams =
-		{"rid": "reply",
+		var createReplyParams ={
+				"rid": "reply",
 				"timestamp": new Date().getTime(),
 				"method": "POST",
 				"uri": encodeURI(POST_REPLY_URI),
@@ -89,7 +89,8 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	}
 
 	function likeReplyRequest(){
-		return  varLikeParams = {"rid": "reply",
+		return  varLikeParams = {
+				"rid": "reply",
 				"timestamp": new Date().getTime(),
 				"method": "POST",
 				"uri": encodeURI(LIKE_REPLY_URI + _id)};
@@ -98,7 +99,8 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	}
 
 	function unlikeReplyRequest(){
-		return  varLikeParams = {"rid": "reply",
+		return  varLikeParams = {
+				"rid": "reply",
 				"timestamp": new Date().getTime(),
 				"method": "POST",
 				"uri": encodeURI(UNLIKE_REPLY_URI + _id)};

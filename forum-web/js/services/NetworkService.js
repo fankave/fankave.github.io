@@ -1,17 +1,11 @@
 var networkModule = angular.module("NetworkModule", ['ngWebSocket']);
-networkModule.factory("networkService",["$websocket","DataService",initNetworkService]);
+networkModule.factory("networkService",["$websocket","DataService","UserInfoService",initNetworkService]);
 
-function initNetworkService($websocket,DataService)
+function initNetworkService($websocket,DataService,UserInfoService)
 {
-	var OLD_URI = 'ws://107.178.223.208/ws?userId=1&sessionId=dac24379&accessToken=7uFF3QGh-84=/';
-	//var OLD_STATIC_TOPIC_ID = "53c167f17040001d";
-
-	var NEW_URI = 'ws://104.197.8.198/ws?userId=193&sessionId=53d7b518&accessToken=dsKGKXyZgGs=/';
-	//new topicID 
-	//var NEW_STATIC_TOPIC_ID1 = 53ccf152c5000001;
-	//var NEW_STATIC_TOPIC_ID2 = 53ccf184c0c00002;
-
-	var ws = $websocket(NEW_URI);
+	var WEBSOCKET_BASE_URI = 'ws://104.197.8.198/ws?';
+	
+	var ws = $websocket(getWebsocketUri());
 
 	//Websocket callbacks below
 	ws.onOpen(function() {
@@ -46,6 +40,12 @@ function initNetworkService($websocket,DataService)
 	ws.onError(function(evt) {
 		console.log("OnError:"+evt.data);
 	});
+	
+	function getWebsocketUri(){
+		var user = UserInfoService.getUserCredentials();
+		var socketUri = WEBSOCKET_BASE_URI+'userId='+user.userId+'&sessionId='+user.sessionId+'&accessToken='+user.accessToken+'/';
+		return socketUri;
+	}
 
 
 	var postAuthors = [
@@ -276,9 +276,8 @@ function initNetworkService($websocket,DataService)
 
 	return{
 		send:function(message) { ws.send(JSON.stringify(message));},
-//		init:function(message) { ws.send(JSON.stringify(varTopicParams));
-//		ws.send(JSON.stringify(varCommentParams));
-//		},
+		init:function() { 
+		},
 		getPostsForTopicID:getPostsForTopicID,
 		getRepliesForPostID:getRepliesForPostID
 	}
