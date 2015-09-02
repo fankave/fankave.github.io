@@ -22,10 +22,10 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 	}
 
 	function appendToComments(postCommentData) {
-		tempPostedComment = postCommentData.data;
+		var tempComment = postCommentData.data;
 		if(tempCommentsData!= undefined){
 			var _commentObject = {};
-			_commentObject = Bant.bant(postCommentData);
+			_commentObject = Bant.bant(tempComment);
 			if(_commentObject.id != undefined && _commentObject.html != undefined)
 				_comments.unshift(_commentObject);
 			console.log("appendToComments CommentService"+_commentObject.html );
@@ -39,10 +39,11 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 	function updateComment(commentData){
 		//if comments ID exist, update it 
 		//else append to existing list
+		var tempComment = commentData.data;
 		for(i=0;i<_comments.length;i++){
-			if(_comments[i].id == commentData.id){
+			if(_comments[i].id == tempComment.id){
 				//update
-				_comments[i] = Bant.bant(commentData);
+				_comments[i] = Bant.bant(tempComment);
 				return;
 			}
 		}

@@ -17,6 +17,7 @@ networkModule.factory('Bant', function (DateUtilityService) {
 		_commentObject.author = tempCommentsData.author;
 		_commentObject.owner = tempCommentsData.owner;
 		_commentObject.sectionsLength = tempCommentsData.content.sections.length;
+		
 		for(j=0;j<_commentObject.sectionsLength;j++){
 			_commentObject.type = tempCommentsData.content.sections[j].type;
 			if(_commentObject.type == "html")

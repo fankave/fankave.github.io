@@ -7,7 +7,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 		}
 		else if(commentsData.push){
 			if(commentsData.method == "UPSERT")
-				CommentService.updateComment();
+				CommentService.updateComment(commentsData);
 			else if(commentsData.method == "REMOVE")
 				CommentService.removeComment();	
 		}

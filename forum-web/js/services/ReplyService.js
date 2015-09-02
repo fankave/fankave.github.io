@@ -23,7 +23,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	}
 
 	function appendToReplies(postReplyData) {
-		tempPostedReply = postReplyData.data;
+		var tempPostedReply = postReplyData.data;
 		if(tempReplysData!= undefined){
 			var _replyObject = Bant.bant(tempPostedReply);
 			if(_replyObject.id != undefined )
@@ -35,10 +35,11 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	function updateReply(replyData){
 		//if Replys ID exist, update it 
 		//else append to existing list
+		var tempReply = replyData.data;
 		for(i=0;i<_replies.length;i++){
 			if(_replies[i].id == replyData.id){
 				//update
-				_replies[i] = Bant.bant(replyData)
+				_replies[i] = Bant.bant(tempReply)
 				return;
 			}
 		}
