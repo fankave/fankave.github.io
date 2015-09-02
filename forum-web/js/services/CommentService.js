@@ -23,7 +23,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 
 	function appendToComments(postCommentData) {
 		var tempComment = postCommentData.data;
-		if(tempCommentsData!= undefined){
+		if(tempComment!= undefined){
 			var _commentObject = {};
 			_commentObject = Bant.bant(tempComment);
 			if(_commentObject.id != undefined && _commentObject.html != undefined)
