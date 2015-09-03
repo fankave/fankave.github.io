@@ -52,24 +52,23 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 		//$scope.topic = TopicService.getTopic();
 		$scope.topicTitle = TopicService.getTitle();
 
-		var sectionType = TopicService.getSectionType();
-		if(sectionType == "html")
+//		var sectionType = TopicService.getSectionType();
+//		if(sectionType == "html")
 			$scope.topicDescHtml = TopicService.getHtml();
-		else if(sectionType == "media")
-			$scope.media = TopicService.getMedia();
-		else if(sectionType == "tweet")
-			$scope.tweet = TopicService.getTweet();
-		else if(sectionType == "ogp")
-			$scope.ogp = TopicService.getOgp();
-		else if(sectionType == "link")
-			$scope.link = TopicService.getLink();
+//		else if(sectionType == "media")
+//			$scope.media = TopicService.getMedia();
+//		else if(sectionType == "tweet")
+//			$scope.tweet = TopicService.getTweet();
+//		else if(sectionType == "ogp")
+//			$scope.ogp = TopicService.getOgp();
+//		else if(sectionType == "link")
+//			$scope.link = TopicService.getLink();
 
 		$scope.createdAt = TopicService.getTimeCreatedAt();
 		var metrics = TopicService.getMetrics();
 		$scope.likesCount = metrics.likes;
 		$scope.commentsCount = metrics.comments;
 		console.log("updated topic" +$scope.topicTitle);
-		console.log("updated type" +sectionType);
 		console.log("updated time" +$scope.createdAt);
 		console.log("updated metrics" +$scope.likesCount);
 	};
