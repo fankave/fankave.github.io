@@ -49,7 +49,13 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 
 	var updateTopic = function(){
 		//TODO: re think design to setAll values in one JSON and update here after all integration complete
-		//$scope.topic = TopicService.getTopic();
+//Score API update
+		$scope.leftTeam = TopicService.getTeamA();
+		$scope.rightTeam = TopicService.getTeamB();
+		var score = TopicService.getScore();
+		$scope.leftTeamScore = score.points[0];
+		$scope.rightTeamScore = score.points[1];
+		
 		$scope.topicTitle = TopicService.getTitle();
 
 //		var sectionType = TopicService.getSectionType();

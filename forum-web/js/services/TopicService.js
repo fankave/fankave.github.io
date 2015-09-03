@@ -6,28 +6,8 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	//TODO temp, holding Topic JSON
 	var _topic;
 	var _id;
-
 	var _title;
-	var _author;
-	var _owner;
-	var _lang;
-
-
-	//Content Sections
-	var _sectionLenght;
-	var _sectionType;
-
-	var _html;
-	var _media;
-	var _tweet;
-	var _ogp;
-	var _link;
-
-	var _liked;
-	var _createdAt;
-	var _topicSubType;
-	var _options;
-	var _metrics;
+	var _game;
 
 	var observerCallbacks = [];
 
@@ -40,29 +20,11 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 
 	function setTopicData(topicData) 
 	{
-		
+
 		_id = topicData.id;
 		_title = topicData.data.content.title;
+		_game = topicData.data.content.game;
 		_topic = Bant.bant(topicData.data);
-//		_author = _topic.data.author;
-//		_owner = _topic.owner;
-//		_lang = _topic.data.lang;
-//		_sectionLength = _topic.data.content.sections.length;
-//		_sectionType = _topic.data.content.sections[0].type;
-//		//TODO support for multiple sections here
-//		_html = _topic.data.content.sections[0].html;
-//		_media = _topic.data.content.sections[0].media;
-//		_ogp = _topic.data.content.sections[0].ogp;
-//		_tweet = _topic.data.content.sections[0].tweet;
-//		_link = _topic.data.content.sections[0].link;
-//
-//		_liked = _topic.data.liked;
-//		_createdAt = DateUtilityService.getTimeSince(_topic.data.createdAt);
-//		_topicSubType = _topic.data.topicType;
-//		_options = _topic.data.options;
-//		_metrics = _topic.data.metrics;
-
-		
 		notifyObservers();
 	}
 
@@ -96,12 +58,15 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	return {
 		getTopic: function(){return _topic ;},
 		getTopicId: function(){return _id ;},
+		getTeamA: function(){return _game.teams[0];},
+		getTeamA: function(){return _game.teams[1];},
+		getScore: function(){return _games.score;},
 //		getSectionType: function(sectionNumber){ 
-//			//TODO check for section length
-//			if(sectionNumber == undefined )
-//				return _topic.data.content.sections[0].type;
-//			else
-//				return _topic.data.content.sections[sectionNumber].type
+//		//TODO check for section length
+//		if(sectionNumber == undefined )
+//		return _topic.data.content.sections[0].type;
+//		else
+//		return _topic.data.content.sections[sectionNumber].type
 //		},
 		getTitle:function(){ return _title;},
 		getHtml:function(){return _topic.html},
