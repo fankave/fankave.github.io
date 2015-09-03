@@ -55,7 +55,7 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 		var score = TopicService.getScore();
 		$scope.leftTeamScore = score.points[0];
 		$scope.rightTeamScore = score.points[1];
-		
+		$scope.gameStatus = TopicService.getGameStatus();
 		$scope.topicTitle = TopicService.getTitle();
 
 //		var sectionType = TopicService.getSectionType();

@@ -8,7 +8,8 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	var _id;
 	var _title;
 	var _game;
-
+	var _status;
+	var _score;
 	var observerCallbacks = [];
 
 	//call this when you know 'foo' has been changed
@@ -23,7 +24,19 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 
 		_id = topicData.id;
 		_title = topicData.data.content.title;
-		_game = topicData.data.content.game;
+		_game = topicData.data.game;
+		_score = _game.score;
+//		Future game: live == false AND final == false.
+//		Live game: live == true.
+//		Past game: final == true.
+		if(_score.live == undefined && _score.final == undefined)
+			_status = "future";
+		else if(_score.live == true)
+			_status = "live";
+		else if(_score.final == true)
+			_status = "final";
+		console.log("GAME Status  :"+ _status );
+
 		_topic = Bant.bant(topicData.data);
 		notifyObservers();
 	}
@@ -58,9 +71,11 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	return {
 		getTopic: function(){return _topic ;},
 		getTopicId: function(){return _id ;},
+		getGame: function(){return _game;},
 		getTeamA: function(){return _game.teams[0];},
-		getTeamA: function(){return _game.teams[1];},
-		getScore: function(){return _games.score;},
+		getTeamB: function(){return _game.teams[1];},
+		getScore: function(){return _score;},
+		getGameStatus: function() {return _status;},
 //		getSectionType: function(sectionNumber){ 
 //		//TODO check for section length
 //		if(sectionNumber == undefined )
