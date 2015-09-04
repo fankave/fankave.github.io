@@ -56,13 +56,6 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 		}
 
 	}
-
-	//call this when you know '_replies' has been changed
-	var notifyObservers = function(){
-		angular.forEach(observerCallbacks, function(callback){
-			callback();
-		});
-	};
 	
 	function getReplyRequest(replyId){
 		var uri = LIST_REPLIES_URI+replyId;
@@ -108,6 +101,13 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 
 
 	}
+	
+	//call this when you know '_replies' has been changed
+	var notifyObservers = function(){
+		angular.forEach(observerCallbacks, function(callback){
+			callback();
+		});
+	};
 	
 	return {
 		replys: function(){return _replys },

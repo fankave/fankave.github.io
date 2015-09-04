@@ -10,14 +10,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	var _game;
 	var _status;
 	var _score;
-	var observerCallbacks = [];
-
-	//call this when you know 'foo' has been changed
-	var notifyObservers = function(){
-		angular.forEach(observerCallbacks, function(callback){
-			callback();
-		});
-	};
+	var observerCallbacks = [];	
 
 	function setTopicData(topicData) 
 	{
@@ -38,6 +31,27 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		console.log("GAME Status  :"+ _status );
 
 		_topic = Bant.bant(topicData.data);
+		notifyObservers();
+	}
+	
+	function updateTopicData(topicData){
+		setScoreData(topicData.data);
+	}
+	
+	function setScoreData(scoreData) 
+	{
+//TODO: Check API to complete this.
+		_score = scoreData.score;
+//		Future game: live == false AND final == false.
+//		Live game: live == true.
+//		Past game: final == true.
+		if(_score.live == undefined && _score.final == undefined)
+			_status = "future";
+		else if(_score.live == true)
+			_status = "live";
+		else if(_score.final == true)
+			_status = "final";
+		console.log("GAME Status  :"+ _status );
 		notifyObservers();
 	}
 
@@ -67,6 +81,13 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 
 
 	}
+	
+	//call this when you know 'data' has been changed
+	var notifyObservers = function(){
+		angular.forEach(observerCallbacks, function(callback){
+			callback();
+		});
+	};
 
 	return {
 		getTopic: function(){return _topic ;},
@@ -97,6 +118,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		getUnlikeTopicRequest:unlikeTopicRequest,
 		getTopicRequest:getTopicRequest,
 		setTopic:setTopicData,
+		updateTopic:updateTopicData,
 		registerObserverCallback:function(callback){
 			//register an observer
 			console.log("topic callback registered");
