@@ -10,6 +10,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	var _game;
 	var _status;
 	var _score;
+	var _gameStats;
 	var observerCallbacks = [];	
 
 	function setTopicData(topicData) 
@@ -27,8 +28,11 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		else if(_score.live == true)
 			_status = "live";
 		else if(_score.final == true)
-			_status = "final";
+			_status = "past";
 		console.log("GAME Status  :"+ _status );
+		
+		if(_status == "live")
+			_gameStats = _game.status;
 
 		_topic = Bant.bant(topicData.data);
 		notifyObservers();
@@ -52,6 +56,8 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		else if(_score.final == true)
 			_status = "final";
 		console.log("GAME Status  :"+ _status );
+		if(_status == "live")
+			_gameStats = _game.status;
 		notifyObservers();
 	}
 
@@ -97,6 +103,8 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		getTeamB: function(){return _game.teams[1];},
 		getScore: function(){return _score;},
 		getGameStatus: function() {return _status;},
+		getGamePeriod: function() {return _gameStats.period;},
+		getGameClock: function() {return _gameStats.clock;},
 //		getSectionType: function(sectionNumber){ 
 //		//TODO check for section length
 //		if(sectionNumber == undefined )
