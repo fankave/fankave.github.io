@@ -22,7 +22,7 @@ function initNetworkService($websocket,DataService,UserInfoService)
 		var responseJson = JSON.parse(evt.data);
 		var type = responseJson.rid;
 		if(type != undefined){
-			if(type =="topic"){
+			if(type =="topic" || type =="score"){
 				DataService.setTopic(responseJson);
 				console.log("Got Topic");
 			}else if(type =="comment"){

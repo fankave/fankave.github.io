@@ -12,10 +12,11 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
 		networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
 		//TODO: add watch for Push, test once API starts working from server, currently broken - aug 25th, tuesday
-//		var varTopicParams = {"rid": "comment",
-//		"timestamp": (new Date).getTime(),
-//		"method": "POST",
-//		"uri": "\/v1.0\/topic\/watch\/53c167f17040001d"};
+		var varTopicWatch = {"rid": "topic",
+		"timestamp": (new Date).getTime(),
+		"method": "POST",
+		"uri": "\/v1.0\/topic\/watch\/53e71a5c31800014"};
+		networkService.send(varTopicWatch);
 //		var varPushParams = {"rid": "comment",
 //		"timestamp": (new Date).getTime(),
 //		"method": "POST",

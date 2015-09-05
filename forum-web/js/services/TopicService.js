@@ -17,34 +17,40 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	{
 
 		_id = topicData.id;
-		_title = topicData.data.content.title;
-		_game = topicData.data.game;
-		_score = _game.score;
-//		Future game: live == false AND final == false.
-//		Live game: live == true.
-//		Past game: final == true.
-		if(_score.live == undefined && _score.final == undefined)
-			_status = "future";
-		else if(_score.live == true)
-			_status = "live";
-		else if(_score.final == true)
-			_status = "past";
-		console.log("GAME Status  :"+ _status );
-		
-		if(_status == "live")
-			_gameStats = _game.status;
+		if(topicData.data != undefined){
+			if(topicData.data.content != undefined )
+			_title = topicData.data.content.title;
+			
+			_game = topicData.data.game;
+			_score = _game.score;
+//			Future game: live == false AND final == false.
+//			Live game: live == true.
+//			Past game: final == true.
+			if(_score.live == undefined && _score.final == undefined)
+				_status = "future";
+			else if(_score.live == true)
+				_status = "live";
+			else if(_score.final == true)
+				_status = "past";
+			console.log("GAME Status  :"+ _status );
 
-		_topic = Bant.bant(topicData.data);
-		notifyObservers();
+			if(_status == "live"){
+				console.log("_gameStats" + _game.status);
+				_gameStats = _score.status;
+		}
+
+			_topic = Bant.bant(topicData.data);
+			notifyObservers();
+		}
 	}
-	
+
 	function updateTopicData(topicData){
 		setScoreData(topicData.data);
 	}
-	
+
 	function setScoreData(scoreData) 
 	{
-//TODO: Check API to complete this.
+//		TODO: Check API to complete this.
 		_score = scoreData.score;
 //		Future game: live == false AND final == false.
 //		Live game: live == true.
@@ -57,7 +63,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 			_status = "final";
 		console.log("GAME Status  :"+ _status );
 		if(_status == "live")
-			_gameStats = _game.status;
+			_gameStats = _score.status;
 		notifyObservers();
 	}
 
@@ -87,7 +93,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 
 
 	}
-	
+
 	//call this when you know 'data' has been changed
 	var notifyObservers = function(){
 		angular.forEach(observerCallbacks, function(callback){
@@ -103,8 +109,8 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		getTeamB: function(){return _game.teams[1];},
 		getScore: function(){return _score;},
 		getGameStatus: function() {return _status;},
-		getGamePeriod: function() {return _gameStats.period;},
-		getGameClock: function() {return _gameStats.clock;},
+		getGamePeriod: function() {return _gameStats[0];},
+		getGameClock: function() {return _gameStats[1];},
 //		getSectionType: function(sectionNumber){ 
 //		//TODO check for section length
 //		if(sectionNumber == undefined )
