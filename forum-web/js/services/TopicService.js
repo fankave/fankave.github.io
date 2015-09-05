@@ -45,26 +45,19 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		}
 	}
 
-	function updateTopicData(topicData){
-		setScoreData(topicData.data);
+	function updateTopicData(scoreData){
+		setScoreData(scoreData);
 	}
 
 	function setScoreData(scoreData) 
 	{
 //		TODO: Check API to complete this.
-		_score = scoreData.score;
-//		Future game: live == false AND final == false.
-//		Live game: live == true.
-//		Past game: final == true.
-		if(_score.live == undefined && _score.final == undefined)
-			_status = "future";
-		else if(_score.live == true)
+		_score = scoreData;
+		if(_score.live == true){
 			_status = "live";
-		else if(_score.final == true)
-			_status = "final";
-		console.log("GAME Status  :"+ _status );
-		if(_status == "live")
-			_gameStats = _score.status;
+		}
+		_gameStats = _score.status;
+		console.log("_gameStats" + _gameStats);
 		notifyObservers();
 	}
 
