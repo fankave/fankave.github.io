@@ -3,6 +3,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	var TOPIC_BASE_URI = "/v1.0/topic/show/";
 	var LIKE_TOPIC_URI = "/v1.0/topic/like/";
 	var UNLIKE_TOPIC_URI = "/v1.0/topic/unlike/";
+	var WATCH_TOPIC_URI = "/v1.0/topic/watch/";
 	//TODO temp, holding Topic JSON
 	var _topic;
 	var _id;
@@ -75,6 +76,14 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 				"method": "GET",
 				"uri": encodeURI(uri)};
 	}
+	function watchTopicRequest(topicId){
+		var uri = WATCH_TOPIC_URI+topicId;
+
+		return  varTopicParams = {"rid": "topic",
+				"timestamp": new Date().getTime(),
+				"method": "POST",
+				"uri": encodeURI(uri)};
+	}
 
 	function likeTopicRequest(){
 		return  varLikeParams = {"rid": "topic",
@@ -127,7 +136,8 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		getTimeCreatedAt:function(){return _topic.createdAt},
 		getLiked:function(){return _topic.liked},
 		getMetrics:function(){return _topic.metrics},
-
+		
+		watchTopicRequest:watchTopicRequest,
 		getLikeTopicRequest:likeTopicRequest,
 		getUnlikeTopicRequest:unlikeTopicRequest,
 		getTopicRequest:getTopicRequest,
