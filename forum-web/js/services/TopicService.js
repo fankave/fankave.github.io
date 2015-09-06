@@ -20,8 +20,8 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		_id = topicData.id;
 		if(topicData.data != undefined){
 			if(topicData.data.content != undefined )
-			_title = topicData.data.content.title;
-			
+				_title = topicData.data.content.title;
+
 			_game = topicData.data.game;
 			_score = _game.score;
 //			Future game: live == false AND final == false.
@@ -36,9 +36,9 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 			console.log("GAME Status  :"+ _status );
 
 			if(_status == "live"){
-				console.log("_gameStats" + _game.status);
+				console.log("_gameStats" + _score.status);
 				_gameStats = _score.status;
-		}
+			}
 
 			_topic = Bant.bant(topicData.data);
 			notifyObservers();
@@ -53,12 +53,16 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	{
 //		TODO: Check API to complete this.
 		_score = scoreData;
-		if(_score.live == true){
-			_status = "live";
+		if(_score != undefined){
+			if(_score.live == true){
+				_status = "live";
+			}
+			_gameStats = _score.status;
+			console.log("Game Points :" + _score.points[0] + " : : "+_score.points[1] );
+			console.log("Game Period :" + _gameStats[0]);
+			console.log("Game Period :" + _gameStats[1]);
+			notifyObservers();
 		}
-		_gameStats = _score.status;
-		console.log("_gameStats" + _gameStats);
-		notifyObservers();
 	}
 
 	function getTopicRequest(topicId){
@@ -129,7 +133,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		getTimeCreatedAt:function(){return _topic.createdAt},
 		getLiked:function(){return _topic.liked},
 		getMetrics:function(){return _topic.metrics},
-		
+
 		watchTopicRequest:watchTopicRequest,
 		getLikeTopicRequest:likeTopicRequest,
 		getUnlikeTopicRequest:unlikeTopicRequest,
