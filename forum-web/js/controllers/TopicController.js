@@ -13,7 +13,7 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 		networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
 		//TODO: add watch for Push, test once API starts working from server, currently broken - aug 25th, tuesday
 		networkService.send(TopicService.watchTopicRequest($routeParams.topicID));
-		
+
 //		var varPushParams = {"rid": "comment",
 //		"timestamp": (new Date).getTime(),
 //		"method": "POST",
@@ -54,21 +54,21 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 		$scope.gameStatus = TopicService.getGameStatus();
 		$scope.topicTitle = TopicService.getTitle();
 		if($scope.gameStatus == "live") {
-		$scope.gamePeriod = TopicService.getGamePeriod();
-		$scope.gameClock = TopicService.getGameClock();
+			$scope.gamePeriod = TopicService.getGamePeriod();
+			$scope.gameClock = TopicService.getGameClock();
 		}
 
 //		var sectionType = TopicService.getSectionType();
 //		if(sectionType == "html")
-			$scope.topicDescHtml = TopicService.getHtml();
+		$scope.topicDescHtml = TopicService.getHtml();
 //		else if(sectionType == "media")
-//			$scope.media = TopicService.getMedia();
+//		$scope.media = TopicService.getMedia();
 //		else if(sectionType == "tweet")
-//			$scope.tweet = TopicService.getTweet();
+//		$scope.tweet = TopicService.getTweet();
 //		else if(sectionType == "ogp")
-//			$scope.ogp = TopicService.getOgp();
+//		$scope.ogp = TopicService.getOgp();
 //		else if(sectionType == "link")
-//			$scope.link = TopicService.getLink();
+//		$scope.link = TopicService.getLink();
 
 		$scope.createdAt = TopicService.getTimeCreatedAt();
 		var metrics = TopicService.getMetrics();
@@ -91,18 +91,18 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 			tempComment = commentsdata[i];
 			tempComment.postAuthorName = commentsdata[i].author.name;
 			tempComment.postAuthorPhoto = commentsdata[i].author.photo;
-			
+
 			tempComment.postTimestamp = commentsdata[i].createdAt;
-		
+
 			if(commentsdata[i].mediaAspect16x9 != undefined)
 				tempComment.mediaAspectFeed = commentsdata[i].mediaAspect16x9
-			else if(commentsdata[i].mediaAspect1x1 != undefined)
-				tempComment.mediaAspectFeed = commentsdata[i].mediaAspect1x1
-			else if(commentsdata[i].mediaAspect2x1 != undefined)
-				tempComment.mediaAspectFeed = commentsdata[i].mediaAspect2x1
-			
-				
-			$scope.commentsArray.push(tempComment);
+				else if(commentsdata[i].mediaAspect1x1 != undefined)
+					tempComment.mediaAspectFeed = commentsdata[i].mediaAspect1x1
+					else if(commentsdata[i].mediaAspect2x1 != undefined)
+						tempComment.mediaAspectFeed = commentsdata[i].mediaAspect2x1
+
+
+						$scope.commentsArray.push(tempComment);
 			console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);
 			if($scope.commentsArray[i].type == "media"){
 				console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaUrl);

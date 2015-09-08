@@ -8,6 +8,8 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 
 
 	function setComments(commentsData) {
+		//TODO clear comments for complete refresh Comments API
+		_comments = [];
 		tempCommentsData = commentsData.data.results;
 		if(tempCommentsData!= undefined && tempCommentsData.length>0)
 			var len = tempCommentsData.length;

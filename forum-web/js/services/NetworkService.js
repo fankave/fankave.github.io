@@ -32,6 +32,7 @@ function initNetworkService($websocket,DataService,UserInfoService)
 			}
 			else if(type =="reply"){
 				//TODO handle Replies
+				console.log("Got Reply");
 				DataService.setReplies(responseJson);
 			}
 		}

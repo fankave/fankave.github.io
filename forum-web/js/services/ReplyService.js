@@ -1,5 +1,5 @@
 networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
-	var LIST_REPLIES_URI = "/v1.0/reply/replies/list/"
+	var LIST_REPLIES_URI = "/v1.0/comment/replies/list/"
 	var POST_REPLY_URI="/v1.0/reply/create";
 	var UPDATE_REPLY_URI = "/v1.0/reply/content/update/";
 	var DELETE_REPLY_URI = "/v1.0/reply/delete/"
@@ -9,6 +9,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	var _replies = [];
 
 	function setReplies(replyData) {
+		_replies = [];
 		tempReplyData = replyData.data.results;
 		if(tempReplyData!= undefined && tempReplyData.length>0){
 			var len = tempReplyData.length;
@@ -17,6 +18,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 				_replyObject = Bant.bant(tempReplyData[i])
 				if(_replyObject.id != undefined )
 					_replies.push(_replyObject);
+				console.log("Reply object"+_replyObject);
 				notifyObservers();
 			}
 		}
@@ -66,7 +68,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 				"uri": encodeURI(uri)};
 	}
 
-	function postReplyRequest(topicId, replyData){
+	function postReplyRequest(topicId, commentId,replyData){
 		var ReplyHtml = "<!DOCTYPE html><html><body>" + replyData + "</body></html>";
 
 		var createReplyParams ={
@@ -77,7 +79,13 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 				"data":{
 					"lang": "en", 
 					"content": {"sections":[{"type":"html","html":replyData}]},
+					"target": {
+		                  "type": "comment", // Target type: “comment” or “reply”.
+		                  "id":commentId,  // Target bant ID of comment or reply.
+		            },
+
 					"topicId": topicId,
+					"commentId": commentId
 				}};
 		return createReplyParams;
 	}

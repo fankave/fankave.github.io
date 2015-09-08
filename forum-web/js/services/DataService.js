@@ -38,7 +38,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 	function delegateSetReplies(replyData)
 	{
 		if(replyData.error){
-			console.log("Topic Error message from network :"+topicData.error);
+			console.log("Topic Error message from network :"+replyData.error);
 		}
 		else if(replyData.push){
 			if(replyData.method == "UPSERT")

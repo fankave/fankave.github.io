@@ -81,11 +81,11 @@
 					</div>
 
 					<div ng-switch-when="image">
-						<img ng-src="img/{{thisPost.mediaUrl}}" class="postPhoto"/>
+						<img ng-src="{{thisPost.mediaUrl}}" class="postPhoto"/>
 					</div>
 
 					<div ng-switch-when="video">
-						<img ng-src="img/{{thisPost.postMedia}}" class="postVideo"/>
+						<img ng-src="{{thisPost.mediaThumbUrl}}" class="postVideo"/>
 					</div>
 
 					<div class="postContent">
