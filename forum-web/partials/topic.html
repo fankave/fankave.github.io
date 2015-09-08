@@ -7,35 +7,35 @@
 
    			<div id="scoreCardTitlesRow" class="row">
 				<span id="leftTeamSpan">
-					<b>Seahawks</b>
+					<b>{{leftTeam.name}}</b>
 				</span>
 				<span id="rightTeamSpan">
-					<b>49ers</b>
+					<b>{{rightTeam.name}}</b>
 				</span>
 			</div>
 
 			<div id="scoreCardDataRow" class="row">
 				<span id="leftTeamLogo">
 					<span class="helper"></span>
-					<img src="img/seahawks.png" class="teamLogo"/>
+					<img src={{leftTeam.logo}} class="teamLogo"/>
 				</span>
 				<span id="leftTeamScore">
-					35
+					{{leftTeamScore}}
 				</span>
 				<span id="gameTime">
 					<div>
-						QTR 4
+						{{gamePeriod}}
 					</div>
 					<div>
-						02:45
+						{{gameClock}}
 					</div>
 				</span>
 				<span id="rightTeamScore">
-					17
+					{{rightTeamScore}}
 				</span>
 				<span id="rightTeamLogo">
 					<span class="helper"></span>
-					<img src="img/49ers.png" class="teamLogo"/>
+					<img src={{rightTeam.logo}} class="teamLogo"/>
 				</span>
 			</div>
 
