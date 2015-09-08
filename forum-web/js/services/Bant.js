@@ -1,15 +1,5 @@
 networkModule.factory('Bant', function (DateUtilityService) {
-	var type;
-	var id;
-	var author;
-	var owner;
-	var lang;
-	var content;
-	var media;
-	var hidden;
-	var rank;
-	var liked;
-	var createdAt;
+	var EXTRACT_MEDIA_TYPE_LENGTH = 5;
 
 	function Bant(data){
 		var _commentObject = {};
@@ -28,7 +18,7 @@ networkModule.factory('Bant', function (DateUtilityService) {
 					_commentObject.media = data.content.sections[j].media;
 					var tempMedia = _commentObject.media[0];
 					//if Video update
-					_commentObject.mediaType = tempMedia.mediaType.substring(5,0);
+					_commentObject.mediaType = tempMedia.mediaType.substring(EXTRACT_MEDIA_TYPE_LENGTH,0);
 					if(_commentObject.mediaType =="video"){
 						_commentObject.mediaThumbUrl = tempMedia.thumbUrl;
 					}
