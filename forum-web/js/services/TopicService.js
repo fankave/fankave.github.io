@@ -23,21 +23,23 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 				_title = topicData.data.content.title;
 
 			_game = topicData.data.game;
-			_score = _game.score;
-//			Future game: live == false AND final == false.
-//			Live game: live == true.
-//			Past game: final == true.
-			if(_score.live == undefined && _score.final == undefined)
-				_status = "future";
-			else if(_score.live == true)
-				_status = "live";
-			else if(_score.final == true)
-				_status = "past";
-			console.log("GAME Status  :"+ _status );
+			if(_game != undefined){
+				_score = _game.score;
+//				Future game: live == false AND final == false.
+//				Live game: live == true.
+//				Past game: final == true.
+				if(_score.live == undefined && _score.final == undefined)
+					_status = "future";
+				else if(_score.live == true)
+					_status = "live";
+				else if(_score.final == true)
+					_status = "past";
+				console.log("GAME Status  :"+ _status );
 
-			if(_status == "live"){
-				console.log("_gameStats" + _score.status);
-				_gameStats = _score.status;
+				if(_status == "live"){
+					console.log("_gameStats" + _score.status);
+					_gameStats = _score.status;
+				}
 			}
 
 			_topic = Bant.bant(topicData.data);
