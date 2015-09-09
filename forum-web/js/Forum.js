@@ -17,6 +17,11 @@ function initRootModule($routeProvider)
 	{
 		templateUrl:'partials/invalidTopic.html'
 	}).
+	when('/facebookLogin',
+	{
+		templateUrl:'partials/facebookLogin.html',
+		controller:'FacebookController'
+	}).
 	otherwise(
 	{
 		redirectTo:'invalidTopic'

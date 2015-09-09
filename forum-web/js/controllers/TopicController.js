@@ -1,8 +1,14 @@
-var topicModule = angular.module("TopicModule", ["NetworkModule"]);
-topicModule.controller("TopicController", ["$scope", "$routeParams", "networkService", "TopicService","CommentService",initTopicController]);
+var topicModule = angular.module("TopicModule", ["NetworkModule", "FacebookModule"]);
+topicModule.controller("TopicController", ["$scope", "$routeParams", "networkService", "TopicService","CommentService", "facebookService", initTopicController]);
 
-function initTopicController($scope, $routeParams, networkService,TopicService, CommentService)
+function initTopicController($scope, $routeParams, networkService,TopicService, CommentService, facebookService)
 {
+	if(facebookService.userLoggedInToFacebook === false)
+	{
+		console.log("Not logged in to facebook, take user to login page")
+		window.location = "#/facebookLogin";
+	}
+	// console.log("TopicController | userLoggedInToFacebook: " + facebookService.userLoggedInToFacebook);
 	$scope.pageClass = 'page-topic';
 
 	$scope.topicID = $routeParams.topicID;

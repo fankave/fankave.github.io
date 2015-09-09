@@ -12,6 +12,7 @@ networkModule.service('UserInfoService', function () {
 	}
 	
 	function setUserCredentials(userId, accessToken, sessionId){
+		console.log("setUserCredentials(" + userId + ", " + accessToken + ", " + sessionId);
 		this.userInfo.userId = userId;
 		this.userInfo.accessToken = accessToken;
 		this.userInfo.sessionId = sessionId;
