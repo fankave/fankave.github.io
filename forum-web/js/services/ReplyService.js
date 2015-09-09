@@ -69,7 +69,6 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	}
 
 	function postReplyRequest(topicId, commentId,replyData){
-		var ReplyHtml = "<!DOCTYPE html><html><body>" + replyData + "</body></html>";
 
 		var createReplyParams ={
 				"rid": "reply",
