@@ -83,8 +83,6 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 	}
 
 	function postCommentRequest(topicId, commentData){
-		var commentHtml = "<!DOCTYPE html><html><body>" + commentData + "</body></html>";
-
 		var createCommentParams =
 		{"rid": "comment",
 				"timestamp": new Date().getTime(),
