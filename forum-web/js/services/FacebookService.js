@@ -68,6 +68,7 @@ function initFacebookController($scope, $http, facebookService, UserInfoService)
 	              // the user isn't logged in to Facebook.
 	              // $scope.facebookUserStatus = "Not logged in to Facebook";
 	              console.log("Not logged in to Facebook");
+	              FB.login();
 	            }
 
 			 	// $scope.$apply();
