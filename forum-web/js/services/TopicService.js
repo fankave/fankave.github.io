@@ -135,11 +135,12 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		getTimeCreatedAt:function(){return _topic.createdAt},
 		getLiked:function(){return _topic.liked},
 		getMetrics:function(){return _topic.metrics},
-
+		
 		watchTopicRequest:watchTopicRequest,
 		getLikeTopicRequest:likeTopicRequest,
 		getUnlikeTopicRequest:unlikeTopicRequest,
 		getTopicRequest:getTopicRequest,
+		setTopicId: function(topicId){_id = topicId ;},
 		setTopic:setTopicData,
 		updateTopic:updateTopicData,
 		registerObserverCallback:function(callback){
