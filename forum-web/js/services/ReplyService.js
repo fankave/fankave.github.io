@@ -46,7 +46,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 			}
 		}
 		appendToReplies(replyData);
-		console.log("ReplyService updateReply");
+		console.log("ReplyService update Reply");
 	}
 
 	function removeReply(replyData){
