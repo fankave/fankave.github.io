@@ -3,11 +3,11 @@ facebookModule.controller("FacebookController", ["$scope", "$http", "facebookSer
 
 function initFacebookController($scope, $http, facebookService, UserInfoService)
 {
-	// console.log("initFacebookController");
+	console.log("initFacebookController");
 
 	$scope.loginToFacebook = function()
 	{
-		// console.log("log in to Facebook");
+		console.log("log in to Facebook");
 		// facebookService.userLoggedInToFacebook = true;
 		// window.location = "#/topic/0";
 
@@ -19,7 +19,7 @@ function initFacebookController($scope, $http, facebookService, UserInfoService)
 	          xfbml      : true,
 	          version    : 'v2.4'
 	        });
-	        // console.log('FB SDK loaded OK');
+	        console.log('FB SDK loaded OK');
 	        // $scope.facebookSDKStatus = "FB SDK loaded OK";
 	        // $scope.$apply();
 
@@ -41,9 +41,9 @@ function initFacebookController($scope, $http, facebookService, UserInfoService)
 	              FB.api('/me', {}, function(response)
 	              {
 	                // console.log(response.name);
-	                // console.log("FB ID: " + response.id);
+	                console.log("FB ID: " + response.id);
 	                $scope.fbID = response.id;
-	                // console.log("FB access token: " + accessToken);
+	                console.log("FB access token: " + accessToken);
 	                $scope.fbAccessToken = accessToken;
 	                $scope.registerFacebookUser()
 
