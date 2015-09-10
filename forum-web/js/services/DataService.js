@@ -1,4 +1,9 @@
 networkModule.service('DataService', function (TopicService, CommentService, ReplyService) {
+	
+	var DATA_TYPE_TOPIC = "topic";
+	var DATA_TYPE_COMMENT = "comment";
+	var DATA_TYPE_REPLY = "reply";
+	var DATA_TYPE_SCORE = "score";
 
 	function delegateSetComments(commentsData) 
 	{ 

@@ -149,7 +149,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		watchTopicRequest:watchTopicRequest,
 		getLikeTopicRequest:likeTopicRequest,
 		getUnlikeTopicRequest:unlikeTopicRequest,
-		getFollowTopicRequest:getFollowTopicRequest,
+		getFollowChannelRequest:getFollowChannelRequest,
 		getTopicRequest:getTopicRequest,
 		setTopicId: function(topicId){_id = topicId ;},
 		setTopic:setTopicData,

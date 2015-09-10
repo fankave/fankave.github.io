@@ -12,7 +12,8 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 	$scope.pageClass = 'page-topic';
 
 	$scope.topicID = $routeParams.topicID;
-	$scope.posts = networkService.getPostsForTopicID();
+	//TODO: remove this - usd with static Data
+	//$scope.posts = StaticData.getPostsForTopicID();
 
 	$scope.init = function() {
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
