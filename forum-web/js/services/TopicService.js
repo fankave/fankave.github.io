@@ -75,6 +75,15 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 				"method": "GET",
 				"uri": encodeURI(uri)};
 	}
+	function getFollowChannelRequest(channelID){
+		var uri = "/v1.0/channel/follow/" + channelID;
+
+		return  varTopicParams = {"rid": "topic",
+				"timestamp": new Date().getTime(),
+				"method": "POST",
+				"uri": encodeURI(uri)};
+	}
+	
 	function watchTopicRequest(topicId){
 		var uri = WATCH_TOPIC_URI+topicId;
 
@@ -126,6 +135,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 //		else
 //		return _topic.data.content.sections[sectionNumber].type
 //		},
+		getChannelId:function(){ return _topic.owner.id;},
 		getTitle:function(){ return _title;},
 		getHtml:function(){return _topic.html},
 //		getMedia:function(){return _media},
@@ -139,6 +149,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		watchTopicRequest:watchTopicRequest,
 		getLikeTopicRequest:likeTopicRequest,
 		getUnlikeTopicRequest:unlikeTopicRequest,
+		getFollowTopicRequest:getFollowTopicRequest,
 		getTopicRequest:getTopicRequest,
 		setTopicId: function(topicId){_id = topicId ;},
 		setTopic:setTopicData,

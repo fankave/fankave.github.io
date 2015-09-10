@@ -16,6 +16,7 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 
 	$scope.init = function() {
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
+		//networkService.send(TopicService.getFollowChannelRequest(TopicService.getChannelId()));
 		networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
 		//TODO: add watch for Push, test once API starts working from server, currently broken - aug 25th, tuesday
 		networkService.send(TopicService.watchTopicRequest($routeParams.topicID));
