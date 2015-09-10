@@ -1,5 +1,5 @@
-//TODO: Static data used for Demo, remove this once the Development is complete
 networkModule.service('StaticData', function () {
+	//TODO: Static data used for Demo, remove this once the Development is complete
 	var postAuthors = [
 	                   {
 	                	   "photo":"ana.png",

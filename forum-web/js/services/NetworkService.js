@@ -4,7 +4,7 @@ networkModule.factory("networkService",["$websocket","DataService","UserInfoServ
 function initNetworkService($websocket,DataService,UserInfoService)
 {
 	var WEBSOCKET_BASE_URI = 'ws://104.197.8.198/ws?';
-	
+
 	var ws = $websocket(getWebsocketUri());
 
 	//Websocket callbacks below
@@ -21,14 +21,14 @@ function initNetworkService($websocket,DataService,UserInfoService)
 		var responseJson = JSON.parse(evt.data);
 		var type = responseJson.rid;
 		if(type != undefined){
-			if(type == DataService.DATA_TYPE_TOPIC || type == DataService.DATA_TYPE_SCORE){
+			if(type == "topic" || type == "score"){
 				DataService.setTopic(responseJson);
 				console.log("Processing Topic");
-			}else if(type == DataService.DATA_TYPE_COMMENT){
+			}else if(type == "comment"){
 				console.log("Processing Comments");
 				DataService.setComments(responseJson);
 			}
-			else if(type == DataService.DATA_TYPE_REPLY){
+			else if(type == "reply"){
 				//TODO handle Replies
 				console.log("Processing Reply");
 				DataService.setReplies(responseJson);
@@ -39,15 +39,17 @@ function initNetworkService($websocket,DataService,UserInfoService)
 	ws.onError(function(evt) {
 		console.log("Websocket OnError: "+evt.data);
 	});
-	
+
 	function getWebsocketUri(){
 		var user = UserInfoService.getUserCredentials();
-		var socketUri = WEBSOCKET_BASE_URI+'userId='+user.userId+'&sessionId='+user.sessionId+'&accessToken='+user.accessToken+'/';
+		var socketUri = WEBSOCKET_BASE_URI+
+		'userId='+user.userId+
+		'&sessionId='+user.sessionId+
+		'&accessToken='+user.accessToken+
+		'/';
 		return socketUri;
 	}
 
-
-	
 
 	return{
 		send:function(message) { ws.send(JSON.stringify(message));},
