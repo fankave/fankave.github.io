@@ -17,7 +17,6 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 
 	$scope.init = function() {
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
-		//networkService.send(TopicService.getFollowChannelRequest(TopicService.getChannelId()));
 		networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
 		//TODO: add watch for Push, test once API starts working from server, currently broken - aug 25th, tuesday
 		networkService.send(TopicService.watchTopicRequest($routeParams.topicID));
@@ -29,30 +28,33 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 	};
 
 	$scope.postComment = function(commentText) {
-		console.log("postComment Invoked"+ commentText);
+		console.log("TopicController postComment Invoked :"+ commentText);
 		networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
 		$scope.commentText = "";
 	};
 
 	$scope.likeTopic = function() {
+		console.log("TopicController Like Topic");
 		networkService.send(TopicService.getLikeTopicRequest());
 	};
 
 	$scope.unlikeTopic = function() {
+		console.log("TopicController Unlike Topic");
 		networkService.send(TopicService.getUnlikeTopicRequest());
 	};
 
 	$scope.likeComment = function(id) {
+		console.log("TopicController Like Comment");
 		networkService.send(CommentService.getLikeCommentRequest(id));
 	};
 
 	$scope.unlikeComment = function(id) {
+		console.log("TopicController Unlike Comment");
 		networkService.send(CommentService.getUnlikeCommentRequest());
 	};
 
 
 	var updateTopic = function(){
-		//TODO: re think design to setAll values in one JSON and update here after all integration complete
 		//Score API update
 		$scope.leftTeam = TopicService.getTeamA();
 		$scope.rightTeam = TopicService.getTeamB();
@@ -116,14 +118,14 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 			console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);
 			if($scope.commentsArray[i].type == "media"){
 				console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaUrl);
-				console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaAspect16x9);
+				console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaAspectFeed);
 
 			}
 			console.log(i +" : updated comments author name: " +$scope.commentsArray[i].postAuthorName);
 			console.log(i +" : updated comments author photo: " +$scope.commentsArray[i].postAuthorPhoto);
-
-//			}
 		}
+
+		networkService.send(TopicService.getFollowChannelRequest(TopicService.getChannelId()));
 	};
 
 	TopicService.registerObserverCallback(updateTopic);
