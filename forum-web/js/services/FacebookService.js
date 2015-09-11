@@ -1,7 +1,7 @@
-var facebookModule = angular.module("FacebookModule", ["NetworkModule"]);
-facebookModule.controller("FacebookController", ["$scope", "$http", "facebookService", "UserInfoService", initFacebookController]);
+var facebookModule = angular.module("FacebookModule", ["NetworkModule", "TopicModule"]);
+facebookModule.controller("FacebookController", ["$scope", "$http", "facebookService", "UserInfoService", "TopicService", initFacebookController]);
 
-function initFacebookController($scope, $http, facebookService, UserInfoService)
+function initFacebookController($scope, $http, facebookService, UserInfoService, TopicService)
 {
 	console.log("initFacebookController");
 
@@ -144,7 +144,8 @@ function initFacebookController($scope, $http, facebookService, UserInfoService)
 	            console.log("Setting user info in Facebook Service");
 	            UserInfoService.setUserCredentials(response.data.userId, response.data.accessToken, response.data.sessionId);
 
-				window.location = "#/topic/53e71a5c31800014";
+	            // console.log(":: " + TopicService.getTopicId());
+				window.location = "#/topic/" + TopicService.getTopicId();
 	          }
 	      },
 	      function(response)

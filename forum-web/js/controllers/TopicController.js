@@ -3,17 +3,7 @@ topicModule.controller("TopicController", ["$scope", "$routeParams","networkServ
 
 function initTopicController($scope, $routeParams,networkService,TopicService, CommentService, facebookService)
 {
-	if(facebookService.userLoggedInToFacebook === false)
-	{
-	console.log("Not logged in to facebook, take user to login page")
-	window.location = "#/facebookLogin";
-	}
-	// console.log("TopicController | userLoggedInToFacebook: " + facebookService.userLoggedInToFacebook);
-	$scope.pageClass = 'page-topic';
-
-	$scope.topicID = $routeParams.topicID;
-	//TODO: remove this - usd with static Data
-	//$scope.posts = StaticData.getPostsForTopicID();
+	TopicService.setTopicId($routeParams.topicID);
 
 	$scope.init = function() {
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
@@ -26,6 +16,25 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 //		"method": "POST",
 //		"uri": "\/mock\/topic\/53c167f17040001d?duration=\(100)"};
 	};
+
+	if(facebookService.userLoggedInToFacebook === false)
+	{
+		console.log("Not logged in to facebook, take user to login page")
+		window.location = "#/facebookLogin";
+	}
+	else
+	{
+		// console.log("TopicController | userLoggedInToFacebook: " + facebookService.userLoggedInToFacebook);
+		$scope.pageClass = 'page-topic';
+
+		$scope.topicID = $routeParams.topicID;
+		//TODO: remove this - usd with static Data
+		//$scope.posts = StaticData.getPostsForTopicID();
+		$scope.init();
+	}
+	
+
+	
 
 	$scope.postComment = function(commentText) {
 		console.log("TopicController postComment Invoked :"+ commentText);
