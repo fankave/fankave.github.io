@@ -9,6 +9,15 @@ networkModule.service('UserInfoService', function () {
 //	};
 
 	function getUserCredentials(){
+		if(_userInfo == undefined){
+			console.log("UserInfoService : UserId is not defined , using static user");
+			return userInfo = {
+					"userId":"193",
+					"accessToken":"dsKGKXyZgGs=",
+					"sessionId":"53d7b518"
+			};
+		}
+			
 		return _userInfo;
 	}
 	
