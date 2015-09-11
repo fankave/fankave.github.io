@@ -49,6 +49,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	}
 
 	function updateTopicData(scoreData){
+		console.log("Topic Service scoreData :" + scoreData)
 		setScoreData(scoreData);
 	}
 
@@ -56,6 +57,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	{
 //		TODO: Check API to complete this.
 		_score = scoreData;
+		console.log("TopicService  insideScore"+_score );
 		if(_score != undefined){
 			if(_score.live == true){
 				_status = "live";

@@ -32,7 +32,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 		}
 		else if(topicData.push){
 			if(topicData.method == "UPSERT")
-				TopicService.updateTopic();
+				TopicService.updateTopic(topicData.data);
 			else if(topicData.method == "REMOVE")
 				TopicService.removeTopic();
 		}
