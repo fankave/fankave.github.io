@@ -12,6 +12,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	var _status;
 	var _score;
 	var _gameStats;
+	var _links;
 	var observerCallbacks = [];	
 
 	function setTopicData(topicData) 
@@ -75,6 +76,15 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 				"method": "GET",
 				"uri": encodeURI(uri)};
 	}
+	function getFollowChannelRequest(channelID){
+		var uri = "/v1.0/channel/follow/" + channelID;
+
+		return  varTopicParams = {"rid": "topic",
+				"timestamp": new Date().getTime(),
+				"method": "POST",
+				"uri": encodeURI(uri)};
+	}
+	
 	function watchTopicRequest(topicId){
 		var uri = WATCH_TOPIC_URI+topicId;
 
@@ -113,9 +123,10 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		getTopic: function(){return _topic ;},
 		getTopicId: function(){return _id ;},
 		getGame: function(){return _game;},
-		getTeamA: function(){return _game.teams[0];},
-		getTeamB: function(){return _game.teams[1];},
-		getScore: function(){return _score;},
+		getTeamA: function(){if(_game != undefined) return _game.teams[0];},
+		getTeamB: function(){if(_game != undefined) return _game.teams[1];},
+		getLinks: function(){if(_game != undefined) return _game.links;},
+		getScore: function(){if(_score != undefined) return _score;},
 		getGameStatus: function() {return _status;},
 		getGamePeriod: function() {return _gameStats[0];},
 		getGameClock: function() {return _gameStats[1];},
@@ -126,6 +137,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 //		else
 //		return _topic.data.content.sections[sectionNumber].type
 //		},
+		getChannelId:function(){ return _topic.owner.id;},
 		getTitle:function(){ return _title;},
 		getHtml:function(){return _topic.html},
 //		getMedia:function(){return _media},
@@ -139,6 +151,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		watchTopicRequest:watchTopicRequest,
 		getLikeTopicRequest:likeTopicRequest,
 		getUnlikeTopicRequest:unlikeTopicRequest,
+		getFollowChannelRequest:getFollowChannelRequest,
 		getTopicRequest:getTopicRequest,
 		setTopicId: function(topicId){_id = topicId ;},
 		setTopic:setTopicData,

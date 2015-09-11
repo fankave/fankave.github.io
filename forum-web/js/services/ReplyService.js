@@ -59,8 +59,8 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 
 	}
 	
-	function getReplyRequest(replyId){
-		var uri = LIST_REPLIES_URI+replyId;
+	function getReplyRequest(commentId){
+		var uri = LIST_REPLIES_URI + commentId;
 
 		return  varReplyParams = {"rid": "reply",
 				"timestamp": new Date().getTime(),
@@ -117,7 +117,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	};
 	
 	return {
-		replys: function(){return _replys },
+		replies: function(){return _replies },
 
 		setReplies:setReplies,
 		updateReply:updateReply,

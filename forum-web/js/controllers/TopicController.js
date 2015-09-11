@@ -1,18 +1,19 @@
 var topicModule = angular.module("TopicModule", ["NetworkModule", "FacebookModule"]);
-topicModule.controller("TopicController", ["$scope", "$routeParams", "networkService", "TopicService","CommentService", "facebookService", initTopicController]);
+topicModule.controller("TopicController", ["$scope", "$routeParams","networkService", "TopicService","CommentService", "facebookService", initTopicController]);
 
-function initTopicController($scope, $routeParams, networkService,TopicService, CommentService, facebookService)
+function initTopicController($scope, $routeParams,networkService,TopicService, CommentService, facebookService)
 {
 	if(facebookService.userLoggedInToFacebook === false)
 	{
-		console.log("Not logged in to facebook, take user to login page")
-		window.location = "#/facebookLogin";
+	console.log("Not logged in to facebook, take user to login page")
+	window.location = "#/facebookLogin";
 	}
 	// console.log("TopicController | userLoggedInToFacebook: " + facebookService.userLoggedInToFacebook);
 	$scope.pageClass = 'page-topic';
 
 	$scope.topicID = $routeParams.topicID;
-	$scope.posts = networkService.getPostsForTopicID();
+	//TODO: remove this - usd with static Data
+	//$scope.posts = StaticData.getPostsForTopicID();
 
 	$scope.init = function() {
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
@@ -27,36 +28,41 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 	};
 
 	$scope.postComment = function(commentText) {
-		console.log("postComment Invoked"+ commentText);
+		console.log("TopicController postComment Invoked :"+ commentText);
 		networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
 		$scope.commentText = "";
 	};
 
 	$scope.likeTopic = function() {
+		console.log("TopicController Like Topic");
 		networkService.send(TopicService.getLikeTopicRequest());
 	};
 
 	$scope.unlikeTopic = function() {
+		console.log("TopicController Unlike Topic");
 		networkService.send(TopicService.getUnlikeTopicRequest());
 	};
 
 	$scope.likeComment = function(id) {
+		console.log("TopicController Like Comment");
 		networkService.send(CommentService.getLikeCommentRequest(id));
 	};
 
 	$scope.unlikeComment = function(id) {
+		console.log("TopicController Unlike Comment");
 		networkService.send(CommentService.getUnlikeCommentRequest());
 	};
 
 
 	var updateTopic = function(){
-		//TODO: re think design to setAll values in one JSON and update here after all integration complete
 		//Score API update
 		$scope.leftTeam = TopicService.getTeamA();
 		$scope.rightTeam = TopicService.getTeamB();
 		var score = TopicService.getScore();
-		$scope.leftTeamScore = score.points[0];
-		$scope.rightTeamScore = score.points[1];
+		if(score != undefined){
+			$scope.leftTeamScore = score.points[0];
+			$scope.rightTeamScore = score.points[1];
+		}
 		$scope.gameStatus = TopicService.getGameStatus();
 		$scope.topicTitle = TopicService.getTitle();
 		if($scope.gameStatus == "live") {
@@ -112,14 +118,14 @@ function initTopicController($scope, $routeParams, networkService,TopicService, 
 			console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);
 			if($scope.commentsArray[i].type == "media"){
 				console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaUrl);
-				console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaAspect16x9);
+				console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaAspectFeed);
 
 			}
 			console.log(i +" : updated comments author name: " +$scope.commentsArray[i].postAuthorName);
 			console.log(i +" : updated comments author photo: " +$scope.commentsArray[i].postAuthorPhoto);
-
-//			}
 		}
+
+		networkService.send(TopicService.getFollowChannelRequest(TopicService.getChannelId()));
 	};
 
 	TopicService.registerObserverCallback(updateTopic);

@@ -141,9 +141,10 @@ function initFacebookController($scope, $http, facebookService, UserInfoService)
 	            // console.log(" - - - > access UserInfoService: " + UserInfoService);
 
 	            facebookService.userLoggedInToFacebook = true;
-				window.location = "#/topic/53e71a5c31800014";
+	            console.log("Setting user info in Facebook Service");
+	            UserInfoService.setUserCredentials(response.data.userId, response.data.accessToken, response.data.sessionId);
 
-	            // UserInfoService.setUserCredentials(response.data.userId, response.data.accessToken, response.data.sessionId);
+				window.location = "#/topic/53e71a5c31800014";
 	          }
 	      },
 	      function(response)
