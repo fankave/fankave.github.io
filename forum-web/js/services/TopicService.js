@@ -12,6 +12,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	var _status;
 	var _score;
 	var _gameStats;
+	var _links;
 	var observerCallbacks = [];	
 
 	function setTopicData(topicData) 
@@ -124,6 +125,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		getGame: function(){return _game;},
 		getTeamA: function(){if(_game != undefined) return _game.teams[0];},
 		getTeamB: function(){if(_game != undefined) return _game.teams[1];},
+		getLinks: function(){if(_game != undefined) return _game.links;},
 		getScore: function(){if(_score != undefined) return _score;},
 		getGameStatus: function() {return _status;},
 		getGamePeriod: function() {return _gameStats[0];},
