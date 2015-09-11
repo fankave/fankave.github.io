@@ -103,7 +103,7 @@ function initFacebookController($scope, $http, facebookService, UserInfoService)
 	        "type":"facebook",
 	        "locale":"en_US",
 	        "utcOffset":-25200,
-	        "deviceType":"ios",
+	        "deviceType":"web",
 	        "deviceId":"0",
 	        "deviceModel":"browser",
 	        "appKey":"testKey",
