@@ -139,16 +139,16 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 //		else
 //		return _topic.data.content.sections[sectionNumber].type
 //		},
-		getChannelId:function(){ return _topic.owner.id;},
+		getChannelId:function(){ if(_topic != undefined) return _topic.owner.id;},
 		getTitle:function(){ return _title;},
-		getHtml:function(){return _topic.html},
+		getHtml:function(){if(_topic != undefined) return _topic.html},
 //		getMedia:function(){return _media},
 //		getTweet:function(){return _tweet},
 //		getOgp:function(){return _ogp},
 //		getLink:function(){return _link},
-		getTimeCreatedAt:function(){return _topic.createdAt},
-		getLiked:function(){return _topic.liked},
-		getMetrics:function(){return _topic.metrics},
+		getTimeCreatedAt:function(){if(_topic != undefined) return _topic.createdAt},
+		getLiked:function(){if(_topic != undefined) return _topic.liked},
+		getMetrics:function(){if(_topic != undefined) return _topic.metrics},
 		
 		watchTopicRequest:watchTopicRequest,
 		getLikeTopicRequest:likeTopicRequest,
