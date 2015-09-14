@@ -52,6 +52,12 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 		networkService.send(TopicService.getUnlikeTopicRequest());
 	};
 
+	$scope.commentOnTopic = function()
+	{
+		// console.log("comment on topic");
+		document.getElementById("topicCommentField").focus();
+	};
+
 	$scope.likeComment = function(id) {
 		console.log("TopicController Like Comment (" + id + ")");
 		networkService.send(CommentService.getLikeCommentRequest(id));

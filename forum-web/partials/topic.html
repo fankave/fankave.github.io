@@ -50,8 +50,8 @@
 			{{topicDescHtml}}
 		</div>
 		<div class="topicSharingButtonsRow">
-			<button class="btn-link topic-social-btn"><img src="img/likeButton-2x_.png"/> {{likesCount}}</button>
-			<button class="btn-link topic-social-btn"><img src="img/commentButton-2x_.png"/> {{commentsCount}}</button>
+			<button class="btn-link topic-social-btn" ng-click="likeTopic()"><img src="img/likeButton-2x_.png"/> {{likesCount}}</button>
+			<button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/commentButton-2x_.png"/> {{commentsCount}}</button>
 			<button class="btn-link topic-social-btn"><img src="img/moreButton-2x_.png"/></button>
 		</div>
 	</div>
@@ -111,7 +111,7 @@
 	<footer class="footer" id="textEntryField">
         <div class="form-group" >
         <form ng-submit="postComment(commentText)">
-        	<input placeholder="Comment..." class="form-control" ng-model="commentText" type="text">
+        	<input id="topicCommentField" placeholder="Comment..." class="form-control" ng-model="commentText" type="text">
         	</form>
         </div>
 	</footer>
