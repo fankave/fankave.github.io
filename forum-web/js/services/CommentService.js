@@ -1,8 +1,20 @@
 networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 	var LIST_COMMENTS_URI = "/v1.0/topic/comments/list/"
-		var POST_COMMENT_URI="/v1.0/comment/create";
+		
+	var POST_COMMENT_URI="/v1.0/comment/create";
+	var UPDATE_COMMNET_URI = "/v1.0/comment/content/update/";
+	var PIN_COMMENT_URI = "/v1.0/comment/pin/";
+	var DELETE_COMMENT_URI = "/v1.0/comment/delete/";
+	
 	var LIKE_COMMENT_URI = "/v1.0/comment/like/";
 	var UNLIKE_COMMENT_URI = "/v1.0/comment/unlike/";
+
+	var HIDE_COMMENT_URI = "/v1.0/comment/hide/";
+	var UNHIDE_COMMENT_URI = "/v1.0/comment/unhide/";
+	
+	var FLAG_COMMENT_URI = "/v1.0/comment/flag/";
+	var UNFLAG_COMMENT_URI = "/v1.0/comment/unflag/";
+	
 	var observerCallbacks = [];
 	var _comments = [];
 
@@ -73,46 +85,63 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 			callback();
 		});
 	};
+	
+	function commentGetRequest(uri){
+		return  {"rid": "comment",
+			"timestamp": new Date().getTime(),
+			"method": "GET",
+			"uri": encodeURI(uri)}
+	}
+	function commentPostRequest(uri){
+		return  {"rid": "comment",
+			"timestamp": new Date().getTime(),
+			"method": "POST",
+			"uri": encodeURI(uri)}
+	}
 	function getCommentsRequest(commentId){
 		var uri = LIST_COMMENTS_URI+commentId;
-
-		return  varCommentParams = {"rid": "comment",
-				"timestamp": new Date().getTime(),
-				"method": "GET",
-				"uri": encodeURI(uri)};
+		return  commentGetRequest(uri);
 	}
 
 	function postCommentRequest(topicId, commentData){
-		var createCommentParams =
-		{"rid": "comment",
-				"timestamp": new Date().getTime(),
-				"method": "POST",
-				"uri": encodeURI(POST_COMMENT_URI),
-				"data":{
+		var createCommentParams = commentPostRequest(POST_COMMENT_URI);
+		createCommentParams.data =
+				{
 					"lang": "en", 
 					"content": {"sections":[{"type":"html","html":commentData}]},
 					"topicId": topicId,
-				}};
+				};
 		return createCommentParams;
 	}
 
-	function likeCommentRequest(){
-		return  varLikeParams = {"rid": "comment",
-				"timestamp": new Date().getTime(),
-				"method": "POST",
-				"uri": encodeURI(LIKE_COMMENT_URI + _id)};
-
+	function likeCommentRequest(id){
+		return commentPostRequest(LIKE_COMMENT_URI + id);
 
 	}
 
-	function unlikeCommentRequest(){
-		return  varLikeParams = {"rid": "topic",
-				"timestamp": new Date().getTime(),
-				"method": "POST",
-				"uri": encodeURI(UNLIKE_COMMENT_URI + _id)};
-
+	function unlikeCommentRequest(id){
+		return commentPostRequest(UNLIKE_COMMENT_URI + id);
+	}
+	
+	function hideCommentRequest(id){
+		return commentPostRequest(HIDE_COMMENT_URI + id);
 
 	}
+
+	function unhideCommentRequest(id){
+		return commentPostRequest(UNHIDE_COMMENT_URI + id);
+	}
+	
+	function flagCommentRequest(id){
+		return commentPostRequest(FLAG_COMMENT_URI + id);
+
+	}
+
+	function unflagCommentRequest(id){
+		return commentPostRequest(UNFLAG_COMMENT_URI + id);
+	}
+	
+	
 
 
 

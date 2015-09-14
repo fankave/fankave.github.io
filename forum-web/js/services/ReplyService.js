@@ -1,10 +1,19 @@
 networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	var LIST_REPLIES_URI = "/v1.0/comment/replies/list/"
 	var POST_REPLY_URI="/v1.0/reply/create";
+	
 	var UPDATE_REPLY_URI = "/v1.0/reply/content/update/";
-	var DELETE_REPLY_URI = "/v1.0/reply/delete/"
+	var DELETE_REPLY_URI = "/v1.0/reply/delete/";
+		
 	var LIKE_REPLY_URI = "/v1.0/reply/like/";
 	var UNLIKE_REPLY_URI = "/v1.0/reply/unlike/";
+	
+	var HIDE_REPLY_URI = "/v1.0/reply/hide/";
+	var UNHIDE_REPLY_URI = "/v1.0/reply/unhide/";
+	
+	var FLAG_REPLY_URI = "/v1.0/reply/flag/";
+	var UNFLAG_REPLY_URI = "/v1.0/reply/unflag/";
+	
 	var observerCallbacks = [];
 	var _replies = [];
 
@@ -59,55 +68,73 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 
 	}
 	
-	function getReplyRequest(commentId){
-		var uri = LIST_REPLIES_URI + commentId;
-
+	function replyGetRequest(uri){
 		return  varReplyParams = {"rid": "reply",
 				"timestamp": new Date().getTime(),
 				"method": "GET",
 				"uri": encodeURI(uri)};
+		
+	}
+	
+	function replyPostRequest(uri){
+		return varPostParams = {
+				"rid": "reply",
+				"timestamp": new Date().getTime(),
+				"method": "POST",
+				"uri": encodeURI(uri)}
+		
+	}
+	
+	function getRepliesRequest(commentId){
+		var uri = LIST_REPLIES_URI + commentId;
+		return replyGetRequest (uri);
+		
 	}
 
 	function postReplyRequest(topicId, commentId,replyData){
 
-		var createReplyParams ={
-				"rid": "reply",
-				"timestamp": new Date().getTime(),
-				"method": "POST",
-				"uri": encodeURI(POST_REPLY_URI),
-				"data":{
-					"lang": "en", 
-					"content": {"sections":[{"type":"html","html":replyData}]},
-					"target": {
-		                  "type": "comment", // Target type: “comment” or “reply”.
-		                  "id":commentId,  // Target bant ID of comment or reply.
-		            },
+		var createReplyParams =replyPostRequest(POST_REPLY_URI);
+		createReplyParams.data = 	
+		{
+				"lang": "en", 
+				"content": {"sections":[{"type":"html","html":replyData}]},
+				"target": {
+					"type": "comment", // Target type: “comment” or “reply”.
+					"id":commentId,  // Target bant ID of comment or reply.
+				},
 
-					"topicId": topicId,
-					"commentId": commentId
-				}};
+				"topicId": topicId,
+				"commentId": commentId
+		};
 		return createReplyParams;
 	}
 
-	function likeReplyRequest(){
-		return  varLikeParams = {
-				"rid": "reply",
-				"timestamp": new Date().getTime(),
-				"method": "POST",
-				"uri": encodeURI(LIKE_REPLY_URI + _id)};
-
-
+	function likeReplyRequest(id){
+		return  replyPostRequest(LIKE_REPLY_URI + id);
 	}
 
-	function unlikeReplyRequest(){
-		return  varLikeParams = {
-				"rid": "reply",
-				"timestamp": new Date().getTime(),
-				"method": "POST",
-				"uri": encodeURI(UNLIKE_REPLY_URI + _id)};
-
-
+	function unlikeReplyRequest(id){
+		return  replyPostRequest(UNLIKE_REPLY_URI + id);
 	}
+	
+	
+	function hideReplyRequest(id){
+		return  replyPostRequest(HIDE_REPLY_URI + id);
+	}
+
+	function unhideReplyRequest(id){
+		return  replyPostRequest(UNHIDE_REPLY_URI + id);
+	}
+	
+	function flagReplyRequest(id){
+		return  replyPostRequest(FLAG_REPLY_URI + id);
+	}
+
+	function unflagReplyRequest(id){
+		return  replyPostRequest(UNFLAG_REPLY_URI + id);
+	}
+	
+	
 	
 	//call this when you know '_replies' has been changed
 	var notifyObservers = function(){
@@ -131,7 +158,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 			console.log("Replies callback registered");
 			observerCallbacks.push(callback);
 		},
-		getReplyRequest:getReplyRequest
+		getRepliesRequest:getRepliesRequest
 	};
 
 });
