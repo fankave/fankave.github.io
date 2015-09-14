@@ -62,6 +62,10 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 		networkService.send(CommentService.getUnlikeCommentRequest());
 	};
 
+	$scope.goToRepliesWithKeyboardTriggered = function()
+	{
+		console.log("TopicController.goToRepliesWithKeyboardTriggered()");
+	};
 
 	var updateTopic = function(){
 		//Score API update
