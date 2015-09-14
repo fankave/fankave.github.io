@@ -53,7 +53,7 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 	};
 
 	$scope.likeComment = function(id) {
-		console.log("TopicController Like Comment");
+		console.log("TopicController Like Comment (" + id + ")");
 		networkService.send(CommentService.getLikeCommentRequest(id));
 	};
 

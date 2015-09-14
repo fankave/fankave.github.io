@@ -64,7 +64,7 @@
 
 	<div>
 		<div ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.mediaType" class="row postRow">
-			<a href="#/post/{{thisPost.id}}">
+
 				<span class="postAuthorPhoto">
 					<!--a class="thumbnail"-->
 	  					<img ng-src="{{thisPost.postAuthorPhoto}}" alt="" class="userPhoto">
@@ -72,6 +72,9 @@
 				</span>
 
 				<span class="post">
+
+					<a href="#/post/{{thisPost.id}}">
+
 					<div class="roww">
 						<span class="postUsername">
 							{{thisPost.postAuthorName}}
@@ -93,13 +96,14 @@
 						{{thisPost.html}} 
 					</div>
 
+					</a>
+
 					<div class="sharingButtonsRow">
-						<button class="btn-link social-btn"><img src="img/likeButton-2x.png"/> {{thisPost.likeCount}}</button>
+						<button class="btn-link social-btn" ng-click="likeComment(thisPost.id)"><img src="img/likeButton-2x.png"/> {{thisPost.likeCount}}</button>
 						<button class="btn-link social-btn"><img src="img/commentButton-2x.png"/> {{thisPost.replyCount}}</button>
 						<button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button>
 					</div>
 				</span>
-			</a>
 		</div>
 	</div>
 	<!--hr/-->
