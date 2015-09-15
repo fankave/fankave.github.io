@@ -21,6 +21,56 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 		networkService.send(ReplyService.getRepliesRequest($scope.postID));
 		var selectedComment = CommentService.getCommentById($scope.postID);
 		if(selectedComment != undefined){
+			updateCommentInReply(selectedComment);
+
+		}
+		else{
+			console.log("No data from comment service : TODO handle this with cookies");
+
+		}
+
+	}
+
+	$scope.requestReplies();
+
+	$scope.postReply = function(commentText) {
+		console.log("PostController postReply Invoked :"+ commentText + $scope.topicId);
+		networkService.send(ReplyService.postReplyRequest($scope.topicId,$scope.postID, commentText));
+		$scope.commentText = "";
+	};
+
+	$scope.likeReply = function() {
+		console.log("PostController Like Reply");
+		networkService.send(ReplyService.likeReplyRequest());
+	};
+
+	$scope.unlikeReply = function() {
+		console.log("PostController Unlike Reply");
+		networkService.send(ReplyService.unlikeReplyRequest());
+	};
+
+	function updateScore(){
+		//Score update here
+		$scope.leftTeam = TopicService.getTeamA();
+		$scope.rightTeam = TopicService.getTeamB();
+		var score = TopicService.getScore();
+		if(score != undefined){
+			$scope.leftTeamScore = score.points[0];
+			$scope.rightTeamScore = score.points[1];
+		}
+		$scope.gameStatus = TopicService.getGameStatus();
+		$scope.topicTitle = TopicService.getTitle();
+		if($scope.gameStatus == "live") {
+			$scope.gamePeriod = TopicService.getGamePeriod();
+			$scope.gameClock = TopicService.getGameClock();
+		}
+		console.log("Scores updated in replies");
+	}
+
+	 function updateCommentInReply(selectedComment){
+		if(selectedComment == undefined)
+			selectedComment = CommentService.getCommentById($scope.postID);
+		if(selectedComment != undefined){
 			var tempComment = {};
 			tempComment = selectedComment;
 			tempComment.postAuthorName = selectedComment.author.name;
@@ -49,51 +99,10 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 				console.log("updated comments media : " +$scope.comment.mediaAspectFeed);
 
 			}
-			
 		}
-		else{
-			console.log("No data from comment service : TODO handle this with cookies")
-		}
-		
 	}
-	
-	$scope.requestReplies();
 
-	$scope.postReply = function(commentText) {
-		console.log("PostController postReply Invoked :"+ commentText + $scope.topicId);
-		networkService.send(ReplyService.postReplyRequest($scope.topicId,$scope.postID, commentText));
-		$scope.commentText = "";
-	};
-
-	$scope.likeReply = function() {
-		console.log("PostController Like Reply");
-		networkService.send(ReplyService.likeReplyRequest());
-	};
-
-	$scope.unlikeReply = function() {
-		console.log("PostController Unlike Reply");
-		networkService.send(ReplyService.unlikeReplyRequest());
-	};
-
-	var updateScore = function(){
-		//Score update here
-		$scope.leftTeam = TopicService.getTeamA();
-		$scope.rightTeam = TopicService.getTeamB();
-		var score = TopicService.getScore();
-		if(score != undefined){
-			$scope.leftTeamScore = score.points[0];
-			$scope.rightTeamScore = score.points[1];
-		}
-		$scope.gameStatus = TopicService.getGameStatus();
-		$scope.topicTitle = TopicService.getTitle();
-		if($scope.gameStatus == "live") {
-			$scope.gamePeriod = TopicService.getGamePeriod();
-			$scope.gameClock = TopicService.getGameClock();
-		}
-		console.log("Scores updated in replies");
-	};
-
-	var updateReplies = function(){
+	 function updateReplies(){
 
 		//TODO: check with ahmed, these values could be individual scope var.
 		var repliesData = ReplyService.replies();
@@ -123,16 +132,17 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 			console.log(i +" : updated replies html : " +$scope.replies[i].html);
 			console.log(i +" : updated replies author name: " +$scope.replies[i].postAuthorName);
 			console.log(i +" : updated replies author photo: " +$scope.replies[i].postAuthorPhoto);
-			
+
 			if($scope.replies[i].type == "media"){
 				console.log(i +" : updated replies media : " +$scope.replies[i].mediaUrl);
 				console.log(i +" : updated replies media : " +$scope.replies[i].mediaAspectFeed);
 			}
-			
+
 		}
-	};
+	}
 	ReplyService.registerObserverCallback(updateReplies);
 	TopicService.registerObserverCallback(updateScore);
+	CommentService.registerObserverCallback(updateCommentInReply);
 
 
 }
