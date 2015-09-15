@@ -36,7 +36,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 					_status = "live";
 				else if(_score.final == true)
 					_status = "past";
-				console.log("GAME Status  :"+ _status );
+				// console.log("GAME Status  :"+ _status );
 
 				if(_status == "live"){
 					console.log("_gameStats" + _score.status);

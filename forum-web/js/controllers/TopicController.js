@@ -105,9 +105,9 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 		var metrics = TopicService.getMetrics();
 		$scope.likesCount = metrics.likes;
 		$scope.commentsCount = metrics.comments;
-		console.log("updated topic" +$scope.topicTitle);
-		console.log("updated time" +$scope.createdAt);
-		console.log("updated metrics" +$scope.likesCount);
+		// console.log("updated topic" +$scope.topicTitle);
+		// console.log("updated time" +$scope.createdAt);
+		// console.log("updated metrics" +$scope.likesCount);
 	};
 	var updateComments = function(){
 
@@ -137,15 +137,15 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 			
 			$scope.commentsArray.push(tempComment);
 						
-			console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);
+			// console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);
 			
 			if($scope.commentsArray[i].type == "media"){
-				console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaUrl);
-				console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaAspectFeed);
+				// console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaUrl);
+				// console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaAspectFeed);
 
 			}
-			console.log(i +" : updated comments author name: " +$scope.commentsArray[i].postAuthorName);
-			console.log(i +" : updated comments author photo: " +$scope.commentsArray[i].postAuthorPhoto);
+			// console.log(i +" : updated comments author name: " +$scope.commentsArray[i].postAuthorName);
+			// console.log(i +" : updated comments author photo: " +$scope.commentsArray[i].postAuthorPhoto);
 		}
 
 		networkService.send(TopicService.getFollowChannelRequest(TopicService.getChannelId()));

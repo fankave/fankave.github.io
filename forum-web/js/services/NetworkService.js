@@ -17,15 +17,15 @@ function initNetworkService($websocket,DataService,UserInfoService)
 	});
 
 	ws.onMessage(function(evt) {
-		console.log("Websocket Message Recieved :  " +evt.data);
+		// console.log("Websocket Message Recieved :  " +evt.data);
 		var responseJson = JSON.parse(evt.data);
 		var type = responseJson.rid;
 		if(type != undefined){
 			if(type == "topic" || type == "score"){
 				DataService.setTopic(responseJson);
-				console.log("Processing Topic");
+				// console.log("Processing Topic");
 			}else if(type == "comment"){
-				console.log("Processing Comments");
+				// console.log("Processing Comments");
 				DataService.setComments(responseJson);
 			}
 			else if(type == "reply"){

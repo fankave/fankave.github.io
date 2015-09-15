@@ -30,7 +30,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 			_commentObject = Bant.bant(tempCommentsData[i]);
 			if(_commentObject.id != undefined)
 				_comments.push(_commentObject);
-			console.log("Comments in set comment Service type:"+_commentObject.type + "  " +_commentObject.html );
+			// console.log("Comments in set comment Service type:"+_commentObject.type + "  " +_commentObject.html );
 		}
 		notifyObservers();
 	}

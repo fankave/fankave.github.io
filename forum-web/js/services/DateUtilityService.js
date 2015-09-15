@@ -3,7 +3,7 @@ networkModule.service('DateUtilityService', dateUtility);
 function dateUtility() {
 
 	function timeSince(timeStamp) {
-		console.log("timeSatmp", timeStamp);
+		// console.log("timeSatmp", timeStamp);
 		var now = new Date();
 		var createdDate = new Date(timeStamp);
 		secondsPast = (now.getTime() - createdDate.getTime()) / 1000;
