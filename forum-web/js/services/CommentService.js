@@ -86,6 +86,17 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 		});
 	};
 	
+	function registerObserverCallback(callback){
+		//register an observer
+		console.log("comments callback registered");
+		var callbackLength  = observerCallbacks.length;
+		while(callbackLength > 0){
+			callbackLength = observerCallbacks.length;
+			observerCallbacks.pop();
+		}
+		observerCallbacks.push(callback);
+	}
+	
 	function commentGetRequest(uri){
 		return  {"rid": "comment",
 			"timestamp": new Date().getTime(),
@@ -156,11 +167,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 			postCommentRequest:postCommentRequest,
 			likeCommentRequest:likeCommentRequest,
 			unlikeCommentRequest:unlikeCommentRequest,
-			registerObserverCallback:function(callback){
-				//register an observer
-				console.log("comments callback registered");
-				observerCallbacks.push(callback);
-			},
+			registerObserverCallback:registerObserverCallback,
 			getCommentsRequest:getCommentsRequest
 	};
 

@@ -121,6 +121,17 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 			callback();
 		});
 	};
+	
+	function registerObserverCallback(callback){
+		//register an observer
+		console.log("topic callback registered");
+		var callbackLength  = observerCallbacks.length;
+		while(callbackLength > 0){
+			callbackLength = observerCallbacks.length;
+			observerCallbacks.pop();
+		}
+		observerCallbacks.push(callback);
+	}
 
 	return {
 		getTopic: function(){return _topic ;},
@@ -159,11 +170,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		setTopicId: function(topicId){_id = topicId ;},
 		setTopic:setTopicData,
 		updateTopic:updateTopicData,
-		registerObserverCallback:function(callback){
-			//register an observer
-			console.log("topic callback registered");
-			observerCallbacks.push(callback);
-		}
+		registerObserverCallback:registerObserverCallback
 	};
 
 });

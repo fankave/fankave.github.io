@@ -145,6 +145,17 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 		});
 	};
 	
+	function registerObserverCallback(callback){
+		//register an observer
+		console.log("reply callback registered");
+		var callbackLength  = observerCallbacks.length;
+		while(callbackLength > 0){
+			callbackLength = observerCallbacks.length;
+			observerCallbacks.pop();
+		}
+		observerCallbacks.push(callback);
+	}
+	
 	return {
 		replies: function(){return _replies },
 
@@ -155,11 +166,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 		postReplyRequest:postReplyRequest,
 		likeReplyRequest:likeReplyRequest,
 		unlikeReplyRequest:unlikeReplyRequest,
-		registerObserverCallback:function(callback){
-			//register an observer
-			console.log("Replies callback registered");
-			observerCallbacks.push(callback);
-		},
+		registerObserverCallback:registerObserverCallback,
 		getRepliesRequest:getRepliesRequest
 	};
 
