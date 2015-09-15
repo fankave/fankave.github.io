@@ -5,9 +5,9 @@ function initFacebookController($scope, $http, facebookService, UserInfoService,
 {
 	// console.log("initFacebookController");
 
-	$scope.loginToFacebook = function()
-	{
-		console.log("log in to Facebook");
+	// $scope.loginToFacebook = function()
+	// {
+		// console.log("log in to Facebook");
 		// facebookService.userLoggedInToFacebook = true;
 		// window.location = "#/topic/0";
 
@@ -33,7 +33,7 @@ function initFacebookController($scope, $http, facebookService, UserInfoService,
 	              var uid = response.authResponse.userID;
 	              var accessToken = response.authResponse.accessToken;
 	              // $scope.facebookUserStatus = "login & authentication OK";
-	              console.log("FB: login & authentication OK");
+	              // console.log("FB: login & authentication OK");
 	 
 
 	              FB.api('/me', {}, function(response)
@@ -83,7 +83,7 @@ function initFacebookController($scope, $http, facebookService, UserInfoService,
 	         fjs.parentNode.insertBefore(js, fjs);
 
 	       }(document, 'script', 'facebook-jssdk'));
-	}
+	// }
 
 
 	$scope.registerFacebookUser = function()

@@ -97,7 +97,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 	
 	function registerObserverCallback(callback){
 		//register an observer
-		console.log("comments callback registered");
+		// console.log("comments callback registered");
 		var callbackLength  = observerCallbacks.length;
 		while(callbackLength > 0){
 			callbackLength = observerCallbacks.length;

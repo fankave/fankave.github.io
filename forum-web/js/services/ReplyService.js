@@ -147,7 +147,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	
 	function registerObserverCallback(callback){
 		//register an observer
-		console.log("reply callback registered");
+		// console.log("reply callback registered");
 		var callbackLength  = observerCallbacks.length;
 		while(callbackLength > 0){
 			callbackLength = observerCallbacks.length;
