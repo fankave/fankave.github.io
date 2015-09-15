@@ -22,20 +22,22 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 		tempReplyData = replyData.data.results;
 		if(tempReplyData!= undefined && tempReplyData.length>0){
 			var len = tempReplyData.length;
+			console.log("replies #"+ len);
 			for(i=0;i<len;i++){
 				var _replyObject = {};
 				_replyObject = Bant.bant(tempReplyData[i])
 				if(_replyObject.id != undefined )
 					_replies.push(_replyObject);
 				console.log("Reply object"+_replyObject);
-				notifyObservers();
 			}
+			notifyObservers();
 		}
 	}
 
 	function appendToReplies(postReplyData) {
 		var tempPostedReply = postReplyData.data;
-		if(tempReplysData!= undefined){
+		if(tempPostedReply!= undefined){
+			console.log("appendToReplies :"+tempPostedReply);
 			var _replyObject = Bant.bant(tempPostedReply);
 			if(_replyObject.id != undefined )
 				_replies.push(_replyObject);
@@ -92,7 +94,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	}
 
 	function postReplyRequest(topicId, commentId,replyData){
-
+		console.log("Topicid : "+topicId,"commentid : "+commentId,"replydata : "+replyData);
 		var createReplyParams =replyPostRequest(POST_REPLY_URI);
 		createReplyParams.data = 	
 		{

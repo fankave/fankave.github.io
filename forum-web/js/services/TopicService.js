@@ -18,10 +18,11 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	function setTopicData(topicData) 
 	{
 
-		_id = topicData.id;
+		;
 		if(topicData.data != undefined){
 			if(topicData.data.content != undefined )
 				_title = topicData.data.content.title;
+			_id = topicData.data.id
 
 			_game = topicData.data.game;
 			if(_game != undefined){

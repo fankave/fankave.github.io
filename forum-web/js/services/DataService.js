@@ -46,13 +46,19 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 			console.log("Topic Error message from network :"+replyData.error);
 		}
 		else if(replyData.push){
+			console.log("reply pushed ");
 			if(replyData.method == "UPSERT")
 				ReplyService.updateReply();
 			else if(replyData.method == "REMOVE")
 				ReplyService.removeReply();
 		}
-		else
-			ReplyService.setReplies(replyData)
+		else {
+			if(replyData.method == "POST")
+				ReplyService.appendToReplies(replyData);
+			else
+				ReplyService.setReplies(replyData);
+		}
+			
 	}
 
 	return {

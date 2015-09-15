@@ -1,12 +1,14 @@
 var postModule = angular.module("PostModule", ["NetworkModule"]);
-postModule.controller("PostController", ["$scope", "$routeParams", "networkService","ReplyService", initPostController]);
+postModule.controller("PostController", ["$scope", "$routeParams", "networkService","ReplyService", "TopicService",initPostController]);
 
-function initPostController($scope, $routeParams, networkService, ReplyService)
+function initPostController($scope, $routeParams, networkService, ReplyService, TopicService)
 {
 	$scope.pageClass = 'page-post';
 
 	$scope.postID = $routeParams.postID;
-	$scope.replies = networkService.getRepliesForPostID();
+	$scope.topicId = TopicService.getTopicId();
+	//$scope.replies = networkService.getRepliesForPostID();
+	
 
 	$scope.backToTopicButtonTapped = function()
 	{
@@ -16,12 +18,13 @@ function initPostController($scope, $routeParams, networkService, ReplyService)
 
 	$scope.requestReplies = function(){
 		console.log("PostController requestReplies Invoked :");
-		networkService.send(ReplyService.getReplyRequest($scope.postID));
+		networkService.send(ReplyService.getRepliesRequest($scope.postID));
 	}
-
+	$scope.requestReplies();
+	
 	$scope.postReply = function(commentText) {
-		console.log("PostController postReply Invoked :"+ commentText);
-		networkService.send(ReplyService.postReplyRequest(TopicService.getTopicId(),$scope.postID, commentText));
+		console.log("PostController postReply Invoked :"+ commentText + $scope.topicId);
+		networkService.send(ReplyService.postReplyRequest($scope.topicId,$scope.postID, commentText));
 		$scope.commentText = "";
 	};
 
@@ -38,10 +41,10 @@ function initPostController($scope, $routeParams, networkService, ReplyService)
 	var updateReplies = function(){
 
 		//TODO: check with ahmed, these values could be individual scope var.
-		var repliesdata = ReplyService.replies();
-		var len = repliesdata.length;
+		var repliesData = ReplyService.replies();
+		var len = repliesData.length;
 
-		$scope.repliesArray = [];
+		$scope.replies = [];
 
 		for(i=0;i<len;i++){
 			var tempReply = {};
@@ -59,15 +62,14 @@ function initPostController($scope, $routeParams, networkService, ReplyService)
 						tempReply.mediaAspectFeed = repliesData[i].mediaAspect2x1
 
 
-						$scope.repliesArray.push(tempReply);
-			console.log(i +" : updated replies html : " +$scope.repliesArray[i].html);
-			if($scope.repliesArray[i].type == "media"){
-				console.log(i +" : updated replies media : " +$scope.repliesArray[i].mediaUrl);
-				console.log(i +" : updated replies media : " +$scope.repliesArray[i].mediaAspectFeed);
-
+						$scope.replies.push(tempReply);
+			console.log(i +" : updated replies html : " +$scope.replies[i].html);
+			if($scope.replies[i].type == "media"){
+				console.log(i +" : updated replies media : " +$scope.replies[i].mediaUrl);
+				console.log(i +" : updated replies media : " +$scope.replies[i].mediaAspectFeed);
 			}
-			console.log(i +" : updated replies author name: " +$scope.repliesArray[i].postAuthorName);
-			console.log(i +" : updated replies author photo: " +$scope.repliesArray[i].postAuthorPhoto);
+			console.log(i +" : updated replies author name: " +$scope.replies[i].postAuthorName);
+			console.log(i +" : updated replies author photo: " +$scope.replies[i].postAuthorPhoto);
 		}
 	};
 	ReplyService.registerObserverCallback(updateReplies);
