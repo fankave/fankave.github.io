@@ -21,7 +21,7 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 		networkService.send(ReplyService.getRepliesRequest($scope.postID));
 		var selectedComment = CommentService.getCommentById($scope.postID);
 		if(selectedComment != undefined){
-			$scope.updateCommentInReply(selectedComment);
+			updateCommentInReply(selectedComment);
 
 		}
 		else{

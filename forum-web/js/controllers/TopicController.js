@@ -17,12 +17,12 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 //		"uri": "\/mock\/topic\/53c167f17040001d?duration=\(100)"};
 	};
 
-	if(facebookService.userLoggedInToFacebook === false)
-	{
-		console.log("Not logged in to facebook, take user to login page")
-		window.location = "#/facebookLogin";
-	}
-	else
+//	if(facebookService.userLoggedInToFacebook === false)
+//	{
+//		console.log("Not logged in to facebook, take user to login page")
+//		window.location = "#/facebookLogin";
+//	}
+//	else
 	{
 		// console.log("TopicController | userLoggedInToFacebook: " + facebookService.userLoggedInToFacebook);
 		$scope.pageClass = 'page-topic';
