@@ -1,14 +1,14 @@
 var postModule = angular.module("PostModule", ["NetworkModule"]);
-postModule.controller("PostController", ["$scope", "$routeParams", "networkService","ReplyService", "TopicService",initPostController]);
+postModule.controller("PostController", ["$scope", "$routeParams", "networkService","ReplyService", "TopicService","CommentService",initPostController]);
 
-function initPostController($scope, $routeParams, networkService, ReplyService, TopicService)
+function initPostController($scope, $routeParams, networkService, ReplyService, TopicService, CommentService)
 {
 	$scope.pageClass = 'page-post';
 
 	$scope.postID = $routeParams.postID;
 	$scope.topicId = TopicService.getTopicId();
 	//$scope.replies = networkService.getRepliesForPostID();
-	
+
 
 	$scope.backToTopicButtonTapped = function()
 	{
@@ -17,11 +17,36 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 
 
 	$scope.requestReplies = function(){
-		console.log("PostController requestReplies Invoked :");
 		networkService.send(ReplyService.getRepliesRequest($scope.postID));
+		var selectedComment = CommentService.getCommentById($scope.postID);
+		var tempComment = {};
+		tempComment = selectedComment;
+		tempComment.postAuthorName = selectedComment.author.name;
+		tempComment.postAuthorPhoto = selectedComment.author.photo;
+
+		tempComment.postTimestamp = selectedComment.createdAt;
+
+		if(selectedComment.mediaAspect16x9 != undefined)
+			tempComment.mediaAspectFeed = selectedComment.mediaAspect16x9;
+		else if(selectedComment.mediaAspect1x1 != undefined)
+			tempComment.mediaAspectFeed = selectedComment.mediaAspect1x1;
+		else if(selectedComment.mediaAspect2x1 != undefined)
+			tempComment.mediaAspectFeed = selectedComment.mediaAspect2x1;
+		
+		$scope.comment = tempComment;
+		
+		console.log("comments html : " +$scope.comment.html);
+		if($scope.comment.type == "media"){
+			console.log("updated comments media : " +$scope.comment.mediaUrl);
+			console.log("updated comments media : " +$scope.comment.mediaAspectFeed);
+
+		}
+		console.log("updated comments author name: " +$scope.comment.postAuthorName);
+		console.log("updated comments author photo: " +$scope.comment.postAuthorPhoto);
+		console.log("PostController requestReplies Invoked");
 	}
 	$scope.requestReplies();
-	
+
 	$scope.postReply = function(commentText) {
 		console.log("PostController postReply Invoked :"+ commentText + $scope.topicId);
 		networkService.send(ReplyService.postReplyRequest($scope.topicId,$scope.postID, commentText));
@@ -36,6 +61,24 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 	$scope.unlikeReply = function() {
 		console.log("PostController Unlike Reply");
 		networkService.send(ReplyService.unlikeReplyRequest());
+	};
+
+	var updateScore = function(){
+		//Score update here
+		$scope.leftTeam = TopicService.getTeamA();
+		$scope.rightTeam = TopicService.getTeamB();
+		var score = TopicService.getScore();
+		if(score != undefined){
+			$scope.leftTeamScore = score.points[0];
+			$scope.rightTeamScore = score.points[1];
+		}
+		$scope.gameStatus = TopicService.getGameStatus();
+		$scope.topicTitle = TopicService.getTitle();
+		if($scope.gameStatus == "live") {
+			$scope.gamePeriod = TopicService.getGamePeriod();
+			$scope.gameClock = TopicService.getGameClock();
+		}
+		console.log("Scores updated in replies");
 	};
 
 	var updateReplies = function(){
@@ -73,6 +116,7 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 		}
 	};
 	ReplyService.registerObserverCallback(updateReplies);
+	TopicService.registerObserverCallback(updateScore);
 
 
 }

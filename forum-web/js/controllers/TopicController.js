@@ -32,9 +32,9 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 		//$scope.posts = StaticData.getPostsForTopicID();
 		$scope.init();
 	}
-	
 
-	
+
+
 
 	$scope.postComment = function(commentText) {
 		console.log("TopicController postComment Invoked :"+ commentText);
@@ -126,15 +126,16 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 			tempComment.postTimestamp = commentsdata[i].createdAt;
 
 			if(commentsdata[i].mediaAspect16x9 != undefined)
-				tempComment.mediaAspectFeed = commentsdata[i].mediaAspect16x9
+				tempComment.mediaAspectFeed = commentsdata[i].mediaAspect16x9;
 				else if(commentsdata[i].mediaAspect1x1 != undefined)
-					tempComment.mediaAspectFeed = commentsdata[i].mediaAspect1x1
+					tempComment.mediaAspectFeed = commentsdata[i].mediaAspect1x1;
 					else if(commentsdata[i].mediaAspect2x1 != undefined)
-						tempComment.mediaAspectFeed = commentsdata[i].mediaAspect2x1
-
-
-						$scope.commentsArray.push(tempComment);
+						tempComment.mediaAspectFeed = commentsdata[i].mediaAspect2x1;
+			
+			$scope.commentsArray.push(tempComment);
+						
 			console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);
+			
 			if($scope.commentsArray[i].type == "media"){
 				console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaUrl);
 				console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaAspectFeed);
