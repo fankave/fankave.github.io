@@ -98,14 +98,14 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 			tempReply.postTimestamp = repliesData[i].createdAt;
 
 			if(repliesData[i].mediaAspect16x9 != undefined)
-				tempReply.mediaAspectFeed = repliesData[i].mediaAspect16x9
+				tempReply.mediaAspectFeed = repliesData[i].mediaAspect16x9;
 				else if(repliesData[i].mediaAspect1x1 != undefined)
-					tempReply.mediaAspectFeed = repliesData[i].mediaAspect1x1
+					tempReply.mediaAspectFeed = repliesData[i].mediaAspect1x1;
 					else if(repliesData[i].mediaAspect2x1 != undefined)
-						tempReply.mediaAspectFeed = repliesData[i].mediaAspect2x1
+						tempReply.mediaAspectFeed = repliesData[i].mediaAspect2x1;
 
-
-						$scope.replies.push(tempReply);
+			$scope.replies.push(tempReply);
+			
 			console.log(i +" : updated replies html : " +$scope.replies[i].html);
 			if($scope.replies[i].type == "media"){
 				console.log(i +" : updated replies media : " +$scope.replies[i].mediaUrl);
