@@ -75,6 +75,15 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 		}
 
 	}
+	
+	function getCommentById(id){
+		for(i=0;i<_comments.length;i++){
+			if(_comments[i].id == id){
+				//remove element
+				return _comments[i];
+			}
+		}
+	}
 
 
 
@@ -168,7 +177,8 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 			likeCommentRequest:likeCommentRequest,
 			unlikeCommentRequest:unlikeCommentRequest,
 			registerObserverCallback:registerObserverCallback,
-			getCommentsRequest:getCommentsRequest
+			getCommentsRequest:getCommentsRequest,
+			getCommentById:getCommentById
 	};
 
 });
