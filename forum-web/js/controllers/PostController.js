@@ -17,34 +17,46 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 
 
 	$scope.requestReplies = function(){
+		console.log("PostController requestReplies Invoked");
 		networkService.send(ReplyService.getRepliesRequest($scope.postID));
 		var selectedComment = CommentService.getCommentById($scope.postID);
-		var tempComment = {};
-		tempComment = selectedComment;
-		tempComment.postAuthorName = selectedComment.author.name;
-		tempComment.postAuthorPhoto = selectedComment.author.photo;
+		if(selectedComment != undefined){
+			var tempComment = {};
+			tempComment = selectedComment;
+			tempComment.postAuthorName = selectedComment.author.name;
+			tempComment.postAuthorPhoto = selectedComment.author.photo;
 
-		tempComment.postTimestamp = selectedComment.createdAt;
+			tempComment.postTimestamp = selectedComment.createdAt;
+			tempComment.likeCount = selectedComment.metrics.likes;
+			tempComment.replyCount = selectedComment.metrics.replies;
 
-		if(selectedComment.mediaAspect16x9 != undefined)
-			tempComment.mediaAspectFeed = selectedComment.mediaAspect16x9;
-		else if(selectedComment.mediaAspect1x1 != undefined)
-			tempComment.mediaAspectFeed = selectedComment.mediaAspect1x1;
-		else if(selectedComment.mediaAspect2x1 != undefined)
-			tempComment.mediaAspectFeed = selectedComment.mediaAspect2x1;
-		
-		$scope.comment = tempComment;
-		
-		console.log("comments html : " +$scope.comment.html);
-		if($scope.comment.type == "media"){
-			console.log("updated comments media : " +$scope.comment.mediaUrl);
-			console.log("updated comments media : " +$scope.comment.mediaAspectFeed);
+			if(selectedComment.mediaAspect16x9 != undefined)
+				tempComment.mediaAspectFeed = selectedComment.mediaAspect16x9;
+			else if(selectedComment.mediaAspect1x1 != undefined)
+				tempComment.mediaAspectFeed = selectedComment.mediaAspect1x1;
+			else if(selectedComment.mediaAspect2x1 != undefined)
+				tempComment.mediaAspectFeed = selectedComment.mediaAspect2x1;
 
+
+
+			$scope.comment = tempComment;
+
+			console.log("comments html : " +$scope.comment.html);
+			console.log("updated comments author name: " +$scope.comment.postAuthorName);
+			console.log("updated comments author photo: " +$scope.comment.postAuthorPhoto);
+			if($scope.comment.type == "media"){
+				console.log("updated comments media : " +$scope.comment.mediaUrl);
+				console.log("updated comments media : " +$scope.comment.mediaAspectFeed);
+
+			}
+			
 		}
-		console.log("updated comments author name: " +$scope.comment.postAuthorName);
-		console.log("updated comments author photo: " +$scope.comment.postAuthorPhoto);
-		console.log("PostController requestReplies Invoked");
+		else{
+			console.log("No data from comment service : TODO handle this with cookies")
+		}
+		
 	}
+	
 	$scope.requestReplies();
 
 	$scope.postReply = function(commentText) {
@@ -96,23 +108,27 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 			tempReply.postAuthorPhoto = repliesData[i].author.photo;
 
 			tempReply.postTimestamp = repliesData[i].createdAt;
+			tempReply.likeCount = repliesData[i].metrics.likes;
+			tempReply.replyCount = repliesData[i].metrics.replies;
 
 			if(repliesData[i].mediaAspect16x9 != undefined)
 				tempReply.mediaAspectFeed = repliesData[i].mediaAspect16x9;
-				else if(repliesData[i].mediaAspect1x1 != undefined)
-					tempReply.mediaAspectFeed = repliesData[i].mediaAspect1x1;
-					else if(repliesData[i].mediaAspect2x1 != undefined)
-						tempReply.mediaAspectFeed = repliesData[i].mediaAspect2x1;
+			else if(repliesData[i].mediaAspect1x1 != undefined)
+				tempReply.mediaAspectFeed = repliesData[i].mediaAspect1x1;
+			else if(repliesData[i].mediaAspect2x1 != undefined)
+				tempReply.mediaAspectFeed = repliesData[i].mediaAspect2x1;
 
 			$scope.replies.push(tempReply);
-			
+
 			console.log(i +" : updated replies html : " +$scope.replies[i].html);
+			console.log(i +" : updated replies author name: " +$scope.replies[i].postAuthorName);
+			console.log(i +" : updated replies author photo: " +$scope.replies[i].postAuthorPhoto);
+			
 			if($scope.replies[i].type == "media"){
 				console.log(i +" : updated replies media : " +$scope.replies[i].mediaUrl);
 				console.log(i +" : updated replies media : " +$scope.replies[i].mediaAspectFeed);
 			}
-			console.log(i +" : updated replies author name: " +$scope.replies[i].postAuthorName);
-			console.log(i +" : updated replies author photo: " +$scope.replies[i].postAuthorPhoto);
+			
 		}
 	};
 	ReplyService.registerObserverCallback(updateReplies);

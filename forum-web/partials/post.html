@@ -17,7 +17,7 @@
 			
 			<span class="postAuthorPhoto">
 				<div class="thumbnail">
-  					<img ng-src="img/staticUsers/{{thisReply.postAuthorPhoto}}" alt="" class="userPhoto">
+  					<img ng-src={{thisReply.postAuthorPhoto}} alt="" class="userPhoto">
 			    </div>
 			</span>
 
@@ -27,12 +27,12 @@
 						{{thisReply.postAuthorName}}
 					</span>
 					<span class="timestamp">
-						3m
+						{{thisReply.postTimestamp}}
 					</span>
 				</div>
 
 				<div class="postContent">
-					{{thisReply.replyContent}} 
+					{{thisReply.html}} 
 				</div>
 
 				<div class="sharingButtonsRow">

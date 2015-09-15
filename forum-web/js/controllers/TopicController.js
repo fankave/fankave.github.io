@@ -122,6 +122,9 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 			tempComment = commentsdata[i];
 			tempComment.postAuthorName = commentsdata[i].author.name;
 			tempComment.postAuthorPhoto = commentsdata[i].author.photo;
+			
+			tempComment.likeCount = commentsdata[i].metrics.likes;
+			tempComment.replyCount = commentsdata[i].metrics.replies;
 
 			tempComment.postTimestamp = commentsdata[i].createdAt;
 
