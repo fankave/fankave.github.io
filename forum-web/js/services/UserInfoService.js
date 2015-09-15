@@ -22,12 +22,12 @@ networkModule.service('UserInfoService', function () {
 	}
 	
 	function setUserCredentials(userId, accessToken, sessionId){
-		console.log("setUserCredentials(" + userId + ", " + accessToken + ", " + sessionId);
+		// console.log("setUserCredentials(" + userId + ", " + accessToken + ", " + sessionId);
 		_userInfo = {};
 		_userInfo.userId = userId;
 		_userInfo.accessToken = accessToken;
 		_userInfo.sessionId = sessionId;
-		console.log("this.userInfo.userId :"+ _userInfo.userId);
+		// console.log("this.userInfo.userId :"+ _userInfo.userId);
 	}
 	return{
 		getUserCredentials:getUserCredentials,

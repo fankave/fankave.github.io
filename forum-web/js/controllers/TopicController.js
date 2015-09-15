@@ -19,7 +19,7 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 
 	if(facebookService.userLoggedInToFacebook === false)
 	{
-		console.log("Not logged in to facebook, take user to login page")
+		// console.log("Not logged in to facebook, take user to login page")
 		window.location = "#/facebookLogin";
 	}
 	else

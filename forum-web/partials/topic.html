@@ -66,9 +66,9 @@
 		<div ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.mediaType" class="row postRow">
 
 				<span class="postAuthorPhoto">
-					<!--a class="thumbnail"-->
+					<a href="#/post/{{thisPost.id}}" class="thumbnail">
 	  					<img ng-src="{{thisPost.postAuthorPhoto}}" alt="" class="userPhoto">
-				    <!--/a-->
+				    </a>
 				</span>
 
 				<span class="post">
