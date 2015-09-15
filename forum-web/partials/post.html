@@ -46,8 +46,10 @@
 	</div>
 
 	<footer class="footer" id="textEntryField">
-        <div class="form-group">
-        	<input placeholder="Comment..." class="form-control" type="text">
+       <div class="form-group" >
+        <form ng-submit="postReply(commentText)">
+        	<input id="replyCommentField" placeholder="Comment..." class="form-control" ng-model="commentText" type="text">
+        	</form>
         </div>
 	</footer>
 </section>
