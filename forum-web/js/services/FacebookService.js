@@ -5,85 +5,85 @@ function initFacebookController($scope, $http, facebookService, UserInfoService,
 {
 	// console.log("initFacebookController");
 
-	// $scope.loginToFacebook = function()
-	// {
+	$scope.loginToFacebook = function()
+	{
 		// console.log("log in to Facebook");
 		// facebookService.userLoggedInToFacebook = true;
 		// window.location = "#/topic/0";
+		FB.login();
+	}
 
 
-		window.fbAsyncInit = function()
-		{
-	        FB.init({
-	          appId      : '1573356879579907',
-	          xfbml      : true,
-	          version    : 'v2.4'
-	        });
-	        // console.log('FB SDK loaded OK');
+	window.fbAsyncInit = function()
+	{
+        FB.init({
+          appId      : '1573356879579907',
+          xfbml      : true,
+          version    : 'v2.4'
+        });
+        // console.log('FB SDK loaded OK');
 
-	        FB.getLoginStatus(function(response)
-	        {
-			   if (response.status === 'connected')
-	            {
-	              // the user is logged in and has authenticated your
-	              // app, and response.authResponse supplies
-	              // the user's ID, a valid access token, a signed
-	              // request, and the time the access token 
-	              // and signed request each expire
-	              var uid = response.authResponse.userID;
-	              var accessToken = response.authResponse.accessToken;
-	              // $scope.facebookUserStatus = "login & authentication OK";
-	              // console.log("FB: login & authentication OK");
-	 
+        FB.getLoginStatus(function(response)
+        {
+		   if (response.status === 'connected')
+            {
+              // the user is logged in and has authenticated your
+              // app, and response.authResponse supplies
+              // the user's ID, a valid access token, a signed
+              // request, and the time the access token 
+              // and signed request each expire
+              var uid = response.authResponse.userID;
+              var accessToken = response.authResponse.accessToken;
+              // $scope.facebookUserStatus = "login & authentication OK";
+              // console.log("FB: login & authentication OK");
+ 
 
-	              FB.api('/me', {}, function(response)
-	              {
-	                // console.log(response.name);
-	                // console.log("FB ID: " + response.id);
-	                $scope.fbID = response.id;
-	                // console.log("FB access token: " + accessToken);
-	                $scope.fbAccessToken = accessToken;
-	                $scope.registerFacebookUser()
+              FB.api('/me', {}, function(response)
+              {
+                // console.log(response.name);
+                // console.log("FB ID: " + response.id);
+                $scope.fbID = response.id;
+                // console.log("FB access token: " + accessToken);
+                $scope.fbAccessToken = accessToken;
+                $scope.registerFacebookUser()
 
-	                // var userPictureURL = "http://graph.facebook.com/" + response.id + "/picture?type=square";
-	                // console.log(userPictureURL);
+                // var userPictureURL = "http://graph.facebook.com/" + response.id + "/picture?type=square";
+                // console.log(userPictureURL);
 
-	                // var userInfoDiv = document.getElementById("facebookUserInfo");
-	                // userInfoDiv.innerHTML = "<div>Welcome back, " + response.name + "</div><div><img src=" + userPictureURL + "></div>";
-	              });
-	 
-	            } 
-	            else if (response.status === 'not_authorized')
-	            {
-	              // the user is logged in to Facebook, 
-	              // but has not authenticated your app
-	              // $scope.facebookUserStatus = "login OK, authentication NO";
-	              console.log("login OK, authentication NO");
-	              FB.login();
-	            }
-	            else
-	            {
-	              // the user isn't logged in to Facebook.
-	              // $scope.facebookUserStatus = "Not logged in to Facebook";
-	              console.log("Not logged in to Facebook");
-	              FB.login();
-	            }
+                // var userInfoDiv = document.getElementById("facebookUserInfo");
+                // userInfoDiv.innerHTML = "<div>Welcome back, " + response.name + "</div><div><img src=" + userPictureURL + "></div>";
+              });
+ 
+            } 
+            else if (response.status === 'not_authorized')
+            {
+              // the user is logged in to Facebook, 
+              // but has not authenticated your app
+              // $scope.facebookUserStatus = "login OK, authentication NO";
+              console.log("login OK, authentication NO");
+              FB.login();
+            }
+            else
+            {
+              // the user isn't logged in to Facebook.
+              // $scope.facebookUserStatus = "Not logged in to Facebook";
+              console.log("Not logged in to Facebook");
+              // FB.login();
+            }
 
-			 	// $scope.$apply();
-			});
-	      };
+		 	// $scope.$apply();
+		});
+     };
 
-	      (function(d, s, id)
-	      {
-	      	// console.log('loading FB SDK...');
-	         var js, fjs = d.getElementsByTagName(s)[0];
-	         if (d.getElementById(id)) {return;}
-	         js = d.createElement(s); js.id = id;
-	         js.src = "//connect.facebook.net/en_US/sdk.js";
-	         fjs.parentNode.insertBefore(js, fjs);
-
-	       }(document, 'script', 'facebook-jssdk'));
-	// }
+	(function(d, s, id)
+	{
+		// console.log('loading FB SDK...');
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
 
 
 	$scope.registerFacebookUser = function()
@@ -156,7 +156,6 @@ function initFacebookController($scope, $http, facebookService, UserInfoService,
 	          console.log('response.config: ' + response.config);
 	          console.log('response.statusText: ' + response.statusText);
 	      });
-
 	}
 }
 
