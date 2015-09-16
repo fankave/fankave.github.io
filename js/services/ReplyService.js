@@ -1,4 +1,5 @@
 networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
+	var _postID;
 	var LIST_REPLIES_URI = "/v1.0/comment/replies/list/"
 	var POST_REPLY_URI="/v1.0/reply/create";
 	
@@ -16,6 +17,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	
 	var observerCallbacks = [];
 	var _replies = [];
+	var _topicIdFromReply;
 
 	function setReplies(replyData) {
 		_replies = [];
@@ -29,6 +31,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 				if(_replyObject.id != undefined )
 					_replies.push(_replyObject);
 				// console.log("Reply object"+_replyObject);
+				_topicIdFromReply =tempReplyData[i].topicId;
 			}
 			notifyObservers();
 		}
@@ -158,7 +161,9 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	
 	return {
 		replies: function(){return _replies },
-
+		getTopicIdFromReply: function(){return _topicIdFromReply; },
+		getPostId: function(){return _postID ;},
+		setPostId: function(postId){_postID = postId ;},
 		setReplies:setReplies,
 		updateReply:updateReply,
 		appendToReplies:appendToReplies,
