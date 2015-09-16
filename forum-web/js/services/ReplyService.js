@@ -1,4 +1,5 @@
 networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
+	var _postID;
 	var LIST_REPLIES_URI = "/v1.0/comment/replies/list/"
 	var POST_REPLY_URI="/v1.0/reply/create";
 	
@@ -160,7 +161,9 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	
 	return {
 		replies: function(){return _replies },
-		getTopicIdFromReply: function(){return tempReplyData; },
+		getTopicIdFromReply: function(){return _topicIdFromReply; },
+		getPostId: function(){return _postID ;},
+		setPostId: function(postId){_postID = postId ;},
 		setReplies:setReplies,
 		updateReply:updateReply,
 		appendToReplies:appendToReplies,
