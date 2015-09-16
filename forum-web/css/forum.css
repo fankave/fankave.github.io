@@ -241,8 +241,8 @@ body
 
 .userPhoto
 {
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
+	border-radius: 25px;
+	-webkit-border-radius: 25px;
 }
 
 .post /* entire right-side of each post row */
