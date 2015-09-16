@@ -1,15 +1,12 @@
-var postModule = angular.module("PostModule", ["NetworkModule", "FacebookModule"]);
-postModule.controller("PostController", ["$scope", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "facebookService", initPostController]);
+var postModule = angular.module("PostModule", ["NetworkModule"]);
+postModule.controller("PostController", ["$scope", "$routeParams", "networkService","ReplyService", "TopicService","CommentService",initPostController]);
 
-function initPostController($scope, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService)
+function initPostController($scope, $routeParams, networkService, ReplyService, TopicService, CommentService)
 {
 	$scope.pageClass = 'page-post';
 
 	$scope.postID = $routeParams.postID;
 	$scope.topicId = TopicService.getTopicId();
-
-	ReplyService.setPostId($routeParams.postID);
-
 	//$scope.replies = networkService.getRepliesForPostID();
 
 
@@ -20,7 +17,7 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 
 
 	$scope.requestReplies = function(){
-		console.log("PostController requestReplies Invoked");
+		// console.log("PostController requestReplies Invoked");
 		networkService.send(ReplyService.getRepliesRequest($scope.postID));
 		var selectedComment = CommentService.getCommentById($scope.postID);
 		if(selectedComment != undefined){
@@ -34,16 +31,7 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 
 	}
 
-	if(facebookService.userLoggedInToFacebook === false)
-	{
-		window.location = "#/facebookLogin";
-	}
-	else
-	{
-		$scope.pageClass = 'page-post';
-
-		$scope.requestReplies();
-	}
+	$scope.requestReplies();
 
 	$scope.postReply = function(commentText) {
 		console.log("PostController postReply Invoked :"+ commentText + $scope.topicId);
