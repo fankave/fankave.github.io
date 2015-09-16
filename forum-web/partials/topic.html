@@ -84,16 +84,16 @@
 						</span>
 					</div>
 
+					<div class="postContent">
+						{{thisPost.html}} 
+					</div>
+
 					<div ng-switch-when="image">
 						<img ng-src="{{thisPost.mediaUrl}}" class="postPhoto"/>
 					</div>
 
 					<div ng-switch-when="video">
 						<img ng-src="{{thisPost.mediaThumbUrl}}" class="postVideo"/>
-					</div>
-
-					<div class="postContent">
-						{{thisPost.html}} 
 					</div>
 
 					</a>
