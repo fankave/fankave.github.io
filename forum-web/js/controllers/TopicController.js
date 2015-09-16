@@ -38,7 +38,7 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 
 
 	$scope.postComment = function(commentText) {
-		console.log("TopicController postComment Invoked :"+ commentText);
+		// console.log("TopicController postComment Invoked :"+ commentText);
 		networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
 		$scope.commentText = "";
 	};

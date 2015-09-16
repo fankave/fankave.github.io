@@ -42,7 +42,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 			_commentObject = Bant.bant(tempComment);
 			if(_commentObject.id != undefined && _commentObject.html != undefined)
 				_comments.unshift(_commentObject);
-			console.log("appendToComments CommentService"+_commentObject.html );
+			// console.log("appendToComments CommentService"+_commentObject.html );
 		}
 		notifyObservers();
 	}
