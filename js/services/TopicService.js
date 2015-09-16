@@ -1,138 +1,176 @@
-networkModule.service('TopicService', function (DateUtilityService) {
-	
+networkModule.service('TopicService', function (DateUtilityService,Bant) {
+
 	var TOPIC_BASE_URI = "/v1.0/topic/show/";
 	var LIKE_TOPIC_URI = "/v1.0/topic/like/";
 	var UNLIKE_TOPIC_URI = "/v1.0/topic/unlike/";
+	var WATCH_TOPIC_URI = "/v1.0/topic/watch/";
 	//TODO temp, holding Topic JSON
 	var _topic;
 	var _id;
-	
 	var _title;
-	var _author;
-	var _owner;
-	var _lang;
-	
-	
-	//Content Sections
-	var _sectionLenght;
-	var _sectionType;
-	
-	var _html;
-	var _media;
-	var _tweet;
-	var _ogp;
-	var _link;
+	var _game;
+	var _status;
+	var _score;
+	var _gameStats;
+	var _links;
+	var observerCallbacks = [];	
 
-	var _liked;
-	var _createdAt;
-	var _topicSubType;
-	var _options;
-	var _metrics;
-	
-	var observerCallbacks = [];
+	function setTopicData(topicData) 
+	{
 
-	//call this when you know 'foo' has been changed
+		;
+		if(topicData.data != undefined){
+			if(topicData.data.content != undefined )
+				_title = topicData.data.content.title;
+			_id = topicData.data.id
+
+			_game = topicData.data.game;
+			if(_game != undefined){
+				_score = _game.score;
+//				Future game: live == false AND final == false.
+//				Live game: live == true.
+//				Past game: final == true.
+				if(_score.live == undefined && _score.final == undefined)
+					_status = "future";
+				else if(_score.live == true)
+					_status = "live";
+				else if(_score.final == true)
+					_status = "past";
+				// console.log("GAME Status  :"+ _status );
+
+				if(_status == "live"){
+					console.log("_gameStats" + _score.status);
+					_gameStats = _score.status;
+				}
+			}
+
+			_topic = Bant.bant(topicData.data);
+			notifyObservers();
+		}
+	}
+
+	function updateTopicData(scoreData){
+		console.log("Topic Service scoreData :" + scoreData)
+		setScoreData(scoreData);
+	}
+
+	function setScoreData(scoreData) 
+	{
+//		TODO: Check API to complete this.
+		_score = scoreData;
+		console.log("TopicService  insideScore"+_score );
+		if(_score != undefined){
+			if(_score.live == true){
+				_status = "live";
+			}
+			_gameStats = _score.status;
+			console.log("Game Points :" + _score.points[0] + " : : "+_score.points[1] );
+			console.log("Game Period :" + _gameStats[0]);
+			console.log("Game Period :" + _gameStats[1]);
+			notifyObservers();
+		}
+	}
+
+	function getTopicRequest(topicId){
+		var uri = TOPIC_BASE_URI+topicId;
+
+		return  varTopicParams = {"rid": "topic",
+				"timestamp": new Date().getTime(),
+				"method": "GET",
+				"uri": encodeURI(uri)};
+	}
+	function getFollowChannelRequest(channelID){
+		var uri = "/v1.0/channel/follow/" + channelID;
+
+		return  varTopicParams = {"rid": "topic",
+				"timestamp": new Date().getTime(),
+				"method": "POST",
+				"uri": encodeURI(uri)};
+	}
+	
+	function watchTopicRequest(topicId){
+		var uri = WATCH_TOPIC_URI+topicId;
+
+		return  varTopicParams = {"rid": "topic",
+				"timestamp": new Date().getTime(),
+				"method": "POST",
+				"uri": encodeURI(uri)};
+	}
+
+	function likeTopicRequest(){
+		return  varLikeParams = {"rid": "topic",
+				"timestamp": new Date().getTime(),
+				"method": "POST",
+				"uri": encodeURI(LIKE_TOPIC_URI + _id)};
+
+
+	}
+
+	function unlikeTopicRequest(){
+		return  varLikeParams = {"rid": "topic",
+				"timestamp": new Date().getTime(),
+				"method": "POST",
+				"uri": encodeURI(UNLIKE_TOPIC_URI + _id)};
+
+
+	}
+
+	//call this when you know 'data' has been changed
 	var notifyObservers = function(){
 		angular.forEach(observerCallbacks, function(callback){
 			callback();
 		});
 	};
 	
-	function setTopicData(topicData) 
-	{
-		_topic = topicData;
-		_id = _topic.id;
-		_title = _topic.data.content.title;
-		_author = _topic.data.author;
-		_owner = _topic.owner;
-		_lang = _topic.data.lang;
-		_sectionLength = _topic.data.content.sections.length;
-		_sectionType = _topic.data.content.sections[0].type;
-		//TODO support for multiple sections here
-		_html = _topic.data.content.sections[0].html;
-		_media = _topic.data.content.sections[0].media;
-		_ogp = _topic.data.content.sections[0].ogp;
-		_tweet = _topic.data.content.sections[0].tweet;
-		_link = _topic.data.content.sections[0].link;
-		
-		_liked = _topic.data.liked;
-		_createdAt = DateUtilityService.getTimeSince(_topic.data.createdAt);
-		_topicSubType = _topic.data.topicType;
-		_options = _topic.data.options;
-		_metrics = _topic.data.metrics;
-
-		console.log("LENGTH : "+_sectionLength);
-		console.log("TYPE : "+ _topic.data.content.sections[0].type);
-		notifyObservers();
-	}
-	
-	function updateTopic(topicData){
-		
-	}
-	
-	//TODO this API looks redundant for topic. do we need this at opic level, if so how to handle?
-	function removeTopic(topicData){
-		
-	}
-	
-	function getTopicRequest(topicId){
-		var uri = TOPIC_BASE_URI+topicId;
-		
-		return  varTopicParams = {"rid": "topic",
-	            "timestamp": new Date().getTime(),
-	            "method": "GET",
-	            "uri": encodeURI(uri)};
-	}
-	
-	function likeTopicRequest(){
-		return  varLikeParams = {"rid": "topic",
-	            "timestamp": new Date().getTime(),
-	            "method": "POST",
-	            "uri": encodeURI(LIKE_TOPIC_URI + _id)};
-		
-
-	}
-	
-	function unlikeTopicRequest(){
-		return  varLikeParams = {"rid": "topic",
-	            "timestamp": new Date().getTime(),
-	            "method": "POST",
-	            "uri": encodeURI(UNLIKE_TOPIC_URI + _id)};
-		
-
+	function registerObserverCallback(callback){
+		//register an observer
+		// console.log("topic callback registered");
+		var callbackLength  = observerCallbacks.length;
+		while(callbackLength > 0){
+			callbackLength = observerCallbacks.length;
+			observerCallbacks.pop();
+		}
+		observerCallbacks.push(callback);
 	}
 
 	return {
 		getTopic: function(){return _topic ;},
 		getTopicId: function(){return _id ;},
-		getSectionType: function(sectionNumber){ 
-			//TODO check for section length
-			if(sectionNumber == undefined )
-			return _topic.data.content.sections[0].type;
-		else
-			return _topic.data.content.sections[sectionNumber].type
-		},
+		getGame: function(){return _game;},
+		getTeamA: function(){if(_game != undefined) return _game.teams[0];},
+		getTeamB: function(){if(_game != undefined) return _game.teams[1];},
+		getLinks: function(){if(_game != undefined) return _game.links;},
+		getScore: function(){if(_score != undefined) return _score;},
+		getGameStatus: function() {return _status;},
+		getGamePeriod: function() {return _gameStats[0];},
+		getGameClock: function() {return _gameStats[1];},
+//		getSectionType: function(sectionNumber){ 
+//		//TODO check for section length
+//		if(sectionNumber == undefined )
+//		return _topic.data.content.sections[0].type;
+//		else
+//		return _topic.data.content.sections[sectionNumber].type
+//		},
+		getChannelId:function(){ if(_topic != undefined) return _topic.owner.id;},
 		getTitle:function(){ return _title;},
-		getHtml:function(){return _html},
-		getMedia:function(){return _media},
-		getTweet:function(){return _tweet},
-		getOgp:function(){return _ogp},
-		getLink:function(){return _link},
-		getTimeCreatedAt:function(){return _createdAt},
-		getLiked:function(){return _liked},
-		getMetrics:function(){return _metrics},
+		getHtml:function(){if(_topic != undefined) return _topic.html},
+//		getMedia:function(){return _media},
+//		getTweet:function(){return _tweet},
+//		getOgp:function(){return _ogp},
+//		getLink:function(){return _link},
+		getTimeCreatedAt:function(){if(_topic != undefined) return _topic.createdAt},
+		getLiked:function(){if(_topic != undefined) return _topic.liked},
+		getMetrics:function(){if(_topic != undefined) return _topic.metrics},
 		
+		watchTopicRequest:watchTopicRequest,
 		getLikeTopicRequest:likeTopicRequest,
 		getUnlikeTopicRequest:unlikeTopicRequest,
+		getFollowChannelRequest:getFollowChannelRequest,
 		getTopicRequest:getTopicRequest,
+		setTopicId: function(topicId){_id = topicId ;},
 		setTopic:setTopicData,
-		updateTopoc:updateTopic,
-		removeTopic:removeTopic,
-		registerObserverCallback:function(callback){
-			//register an observer
-			console.log("topic callback registered");
-			observerCallbacks.push(callback);
-		}
+		updateTopic:updateTopicData,
+		registerObserverCallback:registerObserverCallback
 	};
 
 });

@@ -12,11 +12,16 @@
 	<!-- CSS -->
 	<link rel="stylesheet" href="css/bootstrapCSS/bootstrap.css">
 	<link rel="stylesheet" href="css/forum.css">
+	<link rel="stylesheet" href="css/forumAnimations.css">
+
+	<!-- jQuery -->
+	<script src="lib/jQuery/jQuery.js"></script>
 
 	<!-- Angular libraries -->
 	<script src="lib/angular/angular.js"></script>
 	<script src="lib/angular/angular-route.js"></script>
 	<script src="lib/angular/angular-websocket.js"></script>
+	<script src="lib/angular/angular-animate.js"></script>
 
 	<!-- Forum-related Javascript -->
 	<script src="js/Forum.js"></script>
@@ -26,19 +31,24 @@
 	<script src="js/services/DataService.js"></script>
 	<script src="js/services/TopicService.js"></script>
 	<script src="js/services/CommentService.js"></script>
+	<script src="js/Canvas/ScoreCardRenderer.js"></script>
 	<script src="js/services/DateUtilityService.js"></script>
+	<script src="js/services/ReplyService.js"></script>
+	<script src="js/services/Bant.js"></script>
+	<script src="js/services/UserInfoService.js"></script>
+	<script src="js/services/FacebookService.js"></script>
+	<script src="js/services/StaticData.js"></script>
 </head>
 
 <body>
 	<div class="containerr">
-		<div ng-view>
+		<div class="page {{pageClass}}" ng-view>
 		</div>
 	</div>
 
 	<!-- Bootstrap & jQuery core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-	<script src="lib/jQuery/jQuery.js"></script>
 	<script src="lib/bootstrap/bootstrap.js"></script>
 </body>
 

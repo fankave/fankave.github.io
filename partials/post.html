@@ -1,28 +1,55 @@
 <section>
-	<nav class="navbar navbar-default navbar-fixed-top">
-		<div class="container">
-			<span><button id="backToTopicButton" class="btn btn-default" ng-click="backToTopicButtonTapped()">Back</button></span>
-			<span> Post: {{postID}} </span>
-		</div>
+	<nav class="navbar navbar-fixed-top" id="postHeader">
+
+			<span id="post_backToTopicButtonSpan">
+				<button id="backToTopicButton" class="btn-link" ng-click="backToTopicButtonTapped()">
+					<img src="img/backButton-2x.png"/>
+				</button>
+			</span>
+
+			<span>
+				
+			</span>
 	</nav>
-	
-	<div class="container">
-		<div>
-			This is a post, id: {{postID}}
+
+	<div>
+		<div ng-repeat="thisReply in replies" class="row postRow">
+			
+			<span class="postAuthorPhoto">
+				<div class="thumbnail">
+  					<img ng-src={{thisReply.postAuthorPhoto}} alt="" class="userPhoto">
+			    </div>
+			</span>
+
+			<span class="post">
+				<div class="roww">
+					<span class="postUsername">
+						{{thisReply.postAuthorName}}
+					</span>
+					<span class="timestamp">
+						{{thisReply.postTimestamp}}
+					</span>
+				</div>
+
+				<div class="postContent">
+					{{thisReply.html}} 
+				</div>
+
+				<div class="sharingButtonsRow">
+					<button class="btn-link social-btn"><img src="img/likeButton-2x.png"/> {{thisReply.likeCount}}</button>
+					<button class="btn-link social-btn"><img src="img/commentButton-2x.png"/> {{thisReply.commentCount}}</button>
+					<button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button>
+				</div>
+			</span>
+			
 		</div>
-
-		<hr/>
-
-		<ul>
-			<li ng-repeat="thisReply in replies">
-				{{thisReply.replyContent}}
-			</li>
-		</ul>
-
-		<footer class="footer" style="position:fixed; bottom:0; left:0px; width:100%; padding:5px; background-color:white;">
-	        <div class="form-group">
-	        	<input placeholder="Comment..." class="form-control" type="text">
-	        </div>
-		</footer>
 	</div>
+
+	<footer class="footer" id="textEntryField">
+       <div class="form-group" >
+        <form ng-submit="postReply(commentText)">
+        	<input id="replyCommentField" placeholder="Comment..." class="form-control" ng-model="commentText" type="text">
+        	</form>
+        </div>
+	</footer>
 </section>

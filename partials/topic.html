@@ -1,49 +1,119 @@
 <section>
     
 	<nav class="navbar navbar-fixed-top" id="header">
-       	<h2>Score Card</h2>
+       	<canvas id="scoreCardCanvas" width="1" height="1">
+   		</canvas>
+   		<div id="scoreCardContent">
+
+   			<div id="scoreCardTitlesRow" class="row">
+				<span id="leftTeamSpan">
+					<b>{{leftTeam.name}}</b>
+				</span>
+				<span id="rightTeamSpan">
+					<b>{{rightTeam.name}}</b>
+				</span>
+			</div>
+
+			<div id="scoreCardDataRow" class="row">
+				<span id="leftTeamLogo">
+					<span class="helper"></span>
+					<img src={{leftTeam.logo}} class="teamLogo"/>
+				</span>
+				<span id="leftTeamScore">
+					{{leftTeamScore}}
+				</span>
+				<span id="gameTime">
+					<div>
+						{{gamePeriod}}
+					</div>
+					<div>
+						{{gameClock}}
+					</div>
+				</span>
+				<span id="rightTeamScore">
+					{{rightTeamScore}}
+				</span>
+				<span id="rightTeamLogo">
+					<span class="helper"></span>
+					<img src={{rightTeam.logo}} class="teamLogo"/>
+				</span>
+			</div>
+
+   		</div>
     </nav>
 
 	<div id="topicDetails" class="row"> 
-		title: {{title}}
-		<p>description: {{html}} </p>
-		<p> likes: {{metrics.likes}}</p>
-	</div>
-
-    <hr>
-
-	<div>
-		<div ng-repeat="thisPost in commentsArray track by $index" class="postRow">
-
-			<span class="postAuthorPhoto">
-				<a href="#" class="thumbnail myThumbnail">
-  					<img src="" alt="">
-			    </a>
-			</span>
-
-			<span class="postContent">
-				{{thisPost.html}}
-				{{thisPost.likes}}
-				{{thisPost.createdAt}}
-			</span>
-
+		<div>
+			<b>{{topicTitle}}</b>
+		</div>
+		<div id="topicDescriptionBody">
+			{{topicDescHtml}}
+		</div>
+		<div class="topicSharingButtonsRow">
+			<button class="btn-link topic-social-btn" ng-click="likeTopic()"><img src="img/likeButton-2x_.png"/> {{likesCount}}</button>
+			<button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/commentButton-2x_.png"/> {{commentsCount}}</button>
+			<button class="btn-link topic-social-btn"><img src="img/moreButton-2x_.png"/></button>
 		</div>
 	</div>
-	
-	<hr/>
+
+
+	<!--ul class="nav nav-pills nav-justified">
+			<li role="presentation" class="active"><a>Posts</a></li>
+			<li role="presentation"><a href="#/post/0">Tweets</a></li>
+	</ul-->
 
 	<div>
-		<p>  TopicTitle :{{title}}</p>
-		<button ng-click="init()"> getTopicDetails</button>
-	</div>
+		<div ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.mediaType" class="row postRow">
 
-	<!--footer class="footer" id="textEntryField">
-        <div class="form-group">
-        	<input placeholder="Comment..." class="form-control" type="text">
+				<span class="postAuthorPhoto">
+					<a href="#/post/{{thisPost.id}}" class="thumbnail">
+	  					<img ng-src="{{thisPost.postAuthorPhoto}}" alt="" class="userPhoto">
+				    </a>
+				</span>
+
+				<span class="post">
+
+					<a href="#/post/{{thisPost.id}}">
+
+					<div class="roww">
+						<span class="postUsername">
+							{{thisPost.postAuthorName}}
+						</span>
+						<span class="timestamp">
+							{{thisPost.postTimestamp}}
+						</span>
+					</div>
+
+					<div ng-switch-when="image">
+						<img ng-src="{{thisPost.mediaUrl}}" class="postPhoto"/>
+					</div>
+
+					<div ng-switch-when="video">
+						<img ng-src="{{thisPost.mediaThumbUrl}}" class="postVideo"/>
+					</div>
+
+					<div class="postContent">
+						{{thisPost.html}} 
+					</div>
+
+					</a>
+
+					<div class="sharingButtonsRow">
+						<button class="btn-link social-btn" ng-click="likeComment(thisPost.id)"><img src="img/likeButton-2x.png"/> {{thisPost.likeCount}}</button>
+						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered()"><img src="img/commentButton-2x.png"/> {{thisPost.replyCount}}</button>
+						<button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button>
+					</div>
+				</span>
+		</div>
+	</div>
+	<!--hr/-->
+	
+	<footer class="footer" id="textEntryField">
+        <div class="form-group" >
+        <form ng-submit="postComment(commentText)">
+        	<input id="topicCommentField" placeholder="Comment..." class="form-control" ng-model="commentText" type="text">
+        	</form>
         </div>
-	</footer-->
+	</footer>
 	
 </section>
-
-
-<!-- <a href="#/post/{{thisPost.postID}}">{{thisPost.postContent}}</a> -->

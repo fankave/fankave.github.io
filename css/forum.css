@@ -1,8 +1,39 @@
+/*
+ * Forum CSS
+ *
+ */
+
+
+ /* Page-level / body */
+
+
+.page
+{
+	position:absolute;
+
+	top:0;
+
+	bottom:0;
+	padding-bottom:4em;
+	
+	width:100%;
+	height:100%;
+}
+
+.page-topic
+{
+	padding-top: 7em; 
+}
+
+.page-post
+{
+	padding-top: 4em; 
+}
+
 body
 { 
-    padding-top: 7em; 
     background-color:#EEEEEE;
-    padding-bottom:5em;
+    padding-bottom:4em;
 }
 
 .container
@@ -10,61 +41,368 @@ body
 	background-color: white;
 }
 
+
+/* Header / Nav Bars */
+
 #header
 {
-	min-height: 7em;
+	height: 7em;
 	text-align:center;
-	background-color:red;
+	/*background-color:red;*/
 	color:white;
+
+	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-#backToTopicButton
+
+/* Score Card */
+
+#scoreCardCanvas
 {
-     vertical-align: middle
-     height:100%;
+	text-align:center;
+	/*background-color:black;*/
+	color:white;
+	float:left;
 }
+
+#scoreCardContent
+{
+	width:100%;
+	height:100%;
+	position:absolute;
+	/*background-color:gray;*/
+}
+
+#scoreCardTitlesRow
+{
+	/*background:rgba(0, 0, 0, 0.3);*/
+	/*margin:5px;*/
+	height:25%;
+}
+
+#scoreCardDataRow
+{
+	/*background-color:rgba(0, 0, 0, 0.3);*/
+	/*width:100%;*/
+	/*margin:5px;*/
+	height:75%;
+}
+
+#leftTeamSpan
+{
+	width:50%;
+	float:left;
+	font-size:1.3em;
+}
+
+
+#rightTeamSpan
+{
+	width:50%;
+	float:right;
+	font-size:1.3em;
+}
+
+
+#leftTeamLogo
+{
+	width:25%;
+	max-height:80%;
+	float:left;
+	/*background-color:rgba(255, 255, 255, 0.3);*/
+	/*margin:5px;*/
+	text-align: right;
+}
+
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+#leftTeamScore
+{
+	width:15%;
+	height:80%;
+	float:left;
+	font-size:2.5em;
+	/*background-color:rgba(255, 255, 0, 0.3);*/
+	margin-bottom:10px;
+	line-height:160%;
+	text-align: right;
+	/*margin:5px;*/
+	/*display: table-cell; */
+	/*vertical-align: middle*/
+}
+
+
+.teamLogo
+{
+	max-width:50%;
+	vertical-align: middle;
+	text-align: right;
+}
+
+#gameTime
+{
+	float:left;
+	/*background-color:rgba(255, 255, 255, 0.3);*/
+	width:20%;
+	height:80%;
+	font-size:1.2em;
+	line-height:180%;
+	/*margin:5px;*/
+	vertical-align: middle;
+}
+
+#rightTeamScore
+{
+	width:15%;
+	height:80%;
+	float:left;
+	font-size:2.5em;
+	/*background-color:rgba(255, 255, 255, 0.3);*/
+	line-height:160%;
+	/*margin:5px;*/
+	vertical-align: middle;
+	text-align:left;
+}
+
+#rightTeamLogo
+{
+	width:25%;
+	height:80%;
+	float:left;
+	/*background-color:rgba(255, 255, 255, 0.3);*/
+	text-align: left;
+	/*margin:5px;*/
+}
+
+
+/* Topic Details */
 
 #topicDetails
 {
-	background-color:gray;
-	min-height:3em;
-	margin:0px;
+	/*background-color:gray;*/
+	font-size:1.1em;
+	min-height:4em;
+	margin:10px;
+	/*padding:20px;*/
 }
 
-.post {
-	height:140px;
-	background-color:red;
+#topicDescriptionBody
+{
+	line-height: 1.1;
 }
+
+
+/* - - - Tab-Bar for Posts / Tweets - - - */
+
+
+@media (max-width: 768px) {
+  .nav-justified > li {
+    display: table-cell;
+    width: 1%;
+  }
+  .nav-justified > li > a  {
+    border-bottom: 1px solid #ddd !important;
+    border-radius: 4px 4px 0 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+/* - - - - - - - */
+
+
+/* Post */
 
 .postRow
 {
 	font-size:3em;
-	min-height:5em;
+	/*max-height:4.4em;*/
 	background-color: white;
 	margin:2px;
-	border-bottom: 1px dotted gray;
+	border-bottom: 1px gray;
 }
 
-.postAuthorPhoto
+.postAuthorPhoto /* left-side of each post row */
 {
-	width: 20%;
-	/*background-color: blue;*/
+	/*background-color: #EEE;*/
+	width: 15%;
+	/*max-width: 100px;*/
 	float:left;
+	padding:5px;
+}
+
+.thumbnail {
+    border: 0 none;
+    box-shadow: none;
+}
+
+.userPhoto
+{
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.post /* entire right-side of each post row */
+{
+	width: 85%;
+	/*background-color: #EFF;*/
+	float:right;
+	min-height: 2.0em;
+	padding-left: 5px;
+	padding-right :10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.postUsername
+{
+	font-size: 0.35em;
+	float:left;
+	color: rgb(166, 189, 207);
+	width:80%;
+	/*padding-left:5px;*/
+}
+
+.timestamp
+{
+	font-size: 0.35em;
+	float:right;
+	color: rgb(166, 189, 207);
+	width:20%;
+	text-align: right;
+	padding-right:0px;
 }
 
 .postContent
 {
-	width: 80%;
-	background-color: /*purple*/;
-	float:right;
-	min-height: 5em;
+	/*float:clear;*/
+	/*background-color: gray;*/
+	/*padding-left: 5px;*/
+	padding-right: 5px;
+	font-size: 0.35em;
+	margin-bottom:0.3em;
 }
+
+.postPhoto
+{
+	max-width:100%;
+	max-height:100%;
+	margin-top:0.2em;
+	margin-bottom:0.3em;
+}
+
+.postVideo
+{
+	max-width:100%;
+	max-height:100%;
+	margin-top:0.2em;
+	margin-bottom:0.3em;
+}
+
+.playVideoButton
+{
+	position:absolute;
+	/*left:0;*/
+	/*top:0;*/
+	float:left;
+}
+
+.sharingButtonsRow
+{
+	float:right;
+	/*background-color:gray;*/
+	padding-right:0px;
+	font-size:0.3em;
+	margin-bottom:0.1em;
+}
+
+.social-btn
+{
+	color: rgb(166, 189, 207);
+	padding:0px;
+	margin-right:5px;
+}
+
+.social-btn img
+{
+	width:24px;
+	height:24px;
+}
+
+
+.topicSharingButtonsRow
+{
+	float:right;
+	/*background-color:gray;*/
+	padding-right:0px;
+	font-size:0.8em;
+	margin-top:0.3em;
+	margin-bottom:0.1em;
+}
+
+.topic-social-btn
+{
+	/*color: rgb(166, 189, 207);*/
+	color:gray;
+	padding:0px;
+	margin-right:5px;
+}
+
+.topic-social-btn img
+{
+	width:24px;
+	height:24px;
+}
+
+
+
+/* Text Field */
 
 #textEntryField
 {
 	position:fixed;
 	bottom:0;
 	width:100%;
-	padding:5px;
+	padding:10px;
 	background-color:white;
+	border-top: 1px solid #EEE;
+	height:3.9em;
 }
+
+
+/* - - - - - - -Post page - - - - - - - - -*/
+
+
+#postHeader
+{
+	height: 3em;
+	background-color:rgb(246, 250, 251);
+	color:white;
+	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);	
+}
+
+
+#backToTopicButton
+{
+	background-color:black;
+     vertical-align: middle;
+     height:100%;
+}
+
+
+#backToTopicButton img
+{
+	width:24px;
+	height:33px;
+}
+
+
+#post_backToTopicButtonSpan
+{
+	width:10%;
+	margin-left:-10px;
+}
+
