@@ -1,14 +1,15 @@
-var postModule = angular.module("PostModule", ["NetworkModule"]);
-postModule.controller("PostController", ["$scope", "$routeParams", "networkService","ReplyService", "TopicService","CommentService",initPostController]);
+var postModule = angular.module("PostModule", ["NetworkModule", "FacebookModule"]);
+postModule.controller("PostController", ["$scope", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "facebookService", initPostController]);
 
-function initPostController($scope, $routeParams, networkService, ReplyService, TopicService, CommentService)
+function initPostController($scope, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService)
 {
 	$scope.pageClass = 'page-post';
 
 	$scope.postID = $routeParams.postID;
 	$scope.topicId = TopicService.getTopicId();
 	//$scope.replies = networkService.getRepliesForPostID();
-
+	
+	ReplyService.setPostId($routeParams.postID);
 
 	$scope.backToTopicButtonTapped = function()
 	{
@@ -31,7 +32,16 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 
 	}
 
-	$scope.requestReplies();
+	if(facebookService.userLoggedInToFacebook === false)
+	{
+		window.location = "#/facebookLogin";
+	}
+	else
+	{
+		$scope.pageClass = 'page-post';
+
+		$scope.requestReplies();
+	}
 
 	$scope.postReply = function(commentText) {
 		console.log("PostController postReply Invoked :"+ commentText + $scope.topicId);
