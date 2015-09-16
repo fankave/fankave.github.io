@@ -7,6 +7,11 @@
  /* Page-level / body */
 
 
+a
+{
+	color: black;
+}
+
 .page
 {
 	position:absolute;
