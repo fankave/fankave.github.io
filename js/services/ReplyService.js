@@ -22,13 +22,13 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 		tempReplyData = replyData.data.results;
 		if(tempReplyData!= undefined && tempReplyData.length>0){
 			var len = tempReplyData.length;
-			console.log("replies #"+ len);
+			// console.log("replies #"+ len);
 			for(i=0;i<len;i++){
 				var _replyObject = {};
 				_replyObject = Bant.bant(tempReplyData[i])
 				if(_replyObject.id != undefined )
 					_replies.push(_replyObject);
-				console.log("Reply object"+_replyObject);
+				// console.log("Reply object"+_replyObject);
 			}
 			notifyObservers();
 		}
@@ -57,7 +57,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 			}
 		}
 		appendToReplies(replyData);
-		console.log("ReplyService update Reply");
+		// console.log("ReplyService update Reply");
 	}
 
 	function removeReply(replyData){

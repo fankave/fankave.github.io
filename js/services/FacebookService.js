@@ -1,7 +1,7 @@
 var facebookModule = angular.module("FacebookModule", ["NetworkModule", "TopicModule"]);
-facebookModule.controller("FacebookController", ["$scope", "$http", "facebookService", "UserInfoService", "TopicService", initFacebookController]);
+facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$http", "$compile", "facebookService", "UserInfoService", "TopicService", "networkService", initFacebookController]);
 
-function initFacebookController($scope, $http, facebookService, UserInfoService, TopicService)
+function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, networkService)
 {
 	// console.log("initFacebookController");
 
@@ -66,8 +66,13 @@ function initFacebookController($scope, $http, facebookService, UserInfoService,
             else
             {
               // console.log("Not logged in to Facebook");
+              // show the Facebook login button
 
-              // do nothing, the FB button enables login
+              $("#landingPageContent").html(
+			  $compile(
+			  		"<button ng-click=loginToFacebook();><img src=img/FacebookLoginButton-2x.png width=235 height=50/></button>"
+			  )($scope)
+			  );
             }
 
 		 	// $scope.$apply();
@@ -154,6 +159,8 @@ function initFacebookController($scope, $http, facebookService, UserInfoService,
 	            facebookService.userLoggedInToFacebook = true;
 	            // console.log("Setting user info in Facebook Service");
 	            UserInfoService.setUserCredentials(response.data.userId, response.data.accessToken, response.data.sessionId);
+
+	            networkService.init();
 
 	            // console.log(":: " + TopicService.getTopicId());
 				window.location = "#/topic/" + TopicService.getTopicId();

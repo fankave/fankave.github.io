@@ -17,7 +17,7 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 
 
 	$scope.requestReplies = function(){
-		console.log("PostController requestReplies Invoked");
+		// console.log("PostController requestReplies Invoked");
 		networkService.send(ReplyService.getRepliesRequest($scope.postID));
 		var selectedComment = CommentService.getCommentById($scope.postID);
 		if(selectedComment != undefined){
@@ -91,12 +91,12 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 
 			$scope.comment = tempComment;
 
-			console.log("comments html : " +$scope.comment.html);
-			console.log("updated comments author name: " +$scope.comment.postAuthorName);
-			console.log("updated comments author photo: " +$scope.comment.postAuthorPhoto);
+			// console.log("comments html : " +$scope.comment.html);
+			// console.log("updated comments author name: " +$scope.comment.postAuthorName);
+			// console.log("updated comments author photo: " +$scope.comment.postAuthorPhoto);
 			if($scope.comment.type == "media"){
-				console.log("updated comments media : " +$scope.comment.mediaUrl);
-				console.log("updated comments media : " +$scope.comment.mediaAspectFeed);
+				// console.log("updated comments media : " +$scope.comment.mediaUrl);
+				// console.log("updated comments media : " +$scope.comment.mediaAspectFeed);
 
 			}
 		}
@@ -129,13 +129,13 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 
 			$scope.replies.push(tempReply);
 
-			console.log(i +" : updated replies html : " +$scope.replies[i].html);
-			console.log(i +" : updated replies author name: " +$scope.replies[i].postAuthorName);
-			console.log(i +" : updated replies author photo: " +$scope.replies[i].postAuthorPhoto);
+			// console.log(i +" : updated replies html : " +$scope.replies[i].html);
+			// console.log(i +" : updated replies author name: " +$scope.replies[i].postAuthorName);
+			// console.log(i +" : updated replies author photo: " +$scope.replies[i].postAuthorPhoto);
 
 			if($scope.replies[i].type == "media"){
-				console.log(i +" : updated replies media : " +$scope.replies[i].mediaUrl);
-				console.log(i +" : updated replies media : " +$scope.replies[i].mediaAspectFeed);
+				// console.log(i +" : updated replies media : " +$scope.replies[i].mediaUrl);
+				// console.log(i +" : updated replies media : " +$scope.replies[i].mediaAspectFeed);
 			}
 
 		}
