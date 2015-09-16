@@ -35,11 +35,11 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 
 	}
 
-	if(facebookService.userLoggedInToFacebook === false)
-	{
-		window.location = "#/facebookLogin";
-	}
-	else
+//	if(facebookService.userLoggedInToFacebook === false)
+//	{
+//		window.location = "#/facebookLogin";
+//	}
+//	else
 	{
 		$scope.pageClass = 'page-post';
 
