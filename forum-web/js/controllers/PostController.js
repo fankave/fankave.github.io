@@ -13,7 +13,10 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 
 	$scope.backToTopicButtonTapped = function()
 	{
-		window.location = "#/topic/"+TopicService.getTopicId();
+		var topicId = TopicService.getTopicId();
+		if(topicId == undefined)
+			topicId = ReplyService.getTopicIdFromReply();
+		window.location = "#/topic/"+topicId;
 	}
 
 
