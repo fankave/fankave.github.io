@@ -1,7 +1,7 @@
 var facebookModule = angular.module("FacebookModule", ["NetworkModule", "TopicModule"]);
-facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$http", "$compile", "facebookService", "UserInfoService", "TopicService", "networkService", initFacebookController]);
+facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$http", "$compile", "facebookService", "UserInfoService", "TopicService", "ReplyService", "networkService", initFacebookController]);
 
-function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, networkService)
+function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, ReplyService, networkService)
 {
 	// console.log("initFacebookController");
 
@@ -163,7 +163,17 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	            networkService.init();
 
 	            // console.log(":: " + TopicService.getTopicId());
-				window.location = "#/topic/" + TopicService.getTopicId();
+				// window.location = "#/topic/" + TopicService.getTopicId();
+				if(ReplyService.getPostId() != undefined)
+	            {
+	            	// console.log("found post ID: " + ReplyService.getPostId());
+	            	window.location = "#/post/" + ReplyService.getPostId();
+	            }
+	            else
+	            {
+	            	// console.log("couldn't find a post ID, reverting to topic ID");
+					window.location = "#/topic/" + TopicService.getTopicId();
+				}
 	          }
 	      },
 	      function(response)

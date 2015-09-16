@@ -1,6 +1,6 @@
-function renderScoreCard()
+function renderScoreCard(leftTeamColor, rightTeamColor)
 {
-	// console.log("renderScoreCard");
+	// console.log("renderScoreCard(" + leftTeamColor + ", " + rightTeamColor);
 
 	//sCC = scoreCardCanvas
 	var sCC = $('#scoreCardCanvas');
@@ -20,7 +20,7 @@ function renderScoreCard()
     // draw bkgd (left team)
 
     ctx.beginPath();
-    ctx.fillStyle = "rgb(5, 43, 93)";
+    ctx.fillStyle = leftTeamColor;//"rgb(5, 43, 93)";
     // ctx.fillRect (0, 0, canvasWidth / 2, canvasHeight);
     ctx.moveTo(0, 0);
     ctx.lineTo(centerPoint + centerOffset, 0);
@@ -31,7 +31,7 @@ function renderScoreCard()
 
     // draw bkgd (right team)
     ctx.beginPath();
-    ctx.fillStyle = "rgb(167, 2, 15)";
+    ctx.fillStyle = rightTeamColor;//"rgb(167, 2, 15)";
     // ctx.fillRect (canvasWidth / 2, 0, canvasWidth / 2, canvasHeight);
     ctx.moveTo(centerPoint + centerOffset, 0);
     ctx.lineTo(canvasWidth, 0);

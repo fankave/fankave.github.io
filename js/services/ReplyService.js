@@ -31,7 +31,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 				if(_replyObject.id != undefined )
 					_replies.push(_replyObject);
 				// console.log("Reply object"+_replyObject);
-				_topicIdFromReply =tempReplyData[i].topicId;
+				_topicIdFromReply = tempReplyData[i].topicId;
 			}
 			notifyObservers();
 		}
