@@ -31,6 +31,7 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 		$scope.topicID = $routeParams.topicID;
 		//TODO: remove this - usd with static Data
 		//$scope.posts = StaticData.getPostsForTopicID();
+		networkService.init();
 		$scope.init();
 	}
 
