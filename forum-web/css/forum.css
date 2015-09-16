@@ -27,7 +27,7 @@
 
 .page-post
 {
-	padding-top: 4em; 
+	padding-top: 3.5em; 
 }
 
 body
@@ -387,7 +387,7 @@ body
 
 #backToTopicButton
 {
-	background-color:black;
+	/*background-color:black;*/
      vertical-align: middle;
      height:100%;
 }
@@ -403,6 +403,6 @@ body
 #post_backToTopicButtonSpan
 {
 	width:10%;
-	margin-left:-10px;
+	/*margin-left:-10px;*/
 }
 
