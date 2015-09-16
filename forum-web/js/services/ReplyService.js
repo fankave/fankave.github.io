@@ -16,6 +16,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	
 	var observerCallbacks = [];
 	var _replies = [];
+	var _topicIdFromReply;
 
 	function setReplies(replyData) {
 		_replies = [];
@@ -29,6 +30,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 				if(_replyObject.id != undefined )
 					_replies.push(_replyObject);
 				// console.log("Reply object"+_replyObject);
+				_topicIdFromReply =tempReplyData[i].topicId;
 			}
 			notifyObservers();
 		}
@@ -158,7 +160,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	
 	return {
 		replies: function(){return _replies },
-
+		getTopicIdFromReply: function(){return tempReplyData; },
 		setReplies:setReplies,
 		updateReply:updateReply,
 		appendToReplies:appendToReplies,
