@@ -11,6 +11,7 @@ function initNetworkService($websocket,DataService,UserInfoService)
 	return{
 		send:function(message) { ws.send(JSON.stringify(message));},
 		init:function() { 
+			// console.log("init networkService");
 			ws = $websocket(getWebsocketUri());
 
 			//Websocket callbacks below
