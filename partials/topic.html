@@ -1,0 +1,49 @@
+<section>
+    
+	<nav class="navbar navbar-fixed-top" id="header">
+       	<h2>Score Card</h2>
+    </nav>
+
+	<div id="topicDetails" class="row"> 
+		title: {{title}}
+		<p>description: {{html}} </p>
+		<p> likes: {{metrics.likes}}</p>
+	</div>
+
+    <hr>
+
+	<div>
+		<div ng-repeat="thisPost in commentsArray track by $index" class="postRow">
+
+			<span class="postAuthorPhoto">
+				<a href="#" class="thumbnail myThumbnail">
+  					<img src="" alt="">
+			    </a>
+			</span>
+
+			<span class="postContent">
+				{{thisPost.html}}
+				{{thisPost.likes}}
+				{{thisPost.createdAt}}
+			</span>
+
+		</div>
+	</div>
+	
+	<hr/>
+
+	<div>
+		<p>  TopicTitle :{{title}}</p>
+		<button ng-click="init()"> getTopicDetails</button>
+	</div>
+
+	<!--footer class="footer" id="textEntryField">
+        <div class="form-group">
+        	<input placeholder="Comment..." class="form-control" type="text">
+        </div>
+	</footer-->
+	
+</section>
+
+
+<!-- <a href="#/post/{{thisPost.postID}}">{{thisPost.postContent}}</a> -->

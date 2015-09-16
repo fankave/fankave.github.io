@@ -1,0 +1,70 @@
+body
+{ 
+    padding-top: 7em; 
+    background-color:#EEEEEE;
+    padding-bottom:5em;
+}
+
+.container
+{
+	background-color: white;
+}
+
+#header
+{
+	min-height: 7em;
+	text-align:center;
+	background-color:red;
+	color:white;
+}
+
+#backToTopicButton
+{
+     vertical-align: middle
+     height:100%;
+}
+
+#topicDetails
+{
+	background-color:gray;
+	min-height:3em;
+	margin:0px;
+}
+
+.post {
+	height:140px;
+	background-color:red;
+}
+
+.postRow
+{
+	font-size:3em;
+	min-height:5em;
+	background-color: white;
+	margin:2px;
+	border-bottom: 1px dotted gray;
+}
+
+.postAuthorPhoto
+{
+	width: 20%;
+	/*background-color: blue;*/
+	float:left;
+}
+
+.postContent
+{
+	width: 80%;
+	background-color: /*purple*/;
+	float:right;
+	min-height: 5em;
+}
+
+#textEntryField
+{
+	position:fixed;
+	bottom:0;
+	width:100%;
+	padding:5px;
+	background-color:white;
+}
