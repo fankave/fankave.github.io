@@ -1,6 +1,6 @@
 var networkModule = angular.module("NetworkModule", ['ngWebSocket']);
 networkModule.factory("networkService",["$websocket","DataService","UserInfoService",initNetworkService]);
-
+var DEBUG = true;
 function initNetworkService($websocket,DataService,UserInfoService)
 {
 	var WEBSOCKET_BASE_URI = 'ws://104.197.8.198/ws?';
@@ -29,14 +29,14 @@ function initNetworkService($websocket,DataService,UserInfoService)
 				if(type != undefined){
 					if(type == "topic" || type == "score"){
 						DataService.setTopic(responseJson);
-						// console.log("Processing Topic");
+						if(DEBUG) console.log("Processing Topic");
 					}else if(type == "comment"){
-						// console.log("Processing Comments");
+						if(DEBUG) console.log("Processing Comments");
 						DataService.setComments(responseJson);
 					}
 					else if(type == "reply"){
 						//TODO handle Replies
-						// console.log("Processing Reply");
+						if(DEBUG) console.log("Processing Reply");
 						DataService.setReplies(responseJson);
 					}
 				}
