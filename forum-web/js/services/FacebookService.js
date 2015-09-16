@@ -10,7 +10,14 @@ function initFacebookController($scope, $http, facebookService, UserInfoService,
 		// console.log("log in to Facebook");
 		// facebookService.userLoggedInToFacebook = true;
 		// window.location = "#/topic/0";
-		FB.login();
+		FB.login(function(response)
+		{
+			// console.log("login response: " + JSON.stringify(response));
+			if(response.status === 'connected')
+			{
+				$scope.handleFacebookResponse(response);
+			}
+		});
 	}
 
 
@@ -25,6 +32,8 @@ function initFacebookController($scope, $http, facebookService, UserInfoService,
 
         FB.getLoginStatus(function(response)
         {
+        	// console.log("getLoginStatus response: " + JSON.stringify(response));
+
 		   if (response.status === 'connected')
             {
               // the user is logged in and has authenticated your
@@ -32,26 +41,17 @@ function initFacebookController($scope, $http, facebookService, UserInfoService,
               // the user's ID, a valid access token, a signed
               // request, and the time the access token 
               // and signed request each expire
-              var uid = response.authResponse.userID;
-              var accessToken = response.authResponse.accessToken;
-              // $scope.facebookUserStatus = "login & authentication OK";
-              // console.log("FB: login & authentication OK");
- 
+
+              $scope.handleFacebookResponse(response);
+
 
               FB.api('/me', {}, function(response)
               {
                 // console.log(response.name);
                 // console.log("FB ID: " + response.id);
-                $scope.fbID = response.id;
                 // console.log("FB access token: " + accessToken);
-                $scope.fbAccessToken = accessToken;
-                $scope.registerFacebookUser()
-
                 // var userPictureURL = "http://graph.facebook.com/" + response.id + "/picture?type=square";
                 // console.log(userPictureURL);
-
-                // var userInfoDiv = document.getElementById("facebookUserInfo");
-                // userInfoDiv.innerHTML = "<div>Welcome back, " + response.name + "</div><div><img src=" + userPictureURL + "></div>";
               });
  
             } 
@@ -65,10 +65,9 @@ function initFacebookController($scope, $http, facebookService, UserInfoService,
             }
             else
             {
-              // the user isn't logged in to Facebook.
-              // $scope.facebookUserStatus = "Not logged in to Facebook";
-              console.log("Not logged in to Facebook");
-              // FB.login();
+              // console.log("Not logged in to Facebook");
+
+              // do nothing, the FB button enables login
             }
 
 		 	// $scope.$apply();
@@ -84,6 +83,20 @@ function initFacebookController($scope, $http, facebookService, UserInfoService,
 		js.src = "//connect.facebook.net/en_US/sdk.js";
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
+
+
+	$scope.handleFacebookResponse = function(response)
+	{
+		// console.log("handleFacebookResponse: " + JSON.stringify(response));
+
+		var uid = response.authResponse.userID;
+      	var accessToken = response.authResponse.accessToken;
+
+       $scope.fbID = uid;
+       $scope.fbAccessToken = accessToken;
+
+       $scope.registerFacebookUser();
+	}
 
 
 	$scope.registerFacebookUser = function()
@@ -158,9 +171,6 @@ function initFacebookController($scope, $http, facebookService, UserInfoService,
 	      });
 	}
 }
-
-
-
 
 
 
