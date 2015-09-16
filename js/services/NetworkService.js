@@ -23,7 +23,7 @@ function initNetworkService($websocket,DataService,UserInfoService)
 			});
 
 			ws.onMessage(function(evt) {
-				// console.log("Websocket Message Recieved :  " +evt.data);
+				if(DEBUG) console.log("Websocket Message Recieved :  " +evt.data);
 				var responseJson = JSON.parse(evt.data);
 				var type = responseJson.rid;
 				if(type != undefined){
