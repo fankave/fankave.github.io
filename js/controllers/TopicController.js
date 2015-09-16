@@ -18,12 +18,12 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 	};
 
 
-//	if(facebookService.userLoggedInToFacebook === false)
-//	{
-//		// console.log("Not logged in to facebook, take user to login page")
-//		window.location = "#/facebookLogin";
-//	}
-//	else
+	if(facebookService.userLoggedInToFacebook === false)
+	{
+		// console.log("Not logged in to facebook, take user to login page")
+		window.location = "#/facebookLogin";
+	}
+	else
 	{
 		// console.log("TopicController | userLoggedInToFacebook: " + facebookService.userLoggedInToFacebook);
 		$scope.pageClass = 'page-topic';
@@ -31,7 +31,6 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 		$scope.topicID = $routeParams.topicID;
 		//TODO: remove this - usd with static Data
 		//$scope.posts = StaticData.getPostsForTopicID();
-		networkService.init();
 		$scope.init();
 	}
 
@@ -110,6 +109,8 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 		// console.log("updated topic" +$scope.topicTitle);
 		// console.log("updated time" +$scope.createdAt);
 		// console.log("updated metrics" +$scope.likesCount);
+
+		renderScoreCard($scope.leftTeam.pColor, $scope.rightTeam.pColor);
 	};
 	var updateComments = function(){
 
@@ -156,5 +157,4 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 	TopicService.registerObserverCallback(updateTopic);
 	CommentService.registerObserverCallback(updateComments);
 
-	renderScoreCard();
 }
