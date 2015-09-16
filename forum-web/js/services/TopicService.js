@@ -98,6 +98,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	}
 
 	function likeTopicRequest(){
+		console.log("Like topic request invoked"+_id);
 		return  varLikeParams = {"rid": "topic",
 				"timestamp": new Date().getTime(),
 				"method": "POST",

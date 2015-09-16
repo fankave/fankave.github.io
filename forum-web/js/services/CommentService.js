@@ -174,8 +174,8 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 			appendToComments:appendToComments,
 			removeComment:removeComment,
 			postCommentRequest:postCommentRequest,
-			likeCommentRequest:likeCommentRequest,
-			unlikeCommentRequest:unlikeCommentRequest,
+			getLikeCommentRequest:likeCommentRequest,
+			getUnlikeCommentRequest:unlikeCommentRequest,
 			registerObserverCallback:registerObserverCallback,
 			getCommentsRequest:getCommentsRequest,
 			getCommentById:getCommentById
