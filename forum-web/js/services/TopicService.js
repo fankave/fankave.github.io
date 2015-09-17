@@ -136,16 +136,33 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	}
 
 	return {
-		getTopic: function(){return _topic ;},
-		getTopicId: function(){return _id ;},
-		getGame: function(){return _game;},
-		getTeamA: function(){if(_game != undefined) return _game.teams[0];},
-		getTeamB: function(){if(_game != undefined) return _game.teams[1];},
-		getLinks: function(){if(_game != undefined) return _game.links;},
-		getScore: function(){if(_score != undefined) return _score;},
-		getGameStatus: function() {return _status;},
-		getGamePeriod: function() {return _gameStats[0];},
-		getGameClock: function() {return _gameStats[1];},
+		getTopic: function(){	
+			return _topic ;},
+		getTopicId: function(){	
+			return _id ;},
+		getGame: function(){	
+			return _game;},
+		getTeamA: function(){	
+			if(_game != undefined) 
+				return _game.teams[0];},
+		getTeamB: function(){	
+			if(_game != undefined) 
+				return _game.teams[1];},
+		getScoresTitle: function(){		
+			if(_game != undefined && _game.links != undefined) 
+				return _game.links[0].title;},
+		getScoresLink: function(){	
+			if((_game != undefined) && (_game.links != undefined)) 
+				return _game.links[0].url;},
+		getScore: function(){	
+			if(_score != undefined) 
+				return _score;},
+		getGameStatus: function() {	
+			return _status;},
+		getGamePeriod: function() {	
+			return _gameStats[0];},
+		getGameClock: function() {	
+			return _gameStats[1];},
 //		getSectionType: function(sectionNumber){ 
 //		//TODO check for section length
 //		if(sectionNumber == undefined )
@@ -153,16 +170,27 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 //		else
 //		return _topic.data.content.sections[sectionNumber].type
 //		},
-		getChannelId:function(){ if(_topic != undefined) return _topic.owner.id;},
-		getTitle:function(){ return _title;},
-		getHtml:function(){if(_topic != undefined) return _topic.html},
+		getChannelId:function(){ 	
+			if(_topic != undefined) 
+				return _topic.owner.id;},
+		getTitle:function(){ 	
+			return _title;},
+		getHtml:function(){	
+			if(_topic != undefined) 
+				return _topic.html},
 //		getMedia:function(){return _media},
 //		getTweet:function(){return _tweet},
 //		getOgp:function(){return _ogp},
 //		getLink:function(){return _link},
-		getTimeCreatedAt:function(){if(_topic != undefined) return _topic.createdAt},
-		getLiked:function(){if(_topic != undefined) return _topic.liked},
-		getMetrics:function(){if(_topic != undefined) return _topic.metrics},
+		getTimeCreatedAt:function(){	
+			if(_topic != undefined) 
+				return _topic.createdAt},
+		getLiked:function(){	
+			if(_topic != undefined) 
+				return _topic.liked},
+		getMetrics:function(){	
+			if(_topic != undefined) 
+				return _topic.metrics},
 		
 		watchTopicRequest:watchTopicRequest,
 		getLikeTopicRequest:likeTopicRequest,
