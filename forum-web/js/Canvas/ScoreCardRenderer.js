@@ -75,9 +75,3 @@ function renderScoreCard(leftTeamColor, rightTeamColor)
 	
 	// console.log("dpr: " + dpr);
 }
-
-$(document).ready( function()
-{
-    //Run function when browser resizes
-    // $(window).resize( renderScoreCard );
-});

@@ -27,7 +27,7 @@ a
 
 .page-topic
 {
-	padding-top: 7em; 
+	padding-top: 8em; 
 }
 
 .page-post
@@ -51,7 +51,7 @@ body
 
 #header
 {
-	height: 7em;
+	height: 8em;
 	text-align:center;
 	/*background-color:red;*/
 	color:white;
@@ -65,7 +65,6 @@ body
 #scoreCardCanvas
 {
 	text-align:center;
-	/*background-color:black;*/
 	color:white;
 	float:left;
 }
@@ -90,7 +89,12 @@ body
 	/*background-color:rgba(0, 0, 0, 0.3);*/
 	/*width:100%;*/
 	/*margin:5px;*/
-	height:75%;
+	height:55%;
+}
+
+#allScoresButtonRow
+{
+	height:20%;
 }
 
 #leftTeamSpan
@@ -112,16 +116,21 @@ body
 #leftTeamLogo
 {
 	width:25%;
-	max-height:80%;
+	height:100%;
 	float:left;
 	/*background-color:rgba(255, 255, 255, 0.3);*/
 	/*margin:5px;*/
 	text-align: right;
 }
 
+#leftTeamLogo img
+{
+	max-height:100%;
+}
+
 .helper {
     display: inline-block;
-    height: 100%;
+    max-height: 100%;
     vertical-align: middle;
 }
 
@@ -129,6 +138,7 @@ body
 {
 	width:15%;
 	height:80%;
+	max-height:80%;
 	float:left;
 	font-size:2.5em;
 	/*background-color:rgba(255, 255, 0, 0.3);*/
@@ -176,13 +186,17 @@ body
 #rightTeamLogo
 {
 	width:25%;
-	height:80%;
+	height:100%;
 	float:left;
 	/*background-color:rgba(255, 255, 255, 0.3);*/
 	text-align: left;
 	/*margin:5px;*/
 }
 
+#rightTeamLogo img
+{
+	max-height:100%;
+}
 
 /* Topic Details */
 
@@ -214,6 +228,7 @@ body
     margin-bottom: 0 !important;
   }
 }
+
 
 /* - - - - - - - */
 
