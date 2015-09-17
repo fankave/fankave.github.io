@@ -5,6 +5,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	var UNLIKE_TOPIC_URI = "/v1.0/topic/unlike/";
 	var WATCH_TOPIC_URI = "/v1.0/topic/watch/";
 	//TODO temp, holding Topic JSON
+	var _isTopicWatched = false;
 	var _topic;
 	var _id;
 	var _title;
@@ -18,8 +19,6 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 
 	function setTopicData(topicData) 
 	{
-
-		;
 		if(topicData.data != undefined){
 			if(topicData.data.content != undefined )
 				_title = topicData.data.content.title;
@@ -47,6 +46,11 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 
 			_topic = Bant.bant(topicData.data);
 			notifyObservers();
+		}
+		else if(topicData.method == "POST" && topicData.uri ==WATCH_TOPIC_URI+_id){
+			if(NETWORK_DEBUG)
+				console.log("Topic watch success");
+			_isTopicWatched = true;
 		}
 	}
 
@@ -80,7 +84,11 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 				"method": "GET",
 				"uri": encodeURI(uri)};
 	}
-	function getFollowChannelRequest(channelID){
+	function getFollowChannelRequest(){
+		
+		var channelId = 0;
+		if(_topic!= undefined && _topic.owner!= undefined)
+			channelId = _topic.owner.id;
 		var uri = "/v1.0/channel/follow/" + channelID;
 
 		return  varTopicParams = {"rid": "topic",
@@ -197,6 +205,8 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		getUnlikeTopicRequest:unlikeTopicRequest,
 		getFollowChannelRequest:getFollowChannelRequest,
 		getTopicRequest:getTopicRequest,
+		isWatchingTopic: function(){ return _isTopicWatched;},
+		setWatchTopic: function(watch){_isTopicWatched = watch;},
 		setTopicId: function(topicId){_id = topicId ;},
 		setTopic:setTopicData,
 		updateTopic:updateTopicData,
