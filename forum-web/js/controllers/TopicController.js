@@ -5,7 +5,7 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 {
 	TopicService.setTopicId($routeParams.topicID);
 	$scope.allScoresURL = "http://www.fankave.com";
-	
+
 	$scope.init = function() {
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
 		networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
@@ -70,9 +70,10 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 		networkService.send(CommentService.getUnlikeCommentRequest());
 	};
 
-	$scope.goToRepliesWithKeyboardTriggered = function()
+	$scope.goToRepliesWithKeyboardTriggered = function(id)
 	{
-		console.log("TopicController.goToRepliesWithKeyboardTriggered()");
+		console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
+		window.location = "#/post/" + id;
 	};
 
 	var updateTopic = function(){

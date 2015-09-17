@@ -97,6 +97,8 @@
 						{{thisPost.html}} 
 					</div>
 
+					</a>
+
 					<div ng-switch-when="image">
 						<img ng-src="{{thisPost.mediaUrl}}" class="postPhoto"/>
 					</div>
@@ -105,11 +107,9 @@
 						<img ng-src="{{thisPost.mediaThumbUrl}}" class="postVideo"/>
 					</div>	
 
-					</a>
-
 					<div class="sharingButtonsRow">
 						<button class="btn-link social-btn" ng-click="likeComment(thisPost.id)"><img src="img/likeButton-2x.png"/> {{thisPost.likeCount}}</button>
-						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered()"><img src="img/commentButton-2x.png"/> {{thisPost.replyCount}}</button>
+						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)"><img src="img/commentButton-2x.png"/> {{thisPost.replyCount}}</button>
 						<button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button>
 					</div>
 				</span>
