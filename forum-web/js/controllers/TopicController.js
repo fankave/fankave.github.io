@@ -4,7 +4,8 @@ topicModule.controller("TopicController", ["$scope", "$routeParams","networkServ
 function initTopicController($scope, $routeParams,networkService,TopicService, CommentService, facebookService)
 {
 	TopicService.setTopicId($routeParams.topicID);
-
+	$scope.allScoresURL = "http://www.fankave.com";
+	
 	$scope.init = function() {
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
 		networkService.send(CommentService.getCommentsRequest($routeParams.topicID));

@@ -89,12 +89,30 @@ body
 	/*background-color:rgba(0, 0, 0, 0.3);*/
 	/*width:100%;*/
 	/*margin:5px;*/
-	height:55%;
+	height:50%;
 }
 
 #allScoresButtonRow
 {
-	height:20%;
+	height:25%;
+	/*background-color: black;*/
+}
+
+#allScoresButtonSpan
+{
+	height:100%;
+	font-size:1.2em;
+	font-weight:500;
+	line-height: 1.2em;
+	border: 2px solid #EEE;
+	padding-top:3px;
+	padding-bottom:3px;
+	border-radius: 4px 4px 4px 4px !important;
+}
+
+#allScoresButtonRow a
+{
+	color: white;
 }
 
 #leftTeamSpan
