@@ -44,6 +44,12 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 		$scope.pageClass = 'page-post';
 
 		$scope.requestReplies();
+
+		if(TopicService.directComment === true)
+		{
+			document.getElementById("replyCommentField").focus();
+			TopicService.directComment = false;
+		}
 	}
 
 	$scope.postReply = function(commentText) {

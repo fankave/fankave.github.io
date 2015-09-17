@@ -72,7 +72,8 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 
 	$scope.goToRepliesWithKeyboardTriggered = function(id)
 	{
-		console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
+		// console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
+		TopicService.directComment = true;
 		window.location = "#/post/" + id;
 	};
 

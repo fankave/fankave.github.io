@@ -14,6 +14,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	var _gameStats;
 	var _links;
 	var observerCallbacks = [];	
+	var directComment; //bool flag to indicate whether user tapped on a comment's "comment" icon
 
 	function setTopicData(topicData) 
 	{
@@ -171,7 +172,9 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		setTopicId: function(topicId){_id = topicId ;},
 		setTopic:setTopicData,
 		updateTopic:updateTopicData,
-		registerObserverCallback:registerObserverCallback
+		registerObserverCallback:registerObserverCallback,
+		directoComment:directComment
+
 	};
 
 });
