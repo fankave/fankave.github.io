@@ -4,7 +4,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	var LIKE_TOPIC_URI = "/v1.0/topic/like/";
 	var UNLIKE_TOPIC_URI = "/v1.0/topic/unlike/";
 	var WATCH_TOPIC_URI = "/v1.0/topic/watch/";
-	//TODO temp, holding Topic JSON
+	
 	var _isTopicWatched = false;
 	var _topic;
 	var _id;
@@ -61,7 +61,6 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 
 	function setScoreData(scoreData) 
 	{
-//		TODO: Check API to complete this.
 		_score = scoreData;
 		console.log("TopicService  insideScore"+_score );
 		if(_score != undefined){
@@ -201,16 +200,27 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 				return _topic.metrics},
 		
 		watchTopicRequest:watchTopicRequest,
+		
 		getLikeTopicRequest:likeTopicRequest,
+		
 		getUnlikeTopicRequest:unlikeTopicRequest,
+		
 		getFollowChannelRequest:getFollowChannelRequest,
+		
 		getTopicRequest:getTopicRequest,
+		
 		isWatchingTopic: function(){ return _isTopicWatched;},
+		
 		setWatchTopic: function(watch){_isTopicWatched = watch;},
+		
 		setTopicId: function(topicId){_id = topicId ;},
+		
 		setTopic:setTopicData,
+		
 		updateTopic:updateTopicData,
+		
 		registerObserverCallback:registerObserverCallback,
+		
 		directoComment:directComment
 
 	};
