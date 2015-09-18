@@ -30,7 +30,7 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 		}
 		else{
 			console.log("No data from comment service : TODO handle this with cookies");
-
+			networkService.send(CommentService.getCommentByIdRequest($scope.postID));
 		}
 
 	}
@@ -89,9 +89,11 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 	}
 
 	 function updateCommentInReply(selectedComment){
-		if(selectedComment == undefined)
+		if(selectedComment == undefined){
 			selectedComment = CommentService.getCommentById($scope.postID);
+		}
 		if(selectedComment != undefined){
+			if(NETWORK_DEBUG) console.log("Updated comment in reply triggered" ); 
 			var tempComment = {};
 			tempComment = selectedComment;
 			tempComment.postAuthorName = selectedComment.author.name;
@@ -104,14 +106,14 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 
 			$scope.comment = tempComment;
 
-			// console.log("comments html : " +$scope.comment.html);
-			// console.log("updated comments author name: " +$scope.comment.postAuthorName);
-			// console.log("updated comments author photo: " +$scope.comment.postAuthorPhoto);
-			if($scope.comment.type == "media"){
-				// console.log("updated comments media : " +$scope.comment.mediaUrl);
-				// console.log("updated comments media : " +$scope.comment.mediaAspectFeed);
-
-			}
+//			 console.log("comments html : " +$scope.comment.html);
+//			 console.log("updated comments author name: " +$scope.comment.postAuthorName);
+//			 console.log("updated comments author photo: " +$scope.comment.postAuthorPhoto);
+//			if($scope.comment.type == "media"){
+//				 console.log("updated comments media : " +$scope.comment.mediaUrl);
+//				 console.log("updated comments media : " +$scope.comment.mediaAspectFeed);
+//
+//			}
 		}
 	}
 

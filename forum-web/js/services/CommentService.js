@@ -1,5 +1,6 @@
 networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 	var LIST_COMMENTS_URI = "/v1.0/topic/comments/list/"
+	var SHOW_COMMENT_URI = "/v1.0/comment/show/";
 		
 	var POST_COMMENT_URI="/v1.0/comment/create";
 	var UPDATE_COMMNET_URI = "/v1.0/comment/content/update/";
@@ -23,16 +24,29 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 		//TODO clear comments for complete refresh Comments API
 		_comments = [];
 		tempCommentsData = commentsData.data.results;
-		if(tempCommentsData!= undefined && tempCommentsData.length>0)
+		if(tempCommentsData!= undefined && tempCommentsData.length>0){
 			var len = tempCommentsData.length;
-		for(i=0;i<len;i++){
-			var _commentObject = {};
-			_commentObject = Bant.bant(tempCommentsData[i]);
-			if(_commentObject.id != undefined)
-				_comments.push(_commentObject);
-			// console.log("Comments in set comment Service type:"+_commentObject.type + "  " +_commentObject.html );
+			for(i=0;i<len;i++){
+				var _commentObject = {};
+				_commentObject = Bant.bant(tempCommentsData[i]);
+				if(_commentObject.id != undefined)
+					_comments.push(_commentObject);
+				// console.log("Comments in set comment Service type:"+_commentObject.type + "  " +_commentObject.html );
+			}
+			notifyObservers();
 		}
-		notifyObservers();
+		else{
+			//PArticular case when user is on reply page and requires comment by comment ID
+			var data = commentsData.data;
+			if((commentsData.method == "GET") &&(commentsData.uri.substring(0,SHOW_COMMENT_URI.length) == SHOW_COMMENT_URI) ){
+				if(NETWORK_DEBUG) console.log("Processing Show comment");
+				var _commentObject = {};
+				_commentObject = Bant.bant(data);
+				if(_commentObject.id != undefined)
+					_comments.push(_commentObject);	
+				notifyObservers();
+			}
+		}
 	}
 
 	function appendToComments(postCommentData) {
@@ -77,6 +91,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 	}
 	
 	function getCommentById(id){
+		if(NETWORK_DEBUG) console.log("_comments :"+ _comments.length);
 		for(i=0;i<_comments.length;i++){
 			if(_comments[i].id == id){
 				//remove element
@@ -120,6 +135,11 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 	}
 	function getCommentsRequest(commentId){
 		var uri = LIST_COMMENTS_URI+commentId;
+		return  commentGetRequest(uri);
+	}
+	
+	function getCommentByIdRequest(commentId){
+		var uri = SHOW_COMMENT_URI + commentId;
 		return  commentGetRequest(uri);
 	}
 
@@ -178,7 +198,8 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 			getUnlikeCommentRequest:unlikeCommentRequest,
 			registerObserverCallback:registerObserverCallback,
 			getCommentsRequest:getCommentsRequest,
-			getCommentById:getCommentById
+			getCommentById:getCommentById,
+			getCommentByIdRequest:getCommentByIdRequest
 	};
 
 });
