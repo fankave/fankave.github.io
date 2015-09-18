@@ -4,7 +4,6 @@ topicModule.controller("TopicController", ["$scope", "$routeParams","networkServ
 function initTopicController($scope, $routeParams,networkService,TopicService, CommentService, facebookService)
 {
 	TopicService.setTopicId($routeParams.topicID);
-	$scope.allScoresURL = "http://www.fankave.com";
 
 	$scope.init = function() {
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
@@ -37,8 +36,10 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 
 
 	$scope.postComment = function(commentText) {
+		if((commentText != undefined)	 && commentText != ""){
 		// console.log("TopicController postComment Invoked :"+ commentText);
 		networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
+		}
 		$scope.commentText = "";
 	};
 
@@ -114,6 +115,9 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 		// console.log("updated topic" +$scope.topicTitle);
 		// console.log("updated time" +$scope.createdAt);
 		// console.log("updated metrics" +$scope.likesCount);
+		
+		$scope.allScoresTitle = TopicService.getScoresTitle();
+		$scope.allScoresURL = TopicService.getScoresLink();
 
 		renderScoreCard($scope.leftTeam.pColor, $scope.rightTeam.pColor);
 	};

@@ -53,8 +53,10 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 	}
 
 	$scope.postReply = function(commentText) {
+		if((commentText != undefined)	 && commentText != ""){
 		console.log("PostController postReply Invoked :"+ commentText + $scope.topicId);
 		networkService.send(ReplyService.postReplyRequest($scope.topicId,$scope.postID, commentText));
+		}
 		$scope.commentText = "";
 	};
 
