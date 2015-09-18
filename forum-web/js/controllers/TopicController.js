@@ -9,11 +9,6 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 	$scope.init = function() {
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
 		networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
-		//TODO: add watch for Push, test once API starts working from server, currently broken - aug 25th, tuesday
-		if(!TopicService.isWatchingTopic){
-			networkService.send(TopicService.getFollowChannelRequest());
-			networkService.send(TopicService.watchTopicRequest($routeParams.topicID));
-		}
 
 //		var varPushParams = {"rid": "comment",
 //		"timestamp": (new Date).getTime(),
@@ -81,6 +76,10 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 	};
 
 	var updateTopic = function(){
+		if(TopicService.isWatchingTopic() == false){
+			networkService.send(TopicService.getFollowChannelRequest());
+			networkService.send(TopicService.watchTopicRequest($routeParams.topicID));
+		}
 		//Score API update
 		$scope.leftTeam = TopicService.getTeamA();
 		$scope.rightTeam = TopicService.getTeamB();
@@ -161,7 +160,6 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 			// console.log(i +" : updated comments author photo: " +$scope.commentsArray[i].postAuthorPhoto);
 		}
 
-		networkService.send(TopicService.getFollowChannelRequest(TopicService.getChannelId()));
 	};
 
 	TopicService.registerObserverCallback(updateTopic);

@@ -47,7 +47,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 			_topic = Bant.bant(topicData.data);
 			notifyObservers();
 		}
-		else if(topicData.method == "POST" && topicData.uri ==WATCH_TOPIC_URI+_id){
+		else if(topicData.method == "POST" && topicData.uri == WATCH_TOPIC_URI+_id ){
 			if(NETWORK_DEBUG)
 				console.log("Topic watch success");
 			_isTopicWatched = true;
@@ -88,7 +88,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		var channelId = 0;
 		if(_topic!= undefined && _topic.owner!= undefined)
 			channelId = _topic.owner.id;
-		var uri = "/v1.0/channel/follow/" + channelID;
+		var uri = "/v1.0/channel/follow/" + channelId;
 
 		return  varTopicParams = {"rid": "topic",
 				"timestamp": new Date().getTime(),
