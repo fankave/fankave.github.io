@@ -7,6 +7,11 @@
  /* Page-level / body */
 
 
+a
+{
+	color: black;
+}
+
 .page
 {
 	position:absolute;
@@ -22,7 +27,7 @@
 
 .page-topic
 {
-	padding-top: 7em; 
+	padding-top: 8em; 
 }
 
 .page-post
@@ -32,7 +37,7 @@
 
 body
 { 
-    background-color:#EEEEEE;
+    background-color: white;
     padding-bottom:4em;
 }
 
@@ -46,7 +51,7 @@ body
 
 #header
 {
-	height: 7em;
+	height: 8em;
 	text-align:center;
 	/*background-color:red;*/
 	color:white;
@@ -60,7 +65,6 @@ body
 #scoreCardCanvas
 {
 	text-align:center;
-	/*background-color:black;*/
 	color:white;
 	float:left;
 }
@@ -85,7 +89,30 @@ body
 	/*background-color:rgba(0, 0, 0, 0.3);*/
 	/*width:100%;*/
 	/*margin:5px;*/
-	height:75%;
+	height:50%;
+}
+
+#allScoresButtonRow
+{
+	height:25%;
+	/*background-color: black;*/
+}
+
+#allScoresButtonSpan
+{
+	height:100%;
+	font-size:1.2em;
+	font-weight:500;
+	line-height: 1.2em;
+	border: 2px solid #EEE;
+	padding-top:3px;
+	padding-bottom:3px;
+	border-radius: 4px 4px 4px 4px !important;
+}
+
+#allScoresButtonRow a
+{
+	color: white;
 }
 
 #leftTeamSpan
@@ -107,16 +134,21 @@ body
 #leftTeamLogo
 {
 	width:25%;
-	max-height:80%;
+	height:100%;
 	float:left;
 	/*background-color:rgba(255, 255, 255, 0.3);*/
 	/*margin:5px;*/
 	text-align: right;
 }
 
+#leftTeamLogo img
+{
+	max-height:100%;
+}
+
 .helper {
     display: inline-block;
-    height: 100%;
+    max-height: 100%;
     vertical-align: middle;
 }
 
@@ -124,6 +156,7 @@ body
 {
 	width:15%;
 	height:80%;
+	max-height:80%;
 	float:left;
 	font-size:2.5em;
 	/*background-color:rgba(255, 255, 0, 0.3);*/
@@ -171,23 +204,26 @@ body
 #rightTeamLogo
 {
 	width:25%;
-	height:80%;
+	height:100%;
 	float:left;
 	/*background-color:rgba(255, 255, 255, 0.3);*/
 	text-align: left;
 	/*margin:5px;*/
 }
 
+#rightTeamLogo img
+{
+	max-height:100%;
+}
 
 /* Topic Details */
 
 #topicDetails
 {
-	/*background-color:gray;*/
+	background-color: white;
 	font-size:1.1em;
 	min-height:4em;
 	margin:10px;
-	/*padding:20px;*/
 }
 
 #topicDescriptionBody
@@ -211,9 +247,29 @@ body
   }
 }
 
+
 /* - - - - - - - */
 
 
+/* Comments header */
+
+
+.commentsHeader
+{
+	text-align: center;
+	font-size: 1.2em;
+	background-color: rgb(248, 248, 248);
+	color: rgb(59, 166, 252);
+	font-weight:500;
+	min-height:2.6em;
+	line-height:2.6em;
+}
+
+
+.commentsContainer
+{
+	background-color: #EEEEEE;
+}
 /* Post */
 
 .postRow
@@ -241,8 +297,8 @@ body
 
 .userPhoto
 {
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
+	border-radius: 25px;
+	-webkit-border-radius: 25px;
 }
 
 .post /* entire right-side of each post row */

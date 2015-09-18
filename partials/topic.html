@@ -39,6 +39,12 @@
 				</span>
 			</div>
 
+			<div id="allScoresButtonRow">
+				<a href="{{allScoresURL}}">
+				<span id="allScoresButtonSpan">&nbsp;&nbsp;All Scores&nbsp;&nbsp;</span>
+				</a>
+			</div>
+
    		</div>
     </nav>
 
@@ -52,7 +58,6 @@
 		<div class="topicSharingButtonsRow">
 			<button class="btn-link topic-social-btn" ng-click="likeTopic()"><img src="img/likeButton-2x_.png"/> {{likesCount}}</button>
 			<button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/commentButton-2x_.png"/> {{commentsCount}}</button>
-			<button class="btn-link topic-social-btn"><img src="img/moreButton-2x_.png"/></button>
 		</div>
 	</div>
 
@@ -62,7 +67,11 @@
 			<li role="presentation"><a href="#/post/0">Tweets</a></li>
 	</ul-->
 
-	<div>
+	<div class="commentsHeader">
+		Comments
+	</div>
+
+	<div class="commentsContainer">
 		<div ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.mediaType" class="row postRow">
 
 				<span class="postAuthorPhoto">
@@ -84,23 +93,23 @@
 						</span>
 					</div>
 
-					<div ng-switch-when="image">
-						<img ng-src="{{thisPost.mediaUrl}}" class="postPhoto"/>
-					</div>
-
-					<div ng-switch-when="video">
-						<img ng-src="{{thisPost.mediaThumbUrl}}" class="postVideo"/>
-					</div>
-
 					<div class="postContent">
 						{{thisPost.html}} 
 					</div>
 
 					</a>
 
+					<div ng-switch-when="image">
+						<img ng-src="{{thisPost.mediaUrl}}" class="postPhoto"/>
+					</div>
+
+					<div ng-switch-when="video">
+						<img ng-src="{{thisPost.mediaThumbUrl}}" class="postVideo"/>
+					</div>	
+
 					<div class="sharingButtonsRow">
 						<button class="btn-link social-btn" ng-click="likeComment(thisPost.id)"><img src="img/likeButton-2x.png"/> {{thisPost.likeCount}}</button>
-						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered()"><img src="img/commentButton-2x.png"/> {{thisPost.replyCount}}</button>
+						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)"><img src="img/commentButton-2x.png"/> {{thisPost.replyCount}}</button>
 						<button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button>
 					</div>
 				</span>

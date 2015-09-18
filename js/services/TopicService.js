@@ -4,7 +4,8 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	var LIKE_TOPIC_URI = "/v1.0/topic/like/";
 	var UNLIKE_TOPIC_URI = "/v1.0/topic/unlike/";
 	var WATCH_TOPIC_URI = "/v1.0/topic/watch/";
-	//TODO temp, holding Topic JSON
+	
+	var _isTopicWatched = false;
 	var _topic;
 	var _id;
 	var _title;
@@ -14,11 +15,10 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	var _gameStats;
 	var _links;
 	var observerCallbacks = [];	
+	var directComment; //bool flag to indicate whether user tapped on a comment's "comment" icon
 
 	function setTopicData(topicData) 
 	{
-
-		;
 		if(topicData.data != undefined){
 			if(topicData.data.content != undefined )
 				_title = topicData.data.content.title;
@@ -47,6 +47,11 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 			_topic = Bant.bant(topicData.data);
 			notifyObservers();
 		}
+		else if(topicData.method == "POST" && topicData.uri == WATCH_TOPIC_URI+_id ){
+			if(NETWORK_DEBUG)
+				console.log("Topic watch success");
+			_isTopicWatched = true;
+		}
 	}
 
 	function updateTopicData(scoreData){
@@ -56,7 +61,6 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 
 	function setScoreData(scoreData) 
 	{
-//		TODO: Check API to complete this.
 		_score = scoreData;
 		console.log("TopicService  insideScore"+_score );
 		if(_score != undefined){
@@ -79,8 +83,12 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 				"method": "GET",
 				"uri": encodeURI(uri)};
 	}
-	function getFollowChannelRequest(channelID){
-		var uri = "/v1.0/channel/follow/" + channelID;
+	function getFollowChannelRequest(){
+		
+		var channelId = 0;
+		if(_topic!= undefined && _topic.owner!= undefined)
+			channelId = _topic.owner.id;
+		var uri = "/v1.0/channel/follow/" + channelId;
 
 		return  varTopicParams = {"rid": "topic",
 				"timestamp": new Date().getTime(),
@@ -135,16 +143,33 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 	}
 
 	return {
-		getTopic: function(){return _topic ;},
-		getTopicId: function(){return _id ;},
-		getGame: function(){return _game;},
-		getTeamA: function(){if(_game != undefined) return _game.teams[0];},
-		getTeamB: function(){if(_game != undefined) return _game.teams[1];},
-		getLinks: function(){if(_game != undefined) return _game.links;},
-		getScore: function(){if(_score != undefined) return _score;},
-		getGameStatus: function() {return _status;},
-		getGamePeriod: function() {return _gameStats[0];},
-		getGameClock: function() {return _gameStats[1];},
+		getTopic: function(){	
+			return _topic ;},
+		getTopicId: function(){	
+			return _id ;},
+		getGame: function(){	
+			return _game;},
+		getTeamA: function(){	
+			if(_game != undefined) 
+				return _game.teams[0];},
+		getTeamB: function(){	
+			if(_game != undefined) 
+				return _game.teams[1];},
+		getScoresTitle: function(){		
+			if(_game != undefined && _game.links != undefined) 
+				return _game.links[0].title;},
+		getScoresLink: function(){	
+			if((_game != undefined) && (_game.links != undefined)) 
+				return _game.links[0].url;},
+		getScore: function(){	
+			if(_score != undefined) 
+				return _score;},
+		getGameStatus: function() {	
+			return _status;},
+		getGamePeriod: function() {	
+			return _gameStats[0];},
+		getGameClock: function() {	
+			return _gameStats[1];},
 //		getSectionType: function(sectionNumber){ 
 //		//TODO check for section length
 //		if(sectionNumber == undefined )
@@ -152,26 +177,52 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 //		else
 //		return _topic.data.content.sections[sectionNumber].type
 //		},
-		getChannelId:function(){ if(_topic != undefined) return _topic.owner.id;},
-		getTitle:function(){ return _title;},
-		getHtml:function(){if(_topic != undefined) return _topic.html},
+		getChannelId:function(){ 	
+			if(_topic != undefined) 
+				return _topic.owner.id;},
+		getTitle:function(){ 	
+			return _title;},
+		getHtml:function(){	
+			if(_topic != undefined) 
+				return _topic.html},
 //		getMedia:function(){return _media},
 //		getTweet:function(){return _tweet},
 //		getOgp:function(){return _ogp},
 //		getLink:function(){return _link},
-		getTimeCreatedAt:function(){if(_topic != undefined) return _topic.createdAt},
-		getLiked:function(){if(_topic != undefined) return _topic.liked},
-		getMetrics:function(){if(_topic != undefined) return _topic.metrics},
+		getTimeCreatedAt:function(){	
+			if(_topic != undefined) 
+				return _topic.createdAt},
+		getLiked:function(){	
+			if(_topic != undefined) 
+				return _topic.liked},
+		getMetrics:function(){	
+			if(_topic != undefined) 
+				return _topic.metrics},
 		
 		watchTopicRequest:watchTopicRequest,
+		
 		getLikeTopicRequest:likeTopicRequest,
+		
 		getUnlikeTopicRequest:unlikeTopicRequest,
+		
 		getFollowChannelRequest:getFollowChannelRequest,
+		
 		getTopicRequest:getTopicRequest,
+		
+		isWatchingTopic: function(){ return _isTopicWatched;},
+		
+		setWatchTopic: function(watch){_isTopicWatched = watch;},
+		
 		setTopicId: function(topicId){_id = topicId ;},
+		
 		setTopic:setTopicData,
+		
 		updateTopic:updateTopicData,
-		registerObserverCallback:registerObserverCallback
+		
+		registerObserverCallback:registerObserverCallback,
+		
+		directoComment:directComment
+
 	};
 
 });

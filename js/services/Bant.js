@@ -27,6 +27,24 @@ networkModule.factory('Bant', function (DateUtilityService) {
 					_commentObject.mediaAspect16x9 = tempMedia.sizes["16:9"];
 					_commentObject.mediaAspect1x1 = tempMedia.sizes["1:1"];
 					_commentObject.mediaAspect2x1 = tempMedia.sizes["2:1"];
+					if(_commentObject.mediaAspect16x9 != undefined)
+						_commentObject.mediaAspectFeed = _commentObject.mediaAspect16x9;
+					else if(_commentObject.mediaAspect1x1 != undefined)
+							_commentObject.mediaAspectFeed = _commentObject.mediaAspect1x1;
+					else if(_commentObject.mediaAspect2x1 != undefined)
+								_commentObject.mediaAspectFeed = _commentObject.mediaAspect2x1;
+					if(_commentObject.mediaAspectFeed != undefined){
+						_commentObject.mediaAspectFeed.x == undefined ? 0 : _commentObject.mediaAspectFeed.x;
+						_commentObject.mediaAspectFeed.y == undefined ? 0 : _commentObject.mediaAspectFeed.y;
+						_commentObject.mediaAspectFeed.w == undefined ? 0 : _commentObject.mediaAspectFeed.w;
+						_commentObject.mediaAspectFeed.h == undefined ? 0 : _commentObject.mediaAspectFeed.h;
+					}
+					if(_commentObject.mediaAspectFull != undefined){
+						_commentObject.mediaAspectFull.x == undefined ? 0 : _commentObject.mediaAspectFull.x;
+						_commentObject.mediaAspectFull.y == undefined ? 0 : _commentObject.mediaAspectFull.y;
+						_commentObject.mediaAspectFull.w == undefined ? 0 : _commentObject.mediaAspectFull.w;
+						_commentObject.mediaAspectFull.h == undefined ? 0 : _commentObject.mediaAspectFull.h;
+					}
 
 
 				}

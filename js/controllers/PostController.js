@@ -35,15 +35,21 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 
 	}
 
-//	if(facebookService.userLoggedInToFacebook === false)
-//	{
-//		window.location = "#/facebookLogin";
-//	}
-//	else
+	if(facebookService.userLoggedInToFacebook === false)
+	{
+		window.location = "#/facebookLogin";
+	}
+	else
 	{
 		$scope.pageClass = 'page-post';
-		
+
 		$scope.requestReplies();
+
+		if(TopicService.directComment === true)
+		{
+			document.getElementById("replyCommentField").focus();
+			TopicService.directComment = false;
+		}
 	}
 
 	$scope.postReply = function(commentText) {
@@ -92,15 +98,7 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 			tempComment.postTimestamp = selectedComment.createdAt;
 			tempComment.likeCount = selectedComment.metrics.likes;
 			tempComment.replyCount = selectedComment.metrics.replies;
-
-			if(selectedComment.mediaAspect16x9 != undefined)
-				tempComment.mediaAspectFeed = selectedComment.mediaAspect16x9;
-			else if(selectedComment.mediaAspect1x1 != undefined)
-				tempComment.mediaAspectFeed = selectedComment.mediaAspect1x1;
-			else if(selectedComment.mediaAspect2x1 != undefined)
-				tempComment.mediaAspectFeed = selectedComment.mediaAspect2x1;
-
-
+			tempComment.mediaAspectFeed = selectedComment.mediaAspectFeed;
 
 			$scope.comment = tempComment;
 
@@ -132,13 +130,7 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 			tempReply.postTimestamp = repliesData[i].createdAt;
 			tempReply.likeCount = repliesData[i].metrics.likes;
 			tempReply.replyCount = repliesData[i].metrics.replies;
-
-			if(repliesData[i].mediaAspect16x9 != undefined)
-				tempReply.mediaAspectFeed = repliesData[i].mediaAspect16x9;
-			else if(repliesData[i].mediaAspect1x1 != undefined)
-				tempReply.mediaAspectFeed = repliesData[i].mediaAspect1x1;
-			else if(repliesData[i].mediaAspect2x1 != undefined)
-				tempReply.mediaAspectFeed = repliesData[i].mediaAspect2x1;
+			tempReply.mediaAspectFeed = repliesData[i].mediaAspectFeed;
 
 			$scope.replies.push(tempReply);
 

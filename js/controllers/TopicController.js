@@ -4,12 +4,11 @@ topicModule.controller("TopicController", ["$scope", "$routeParams","networkServ
 function initTopicController($scope, $routeParams,networkService,TopicService, CommentService, facebookService)
 {
 	TopicService.setTopicId($routeParams.topicID);
+	$scope.allScoresURL = "http://www.fankave.com";
 
 	$scope.init = function() {
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
 		networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
-		//TODO: add watch for Push, test once API starts working from server, currently broken - aug 25th, tuesday
-		networkService.send(TopicService.watchTopicRequest($routeParams.topicID));
 
 //		var varPushParams = {"rid": "comment",
 //		"timestamp": (new Date).getTime(),
@@ -18,12 +17,12 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 	};
 
 
-//	if(facebookService.userLoggedInToFacebook === false)
-//	{
-//		// console.log("Not logged in to facebook, take user to login page")
-//		window.location = "#/facebookLogin";
-//	}
-//	else
+	if(facebookService.userLoggedInToFacebook === false)
+	{
+		// console.log("Not logged in to facebook, take user to login page")
+		window.location = "#/facebookLogin";
+	}
+	else
 	{
 		// console.log("TopicController | userLoggedInToFacebook: " + facebookService.userLoggedInToFacebook);
 		$scope.pageClass = 'page-topic';
@@ -31,7 +30,6 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 		$scope.topicID = $routeParams.topicID;
 		//TODO: remove this - usd with static Data
 		//$scope.posts = StaticData.getPostsForTopicID();
-		networkService.init();
 		$scope.init();
 	}
 
@@ -70,12 +68,18 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 		networkService.send(CommentService.getUnlikeCommentRequest());
 	};
 
-	$scope.goToRepliesWithKeyboardTriggered = function()
+	$scope.goToRepliesWithKeyboardTriggered = function(id)
 	{
-		console.log("TopicController.goToRepliesWithKeyboardTriggered()");
+		// console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
+		TopicService.directComment = true;
+		window.location = "#/post/" + id;
 	};
 
 	var updateTopic = function(){
+		if(TopicService.isWatchingTopic() == false){
+			networkService.send(TopicService.getFollowChannelRequest());
+			networkService.send(TopicService.watchTopicRequest($routeParams.topicID));
+		}
 		//Score API update
 		$scope.leftTeam = TopicService.getTeamA();
 		$scope.rightTeam = TopicService.getTeamB();
@@ -131,19 +135,23 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 			tempComment.replyCount = commentsdata[i].metrics.replies;
 
 			tempComment.postTimestamp = commentsdata[i].createdAt;
-
-			if(commentsdata[i].mediaAspect16x9 != undefined)
-				tempComment.mediaAspectFeed = commentsdata[i].mediaAspect16x9;
-				else if(commentsdata[i].mediaAspect1x1 != undefined)
-					tempComment.mediaAspectFeed = commentsdata[i].mediaAspect1x1;
-					else if(commentsdata[i].mediaAspect2x1 != undefined)
-						tempComment.mediaAspectFeed = commentsdata[i].mediaAspect2x1;
+			tempComment.mediaAspectFeed = commentsdata[i].mediaAspectFeed;
+			tempComment.mediaAspectFull = commentsdata[i].mediaAspectFull;
 			
 			$scope.commentsArray.push(tempComment);
 						
 			// console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);
 			
 			if($scope.commentsArray[i].type == "media"){
+//				console.log("Media Aspect feed x: "+tempComment.mediaAspectFeed.x + 
+//						"y: "+ tempComment.mediaAspectFeed.y + 
+//						"w: "+ tempComment.mediaAspectFeed.w +
+//						"h: "+ tempComment.mediaAspectFeed.h );
+//				
+//				console.log("Media Aspect full x: "+tempComment.mediaAspectFull.x + 
+//						"y: "+ tempComment.mediaAspectFull.y + 
+//						"w: "+ tempComment.mediaAspectFull.w +
+//						"h: "+ tempComment.mediaAspectFull.h );
 				// console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaUrl);
 				// console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaAspectFeed);
 
@@ -152,7 +160,6 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 			// console.log(i +" : updated comments author photo: " +$scope.commentsArray[i].postAuthorPhoto);
 		}
 
-		networkService.send(TopicService.getFollowChannelRequest(TopicService.getChannelId()));
 	};
 
 	TopicService.registerObserverCallback(updateTopic);
