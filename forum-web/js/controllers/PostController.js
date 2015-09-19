@@ -60,14 +60,14 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 		$scope.commentText = "";
 	};
 
-	$scope.likeReply = function() {
+	$scope.likeReply = function(id) {
 		console.log("PostController Like Reply");
-		networkService.send(ReplyService.likeReplyRequest());
+		networkService.send(ReplyService.likeReplyRequest(id));
 	};
 
-	$scope.unlikeReply = function() {
+	$scope.unlikeReply = function(id) {
 		console.log("PostController Unlike Reply");
-		networkService.send(ReplyService.unlikeReplyRequest());
+		networkService.send(ReplyService.unlikeReplyRequest(id));
 	};
 
 	function updateScore(){
@@ -146,6 +146,7 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 				// console.log(i +" : updated replies media : " +$scope.replies[i].mediaUrl);
 				// console.log(i +" : updated replies media : " +$scope.replies[i].mediaAspectFeed);
 			}
+			//console.log(i +" : updated replies likecount : " +$scope.replies[i].likeCount);
 
 		}
 	}

@@ -69,8 +69,22 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 				ReplyService.removeReply(replyData);
 		}
 		else {
-			if(replyData.method == "POST")
-				ReplyService.appendToReplies(replyData);
+			if(replyData.method == "POST"){
+				var uri = replyData.uri;
+				if(uri != undefined){
+					var id = uri.slice(-DATA_BANT_ID_LENGTH);
+//					console.log("Comment ID: "+ id);
+//					console.log("uri: "+ uri);
+					if(uri == "/v1.0/reply/like/"+id){
+						ReplyService.updateLikeReplyWithId(id, true)
+					}
+					else if(uri == "/v1.0/reply/unlike/"+id){
+						ReplyService.updateLikeReplyWithId(id, false)
+					}
+					else
+						ReplyService.appendToReplies(replyData);
+				}
+			}
 			else
 				ReplyService.setReplies(replyData);
 		}

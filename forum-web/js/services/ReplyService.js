@@ -63,6 +63,32 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 		appendToReplies(replyData);
 		// console.log("ReplyService update Reply");
 	}
+	
+	function updateLocalData(newData){
+		for(i=0;i<_replies.length;i++){
+			if(_replies[i].id == newData.id){
+				//update
+				_replies[i] = newData;
+				if(NETWORK_DEBUG)
+					console.log("updated Data for id:"+ _replies[i].id);
+				return;
+			}
+		}
+	}
+	
+	function updateLikeReplyWithId(id, liked){
+		if(NETWORK_DEBUG)
+		console.log("updateLikeReplyWithId :"+ id + "   liked "+ liked);
+		if((id != undefined)){
+			var tempObject;
+			tempObject = getReplyById(id);
+			tempObject = Bant.updateBantLiked(tempObject, liked);
+			updateLocalData(tempObject);
+
+			notifyObservers();
+		}
+		
+	}
 
 	function removeReply(replyData){
 		for(i=0;i<_replies.length;i++){
@@ -72,6 +98,16 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 			}
 		}
 
+	}
+	
+	function getReplyById(id){
+		if(NETWORK_DEBUG) console.log("_replies :"+ _replies.length);
+		for(i=0;i<_replies.length;i++){
+			if(_replies[i].id == id){
+				//remove element
+				return _replies[i];
+			}
+		}
 	}
 	
 	function replyGetRequest(uri){
@@ -174,6 +210,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 		setReplies:setReplies,
 		updateReply:updateReply,
 		appendToReplies:appendToReplies,
+		updateLikeReplyWithId:updateLikeReplyWithId,
 		removeReply:removeReply,
 		getPostReplyRequest:getPostReplyRequest,
 		likeReplyRequest:likeReplyRequest,

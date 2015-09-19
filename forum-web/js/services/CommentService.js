@@ -80,7 +80,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 		console.log("In Comment Service update comment");
 	}
 	
-	function updateLocalCommentData(newData){
+	function updateLocalData(newData){
 		for(i=0;i<_comments.length;i++){
 			if(_comments[i].id == newData.id){
 				//update
@@ -97,7 +97,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 			var tempObject;
 			tempObject = getCommentById(id);
 			tempObject = Bant.updateBantLiked(tempObject, liked);
-			updateLocalCommentData(tempObject);
+			updateLocalData(tempObject);
 
 			notifyObservers();
 		}

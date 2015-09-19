@@ -67,8 +67,11 @@ networkModule.factory('Bant', function (DateUtilityService) {
 	
 	function updateBantLiked(data, liked){
 		//if same state, dont do anything
-		if(data.signal.like == liked)
+		if(data.signal.like == liked){
+			if(NETWORK_DEBUG)
+				console.log("no need to change   data.signal.like:"+ data.signal.like);
 			return data;
+		}
 		if(liked){
 			//update like status
 			data.signal.like = true;
@@ -82,6 +85,8 @@ networkModule.factory('Bant', function (DateUtilityService) {
 			if(data.metrics.likes != undefined) 
 			data.metrics.likes = (data.metrics.likes - 1);
 		}
+		if(NETWORK_DEBUG)
+			console.log("data.metrics.likes :"+ data.metrics.likes);
 		return data;
 	}
 
