@@ -4,6 +4,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 	var DATA_TYPE_COMMENT = "comment";
 	var DATA_TYPE_REPLY = "reply";
 	var DATA_TYPE_SCORE = "score";
+	var DATA_BANT_ID_LENGTH = 16;
 
 	function delegateSetComments(commentsData) 
 	{ 
@@ -17,8 +18,23 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 				CommentService.removeComment();	
 		}
 		else {
-			if(commentsData.method == "POST")
-				CommentService.appendToComments(commentsData);
+			if(commentsData.method == "POST"){
+				var uri = commentsData.uri;
+				if(uri != undefined){
+					var commentId = uri.slice(-DATA_BANT_ID_LENGTH);
+//					console.log("Comment ID: "+ commentId);
+//					console.log("uri: "+ uri);
+					if(uri == "/v1.0/comment/like/"+commentId){
+						console.log("calling update like ");
+						CommentService.updateLikeCommentWithId(commentId, true)
+					}
+					else if(uri == "/v1.0/comment/unlike/"+commentId){
+						CommentService.updateLikeCommentWithId(commentId, false)
+					}
+					else
+					CommentService.appendToComments(commentsData);
+				}
+			}
 			else
 				CommentService.setComments(commentsData);
 

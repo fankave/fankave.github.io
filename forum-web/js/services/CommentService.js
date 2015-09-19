@@ -79,6 +79,30 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 		//notifyObservers();
 		console.log("In Comment Service update comment");
 	}
+	
+	function updateLocalCommentData(newData){
+		for(i=0;i<_comments.length;i++){
+			if(_comments[i].id == newData.id){
+				//update
+				_comments[i] = newData;
+				return;
+			}
+		}
+	}
+	
+	function updateLikeCommentWithId(id, liked){
+		if(NETWORK_DEBUG)
+		console.log("updateLikeCommentWithId :"+ id + "   liked "+ liked);
+		if((id != undefined)){
+			var tempObject;
+			tempObject = getCommentById(id);
+			tempObject = Bant.updateBantLiked(tempObject, liked);
+			updateLocalCommentData(tempObject);
+
+			notifyObservers();
+		}
+		
+	}
 
 	function removeComment(commentData){
 		for(i=0;i<_comments.length;i++){
@@ -192,6 +216,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 			setComments:setComments,
 			updateComment:updateComment,
 			appendToComments:appendToComments,
+			updateLikeCommentWithId:updateLikeCommentWithId,
 			removeComment:removeComment,
 			postCommentRequest:postCommentRequest,
 			getLikeCommentRequest:likeCommentRequest,

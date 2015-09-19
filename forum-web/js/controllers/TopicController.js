@@ -163,6 +163,7 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 			}
 			// console.log(i +" : updated comments author name: " +$scope.commentsArray[i].postAuthorName);
 			// console.log(i +" : updated comments author photo: " +$scope.commentsArray[i].postAuthorPhoto);
+			//console.log(i +" : updated comments likes: " +$scope.commentsArray[i].likeCount);
 		}
 
 	};
