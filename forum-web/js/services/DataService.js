@@ -34,7 +34,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 			if(topicData.method == "UPSERT")
 				TopicService.updateTopic(topicData.data);
 			else if(topicData.method == "REMOVE")
-				TopicService.removeTopic();
+				TopicService.removeTopic(topicData.data);
 		}
 		else
 			TopicService.setTopic(topicData)
@@ -48,9 +48,9 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 		else if(replyData.push){
 			console.log("reply pushed ");
 			if(replyData.method == "UPSERT")
-				ReplyService.updateReply();
+				ReplyService.updateReply(replyData);
 			else if(replyData.method == "REMOVE")
-				ReplyService.removeReply();
+				ReplyService.removeReply(replyData);
 		}
 		else {
 			if(replyData.method == "POST")

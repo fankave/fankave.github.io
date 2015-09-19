@@ -53,9 +53,10 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 		//else append to existing list
 		var tempReply = replyData.data;
 		for(i=0;i<_replies.length;i++){
-			if(_replies[i].id == replyData.id){
+			if(_replies[i].id == tempReply.id){
 				//update
 				_replies[i] = Bant.bant(tempReply)
+				console.log("Reply updated");
 				return;
 			}
 		}
@@ -96,16 +97,22 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 		
 	}
 
-	function postReplyRequest(topicId, commentId,replyData){
+	function getPostReplyRequest(topicId, commentId,replyData, replyId, isReplyToReply){
+		var targetType = "comment";
+		var targetId = commentId;
+		if(isReplyToReply != undefined && isReplyToReply == true ){
+			targetType = "reply";
+			targetId = replyId;
+		}
 		console.log("Topicid : "+topicId,"commentid : "+commentId,"replydata : "+replyData);
-		var createReplyParams =replyPostRequest(POST_REPLY_URI);
+		var createReplyParams = replyPostRequest(POST_REPLY_URI);
 		createReplyParams.data = 	
 		{
 				"lang": "en", 
 				"content": {"sections":[{"type":"html","html":replyData}]},
 				"target": {
-					"type": "comment", // Target type: “comment” or “reply”.
-					"id":commentId,  // Target bant ID of comment or reply.
+					"type": targetType, // Target type: “comment” or “reply”.
+					"id":targetId,  // Target bant ID of comment or reply.
 				},
 
 				"topicId": topicId,
@@ -168,7 +175,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 		updateReply:updateReply,
 		appendToReplies:appendToReplies,
 		removeReply:removeReply,
-		postReplyRequest:postReplyRequest,
+		getPostReplyRequest:getPostReplyRequest,
 		likeReplyRequest:likeReplyRequest,
 		unlikeReplyRequest:unlikeReplyRequest,
 		registerObserverCallback:registerObserverCallback,
