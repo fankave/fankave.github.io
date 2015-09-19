@@ -31,8 +31,10 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 					else if(uri == "/v1.0/comment/unlike/"+commentId){
 						CommentService.updateLikeCommentWithId(commentId, false)
 					}
-					else
-					CommentService.appendToComments(commentsData);
+					else if(uri == "/v1.0/comment/create"){
+						CommentService.appendToComments(commentsData);
+						TopicService.updateCommentCount();
+					}
 				}
 			}
 			else
@@ -81,8 +83,9 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 					else if(uri == "/v1.0/reply/unlike/"+id){
 						ReplyService.updateLikeReplyWithId(id, false)
 					}
-					else
+					else if(uri == "/v1.0/reply/create"){
 						ReplyService.appendToReplies(replyData);
+					}
 				}
 			}
 			else

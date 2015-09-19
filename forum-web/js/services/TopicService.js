@@ -91,6 +91,14 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 			notifyObservers();
 		}
 	}
+	
+	function updateCommentCount(){
+		console.log("Update comment count" + _topic.metrics.comments);
+		if(_topic!= undefined && _topic.metrics != undefined){
+			_topic.metrics.comments == undefined ? _topic.metrics.comments =1: _topic.metrics.comments = _topic.metrics.comments+1;
+		}
+		notifyObservers();
+	}
 
 	function getTopicRequest(topicId){
 		var uri = TOPIC_BASE_URI+topicId;
@@ -235,6 +243,8 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		setTopic:setTopicData,
 		
 		updateTopic:updateTopicData,
+		
+		updateCommentCount: updateCommentCount,
 		
 		registerObserverCallback:registerObserverCallback,
 		
