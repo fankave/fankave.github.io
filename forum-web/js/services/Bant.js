@@ -58,6 +58,8 @@ networkModule.factory('Bant', function (DateUtilityService) {
 			var likeObject = {like:false};
 			_commentObject.signal = likeObject;
 		}
+		else if(_commentObject.signal.like == undefined)
+			_commentObject.signal.like = false;
 		_commentObject.metrics = data.metrics;
 		_commentObject.createdAt = DateUtilityService.getTimeSince(data.createdAt);
 
