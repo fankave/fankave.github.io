@@ -51,11 +51,11 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	function updateReply(replyData){
 		//if Replys ID exist, update it 
 		//else append to existing list
-		var tempReply = replyData.data;
+		var replyObj = replyData.data;
 		for(i=0;i<_replies.length;i++){
-			if(_replies[i].id == tempReply.id){
+			if(_replies[i].id == replyObj.id){
 				//update
-				_replies[i] = Bant.bant(tempReply)
+				_replies[i] = Bant.bant(replyObj)
 				console.log("Reply updated");
 				return;
 			}

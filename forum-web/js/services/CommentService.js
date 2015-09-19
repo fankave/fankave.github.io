@@ -67,11 +67,11 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 	function updateComment(commentData){
 		//if comments ID exist, update it 
 		//else append to existing list
-		var tempComment = commentData.data;
+		var commentObj = commentData.data;
 		for(i=0;i<_comments.length;i++){
-			if(_comments[i].id == tempComment.id){
+			if(_comments[i].id == commentObj.id){
 				//update
-				_comments[i] = Bant.bant(tempComment);
+				_comments[i] = Bant.bant(commentObj);
 				return;
 			}
 		}
