@@ -47,10 +47,27 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 			_topic = Bant.bant(topicData.data);
 			notifyObservers();
 		}
-		else if(topicData.method == "POST" && topicData.uri == WATCH_TOPIC_URI+_id ){
-			if(NETWORK_DEBUG)
-				console.log("Topic watch success");
-			_isTopicWatched = true;
+		else if(topicData.method == "POST"){
+
+			//Handle operations dependent on POST
+			if(topicData.uri == WATCH_TOPIC_URI+_id){
+				if(NETWORK_DEBUG)
+					console.log("Topic watch success");
+				_isTopicWatched = true;
+			}
+			else if(topicData.uri == LIKE_TOPIC_URI+_id)
+			{
+				if(NETWORK_DEBUG)
+					console.log("Topic liked success");
+				_topic = Bant.updateBantLiked(_topic, true);
+				notifyObservers();
+			}
+			else if(topicData.uri == UNLIKE_TOPIC_URI+_id){
+				if(NETWORK_DEBUG)
+					console.log("Topic unliked success");
+				_topic = Bant.updateBantLiked(_topic, false);
+				notifyObservers();
+			}
 		}
 	}
 
@@ -194,7 +211,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 				return _topic.createdAt},
 		getLiked:function(){	
 			if(_topic != undefined) 
-				return _topic.liked},
+				return _topic.signal.like},
 		getMetrics:function(){	
 			if(_topic != undefined) 
 				return _topic.metrics},

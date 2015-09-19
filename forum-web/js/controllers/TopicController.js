@@ -109,6 +109,7 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 //		$scope.link = TopicService.getLink();
 
 		$scope.createdAt = TopicService.getTimeCreatedAt();
+		$scope.liked = TopicService.getLiked();
 		var metrics = TopicService.getMetrics();
 		$scope.likesCount = metrics.likes;
 		$scope.commentsCount = metrics.comments;
