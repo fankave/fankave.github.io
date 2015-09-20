@@ -9,6 +9,9 @@
 				<span id="leftTeamSpan">
 					<b>{{leftTeam.name}}</b>
 				</span>
+				<span ng-if="gameStatus == 'live'" id="liveGameIndicatorSpan">
+					<img src="img/live-2x.png"/>
+				</span>
 				<span id="rightTeamSpan">
 					<b>{{rightTeam.name}}</b>
 				</span>
@@ -23,10 +26,15 @@
 					{{leftTeamScore}}
 				</span>
 				<span id="gameTime">
-					<div>
+					<div ng-if="gameStatus == 'live' || gameStatus == 'future'">
 						{{gamePeriod}}
 					</div>
-					<div>
+					<div id="pastGameFinal" ng-if="gameStatus == 'past'">
+						<div id="pastGameFinalText">
+							<span><b>FINAL</b></span>
+						</div>
+					</div>
+					<div ng-if="gameStatus == 'live' || gameStatus == 'future'">
 						{{gameClock}}
 					</div>
 				</span>

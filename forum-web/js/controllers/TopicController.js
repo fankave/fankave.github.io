@@ -90,6 +90,7 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 			$scope.rightTeamScore = score.points[1];
 		}
 		$scope.gameStatus = TopicService.getGameStatus();
+		console.log($scope.gameStatus)
 		$scope.topicTitle = TopicService.getTitle();
 		if($scope.gameStatus == "live") {
 			$scope.gamePeriod = TopicService.getGamePeriod();
