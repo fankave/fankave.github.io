@@ -41,6 +41,7 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 		networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
 		}
 		$scope.commentText = "";
+		document.getElementById("topicCommentField").blur();
 	};
 
 	$scope.likeTopic = function() {
