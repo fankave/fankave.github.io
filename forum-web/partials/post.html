@@ -63,9 +63,17 @@
 				</div>	
 
 				<div class="sharingButtonsRow">
-					<button class="btn-link social-btn"><img src="img/likeButton-2x.png"/> {{thisReply.likeCount}}</button>
-					<button class="btn-link social-btn"><img src="img/commentButton-2x.png"/> {{thisReply.commentCount}}</button>
-					<button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button>
+					<button class="btn-link social-btn" ng-click="updateLikeReply(thisReply.id)"><img src="img/likeButton-2x.png"/> {{thisReply.likeCount}}</button>
+					<button class="btn-link social-btn" ng-click="triggerRepliesKeyboard()"><img src="img/commentButton-2x.png"/> {{thisReply.commentCount}}</button>
+					<div class="btn-group">
+							<button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<img src="img/moreButton-2x.png"/>
+							</button>
+					  <ul class="dropdown-menu dropdown-menu-right">
+					    <li><a ng-click="deleteReply(thisReply.id);">Delete Comment</a></li>
+					    <li><a ng-click="reportReplyAsSpam(thisReply.id);">Report as spam</a></li>
+					  </ul>
+					</div>
 				</div>
 			</span>
 			

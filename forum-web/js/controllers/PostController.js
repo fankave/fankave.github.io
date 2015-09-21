@@ -35,6 +35,11 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 
 	}
 
+	$scope.triggerRepliesKeyboard = function()
+	{
+		document.getElementById("replyCommentField").focus();
+	}
+
 	if(facebookService.userLoggedInToFacebook === false)
 	{
 		window.location = "#/facebookLogin";
@@ -49,7 +54,7 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 
 		if(TopicService.directComment === true)
 		{
-			document.getElementById("replyCommentField").focus();
+			$scope.triggerRepliesKeyboard();
 			TopicService.directComment = false;
 		}
 
@@ -91,6 +96,16 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 			networkService.send(ReplyService.likeReplyRequest(id));
 		}
 	};
+
+	$scope.deleteReply = function(id)
+	{
+		console.log("deleteReply(" + id + ")");
+	}
+
+	$scope.reportReplyAsSpam = function(id)
+	{
+		console.log("reportReplyAsSpam(" + id + ")");
+	}
 
 	function updateScore(){
 		//Score update here
