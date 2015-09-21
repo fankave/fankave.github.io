@@ -81,14 +81,14 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		$scope.commentText = "";
 	};
 
-	$scope.likeReply = function(id) {
+	$scope.updateLikeReply = function(id) {
 		console.log("PostController Like Reply");
-		networkService.send(ReplyService.likeReplyRequest(id));
-	};
-
-	$scope.unlikeReply = function(id) {
-		console.log("PostController Unlike Reply");
-		networkService.send(ReplyService.unlikeReplyRequest(id));
+		if(ReplyService.isReplyLiked(id)){
+			networkService.send(ReplyService.unlikeReplyRequest(id));
+		}
+		else{
+			networkService.send(ReplyService.likeReplyRequest(id));
+		}
 	};
 
 	function updateScore(){

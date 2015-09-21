@@ -92,14 +92,12 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 		document.getElementById("topicCommentField").blur();
 	};
 
-	$scope.likeTopic = function() {
-		console.log("TopicController Like Topic");
-		networkService.send(TopicService.getLikeTopicRequest());
-	};
-
-	$scope.unlikeTopic = function() {
-		console.log("TopicController Unlike Topic");
-		networkService.send(TopicService.getUnlikeTopicRequest());
+	$scope.updateLikeTopic = function() {
+		console.log("TopicController update like Topic");
+		if(TopicService.getLiked() == true)
+			networkService.send(TopicService.getUnlikeTopicRequest());
+		else
+			networkService.send(TopicService.getLikeTopicRequest());	
 	};
 
 	$scope.commentOnTopic = function()
@@ -108,21 +106,19 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 		document.getElementById("topicCommentField").focus();
 	};
 
-	$scope.likeComment = function(id) {
+	$scope.updateLikeComment = function(id) {
 		event.cancelBubble = true;
-	   if(event.stopPropagation) event.stopPropagation();
+		if(event.stopPropagation) event.stopPropagation();
 
-		console.log("TopicController Like Comment (" + id + ")");
-		networkService.send(CommentService.getLikeCommentRequest(id));
+		console.log("TopicController updateLike (" + id + ")");
+		if(CommentService.isCommentLiked(id)){
+			networkService.send(CommentService.getUnlikeCommentRequest(id));
+		}
+		else{
+			networkService.send(CommentService.getLikeCommentRequest(id));	
+		}
 	};
 
-	$scope.unlikeComment = function(id) {
-		event.cancelBubble = true;
-	   if(event.stopPropagation) event.stopPropagation();
-
-		console.log("TopicController Unlike Comment");
-		networkService.send(CommentService.getUnlikeCommentRequest());
-	};
 
 	$scope.deleteComment = function(id)
 	{
@@ -213,7 +209,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 			tempComment.postTimestamp = commentsdata[i].createdAt;
 			tempComment.mediaAspectFeed = commentsdata[i].mediaAspectFeed;
 			tempComment.mediaAspectFull = commentsdata[i].mediaAspectFull;
-			
+			tempComment.isLiked = commentsdata[i].signal.like;
 			$scope.commentsArray.push(tempComment);
 						
 			// console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);

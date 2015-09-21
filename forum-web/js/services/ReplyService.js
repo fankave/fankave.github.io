@@ -1,4 +1,4 @@
-networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
+networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtility) {
 	var _postID;
 	var LIST_REPLIES_URI = "/v1.0/comment/replies/list/"
 	var POST_REPLY_URI="/v1.0/reply/create";
@@ -201,7 +201,9 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 		}
 		observerCallbacks.push(callback);
 	}
-	
+	function isReplyLiked(id){
+		return FDSUtility.isLikedById(_replies, id);
+	}
 	return {
 		replies: function(){return _replies },
 		getTopicIdFromReply: function(){return _topicIdFromReply; },
@@ -216,7 +218,8 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 		likeReplyRequest:likeReplyRequest,
 		unlikeReplyRequest:unlikeReplyRequest,
 		registerObserverCallback:registerObserverCallback,
-		getRepliesRequest:getRepliesRequest
+		getRepliesRequest:getRepliesRequest,
+		isReplyLiked:isReplyLiked
 	};
 
 });

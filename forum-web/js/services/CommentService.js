@@ -1,4 +1,4 @@
-networkModule.factory('CommentService', function (Bant,DateUtilityService) {
+networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUtility) {
 	var LIST_COMMENTS_URI = "/v1.0/topic/comments/list/"
 	var SHOW_COMMENT_URI = "/v1.0/comment/show/";
 		
@@ -205,7 +205,9 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 		return commentPostRequest(UNFLAG_COMMENT_URI + id);
 	}
 	
-	
+	function isCommentLiked(id){
+		return FDSUtility.isLikedById(_comments,id);
+	}
 
 
 
@@ -224,7 +226,8 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 			registerObserverCallback:registerObserverCallback,
 			getCommentsRequest:getCommentsRequest,
 			getCommentById:getCommentById,
-			getCommentByIdRequest:getCommentByIdRequest
+			getCommentByIdRequest:getCommentByIdRequest,
+			isCommentLiked:isCommentLiked
 	};
 
 });

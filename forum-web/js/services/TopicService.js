@@ -1,4 +1,4 @@
-networkModule.service('TopicService', function (DateUtilityService,Bant) {
+networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtility) {
 
 	var TOPIC_BASE_URI = "/v1.0/topic/show/";
 	var LIKE_TOPIC_URI = "/v1.0/topic/like/";
