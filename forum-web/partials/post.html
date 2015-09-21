@@ -52,6 +52,14 @@
 					{{thisReply.html}} 
 				</div>
 
+				<div ng-switch-when="image">
+					<img ng-src="{{thisReply.mediaUrl}}" class="postPhoto"/>
+				</div>
+
+				<div ng-switch-when="video">
+					<img ng-src="{{thisReply.mediaThumbUrl}}" class="postVideo"/>
+				</div>	
+
 				<div class="sharingButtonsRow">
 					<button class="btn-link social-btn"><img src="img/likeButton-2x.png"/> {{thisReply.likeCount}}</button>
 					<button class="btn-link social-btn"><img src="img/commentButton-2x.png"/> {{thisReply.commentCount}}</button>
