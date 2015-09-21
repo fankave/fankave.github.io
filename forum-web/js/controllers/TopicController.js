@@ -15,7 +15,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 //		"uri": "\/mock\/topic\/53c167f17040001d?duration=\(100)"};
 	};
 
-
+	$scope.innerButtonTapped = false
 	if(facebookService.userLoggedInToFacebook === false)
 	{
 		// console.log("Not logged in to facebook, take user to login page")
@@ -49,8 +49,13 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 						 	var thisDiv = postDivs[div];
 						 	thisDiv.onclick = function()
 						 	{
+						 		// console.log("thisDiv.onclick");
 						 		thisPost = $scope.commentsArray[this.id];
-						 		window.location = "#/post/" + thisPost.id;
+						 		if($scope.innerButtonTapped == false)
+						 		{
+						 			window.location = "#/post/" + thisPost.id;
+						 		}
+						 		$scope.innerButtonTapped = false;
 						 	}
 						 }	
 					}
@@ -64,8 +69,6 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 		event.cancelBubble = true;
 	   if(event.stopPropagation) event.stopPropagation();
 
-		console.log("imageClik(" + imageURL + ")");
-
 		$.magnificPopup.open({
                     items: {
                     	type:'image',
@@ -77,9 +80,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 
 	$scope.moreButtonTapped = function()
 	{
-		// console.log("more button tapped");
-		// event.cancelBubble = true;
-	   // if(event.stopPropagation) event.stopPropagation();
+		$scope.innerButtonTapped = true;
 	}
 
 	$scope.postComment = function(commentText) {
@@ -122,6 +123,18 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 		console.log("TopicController Unlike Comment");
 		networkService.send(CommentService.getUnlikeCommentRequest());
 	};
+
+	$scope.deleteComment = function(id)
+	{
+		console.log("deleteComment(" + id + ")");
+		$scope.innerButtonTapped = true;
+	}
+
+	$scope.reportCommentAsSpam = function(id)
+	{
+		console.log("reportCommentAsSpam(" + id + ")");
+		$scope.innerButtonTapped = true;
+	}
 
 	$scope.goToRepliesWithKeyboardTriggered = function(id)
 	{

@@ -90,8 +90,6 @@
 
 				<span class="post">
 
-					<!--a href="#/post/{{thisPost.id}}"-->
-
 					<div class="roww">
 						<span class="postUsername">
 							{{thisPost.postAuthorName}}
@@ -104,8 +102,6 @@
 					<div class="postContent">
 						{{thisPost.html}} 
 					</div>
-
-					<!--/a-->
 
 					<div ng-switch-when="image">
 							<img ng-src="{{thisPost.mediaUrl}}" class="postPhoto" ng-click="imageClick(thisPost.mediaUrl);" />
@@ -124,8 +120,8 @@
     							<img src="img/moreButton-2x.png"/>
   							</button>
 						  <ul class="dropdown-menu dropdown-menu-right">
-						    <li><a href="">Delete Comment</a></li>
-						    <li><a href="">Report as spam</a></li>
+						    <li><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
+						    <li><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
 						  </ul>
 						</div>
 					</div>
