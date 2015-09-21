@@ -1,7 +1,7 @@
 var postModule = angular.module("PostModule", ["NetworkModule", "FacebookModule"]);
-postModule.controller("PostController", ["$scope", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "facebookService", initPostController]);
+postModule.controller("PostController", ["$scope", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "facebookService","UserInfoService", initPostController]);
 
-function initPostController($scope, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService)
+function initPostController($scope, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService, UserInfoService)
 {
 	$scope.pageClass = 'page-post';
 
@@ -167,6 +167,7 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 			tempReply = repliesData[i];
 			tempReply.postAuthorName = repliesData[i].author.name;
 			tempReply.postAuthorPhoto = repliesData[i].author.photo;
+			tempReply.isMyReply = UserInfoService.isCurrentUser(repliesData[i].author.id);
 
 			tempReply.postTimestamp = repliesData[i].createdAt;
 			tempReply.likeCount = repliesData[i].metrics.likes;

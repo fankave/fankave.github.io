@@ -14,6 +14,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 	var _score;
 	var _gameStats;
 	var _links;
+	var _scheduledAt;
 	var observerCallbacks = [];	
 	var directComment; //bool flag to indicate whether user tapped on a comment's "comment" icon
 
@@ -26,6 +27,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 
 			_game = topicData.data.game;
 			if(_game != undefined){
+				_scheduledAt = _game.scheduledAt;
 				_score = _game.score;
 //				Future game: live == false AND final == false.
 //				Live game: live == true.

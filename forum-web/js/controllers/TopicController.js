@@ -1,7 +1,7 @@
 var topicModule = angular.module("TopicModule", ["NetworkModule", "FacebookModule"]);
-topicModule.controller("TopicController", ["$scope", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "facebookService", initTopicController]);
+topicModule.controller("TopicController", ["$scope", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "facebookService", "UserInfoService",initTopicController]);
 
-function initTopicController($scope, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService)
+function initTopicController($scope, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService)
 {
 	TopicService.setTopicId($routeParams.topicID);
 
@@ -203,6 +203,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 			tempComment = commentsdata[i];
 			tempComment.postAuthorName = commentsdata[i].author.name;
 			tempComment.postAuthorPhoto = commentsdata[i].author.photo;
+			tempComment.isMyComment = UserInfoService.isCurrentUser(commentsdata[i].author.id);
 			
 			tempComment.likeCount = commentsdata[i].metrics.likes;
 			tempComment.replyCount = commentsdata[i].metrics.replies;

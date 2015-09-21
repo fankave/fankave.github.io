@@ -22,6 +22,10 @@ networkModule.service('UserInfoService', function () {
 			
 		return _userInfo;
 	}
+	 
+	function isCurrentUser(id){
+		return id == _userInfo.userId;
+	}
 	
 	function setUserCredentials(userId, accessToken, sessionId){
 		// console.log("setUserCredentials(" + userId + ", " + accessToken + ", " + sessionId);
@@ -33,7 +37,8 @@ networkModule.service('UserInfoService', function () {
 	}
 	return{
 		getUserCredentials:getUserCredentials,
-		setUserCredentials:setUserCredentials
+		setUserCredentials:setUserCredentials,
+		isCurrentUser:isCurrentUser
 	}
 
 });
