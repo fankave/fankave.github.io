@@ -80,17 +80,17 @@
 	</div>
 
 	<div class="commentsContainer">
-		<div ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.mediaType" class="row postRow">
+		<div ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}">
 
 				<span class="postAuthorPhoto">
-					<a href="#/post/{{thisPost.id}}" class="thumbnail">
+					<a class="thumbnail">
 	  					<img ng-src="{{thisPost.postAuthorPhoto}}" alt="" class="userPhoto">
 				    </a>
 				</span>
 
 				<span class="post">
 
-					<a href="#/post/{{thisPost.id}}">
+					<!--a href="#/post/{{thisPost.id}}"-->
 
 					<div class="roww">
 						<span class="postUsername">
@@ -105,12 +105,10 @@
 						{{thisPost.html}} 
 					</div>
 
-					</a>
+					<!--/a-->
 
 					<div ng-switch-when="image">
-						<a class="image-link" href="{{thisPost.mediaUrl}}">
-							<img ng-src="{{thisPost.mediaUrl}}" class="postPhoto"/>
-						</a>
+							<img ng-src="{{thisPost.mediaUrl}}" class="postPhoto" ng-click="imageClick(thisPost.mediaUrl);" />
 					</div>
 
 					<div ng-switch-when="video">
@@ -122,7 +120,7 @@
 						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)"><img src="img/commentButton-2x.png"/> {{thisPost.replyCount}}</button>
 						<!--button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button-->
 						<div class="btn-group">
-  							<button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  							<button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
     							<img src="img/moreButton-2x.png"/>
   							</button>
 						  <ul class="dropdown-menu dropdown-menu-right">

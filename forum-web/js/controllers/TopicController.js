@@ -33,24 +33,54 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 
 		document.getElementById('topicSection').style.paddingTop = "8em";
 
-		 // $('.image-link').magnificPopup({type:'image'});
-
 		 $scope.$watch("commentsArray", function (newValue, oldValue)
 		 {
   			$timeout(function()
   			{
-    			$('.commentsContainer').each(function()
-    			{
-      				$('.image-link').magnificPopup({
-        				type:'image'
-     				});
-    			});
+    			var postDivs = document.getElementsByClassName("postRow");
+				 for(div in postDivs)
+				 {
+				 	if(newValue != undefined)
+				 	{
+					 	var thisPost = newValue[div];
+
+					 	if(thisPost != undefined)
+					 	{
+						 	var thisDiv = postDivs[div];
+						 	thisDiv.onclick = function()
+						 	{
+						 		thisPost = $scope.commentsArray[this.id];
+						 		window.location = "#/post/" + thisPost.id;
+						 	}
+						 }	
+					}
+				 }
   			});
 		});
 	}
 
+	$scope.imageClick = function(imageURL)
+	{
+		event.cancelBubble = true;
+	   if(event.stopPropagation) event.stopPropagation();
 
+		console.log("imageClik(" + imageURL + ")");
 
+		$.magnificPopup.open({
+                    items: {
+                    	type:'image',
+                    	src: imageURL,
+                },
+                type: 'inline'
+            });
+	}
+
+	$scope.moreButtonTapped = function()
+	{
+		// console.log("more button tapped");
+		// event.cancelBubble = true;
+	   // if(event.stopPropagation) event.stopPropagation();
+	}
 
 	$scope.postComment = function(commentText) {
 		if((commentText != undefined)	 && commentText != ""){
@@ -78,17 +108,26 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 	};
 
 	$scope.likeComment = function(id) {
+		event.cancelBubble = true;
+	   if(event.stopPropagation) event.stopPropagation();
+
 		console.log("TopicController Like Comment (" + id + ")");
 		networkService.send(CommentService.getLikeCommentRequest(id));
 	};
 
 	$scope.unlikeComment = function(id) {
+		event.cancelBubble = true;
+	   if(event.stopPropagation) event.stopPropagation();
+
 		console.log("TopicController Unlike Comment");
 		networkService.send(CommentService.getUnlikeCommentRequest());
 	};
 
 	$scope.goToRepliesWithKeyboardTriggered = function(id)
 	{
+		event.cancelBubble = true;
+	   if(event.stopPropagation) event.stopPropagation();
+
 		// console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
 		TopicService.directComment = true;
 		window.location = "#/post/" + id;
