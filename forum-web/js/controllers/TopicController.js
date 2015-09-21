@@ -32,6 +32,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 		$scope.init();
 
 		document.getElementById('topicSection').style.paddingTop = "8em";
+		document.getElementById('topicSection').style.paddingBottom = "3.9em";
 
 		 $scope.$watch("commentsArray", function (newValue, oldValue)
 		 {

@@ -58,6 +58,7 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		var heightString = replyPostHeader + "px";
 		document.getElementById('postHeader').style.height=heightString;
 		document.getElementById('postSection').style.paddingTop = heightString;
+		document.getElementById('postSection').style.paddingBottom = "3.9em";
 
 		$scope.$watch("replies", function (newValue, oldValue)
 		 {
