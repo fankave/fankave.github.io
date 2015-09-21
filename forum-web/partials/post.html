@@ -9,22 +9,22 @@
 
 			<span class="repliesHeaderPostAuthorPhoto">
 				<!--a class="thumbnail"-->
-  					<img ng-src="img/staticUsers/ana.png" alt="" class="repliesHeaderUserPhoto">
+  					<img ng-src="{{comment.postAuthorPhoto}}" alt="" class="repliesHeaderUserPhoto">
 			    <!--/a-->
 			</span>
 
 			<span id="replyPost">
 				<div class="roww">
 					<span class="replyUsername">
-						afarghaly
+						{{comment.postAuthorName}}
 					</span>
 					<span class="replyTimestamp">
-						3m
+						{{comment.postTimestamp}}
 					</span>
 				</div>
 
 				<div class="replyContent">
-					Post <!--Content Post Content Post Content Post Content Post Content Post Content Post Content Post Content Post Content Post Content Post Content Post Content Post Content Post Content-->
+					{{comment.html}}
 				</div>
 			</span>
 	</nav>
