@@ -42,6 +42,8 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 	else
 	{
 		$scope.pageClass = 'page-post';
+		$scope.paddingTop = "20";
+		$scope.pageStyle = {'padding-top': '10em'};
 
 		$scope.requestReplies();
 
@@ -50,6 +52,12 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 			document.getElementById("replyCommentField").focus();
 			TopicService.directComment = false;
 		}
+
+		var replyPostHeader = $("#replyPost").height();
+		console.log("height of repy header: " + replyPostHeader);
+		var heightString = replyPostHeader + "px";
+		document.getElementById('postHeader').style.height=heightString;
+		document.getElementById('postSection').style.paddingTop = heightString;
 	}
 
 	$scope.postReply = function(commentText) {

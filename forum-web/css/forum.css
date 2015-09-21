@@ -32,7 +32,7 @@ a
 
 .page-post
 {
-	padding-top: 3.5em; 
+	padding-top: 3.5em;
 }
 
 body
@@ -323,11 +323,29 @@ body
 
 .postAuthorPhoto /* left-side of each post row */
 {
-	/*background-color: #EEE;*/
+	/*background-color: yellow;*/
 	width: 15%;
 	/*max-width: 100px;*/
 	float:left;
 	padding:5px;
+}
+
+.repliesHeaderPostAuthorPhoto
+{
+	/*background-color: yellow;*/
+	width: 15%;
+	/*max-width: 100px;*/
+	float:left;
+	padding:5px;
+}
+
+.repliesHeaderPostAuthorPhoto img
+{
+	/*background-color: yellow;*/
+	/*width: 15%;*/
+	max-width: 100%;
+	/*float:left;*/
+	/*padding:5px;*/
 }
 
 .thumbnail {
@@ -339,6 +357,14 @@ body
 {
 	border-radius: 25px;
 	-webkit-border-radius: 25px;
+}
+
+.repliesHeaderUserPhoto
+{
+	background-color:rgb(246, 250, 251);
+	border-radius: 25px;
+	-webkit-border-radius: 25px;
+	max-height: 100%;
 }
 
 .post /* entire right-side of each post row */
@@ -353,6 +379,24 @@ body
 	padding-bottom: 10px;
 }
 
+#replyPost
+{
+	width: 75%;
+	/*background-color: red;*/
+	min-height: 2.0em;
+	float:left;
+	padding-left: 5px;
+}
+
+.replyUsername
+{
+	font-size: 1em;
+	float:left;
+	color: rgb(166, 189, 207);
+	width:80%;
+	/*padding-left:5px;*/
+}
+
 .postUsername
 {
 	font-size: 0.35em;
@@ -362,9 +406,21 @@ body
 	/*padding-left:5px;*/
 }
 
+
+
 .timestamp
 {
 	font-size: 0.35em;
+	float:right;
+	color: rgb(166, 189, 207);
+	width:20%;
+	text-align: right;
+	padding-right:0px;
+}
+
+.replyTimestamp
+{
+	font-size: 1em;
 	float:right;
 	color: rgb(166, 189, 207);
 	width:20%;
@@ -380,6 +436,14 @@ body
 	padding-right: 5px;
 	font-size: 0.35em;
 	margin-bottom:0.3em;
+}
+
+.replyContent
+{
+	padding-right: 5px;
+	font-size: 1em;
+	margin-bottom: 1em;
+	color: black;
 }
 
 .postPhoto
@@ -401,8 +465,6 @@ body
 .playVideoButton
 {
 	position:absolute;
-	/*left:0;*/
-	/*top:0;*/
 	float:left;
 }
 
@@ -474,9 +536,9 @@ body
 
 #postHeader
 {
-	height: 3em;
+	height: 5em;
 	background-color:rgb(246, 250, 251);
-	color:white;
+	/*color:white;*/
 	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);	
 }
 
@@ -499,6 +561,7 @@ body
 #post_backToTopicButtonSpan
 {
 	width:10%;
+	float:left;
 	/*margin-left:-10px;*/
 }
 

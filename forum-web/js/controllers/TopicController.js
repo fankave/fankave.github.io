@@ -30,6 +30,8 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 		//TODO: remove this - usd with static Data
 		//$scope.posts = StaticData.getPostsForTopicID();
 		$scope.init();
+
+		document.getElementById('topicSection').style.paddingTop = "8em";
 	}
 
 
@@ -91,7 +93,7 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 			$scope.rightTeamScore = score.points[1];
 		}
 		$scope.gameStatus = TopicService.getGameStatus();
-		console.log($scope.gameStatus)
+		// console.log($scope.gameStatus)
 		$scope.topicTitle = TopicService.getTitle();
 		if($scope.gameStatus == "live") {
 			$scope.gamePeriod = TopicService.getGamePeriod();
