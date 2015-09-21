@@ -64,7 +64,7 @@
 			{{topicDescHtml}}
 		</div>
 		<div class="topicSharingButtonsRow">
-			<button class="btn-link topic-social-btn" ng-click="likeTopic()"><img src="img/likeButton-2x_.png"/> {{likesCount}}</button>
+			<button class="btn-link topic-social-btn" ng-click="updateLikeTopic()"><img src="img/likeButton-2x_.png"/> {{likesCount}}</button>
 			<button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/commentButton-2x_.png"/> {{commentsCount}}</button>
 		</div>
 	</div>
@@ -112,7 +112,7 @@
 					</div>	
 
 					<div class="sharingButtonsRow">
-						<button class="btn-link social-btn" ng-click="updateLike(thisPost.id)"><img src="img/likeButton-2x.png"/> {{thisPost.likeCount}}</button>
+						<button class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)"><img src="img/likeButton-2x.png"/> {{thisPost.likeCount}}</button>
 						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)"><img src="img/commentButton-2x.png"/> {{thisPost.replyCount}}</button>
 						<!--button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button-->
 						<div class="btn-group">
