@@ -1,7 +1,7 @@
 var postModule = angular.module("PostModule", ["NetworkModule", "FacebookModule"]);
-postModule.controller("PostController", ["$scope", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "facebookService", initPostController]);
+postModule.controller("PostController", ["$scope", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "facebookService", initPostController]);
 
-function initPostController($scope, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService)
+function initPostController($scope, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService)
 {
 	$scope.pageClass = 'page-post';
 
@@ -54,10 +54,23 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 		}
 
 		var replyPostHeader = $("#replyPost").height();
-		console.log("height of repy header: " + replyPostHeader);
+		// console.log("height of repy header: " + replyPostHeader);
 		var heightString = replyPostHeader + "px";
 		document.getElementById('postHeader').style.height=heightString;
 		document.getElementById('postSection').style.paddingTop = heightString;
+
+		$scope.$watch("replies", function (newValue, oldValue)
+		 {
+  			$timeout(function()
+  			{
+    			$('.commentsContainer').each(function()
+    			{
+      				$('.image-link').magnificPopup({
+        				type:'image'
+     				});
+    			});
+  			});
+		});
 	}
 
 	$scope.postReply = function(commentText) {

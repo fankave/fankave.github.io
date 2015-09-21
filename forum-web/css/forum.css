@@ -27,12 +27,12 @@ a
 
 .page-topic
 {
-	padding-top: 8em; 
+	/*padding-top: 8em; */
 }
 
 .page-post
 {
-	padding-top: 3.5em;
+	/*padding-top: 3.5em;*/
 }
 
 body
@@ -344,6 +344,7 @@ body
 	/*background-color: yellow;*/
 	/*width: 15%;*/
 	max-width: 100%;
+	/*max-height: 100%;*/
 	/*float:left;*/
 	/*padding:5px;*/
 }
@@ -563,5 +564,11 @@ body
 	width:10%;
 	float:left;
 	/*margin-left:-10px;*/
+}
+
+
+.repliesContainer
+{
+	background-color: #EEEEEE;
 }
 

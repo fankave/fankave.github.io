@@ -1,7 +1,7 @@
 var topicModule = angular.module("TopicModule", ["NetworkModule", "FacebookModule"]);
-topicModule.controller("TopicController", ["$scope", "$routeParams","networkService", "TopicService","CommentService", "facebookService", initTopicController]);
+topicModule.controller("TopicController", ["$scope", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "facebookService", initTopicController]);
 
-function initTopicController($scope, $routeParams,networkService,TopicService, CommentService, facebookService)
+function initTopicController($scope, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService)
 {
 	TopicService.setTopicId($routeParams.topicID);
 
@@ -32,6 +32,21 @@ function initTopicController($scope, $routeParams,networkService,TopicService, C
 		$scope.init();
 
 		document.getElementById('topicSection').style.paddingTop = "8em";
+
+		 // $('.image-link').magnificPopup({type:'image'});
+
+		 $scope.$watch("commentsArray", function (newValue, oldValue)
+		 {
+  			$timeout(function()
+  			{
+    			$('.commentsContainer').each(function()
+    			{
+      				$('.image-link').magnificPopup({
+        				type:'image'
+     				});
+    			});
+  			});
+		});
 	}
 
 

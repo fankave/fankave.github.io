@@ -108,7 +108,9 @@
 					</a>
 
 					<div ng-switch-when="image">
-						<img ng-src="{{thisPost.mediaUrl}}" class="postPhoto"/>
+						<a class="image-link" href="{{thisPost.mediaUrl}}">
+							<img ng-src="{{thisPost.mediaUrl}}" class="postPhoto"/>
+						</a>
 					</div>
 
 					<div ng-switch-when="video">

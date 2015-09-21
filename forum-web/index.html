@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="css/bootstrapCSS/bootstrap.css">
 	<link rel="stylesheet" href="css/forum.css">
 	<link rel="stylesheet" href="css/forumAnimations.css">
+	<link rel="stylesheet" href="css/magnificCSS/magnific.css">
 
 	<!-- jQuery -->
 	<script src="lib/jQuery/jQuery.js"></script>
@@ -42,7 +43,7 @@
 
 <body>
 	<div class="containerr">
-		<div class="page" ng-view>
+		<div class="page {{pageClass}}" ng-view>
 		</div>
 	</div>
 
@@ -50,6 +51,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 	<script src="lib/bootstrap/bootstrap.js"></script>
+	<script src="lib/magnific/jQuery.magnific-popup.js"></script>
 </body>
 
 </html>
