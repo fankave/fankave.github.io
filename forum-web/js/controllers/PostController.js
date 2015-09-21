@@ -100,11 +100,13 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 	$scope.deleteReply = function(id)
 	{
 		console.log("deleteReply(" + id + ")");
+		networkService.send(ReplyService.deleteReplyRequest(id));
 	}
 
 	$scope.reportReplyAsSpam = function(id)
 	{
 		console.log("reportReplyAsSpam(" + id + ")");
+		networkService.send(ReplyService.flagReplyRequest(id));
 	}
 
 	function updateScore(){

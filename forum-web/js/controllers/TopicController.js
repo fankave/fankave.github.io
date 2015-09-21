@@ -125,12 +125,14 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 	{
 		console.log("deleteComment(" + id + ")");
 		$scope.innerButtonTapped = true;
+		networkService.send(CommentService.deleteCommentRequest(id));	
 	}
 
 	$scope.reportCommentAsSpam = function(id)
 	{
 		console.log("reportCommentAsSpam(" + id + ")");
 		$scope.innerButtonTapped = true;
+		networkService.send(CommentService.flagCommentRequest(id));	
 	}
 
 	$scope.goToRepliesWithKeyboardTriggered = function(id)

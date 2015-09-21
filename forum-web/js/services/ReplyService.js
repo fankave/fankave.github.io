@@ -175,14 +175,16 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 	}
 	
 	function flagReplyRequest(id){
-		return  replyPostRequest(FLAG_REPLY_URI + id);
+		return  replyPostRequest(FLAG_REPLY_URI + id +"?reason=spam");
 	}
 
 	function unflagReplyRequest(id){
 		return  replyPostRequest(UNFLAG_REPLY_URI + id);
 	}
 	
-	
+	function deleteReplyRequest(id){
+		return  replyPostRequest(DELETE_REPLY_URI + id);
+	}
 	
 	//call this when you know '_replies' has been changed
 	var notifyObservers = function(){
@@ -217,6 +219,8 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 		getPostReplyRequest:getPostReplyRequest,
 		likeReplyRequest:likeReplyRequest,
 		unlikeReplyRequest:unlikeReplyRequest,
+		deleteReplyRequest:deleteReplyRequest,
+		flagReplyRequest:flagReplyRequest,
 		registerObserverCallback:registerObserverCallback,
 		getRepliesRequest:getRepliesRequest,
 		isReplyLiked:isReplyLiked

@@ -197,12 +197,16 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 	}
 	
 	function flagCommentRequest(id){
-		return commentPostRequest(FLAG_COMMENT_URI + id);
+		return commentPostRequest(FLAG_COMMENT_URI + id + "?reason=spam");
 
 	}
 
 	function unflagCommentRequest(id){
 		return commentPostRequest(UNFLAG_COMMENT_URI + id);
+	}
+	
+	function deleteCommentRequest(id){
+		return commentPostRequest(DELETE_COMMENT_URI + id);
 	}
 	
 	function isCommentLiked(id){
@@ -227,6 +231,8 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 			getCommentsRequest:getCommentsRequest,
 			getCommentById:getCommentById,
 			getCommentByIdRequest:getCommentByIdRequest,
+			deleteCommentRequest:deleteCommentRequest,
+			flagCommentRequest:flagCommentRequest,
 			isCommentLiked:isCommentLiked
 	};
 
