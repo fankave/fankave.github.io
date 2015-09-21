@@ -1,5 +1,6 @@
-networkModule.factory('CommentService', function (Bant,DateUtilityService) {
+networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUtility) {
 	var LIST_COMMENTS_URI = "/v1.0/topic/comments/list/"
+	var SHOW_COMMENT_URI = "/v1.0/comment/show/";
 		
 	var POST_COMMENT_URI="/v1.0/comment/create";
 	var UPDATE_COMMNET_URI = "/v1.0/comment/content/update/";
@@ -23,16 +24,29 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 		//TODO clear comments for complete refresh Comments API
 		_comments = [];
 		tempCommentsData = commentsData.data.results;
-		if(tempCommentsData!= undefined && tempCommentsData.length>0)
+		if(tempCommentsData!= undefined && tempCommentsData.length>0){
 			var len = tempCommentsData.length;
-		for(i=0;i<len;i++){
-			var _commentObject = {};
-			_commentObject = Bant.bant(tempCommentsData[i]);
-			if(_commentObject.id != undefined)
-				_comments.push(_commentObject);
-			// console.log("Comments in set comment Service type:"+_commentObject.type + "  " +_commentObject.html );
+			for(i=0;i<len;i++){
+				var _commentObject = {};
+				_commentObject = Bant.bant(tempCommentsData[i]);
+				if(_commentObject.id != undefined)
+					_comments.push(_commentObject);
+				// console.log("Comments in set comment Service type:"+_commentObject.type + "  " +_commentObject.html );
+			}
+			notifyObservers();
 		}
-		notifyObservers();
+		else{
+			//PArticular case when user is on reply page and requires comment by comment ID
+			var data = commentsData.data;
+			if((commentsData.method == "GET") &&(commentsData.uri.substring(0,SHOW_COMMENT_URI.length) == SHOW_COMMENT_URI) ){
+				if(NETWORK_DEBUG) console.log("Processing Show comment");
+				var _commentObject = {};
+				_commentObject = Bant.bant(data);
+				if(_commentObject.id != undefined)
+					_comments.push(_commentObject);	
+				notifyObservers();
+			}
+		}
 	}
 
 	function appendToComments(postCommentData) {
@@ -53,17 +67,41 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 	function updateComment(commentData){
 		//if comments ID exist, update it 
 		//else append to existing list
-		var tempComment = commentData.data;
+		var commentObj = commentData.data;
 		for(i=0;i<_comments.length;i++){
-			if(_comments[i].id == tempComment.id){
+			if(_comments[i].id == commentObj.id){
 				//update
-				_comments[i] = Bant.bant(tempComment);
+				_comments[i] = Bant.bant(commentObj);
 				return;
 			}
 		}
 		appendToComments(commentData);
 		//notifyObservers();
 		console.log("In Comment Service update comment");
+	}
+	
+	function updateLocalData(newData){
+		for(i=0;i<_comments.length;i++){
+			if(_comments[i].id == newData.id){
+				//update
+				_comments[i] = newData;
+				return;
+			}
+		}
+	}
+	
+	function updateLikeCommentWithId(id, liked){
+		if(NETWORK_DEBUG)
+		console.log("updateLikeCommentWithId :"+ id + "   liked "+ liked);
+		if((id != undefined)){
+			var tempObject;
+			tempObject = getCommentById(id);
+			tempObject = Bant.updateBantLiked(tempObject, liked);
+			updateLocalData(tempObject);
+
+			notifyObservers();
+		}
+		
 	}
 
 	function removeComment(commentData){
@@ -77,6 +115,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 	}
 	
 	function getCommentById(id){
+		if(NETWORK_DEBUG) console.log("_comments :"+ _comments.length);
 		for(i=0;i<_comments.length;i++){
 			if(_comments[i].id == id){
 				//remove element
@@ -122,6 +161,11 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 		var uri = LIST_COMMENTS_URI+commentId;
 		return  commentGetRequest(uri);
 	}
+	
+	function getCommentByIdRequest(commentId){
+		var uri = SHOW_COMMENT_URI + commentId;
+		return  commentGetRequest(uri);
+	}
 
 	function postCommentRequest(topicId, commentData){
 		var createCommentParams = commentPostRequest(POST_COMMENT_URI);
@@ -161,7 +205,9 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 		return commentPostRequest(UNFLAG_COMMENT_URI + id);
 	}
 	
-	
+	function isCommentLiked(id){
+		return FDSUtility.isLikedById(_comments,id);
+	}
 
 
 
@@ -172,13 +218,16 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService) {
 			setComments:setComments,
 			updateComment:updateComment,
 			appendToComments:appendToComments,
+			updateLikeCommentWithId:updateLikeCommentWithId,
 			removeComment:removeComment,
 			postCommentRequest:postCommentRequest,
 			getLikeCommentRequest:likeCommentRequest,
 			getUnlikeCommentRequest:unlikeCommentRequest,
 			registerObserverCallback:registerObserverCallback,
 			getCommentsRequest:getCommentsRequest,
-			getCommentById:getCommentById
+			getCommentById:getCommentById,
+			getCommentByIdRequest:getCommentByIdRequest,
+			isCommentLiked:isCommentLiked
 	};
 
 });

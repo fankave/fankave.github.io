@@ -27,12 +27,12 @@ a
 
 .page-topic
 {
-	padding-top: 8em; 
+	/*padding-top: 8em; */
 }
 
 .page-post
 {
-	padding-top: 3.5em; 
+	/*padding-top: 3.5em;*/
 }
 
 body
@@ -81,33 +81,58 @@ body
 {
 	/*background:rgba(0, 0, 0, 0.3);*/
 	/*margin:5px;*/
-	height:25%;
+	height:20%;
 }
 
 #scoreCardDataRow
 {
 	/*background-color:rgba(0, 0, 0, 0.3);*/
-	/*width:100%;*/
-	/*margin:5px;*/
-	height:50%;
+	height:60%;
 }
+
+#pastGameFinal
+{
+	/*background-color: green;*/
+	height:100%;
+	/*display:table;*/
+	/*line-height:100%;*/
+	/*vertical-align: middle;*/
+}
+
+
+#pastGameFinalText
+{
+	content: '';
+	height: 100%;
+    width: 100%;
+    padding-top:0.8em;
+    /*display: inline-block;*/
+    /*vertical-align: middle;*/
+    /*align-items: center; */
+    /*text-align:center;*/
+}
+
 
 #allScoresButtonRow
 {
-	height:25%;
+	height:20%;
 	/*background-color: black;*/
+	vertical-align: middle;
 }
 
 #allScoresButtonSpan
 {
-	height:100%;
-	font-size:1.2em;
+	/*background-color: yellow;*/
+	/*height:100%;*/
+	font-size:1.0em;
 	font-weight:500;
-	line-height: 1.2em;
+	line-height: 1.0em;
 	border: 2px solid #EEE;
-	padding-top:3px;
-	padding-bottom:3px;
+	/*margin-top: 40px;*/
+	/*padding-top:10px;*/
+	/*padding-bottom:3px;*/
 	border-radius: 4px 4px 4px 4px !important;
+	vertical-align: middle;
 }
 
 #allScoresButtonRow a
@@ -117,23 +142,38 @@ body
 
 #leftTeamSpan
 {
-	width:50%;
+	/*background-color: red;*/
+	width:35%;
 	float:left;
-	font-size:1.3em;
+	font-size:1.1em;
+	text-align: right;
 }
 
+#liveGameIndicatorSpan
+{
+	width: 30%;
+	float:left;
+	/*background-color: green;*/
+}
+
+#liveGameIndicatorSpan img
+{
+	height:1.1em;
+}
 
 #rightTeamSpan
 {
-	width:50%;
+	/*background-color: blue;*/
+	width:35%;
 	float:right;
-	font-size:1.3em;
+	font-size:1.1em;
+	text-align: left;
 }
 
 
 #leftTeamLogo
 {
-	width:25%;
+	width:20%;
 	height:100%;
 	float:left;
 	/*background-color:rgba(255, 255, 255, 0.3);*/
@@ -171,7 +211,7 @@ body
 
 .teamLogo
 {
-	max-width:50%;
+	max-width:70%;
 	vertical-align: middle;
 	text-align: right;
 }
@@ -180,7 +220,7 @@ body
 {
 	float:left;
 	/*background-color:rgba(255, 255, 255, 0.3);*/
-	width:20%;
+	width:30%;
 	height:80%;
 	font-size:1.2em;
 	line-height:180%;
@@ -203,7 +243,7 @@ body
 
 #rightTeamLogo
 {
-	width:25%;
+	width:20%;
 	height:100%;
 	float:left;
 	/*background-color:rgba(255, 255, 255, 0.3);*/
@@ -283,11 +323,30 @@ body
 
 .postAuthorPhoto /* left-side of each post row */
 {
-	/*background-color: #EEE;*/
+	/*background-color: yellow;*/
 	width: 15%;
 	/*max-width: 100px;*/
 	float:left;
 	padding:5px;
+}
+
+.repliesHeaderPostAuthorPhoto
+{
+	/*background-color: yellow;*/
+	width: 15%;
+	/*max-width: 100px;*/
+	float:left;
+	padding:5px;
+}
+
+.repliesHeaderPostAuthorPhoto img
+{
+	/*background-color: yellow;*/
+	/*width: 15%;*/
+	max-width: 100%;
+	/*max-height: 100%;*/
+	/*float:left;*/
+	/*padding:5px;*/
 }
 
 .thumbnail {
@@ -299,6 +358,14 @@ body
 {
 	border-radius: 25px;
 	-webkit-border-radius: 25px;
+}
+
+.repliesHeaderUserPhoto
+{
+	background-color:rgb(246, 250, 251);
+	border-radius: 25px;
+	-webkit-border-radius: 25px;
+	max-height: 100%;
 }
 
 .post /* entire right-side of each post row */
@@ -313,6 +380,24 @@ body
 	padding-bottom: 10px;
 }
 
+#replyPost
+{
+	width: 75%;
+	/*background-color: red;*/
+	min-height: 2.0em;
+	float:left;
+	padding-left: 5px;
+}
+
+.replyUsername
+{
+	font-size: 1em;
+	float:left;
+	color: rgb(166, 189, 207);
+	width:80%;
+	/*padding-left:5px;*/
+}
+
 .postUsername
 {
 	font-size: 0.35em;
@@ -322,9 +407,21 @@ body
 	/*padding-left:5px;*/
 }
 
+
+
 .timestamp
 {
 	font-size: 0.35em;
+	float:right;
+	color: rgb(166, 189, 207);
+	width:20%;
+	text-align: right;
+	padding-right:0px;
+}
+
+.replyTimestamp
+{
+	font-size: 1em;
 	float:right;
 	color: rgb(166, 189, 207);
 	width:20%;
@@ -340,6 +437,14 @@ body
 	padding-right: 5px;
 	font-size: 0.35em;
 	margin-bottom:0.3em;
+}
+
+.replyContent
+{
+	padding-right: 5px;
+	font-size: 1em;
+	margin-bottom: 1em;
+	color: black;
 }
 
 .postPhoto
@@ -361,8 +466,6 @@ body
 .playVideoButton
 {
 	position:absolute;
-	/*left:0;*/
-	/*top:0;*/
 	float:left;
 }
 
@@ -434,9 +537,9 @@ body
 
 #postHeader
 {
-	height: 3em;
+	height: 5em;
 	background-color:rgb(246, 250, 251);
-	color:white;
+	/*color:white;*/
 	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);	
 }
 
@@ -459,6 +562,13 @@ body
 #post_backToTopicButtonSpan
 {
 	width:10%;
+	float:left;
 	/*margin-left:-10px;*/
+}
+
+
+.repliesContainer
+{
+	background-color: #EEEEEE;
 }
 

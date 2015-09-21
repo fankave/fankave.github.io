@@ -4,6 +4,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 	var DATA_TYPE_COMMENT = "comment";
 	var DATA_TYPE_REPLY = "reply";
 	var DATA_TYPE_SCORE = "score";
+	var DATA_BANT_ID_LENGTH = 16;
 
 	function delegateSetComments(commentsData) 
 	{ 
@@ -17,8 +18,25 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 				CommentService.removeComment();	
 		}
 		else {
-			if(commentsData.method == "POST")
-				CommentService.appendToComments(commentsData);
+			if(commentsData.method == "POST"){
+				var uri = commentsData.uri;
+				if(uri != undefined){
+					var commentId = uri.slice(-DATA_BANT_ID_LENGTH);
+//					console.log("Comment ID: "+ commentId);
+//					console.log("uri: "+ uri);
+					if(uri == "/v1.0/comment/like/"+commentId){
+						console.log("calling update like ");
+						CommentService.updateLikeCommentWithId(commentId, true)
+					}
+					else if(uri == "/v1.0/comment/unlike/"+commentId){
+						CommentService.updateLikeCommentWithId(commentId, false)
+					}
+					else if(uri == "/v1.0/comment/create"){
+						CommentService.appendToComments(commentsData);
+						TopicService.updateCommentCount();
+					}
+				}
+			}
 			else
 				CommentService.setComments(commentsData);
 
@@ -34,7 +52,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 			if(topicData.method == "UPSERT")
 				TopicService.updateTopic(topicData.data);
 			else if(topicData.method == "REMOVE")
-				TopicService.removeTopic();
+				TopicService.removeTopic(topicData.data);
 		}
 		else
 			TopicService.setTopic(topicData)
@@ -48,13 +66,28 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 		else if(replyData.push){
 			console.log("reply pushed ");
 			if(replyData.method == "UPSERT")
-				ReplyService.updateReply();
+				ReplyService.updateReply(replyData);
 			else if(replyData.method == "REMOVE")
-				ReplyService.removeReply();
+				ReplyService.removeReply(replyData);
 		}
 		else {
-			if(replyData.method == "POST")
-				ReplyService.appendToReplies(replyData);
+			if(replyData.method == "POST"){
+				var uri = replyData.uri;
+				if(uri != undefined){
+					var id = uri.slice(-DATA_BANT_ID_LENGTH);
+//					console.log("Comment ID: "+ id);
+//					console.log("uri: "+ uri);
+					if(uri == "/v1.0/reply/like/"+id){
+						ReplyService.updateLikeReplyWithId(id, true)
+					}
+					else if(uri == "/v1.0/reply/unlike/"+id){
+						ReplyService.updateLikeReplyWithId(id, false)
+					}
+					else if(uri == "/v1.0/reply/create"){
+						ReplyService.appendToReplies(replyData);
+					}
+				}
+			}
 			else
 				ReplyService.setReplies(replyData);
 		}

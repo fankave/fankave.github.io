@@ -53,15 +53,48 @@ networkModule.factory('Bant', function (DateUtilityService) {
 				_commentObject.link = data.content.sections[j].link;
 			}
 		}
+		_commentObject.signal = data.signal;
+		if(_commentObject.signal == undefined){
+			var likeObject = {like:false};
+			_commentObject.signal = likeObject;
+		}
+		else if(_commentObject.signal.like == undefined)
+			_commentObject.signal.like = false;
 		_commentObject.metrics = data.metrics;
 		_commentObject.createdAt = DateUtilityService.getTimeSince(data.createdAt);
 
 		return _commentObject;
 
 	}
+	
+	function updateBantLiked(data, liked){
+		//if same state, dont do anything
+		if(data.signal.like == liked){
+			if(NETWORK_DEBUG)
+				console.log("no need to change   data.signal.like:"+ data.signal.like);
+			return data;
+		}
+		if(liked){
+			//update like status
+			data.signal.like = true;
+			//increment like count.
+			(data.metrics.likes == undefined) ? data.metrics.likes = 1: data.metrics.likes = (data.metrics.likes + 1);
+		}
+		else{
+			//update like status
+			data.signal.like = false;
+			//decrement like count.
+			if(data.metrics.likes != undefined) 
+			data.metrics.likes = (data.metrics.likes - 1);
+		}
+		if(NETWORK_DEBUG)
+			console.log("data.metrics.likes :"+ data.metrics.likes);
+		return data;
+	}
 
 	return {
-		bant: Bant
+		bant: Bant,
+		updateBantLiked : updateBantLiked
 	};
 
 });

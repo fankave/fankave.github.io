@@ -1,4 +1,4 @@
-networkModule.service('TopicService', function (DateUtilityService,Bant) {
+networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtility) {
 
 	var TOPIC_BASE_URI = "/v1.0/topic/show/";
 	var LIKE_TOPIC_URI = "/v1.0/topic/like/";
@@ -47,10 +47,27 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 			_topic = Bant.bant(topicData.data);
 			notifyObservers();
 		}
-		else if(topicData.method == "POST" && topicData.uri == WATCH_TOPIC_URI+_id ){
-			if(NETWORK_DEBUG)
-				console.log("Topic watch success");
-			_isTopicWatched = true;
+		else if(topicData.method == "POST"){
+
+			//Handle operations dependent on POST
+			if(topicData.uri == WATCH_TOPIC_URI+_id){
+				if(NETWORK_DEBUG)
+					console.log("Topic watch success");
+				_isTopicWatched = true;
+			}
+			else if(topicData.uri == LIKE_TOPIC_URI+_id)
+			{
+				if(NETWORK_DEBUG)
+					console.log("Topic liked success");
+				_topic = Bant.updateBantLiked(_topic, true);
+				notifyObservers();
+			}
+			else if(topicData.uri == UNLIKE_TOPIC_URI+_id){
+				if(NETWORK_DEBUG)
+					console.log("Topic unliked success");
+				_topic = Bant.updateBantLiked(_topic, false);
+				notifyObservers();
+			}
 		}
 	}
 
@@ -73,6 +90,14 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 			console.log("Game Period :" + _gameStats[1]);
 			notifyObservers();
 		}
+	}
+	
+	function updateCommentCount(){
+		console.log("Update comment count" + _topic.metrics.comments);
+		if(_topic!= undefined && _topic.metrics != undefined){
+			_topic.metrics.comments == undefined ? _topic.metrics.comments =1: _topic.metrics.comments = _topic.metrics.comments+1;
+		}
+		notifyObservers();
 	}
 
 	function getTopicRequest(topicId){
@@ -194,7 +219,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 				return _topic.createdAt},
 		getLiked:function(){	
 			if(_topic != undefined) 
-				return _topic.liked},
+				return _topic.signal.like},
 		getMetrics:function(){	
 			if(_topic != undefined) 
 				return _topic.metrics},
@@ -218,6 +243,8 @@ networkModule.service('TopicService', function (DateUtilityService,Bant) {
 		setTopic:setTopicData,
 		
 		updateTopic:updateTopicData,
+		
+		updateCommentCount: updateCommentCount,
 		
 		registerObserverCallback:registerObserverCallback,
 		

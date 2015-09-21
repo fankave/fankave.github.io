@@ -1,4 +1,4 @@
-networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
+networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtility) {
 	var _postID;
 	var LIST_REPLIES_URI = "/v1.0/comment/replies/list/"
 	var POST_REPLY_URI="/v1.0/reply/create";
@@ -51,16 +51,43 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 	function updateReply(replyData){
 		//if Replys ID exist, update it 
 		//else append to existing list
-		var tempReply = replyData.data;
+		var replyObj = replyData.data;
 		for(i=0;i<_replies.length;i++){
-			if(_replies[i].id == replyData.id){
+			if(_replies[i].id == replyObj.id){
 				//update
-				_replies[i] = Bant.bant(tempReply)
+				_replies[i] = Bant.bant(replyObj)
+				console.log("Reply updated");
 				return;
 			}
 		}
 		appendToReplies(replyData);
 		// console.log("ReplyService update Reply");
+	}
+	
+	function updateLocalData(newData){
+		for(i=0;i<_replies.length;i++){
+			if(_replies[i].id == newData.id){
+				//update
+				_replies[i] = newData;
+				if(NETWORK_DEBUG)
+					console.log("updated Data for id:"+ _replies[i].id);
+				return;
+			}
+		}
+	}
+	
+	function updateLikeReplyWithId(id, liked){
+		if(NETWORK_DEBUG)
+		console.log("updateLikeReplyWithId :"+ id + "   liked "+ liked);
+		if((id != undefined)){
+			var tempObject;
+			tempObject = getReplyById(id);
+			tempObject = Bant.updateBantLiked(tempObject, liked);
+			updateLocalData(tempObject);
+
+			notifyObservers();
+		}
+		
 	}
 
 	function removeReply(replyData){
@@ -71,6 +98,16 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 			}
 		}
 
+	}
+	
+	function getReplyById(id){
+		if(NETWORK_DEBUG) console.log("_replies :"+ _replies.length);
+		for(i=0;i<_replies.length;i++){
+			if(_replies[i].id == id){
+				//remove element
+				return _replies[i];
+			}
+		}
 	}
 	
 	function replyGetRequest(uri){
@@ -96,16 +133,22 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 		
 	}
 
-	function postReplyRequest(topicId, commentId,replyData){
+	function getPostReplyRequest(topicId, commentId,replyData, replyId, isReplyToReply){
+		var targetType = "comment";
+		var targetId = commentId;
+		if(isReplyToReply != undefined && isReplyToReply == true ){
+			targetType = "reply";
+			targetId = replyId;
+		}
 		console.log("Topicid : "+topicId,"commentid : "+commentId,"replydata : "+replyData);
-		var createReplyParams =replyPostRequest(POST_REPLY_URI);
+		var createReplyParams = replyPostRequest(POST_REPLY_URI);
 		createReplyParams.data = 	
 		{
 				"lang": "en", 
 				"content": {"sections":[{"type":"html","html":replyData}]},
 				"target": {
-					"type": "comment", // Target type: “comment” or “reply”.
-					"id":commentId,  // Target bant ID of comment or reply.
+					"type": targetType, // Target type: “comment” or “reply”.
+					"id":targetId,  // Target bant ID of comment or reply.
 				},
 
 				"topicId": topicId,
@@ -158,7 +201,9 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 		}
 		observerCallbacks.push(callback);
 	}
-	
+	function isReplyLiked(id){
+		return FDSUtility.isLikedById(_replies, id);
+	}
 	return {
 		replies: function(){return _replies },
 		getTopicIdFromReply: function(){return _topicIdFromReply; },
@@ -167,12 +212,14 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant) {
 		setReplies:setReplies,
 		updateReply:updateReply,
 		appendToReplies:appendToReplies,
+		updateLikeReplyWithId:updateLikeReplyWithId,
 		removeReply:removeReply,
-		postReplyRequest:postReplyRequest,
+		getPostReplyRequest:getPostReplyRequest,
 		likeReplyRequest:likeReplyRequest,
 		unlikeReplyRequest:unlikeReplyRequest,
 		registerObserverCallback:registerObserverCallback,
-		getRepliesRequest:getRepliesRequest
+		getRepliesRequest:getRepliesRequest,
+		isReplyLiked:isReplyLiked
 	};
 
 });

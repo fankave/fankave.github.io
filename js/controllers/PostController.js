@@ -1,7 +1,7 @@
 var postModule = angular.module("PostModule", ["NetworkModule", "FacebookModule"]);
-postModule.controller("PostController", ["$scope", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "facebookService", initPostController]);
+postModule.controller("PostController", ["$scope", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "facebookService","UserInfoService", initPostController]);
 
-function initPostController($scope, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService)
+function initPostController($scope, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService, UserInfoService)
 {
 	$scope.pageClass = 'page-post';
 
@@ -30,7 +30,7 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 		}
 		else{
 			console.log("No data from comment service : TODO handle this with cookies");
-
+			networkService.send(CommentService.getCommentByIdRequest($scope.postID));
 		}
 
 	}
@@ -42,7 +42,9 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 //	else
 	{
 		$scope.pageClass = 'page-post';
-		
+		$scope.paddingTop = "20";
+		$scope.pageStyle = {'padding-top': '10em'};
+		networkService.init();
 		$scope.requestReplies();
 
 		if(TopicService.directComment === true)
@@ -50,24 +52,43 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 			document.getElementById("replyCommentField").focus();
 			TopicService.directComment = false;
 		}
+
+		var replyPostHeader = $("#replyPost").height();
+		// console.log("height of repy header: " + replyPostHeader);
+		var heightString = replyPostHeader + "px";
+		document.getElementById('postHeader').style.height=heightString;
+		document.getElementById('postSection').style.paddingTop = heightString;
+
+		$scope.$watch("replies", function (newValue, oldValue)
+		 {
+  			$timeout(function()
+  			{
+    			$('.commentsContainer').each(function()
+    			{
+      				$('.image-link').magnificPopup({
+        				type:'image'
+     				});
+    			});
+  			});
+		});
 	}
 
 	$scope.postReply = function(commentText) {
 		if((commentText != undefined)	 && commentText != ""){
 		console.log("PostController postReply Invoked :"+ commentText + $scope.topicId);
-		networkService.send(ReplyService.postReplyRequest($scope.topicId,$scope.postID, commentText));
+		networkService.send(ReplyService.getPostReplyRequest($scope.topicId,$scope.postID, commentText));
 		}
 		$scope.commentText = "";
 	};
 
-	$scope.likeReply = function() {
+	$scope.updateLikeReply = function(id) {
 		console.log("PostController Like Reply");
-		networkService.send(ReplyService.likeReplyRequest());
-	};
-
-	$scope.unlikeReply = function() {
-		console.log("PostController Unlike Reply");
-		networkService.send(ReplyService.unlikeReplyRequest());
+		if(ReplyService.isReplyLiked(id)){
+			networkService.send(ReplyService.unlikeReplyRequest(id));
+		}
+		else{
+			networkService.send(ReplyService.likeReplyRequest(id));
+		}
 	};
 
 	function updateScore(){
@@ -89,9 +110,11 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 	}
 
 	 function updateCommentInReply(selectedComment){
-		if(selectedComment == undefined)
+		if(selectedComment == undefined){
 			selectedComment = CommentService.getCommentById($scope.postID);
+		}
 		if(selectedComment != undefined){
+			if(NETWORK_DEBUG) console.log("Updated comment in reply triggered" ); 
 			var tempComment = {};
 			tempComment = selectedComment;
 			tempComment.postAuthorName = selectedComment.author.name;
@@ -104,14 +127,14 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 
 			$scope.comment = tempComment;
 
-			// console.log("comments html : " +$scope.comment.html);
-			// console.log("updated comments author name: " +$scope.comment.postAuthorName);
-			// console.log("updated comments author photo: " +$scope.comment.postAuthorPhoto);
-			if($scope.comment.type == "media"){
-				// console.log("updated comments media : " +$scope.comment.mediaUrl);
-				// console.log("updated comments media : " +$scope.comment.mediaAspectFeed);
-
-			}
+//			 console.log("comments html : " +$scope.comment.html);
+//			 console.log("updated comments author name: " +$scope.comment.postAuthorName);
+//			 console.log("updated comments author photo: " +$scope.comment.postAuthorPhoto);
+//			if($scope.comment.type == "media"){
+//				 console.log("updated comments media : " +$scope.comment.mediaUrl);
+//				 console.log("updated comments media : " +$scope.comment.mediaAspectFeed);
+//
+//			}
 		}
 	}
 
@@ -128,6 +151,7 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 			tempReply = repliesData[i];
 			tempReply.postAuthorName = repliesData[i].author.name;
 			tempReply.postAuthorPhoto = repliesData[i].author.photo;
+			tempReply.isMyReply = UserInfoService.isCurrentUser(repliesData[i].author.id);
 
 			tempReply.postTimestamp = repliesData[i].createdAt;
 			tempReply.likeCount = repliesData[i].metrics.likes;
@@ -144,6 +168,7 @@ function initPostController($scope, $routeParams, networkService, ReplyService, 
 				// console.log(i +" : updated replies media : " +$scope.replies[i].mediaUrl);
 				// console.log(i +" : updated replies media : " +$scope.replies[i].mediaAspectFeed);
 			}
+			//console.log(i +" : updated replies likecount : " +$scope.replies[i].likeCount);
 
 		}
 	}

@@ -1,4 +1,4 @@
-<section>
+<section id="postSection">
 	<nav class="navbar navbar-fixed-top" id="postHeader">
 
 			<span id="post_backToTopicButtonSpan">
@@ -7,13 +7,30 @@
 				</button>
 			</span>
 
-			<span>
-				
+			<span class="repliesHeaderPostAuthorPhoto">
+				<!--a class="thumbnail"-->
+  					<img ng-src="img/staticUsers/ana.png" alt="" class="repliesHeaderUserPhoto">
+			    <!--/a-->
+			</span>
+
+			<span id="replyPost">
+				<div class="roww">
+					<span class="replyUsername">
+						afarghaly
+					</span>
+					<span class="replyTimestamp">
+						3m
+					</span>
+				</div>
+
+				<div class="replyContent">
+					Post <!--Content Post Content Post Content Post Content Post Content Post Content Post Content Post Content Post Content Post Content Post Content Post Content Post Content Post Content-->
+				</div>
 			</span>
 	</nav>
 
-	<div>
-		<div ng-repeat="thisReply in replies" class="row postRow">
+	<div class="repliesContainer">
+		<div ng-repeat="thisReply in replies" class="row postRow" ng-switch="thisReply.mediaType">
 			
 			<span class="postAuthorPhoto">
 				<div class="thumbnail">
@@ -34,6 +51,16 @@
 				<div class="postContent">
 					{{thisReply.html}} 
 				</div>
+
+				<div ng-switch-when="image">
+					<a class="image-link" href="{{thisReply.mediaUrl}}">
+						<img ng-src="{{thisReply.mediaUrl}}" class="postPhoto"/>
+					</a>
+				</div>
+
+				<div ng-switch-when="video">
+					<img ng-src="{{thisReply.mediaThumbUrl}}" class="postVideo"/>
+				</div>	
 
 				<div class="sharingButtonsRow">
 					<button class="btn-link social-btn"><img src="img/likeButton-2x.png"/> {{thisReply.likeCount}}</button>
