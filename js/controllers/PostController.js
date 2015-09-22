@@ -35,6 +35,11 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 
 	}
 
+	$scope.triggerRepliesKeyboard = function()
+	{
+		document.getElementById("replyCommentField").focus();
+	}
+
 //	if(facebookService.userLoggedInToFacebook === false)
 //	{
 //		window.location = "#/facebookLogin";
@@ -44,12 +49,12 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		$scope.pageClass = 'page-post';
 		$scope.paddingTop = "20";
 		$scope.pageStyle = {'padding-top': '10em'};
-		networkService.init();
+
 		$scope.requestReplies();
 
 		if(TopicService.directComment === true)
 		{
-			document.getElementById("replyCommentField").focus();
+			$scope.triggerRepliesKeyboard();
 			TopicService.directComment = false;
 		}
 
@@ -58,6 +63,7 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		var heightString = replyPostHeader + "px";
 		document.getElementById('postHeader').style.height=heightString;
 		document.getElementById('postSection').style.paddingTop = heightString;
+		document.getElementById('postSection').style.paddingBottom = "3.9em";
 
 		$scope.$watch("replies", function (newValue, oldValue)
 		 {
@@ -90,6 +96,18 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 			networkService.send(ReplyService.likeReplyRequest(id));
 		}
 	};
+
+	$scope.deleteReply = function(id)
+	{
+		console.log("deleteReply(" + id + ")");
+		networkService.send(ReplyService.deleteReplyRequest(id));
+	}
+
+	$scope.reportReplyAsSpam = function(id)
+	{
+		console.log("reportReplyAsSpam(" + id + ")");
+		networkService.send(ReplyService.flagReplyRequest(id));
+	}
 
 	function updateScore(){
 		//Score update here

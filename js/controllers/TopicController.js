@@ -25,14 +25,15 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 	{
 		// console.log("TopicController | userLoggedInToFacebook: " + facebookService.userLoggedInToFacebook);
 		$scope.pageClass = 'page-topic';
-		networkService.init();
 
 		$scope.topicID = $routeParams.topicID;
 		//TODO: remove this - usd with static Data
 		//$scope.posts = StaticData.getPostsForTopicID();
+		networkService.init();
 		$scope.init();
 
 		document.getElementById('topicSection').style.paddingTop = "8em";
+		document.getElementById('topicSection').style.paddingBottom = "3.9em";
 
 		 $scope.$watch("commentsArray", function (newValue, oldValue)
 		 {
@@ -125,12 +126,14 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 	{
 		console.log("deleteComment(" + id + ")");
 		$scope.innerButtonTapped = true;
+		networkService.send(CommentService.deleteCommentRequest(id));	
 	}
 
 	$scope.reportCommentAsSpam = function(id)
 	{
 		console.log("reportCommentAsSpam(" + id + ")");
 		$scope.innerButtonTapped = true;
+		networkService.send(CommentService.flagCommentRequest(id));	
 	}
 
 	$scope.goToRepliesWithKeyboardTriggered = function(id)
