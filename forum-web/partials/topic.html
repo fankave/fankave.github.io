@@ -112,7 +112,11 @@
 					</div>	
 
 					<div class="sharingButtonsRow">
-						<button class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)"><img src="img/likeButton-2x.png"/> {{thisPost.likeCount}}</button>
+						<button class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
+							<img ng-switch-when="true" src="img/likeButton_selected-2x.png"/> 
+							<img ng-switch-when="false" src="img/likeButton-2x.png"/> 
+							{{thisPost.likeCount}}
+						</button>
 						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)"><img src="img/commentButton-2x.png"/> {{thisPost.replyCount}}</button>
 						<!--button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button-->
 						<div class="btn-group">
