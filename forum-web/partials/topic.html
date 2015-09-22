@@ -123,9 +123,10 @@
   							<button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
     							<img src="img/moreButton-2x.png"/>
   							</button>
-						  <ul class="dropdown-menu dropdown-menu-right">
-						    <li><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
-						    <li><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
+						  <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
+
+						    <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
+						    <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
 						  </ul>
 						</div>
 					</div>
