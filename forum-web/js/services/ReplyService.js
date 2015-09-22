@@ -206,6 +206,34 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 	function isReplyLiked(id){
 		return FDSUtility.isLikedById(_replies, id);
 	}
+	
+	function updateReplyLocalData(uri,id){
+		if(uri == LIKE_REPLY_URI+id){
+			console.log("calling update like ");
+			updateLikeReplyWithId(id, true)
+		}
+		else if(uri == UNLIKE_REPLY_URI+id){
+			updateLikeReplyWithId(id, false)
+		}
+		else if(uri == DELETE_REPLY_URI+id){
+			_replies = FDSUtility.deleteById(_replies,id);
+			notifyObservers();
+		}
+		else if(uri == FLAG_REPLY_URI+id){
+			_replies = FDSUtility.flagById(_replies, true);
+			}
+		else if(uri == UNFLAG_REPLY_URI+id){
+			_replies = FDSUtility.flagById(_replies, false);
+		}
+		else if(uri == HIDE_REPLY_URI+id){
+			_replies = FDSUtility.hideById(_replies, true);
+		}
+		else if(uri == UNHIDE_REPLY_URI+id){
+			_replies = FDSUtility.hideById(_replies, false);
+		}
+	}
+
+	
 	return {
 		replies: function(){return _replies },
 		getTopicIdFromReply: function(){return _topicIdFromReply; },
@@ -215,6 +243,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 		updateReply:updateReply,
 		appendToReplies:appendToReplies,
 		updateLikeReplyWithId:updateLikeReplyWithId,
+		updateReplyLocalData:updateReplyLocalData,
 		removeReply:removeReply,
 		getPostReplyRequest:getPostReplyRequest,
 		likeReplyRequest:likeReplyRequest,

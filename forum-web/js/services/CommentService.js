@@ -213,6 +213,31 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 		return FDSUtility.isLikedById(_comments,id);
 	}
 
+	function updateCommentLocalData(uri,id){
+		if(uri == LIKE_COMMENT_URI+id){
+			console.log("calling update like ");
+			updateLikeCommentWithId(id, true)
+		}
+		else if(uri == UNLIKE_COMMENT_URI+id){
+			updateLikeCommentWithId(id, false)
+		}
+		else if(uri == DELETE_COMMENT_URI+id){
+			_comments = FDSUtility.deleteById(_comments,id);
+			notifyObservers();
+		}
+		else if(uri == FLAG_COMMENT_URI+id){
+			_comments = FDSUtility.flagById(_comments, false);
+			}
+		else if(uri == UNFLAG_COMMENT_URI+id){
+			_comments = FDSUtility.flagById(_comments, false);
+		}
+		else if(uri == HIDE_COMMENT_URI+id){
+			_comments = FDSUtility.hideById(_comments, true);
+		}
+		else if(uri == UNHIDE_COMMENT_URI+id){
+			_comments = FDSUtility.hideById(_comments, false);
+		}
+	}
 
 
 	return {
@@ -223,6 +248,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 			updateComment:updateComment,
 			appendToComments:appendToComments,
 			updateLikeCommentWithId:updateLikeCommentWithId,
+			updateCommentLocalData:updateCommentLocalData,
 			removeComment:removeComment,
 			postCommentRequest:postCommentRequest,
 			getLikeCommentRequest:likeCommentRequest,

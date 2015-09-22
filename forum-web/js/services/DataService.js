@@ -24,17 +24,12 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 					var commentId = uri.slice(-DATA_BANT_ID_LENGTH);
 //					console.log("Comment ID: "+ commentId);
 //					console.log("uri: "+ uri);
-					if(uri == "/v1.0/comment/like/"+commentId){
-						console.log("calling update like ");
-						CommentService.updateLikeCommentWithId(commentId, true)
-					}
-					else if(uri == "/v1.0/comment/unlike/"+commentId){
-						CommentService.updateLikeCommentWithId(commentId, false)
-					}
-					else if(uri == "/v1.0/comment/create"){
+					if(uri == "/v1.0/comment/create"){
 						CommentService.appendToComments(commentsData);
 						TopicService.updateCommentCount();
 					}
+					else
+						CommentService.updateCommentLocalData(uri, commentId);
 				}
 			}
 			else
@@ -77,15 +72,11 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 					var id = uri.slice(-DATA_BANT_ID_LENGTH);
 //					console.log("Comment ID: "+ id);
 //					console.log("uri: "+ uri);
-					if(uri == "/v1.0/reply/like/"+id){
-						ReplyService.updateLikeReplyWithId(id, true)
-					}
-					else if(uri == "/v1.0/reply/unlike/"+id){
-						ReplyService.updateLikeReplyWithId(id, false)
-					}
-					else if(uri == "/v1.0/reply/create"){
+			 if(uri == "/v1.0/reply/create"){
 						ReplyService.appendToReplies(replyData);
 					}
+			 else
+				 ReplyService.updateReplyLocalData(uri, id);
 				}
 			}
 			else
