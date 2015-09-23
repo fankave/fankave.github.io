@@ -7,10 +7,8 @@
 				</button>
 			</span>
 
-			<span class="repliesHeaderPostAuthorPhoto">
-				<!--a class="thumbnail"-->
-  					<img ng-src="{{comment.postAuthorPhoto}}" alt="" class="repliesHeaderUserPhoto">
-			    <!--/a-->
+			<!--span class="repliesHeaderPostAuthorPhoto">
+				<img ng-src="{{comment.postAuthorPhoto}}" alt="" class="repliesHeaderUserPhoto">
 			</span>
 
 			<span id="replyPost">
@@ -26,8 +24,62 @@
 				<div class="replyContent">
 					{{comment.html}}
 				</div>
-			</span>
+			</span-->
 	</nav>
+
+	<div class="row repliesCommentRow" ng-switch="comment.mediaType">
+		<span class="repliesHeaderPostAuthorPhoto">
+			<a class="thumbnail">
+					<img ng-src="{{comment.postAuthorPhoto}}" alt="" class="userPhoto">
+		    </a>
+		</span>
+
+		<span class="post">
+			<div class="roww">
+				<span class="postUsername">
+					{{comment.postAuthorName}}
+				</span>
+				<span class="timestamp">
+					{{comment.postTimestamp}}
+				</span>
+			</div>
+
+			<div class="postContent">
+				{{comment.html}} 
+			</div>
+
+			<div ng-switch-when="image">
+				<img ng-src="{{comment.mediaUrl}}" class="postPhoto" ng-click="imageClick(comment.mediaUrl);" />
+			</div>
+
+			<div ng-switch-when="video">
+				<img ng-src="{{comment.mediaThumbUrl}}" class="postVideo"/>
+			</div>	
+
+			<div class="sharingButtonsRow">
+				<button class="btn-link social-btn" ng-click="updateLikeComment(comment.id)" ng-switch="comment.isLiked">
+					<img ng-switch-when="true" src="img/likeButton_selected-2x.png"/> 
+					<img ng-switch-when="false" src="img/likeButton-2x.png"/> 
+					{{comment.likeCount}}
+				</button>
+				<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(comment.id)"><img src="img/commentButton-2x.png"/> {{comment.replyCount}}</button>
+				<!--button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button-->
+				<div class="btn-group">
+						<button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
+						<img src="img/moreButton-2x.png"/>
+						</button>
+				  <ul class="dropdown-menu dropdown-menu-right" ng-switch="comment.isMyComment">
+				    <li ng-switch-when="true"><a ng-click="deleteComment(comment.id);">Delete Comment</a></li>
+				    <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(comment.id);">Report as spam</a></li>
+				  </ul>
+				</div>
+			</div>
+		</span>
+	</div>
+
+	<div class="row" id="repliesCommentSeparator">
+		 &nbsp;
+	</div>
 
 	<div class="repliesContainer">
 		<div ng-repeat="thisReply in replies" class="row postRow" ng-switch="thisReply.mediaType">
@@ -63,7 +115,12 @@
 				</div>	
 
 				<div class="sharingButtonsRow">
-					<button class="btn-link social-btn" ng-click="updateLikeReply(thisReply.id)"><img src="img/likeButton-2x.png"/> {{thisReply.likeCount}}</button>
+					<button class="btn-link social-btn" ng-click="updateLikeReply(thisReply.id)" ng-switch="thisReply.isLiked">
+						<img ng-switch-when="true" src="img/likeButton_selected-2x.png"/> 
+						<img ng-switch-when="false" src="img/likeButton-2x.png"/>
+						
+						{{thisReply.likeCount}}
+					</button>
 					<button class="btn-link social-btn" ng-click="triggerRepliesKeyboard()"><img src="img/commentButton-2x.png"/> {{thisReply.commentCount}}</button>
 					<div class="btn-group">
 							<button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
