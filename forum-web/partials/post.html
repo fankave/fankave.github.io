@@ -57,12 +57,12 @@
 			</div>	
 
 			<div class="sharingButtonsRow">
-				<button class="btn-link social-btn" ng-click="updateLikeComment(comment.id)" ng-switch="comment.isLiked">
+				<button class="btn-link social-btn" ng-click="updateLikeReply(comment.id)" ng-switch="comment.isLiked">
 					<img ng-switch-when="true" src="img/likeButton_selected-2x.png"/> 
 					<img ng-switch-when="false" src="img/likeButton-2x.png"/> 
 					{{comment.likeCount}}
 				</button>
-				<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(comment.id)"><img src="img/commentButton-2x.png"/> {{comment.replyCount}}</button>
+				<button class="btn-link social-btn" ng-click="triggerRepliesKeyboard()"><img src="img/commentButton-2x.png"/> {{comment.replyCount}}</button>
 				<!--button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button-->
 				<div class="btn-group">
 						<button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
