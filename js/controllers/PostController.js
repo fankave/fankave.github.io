@@ -32,7 +32,6 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 			console.log("No data from comment service : TODO handle this with cookies");
 			networkService.send(CommentService.getCommentByIdRequest($scope.postID));
 		}
-
 	}
 
 	$scope.triggerRepliesKeyboard = function()
@@ -40,11 +39,11 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		document.getElementById("replyCommentField").focus();
 	}
 
-//	if(facebookService.userLoggedInToFacebook === false)
-//	{
-//		window.location = "#/facebookLogin";
-//	}
-//	else
+	if(facebookService.userLoggedInToFacebook === false)
+	{
+		window.location = "#/facebookLogin";
+	}
+	else
 	{
 		$scope.pageClass = 'page-post';
 		$scope.paddingTop = "20";
@@ -61,8 +60,8 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		var replyPostHeader = $("#replyPost").height();
 		// console.log("height of repy header: " + replyPostHeader);
 		var heightString = replyPostHeader + "px";
-		document.getElementById('postHeader').style.height=heightString;
-		document.getElementById('postSection').style.paddingTop = heightString;
+		document.getElementById('postHeader').style.height = '3.5em';//heightString;
+		document.getElementById('postSection').style.paddingTop = '3.5em';
 		document.getElementById('postSection').style.paddingBottom = "3.9em";
 
 		$scope.$watch("replies", function (newValue, oldValue)

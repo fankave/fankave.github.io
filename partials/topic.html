@@ -112,16 +112,21 @@
 					</div>	
 
 					<div class="sharingButtonsRow">
-						<button class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)"><img src="img/likeButton-2x.png"/> {{thisPost.likeCount}}</button>
+						<button class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
+							<img ng-switch-when="true" src="img/likeButton_selected-2x.png"/> 
+							<img ng-switch-when="false" src="img/likeButton-2x.png"/> 
+							{{thisPost.likeCount}}
+						</button>
 						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)"><img src="img/commentButton-2x.png"/> {{thisPost.replyCount}}</button>
 						<!--button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button-->
 						<div class="btn-group">
   							<button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
     							<img src="img/moreButton-2x.png"/>
   							</button>
-						  <ul class="dropdown-menu dropdown-menu-right">
-						    <li><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
-						    <li><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
+						  <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
+
+						    <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
+						    <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
 						  </ul>
 						</div>
 					</div>
