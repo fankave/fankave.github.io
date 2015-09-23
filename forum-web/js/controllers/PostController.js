@@ -174,7 +174,7 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 			tempReply.likeCount = repliesData[i].metrics.likes;
 			tempReply.replyCount = repliesData[i].metrics.replies;
 			tempReply.mediaAspectFeed = repliesData[i].mediaAspectFeed;
-
+			tempReply.isLiked = repliesData[i].signal.like;
 			$scope.replies.push(tempReply);
 
 			// console.log(i +" : updated replies html : " +$scope.replies[i].html);

@@ -17,6 +17,7 @@ networkModule.service('UserInfoService', function () {
 	function getUserCredentials(){
 		if(_userInfo == undefined){
 			console.log("UserInfoService : UserId is not defined , using static user, TODO : Remove this for release build");
+			_userInfo = userInfoTemp;
 			return userInfoTemp;
 		}
 			

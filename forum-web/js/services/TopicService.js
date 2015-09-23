@@ -177,11 +177,17 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 		getGame: function(){	
 			return _game;},
 		getTeamA: function(){	
-			if(_game != undefined) 
-				return _game.teams[0];},
+			if(_game != undefined) {
+				if(_id=="53f950aee1c00039")
+				_game.teams[0].name = "SJ Earthquakes";
+				return _game.teams[0];
+			}},
 		getTeamB: function(){	
-			if(_game != undefined) 
-				return _game.teams[1];},
+			if(_game != undefined) {
+				if(_id=="53f950aee1c00039")
+				_game.teams[1].name = "NYCFC";
+				return _game.teams[1];}
+		},
 		getScoresTitle: function(){		
 			if(_game != undefined && _game.links != undefined) 
 				return _game.links[0].title;},
