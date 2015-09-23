@@ -32,7 +32,6 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 			console.log("No data from comment service : TODO handle this with cookies");
 			networkService.send(CommentService.getCommentByIdRequest($scope.postID));
 		}
-
 	}
 
 	$scope.triggerRepliesKeyboard = function()

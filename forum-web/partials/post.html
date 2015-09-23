@@ -77,7 +77,7 @@
 		</span>
 	</div>
 
-	<div class="row" id="repliesCommentSeparator">
+	<div class="roww" id="repliesCommentSeparator">
 		 &nbsp;
 	</div>
 
@@ -118,7 +118,7 @@
 					<button class="btn-link social-btn" ng-click="updateLikeReply(thisReply.id)" ng-switch="thisReply.isLiked">
 						<img ng-switch-when="true" src="img/likeButton_selected-2x.png"/> 
 						<img ng-switch-when="false" src="img/likeButton-2x.png"/>
-						
+
 						{{thisReply.likeCount}}
 					</button>
 					<button class="btn-link social-btn" ng-click="triggerRepliesKeyboard()"><img src="img/commentButton-2x.png"/> {{thisReply.commentCount}}</button>
@@ -126,9 +126,9 @@
 							<button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<img src="img/moreButton-2x.png"/>
 							</button>
-					  <ul class="dropdown-menu dropdown-menu-right">
-					    <li><a ng-click="deleteReply(thisReply.id);">Delete Comment</a></li>
-					    <li><a ng-click="reportReplyAsSpam(thisReply.id);">Report as spam</a></li>
+					  <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisReply.isMyReply">
+					    <li ng-switch-when="true"><a ng-click="deleteReply(thisReply.id);">Delete Comment</a></li>
+					    <li ng-switch-when="false"><a ng-click="reportReplyAsSpam(thisReply.id);">Report as spam</a></li>
 					  </ul>
 					</div>
 				</div>
