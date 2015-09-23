@@ -57,7 +57,7 @@
 			</div>	
 
 			<div class="sharingButtonsRow">
-				<button class="btn-link social-btn" ng-click="updateLikeReply(comment.id)" ng-switch="comment.isLiked">
+				<button class="btn-link social-btn" ng-click="updateLikeComment(comment.id)" ng-switch="comment.isLiked">
 					<img ng-switch-when="true" src="img/likeButton_selected-2x.png"/> 
 					<img ng-switch-when="false" src="img/likeButton-2x.png"/> 
 					{{comment.likeCount}}
