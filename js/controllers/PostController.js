@@ -86,8 +86,18 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		$scope.commentText = "";
 	};
 
+	$scope.updateLikeComment = function(id) {
+		// console.log("PostController updateLikeComment(" + id + ")");
+		if(CommentService.isCommentLiked(id)){
+			networkService.send(CommentService.getUnlikeCommentRequest(id));
+		}
+		else{
+			networkService.send(CommentService.getLikeCommentRequest(id));	
+		}
+	};
+
 	$scope.updateLikeReply = function(id) {
-		console.log("PostController Like Reply");
+		// console.log("PostController Like Reply");
 		if(ReplyService.isReplyLiked(id)){
 			networkService.send(ReplyService.unlikeReplyRequest(id));
 		}
@@ -141,6 +151,7 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 			tempComment.likeCount = selectedComment.metrics.likes;
 			tempComment.replyCount = selectedComment.metrics.replies;
 			tempComment.mediaAspectFeed = selectedComment.mediaAspectFeed;
+			tempComment.isLiked = selectedComment.signal.like;
 
 			$scope.comment = tempComment;
 
@@ -174,7 +185,7 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 			tempReply.likeCount = repliesData[i].metrics.likes;
 			tempReply.replyCount = repliesData[i].metrics.replies;
 			tempReply.mediaAspectFeed = repliesData[i].mediaAspectFeed;
-
+			tempReply.isLiked = repliesData[i].signal.like;
 			$scope.replies.push(tempReply);
 
 			// console.log(i +" : updated replies html : " +$scope.replies[i].html);
