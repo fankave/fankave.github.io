@@ -28,7 +28,17 @@ function dateUtility() {
 //			return day + " " + month + year;
 //		}
 	}
+	
+	function gameScheduleTime(timeStamp){
+		var createdDate = new Date(timeStamp);
+		day = createdDate.getUTCDate();
+		month = createdDate.getUTCMonth();
+		console.log("Scheduled date :  "+day+ "/" +month );
+		return day+ "/" +month;
+		
+	}
 	return{
-		getTimeSince:timeSince
+		getTimeSince:timeSince,
+		getGameScheduledTime:gameScheduleTime
 	};	
 }
