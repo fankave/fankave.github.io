@@ -15,7 +15,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 //		"uri": "\/mock\/topic\/53c167f17040001d?duration=\(100)"};
 	};
 
-	$scope.innerButtonTapped = false
+	$scope.innerButtonTapped = false;
 	if(facebookService.userLoggedInToFacebook === false)
 	{
 		// console.log("Not logged in to facebook, take user to login page")

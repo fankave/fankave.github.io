@@ -26,12 +26,17 @@
 					{{leftTeamScore}}
 				</span>
 				<span id="gameTime">
-					<div ng-if="gameStatus == 'live' || gameStatus == 'future'">
+					<div ng-if="gameStatus == 'live'">
 						{{gamePeriod}}
 					</div>
 					<div id="pastGameFinal" ng-if="gameStatus == 'past'">
-						<div id="pastGameFinalText">
+						<div id="scoreboardCenterLine">
 							<span><b>FINAL</b></span>
+						</div>
+					</div>
+					<div id="pastGameFinal" ng-if="gameStatus == 'future'">
+						<div id="scoreboardCenterLine">
+							<span><b>gameFutureDate</b></span>
 						</div>
 					</div>
 					<div ng-if="gameStatus == 'live' || gameStatus == 'future'">

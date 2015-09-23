@@ -100,7 +100,8 @@ body
 }
 
 
-#pastGameFinalText
+/*#pastGameFinalText*/
+#scoreboardCenterLine
 {
 	content: '';
 	height: 100%;
