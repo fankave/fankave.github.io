@@ -39,11 +39,11 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		document.getElementById("replyCommentField").focus();
 	}
 
-	if(facebookService.userLoggedInToFacebook === false)
-	{
-		window.location = "#/facebookLogin";
-	}
-	else
+//	if(facebookService.userLoggedInToFacebook === false)
+//	{
+//		window.location = "#/facebookLogin";
+//	}
+//	else
 	{
 		$scope.pageClass = 'page-post';
 		$scope.paddingTop = "20";
