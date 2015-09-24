@@ -16,12 +16,12 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 	};
 
 	$scope.innerButtonTapped = false
-//	if(facebookService.userLoggedInToFacebook === false)
-//	{
-//		// console.log("Not logged in to facebook, take user to login page")
-//		window.location = "#/facebookLogin";
-//	}
-//	else
+	if(facebookService.userLoggedInToFacebook === false)
+	{
+		// console.log("Not logged in to facebook, take user to login page")
+		window.location = "#/facebookLogin";
+	}
+	else
 	{
 		// console.log("TopicController | userLoggedInToFacebook: " + facebookService.userLoggedInToFacebook);
 		$scope.pageClass = 'page-topic';
@@ -29,7 +29,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 		$scope.topicID = $routeParams.topicID;
 		//TODO: remove this - usd with static Data
 		//$scope.posts = StaticData.getPostsForTopicID();
-		networkService.init();
+		//networkService.init();
 		$scope.init();
 
 		document.getElementById('topicSection').style.paddingTop = "8em";
