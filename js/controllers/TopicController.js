@@ -18,7 +18,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 	$scope.innerButtonTapped = false
 	if(facebookService.userLoggedInToFacebook === false)
 	{
-		// console.log("Not logged in to facebook, take user to login page")
+		console.log("Not logged in to facebook, take user to login page")
 		window.location = "#/facebookLogin";
 	}
 	else
