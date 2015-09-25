@@ -32,9 +32,9 @@ function dateUtility() {
 	function gameScheduleTime(timeStamp){
 		var createdDate = new Date(timeStamp);
 		day = createdDate.getUTCDate();
-		month = createdDate.getUTCMonth();
-		console.log("Scheduled date :  "+day+ "/" +month );
-		return day+ "/" +month;
+		month = createdDate.getUTCMonth() + 1;
+		//console.log("Scheduled date :  "+month+ "/" +day );
+		return month+ "/" +day;
 		
 	}
 	return{

@@ -1,7 +1,7 @@
 var facebookModule = angular.module("FacebookModule", ["NetworkModule", "TopicModule"]);
-facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$http", "$compile", "facebookService", "UserInfoService", "TopicService", "ReplyService", "networkService", initFacebookController]);
+facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$http", "$compile", "facebookService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", initFacebookController]);
 
-function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, ReplyService, networkService)
+function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo)
 {
 	// console.log("initFacebookController");
 
@@ -113,7 +113,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 		var facebookData = new Object();
 		facebookData.id = $scope.fbID;
 		facebookData.accessToken = $scope.fbAccessToken;
-		
+		var deviceId = ForumDeviceInfo.getDeviceId();
 	      var registrationParameters =
 	      {
 	        "type":"facebook",
