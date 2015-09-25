@@ -165,7 +165,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 			$scope.gamePeriod = TopicService.getGamePeriod();
 			$scope.gameClock = TopicService.getGameClock();
 		}
-
+		$scope.gameScheduledTime = TopicService.getGameTime();
 //		var sectionType = TopicService.getSectionType();
 //		if(sectionType == "html")
 		$scope.topicDescHtml = TopicService.getHtml();

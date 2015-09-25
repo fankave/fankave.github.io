@@ -27,7 +27,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 
 			_game = topicData.data.game;
 			if(_game != undefined){
-				_scheduledAt = _game.scheduledAt;
+				_scheduledAt = DateUtilityService.getGameScheduledTime(_game.scheduledAt);
 				_score = _game.score;
 //				Future game: live == false AND final == false.
 //				Live game: live == true.
@@ -176,6 +176,9 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 			return _id ;},
 		getGame: function(){	
 			return _game;},
+		getGameTime: function(){
+			return _scheduledAt;
+		},
 		getTeamA: function(){	
 			if(_game != undefined) {
 				if(_id=="53f950aee1c00039")

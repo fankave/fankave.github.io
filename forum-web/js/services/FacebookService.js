@@ -1,7 +1,7 @@
 var facebookModule = angular.module("FacebookModule", ["NetworkModule", "TopicModule"]);
-facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$http", "$compile", "facebookService", "UserInfoService", "TopicService", "ReplyService", "networkService", initFacebookController]);
+facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$http", "$compile", "facebookService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", initFacebookController]);
 
-function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, ReplyService, networkService)
+function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo)
 {
 	// console.log("initFacebookController");
 
@@ -99,6 +99,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 
        $scope.fbID = uid;
        $scope.fbAccessToken = accessToken;
+       console.log("FB REsPONSE "+ $scope.fbID + "token : "+ $scope.fbAccessToken);
 
        $scope.registerFacebookUser();
 	}
@@ -113,14 +114,14 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 		var facebookData = new Object();
 		facebookData.id = $scope.fbID;
 		facebookData.accessToken = $scope.fbAccessToken;
-		
+		var deviceId = ForumDeviceInfo.getDeviceId();
 	      var registrationParameters =
 	      {
 	        "type":"facebook",
 	        "locale":"en_US",
 	        "utcOffset":-25200,
 	        "deviceType":"web",
-	        "deviceId":"0",
+	        "deviceId":deviceId,
 	        "deviceModel":"browser",
 	        "appKey":"testKey",
 	        "appVersion":"0.1",
