@@ -5,7 +5,7 @@ var NETWORK_DEBUG = true;
 
 function initNetworkService($websocket,DataService,UserInfoService)
 {
-	var WEBSOCKET_BASE_URI = 'ws://104.197.8.198/ws?';
+	var WEBSOCKET_BASE_URI = 'wss://104.197.8.198/ws?';
 
 	var ws;
 
