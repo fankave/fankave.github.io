@@ -120,7 +120,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	        "locale":"en_US",
 	        "utcOffset":-25200,
 	        "deviceType":"web",
-	        "deviceId":"0",
+	        "deviceId":deviceId,
 	        "deviceModel":"browser",
 	        "appKey":"testKey",
 	        "appVersion":"0.1",
