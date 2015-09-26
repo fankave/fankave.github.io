@@ -44,7 +44,8 @@ function initNetworkService($websocket,DataService,UserInfoService)
 			});
 
 			ws.onError(function(evt) {
-				console.log("Websocket OnError: "+evt.data);
+				
+				console.log("Websocket OnError: "+JSON.stringify(evt) );
 			});
 
 			function getWebsocketUri(){
