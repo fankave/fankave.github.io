@@ -81,7 +81,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 	function setScoreData(scoreData) 
 	{
 		_score = scoreData;
-		console.log("TopicService  insideScore"+_score );
+		//console.log("TopicService  insideScore"+_score );
 		if(_score != undefined){
 			if(_score.live == true){
 				_status = "live";
