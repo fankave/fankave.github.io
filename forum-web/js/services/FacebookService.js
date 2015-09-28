@@ -28,11 +28,11 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
           xfbml      : true,
           version    : 'v2.4'
         });
-        // console.log('FB SDK loaded OK');
+        console.log('FB SDK loaded OK');
 
         FB.getLoginStatus(function(response)
         {
-        	// console.log("getLoginStatus response: " + JSON.stringify(response));
+        	console.log("getLoginStatus response: " + JSON.stringify(response));
 
 		   if (response.status === 'connected')
             {
@@ -81,7 +81,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 
 	(function(d, s, id)
 	{
-		// console.log('loading FB SDK...');
+		console.log('loading FB SDK...');
 		var js, fjs = d.getElementsByTagName(s)[0];
 		if (d.getElementById(id)) {return;}
 		js = d.createElement(s); js.id = id;
@@ -129,7 +129,6 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	      };
 
 	      // console.log('registration parameters: ' + JSON.stringify(registrationParameters));
-
 	      
 	      $http.post('http://104.197.8.198/v1.0/user/register', registrationParameters).then(
 	      function(response)
@@ -144,16 +143,16 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 
 	          if(response.status == 200)
 	          {
-	            // console.log("registered user successfully");
+	            console.log("registered user successfully");
 	            var registrationInfoElement = document.getElementById("registrationInfo")
 	            var registrationInfoHTML = "<div>userID: " + response.data.userId + "</div>";
 	            registrationInfoHTML += "<div>sessionID: " + response.data.sessionId + "</div>";
 	            registrationInfoHTML += "<div>accessToken: " + response.data.accessToken + "</div>";
 	            // registrationInfoElement.innerHTML = registrationInfoHTML;
 
-	            // console.log("user ID: " + response.data.userId);
-	            // console.log("session ID: " + response.data.sessionId);
-	            // console.log("access token: " + response.data.accessToken);
+	            console.log("user ID: " + response.data.userId);
+	            console.log("session ID: " + response.data.sessionId);
+	            console.log("access token: " + response.data.accessToken);
 
 	            // console.log(" - - - > access UserInfoService: " + UserInfoService);
 
@@ -180,7 +179,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	      function(response)
 	      {
 	          console.log('error');
-	          console.log('response:  ' + response);
+	          console.log('response:  ' + JSON.stringify(response));
 	          console.log('response.status: ' + response.status);
 	          console.log('response.data: ' + JSON.stringify(response.data));
 	          console.log('response.headers: ' + response.headers);
