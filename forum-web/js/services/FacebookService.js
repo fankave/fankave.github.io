@@ -28,11 +28,11 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
           xfbml      : true,
           version    : 'v2.4'
         });
-        console.log('FB SDK loaded OK');
+        // console.log('FB SDK loaded OK');
 
         FB.getLoginStatus(function(response)
         {
-        	console.log("getLoginStatus response: " + JSON.stringify(response));
+        	// console.log("getLoginStatus response: " + JSON.stringify(response));
 
 		   if (response.status === 'connected')
             {
@@ -150,9 +150,9 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	            registrationInfoHTML += "<div>accessToken: " + response.data.accessToken + "</div>";
 	            // registrationInfoElement.innerHTML = registrationInfoHTML;
 
-	            console.log("user ID: " + response.data.userId);
-	            console.log("session ID: " + response.data.sessionId);
-	            console.log("access token: " + response.data.accessToken);
+	            // console.log("user ID: " + response.data.userId);
+	            // console.log("session ID: " + response.data.sessionId);
+	            // console.log("access token: " + response.data.accessToken);
 
 	            // console.log(" - - - > access UserInfoService: " + UserInfoService);
 
