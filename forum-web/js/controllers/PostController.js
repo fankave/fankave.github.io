@@ -38,13 +38,8 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 	{
 		document.getElementById("replyCommentField").focus();
 	}
-
-	if(facebookService.userLoggedInToFacebook === false)
-	{
-		window.location = "#/facebookLogin";
-	}
-	else
-	{
+	
+	$scope.initReplyPage = function(){
 		$scope.pageClass = 'page-post';
 		$scope.paddingTop = "20";
 		$scope.pageStyle = {'padding-top': '10em'};
@@ -76,6 +71,16 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
     			});
   			});
 		});
+	}
+
+	if(UserInfoService.isUserLoggedIn()){
+		if(!networkService.isSocketConnected())
+			networkService.init();
+		$scope.initReplyPage();
+	}
+	else
+	{
+		window.location = "#/facebookLogin";
 	}
 
 	$scope.postReply = function(commentText) {

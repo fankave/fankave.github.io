@@ -17,7 +17,7 @@ networkModule.factory('URIHelper', function () {
 	
 
 	return {
-		isPeelUri:function(){
+		isPeelUser:function(){
 			var vars = getUrlVars();
 			if(vars["peel"]){
 				peelUserId = vars["userId"];
@@ -28,10 +28,10 @@ networkModule.factory('URIHelper', function () {
 			return false;
 		},
 		getPeelUserId:function(){
-			return peelUserName;
+			return peelUserId;
 		},
 		getPeelUserName:function(){
-			return peelUserId;
+			return peelUserName;
 		}
 
 

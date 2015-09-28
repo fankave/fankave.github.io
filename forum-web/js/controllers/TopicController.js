@@ -1,7 +1,7 @@
 var topicModule = angular.module("TopicModule", ["NetworkModule", "FacebookModule"]);
-topicModule.controller("TopicController", ["$scope", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "facebookService", "UserInfoService",initTopicController]);
+topicModule.controller("TopicController", ["$scope", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "facebookService", "UserInfoService","URIHelper","RegistrationService",initTopicController]);
 
-function initTopicController($scope, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService)
+function initTopicController($scope, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper,RegistrationService)
 {
 	TopicService.setTopicId($routeParams.topicID);
 
@@ -16,14 +16,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 	};
 
 	$scope.innerButtonTapped = false;
-	if(facebookService.userLoggedInToFacebook === false)
-	{
-		// console.log("Not logged in to facebook, take user to login page")
-		window.location = "#/facebookLogin";
-	}
-	else
-	{
-		// console.log("TopicController | userLoggedInToFacebook: " + facebookService.userLoggedInToFacebook);
+	$scope.initPage = function(){
 		$scope.pageClass = 'page-topic';
 
 		$scope.topicID = $routeParams.topicID;
@@ -64,6 +57,35 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
   			});
 		});
 	}
+	
+	if(UserInfoService.isUserLoggedIn()){
+		if(!networkService.isSocketConnected())
+			networkService.init();
+		$scope.initPage();
+	}
+	else
+	if(URIHelper.isPeelUser()){
+		RegistrationService.registerUser(URIHelper.getPeelUserId(),(URIHelper.getPeelUserName()));
+			//networkService.init();
+	}
+	else{
+		// console.log("Not logged in to facebook, take user to login page")
+		window.location = "#/facebookLogin";
+	}
+	
+
+//	if(facebookService.userLoggedInToFacebook === false)
+//	{
+//		// console.log("Not logged in to facebook, take user to login page")
+//		window.location = "#/facebookLogin";
+//	}
+//	else
+//	{
+//		// console.log("TopicController | userLoggedInToFacebook: " + facebookService.userLoggedInToFacebook);
+//		$scope.initPage();
+//	}
+	
+	
 
 	$scope.imageClick = function(imageURL)
 	{

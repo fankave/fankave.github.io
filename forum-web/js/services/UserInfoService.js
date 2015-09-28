@@ -1,4 +1,4 @@
-networkModule.service('UserInfoService', function () {
+networkModule.service('UserInfoService', function (ForumStorage) {
 	//OLD Creds userId=1, sessionId=dac24379, accessToken=7uFF3QGh-84=
 	//NEW Creds userId=193, sessionId=53d7b518, accessToken=dsKGKXyZgGs=
 	var _userInfo;
@@ -7,6 +7,7 @@ networkModule.service('UserInfoService', function () {
 			"accessToken":"dsKGKXyZgGs=",
 			"sessionId":"53d7b518"
 	};
+	var userLoggedIn = false;
 	
 //	var userInfoTemp = {
 //			"userId":"204",
@@ -34,12 +35,28 @@ networkModule.service('UserInfoService', function () {
 		_userInfo.userId = userId;
 		_userInfo.accessToken = accessToken;
 		_userInfo.sessionId = sessionId;
+		isUserLoggedIn = true;
+		ForumStorage.setToLocalStorage("forumIsLoggedIn",isUserLoggedIn);
+		ForumStorage.setToLocalStorage("forumUserId",userId);
+		ForumStorage.setToLocalStorage("forumAccessToken",accessToken);
+		ForumStorage.setToLocalStorage("forumSessionId",sessionId);
+		
 		// console.log("this.userInfo.userId :"+ _userInfo.userId);
 	}
 	return{
 		getUserCredentials:getUserCredentials,
 		setUserCredentials:setUserCredentials,
-		isCurrentUser:isCurrentUser
+		isCurrentUser:isCurrentUser,
+		isUserLoggedIn:function(){
+			if(ForumStorage.getFromLocalStorage("forumIsLoggedIn"))
+				{
+				_userInfo = {};
+				_userInfo.userId = ForumStorage.getFromLocalStorage("forumUserId");;
+				_userInfo.accessToken = ForumStorage.getFromLocalStorage("forumAccessToken");
+				_userInfo.sessionId = ForumStorage.getFromLocalStorage("forumSessionId");
+				}
+			return ForumStorage.getFromLocalStorage("forumIsLoggedIn");
+		}
 	}
 
 });
