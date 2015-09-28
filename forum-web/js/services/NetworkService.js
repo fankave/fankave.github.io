@@ -10,6 +10,11 @@ function initNetworkService($websocket,DataService,UserInfoService)
 	var ws;
 
 	return{
+		isSocketConnected:function(){
+			if(ws == undefined)
+				return false;
+			return true;
+		},
 		send:function(message) { ws.send(JSON.stringify(message));},
 		init:function() { 
 			ws = $websocket(getWebsocketUri());

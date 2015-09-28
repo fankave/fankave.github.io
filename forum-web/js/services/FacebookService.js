@@ -130,7 +130,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 
 	      // console.log('registration parameters: ' + JSON.stringify(registrationParameters));
 	      
-	      $http.post('http://104.197.8.198/v1.0/user/register', registrationParameters).then(
+	      $http.post('http://104.197.8.198/v1.0/user/register', JSON.stringify(registrationParameters)).then(
 	      function(response)
 	      {
 	          // console.log('success');

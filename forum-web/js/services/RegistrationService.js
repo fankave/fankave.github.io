@@ -1,0 +1,116 @@
+networkModule.service('RegistrationService', ["ForumStorage","ForumDeviceInfo","$http","UserInfoService","networkService","ReplyService","TopicService", registration]);
+
+function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,networkService,ReplyService,TopicService) {
+	REGISTER_SERVER_URI = 'http://104.197.8.198/v1.0/user/register';
+
+	function getPeelRegistrationParams(userId,userName){
+		var peelData = new Object();
+		peelData.id = userId;
+		peelData.name = userName;
+		
+		var deviceId = ForumDeviceInfo.getDeviceId();
+		var registrationParameters = new Object();
+		registrationParameters.type = 'peel';
+		registrationParameters.locale = 'en_US';
+		registrationParameters.utcOffset = -28800;
+		registrationParameters.deviceType = 'web';
+		registrationParameters.deviceId = deviceId;
+		registrationParameters.deviceModel = 'browser';
+		registrationParameters.appKey = 'testkey';
+		registrationParameters.appVersion = '1.0';
+		registrationParameters.peel = peelData;
+		
+//		{
+//				"type": "peel", 
+//				"locale": "en_US", 
+//				"utcOffset": -28800, 
+//				"deviceType": "ios", 
+//				"deviceId": "testdevice2", 
+//				"deviceModel": "i phone 6", 
+//				"appKey": "testKey", 
+//				"appVersion": "1.0", 
+//				"peel": {"id": userId, "name": userName}
+//		};
+//		
+		//var regParamsTemp = {"type": "peel", "locale": "en_US", "utcOffset": -28800, "deviceType": "ios", "deviceId": "testdevice", "deviceModel": "iPhone 6", "appKey": "testkey", "appVersion": "1.0", "peel": {"id": "10", "name": "Peel User"}};
+		//return registrationParameters;
+		return registrationParameters;
+
+	}
+	function registerUser(userId,userName){
+		var registrationParameters = getPeelRegistrationParams(userId,userName);
+//
+//
+//		console.log('Peel registration parameters: ' + JSON.stringify(registrationParameters));
+//		var peelData = new Object();
+//		peelData.id = userId;
+//		peelData.name = userName;
+//
+//		var deviceId = ForumDeviceInfo.getDeviceId();
+//	     var registrationParameters =
+//	      {
+//	        "type":"peel",
+//	        "locale":"en_US",
+//	        "utcOffset":-25200,
+//	        "deviceType":"web",
+//	        "deviceId":deviceId,
+//	        "deviceModel":"browser",
+//	        "appKey":"testKey",
+//	        "appVersion":"0.1",
+//	        "peel":{"id":"1","name":"TestPeelUser"}
+//	      };
+			console.log('Peel registration parameters: ' + JSON.stringify(registrationParameters));
+		var registrationSuccess = false;
+		var res = $http.post('http://104.197.8.198/v1.0/user/register', JSON.stringify(registrationParameters));
+		res.success(function(data, status, headers, config) {
+			console.log('success');
+			console.log('response.status: ' + status);
+			console.log('response.data: ' + JSON.stringify(data));
+			console.log('response.headers: ' + headers);
+			console.log('response.config: ' + config);
+
+			if(status == 200)
+			{
+				 console.log("registered user successfully");
+				 console.log("user ID: " + data.userId);
+				 console.log("session ID: " + data.sessionId);
+				 console.log("access token: " + data.accessToken);
+				 registrationSuccess = true;
+				 UserInfoService.setUserCredentials(data.userId, data.accessToken, data.sessionId);
+				
+			}
+			
+			networkService.init();
+
+            // console.log(":: " + TopicService.getTopicId());
+			// window.location = "#/topic/" + TopicService.getTopicId();
+			if(ReplyService.getPostId() != undefined)
+            {
+            	// console.log("found post ID: " + ReplyService.getPostId());
+            	window.location = "#/post/" + ReplyService.getPostId();
+            }
+            else
+            {
+            	// console.log("couldn't find a post ID, reverting to topic ID");
+				window.location = "#/topic/" + TopicService.getTopicId();
+			}
+		});
+				
+				
+		res.error(function(data, status, headers, config)
+				{
+					console.log('error ' +  data);
+					console.log('response.code:  ' + status);
+				});
+	}
+	
+	function isUserRegistered(){
+		//TODO
+	}
+
+	return{
+		isUserRegistered:isUserRegistered,
+		registerUser:registerUser
+
+	};	
+}
