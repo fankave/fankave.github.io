@@ -1,7 +1,7 @@
 networkModule.service('RegistrationService', ["ForumStorage","ForumDeviceInfo","$http","UserInfoService","networkService","ReplyService","TopicService", registration]);
 
 function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,networkService,ReplyService,TopicService) {
-	REGISTER_SERVER_URI = 'http://104.197.8.198/v1.0/user/register';
+	REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
 
 	function getPeelRegistrationParams(userId,userName){
 		var peelData = new Object();
@@ -61,7 +61,7 @@ function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,network
 //	      };
 			console.log('Peel registration parameters: ' + JSON.stringify(registrationParameters));
 		var registrationSuccess = false;
-		var res = $http.post('http://104.197.8.198/v1.0/user/register', JSON.stringify(registrationParameters));
+		var res = $http.post(REGISTER_SERVER_URI, JSON.stringify(registrationParameters));
 		res.success(function(data, status, headers, config) {
 			console.log('success');
 			console.log('response.status: ' + status);
