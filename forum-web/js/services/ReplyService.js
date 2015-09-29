@@ -57,11 +57,12 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 				//update
 				_replies[i] = Bant.bant(replyObj)
 				console.log("Reply updated");
-				return;
+				return 1;
 			}
 		}
 		appendToReplies(replyData);
 		// console.log("ReplyService update Reply");
+		return 0;
 	}
 	
 	function updateLocalData(newData){
