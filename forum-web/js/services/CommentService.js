@@ -78,7 +78,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 		appendToComments(commentData);
 		//notifyObservers();
 		console.log("In Comment Service update comment");
-		retunr 1;
+		return 1;
 	}
 	
 	function updateLocalData(newData){
