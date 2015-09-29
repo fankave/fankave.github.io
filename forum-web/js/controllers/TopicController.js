@@ -28,8 +28,8 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 
 		if($scope.isPeelUser === true)
 		{
-			document.getElementById('topicSection').style.paddingTop = "10.4em";
-			document.getElementById('header').style.height = "10.4em";
+			document.getElementById('topicSection').style.paddingTop = "11em";
+			document.getElementById('header').style.height = "11em";
 		}
 		else
 		{
