@@ -588,3 +588,40 @@ body
 	background-color: rgb(230, 237, 243);
 	font-size:0.2em;
 }
+
+
+/* - - - Peel-specific CSS - - - */
+
+
+#peelNavBar
+{
+	background-color: black;//rgb(16, 93, 110);
+	min-height: 3em;
+}
+
+/*
+.peelButton
+{
+	padding:10px;
+}
+*/
+
+.peelButton img
+{
+	max-height: 100%;
+	width:2.4em;
+	height:2.4em;
+	/*padding-top:0;*/
+	/*padding-bottom:3px;*/
+	/*background-color:green;*/
+}
+
+#closePeelButton
+{
+	float:left;
+}
+
+#peelWatchOnTVButton
+{
+	float:right;
+}

@@ -16,6 +16,8 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 	};
 
 	$scope.innerButtonTapped = false;
+	$scope.isPeelUser = true;
+
 	$scope.initPage = function(){
 		$scope.pageClass = 'page-topic';
 
@@ -24,7 +26,17 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 		//$scope.posts = StaticData.getPostsForTopicID();
 		$scope.init();
 
-		document.getElementById('topicSection').style.paddingTop = "8em";
+		if($scope.isPeelUser === true)
+		{
+			document.getElementById('topicSection').style.paddingTop = "10.4em";
+			document.getElementById('header').style.height = "10.4em";
+		}
+		else
+		{
+			document.getElementById('topicSection').style.paddingTop = "8em";
+			document.getElementById('header').style.height = "8em";
+		}
+
 		document.getElementById('topicSection').style.paddingBottom = "3.9em";
 
 		 $scope.$watch("commentsArray", function (newValue, oldValue)
@@ -58,6 +70,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 		});
 	}
 	
+	
 	if(UserInfoService.isUserLoggedIn()){
 		if(!networkService.isSocketConnected())
 			networkService.init();
@@ -71,6 +84,17 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 	else{
 		// console.log("Not logged in to facebook, take user to login page")
 		window.location = "#/facebookLogin";
+	}
+	
+
+	$scope.peelClose = function()
+	{
+		console.log("peelClose()");
+	}
+
+	$scope.peelWatchOnTV = function()
+	{
+		console.log("peelWatchOnTV()")
 	}
 	
 
