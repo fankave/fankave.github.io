@@ -13,7 +13,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 		}
 		else if(commentsData.push){
 			if(commentsData.method == "UPSERT")
-				if(CommentService.updateComment(commentsData) == 1)
+				if(CommentService.updateComment(commentsData) == 0)
 					TopicService.updateCommentCount(1);
 			else if(commentsData.method == "REMOVE")
 				if(CommentService.removeComment(commentsData) == 0)
