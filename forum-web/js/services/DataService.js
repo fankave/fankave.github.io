@@ -15,9 +15,11 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 			if(commentsData.method == "UPSERT")
 				if(CommentService.updateComment(commentsData) == 0)
 					TopicService.updateCommentCount(1);
-			else if(commentsData.method == "REMOVE")
-				if(CommentService.removeComment(commentsData) == 0)
-					TopicService.updateCommentCount(-1);	
+			else if(commentsData.method == "REMOVE"){
+				//TODO: Design requirement for how to show a deleted comment
+//				if(CommentService.removeComment(commentsData) == 0)
+//					TopicService.updateCommentCount(-1);	
+			}
 		}
 		else {
 			if(commentsData.method == "POST"){
@@ -30,8 +32,10 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 						CommentService.appendToComments(commentsData);
 						TopicService.updateCommentCount(1);
 					}
-					else
-						CommentService.updateCommentLocalData(uri, commentId);
+					else{
+						if(CommentService.updateCommentLocalData(uri, commentId) == 0)
+							TopicService.updateCommentCount(-1);
+					}
 				}
 			}
 			else
@@ -63,9 +67,13 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 		else if(replyData.push){
 			console.log("reply pushed ");
 			if(replyData.method == "UPSERT")
-				ReplyService.updateReply(replyData);
-			else if(replyData.method == "REMOVE")
-				ReplyService.removeReply(replyData);
+				if(ReplyService.updateReply(replyData) == 0){
+					CommentService.updateReplyCountById(replyData.data);
+				}
+			else if(replyData.method == "REMOVE"){
+				//TODO: no action required
+				//ReplyService.removeReply(replyData);
+			}
 		}
 		else {
 			if(replyData.method == "POST"){
@@ -76,6 +84,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 //					console.log("uri: "+ uri);
 			 if(uri == "/v1.0/reply/create"){
 						ReplyService.appendToReplies(replyData);
+						CommentService.updateReplyCountById(replyData.data);
 					}
 			 else
 				 ReplyService.updateReplyLocalData(uri, id);

@@ -217,6 +217,21 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 	function isCommentLiked(id){
 		return FDSUtility.isLikedById(_comments,id);
 	}
+	
+	
+	function updateReplyCountById(replyData){
+		if(replyData.commentId != undefined ){
+		var id = replyData.commentId;
+		var tempStructure = getCommentById(id);
+		if(tempStructure != undefined){
+			if(NETWORK_DEBUG) console.log("found element :"+ tempStructure  + " tempStructure.signal.flag :"+ tempStructure.metrics.replies);
+			tempStructure.metrics.replies == undefined ? tempStructure.metrics.replies = 1: tempStructure.metrics.replies = tempStructure.metrics.replies + 1;
+		updateLocalData(tempStructure);	
+		notifyObservers();
+		}
+		}
+		
+	}
 
 	function updateCommentLocalData(uri,id){
 		if(uri == LIKE_COMMENT_URI+id){
@@ -226,9 +241,13 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 		else if(uri == UNLIKE_COMMENT_URI+id){
 			updateLikeCommentWithId(id, false)
 		}
+		else if(uri == "update_count"){
+			
+		}
 		else if(uri == DELETE_COMMENT_URI+id){
 			_comments = FDSUtility.deleteById(_comments,id);
 			notifyObservers();
+			return 0;
 		}
 		else if(uri == FLAG_COMMENT_URI+id){
 			_comments = FDSUtility.flagById(_comments, false);
@@ -254,6 +273,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 			appendToComments:appendToComments,
 			updateLikeCommentWithId:updateLikeCommentWithId,
 			updateCommentLocalData:updateCommentLocalData,
+			updateReplyCountById:updateReplyCountById,
 			removeComment:removeComment,
 			postCommentRequest:postCommentRequest,
 			getLikeCommentRequest:likeCommentRequest,
