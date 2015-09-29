@@ -94,10 +94,13 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 		}
 	}
 	
-	function updateCommentCount(){
+	function updateCommentCount(value){
 		console.log("Update comment count" + _topic.metrics.comments);
 		if(_topic!= undefined && _topic.metrics != undefined){
+			if(value == 1)
 			_topic.metrics.comments == undefined ? _topic.metrics.comments =1: _topic.metrics.comments = _topic.metrics.comments+1;
+			else
+				_topic.metrics.comments == undefined ? _topic.metrics.comments =0: _topic.metrics.comments = _topic.metrics.comments-1;	
 		}
 		notifyObservers();
 	}

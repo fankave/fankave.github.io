@@ -13,9 +13,11 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 		}
 		else if(commentsData.push){
 			if(commentsData.method == "UPSERT")
-				CommentService.updateComment(commentsData);
+				if(CommentService.updateComment(commentsData) == 1)
+					TopicService.updateCommentCount(1);
 			else if(commentsData.method == "REMOVE")
-				CommentService.removeComment();	
+				if(CommentService.removeComment(commentsData) == 0)
+					TopicService.updateCommentCount(-1);	
 		}
 		else {
 			if(commentsData.method == "POST"){
@@ -26,7 +28,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 //					console.log("uri: "+ uri);
 					if(uri == "/v1.0/comment/create"){
 						CommentService.appendToComments(commentsData);
-						TopicService.updateCommentCount();
+						TopicService.updateCommentCount(1);
 					}
 					else
 						CommentService.updateCommentLocalData(uri, commentId);

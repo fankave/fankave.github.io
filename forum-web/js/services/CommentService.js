@@ -72,12 +72,13 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 			if(_comments[i].id == commentObj.id){
 				//update
 				_comments[i] = Bant.bant(commentObj);
-				return;
+				return 0;
 			}
 		}
 		appendToComments(commentData);
 		//notifyObservers();
 		console.log("In Comment Service update comment");
+		retunr 1;
 	}
 	
 	function updateLocalData(newData){
@@ -105,12 +106,15 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 	}
 
 	function removeComment(commentData){
+		var commentObj = commentData.data;
 		for(i=0;i<_comments.length;i++){
-			if(_comments[i].id == commentData.id){
+			if(_comments[i].id == commentObj.id){
 				//remove element
 				_comments.splice(i,1);
+				return 0;
 			}
 		}
+		return 1;
 
 	}
 	
