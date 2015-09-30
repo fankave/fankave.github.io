@@ -76,7 +76,7 @@ function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,network
 				 console.log("session ID: " + data.sessionId);
 				 console.log("access token: " + data.accessToken);
 				 registrationSuccess = true;
-				 UserInfoService.setUserCredentials(data.userId, data.accessToken, data.sessionId);
+				 UserInfoService.setUserCredentials(data.userId, data.accessToken, data.sessionId, "peel");
 				
 			}
 			

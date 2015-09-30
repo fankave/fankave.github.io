@@ -1,7 +1,7 @@
 var facebookModule = angular.module("FacebookModule", ["NetworkModule", "TopicModule"]);
-facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$http", "$compile", "facebookService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo","ForumStorage", initFacebookController]);
+facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$http", "$compile", "facebookService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", initFacebookController]);
 
-function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo,ForumStorage)
+function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo)
 {
 	// console.log("initFacebookController");
 
@@ -157,10 +157,8 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	            // console.log(" - - - > access UserInfoService: " + UserInfoService);
 
 	            facebookService.userLoggedInToFacebook = true;
-	            ForumStorage.clearStorage();
-	            ForumStorage.setToLocalStorage("forumUserType","facebook");
 	            // console.log("Setting user info in Facebook Service");
-	            UserInfoService.setUserCredentials(response.data.userId, response.data.accessToken, response.data.sessionId);
+	            UserInfoService.setUserCredentials(response.data.userId, response.data.accessToken, response.data.sessionId, "facebook");
 
 	            networkService.init();
 
