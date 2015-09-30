@@ -157,6 +157,8 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	            // console.log(" - - - > access UserInfoService: " + UserInfoService);
 
 	            facebookService.userLoggedInToFacebook = true;
+	            ForumStorage.clearStorage();
+	            ForumStorage.setToLocalStorage("forumUserType","facebook");
 	            // console.log("Setting user info in Facebook Service");
 	            UserInfoService.setUserCredentials(response.data.userId, response.data.accessToken, response.data.sessionId);
 
