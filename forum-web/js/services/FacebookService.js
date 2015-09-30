@@ -1,7 +1,7 @@
 var facebookModule = angular.module("FacebookModule", ["NetworkModule", "TopicModule"]);
-facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$http", "$compile", "facebookService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", initFacebookController]);
+facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$http", "$compile", "facebookService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo","ForumStorage", initFacebookController]);
 
-function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo)
+function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo,ForumStorage)
 {
 	// console.log("initFacebookController");
 
