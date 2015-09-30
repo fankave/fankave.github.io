@@ -26,7 +26,6 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 				var prevPeelUser = ForumStorage.getFromLocalStorage("forumUserType");
 				if(prevPeelUser != undefined && prevPeelUser == "peel" && ForumStorage.setToLocalStorage("forumPeelUserId") != peelUserId)
 					ForumStorage.clearStorage();
-				ForumStorage.setToLocalStorage("forumUserType","peel");
 				ForumStorage.setToLocalStorage("forumPeelUserId",peelUserId);
 				return true;
 			}

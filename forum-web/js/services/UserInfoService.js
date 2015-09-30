@@ -29,17 +29,19 @@ networkModule.service('UserInfoService', function (ForumStorage) {
 		return id == _userInfo.userId;
 	}
 
-	function setUserCredentials(userId, accessToken, sessionId){
+	function setUserCredentials(userId, accessToken, sessionId, userType){
 		// console.log("setUserCredentials(" + userId + ", " + accessToken + ", " + sessionId);
 		_userInfo = {};
 		_userInfo.userId = userId;
 		_userInfo.accessToken = accessToken;
 		_userInfo.sessionId = sessionId;
 		isUserLoggedIn = true;
+		ForumStorage.clearStorage();
 		ForumStorage.setToLocalStorage("forumIsLoggedIn",isUserLoggedIn);
 		ForumStorage.setToLocalStorage("forumUserId",userId);
 		ForumStorage.setToLocalStorage("forumAccessToken",accessToken);
 		ForumStorage.setToLocalStorage("forumSessionId",sessionId);
+		ForumStorage.setToLocalStorage("forumUserType",userType);
 
 		// console.log("this.userInfo.userId :"+ _userInfo.userId);
 	}
