@@ -8,25 +8,11 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 	$scope.init = function() {
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
 		networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
-
-//		var varPushParams = {"rid": "comment",
-//		"timestamp": (new Date).getTime(),
-//		"method": "POST",
-//		"uri": "\/mock\/topic\/53c167f17040001d?duration=\(100)"};
 	};
-
-	$scope.innerButtonTapped = false;
-	$scope.isPeelUser = true;
-
-	$scope.initPage = function(){
-		$scope.pageClass = 'page-topic';
-
-		$scope.topicID = $routeParams.topicID;
-		//TODO: remove this - usd with static Data
-		//$scope.posts = StaticData.getPostsForTopicID();
-		$scope.init();
-
-		if($scope.isPeelUser === true)
+	
+	$scope.setPeelUI = function(isPeelUser){
+		console.log("isPeelUser :"+isPeelUser);
+		if(isPeelUser === true)
 		{
 			document.getElementById('topicSection').style.paddingTop = "11em";
 			document.getElementById('header').style.height = "11em";
@@ -36,6 +22,24 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 			document.getElementById('topicSection').style.paddingTop = "8em";
 			document.getElementById('header').style.height = "8em";
 		}
+	}
+	
+	$scope.innerButtonTapped = false;
+	if((UserInfoService.isPeelUser() == true))
+		$scope.isPeelUser = true;
+	else
+		$scope.isPeelUser = false;	
+	$scope.setPeelUI($scope.isPeelUser);
+
+	$scope.initPage = function(){
+		$scope.pageClass = 'page-topic';
+
+		$scope.topicID = $routeParams.topicID;
+		//TODO: remove this - usd with static Data
+		//$scope.posts = StaticData.getPostsForTopicID();
+		$scope.init();
+
+		
 
 		document.getElementById('topicSection').style.paddingBottom = "3.9em";
 
@@ -78,6 +82,8 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 	}
 	else
 	if(URIHelper.isPeelUser()){
+		$scope.isPeelUser = true;
+		$scope.setPeelUI( true);
 		RegistrationService.registerUser(URIHelper.getPeelUserId(),(URIHelper.getPeelUserName()));
 			//networkService.init();
 	}

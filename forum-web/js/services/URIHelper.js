@@ -1,4 +1,4 @@
-networkModule.factory('URIHelper', function () {
+networkModule.factory('URIHelper', function (ForumStorage) {
 
 	var peelUserName;
 	var peelUserId;
@@ -22,6 +22,12 @@ networkModule.factory('URIHelper', function () {
 			if(vars["peel"]){
 				peelUserId = vars["userId"];
 				peelUserName = vars["userName"];
+				//If diff previous peel user, clear storage
+				var prevPeelUser = ForumStorage.getFromLocalStorage("forumUserType");
+				if(prevPeelUser != undefined && prevPeelUser == "peel" && ForumStorage.setToLocalStorage("forumPeelUserId") != peelUserId)
+					ForumStorage.clearStorage();
+				ForumStorage.setToLocalStorage("forumUserType","peel");
+				ForumStorage.setToLocalStorage("forumPeelUserId",peelUserId);
 				return true;
 			}
 			else
