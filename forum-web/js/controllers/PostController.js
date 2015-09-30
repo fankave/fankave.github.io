@@ -89,6 +89,7 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		networkService.send(ReplyService.getPostReplyRequest($scope.topicId,$scope.postID, commentText));
 		}
 		$scope.commentText = "";
+		document.getElementById("replyCommentField").blur();
 	};
 
 	$scope.updateLikeComment = function(id) {
