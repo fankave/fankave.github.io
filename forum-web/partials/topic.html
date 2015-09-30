@@ -147,11 +147,24 @@
 	<!--hr/-->
 	
 	<footer class="footer" id="textEntryField">
-        <div class="form-group" >
+        <!--div class="form-group form-inline" >
+	        <form ng-submit="postComment(commentText)">
+	        	<input id="topicCommentField" placeholder="Comment..." class="form-control" ng-model="commentText" type="text">
+	        	<span class="input-group-btn col-sm-6">
+			        <button class="btn btn-default" type="button">Go!</button>
+		      	</span>
+	    	</form>
+        </div-->
+
+        
         <form ng-submit="postComment(commentText)">
-        	<input id="topicCommentField" placeholder="Comment..." class="form-control" ng-model="commentText" type="text">
-        	</form>
-        </div>
+    		<div class="input-group">
+      			<input id="topicCommentField" type="text" class="form-control" placeholder="Comment..." ng-model="commentText">
+      			<span class="input-group-btn">
+        			<button class="btn btn-default" type="button" ng-click="postComment(commentText)">Comment</button>
+      			</span>
+    		</div><!-- /input-group -->
+    	</form>
 	</footer>
 	
 </section>
