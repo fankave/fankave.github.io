@@ -72,6 +72,11 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 				 }
   			});
 		});
+
+		 jQuery('#topicCommentField').bind('focusin focus', function(e){
+		// console.log("topic comment field focused")
+  		e.preventDefault();
+		})
 	}
 	
 	
@@ -294,11 +299,5 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 
 	TopicService.registerObserverCallback(updateTopic);
 	CommentService.registerObserverCallback(updateComments);
-
-
-	jQuery('#topicCommentField').bind('focusin focus', function(e){
-		// console.log("topic comment field focused")
-  		e.preventDefault();
-	})
 
 }
