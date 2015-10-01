@@ -16,9 +16,11 @@ networkModule.factory('ForumStorage', function () {
 	function getFromLocalStorage(key){
 		if(localStorageAvailable)
 		return localStorage.getItem(key);
+		return undefined;
 	}
 	
 	function clearStorage(){
+		if(localStorageAvailable)
 		localStorage.clear();
 	}
 	

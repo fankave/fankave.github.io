@@ -7,7 +7,7 @@ networkModule.service('UserInfoService', function (ForumStorage) {
 			"accessToken":"dsKGKXyZgGs=",
 			"sessionId":"53d7b518"
 	};
-	var userLoggedIn = false;
+	var _isUserLoggedIn = false;
 
 //	var userInfoTemp = {
 //	"userId":"204",
@@ -35,9 +35,9 @@ networkModule.service('UserInfoService', function (ForumStorage) {
 		_userInfo.userId = userId;
 		_userInfo.accessToken = accessToken;
 		_userInfo.sessionId = sessionId;
-		isUserLoggedIn = true;
+		_isUserLoggedIn = true;
 		ForumStorage.clearStorage();
-		ForumStorage.setToLocalStorage("forumIsLoggedIn",isUserLoggedIn);
+		ForumStorage.setToLocalStorage("forumIsLoggedIn",_isUserLoggedIn);
 		ForumStorage.setToLocalStorage("forumUserId",userId);
 		ForumStorage.setToLocalStorage("forumAccessToken",accessToken);
 		ForumStorage.setToLocalStorage("forumSessionId",sessionId);
@@ -50,14 +50,23 @@ networkModule.service('UserInfoService', function (ForumStorage) {
 		setUserCredentials:setUserCredentials,
 		isCurrentUser:isCurrentUser,
 		isUserLoggedIn:function(){
-			if(ForumStorage.getFromLocalStorage("forumIsLoggedIn"))
-			{
-				_userInfo = {};
-				_userInfo.userId = ForumStorage.getFromLocalStorage("forumUserId");;
-				_userInfo.accessToken = ForumStorage.getFromLocalStorage("forumAccessToken");
-				_userInfo.sessionId = ForumStorage.getFromLocalStorage("forumSessionId");
+
+			//console.log("cached : is user logged in : "+_isUserLoggedIn);
+			if(_isUserLoggedIn)
+				return true;
+			else{
+//				var islogged = ForumStorage.getFromLocalStorage("forumIsLoggedIn");
+//				console.log("storage : is user logged in : "+islogged);
+				if(ForumStorage.getFromLocalStorage("forumIsLoggedIn"))
+				{
+					_userInfo = {};
+					_userInfo.userId = ForumStorage.getFromLocalStorage("forumUserId");;
+					_userInfo.accessToken = ForumStorage.getFromLocalStorage("forumAccessToken");
+					_userInfo.sessionId = ForumStorage.getFromLocalStorage("forumSessionId");
+					return true;
+				}
+				return false;
 			}
-			return ForumStorage.getFromLocalStorage("forumIsLoggedIn");
 		},
 		isPeelUser:function(){
 			console.log("ForumStorage.getFromLocalStorage: "+ForumStorage.getFromLocalStorage("forumUserType"));
