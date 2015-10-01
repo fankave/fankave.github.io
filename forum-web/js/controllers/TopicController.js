@@ -296,7 +296,8 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 	CommentService.registerObserverCallback(updateComments);
 
 
-	jQuery('body').bind('focusin focus', function(e){
+	jQuery('#topicCommentField').bind('focusin focus', function(e){
+		// console.log("topic comment field focused")
   		e.preventDefault();
 	})
 
