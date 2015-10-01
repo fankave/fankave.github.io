@@ -36,7 +36,7 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 	if((UserInfoService.isPeelUser() == true))
 		$scope.isPeelUser = true;
 	else
-		$scope.isPeelUser = true;	
+		$scope.isPeelUser = false;	
 	$scope.setPeelUI($scope.isPeelUser);
 
 	$scope.requestReplies = function(){
