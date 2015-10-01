@@ -295,4 +295,9 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 	TopicService.registerObserverCallback(updateTopic);
 	CommentService.registerObserverCallback(updateComments);
 
+
+	jQuery('body').bind('focusin focus', function(e){
+  		e.preventDefault();
+	})
+
 }
