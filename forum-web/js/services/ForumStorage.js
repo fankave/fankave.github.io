@@ -9,18 +9,18 @@ networkModule.factory('ForumStorage', function () {
 	}
 	
 	function setToLocalStorage(key, value){
-		if(localStorageAvailable)
+		if(localStorage!= undefined && localStorageAvailable)
 		localStorage.setItem(key,value);
 	}
 	
 	function getFromLocalStorage(key){
-		if(localStorageAvailable)
+		if(localStorage!= undefined && localStorageAvailable)
 		return localStorage.getItem(key);
 		return undefined;
 	}
 	
 	function clearStorage(){
-		if(localStorageAvailable)
+		if(localStorage!= undefined && localStorageAvailable)
 		localStorage.clear();
 	}
 	
