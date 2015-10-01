@@ -19,6 +19,25 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		window.location = "#/topic/"+topicId;
 	}
 
+	$scope.setPeelUI = function(isPeelUser){
+		console.log("isPeelUser :"+isPeelUser);
+		if(isPeelUser === true)
+		{
+			document.getElementById('postSection').style.paddingTop = "6.5em";
+			document.getElementById('postHeader').style.height = "6.5em";
+		}
+		else
+		{
+			document.getElementById('postSection').style.paddingTop = "3.5em";
+			document.getElementById('postHeader').style.height = "3.5em";
+		}
+	}
+
+	if((UserInfoService.isPeelUser() == true))
+		$scope.isPeelUser = true;
+	else
+		$scope.isPeelUser = true;	
+	$scope.setPeelUI($scope.isPeelUser);
 
 	$scope.requestReplies = function(){
 		// console.log("PostController requestReplies Invoked");
@@ -34,6 +53,16 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		}
 	}
 
+	$scope.peelClose = function()
+	{
+		console.log("peelClose()");
+	}
+
+	$scope.peelWatchOnTV = function()
+	{
+		console.log("peelWatchOnTV()")
+	}
+
 	$scope.triggerRepliesKeyboard = function()
 	{
 		document.getElementById("replyCommentField").focus();
@@ -42,7 +71,7 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 	$scope.initReplyPage = function(){
 		$scope.pageClass = 'page-post';
 		$scope.paddingTop = "20";
-		$scope.pageStyle = {'padding-top': '10em'};
+		// $scope.pageStyle = {'padding-top': '10em'};
 
 		$scope.requestReplies();
 
@@ -55,8 +84,8 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		var replyPostHeader = $("#replyPost").height();
 		// console.log("height of repy header: " + replyPostHeader);
 		var heightString = replyPostHeader + "px";
-		document.getElementById('postHeader').style.height = '3.5em';//heightString;
-		document.getElementById('postSection').style.paddingTop = '3.5em';
+		// document.getElementById('postHeader').style.height = '3.5em';//heightString;
+		// document.getElementById('postSection').style.paddingTop = '3.5em';
 		document.getElementById('postSection').style.paddingBottom = "3.9em";
 
 		$scope.$watch("replies", function (newValue, oldValue)
