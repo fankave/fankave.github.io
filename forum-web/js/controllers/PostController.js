@@ -8,6 +8,7 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 	$scope.postID = $routeParams.postID;
 	$scope.topicId = TopicService.getTopicId();
 	//$scope.replies = networkService.getRepliesForPostID();
+	$scope.justReplied = false;
 	
 	ReplyService.setPostId($routeParams.postID);
 
@@ -120,6 +121,7 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		$scope.commentText = "";
 		document.getElementById("replyCommentField").blur();
 		document.getElementById("postReplyButton").blur();
+		$scope.justReplied = true
 	};
 
 	$scope.updateLikeComment = function(id) {
@@ -234,6 +236,16 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 			}
 			//console.log(i +" : updated replies likecount : " +$scope.replies[i].likeCount);
 
+		}
+
+		if($scope.justReplied == true)
+		{
+			setTimeout(function()
+				{ 
+					console.log("Scroll to last reply");
+					window.scrollTo(0,document.body.scrollHeight);
+					$scope.justReplied = false;
+				}, 1000);
 		}
 	}
 	ReplyService.registerObserverCallback(updateReplies);

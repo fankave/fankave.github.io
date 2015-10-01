@@ -76,7 +76,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 		 jQuery('#topicCommentField').bind('focusin focus', function(e){
 			console.log("topic comment field focused")
 	  		e.preventDefault();
-	  		 $(document).scrollTop(0);
+	  		 // $(document).scrollTop(0);
 		})
 	}
 	
