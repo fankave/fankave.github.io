@@ -54,8 +54,16 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 		if(tempComment!= undefined){
 			var _commentObject = {};
 			_commentObject = Bant.bant(tempComment);
-			if(_commentObject.id != undefined && _commentObject.html != undefined)
-				_comments.unshift(_commentObject);
+			if(_commentObject.id != undefined && _commentObject.html != undefined){
+				var i = 0;
+				while(_comments[i].pin == true)
+					i++;
+				//console.log("Pinned comments "+ i);
+				if(i>0)
+					_comments.splice(i,0,_commentObject);
+				else
+					_comments.unshift(_commentObject);
+			}
 			// console.log("appendToComments CommentService"+_commentObject.html );
 		}
 		notifyObservers();
