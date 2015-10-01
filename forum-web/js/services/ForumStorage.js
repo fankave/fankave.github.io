@@ -1,6 +1,6 @@
 networkModule.factory('ForumStorage', function () {
 	var localStorageAvailable = false;
-	if(typeof(Storage) !== "undefined") {
+	if(typeof(Storage) != undefined) {
 		console.log("Local storage available :"+ typeof(Storage));
 		localStorageAvailable = true;
 	}  
@@ -16,9 +16,11 @@ networkModule.factory('ForumStorage', function () {
 	function getFromLocalStorage(key){
 		if(localStorageAvailable)
 		return localStorage.getItem(key);
+		return undefined;
 	}
 	
 	function clearStorage(){
+		if(localStorageAvailable)
 		localStorage.clear();
 	}
 	
