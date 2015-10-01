@@ -150,6 +150,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 		$scope.commentText = "";
 		document.getElementById("topicCommentField").blur();
 		document.getElementById("postCommentButton").blur();
+		$(document).scrollTop(0);
 	};
 
 	$scope.updateLikeTopic = function() {
