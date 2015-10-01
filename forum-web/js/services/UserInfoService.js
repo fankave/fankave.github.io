@@ -8,6 +8,7 @@ networkModule.service('UserInfoService', function (ForumStorage) {
 			"sessionId":"53d7b518"
 	};
 	var _isUserLoggedIn = false;
+	var _userType = "default";
 
 //	var userInfoTemp = {
 //	"userId":"204",
@@ -36,6 +37,7 @@ networkModule.service('UserInfoService', function (ForumStorage) {
 		_userInfo.accessToken = accessToken;
 		_userInfo.sessionId = sessionId;
 		_isUserLoggedIn = true;
+		_userType =userType
 		ForumStorage.clearStorage();
 		ForumStorage.setToLocalStorage("forumIsLoggedIn",_isUserLoggedIn);
 		ForumStorage.setToLocalStorage("forumUserId",userId);
@@ -70,6 +72,8 @@ networkModule.service('UserInfoService', function (ForumStorage) {
 		},
 		isPeelUser:function(){
 			console.log("ForumStorage.getFromLocalStorage: "+ForumStorage.getFromLocalStorage("forumUserType"));
+			if(_userType == "peel")
+				return true;
 			if(ForumStorage.getFromLocalStorage("forumUserType") == "peel")
 				return true;
 			return false;
