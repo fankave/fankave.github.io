@@ -24,7 +24,6 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 		}
 	}
 	
-	$scope.innerButtonTapped = false;
 	if((UserInfoService.isPeelUser() == true))
 		$scope.isPeelUser = true;
 	else
@@ -95,18 +94,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 		// console.log("Not logged in to facebook, take user to login page")
 		window.location = "#/facebookLogin";
 	}
-	
-
-	$scope.peelClose = function()
-	{
-		console.log("peelClose()");
-	}
-
-	$scope.peelWatchOnTV = function()
-	{
-		console.log("peelWatchOnTV()")
-	}
-	
+		
 
 //	if(facebookService.userLoggedInToFacebook === false)
 //	{
@@ -118,97 +106,6 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 //		// console.log("TopicController | userLoggedInToFacebook: " + facebookService.userLoggedInToFacebook);
 //		$scope.initPage();
 //	}
-	
-	
-	$scope.showNewCommentsIndicator = true
-	$scope.newCommentsIndicatorTapped = function()
-	{
-		console.log("newCommentsIndicatorTapped");
-		$scope.showNewCommentsIndicator = false;
-		$(document).scrollTop(0);
-	}
-
-	$scope.imageClick = function(imageURL)
-	{
-		event.cancelBubble = true;
-	   if(event.stopPropagation) event.stopPropagation();
-
-		$.magnificPopup.open({
-                    items: {
-                    	type:'image',
-                    	src: imageURL,
-                },
-                type: 'inline'
-            });
-	}
-
-	$scope.moreButtonTapped = function()
-	{
-		$scope.innerButtonTapped = true;
-	}
-
-	$scope.postComment = function(commentText) {
-		if((commentText != undefined)	 && commentText != ""){
-		// console.log("TopicController postComment Invoked :"+ commentText);
-		networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
-		}
-		$scope.commentText = "";
-		document.getElementById("topicCommentField").blur();
-		document.getElementById("postCommentButton").blur();
-		$(document).scrollTop(0);
-	};
-
-	$scope.updateLikeTopic = function() {
-		console.log("TopicController update like Topic");
-		if(TopicService.getLiked() == true)
-			networkService.send(TopicService.getUnlikeTopicRequest());
-		else
-			networkService.send(TopicService.getLikeTopicRequest());	
-	};
-
-	$scope.commentOnTopic = function()
-	{
-		// console.log("comment on topic");
-		document.getElementById("topicCommentField").focus();
-	};
-
-	$scope.updateLikeComment = function(id) {
-		event.cancelBubble = true;
-		if(event.stopPropagation) event.stopPropagation();
-
-		console.log("TopicController updateLike (" + id + ")");
-		if(CommentService.isCommentLiked(id)){
-			networkService.send(CommentService.getUnlikeCommentRequest(id));
-		}
-		else{
-			networkService.send(CommentService.getLikeCommentRequest(id));	
-		}
-	};
-
-
-	$scope.deleteComment = function(id)
-	{
-		console.log("deleteComment(" + id + ")");
-		$scope.innerButtonTapped = true;
-		networkService.send(CommentService.deleteCommentRequest(id));	
-	}
-
-	$scope.reportCommentAsSpam = function(id)
-	{
-		console.log("reportCommentAsSpam(" + id + ")");
-		$scope.innerButtonTapped = true;
-		networkService.send(CommentService.flagCommentRequest(id));	
-	}
-
-	$scope.goToRepliesWithKeyboardTriggered = function(id)
-	{
-		event.cancelBubble = true;
-	   if(event.stopPropagation) event.stopPropagation();
-
-		// console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
-		TopicService.directComment = true;
-		window.location = "#/post/" + id;
-	};
 
 	var updateTopic = function(){
 		if(TopicService.isWatchingTopic() == false){
@@ -307,4 +204,129 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 	TopicService.registerObserverCallback(updateTopic);
 	CommentService.registerObserverCallback(updateComments);
 
+
+	// - - - User action events - - - - - -
+
+	// User hits enter when typing a comment OR taps the "Comment" button next to the text-field
+	$scope.postComment = function(commentText) {
+		if((commentText != undefined)	 && commentText != ""){
+		// console.log("TopicController postComment Invoked :"+ commentText);
+		networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
+		}
+		$scope.commentText = "";
+		document.getElementById("topicCommentField").blur();
+		document.getElementById("postCommentButton").blur();
+		$(document).scrollTop(0);
+	};
+
+	// User taps "like" button in topic details
+	$scope.updateLikeTopic = function() {
+		console.log("TopicController update like Topic");
+		if(TopicService.getLiked() == true)
+			networkService.send(TopicService.getUnlikeTopicRequest());
+		else
+			networkService.send(TopicService.getLikeTopicRequest());	
+	};
+
+	// User taps "like" button for a specific comment
+	$scope.updateLikeComment = function(id) {
+		event.cancelBubble = true;
+		if(event.stopPropagation) event.stopPropagation();
+
+		console.log("TopicController updateLike (" + id + ")");
+		if(CommentService.isCommentLiked(id)){
+			networkService.send(CommentService.getUnlikeCommentRequest(id));
+		}
+		else{
+			networkService.send(CommentService.getLikeCommentRequest(id));	
+		}
+	};
+
+	// Author taps "delete" button for a specific comment
+	$scope.deleteComment = function(id)
+	{
+		console.log("deleteComment(" + id + ")");
+		$scope.innerButtonTapped = true;
+		networkService.send(CommentService.deleteCommentRequest(id));	
+	}
+
+	// User taps "Report as spam" button for a specific comment
+	$scope.reportCommentAsSpam = function(id)
+	{
+		console.log("reportCommentAsSpam(" + id + ")");
+		$scope.innerButtonTapped = true;
+		networkService.send(CommentService.flagCommentRequest(id));	
+	}
+
+	// User taps "comment" button for a specific comment
+	$scope.goToRepliesWithKeyboardTriggered = function(id)
+	{
+		event.cancelBubble = true;
+	   if(event.stopPropagation) event.stopPropagation();
+
+		// console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
+		TopicService.directComment = true;
+		window.location = "#/post/" + id;
+	};
+
+	// User taps "new comments" indicator at top of screen
+	$scope.newCommentsIndicatorTapped = function()
+	{
+		console.log("newCommentsIndicatorTapped");
+		$scope.showNewCommentsIndicator = false;
+		$(document).scrollTop(0);
+	}
+
+	// User taps Peel's "close" button
+	$scope.peelClose = function()
+	{
+		console.log("peelClose()");
+	}
+
+	// User taps Peel's "Watch on TV" button
+	$scope.peelWatchOnTV = function()
+	{
+		console.log("peelWatchOnTV()")
+	}
+
+	// User taps on an image in a specific comment
+	$scope.imageClick = function(imageURL)
+	{
+		event.cancelBubble = true;
+	   if(event.stopPropagation) event.stopPropagation();
+
+		$.magnificPopup.open({
+                    items: {
+                    	type:'image',
+                    	src: imageURL,
+                },
+                type: 'inline'
+            });
+	}
+
+	// User taps on the ... (more) button for a specific comment
+	$scope.moreButtonTapped = function()
+	{
+		$scope.innerButtonTapped = true;
+	}
+
+	// User taps on the "comment" button for the topic
+	$scope.commentOnTopic = function()
+	{
+		// console.log("comment on topic");
+		document.getElementById("topicCommentField").focus();
+	};
+
+
+	// - - - UI-related functions - - - - - -
+
+	// detects when user taps on a button INSIDE the overall post row
+	$scope.innerButtonTapped = false;	// used to suppress navigation to the replies page
+
+	// variable to hide/show the "new comments" indicator
+	$scope.showNewCommentsIndicator = true
+
+
+	
 }
+
