@@ -70,7 +70,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 
               $("#landingPageContent").html(
 			  $compile(
-			  		"<div id=facebookLoginContainer><div id=facebookLoginButtonDiv><button class=btn-link ng-click=loginToFacebook();><img src=img/FacebookLoginButton-2x.png /></button></div></div>"
+			  		"<div id=facebookLoginContainer><center><div id=facebookLoginButtonDiv><button class=btn-link ng-click=loginToFacebook();><img src=img/FacebookLoginButton-2x.png /></button></div></center></div>"
 			  )($scope)
 			  );
             }
