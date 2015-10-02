@@ -68,7 +68,8 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 			console.log("reply pushed ");
 			if(replyData.method == "UPSERT")
 				if(ReplyService.updateReply(replyData) == 0){
-					CommentService.updateReplyCountById(replyData.data);
+					if(replyData.data == undefined)
+					CommentService.updateReplyCountById(replyData.data.commentId,1);
 				}
 			else if(replyData.method == "REMOVE"){
 				//TODO: no action required
@@ -82,12 +83,16 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 					var id = uri.slice(-DATA_BANT_ID_LENGTH);
 //					console.log("Comment ID: "+ id);
 //					console.log("uri: "+ uri);
-			 if(uri == "/v1.0/reply/create"){
+					if(uri == "/v1.0/reply/create"){
 						ReplyService.appendToReplies(replyData);
-						CommentService.updateReplyCountById(replyData.data);
+						if(replyData.data != undefined)
+							CommentService.updateReplyCountById(replyData.data.commentId, 1);
 					}
-			 else
-				 ReplyService.updateReplyLocalData(uri, id);
+					else{
+						var commentId =  ReplyService.getCommentIdByReply(id);
+						if(ReplyService.updateReplyLocalData(uri, id) == 0)
+							CommentService.updateReplyCountById(commentId, -1);
+					}
 				}
 			}
 			else

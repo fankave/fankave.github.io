@@ -120,11 +120,12 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 //	}
 	
 	
-	$scope.showNewCommentsIndicator = true
+	$scope.showNewCommentsIndicator = false;
 	$scope.newCommentsIndicatorTapped = function()
 	{
 		console.log("newCommentsIndicatorTapped");
 		$scope.showNewCommentsIndicator = false;
+		updateComments();
 		$(document).scrollTop(0);
 	}
 
@@ -257,9 +258,9 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 
 		renderScoreCard($scope.leftTeam.pColor, $scope.rightTeam.pColor);
 	};
-	var updateComments = function(){
+	
 
-		//TODO: check with ahmed, these values could be individual scope var.
+	var updateComments = function(){
 		var commentsdata = CommentService.comments();
 		var len = commentsdata.length;
 
@@ -303,8 +304,31 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 		}
 
 	};
+	
+	var notifyNewComments = function(){
+		if($scope.commentsArray == undefined)
+		{
+			updateComments();
+		}
+		else {
+			var commentsdata = CommentService.comments();
+			var len = commentsdata.length;
+			var pinIndex = CommentService.getNumPinComments();
+			if($scope.commentsArray.length <= len){
+				if(!UserInfoService.isCurrentUser(commentsdata[pinIndex].author.id)){
+					$scope.showNewCommentsIndicator = true;
+				}
+				else {
+					updateComments();
+				}
+			}
+			else{
+				updateComments();
+			}
+		}
+	}
 
 	TopicService.registerObserverCallback(updateTopic);
-	CommentService.registerObserverCallback(updateComments);
+	CommentService.registerObserverCallback(notifyNewComments);
 
 }

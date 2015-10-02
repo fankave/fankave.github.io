@@ -18,6 +18,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 	
 	var observerCallbacks = [];
 	var _comments = [];
+	var _pinnedComments = 0;
 
 
 	function setComments(commentsData) {
@@ -58,9 +59,10 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 				var i = 0;
 				if(_comments.length >0)
 				while(_comments[i].pin == true)
-					i++;
+					i++; 
+				_pinnedComments = i;
 				//console.log("Pinned comments "+ i);
-				if(i>0)
+				if(_pinnedComments>0)
 					_comments.splice(i,0,_commentObject);
 				else
 					_comments.unshift(_commentObject);
@@ -228,14 +230,20 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 	}
 	
 	
-	function updateReplyCountById(replyData){
-		if(replyData.commentId != undefined ){
-		var id = replyData.commentId;
+	function updateReplyCountById(id, value){
+		if(id != undefined ){
+		//var id = replyData.commentId;
 		var tempStructure = getCommentById(id);
 		if(tempStructure != undefined){
 			if(NETWORK_DEBUG) console.log("found element :"+ tempStructure  + " tempStructure.metrics.replies :"+ tempStructure.metrics.replies);
-			tempStructure.metrics.replies == undefined ? tempStructure.metrics.replies = 1: tempStructure.metrics.replies = tempStructure.metrics.replies + 1;
-		updateLocalData(tempStructure);	
+			if(value == -1){
+			tempStructure.metrics.replies == undefined ? tempStructure.metrics.replies = 0: tempStructure.metrics.replies = tempStructure.metrics.replies - 1;
+			}
+			else {
+				
+				tempStructure.metrics.replies == undefined ? tempStructure.metrics.replies = 1: tempStructure.metrics.replies = tempStructure.metrics.replies + 1;
+			}
+			updateLocalData(tempStructure);	
 		notifyObservers();
 		}
 		}
@@ -290,7 +298,10 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 			getCommentByIdRequest:getCommentByIdRequest,
 			deleteCommentRequest:deleteCommentRequest,
 			flagCommentRequest:flagCommentRequest,
-			isCommentLiked:isCommentLiked
+			isCommentLiked:isCommentLiked,
+			getNumPinComments:function(){
+				return _pinnedComments;
+			}
 	};
 
 });

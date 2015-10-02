@@ -27,7 +27,10 @@ networkModule.service('UserInfoService', function (ForumStorage) {
 	}
 
 	function isCurrentUser(id){
-		return id == _userInfo.userId;
+		//console.log("Current user id  && id :"+_userInfo.userId + " :   "+ id);
+		if(id == _userInfo.userId)
+			return true;
+		return false;
 	}
 
 	function setUserCredentials(userId, accessToken, sessionId, userType){

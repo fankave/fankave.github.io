@@ -111,6 +111,16 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 		}
 	}
 	
+	function getCommentIdByReply(id){
+		if(NETWORK_DEBUG) console.log("_replies :"+ _replies.length);
+		for(i=0;i<_replies.length;i++){
+			if(_replies[i].id == id){
+				//remove element
+				return _replies[i].commentId;
+			}
+		}
+	}
+	
 	function replyGetRequest(uri){
 		return  varReplyParams = {"rid": "reply",
 				"timestamp": new Date().getTime(),
@@ -219,6 +229,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 		else if(uri == DELETE_REPLY_URI+id){
 			_replies = FDSUtility.deleteById(_replies,id);
 			notifyObservers();
+			return 0;
 		}
 		else if(uri == FLAG_REPLY_URI+id){
 			_replies = FDSUtility.flagById(_replies, true);
@@ -253,7 +264,8 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 		flagReplyRequest:flagReplyRequest,
 		registerObserverCallback:registerObserverCallback,
 		getRepliesRequest:getRepliesRequest,
-		isReplyLiked:isReplyLiked
+		isReplyLiked:isReplyLiked,
+		getCommentIdByReply:getCommentIdByReply
 	};
 
 });
