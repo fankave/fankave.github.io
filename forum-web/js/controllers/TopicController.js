@@ -39,8 +39,6 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 		//$scope.posts = StaticData.getPostsForTopicID();
 		$scope.init();
 
-		
-
 		document.getElementById('topicSection').style.paddingBottom = "3.9em";
 
 		 $scope.$watch("commentsArray", function (newValue, oldValue)
@@ -122,6 +120,13 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 //	}
 	
 	
+	$scope.showNewCommentsIndicator = true
+	$scope.newCommentsIndicatorTapped = function()
+	{
+		console.log("newCommentsIndicatorTapped");
+		$scope.showNewCommentsIndicator = false;
+		$(document).scrollTop(0);
+	}
 
 	$scope.imageClick = function(imageURL)
 	{
