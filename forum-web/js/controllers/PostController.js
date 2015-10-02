@@ -64,6 +64,14 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		console.log("peelWatchOnTV()")
 	}
 
+	$scope.showNewRepliesIndicator = true;
+	$scope.newRepliesIndicatorTapped = function()
+	{
+		console.log("newRepliesIndicatorTapped");
+		$scope.showNewRepliesIndicator = false;
+		window.scrollTo(0,document.body.scrollHeight);
+	}
+
 	$scope.triggerRepliesKeyboard = function()
 	{
 		document.getElementById("replyCommentField").focus();

@@ -641,7 +641,7 @@ body
 /* - - - 'New Content Available' indicator - - - */
 
 
-div#newCommentsAvailableIndicatorDiv
+#newCommentsAvailableIndicatorDiv
 {
 	/*background-color:red;*/
 	position:fixed;
@@ -651,3 +651,14 @@ div#newCommentsAvailableIndicatorDiv
 	left: 50%;
 	margin-left: -37.5%;
 }
+
+#newRepliesAvailableIndicatorDiv
+{
+	position:fixed;
+	bottom:5em;
+	z-index: 10000;
+	width: 75%;
+	left: 50%;
+	margin-left: -37.5%;
+}
+
