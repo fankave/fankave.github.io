@@ -30,11 +30,48 @@ function dateUtility() {
 	}
 	
 	function gameScheduleTime(timeStamp){
+		var date_format = '12';
 		var createdDate = new Date(timeStamp);
-		day = createdDate.getUTCDate();
-		month = createdDate.getUTCMonth() + 1;
-		//console.log("Scheduled date :  "+month+ "/" +day );
-		return month+ "/" +day;
+		day = createdDate.getDate();
+		month = createdDate.getMonth() + 1;
+		hour = createdDate.getHours();
+		var hour    = createdDate.getHours();  /* Returns the hour (from 0-23) */
+		var minutes     = createdDate.getMinutes();  /* Returns the minutes (from 0-59) */
+		var time  = hour;
+		var ext     = '';
+
+		if(date_format == '12'){
+		    if(hour > 12){
+		        ext = 'PM';
+		        hour = (hour - 12);
+
+		        if(hour < 10){
+		        	time = "0" + hour;
+		        }else if(hour == 12){
+		            hour = "00";
+		            ext = 'AM';
+		        }
+		    }
+		    else if(hour < 12){
+		    	time = ((hour < 10) ? "0" + hour : hour);
+		        ext = 'AM';
+		    }else if(hour == 12){
+		        ext = 'PM';
+		    }
+		}
+
+		if(minutes < 10){
+		    minutes = "0" + minutes; 
+		}
+
+		time = time + ":" + minutes + ' ' + ext; 
+		date = month+ "/" +day;
+		result = {"date":date,"time":time};
+
+		console.log("Scheduled date : "+ result.date + "  Scheduled time : "+result.time);
+		
+		
+		return result;
 		
 	}
 	return{

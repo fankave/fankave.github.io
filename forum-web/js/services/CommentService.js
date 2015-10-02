@@ -56,6 +56,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 			_commentObject = Bant.bant(tempComment);
 			if(_commentObject.id != undefined && _commentObject.html != undefined){
 				var i = 0;
+				if(_comments.length >0)
 				while(_comments[i].pin == true)
 					i++;
 				//console.log("Pinned comments "+ i);
