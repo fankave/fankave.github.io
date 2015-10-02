@@ -11,10 +11,10 @@ function dateUtility() {
 			return 'now';
 		}
 		if(secondsPast < 3600){
-			return parseInt(secondsPast/60) + 'min';
+			return parseInt(secondsPast/60) + 'm';
 		}
 		if(secondsPast < 86400){
-			return parseInt(secondsPast/3600) + 'hr';
+			return parseInt(secondsPast/3600) + 'h';
 		}
 		if(secondsPast > 86400){
 
