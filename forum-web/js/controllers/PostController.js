@@ -64,11 +64,12 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		console.log("peelWatchOnTV()")
 	}
 
-	$scope.showNewRepliesIndicator = true;
+	$scope.showNewRepliesIndicator = false;
 	$scope.newRepliesIndicatorTapped = function()
 	{
 		console.log("newRepliesIndicatorTapped");
 		$scope.showNewRepliesIndicator = false;
+		updateReplies();
 		window.scrollTo(0,document.body.scrollHeight);
 	}
 
@@ -256,7 +257,33 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 				}, 1000);
 		}
 	}
-	ReplyService.registerObserverCallback(updateReplies);
+	 
+	 var notifyNewReplies = function(){
+
+		 if($scope.replies == undefined)
+		 {
+			 updateReplies();
+		 }
+		 else {
+			 var repliesData = ReplyService.replies();
+			 var len = repliesData.length;
+			 if($scope.replies.length < len ){
+				 //console.log("newReplies triggered");
+				 if(!UserInfoService.isCurrentUser(repliesData[len-1].author.id)){
+					 $scope.showNewRepliesIndicator = true;
+				 }
+				 else{
+					 updateReplies();
+				 }
+			 }
+			 else{
+				 updateReplies();
+			 }
+
+		 }
+	 }
+	 
+	ReplyService.registerObserverCallback(notifyNewReplies);
 	TopicService.registerObserverCallback(updateScore);
 	CommentService.registerObserverCallback(updateCommentInReply);
 
