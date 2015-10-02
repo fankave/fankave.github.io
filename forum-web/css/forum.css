@@ -60,6 +60,10 @@ body
 }
 
 
+#topicSection
+{
+	position:relative;
+}
 /* Score Card */
 
 #scoreCardCanvas
@@ -631,4 +635,19 @@ body
 #peelWatchOnTVButton img
 {
 	max-height:2.4em;
+}
+
+
+/* - - - 'New Content Available' indicator - - - */
+
+
+div#newCommentsAvailableIndicatorDiv
+{
+	/*background-color:red;*/
+	position:fixed;
+	top:9em;
+	z-index: 10000;
+	width: 75%;
+	left: 50%;
+	margin-left: -37.5%;
 }
