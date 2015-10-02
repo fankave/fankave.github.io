@@ -267,7 +267,7 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		 else {
 			 var repliesData = ReplyService.replies();
 			 var len = repliesData.length;
-			 if($scope.replies.length <= len ){
+			 if($scope.replies.length < len ){
 				 //console.log("newReplies triggered");
 				 if(!UserInfoService.isCurrentUser(repliesData[len-1].author.id)){
 					 $scope.showNewRepliesIndicator = true;
