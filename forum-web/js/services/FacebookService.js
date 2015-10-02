@@ -24,7 +24,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	window.fbAsyncInit = function()
 	{
         FB.init({
-          appId      : '813620855403175',
+          appId      : '210324962465861',
           xfbml      : true,
           version    : 'v2.4'
         });
