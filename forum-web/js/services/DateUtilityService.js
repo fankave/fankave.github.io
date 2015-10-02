@@ -32,9 +32,9 @@ function dateUtility() {
 	function gameScheduleTime(timeStamp){
 		var date_format = '12';
 		var createdDate = new Date(timeStamp);
-		day = createdDate.getUTCDate();
-		month = createdDate.getUTCMonth() + 1;
-		hour = createdDate.getUTCHours();
+		day = createdDate.getDate();
+		month = createdDate.getMonth() + 1;
+		hour = createdDate.getHours();
 		var hour    = createdDate.getHours();  /* Returns the hour (from 0-23) */
 		var minutes     = createdDate.getMinutes();  /* Returns the minutes (from 0-59) */
 		var time  = hour;
