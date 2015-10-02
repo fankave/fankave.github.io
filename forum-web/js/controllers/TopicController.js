@@ -28,7 +28,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 	if((UserInfoService.isPeelUser() == true))
 		$scope.isPeelUser = true;
 	else
-		$scope.isPeelUser = false;	
+		$scope.isPeelUser = true;	
 	$scope.setPeelUI($scope.isPeelUser);
 
 	$scope.initPage = function(){

@@ -610,22 +610,25 @@ body
 }
 */
 
-.peelButton img
-{
-	max-height: 100%;
-	width:2.4em;
-	height:2.4em;
-	/*padding-top:0;*/
-	/*padding-bottom:3px;*/
-	/*background-color:green;*/
-}
 
 #closePeelButton
 {
 	float:left;
 }
 
+#closePeelButton img
+{
+	max-height: 100%;
+	width:2.4em;
+	height:2.4em;
+}
+
 #peelWatchOnTVButton
 {
 	float:right;
+}
+
+#peelWatchOnTVButton img
+{
+	max-height:2.4em;
 }
