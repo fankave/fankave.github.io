@@ -24,7 +24,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	window.fbAsyncInit = function()
 	{
         FB.init({
-          appId      : '210324962465861',
+          appId      : '813620855403175',
           xfbml      : true,
           version    : 'v2.4'
         });
@@ -70,7 +70,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 
               $("#landingPageContent").html(
 			  $compile(
-			  		"<button ng-click=loginToFacebook();><img src=img/FacebookLoginButton-2x.png width=235 height=50/></button>"
+			  		"<div id=facebookLoginContainer><div id=facebookLoginButtonDiv><button class=btn-link ng-click=loginToFacebook();><img src=img/FacebookLoginButton-2x.png /></button></div></div>"
 			  )($scope)
 			  );
             }

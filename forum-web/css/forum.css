@@ -662,3 +662,26 @@ body
 	margin-left: -37.5%;
 }
 
+
+#facebookLoginContainer
+{
+	position:absolute;
+	background-image: url("../img/facebookLoginPage_bkgd-2x.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width:100%;
+    height:100%;
+}
+
+
+#facebookLoginButtonDiv
+{
+	position:fixed;
+	top: 23em;
+	width:75%;
+	left: 50%;
+	margin-left: -37.5%;
+}
+
+
+
