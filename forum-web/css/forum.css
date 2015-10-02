@@ -455,6 +455,8 @@ body
 	padding-right: 5px;
 	font-size: 0.35em;
 	margin-bottom:0.3em;
+	/*overflow:hidden;*/
+	word-wrap:break-word;
 }
 
 .replyContent
