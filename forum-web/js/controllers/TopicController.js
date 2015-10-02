@@ -100,6 +100,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 	$scope.peelClose = function()
 	{
 		console.log("peelClose()");
+		window.location = "peel://home";
 	}
 
 	$scope.peelWatchOnTV = function()
@@ -314,7 +315,7 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 			var commentsdata = CommentService.comments();
 			var len = commentsdata.length;
 			var pinIndex = CommentService.getNumPinComments();
-			if($scope.commentsArray.length <= len){
+			if($scope.commentsArray.length < len){
 				if(!UserInfoService.isCurrentUser(commentsdata[pinIndex].author.id)){
 					$scope.showNewCommentsIndicator = true;
 				}
