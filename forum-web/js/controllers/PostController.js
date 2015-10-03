@@ -17,7 +17,8 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		var topicId = TopicService.getTopicId();
 		if(topicId == undefined)
 			topicId = $scope.comment.topicId;
-		window.location = "#/topic/"+topicId;
+		//window.location = "#/topic/"+topicId;
+		window.history.back();
 		
 	}
 
