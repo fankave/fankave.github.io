@@ -83,12 +83,6 @@
 		</div>
 	</div>
 
-
-	<!--ul class="nav nav-pills nav-justified">
-			<li role="presentation" class="active"><a>Posts</a></li>
-			<li role="presentation"><a href="#/post/0">Tweets</a></li>
-	</ul-->
-
 	<div class="commentsHeader">
 		Comments
 	</div>
@@ -102,7 +96,7 @@
 		  					<img ng-src="{{thisPost.postAuthorPhoto}}" alt="" class="userPhoto">
 					    </a>
 				    </div>
-				    <div id="pinIcon" >
+				    <div id="pinIcon">
 					    <img src="img/pin.png"/>
 					    
 				    </div>
@@ -140,7 +134,6 @@
 							{{thisPost.likeCount}}
 						</button>
 						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)"><img src="img/commentButton-2x.png"/> {{thisPost.replyCount}}</button>
-						<!--button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button-->
 						<div class="btn-group">
   							<button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
     							<img src="img/moreButton-2x.png"/>
@@ -163,7 +156,7 @@
       			<span class="input-group-btn">
         			<button id="postCommentButton" class="btn btn-default" type="button" ng-click="postComment(commentText)">Comment</button>
       			</span>
-    		</div><!-- /input-group -->
+    		</div>
     	</form>
 	</footer>
 
