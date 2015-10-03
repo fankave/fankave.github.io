@@ -11,7 +11,7 @@ function initNetworkService($websocket,DataService,UserInfoService)
 
 	return{
 		isSocketConnected:function(){
-			if(ws == undefined)
+			if(ws == undefined || ws.readyState == ws.CLOSED)
 				return false;
 			return true;
 		},
