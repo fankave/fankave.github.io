@@ -39,6 +39,7 @@ function dateUtility() {
 		var minutes     = createdDate.getMinutes();  /* Returns the minutes (from 0-59) */
 		var time  = hour;
 		var ext     = '';
+		var timeZone = createdDate.toLocaleString('en', {timeZoneName:'short'}).split(' ').pop();
 
 		if(date_format == '12'){
 		    if(hour > 12){
@@ -64,7 +65,7 @@ function dateUtility() {
 		    minutes = "0" + minutes; 
 		}
 
-		time = time + ":" + minutes + ' ' + ext; 
+		time = time + ":" + minutes + ' ' + ext + ' '+timeZone; 
 		date = month+ "/" +day;
 		result = {"date":date,"time":time};
 
