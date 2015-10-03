@@ -19,6 +19,7 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 			topicId = $scope.comment.topicId;
 		window.location = "#/topic/"+topicId;
 		
+		
 	}
 
 	$scope.setPeelUI = function(isPeelUser){
@@ -200,6 +201,7 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 			tempComment.replyCount = selectedComment.metrics.replies;
 			tempComment.mediaAspectFeed = selectedComment.mediaAspectFeed;
 			tempComment.isLiked = selectedComment.signal.like;
+			tempComment.topicId = selectedComment.topicId;
 
 			$scope.comment = tempComment;
 
