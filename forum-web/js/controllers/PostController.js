@@ -16,8 +16,9 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 	{
 		var topicId = TopicService.getTopicId();
 		if(topicId == undefined)
-			topicId = ReplyService.getTopicIdFromReply();
+			topicId = $scope.comment.topicId;
 		window.location = "#/topic/"+topicId;
+		
 	}
 
 	$scope.setPeelUI = function(isPeelUser){
