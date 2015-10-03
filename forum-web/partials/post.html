@@ -44,8 +44,8 @@
 			</div>
 
 			<div ng-switch-when="video">
-				<video controls="controls" poster="{{comment.mediaThumbUrl}}" class="postVideo">
-						  <source src="{{trustSrc(comment.mediaUrl)}}" type="video/mp4">
+				<video controls="controls" ng-poster="{{comment.mediaThumbUrl}}" class="postVideo">
+						  <source ng-src="{{trustSrc(comment.mediaUrl)}}" type="video/mp4">
 						</video>
 				</div>	
 
@@ -104,8 +104,8 @@
 				</div>
 
 				<div ng-switch-when="video">
-					<video controls="controls" poster="{{thisReply.mediaThumbUrl}}" class="postVideo">
-						  <source src="{{trustSrc(thisReply.mediaUrl)}}" type="video/mp4">
+					<video controls="controls" ng-poster="{{thisReply.mediaThumbUrl}}" class="postVideo">
+						  <source ng-src="{{trustSrc(thisReply.mediaUrl)}}" type="video/mp4">
 						</video>
 				</div>	
 

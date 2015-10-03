@@ -128,8 +128,8 @@
 					</div>
 
 					<div ng-switch-when="video">
-						<video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
-						  <source src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
+						<video controls="controls" ng-poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
+						  <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
 						</video>
 					</div>	
 
