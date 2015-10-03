@@ -1,7 +1,7 @@
 var topicModule = angular.module("TopicModule", ["NetworkModule", "FacebookModule"]);
-topicModule.controller("TopicController", ["$scope", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "facebookService", "UserInfoService","URIHelper","RegistrationService",initTopicController]);
+topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "facebookService", "UserInfoService","URIHelper","RegistrationService",initTopicController]);
 
-function initTopicController($scope, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper,RegistrationService)
+function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper,RegistrationService)
 {
 	TopicService.setTopicId($routeParams.topicID);
 
@@ -282,7 +282,8 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 			tempComment.mediaAspectFull = commentsdata[i].mediaAspectFull;
 			tempComment.isLiked = commentsdata[i].signal.like;
 			$scope.commentsArray.push(tempComment);
-						
+					
+			console.log(" - - - -> " + tempComment.mediaUrl);	
 			// console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);
 			
 			if($scope.commentsArray[i].type == "media"){
@@ -331,5 +332,11 @@ function initTopicController($scope, $timeout, $routeParams,networkService,Topic
 
 	TopicService.registerObserverCallback(updateTopic);
 	CommentService.registerObserverCallback(notifyNewComments);
+
+	
+	$scope.trustSrc = function(src)
+	{
+    	return $sce.trustAsResourceUrl(src);
+  	}
 
 }
