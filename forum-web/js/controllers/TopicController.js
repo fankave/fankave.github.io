@@ -140,7 +140,21 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
                     	type:'image',
                     	src: imageURL,
                 },
-                type: 'inline'
+                type: 'inline',
+                callbacks:
+                {
+				    open: function()
+				    {
+				      console.log("popup opened");
+				      $('body').bind('touchmove', function(e){e.preventDefault()})
+				    },
+				    close: function()
+				    {
+				      console.log("popup closed");
+				      $('body').unbind('touchmove')
+				    }
+				    // e.t.c.
+				}
             });
 	}
 

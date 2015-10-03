@@ -702,3 +702,10 @@ body
 	margin-left: -40%;
 }
 
+/* - - - disable scrolling (for use with magnific popup) - - - */
+
+.stop-scrolling
+{
+  height: 100%;
+  overflow: hidden;
+}
