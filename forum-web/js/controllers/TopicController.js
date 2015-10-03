@@ -283,7 +283,6 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 			tempComment.isLiked = commentsdata[i].signal.like;
 			$scope.commentsArray.push(tempComment);
 					
-			console.log(" - - - -> " + tempComment.mediaUrl);	
 			// console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);
 			
 			if($scope.commentsArray[i].type == "media"){
