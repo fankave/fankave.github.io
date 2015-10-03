@@ -70,12 +70,6 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 				 }
   			});
 		});
-
-		 jQuery('#topicCommentField').bind('focusin focus', function(e){
-			console.log("topic comment field focused")
-	  		e.preventDefault();
-	  		 // $(document).scrollTop(0);
-		})
 	}
 	
 	

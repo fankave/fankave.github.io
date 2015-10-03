@@ -159,6 +159,34 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		networkService.send(ReplyService.flagReplyRequest(id));
 	}
 
+	$scope.imageClick = function(imageURL)
+	{
+		event.cancelBubble = true;
+	   if(event.stopPropagation) event.stopPropagation();
+
+		$.magnificPopup.open({
+                    items: {
+                    	type:'image',
+                    	src: imageURL,
+                },
+                type: 'inline',
+                callbacks:
+                {
+				    open: function()
+				    {
+				      console.log("popup opened");
+				      $('body').bind('touchmove', function(e){e.preventDefault()})
+				    },
+				    close: function()
+				    {
+				      console.log("popup closed");
+				      $('body').unbind('touchmove')
+				    }
+				    // e.t.c.
+				}
+            });
+	}
+
 	function updateScore(){
 		//Score update here
 		$scope.leftTeam = TopicService.getTeamA();
@@ -247,7 +275,7 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 			$scope.triggerRepliesKeyboard();
 			TopicService.directComment = false;
 		}
-		
+
 		if($scope.justReplied == true)
 		{
 			setTimeout(function()
