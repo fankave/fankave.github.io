@@ -57,8 +57,10 @@
 			</div>
 
 			<div ng-switch-when="video">
-				<img ng-src="{{comment.mediaThumbUrl}}" class="postVideo"/>
-			</div>	
+				<video controls="controls" poster="{{comment.mediaThumbUrl}}" class="postVideo">
+						  <source src="{{trustSrc(comment.mediaUrl)}}" type="video/mp4">
+						</video>
+				</div>	
 
 			<div class="sharingButtonsRow">
 				<button class="btn-link social-btn" ng-click="updateLikeComment(comment.id)" ng-switch="comment.isLiked">
@@ -115,7 +117,9 @@
 				</div>
 
 				<div ng-switch-when="video">
-					<img ng-src="{{thisReply.mediaThumbUrl}}" class="postVideo"/>
+					<video controls="controls" poster="{{thisReply.mediaThumbUrl}}" class="postVideo">
+						  <source src="{{trustSrc(thisReply.mediaUrl)}}" type="video/mp4">
+						</video>
 				</div>	
 
 				<div class="sharingButtonsRow">

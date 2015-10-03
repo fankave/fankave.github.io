@@ -1,7 +1,7 @@
 var postModule = angular.module("PostModule", ["NetworkModule", "FacebookModule"]);
-postModule.controller("PostController", ["$scope", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "facebookService","UserInfoService", initPostController]);
+postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "facebookService","UserInfoService", initPostController]);
 
-function initPostController($scope, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService, UserInfoService)
+function initPostController($scope, $sce, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService, UserInfoService)
 {
 	$scope.pageClass = 'page-post';
 
@@ -287,5 +287,9 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 	TopicService.registerObserverCallback(updateScore);
 	CommentService.registerObserverCallback(updateCommentInReply);
 
+	$scope.trustSrc = function(src)
+	{
+    	return $sce.trustAsResourceUrl(src);
+  	}
 
 }
