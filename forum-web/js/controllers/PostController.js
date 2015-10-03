@@ -18,8 +18,6 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		if(topicId == undefined)
 			topicId = $scope.comment.topicId;
 		window.location = "#/topic/"+topicId;
-		
-		
 	}
 
 	$scope.setPeelUI = function(isPeelUser){
@@ -86,12 +84,6 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		// $scope.pageStyle = {'padding-top': '10em'};
 
 		$scope.requestReplies();
-
-		if(TopicService.directComment === true)
-		{
-			$scope.triggerRepliesKeyboard();
-			TopicService.directComment = false;
-		}
 
 		var replyPostHeader = $("#replyPost").height();
 		// console.log("height of repy header: " + replyPostHeader);
@@ -250,6 +242,12 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 
 		}
 
+		if(TopicService.directComment === true)
+		{
+			$scope.triggerRepliesKeyboard();
+			TopicService.directComment = false;
+		}
+		
 		if($scope.justReplied == true)
 		{
 			setTimeout(function()

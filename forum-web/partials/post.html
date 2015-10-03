@@ -20,7 +20,7 @@
 					<img ng-src="{{comment.postAuthorPhoto}}" alt="" class="userPhoto">
 			    </a>
 		    </div>
-		    <div id="pinIcon">
+		    <div id="pinIcon" ng-if="comment.pin == true">
 		    	<img src="img/pin.png"/>
 	    	</div>
 		</span>
