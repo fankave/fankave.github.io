@@ -102,7 +102,7 @@
 		  					<img ng-src="{{thisPost.postAuthorPhoto}}" alt="" class="userPhoto">
 					    </a>
 				    </div>
-				    <div id="pinIcon" ng-if="thisPost.pin == true">
+				    <div id="pinIcon" >
 					    <img src="img/pin.png"/>
 					    
 				    </div>
@@ -128,7 +128,7 @@
 					</div>
 
 					<div ng-switch-when="video">
-						<video controls="controls" ng-poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
+						<video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
 						  <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
 						</video>
 					</div>	
