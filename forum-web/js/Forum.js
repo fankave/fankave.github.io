@@ -1,4 +1,4 @@
-var rootModule = angular.module("Forum", ["ngRoute", "ngAnimate", "TopicModule", "PostModule", "NetworkModule"]);
+var rootModule = angular.module("Forum", ["ngRoute", "TopicModule", "PostModule", "NetworkModule"]);
 rootModule.config(["$routeProvider", initRootModule]);
 
 function initRootModule($routeProvider)
