@@ -40,13 +40,13 @@
 							{{gameClock}}
 						</div>
 						<div id="gameTimeTopLine" ng-if="gameStatus == 'future'">
-							<b>{{gameScheduledTime.date}}</b>
+							{{gameScheduledTime.date}}
 						</div>
 						<div id="gameTimeBottomLine" ng-if="gameStatus == 'live'">
 							{{gamePeriod}}
 						</div>
 						<div id="gameTimeBottomLine" ng-if="gameStatus == 'future'">
-							future time
+							{{gameScheduledTime.time}}
 						</div>
 					</div>
 					<div ng-if="gameStatus == 'past'">
