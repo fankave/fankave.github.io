@@ -16,13 +16,13 @@
 
    			<div id="scoreCardTitlesRow" class="row">
 				<span id="leftTeamSpan">
-					<b>{{leftTeam.name}}</b>
+					{{leftTeam.name}}
 				</span>
 				<span ng-if="gameStatus == 'live'" id="liveGameIndicatorSpan">
 					<img src="img/live-2x.png"/>
 				</span>
 				<span id="rightTeamSpan">
-					<b>{{rightTeam.name}}</b>
+					{{rightTeam.name}}
 				</span>
 			</div>
 
@@ -35,21 +35,24 @@
 					{{leftTeamScore}}
 				</span>
 				<span id="gameTime">
-					<div ng-if="gameStatus == 'live'">
-						{{gamePeriod}}
+					<div ng-if="gameStatus == 'live' || gameStatus == 'future'">
+						<div id="gameTimeTopLine" ng-if="gameStatus == 'live'">
+							{{gameClock}}
+						</div>
+						<div id="gameTimeTopLine" ng-if="gameStatus == 'future'">
+							<b>{{gameScheduledTime.date}}</b>
+						</div>
+						<div id="gameTimeBottomLine" ng-if="gameStatus == 'live'">
+							{{gamePeriod}}
+						</div>
+						<div id="gameTimeBottomLine" ng-if="gameStatus == 'future'">
+							future time
+						</div>
 					</div>
-					<div id="pastGameFinal" ng-if="gameStatus == 'past'">
-						<div id="scoreboardCenterLine">
+					<div ng-if="gameStatus == 'past'">
+						<div id="gameTimeCenterLine">
 							<span><b>FINAL</b></span>
 						</div>
-					</div>
-					<div id="pastGameFinal" ng-if="gameStatus == 'future'">
-						<div id="scoreboardCenterLine">
-							<span><b>{{gameScheduledTime.date}}</b></span>
-						</div>
-					</div>
-					<div ng-if="gameStatus == 'live' || gameStatus == 'future'">
-						{{gameClock}}
 					</div>
 				</span>
 				<span id="rightTeamScore">
