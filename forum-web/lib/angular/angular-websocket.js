@@ -53,7 +53,7 @@
       this.useApplyAsync               = options && options.useApplyAsync              || false;
       this.initialTimeout              = options && options.initialTimeout             || 500; // 500ms
       this.maxTimeout                  = options && options.maxTimeout                 || 5 * 60 * 1000; // 5 minutes
-      this.reconnectIfNotNormalClose   = options && options.reconnectIfNotNormalClose  || false;
+      this.reconnectIfNotNormalClose   = options && options.reconnectIfNotNormalClose  || true;
 
       this._reconnectAttempts = 0;
       this.sendQueue          = [];
