@@ -58,8 +58,8 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 
 	var updateComments = function(){
 		var commentsdata = CommentService.comments();
-		if(commentsdata != undefined && commentsdata.len >0){
-			
+		if(commentsdata != undefined && commentsdata.length >0){
+			console.log("CommentsData :"+ commentsdata.length);
 			var len = commentsdata.length;
 
 			$scope.commentsArray = [];
