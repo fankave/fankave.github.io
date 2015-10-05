@@ -81,8 +81,8 @@
 			{{topicDescHtml}}
 		</div>
 		<div class="topicSharingButtonsRow">
-			<button class="btn-link topic-social-btn" ng-click="updateLikeTopic()"><img src="img/likeButton-2x_.png"/> {{likesCount}}</button>
-			<button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/commentButton-2x_.png"/> {{commentsCount}}</button>
+			<button class="btn-link topic-social-btn" ng-click="updateLikeTopic()"><img src="img/topicLikeButton.png"/> {{likesCount}}</button>
+			<button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/topicCommentButton.png"/> {{commentsCount}}</button>
 		</div>
 	</div>
 
@@ -136,7 +136,7 @@
 							<img ng-switch-when="false" src="img/commentLikeButton.png"/> 
 							{{thisPost.likeCount}}
 						</button>
-						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)"><img src="img/topicCommentButton.png"/> {{thisPost.replyCount}}</button>
+						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)"><img src="img/commentOnTopicButton.png"/> {{thisPost.replyCount}}</button>
 						<div class="btn-group">
   							<button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
     							<img src="img/moreButton.png"/>
