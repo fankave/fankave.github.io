@@ -11,13 +11,14 @@ function initNetworkService($websocket,DataService,UserInfoService)
 
 	return{
 		isSocketConnected:function(){
-			if(ws == undefined || ws.readyState == ws.CLOSED){if(NETWORK_DEBUG)
-				if(NETWORK_DEBUG){
-					if(ws!= null)
-					console.log("ws status : "+ ws.readyState);
-					else
-						console.log("ws is null");
-				}
+			if(NETWORK_DEBUG){
+				if(ws!= null)
+				console.log("ws status : "+ ws.readyState);
+				else
+					console.log("ws is null");
+			}
+			if(ws == undefined || ws.readyState == ws.CLOSED){
+				
 				return false;
 			}
 			return true;
