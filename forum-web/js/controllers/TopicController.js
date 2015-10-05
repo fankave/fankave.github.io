@@ -74,6 +74,8 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 	
 	
 	if(UserInfoService.isUserLoggedIn()){
+		if(NETWORK_DEBUG)
+		console.log("User is logged in, checking for connection");
 		if(!networkService.isSocketConnected())
 			networkService.init();
 		$scope.initPage();
