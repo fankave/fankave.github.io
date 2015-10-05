@@ -26,7 +26,7 @@ function initNetworkService($websocket,DataService,UserInfoService)
 		send:function(message) { ws.send(JSON.stringify(message));},
 		init:function() { 
 			ws = $websocket(getWebsocketUri());
-
+			DataService.setWatchTopic(false);
 			//Websocket callbacks below
 			ws.onOpen(function() {
 				console.log("Websocket Connected");

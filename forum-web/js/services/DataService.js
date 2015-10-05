@@ -104,7 +104,10 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 	return {
 		setTopic:delegateSetTopic,
 		setComments:delegateSetComments,
-		setReplies:delegateSetReplies
+		setReplies:delegateSetReplies,
+		setWatchTopic:function(watched){
+			TopicService.setWatchTopic(watched);
+		}
 	};
 
 });
