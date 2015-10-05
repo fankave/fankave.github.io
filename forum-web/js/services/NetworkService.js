@@ -34,7 +34,7 @@ function initNetworkService($websocket,DataService,UserInfoService)
 
 			ws.onClose(function(evt) {
 				ws = undefined;
-				console.log("Websocket Closed")
+				console.log("Websocket Closed :"+evt);
 			});
 
 			ws.onMessage(function(evt) {
