@@ -65,15 +65,14 @@ function initNetworkService($websocket,DataService,UserInfoService)
 				else
 					console.log("ws is null");
 			}
-			if(ws == undefined || ws.readyState == ws.CLOSED){
-				
+			if(ws == undefined || ws.readyState != ws.OPEN){
 				return false;
 			}
 			return true;
 		},
 		send:function(message) { 
-			if(ws == undefined || ws.readyState !=ws.OPEN) 
-			initSocket()
+			if(ws == undefined) 
+			initSocket();
 			ws.send(JSON.stringify(message));
 			},
 		init:initSocket
