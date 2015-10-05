@@ -5,11 +5,109 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 {
 	TopicService.setTopicId($routeParams.topicID);
 
+	var updateTopic = function(){
+		if(TopicService.getTopic() != undefined){
+			if(TopicService.isWatchingTopic() == false){
+				networkService.send(TopicService.getFollowChannelRequest());
+				networkService.send(TopicService.watchTopicRequest($routeParams.topicID));
+			}
+			//Score API update
+			$scope.leftTeam = TopicService.getTeamA();
+			$scope.rightTeam = TopicService.getTeamB();
+			var score = TopicService.getScore();
+			if(score != undefined){
+				$scope.leftTeamScore = score.points[0];
+				$scope.rightTeamScore = score.points[1];
+			}
+			$scope.gameStatus = TopicService.getGameStatus();
+			// console.log($scope.gameStatus)
+			$scope.topicTitle = TopicService.getTitle();
+			if($scope.gameStatus == "live") {
+				$scope.gamePeriod = TopicService.getGamePeriod();
+				$scope.gameClock = TopicService.getGameClock();
+			}
+			$scope.gameScheduledTime = TopicService.getGameTime();
+//			var sectionType = TopicService.getSectionType();
+//			if(sectionType == "html")
+			$scope.topicDescHtml = TopicService.getHtml();
+//			else if(sectionType == "media")
+//			$scope.media = TopicService.getMedia();
+//			else if(sectionType == "tweet")
+//			$scope.tweet = TopicService.getTweet();
+//			else if(sectionType == "ogp")
+//			$scope.ogp = TopicService.getOgp();
+//			else if(sectionType == "link")
+//			$scope.link = TopicService.getLink();
+
+			$scope.createdAt = TopicService.getTimeCreatedAt();
+			$scope.liked = TopicService.getLiked();
+			var metrics = TopicService.getMetrics();
+			$scope.likesCount = metrics.likes;
+			$scope.commentsCount = metrics.comments;
+			// console.log("updated topic" +$scope.topicTitle);
+			// console.log("updated time" +$scope.createdAt);
+			// console.log("updated metrics" +$scope.likesCount);
+
+			$scope.allScoresTitle = TopicService.getScoresTitle();
+			$scope.allScoresURL = TopicService.getScoresLink();
+
+			renderScoreCard($scope.leftTeam.pColor, $scope.rightTeam.pColor);
+		}
+	};
+
+
+	var updateComments = function(){
+		if(commentsdata != undefined && commentsdata.len >0){
+			var commentsdata = CommentService.comments();
+			var len = commentsdata.length;
+
+			$scope.commentsArray = [];
+
+			for(i=0;i<len;i++){
+				var tempComment = {};
+				tempComment = commentsdata[i];
+				tempComment.postAuthorName = commentsdata[i].author.name;
+				tempComment.postAuthorPhoto = commentsdata[i].author.photo;
+				tempComment.isMyComment = UserInfoService.isCurrentUser(commentsdata[i].author.id);
+
+				tempComment.likeCount = commentsdata[i].metrics.likes;
+				tempComment.replyCount = commentsdata[i].metrics.replies;
+
+				tempComment.postTimestamp = commentsdata[i].createdAt;
+				tempComment.mediaAspectFeed = commentsdata[i].mediaAspectFeed;
+				tempComment.mediaAspectFull = commentsdata[i].mediaAspectFull;
+				tempComment.isLiked = commentsdata[i].signal.like;
+				$scope.commentsArray.push(tempComment);
+
+				// console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);
+
+				if($scope.commentsArray[i].type == "media"){
+//					console.log("Media Aspect feed x: "+tempComment.mediaAspectFeed.x + 
+//					"y: "+ tempComment.mediaAspectFeed.y + 
+//					"w: "+ tempComment.mediaAspectFeed.w +
+//					"h: "+ tempComment.mediaAspectFeed.h );
+
+//					console.log("Media Aspect full x: "+tempComment.mediaAspectFull.x + 
+//					"y: "+ tempComment.mediaAspectFull.y + 
+//					"w: "+ tempComment.mediaAspectFull.w +
+//					"h: "+ tempComment.mediaAspectFull.h );
+					// console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaUrl);
+					// console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaAspectFeed);
+
+				}
+				// console.log(i +" : updated comments author name: " +$scope.commentsArray[i].postAuthorName);
+				// console.log(i +" : updated comments author photo: " +$scope.commentsArray[i].postAuthorPhoto);
+				//console.log(i +" : updated comments likes: " +$scope.commentsArray[i].likeCount);
+			}
+		}
+
+	};
+
 	$scope.init = function() {
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
 		networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
 	};
-	
+
 	$scope.setPeelUI = function(isPeelUser){
 		console.log("isPeelUser :"+isPeelUser);
 		if(isPeelUser === true)
@@ -23,7 +121,7 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 			document.getElementById('header').style.height = "8em";
 		}
 	}
-	
+
 	$scope.innerButtonTapped = false;
 	if((UserInfoService.isPeelUser() == true))
 		$scope.isPeelUser = true;
@@ -32,6 +130,8 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 	$scope.setPeelUI($scope.isPeelUser);
 
 	$scope.initPage = function(){
+		updateTopic();
+		updateComments();
 		$scope.pageClass = 'page-topic';
 
 		$scope.topicID = $routeParams.topicID;
@@ -41,57 +141,57 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 
 		document.getElementById('topicSection').style.paddingBottom = "3.9em";
 
-		 $scope.$watch("commentsArray", function (newValue, oldValue)
-		 {
-  			$timeout(function()
-  			{
-    			var postDivs = document.getElementsByClassName("postRow");
-				 for(div in postDivs)
-				 {
-				 	if(newValue != undefined)
-				 	{
-					 	var thisPost = newValue[div];
+		$scope.$watch("commentsArray", function (newValue, oldValue)
+				{
+			$timeout(function()
+					{
+				var postDivs = document.getElementsByClassName("postRow");
+				for(div in postDivs)
+				{
+					if(newValue != undefined)
+					{
+						var thisPost = newValue[div];
 
-					 	if(thisPost != undefined)
-					 	{
-						 	var thisDiv = postDivs[div];
-						 	thisDiv.onclick = function()
-						 	{
-						 		// console.log("thisDiv.onclick");
-						 		thisPost = $scope.commentsArray[this.id];
-						 		if($scope.innerButtonTapped == false)
-						 		{
-						 			window.location = "#/post/" + thisPost.id;
-						 		}
-						 		$scope.innerButtonTapped = false;
-						 	}
-						 }	
+						if(thisPost != undefined)
+						{
+							var thisDiv = postDivs[div];
+							thisDiv.onclick = function()
+							{
+								// console.log("thisDiv.onclick");
+								thisPost = $scope.commentsArray[this.id];
+								if($scope.innerButtonTapped == false)
+								{
+									window.location = "#/post/" + thisPost.id;
+								}
+								$scope.innerButtonTapped = false;
+							}
+						}	
 					}
-				 }
-  			});
-		});
+				}
+					});
+				});
 	}
-	
-	
+
+
 	if(UserInfoService.isUserLoggedIn()){
 		if(NETWORK_DEBUG)
-		console.log("User is logged in, checking for connection");
+			console.log("User is logged in, checking for connection");
 		if(!networkService.isSocketConnected())
 			networkService.init();
 		$scope.initPage();
 	}
 	else
-	if(URIHelper.isPeelUser()){
-		$scope.isPeelUser = true;
-		$scope.setPeelUI( true);
-		RegistrationService.registerUser(URIHelper.getPeelUserId(),(URIHelper.getPeelUserName()));
+		if(URIHelper.isPeelUser()){
+			$scope.isPeelUser = true;
+			$scope.setPeelUI( true);
+			RegistrationService.registerUser(URIHelper.getPeelUserId(),(URIHelper.getPeelUserName()));
 			//networkService.init();
-	}
-	else{
-		// console.log("Not logged in to facebook, take user to login page")
-		window.location = "#/facebookLogin";
-	}
-	
+		}
+		else{
+			// console.log("Not logged in to facebook, take user to login page")
+			window.location = "#/facebookLogin";
+		}
+
 
 	$scope.peelClose = function()
 	{
@@ -103,20 +203,20 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 	{
 		console.log("peelWatchOnTV()")
 	}
-	
+
 
 //	if(facebookService.userLoggedInToFacebook === false)
 //	{
-//		// console.log("Not logged in to facebook, take user to login page")
-//		window.location = "#/facebookLogin";
+//	// console.log("Not logged in to facebook, take user to login page")
+//	window.location = "#/facebookLogin";
 //	}
 //	else
 //	{
-//		// console.log("TopicController | userLoggedInToFacebook: " + facebookService.userLoggedInToFacebook);
-//		$scope.initPage();
+//	// console.log("TopicController | userLoggedInToFacebook: " + facebookService.userLoggedInToFacebook);
+//	$scope.initPage();
 //	}
-	
-	
+
+
 	$scope.showNewCommentsIndicator = false;
 	$scope.newCommentsIndicatorTapped = function()
 	{
@@ -129,29 +229,29 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 	$scope.imageClick = function(imageURL)
 	{
 		event.cancelBubble = true;
-	   if(event.stopPropagation) event.stopPropagation();
+		if(event.stopPropagation) event.stopPropagation();
 
 		$.magnificPopup.open({
-                    items: {
-                    	type:'image',
-                    	src: imageURL,
-                },
-                type: 'inline',
-                callbacks:
-                {
-				    open: function()
-				    {
-				      console.log("popup opened");
-				      $('body').bind('touchmove', function(e){e.preventDefault()})
-				    },
-				    close: function()
-				    {
-				      console.log("popup closed");
-				      $('body').unbind('touchmove')
-				    }
-				    // e.t.c.
+			items: {
+				type:'image',
+				src: imageURL,
+			},
+			type: 'inline',
+			callbacks:
+			{
+				open: function()
+				{
+					console.log("popup opened");
+					$('body').bind('touchmove', function(e){e.preventDefault()})
+				},
+				close: function()
+				{
+					console.log("popup closed");
+					$('body').unbind('touchmove')
 				}
-            });
+				// e.t.c.
+			}
+		});
 	}
 
 	$scope.moreButtonTapped = function()
@@ -161,8 +261,8 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 
 	$scope.postComment = function(commentText) {
 		if((commentText != undefined)	 && commentText != ""){
-		// console.log("TopicController postComment Invoked :"+ commentText);
-		networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
+			// console.log("TopicController postComment Invoked :"+ commentText);
+			networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
 		}
 		$scope.commentText = "";
 		document.getElementById("topicCommentField").blur();
@@ -215,107 +315,15 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 	$scope.goToRepliesWithKeyboardTriggered = function(id)
 	{
 		event.cancelBubble = true;
-	   if(event.stopPropagation) event.stopPropagation();
+		if(event.stopPropagation) event.stopPropagation();
 
 		// console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
 		TopicService.directComment = true;
 		window.location = "#/post/" + id;
 	};
 
-	var updateTopic = function(){
-		if(TopicService.isWatchingTopic() == false){
-			networkService.send(TopicService.getFollowChannelRequest());
-			networkService.send(TopicService.watchTopicRequest($routeParams.topicID));
-		}
-		//Score API update
-		$scope.leftTeam = TopicService.getTeamA();
-		$scope.rightTeam = TopicService.getTeamB();
-		var score = TopicService.getScore();
-		if(score != undefined){
-			$scope.leftTeamScore = score.points[0];
-			$scope.rightTeamScore = score.points[1];
-		}
-		$scope.gameStatus = TopicService.getGameStatus();
-		// console.log($scope.gameStatus)
-		$scope.topicTitle = TopicService.getTitle();
-		if($scope.gameStatus == "live") {
-			$scope.gamePeriod = TopicService.getGamePeriod();
-			$scope.gameClock = TopicService.getGameClock();
-		}
-		$scope.gameScheduledTime = TopicService.getGameTime();
-//		var sectionType = TopicService.getSectionType();
-//		if(sectionType == "html")
-		$scope.topicDescHtml = TopicService.getHtml();
-//		else if(sectionType == "media")
-//		$scope.media = TopicService.getMedia();
-//		else if(sectionType == "tweet")
-//		$scope.tweet = TopicService.getTweet();
-//		else if(sectionType == "ogp")
-//		$scope.ogp = TopicService.getOgp();
-//		else if(sectionType == "link")
-//		$scope.link = TopicService.getLink();
 
-		$scope.createdAt = TopicService.getTimeCreatedAt();
-		$scope.liked = TopicService.getLiked();
-		var metrics = TopicService.getMetrics();
-		$scope.likesCount = metrics.likes;
-		$scope.commentsCount = metrics.comments;
-		// console.log("updated topic" +$scope.topicTitle);
-		// console.log("updated time" +$scope.createdAt);
-		// console.log("updated metrics" +$scope.likesCount);
-		
-		$scope.allScoresTitle = TopicService.getScoresTitle();
-		$scope.allScoresURL = TopicService.getScoresLink();
 
-		renderScoreCard($scope.leftTeam.pColor, $scope.rightTeam.pColor);
-	};
-	
-
-	var updateComments = function(){
-		var commentsdata = CommentService.comments();
-		var len = commentsdata.length;
-
-		$scope.commentsArray = [];
-
-		for(i=0;i<len;i++){
-			var tempComment = {};
-			tempComment = commentsdata[i];
-			tempComment.postAuthorName = commentsdata[i].author.name;
-			tempComment.postAuthorPhoto = commentsdata[i].author.photo;
-			tempComment.isMyComment = UserInfoService.isCurrentUser(commentsdata[i].author.id);
-			
-			tempComment.likeCount = commentsdata[i].metrics.likes;
-			tempComment.replyCount = commentsdata[i].metrics.replies;
-
-			tempComment.postTimestamp = commentsdata[i].createdAt;
-			tempComment.mediaAspectFeed = commentsdata[i].mediaAspectFeed;
-			tempComment.mediaAspectFull = commentsdata[i].mediaAspectFull;
-			tempComment.isLiked = commentsdata[i].signal.like;
-			$scope.commentsArray.push(tempComment);
-					
-			// console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);
-			
-			if($scope.commentsArray[i].type == "media"){
-//				console.log("Media Aspect feed x: "+tempComment.mediaAspectFeed.x + 
-//						"y: "+ tempComment.mediaAspectFeed.y + 
-//						"w: "+ tempComment.mediaAspectFeed.w +
-//						"h: "+ tempComment.mediaAspectFeed.h );
-//				
-//				console.log("Media Aspect full x: "+tempComment.mediaAspectFull.x + 
-//						"y: "+ tempComment.mediaAspectFull.y + 
-//						"w: "+ tempComment.mediaAspectFull.w +
-//						"h: "+ tempComment.mediaAspectFull.h );
-				// console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaUrl);
-				// console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaAspectFeed);
-
-			}
-			// console.log(i +" : updated comments author name: " +$scope.commentsArray[i].postAuthorName);
-			// console.log(i +" : updated comments author photo: " +$scope.commentsArray[i].postAuthorPhoto);
-			//console.log(i +" : updated comments likes: " +$scope.commentsArray[i].likeCount);
-		}
-
-	};
-	
 	var notifyNewComments = function(){
 		if($scope.commentsArray == undefined)
 		{
@@ -342,10 +350,10 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 	TopicService.registerObserverCallback(updateTopic);
 	CommentService.registerObserverCallback(notifyNewComments);
 
-	
+
 	$scope.trustSrc = function(src)
 	{
-    	return $sce.trustAsResourceUrl(src);
-  	}
+		return $sce.trustAsResourceUrl(src);
+	}
 
 }
