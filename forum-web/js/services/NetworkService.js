@@ -23,7 +23,12 @@ function initNetworkService($websocket,DataService,UserInfoService)
 			}
 			return true;
 		},
-		send:function(message) { ws.send(JSON.stringify(message));},
+		send:function(message) { 
+			if(ws != undefined && ws.readyState == ws.OPEN)
+				ws.send(JSON.stringify(message));
+			else
+				init();
+		},
 		init:function() { 
 			ws = $websocket(getWebsocketUri());
 			DataService.setWatchTopic(false);
