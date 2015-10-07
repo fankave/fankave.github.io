@@ -528,6 +528,15 @@ body
 	margin-bottom:0.1em;
 }
 
+.socialButtonsRow
+{
+	float:left;
+	/*background-color:gray;*/
+	padding-right:0px;
+	font-size:0.3em;
+	margin-bottom:0.1em;
+}
+
 .social-btn
 {
 	color: rgb(166, 189, 207);
@@ -544,7 +553,7 @@ body
 
 .topicSharingButtonsRow
 {
-	float:right;
+	float:left;
 	/*background-color:gray;*/
 	padding-right:0px;
 	font-size:0.8em;

@@ -17,7 +17,7 @@
 		<span class="repliesHeaderPostAuthorPhoto">
 			<div>
 				<a class="thumbnail">
-					<img   ng-src="{{comment.postAuthorPhoto || 'img/default_user_v3.png'}}" class="userPhoto">
+					<img   ng-src="{{comment.postAuthorPhoto}}" onerror="this.src='img/default_user_v3.png'" class="userPhoto">
 			    </a>
 		    </div>
 		    <div id="pinIcon" ng-if="comment.pin == true">
@@ -79,7 +79,7 @@
 			
 			<span class="postAuthorPhoto">
 				<div class="thumbnail">
-  					<img ng-src={{thisReply.postAuthorPhoto}} alt="" class="userPhoto">
+  					<img ng-src={{thisReply.postAuthorPhoto}} alt="" onerror="this.src='img/default_user_v3.png'" class="userPhoto">
 			    </div>
 			</span>
 
@@ -107,14 +107,16 @@
 						</video>
 				</div>	
 
-				<div class="sharingButtonsRow">
+				<div class="socialButtonsRow">
 					<button class="btn-link social-btn" ng-click="updateLikeReply(thisReply.id)" ng-switch="thisReply.isLiked">
-						<img ng-switch-when="true" src="img/likeButton_selected-2x.png"/> 
-						<img ng-switch-when="false" src="img/likeButton-2x.png"/>
+						<img ng-switch-when="true" src="img/commentLikeButton_selected.png"/> 
+							<img ng-switch-when="false" src="img/commentLikeButton.png"/> 
 
 						{{thisReply.likeCount}}
 					</button>
-					<button class="btn-link social-btn" ng-click="triggerRepliesKeyboard()"><img src="img/commentButton-2x.png"/> {{thisReply.commentCount}}</button>
+					<button class="btn-link social-btn" ng-click="triggerRepliesKeyboard()"><img src="img/commentOnTopicButton.png"/> {{thisReply.commentCount}}</button>
+					</div>
+					<div class="sharingButtonsRow">
 					<div class="btn-group">
 							<button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<img src="img/moreButton-2x.png"/>

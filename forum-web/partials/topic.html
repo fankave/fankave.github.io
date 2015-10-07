@@ -81,7 +81,9 @@
 			{{topicDescHtml}}
 		</div>
 		<div class="topicSharingButtonsRow">
-			<button class="btn-link topic-social-btn" ng-click="updateLikeTopic()"><img src="img/topicLikeButton.png"/> {{likesCount}}</button>
+			<button class="btn-link topic-social-btn" ng-click="updateLikeTopic()" ng-switch="liked">
+							<img ng-switch-when="true" src="img/topicLikeButtonSelected.png"/> 
+							<img ng-switch-when="false" src="img/topicLikeButton.png"/>  {{likesCount}}</button>
 			<button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/topicCommentButton.png"/> {{commentsCount}}</button>
 		</div>
 	</div>
@@ -96,7 +98,7 @@
 				<span class="postAuthorPhoto">
 					<div>
 						<a class="thumbnail">
-		  					<img ng-src="{{thisPost.postAuthorPhoto}}" alt="" class="userPhoto">
+		  					<img ng-src="{{thisPost.postAuthorPhoto}}" alt="" onerror="this.src='img/default_user_v3.png'" class="userPhoto">
 					    </a>
 				    </div>
 				    <div id="pinIcon" ng-if="thisPost.pin == true">
@@ -130,13 +132,15 @@
 						</video>
 					</div>	
 
-					<div class="sharingButtonsRow">
+					<div class="socialButtonsRow">
 						<button class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
 							<img ng-switch-when="true" src="img/commentLikeButton_selected.png"/> 
 							<img ng-switch-when="false" src="img/commentLikeButton.png"/> 
 							{{thisPost.likeCount}}
 						</button>
 						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)"><img src="img/commentOnTopicButton.png"/> {{thisPost.replyCount}}</button>
+					</div>
+					<div class="sharingButtonsRow">
 						<div class="btn-group">
   							<button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
     							<img src="img/moreButton.png"/>
@@ -147,7 +151,8 @@
 						    <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
 						  </ul>
 						</div>
-					</div>
+						</div>
+					
 				</span>
 		</div>
 	</div>
