@@ -464,7 +464,7 @@ body
 	color: rgb(166, 189, 207);
 	width:20%;
 	text-align: right;
-	padding-right:0px;
+	padding-right:10px;
 }
 
 .replyTimestamp
@@ -532,7 +532,6 @@ body
 {
 	float:left;
 	/*background-color:gray;*/
-	padding-right:0px;
 	font-size:0.3em;
 	margin-bottom:0.1em;
 }
@@ -541,7 +540,7 @@ body
 {
 	color: rgb(166, 189, 207);
 	padding:0px;
-	margin-right:5px;
+	width:56px
 }
 
 .social-btn img
@@ -566,7 +565,7 @@ body
 	/*color: rgb(166, 189, 207);*/
 	color:gray;
 	padding:0px;
-	margin-right:5px;
+	width:56px
 }
 
 .topic-social-btn img
