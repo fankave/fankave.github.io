@@ -362,6 +362,16 @@ body
 	padding-right: 5px;
 }
 
+.postAuthorPhoto img/* left-side of each post row */
+{
+	/*background-color: yellow;*/
+	/*width: 15%;*/
+	max-width: 32px !important;
+	/*max-height: 100%;*/
+	/*float:left;*/
+	/*padding:5px;*/
+}
+
 .repliesHeaderPostAuthorPhoto
 {
 	/*background-color: yellow;*/
@@ -375,7 +385,7 @@ body
 {
 	/*background-color: yellow;*/
 	/*width: 15%;*/
-	max-width: 100%;
+	max-width: 42px !important;
 	/*max-height: 100%;*/
 	/*float:left;*/
 	/*padding:5px;*/
@@ -398,7 +408,7 @@ body
 	background-color:rgb(246, 250, 251);
 	border-radius: 25px;
 	-webkit-border-radius: 25px;
-	max-height: 100%;
+	max-height: 32px !important;
 }
 
 #pinIcon
@@ -532,6 +542,7 @@ body
 {
 	float:left;
 	/*background-color:gray;*/
+	padding-left:0px;
 	font-size:0.3em;
 	margin-bottom:0.1em;
 }
