@@ -1,10 +1,10 @@
 <section id="postSection">
 	<nav class="navbar navbar-fixed-top" id="postHeader">
 		<div id="peelNavBar" ng-if="isPeelUser == true">
-			<button class="btn-link peelButton" id="closePeelButton" ng-click="peelClose()"><img src="img/peelBackButton-2x.png"/></button>
+			<button class="btn-link peelButton" id="closePeelButton" ng-click="backToTopicButtonTapped()"><img src="img/peelBackButton-2x.png"/></button>
 			<button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()"><img src="img/peel_watchOnTVButton.png"/></button>
 		</div>
-		<div>
+		<div ng-if="isPeelUser != true">
 			<span id="post_backToTopicButtonSpan">
 				<button id="backToTopicButton" class="btn-link" ng-click="backToTopicButtonTapped()">
 					<img src="img/backButton-2x.png"/>
@@ -17,7 +17,7 @@
 		<span class="repliesHeaderPostAuthorPhoto">
 			<div>
 				<a class="thumbnail">
-					<img ng-src="{{comment.postAuthorPhoto}}" alt="" class="userPhoto">
+					<img   ng-src="{{comment.postAuthorPhoto || 'img/default_user_v3.png'}}" class="userPhoto">
 			    </a>
 		    </div>
 		    <div id="pinIcon" ng-if="comment.pin == true">
@@ -57,7 +57,7 @@
 				</button>
 				<button class="btn-link social-btn" ng-click="triggerRepliesKeyboard()"><img src="img/commentOnTopicButton.png"/> {{comment.replyCount}}</button>
 				<!--button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button-->
-				<div class="btn-group">
+				<!-- <div class="btn-group">
 						<button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
 						<img src="img/moreButton.png"/>
 						</button>
@@ -65,7 +65,7 @@
 				    <li ng-switch-when="true"><a ng-click="deleteComment(comment.id);">Delete Comment</a></li>
 				    <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(comment.id);">Report as spam</a></li>
 				  </ul>
-				</div>
+				</div> -->
 			</div>
 		</span>
 	</div>
@@ -151,6 +151,6 @@
 
 <div id="newRepliesAvailableIndicatorDiv" ng-show="showNewRepliesIndicator">
 	<center>
-		<button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newRepliesIndicatorTapped()"><img src="img/newContentAvailableIndicator-2x.png"/></button>
+		<button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newRepliesIndicatorTapped()"><img src="img/newReplyIndicator.png"/></button>
 	</center>
 </div>

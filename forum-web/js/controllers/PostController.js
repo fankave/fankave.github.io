@@ -23,12 +23,12 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 
 	$scope.setPeelUI = function(isPeelUser){
 		console.log("isPeelUser :"+isPeelUser);
-		if(isPeelUser === true)
-		{
-			document.getElementById('postSection').style.paddingTop = "6.5em";
-			document.getElementById('postHeader').style.height = "6.5em";
-		}
-		else
+//		if(isPeelUser === true)
+//		{
+//			document.getElementById('postSection').style.paddingTop = "2.0em";
+//			document.getElementById('postHeader').style.height = "3.5em";
+//		}
+//		else
 		{
 			document.getElementById('postSection').style.paddingTop = "3.5em";
 			document.getElementById('postHeader').style.height = "3.5em";
