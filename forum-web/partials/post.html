@@ -51,11 +51,11 @@
 
 			<div class="sharingButtonsRow">
 				<button class="btn-link social-btn" ng-click="updateLikeComment(comment.id)" ng-switch="comment.isLiked">
-					<img ng-switch-when="true" src="img/commentLikeButton_selected.png"/> 
-					<img ng-switch-when="false" src="img/commentLikeButton.png"/> 
+					<img ng-switch-when="true" src="img/likeSmallSelected.png"/> 
+					<img ng-switch-when="false" src="img/likeSmall.png"/> 
 					{{comment.likeCount}}
 				</button>
-				<button class="btn-link social-btn" ng-click="triggerRepliesKeyboard()"><img src="img/commentOnTopicButton.png"/> {{comment.replyCount}}</button>
+				<button class="btn-link social-btn" ng-click="triggerRepliesKeyboard()"><img src="img/replySmall.png"/> {{comment.replyCount}}</button>
 				<!--button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button-->
 				<!-- <div class="btn-group">
 						<button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
@@ -109,12 +109,12 @@
 
 				<div class="socialButtonsRow">
 					<button class="btn-link social-btn" ng-click="updateLikeReply(thisReply.id)" ng-switch="thisReply.isLiked">
-						<img ng-switch-when="true" src="img/commentLikeButton_selected.png"/> 
-							<img ng-switch-when="false" src="img/commentLikeButton.png"/> 
+						<img ng-switch-when="true" src="img/likeSmallSelected.png"/> 
+							<img ng-switch-when="false" src="img/likeSmall.png"/> 
 
 						{{thisReply.likeCount}}
 					</button>
-					<button class="btn-link social-btn" ng-click="triggerRepliesKeyboard()"><img src="img/commentOnTopicButton.png"/> {{thisReply.commentCount}}</button>
+					<button class="btn-link social-btn" ng-click="triggerRepliesKeyboard()"><img src="img/replySmall.png"/> {{thisReply.commentCount}}</button>
 					</div>
 					<div class="sharingButtonsRow">
 					<div class="btn-group">
