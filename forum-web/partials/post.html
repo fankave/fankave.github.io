@@ -135,15 +135,15 @@
 	<footer class="footer" id="textEntryField">
        <!--div class="form-group" >
         <form ng-submit="postReply(commentText)">
-        	<input id="replyCommentField" placeholder="Comment..." class="form-control" ng-model="commentText" type="text">
+        	<input id="replyCommentField" placeholder="Write a reply..." class="form-control" ng-model="commentText" type="text">
         	</form>
         </div-->
 
         <form ng-submit="postReply(commentText)">
     		<div class="input-group">
-      			<input id="replyCommentField" type="text" class="form-control" placeholder="Comment..." ng-model="commentText">
+      			<input id="replyCommentField" type="text" class="form-control" placeholder="Write a reply..." ng-model="commentText">
       			<span class="input-group-btn">
-        			<button id="postReplyButton" class="btn btn-default" type="button" ng-click="postReply(commentText)">Comment</button>
+        			<button id="postReplyButton" class="btn btn-default" type="button" ng-click="postReply(commentText)">Post</button>
       			</span>
     		</div><!-- /input-group -->
     	</form>

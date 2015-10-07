@@ -83,8 +83,9 @@
 		<div class="topicSharingButtonsRow">
 			<button class="btn-link topic-social-btn" ng-click="updateLikeTopic()" ng-switch="liked">
 							<img ng-switch-when="true" src="img/likeBigSelected.png"/> 
-							<img ng-switch-when="false" src="img/likeBig.png"/>  
-							{{likesCount}}</button>
+							<img ng-switch-when="false" src="img/likeBig.png"/> 
+							{{likesCount}}
+							</button>
 			<button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/commentBig.png"/> {{commentsCount}}</button>
 		</div>
 	</div>
@@ -137,8 +138,9 @@
 						<button class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
 							<img ng-switch-when="true" src="img/likeSmallSelected.png"/> 
 							<img ng-switch-when="false" src="img/likeSmall.png"/> 
-							{{thisPost.likeCount}}
+						{{thisPost.likeCount}}	
 						</button>
+						
 						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)"><img src="img/replySmall.png"/> {{thisPost.replyCount}}</button>
 					</div>
 					<div class="sharingButtonsRow">
@@ -161,9 +163,9 @@
 	<footer class="footer" id="textEntryField">
         <form ng-submit="postComment(commentText)">
     		<div class="input-group">
-      			<input id="topicCommentField" type="text" class="form-control" placeholder="Comment..." ng-model="commentText">
+      			<input id="topicCommentField" type="text" class="form-control" placeholder="Write a comment..." ng-model="commentText">
       			<span class="input-group-btn">
-        			<button id="postCommentButton" class="btn btn-default" type="button" ng-click="postComment(commentText)">Comment</button>
+        			<button id="postCommentButton" class="btn btn-default" type="button" ng-click="postComment(commentText)">Post</button>
       			</span>
     		</div>
     	</form>

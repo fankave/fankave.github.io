@@ -358,8 +358,7 @@ body
 	width: 15%;
 	/*max-width: 100px;*/
 	float:left;
-	padding-left: 5px;
-	padding-right: 5px;
+	padding:5px;
 }
 
 .postAuthorPhoto img/* left-side of each post row */
@@ -549,9 +548,10 @@ body
 
 .social-btn
 {
-	color: rgb(166, 189, 207);
+	float:left;
+	color:gray;
 	padding:0px;
-	width:56px
+	width:60px;
 }
 
 .social-btn img
@@ -559,6 +559,13 @@ body
 	width:24px;
 	height:24px;
 }
+.social-btn lable
+{
+	width:36px;
+	height:24px;
+}
+
+
 
 
 .topicSharingButtonsRow
@@ -574,14 +581,20 @@ body
 .topic-social-btn
 {
 	/*color: rgb(166, 189, 207);*/
+	float:left;
 	color:gray;
 	padding:0px;
-	width:56px
+	width:60px
 }
 
 .topic-social-btn img
 {
 	width:24px;
+	height:24px;
+}
+.topic-social-btn lable
+{
+	width:36px;
 	height:24px;
 }
 
