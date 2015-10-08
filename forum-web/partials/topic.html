@@ -84,9 +84,12 @@
 			<button class="btn-link topic-social-btn" ng-click="updateLikeTopic()" ng-switch="liked">
 							<img ng-switch-when="true" src="img/likeBigSelected.png"/> 
 							<img ng-switch-when="false" src="img/likeBig.png"/> 
-							{{likesCount}}
+							
 							</button>
-			<button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/commentBig.png"/> {{commentsCount}}</button>
+							<span class="socialButtonLable">{{likesCount}} </span>
+			<button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/commentBig.png"/> 
+			</button>
+			<span class="socialButtonLable">{{commentsCount}}</span>
 		</div>
 	</div>
 
@@ -138,10 +141,13 @@
 						<button class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
 							<img ng-switch-when="true" src="img/likeSmallSelected.png"/> 
 							<img ng-switch-when="false" src="img/likeSmall.png"/> 
-						{{thisPost.likeCount}}	
-						</button>
 						
-						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)"><img src="img/replySmall.png"/> {{thisPost.replyCount}}</button>
+						</button>
+						<span class="socialButtonLable">{{thisPost.likeCount}}	</span>
+						
+						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
+						<img src="img/replySmall.png"/> </button>
+						<span class="socialButtonLable"> {{thisPost.replyCount}}</span>
 					</div>
 					<div class="sharingButtonsRow">
 						<div class="btn-group">

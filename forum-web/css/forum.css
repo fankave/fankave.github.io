@@ -551,7 +551,7 @@ body
 	float:left;
 	color:gray;
 	padding:0px;
-	width:60px;
+	width:25px;
 }
 
 .social-btn img
@@ -559,12 +559,18 @@ body
 	width:24px;
 	height:24px;
 }
-.social-btn lable
+.socialButtonLable
 {
+	float:left;
+	min-width:36px;
 	width:36px;
 	height:24px;
+	padding:5px;
+} 
+span.socialButtonLable
+{
+    display: inline-block;
 }
-
 
 
 
@@ -584,16 +590,18 @@ body
 	float:left;
 	color:gray;
 	padding:0px;
-	width:60px
+	width:25px
 }
 
 .topic-social-btn img
 {
+	float:left;
 	width:24px;
 	height:24px;
 }
 .topic-social-btn lable
 {
+	float:left;
 	width:36px;
 	height:24px;
 }
