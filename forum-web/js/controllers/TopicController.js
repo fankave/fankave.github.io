@@ -204,6 +204,7 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 	{
 		console.log("peelWatchOnTV()");
 		var showId = URIHelper.getPeelShowId();
+		console.log("Peel show on TV uri :  "+ "peel://tunein/"+showId);
 		if(showId != undefined)
 			window.location = "peel://tunein/"+showId;
 		else
