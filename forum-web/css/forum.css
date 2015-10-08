@@ -392,16 +392,25 @@ body
 
 .thumbnail
 {
+	padding-top:10px;
     border: 0 none;
     box-shadow: none;
+    background-color:transparent;
 }
 
 .userPhoto
 {
+	background-color:rgb(230, 237, 243);
 	border-radius: 25px;
 	-webkit-border-radius: 25px;
 }
 
+#pinIcon img {
+    display: block;
+    padding-left:10px;
+    margin-left: auto;
+    margin-right: auto;
+}
 .repliesHeaderUserPhoto
 {
 	background-color:rgb(246, 250, 251);
@@ -551,7 +560,7 @@ body
 	float:left;
 	color:gray;
 	padding:0px;
-	width:25px;
+	width:30px;
 }
 
 .social-btn img
@@ -590,7 +599,7 @@ span.socialButtonLable
 	float:left;
 	color:gray;
 	padding:0px;
-	width:25px
+	width:30px
 }
 
 .topic-social-btn img

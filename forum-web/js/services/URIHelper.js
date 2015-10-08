@@ -2,6 +2,7 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 
 	var peelUserName;
 	var peelUserId;
+	var peelShowId;
 
 	function getUrlVars() {
 		var vars = [], hash;
@@ -22,11 +23,13 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 			if(vars["peel"]){
 				peelUserId = vars["userId"];
 				peelUserName = vars["userName"];
+				peelShowId = vars["showId"];
 				//If diff previous peel user, clear storage
 				var prevPeelUser = ForumStorage.getFromLocalStorage("forumUserType");
 				if(prevPeelUser != undefined && prevPeelUser == "peel" && ForumStorage.setToLocalStorage("forumPeelUserId") != peelUserId)
 					ForumStorage.clearStorage();
 				ForumStorage.setToLocalStorage("forumPeelUserId",peelUserId);
+				ForumStorage.setToLocalStorage("forumPeelShowId",peelShowId);
 				return true;
 			}
 			else
@@ -37,6 +40,9 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 		},
 		getPeelUserName:function(){
 			return peelUserName;
+		},
+		getPeelShowId:function(){
+			return peelShowId;
 		}
 
 
