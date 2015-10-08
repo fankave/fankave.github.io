@@ -62,7 +62,12 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 
 	$scope.peelWatchOnTV = function()
 	{
-		console.log("peelWatchOnTV()")
+		console.log("peelWatchOnTV()");
+		var showId = URIHelper.getPeelShowId();
+		if(showId != undefined)
+			window.location = "peel://tunein/"+showId;
+		else
+			window.location = "peel://home";
 	}
 
 	$scope.showNewRepliesIndicator = false;
