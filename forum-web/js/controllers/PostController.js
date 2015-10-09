@@ -1,5 +1,5 @@
 var postModule = angular.module("PostModule", ["NetworkModule", "FacebookModule"]);
-postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "facebookService","UserInfoService","URIHelper" initPostController]);
+postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "facebookService","UserInfoService","URIHelper", initPostController]);
 
 function initPostController($scope, $sce, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService, UserInfoService,URIHelper)
 {
