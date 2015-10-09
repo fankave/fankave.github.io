@@ -721,6 +721,18 @@ span.socialButtonLable
 	height:2.4em;
 }
 
+.btn-link:focus,
+.btn-link:active:focus{
+    outline:none;
+}
+
+.btn-link:focus{
+    text-decoration:none;
+}
+.btn-link:hover{
+    text-decoration:underline;
+}
+
 #peelWatchOnTVButton
 {
 	float:right;
@@ -739,7 +751,7 @@ span.socialButtonLable
 {
 	/*background-color:red;*/
 	position:fixed;
-	top:11em;
+	top:16em;
 	z-index: 10000;
 	width: 75%;
 	left: 50%;
