@@ -721,17 +721,7 @@ span.socialButtonLable
 	height:2.4em;
 }
 
-.btn-link:focus,
-.btn-link:active:focus{
-    outline:none;
-}
 
-.btn-link:focus{
-    text-decoration:none;
-}
-.btn-link:hover{
-    text-decoration:underline;
-}
 
 #peelWatchOnTVButton
 {
