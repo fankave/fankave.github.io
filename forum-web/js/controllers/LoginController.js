@@ -1,7 +1,7 @@
 var loginModule = angular.module("LoginModule", ["NetworkModule", "FacebookModule"]);
 loginModule.controller("LoginController", ["$scope","$sce","$routeParams","networkService", "ChannelService","TopicService","URIHelper","RegistrationService","UserInfoService",initTopicController]);
 
-function initTopicController($scope, $sce,$routeParams,networkService,ChannelService,TopicService, URIHelper, RegistrationService, UserInforService)
+function initTopicController($scope, $sce,$routeParams,networkService,ChannelService,TopicService, URIHelper, RegistrationService, UserInfoService)
 {
 	ChannelService.setChannel($routeParams.channelID);
 	$scope.urlQueryStr = window.location.search.substring(1);
