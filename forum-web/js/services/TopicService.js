@@ -5,6 +5,8 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 	var UNLIKE_TOPIC_URI = "/v1.0/topic/unlike/";
 	var WATCH_TOPIC_URI = "/v1.0/topic/watch/";
 	
+	var _channelId;
+	
 	var _isTopicWatched = false;
 	var _topic;
 	var _id;
@@ -253,6 +255,9 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 		setWatchTopic: function(watch){_isTopicWatched = watch;},
 		
 		setTopicId: function(topicId){_id = topicId ;},
+		
+		setChannel: function(channelId){_channelId = channelId; },
+		getChannel: function(){return _channelId ; },
 		
 		setTopic:setTopicData,
 		

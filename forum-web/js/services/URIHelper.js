@@ -3,6 +3,7 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 	var peelUserName;
 	var peelUserId;
 	var peelShowId;
+	var peelParmas;
 
 	function getUrlVars() {
 		var vars = [], hash;
@@ -20,6 +21,7 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 	return {
 		isPeelUser:function(){
 			var vars = getUrlVars();
+			console.log("")
 			if(vars["peel"]){
 				peelUserId = vars["userId"];
 				peelUserName = vars["userName"];
@@ -43,6 +45,9 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 		},
 		getPeelShowId:function(){
 			return peelShowId;
+		},
+		getPeelParams:function(){
+			return window.location.search.substring(1);
 		}
 
 

@@ -1,9 +1,14 @@
-var rootModule = angular.module("Forum", ["ngRoute", "TopicModule", "PostModule", "NetworkModule"]);
+var rootModule = angular.module("Forum", ["ngRoute", "LoginModule","TopicModule", "PostModule", "NetworkModule"]);
 rootModule.config(["$routeProvider", initRootModule]);
 
 function initRootModule($routeProvider)
 {
-	$routeProvider.when('/topic/:topicID',
+	$routeProvider.when('/channel/:channelID',
+			{
+				templateUrl:'partials/login.html',
+				controller:'LoginController'
+			}).
+	when('/topic/:topicID',
 	{
 		templateUrl:'partials/topic.html',
 		controller:'TopicController'

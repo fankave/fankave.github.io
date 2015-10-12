@@ -1,6 +1,6 @@
-networkModule.service('RegistrationService', ["ForumStorage","ForumDeviceInfo","$http","UserInfoService","networkService","ReplyService","TopicService", registration]);
+networkModule.service('RegistrationService', ["ForumStorage","ForumDeviceInfo","$http","UserInfoService","networkService","ReplyService","TopicService", "ChannelService","URIHelper",registration]);
 
-function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,networkService,ReplyService,TopicService) {
+function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,networkService,ReplyService,TopicService,ChannelService,URIHelper) {
 	REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
 
 	function getPeelRegistrationParams(userId,userName){
@@ -81,18 +81,18 @@ function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,network
 			}
 			
 			networkService.init();
-
-            // console.log(":: " + TopicService.getTopicId());
-			// window.location = "#/topic/" + TopicService.getTopicId();
+			
 			if(ReplyService.getPostId() != undefined)
             {
             	// console.log("found post ID: " + ReplyService.getPostId());
             	window.location = "#/post/" + ReplyService.getPostId();
             }
-            else
+            else if(TopicService.getTopicId() != undefined)
             {
-            	// console.log("couldn't find a post ID, reverting to topic ID");
 				window.location = "#/topic/" + TopicService.getTopicId();
+			}
+			else if(ChannelService.getChannel() != undefined){
+				networkService.send(ChannelService.getLiveGameTopic());
 			}
 		});
 				
@@ -103,6 +103,8 @@ function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,network
 					console.log('response.code:  ' + status);
 				});
 	}
+	
+
 	
 	function isUserRegistered(){
 		//TODO

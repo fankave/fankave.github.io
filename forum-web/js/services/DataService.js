@@ -1,4 +1,4 @@
-networkModule.service('DataService', function (TopicService, CommentService, ReplyService) {
+networkModule.service('DataService', function (TopicService, CommentService, ReplyService,ChannelService) {
 	
 	var DATA_TYPE_TOPIC = "topic";
 	var DATA_TYPE_COMMENT = "comment";
@@ -56,7 +56,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 				TopicService.removeTopic(topicData.data);
 		}
 		else
-			TopicService.setTopic(topicData)
+			TopicService.setTopic(topicData);
 	}
 
 	function delegateSetReplies(replyData)
@@ -100,8 +100,18 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 		}
 			
 	}
+	
+	function delegateSetChannel(topicData)
+	{
+		if(topicData.error){
+			console.log("Topic Error message from network :"+topicData.error);
+		}
+		else
+			ChannelService.setTopicData(topicData);
+	}
 
 	return {
+		setChannel:delegateSetChannel,
 		setTopic:delegateSetTopic,
 		setComments:delegateSetComments,
 		setReplies:delegateSetReplies,

@@ -1,7 +1,7 @@
 var facebookModule = angular.module("FacebookModule", ["NetworkModule", "TopicModule"]);
-facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$http", "$compile", "facebookService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", initFacebookController]);
+facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$http", "$compile", "facebookService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService",initFacebookController]);
 
-function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo)
+function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo,ChannelService)
 {
 	// console.log("initFacebookController");
 
@@ -169,11 +169,13 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	            	// console.log("found post ID: " + ReplyService.getPostId());
 	            	window.location = "#/post/" + ReplyService.getPostId();
 	            }
-	            else
-	            {
-	            	// console.log("couldn't find a post ID, reverting to topic ID");
-					window.location = "#/topic/" + TopicService.getTopicId();
-				}
+				 else if(TopicService.getTopicId() != undefined)
+		            {
+						window.location = "#/topic/" + TopicService.getTopicId();
+					}
+					else if(ChannelService.getChannel() != undefined){
+						networkService.send(ChannelService.getLiveGameTopic());
+					}
 	          }
 	      },
 	      function(response)

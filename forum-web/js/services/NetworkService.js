@@ -26,6 +26,10 @@ function initNetworkService($websocket,DataService,UserInfoService)
 			var responseJson = JSON.parse(evt.data);
 			var type = responseJson.rid;
 			if(type != undefined){
+				if(type == "channel"){
+					DataService.setChannel(responseJson);
+					if(NETWORK_DEBUG) console.log("Processing Channel");
+				}
 				if(type == "topic" || type == "score"){
 					DataService.setTopic(responseJson);
 					if(NETWORK_DEBUG) console.log("Processing Topic");
