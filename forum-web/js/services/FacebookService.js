@@ -171,9 +171,11 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	            }
 				 else if(TopicService.getTopicId() != undefined)
 		            {
+					 console.log("found Topic ID: " + TopicService.getTopicId());
 						window.location = "#/topic/" + TopicService.getTopicId();
 					}
 					else if(ChannelService.getChannel() != undefined){
+						console.log("found channel ID: " + ChannelService.getChannel());
 						networkService.send(ChannelService.getLiveGameTopic());
 					}
 	          }
