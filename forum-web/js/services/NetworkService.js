@@ -69,10 +69,10 @@ function initNetworkService($websocket,DataService,UserInfoService)
 				else
 					console.log("ws is null");
 			}
-			if(ws == undefined || ws.readyState != ws.OPEN){
-				return false;
+			if(ws != undefined && ws.readyState == ws.OPEN){
+				return true;
 			}
-			return true;
+			return false;
 		},
 		send:function(message) { 
 			if(ws == undefined) 
