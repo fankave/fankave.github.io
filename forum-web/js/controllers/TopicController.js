@@ -26,7 +26,14 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 				$scope.gamePeriod = TopicService.getGamePeriod();
 				$scope.gameClock = TopicService.getGameClock();
 			}
+			//Samyukta debug
+//			$scope.gameStatus = "live";
+//			$scope.gamePeriod = "2nd qtr";
+//			$scope.gameClock  = "10:00";
 			$scope.gameScheduledTime = TopicService.getGameTime();
+//			$scope.gameStatus = "future";
+//			$scope.gameScheduledTime = {date:"10/13",
+//					time:"9:30PM PDT"};
 //			var sectionType = TopicService.getSectionType();
 //			if(sectionType == "html")
 			$scope.topicDescHtml = TopicService.getHtml();

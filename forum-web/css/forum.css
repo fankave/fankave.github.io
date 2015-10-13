@@ -6,7 +6,6 @@
 
  /* Page-level / body */
 
-
 a
 {
 	color: black;
@@ -97,6 +96,9 @@ body
 {
 	/*background-color:rgba(0, 255, 0, 0.3);*/
 	height:50%;
+	width:100%;
+	position:absolute;
+	
 }
 
 
@@ -212,6 +214,7 @@ body
 	font-size:1.0em;
 	line-height:140%;
 	padding-top:2.5%;
+	padding-left:2.7%;
 	/*margin:5px;*/
 	vertical-align: middle;
 }

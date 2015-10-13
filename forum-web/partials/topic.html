@@ -33,29 +33,29 @@
 				</span>
 				<span id="leftTeamScore">
 					{{leftTeamScore}}
-				</span>
+				</span> 
 				<span id="gameTime">
 					<div ng-if="gameStatus == 'live' || gameStatus == 'future'">
 						<div id="gameTimeTopLine" ng-if="gameStatus == 'live'">
-							{{gameClock}}
-						</div>
+							{{gameClock}}</div>
 						<div id="gameTimeTopLine" ng-if="gameStatus == 'future'">
-							{{gameScheduledTime.date}}
-						</div>
+							{{gameScheduledTime.date}}</div>
 						<div id="gameTimeBottomLine" ng-if="gameStatus == 'live'">
-							{{gamePeriod}}
-						</div>
+							{{gamePeriod}}</div>
 						<div id="gameTimeBottomLine" ng-if="gameStatus == 'future'">
-							{{gameScheduledTime.time}}
-						</div>
+							{{gameScheduledTime.time}}</div>
 					</div>
 					<div ng-if="gameStatus == 'past'">
 						<div id="gameTimeCenterLine">
 							<span><b>FINAL</b></span>
 						</div>
 					</div>
+					<div id="allScoresButtonRow">
+						<a href="{{allScoresURL}}"> <span id="allScoresButtonSpan">&nbsp;&nbsp;{{allScoresTitle}}&nbsp;&nbsp;</span>
+						</a>
+					</div>
 				</span>
-				<span id="rightTeamScore">
+				 <span id="rightTeamScore">
 					{{rightTeamScore}}
 				</span>
 				<span id="rightTeamLogo">
@@ -64,11 +64,7 @@
 				</span>
 			</div>
 
-			<div id="allScoresButtonRow">
-				<a href="{{allScoresURL}}">
-				<span id="allScoresButtonSpan">&nbsp;&nbsp;{{allScoresTitle}}&nbsp;&nbsp;</span>
-				</a>
-			</div>
+			
 
    		</div>
     </nav>
