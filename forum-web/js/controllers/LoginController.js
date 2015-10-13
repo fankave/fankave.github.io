@@ -4,7 +4,7 @@ loginModule.controller("LoginController", ["$scope","$sce","$routeParams","netwo
 function initTopicController($scope, $sce,$routeParams,networkService,ChannelService,TopicService, URIHelper, RegistrationService, UserInfoService)
 {
 	ChannelService.setChannel($routeParams.channelID);
-	$scope.urlQueryStr = window.location.search.substring(1);
+	$scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
 	console.log(" $scope.urlQueryStr :" + $scope.urlQueryStr);
 	
 	
@@ -17,16 +17,18 @@ function initTopicController($scope, $sce,$routeParams,networkService,ChannelSer
 //				"uri":uri };
 //	}
 //	
-//	$scope.init = function() {
-//		networkService.init();
-//		networkService.send(getLiveGameTopic);
-//	};
+	$scope.init = function() {
+		console.log("Init all connections");
+		networkService.init();
+		networkService.send(ChannelService.getLiveGameTopic());
+	};
 
 	
 	var updateTopic = function(){
-		if(TopicService.getTopic() != undefined){
-			console.log("Got Topic id from Channel : " +"#/topic/" + TopicService.getTopicId()+$scope.urlQueryStr)
-			window.location = "#/topic/" + TopicService.getTopicId()+$scope.urlQueryStr;
+		var id = ChannelService.getLiveTopicId();
+		if(id != undefined){
+			console.log("Got Topic id from Channel : " +"#/topic/" + id+$scope.urlQueryStr)
+			window.location = "#/topic/" + id+$scope.urlQueryStr;
 		}
 
 	};
@@ -34,25 +36,23 @@ function initTopicController($scope, $sce,$routeParams,networkService,ChannelSer
 	
 
 	ChannelService.registerObserverCallback(updateTopic);
+	
 	if(UserInfoService.isUserLoggedIn()){
 		if(NETWORK_DEBUG)
 			console.log("User is logged in, checking for connection");
-		if(!networkService.isSocketConnected())
-			networkService.init();
-		window.location = "#/topic/" + TopicService.getTopicId()+$scope.urlQueryStr;
+		$scope.init();
+//		if(!networkService.isSocketConnected())
+//			networkService.init();
+//		window.location = "#/topic/" + TopicService.getTopicId()+$scope.urlQueryStr;
 	}
 	if(URIHelper.isPeelUser()){
 		$scope.isPeelUser = true;
 		RegistrationService.registerUser(URIHelper.getPeelUserId(),(URIHelper.getPeelUserName()));
-		//networkService.init();
 	}
 	else{
 		// console.log("Not logged in to facebook, take user to login page")
 		window.location = "#/facebookLogin";
 	}
-	$scope.trustSrc = function(src)
-	{
-		return $sce.trustAsResourceUrl(src);
-	}
+	
 
 }

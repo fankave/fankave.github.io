@@ -9,7 +9,8 @@ networkModule.service('ChannelService', function (DateUtilityService,Bant,FDSUti
 	function setTopicData(topicData) 
 	{
 		if(topicData.data != undefined){
-			_liveTopicId = topicData.data.id
+			_liveTopicId = topicData.data.id;
+			console.log("_liveTopicId : "+ _liveTopicId);
 			notifyObservers();
 		}
 	}
@@ -17,7 +18,7 @@ networkModule.service('ChannelService', function (DateUtilityService,Bant,FDSUti
 	function getLiveGameTopic(){
 		var uri = "/v1.0/channel/topic/show/" + _channelId+"?type=livegame";
 
-		return  varTopicParams = {"rid": "topic",
+		return  varTopicParams = {"rid": "channel",
 				"timestamp": new Date().getTime(),
 				"method": "GET",
 				"uri":uri };
