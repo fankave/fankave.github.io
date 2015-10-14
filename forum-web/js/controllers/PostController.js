@@ -4,18 +4,7 @@ postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$routePa
 function initPostController($scope, $sce, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService, UserInfoService,URIHelper)
 {
 	$scope.pageClass = 'page-post';
-	$(function() {
-	    var oldScroll = window.onscroll;
-	    $(document).on('focus', 'input', function(e) {
-	        window.onscroll = function () { 
-	            window.scroll(0,0); 
-	        } ;
-	        setTimeout(function() {
-	            window.onscroll = oldScroll;
-	        }, 100);
-	    });
-	    
-	});
+
 	$scope.postID = $routeParams.postID;
 	$scope.topicId = TopicService.getTopicId();
 	//$scope.replies = networkService.getRepliesForPostID();
