@@ -28,7 +28,7 @@
 
 			<div id="scoreCardDataRow" class="row">
 				<span id="leftTeamLogo">
-					<span class="helper"></span>
+					<!-- <span class="helper"></span> -->
 					<img src={{leftTeam.logo}} class="teamLogo"/>
 				</span>
 				<span id="leftTeamScore">
@@ -50,21 +50,22 @@
 							<span><b>FINAL</b></span>
 						</div>
 					</div>
-					<div id="allScoresButtonRow">
-						<a href="{{allScoresURL}}"> <span id="allScoresButtonSpan">&nbsp;&nbsp;{{allScoresTitle}}&nbsp;&nbsp;</span>
-						</a>
-					</div>
+					
 				</span>
 				 <span id="rightTeamScore">
 					{{rightTeamScore}}
 				</span>
 				<span id="rightTeamLogo">
-					<span class="helper"></span>
+				<!-- 
+					<span class="helper"></span> -->
 					<img src={{rightTeam.logo}} class="teamLogo"/>
 				</span>
 			</div>
 
-			
+			<div id="allScoresButtonRow">
+						<a href="{{allScoresURL}}"> <span id="allScoresButtonSpan">&nbsp;&nbsp;{{allScoresTitle}}&nbsp;&nbsp;</span>
+						</a>
+			</div>
 
    		</div>
     </nav>
