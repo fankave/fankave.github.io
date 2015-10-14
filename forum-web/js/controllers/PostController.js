@@ -4,7 +4,7 @@ postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$routePa
 function initPostController($scope, $sce, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService, UserInfoService,URIHelper)
 {
 	$scope.pageClass = 'page-post';
-
+	document.getElementById('replyCommentField').onkeydown = new function(event){return false;};
 	$scope.postID = $routeParams.postID;
 	$scope.topicId = TopicService.getTopicId();
 	//$scope.replies = networkService.getRepliesForPostID();
