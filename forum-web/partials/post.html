@@ -76,7 +76,17 @@
 	<div class="roww" id="repliesCommentSeparator">
 		 &nbsp;
 	</div>
-
+	 <form ng-submit="postReply(commentText)">
+	<div class="input-group">
+      			<input id="replyCommentField" type="text" class="form-control" placeholder="Write a reply..." ng-model="commentText" onscroll="javascript:document.getElementById('scroll').value = this.scrollTop" style="display:inline; positon:absolute; width=50%;" >
+      			<span class="input-group-btn" width=5%;>
+        			<button id="postReplyButton" class="btn btn-default" type="button" ng-click="postReply(commentText)">Post</button>
+      			</span>
+    </div>
+    </form>
+<div class="roww" id="repliesCommentSeparator">
+		 &nbsp;
+	</div>
 	<div class="repliesContainer">
 		<div ng-repeat="thisReply in replies" class="row postRow" ng-switch="thisReply.mediaType">
 			
@@ -137,20 +147,14 @@
 	</div>
 
 	<footer class="footer" id="textEntryField">
-       <!--div class="form-group" >
-        <form ng-submit="postReply(commentText)">
-        	<input id="replyCommentField" placeholder="Write a reply..." class="form-control" ng-model="commentText" type="text">
-        	</form>
-        </div-->
-
-        <form ng-submit="postReply(commentText)">
+       <!--  <form ng-submit="postReply(commentText)">
     		<div class="input-group">
       			<input id="replyCommentField" type="text" class="form-control" placeholder="Write a reply..." ng-model="commentText" onscroll="javascript:document.getElementById('scroll').value = this.scrollTop">
       			<span class="input-group-btn">
         			<button id="postReplyButton" class="btn btn-default" type="button" ng-click="postReply(commentText)">Post</button>
       			</span>
-    		</div><!-- /input-group -->
-    	</form>
+    		</div>/input-group
+    	</form> -->
 	</footer>
 </section>
 

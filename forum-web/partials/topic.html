@@ -70,7 +70,7 @@
    		</div>
     </nav>
 
-	<div id="topicDetails" class="row"> 
+	<div id="topicDetails" class="row" style="width=40%"> 
 		<div>
 			<b>{{topicTitle}}</b>
 		</div>
@@ -89,10 +89,18 @@
 			<span class="socialButtonLable">{{commentsCount}}</span>
 		</div>
 	</div>
+	<div class="input-group">
+      			<input id="topicCommentField" type="text" class="form-control" placeholder="Write a comment..." ng-model="commentText" style="display:inline; positon:absolute; width=50%;" >
+      			<span class="input-group-btn" width=5%;>
+        			<button id="postCommentButton" class="btn btn-default" type="button" ng-click="postComment(commentText)">Post</button>
+      			</span>
+    </div>
 
 	<div class="commentsHeader">
 		Comments
 	</div>
+	
+
 
 	<div class="commentsContainer">
 		<div ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}">
@@ -163,16 +171,16 @@
 		</div>
 	</div>
 	
-	<footer class="footer" id="textEntryField">
+<!-- 	<footer class="footer" id="textEntryField">
         <form ng-submit="postComment(commentText)">
     		<div class="input-group">
-      			<input id="topicCommentField" type="text" class="form-control" placeholder="Write a comment..." ng-model="commentText">
+      			<input id="topicCommentField" type="text" class="form-control" placeholder="Write a comment..." ng-model="commentText" style="display:inline; positon:absolute; top:50px; right: 5%;" >
       			<span class="input-group-btn">
         			<button id="postCommentButton" class="btn btn-default" type="button" ng-click="postComment(commentText)">Post</button>
       			</span>
     		</div>
     	</form>
-	</footer>
+	</footer> -->
 
 </section>
 
