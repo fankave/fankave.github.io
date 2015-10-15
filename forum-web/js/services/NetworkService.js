@@ -8,6 +8,8 @@ var REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
 
 function initNetworkService($websocket,DataService,UserInfoService)
 {
+	if(HOST_NAME == undefined)
+		HOST_NAME = window.location.hostname;;
 	if(HOSTNAME == 'was.fankave.com')
 		WEBSOCKET_BASE_URI = 'ws://was.fankave.com/ws?';
 	var ws;
