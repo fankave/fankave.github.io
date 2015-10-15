@@ -1,6 +1,11 @@
 var loginModule = angular.module("LoginModule", ["NetworkModule", "FacebookModule"]);
 loginModule.controller("LoginController", ["$scope","$sce","$routeParams","networkService", "ChannelService","TopicService","URIHelper","RegistrationService","UserInfoService",initTopicController]);
-
+BUILD_TYPE = window.location.hostname;
+if(BUILD_TYPE == 'was.fankave.com')
+	{
+		WEBSOCKET_BASE_URI = 'ws://was.fankave.com/ws?';
+		REGISTER_SERVER_URI = 'http://was.fankave.com/v1.0/user/register';
+	}
 function initTopicController($scope, $sce,$routeParams,networkService,ChannelService,TopicService, URIHelper, RegistrationService, UserInfoService)
 {
 	ChannelService.setChannel($routeParams.channelID);

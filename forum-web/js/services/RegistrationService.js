@@ -1,7 +1,7 @@
 networkModule.service('RegistrationService', ["ForumStorage","ForumDeviceInfo","$http","UserInfoService","networkService","ReplyService","TopicService", "ChannelService","URIHelper",registration]);
 
 function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,networkService,ReplyService,TopicService,ChannelService,URIHelper) {
-	REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
+	
 
 	function getPeelRegistrationParams(userId,userName){
 		var peelData = new Object();
