@@ -3,12 +3,12 @@ loginModule.controller("LoginController", ["$scope","$sce","$routeParams","netwo
 
 function initTopicController($scope, $sce,$routeParams,networkService,ChannelService,TopicService, URIHelper, RegistrationService, UserInfoService)
 {
-	BUILD_TYPE = window.location.hostname;
-	if(BUILD_TYPE == 'was.fankave.com')
+	HOST_NAME = window.location.hostname;
+	if(HOST_NAME == 'was.fankave.com')
 		{
 			WEBSOCKET_BASE_URI = 'ws://was.fankave.com/ws?';
 			REGISTER_SERVER_URI = 'http://was.fankave.com/v1.0/user/register';
-			console.log("setting Prod url for "+ BUILD_TYPE);
+			console.log("setting Prod url for "+ HOST_NAME);
 		}
 	ChannelService.setChannel($routeParams.channelID);
 	$scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));

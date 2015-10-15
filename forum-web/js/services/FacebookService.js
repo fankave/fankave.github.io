@@ -4,7 +4,8 @@ facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$htt
 function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo,ChannelService)
 {
 	// console.log("initFacebookController");
-
+	if(HOST_NAME == 'was.fanakve.com')
+	REGISTER_SERVER_URI = 'http://was.fankave.com/v1.0/user/register';
 	$scope.loginToFacebook = function()
 	{
 		// console.log("log in to Facebook");
