@@ -666,7 +666,7 @@ span.socialButtonLable
 }
 
 #postCommentButton{
-	width:10%;
+	width:15%;
 	height:2.4em;
 	text-align:center;
 	verticle-align:middle;
@@ -674,7 +674,7 @@ span.socialButtonLable
 }
 
 #postReplyButton{
-	width:10%;
+	width:15%;
 	height:2.4em;
 	text-align:center;
 	verticle-align:middle;
