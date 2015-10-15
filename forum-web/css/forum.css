@@ -332,8 +332,8 @@ body
 	background-color: rgb(248, 248, 248);
 	color: rgb(59, 166, 252);
 	font-weight:500;
-	min-height:2.6em;
-	line-height:2.6em;
+	min-height:2.4em;
+	line-height:2.4em;
 }
 
 
@@ -621,7 +621,7 @@ span.socialButtonLable
 	float:left;
 	color:gray;
 	padding:0px;
-	width:30px
+	width:24px
 }
 
 .topic-social-btn img
@@ -640,6 +640,7 @@ span.socialButtonLable
 
 
 /* Text Field */
+
 /* #textInputFieldTopic
 {
 	background-color:red;
@@ -662,6 +663,19 @@ span.socialButtonLable
 	background-color:white;
 	border-top: 1px solid #EEE;
 	height:3.9em;
+}
+
+#postCommentButton{
+	width:10%;
+	height:2.4em;
+	text-align:center;
+	verticle-align:middle;
+	border: 2px solid #EEE;
+	/*color:white;*/	
+}
+input:focus + label {
+   background: linear-gradient(blue,white);
+    
 }
 
 
