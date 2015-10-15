@@ -8,6 +8,7 @@ function initTopicController($scope, $sce,$routeParams,networkService,ChannelSer
 		{
 			WEBSOCKET_BASE_URI = 'ws://was.fankave.com/ws?';
 			REGISTER_SERVER_URI = 'http://was.fankave.com/v1.0/user/register';
+			console.log("setting Prod url for "+ BUILD_TYPE);
 		}
 	ChannelService.setChannel($routeParams.channelID);
 	$scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
