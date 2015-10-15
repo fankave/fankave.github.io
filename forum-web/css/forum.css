@@ -670,11 +670,19 @@ span.socialButtonLable
 	height:2.4em;
 	text-align:center;
 	verticle-align:middle;
-	border: 2px solid #EEE;
 	/*color:white;*/	
 }
-input:focus + label {
-   background: linear-gradient(blue,white);
+
+#postReplyButton{
+	width:10%;
+	height:2.4em;
+	text-align:center;
+	verticle-align:middle;
+	margin-right:0px;
+	/*color:white;*/	
+}
+input:focus + button {
+   background: linear-gradient(#56A5EC,#82CAFF,#56A5EC);
     
 }
 

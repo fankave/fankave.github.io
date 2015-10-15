@@ -76,14 +76,19 @@
 	<div class="roww" id="repliesCommentSeparator">
 		 &nbsp;
 	</div>
-	 <form ng-submit="postReply(commentText)">
-	<div class="input-group">
-      			<input id="replyCommentField" type="text" class="form-control" placeholder="Write a reply..." ng-model="commentText" onscroll="javascript:document.getElementById('scroll').value = this.scrollTop" style="display:inline; positon:absolute; width=50%;" >
-      			<span class="input-group-btn" width=5%;>
-        			<button id="postReplyButton" class="btn btn-default" type="button" ng-click="postReply(commentText)">Post</button>
-      			</span>
-    </div>
-    </form>
+	
+	<div id="textInputFieldReply">
+		<form ng-submit="postReply(commentText)">
+			<div class="input-group" style="display: inline; positon: absolute; width:100%">
+				<input id="topicCommentField" type="text" class="form-control"
+					placeholder="Write a reply..." ng-model="commentText" 
+					style="display: inline; positon: absolute; width:90%"> 
+					<button id="postReplyButton" class="btn btn-default" type="button" ng-click="postReply(commentText)">Post</button>
+				
+			</div>
+		</form>
+	</div>
+	
 <div class="roww" id="repliesCommentSeparator">
 		 &nbsp;
 	</div>
