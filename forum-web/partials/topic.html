@@ -89,17 +89,23 @@
 			<span class="socialButtonLable">{{commentsCount}}</span>
 		</div>
 	</div>
-	<div class="input-group">
-      			<input id="topicCommentField" type="text" class="form-control" placeholder="Write a comment..." ng-model="commentText" style="display:inline; positon:absolute; width=50%;" >
-      			<span class="input-group-btn" width=5%;>
-        			<button id="postCommentButton" class="btn btn-default" type="button" ng-click="postComment(commentText)">Post</button>
-      			</span>
-    </div>
 
-	<div class="commentsHeader">
-		Comments
+	<div class="commentsHeader">Comments</div>
+
+	<div id="textInputFieldTopic">
+		<form ng-submit="postComment(commentText)">
+			<div class="input-group">
+				<input id="topicCommentField" type="text" class="form-control"
+					placeholder="Write a comment..." ng-model="commentText"
+					style="display: inline; positon: absolute;"> <span
+					class="input-group-btn" width=5%;>
+					<button id="postCommentButton" class="btn btn-default"
+						type="button" ng-click="postComment(commentText)">Post</button>
+				</span>
+			</div>
+		</form>
 	</div>
-	
+
 
 
 	<div class="commentsContainer">

@@ -4,6 +4,11 @@ topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$route
 function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper,RegistrationService)
 {
 	TopicService.setTopicId($routeParams.topicID);
+	//Samyukta test
+//	$(window).scroll(function(){
+//	    $("#textInputFieldTopic").css("top", Math.max(160, 250 - $(this).scrollTop()));
+//	});
+	
 
 	var updateTopic = function(){
 		if(TopicService.getTopic() != undefined){

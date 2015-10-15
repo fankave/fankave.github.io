@@ -640,6 +640,18 @@ span.socialButtonLable
 
 
 /* Text Field */
+/* #textInputFieldTopic
+{
+	background-color:red;
+	display:inline;
+	position:fixed;
+	top:15em;
+	z-index: 10000;
+	
+	width: 75%;
+	left: 50%;
+	margin-left: -37.5%;
+} */
 
 #textEntryField
 {
@@ -744,7 +756,6 @@ span.socialButtonLable
 
 
 /* - - - 'New Content Available' indicator - - - */
-
 
 #newCommentsAvailableIndicatorDiv
 {
