@@ -293,7 +293,7 @@ body
 {
 	background-color: white;
 	font-size:1.1em;
-	min-height:4em;
+	min-height:2.8em;
 	margin:10px;
 }
 
@@ -328,12 +328,12 @@ body
 .commentsHeader
 {
 	text-align: center;
-	font-size: 1.2em;
+	font-size: 1.0em;
 	background-color: rgb(248, 248, 248);
 	color: rgb(59, 166, 252);
 	font-weight:500;
-	min-height:2.4em;
-	line-height:2.4em;
+	min-height:2.2em;
+	line-height:2.2em;
 }
 
 
@@ -475,7 +475,7 @@ body
 
 .postUsername
 {
-	font-size: 0.35em;
+	font-size: 0.31em;
 	float:left;
 	color: rgb(166, 189, 207);
 	width:80%;
@@ -486,7 +486,7 @@ body
 
 .timestamp
 {
-	font-size: 0.35em;
+	font-size: 0.31em;
 	float:right;
 	color: rgb(166, 189, 207);
 	width:20%;
@@ -510,7 +510,7 @@ body
 	/*background-color: gray;*/
 	/*padding-left: 5px;*/
 	padding-right: 5px;
-	font-size: 0.35em;
+	font-size: 0.34em;
 	margin-bottom:0.3em;
 	/*overflow:hidden;*/
 	word-wrap:break-word;
