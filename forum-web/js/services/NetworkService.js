@@ -5,7 +5,7 @@ var NETWORK_DEBUG = true;
 
 function initNetworkService($websocket,DataService,UserInfoService)
 {
-	var WEBSOCKET_BASE_URI = 'ws://was.fankave.com/ws?';
+	var WEBSOCKET_BASE_URI = 'ws://dev.fankave.com/ws?';
 
 	var ws;
 	function initSocket() { 
