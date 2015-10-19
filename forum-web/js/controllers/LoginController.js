@@ -55,13 +55,15 @@ function initTopicController($scope, $sce,$routeParams,networkService,ChannelSer
 //			networkService.init();
 //		window.location = "#/topic/" + TopicService.getTopicId()+$scope.urlQueryStr;
 	}
-	if(URIHelper.isPeelUser()){
-		$scope.isPeelUser = true;
-		RegistrationService.registerUser(URIHelper.getPeelUserId(),(URIHelper.getPeelUserName()));
-	}
 	else{
-		// console.log("Not logged in to facebook, take user to login page")
-		window.location = "#/facebookLogin";
+		if(URIHelper.isPeelUser()){
+			$scope.isPeelUser = true;
+			RegistrationService.registerUser(URIHelper.getPeelUserId(),(URIHelper.getPeelUserName()));
+		}
+		else{
+			// console.log("Not logged in to facebook, take user to login page")
+			window.location = "#/facebookLogin";
+		}
 	}
 	
 
