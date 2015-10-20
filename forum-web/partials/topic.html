@@ -73,6 +73,9 @@
 		<div id="topicDescriptionBody">
 			{{topicDescHtml}}
 		</div>
+		<img ng-src="{{topicMediaUrl}}" class="postPhoto" ng-click="imageClick(topicMediaUrl);" />
+					
+							
 		<div class="topicSharingButtonsRow">
 			<button class="btn-link topic-social-btn" ng-click="updateLikeTopic()" ng-switch="liked">
 							<img ng-switch-when="true" src="img/likeBigSelected.png"/> 

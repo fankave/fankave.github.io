@@ -4,6 +4,11 @@ topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$route
 function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper,RegistrationService)
 {
 	TopicService.setTopicId($routeParams.topicID);
+	$scope.innerButtonTapped = false;
+	if((UserInfoService.isPeelUser() == true))
+		$scope.isPeelUser = true;
+	else
+		$scope.isPeelUser = false;	
 //	var tempJasonNFL = {};
 //	
 //	
@@ -16,61 +21,82 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 //	    $("#textInputFieldTopic").css("top", Math.max(160, 250 - $(this).scrollTop()));
 //	});
 	
-
+	$scope.setScoreCardUI = function(){
+		if($scope.isPeelUser === true)
+		{
+			if($scope.topicType == "livegame"){
+				document.getElementById('topicSection').style.paddingTop = "11em";
+				document.getElementById('header').style.height = "11em";	
+			}
+			else{
+			document.getElementById('topicSection').style.paddingTop = "3em";
+			document.getElementById('header').style.height = "3em";
+			}
+		}
+		else
+		{
+			if($scope.topicType == "livegame"){
+				document.getElementById('topicSection').style.paddingTop = "8em";
+				document.getElementById('header').style.height = "8em";
+			}
+//			else{
+//			document.getElementById('topicSection').style.paddingTop = "2em";
+//			document.getElementById('header').style.height = "2em";
+//			}
+		}
+	}
+	
 	var updateTopic = function(){
 		if(TopicService.getTopic() != undefined){
 			if(TopicService.isWatchingTopic() == false){
 				networkService.send(TopicService.getFollowChannelRequest());
 				networkService.send(TopicService.watchTopicRequest($routeParams.topicID));
 			}
-			//Score API update
-			$scope.leftTeam = TopicService.getTeamA();
-			$scope.rightTeam = TopicService.getTeamB();
-			var score = TopicService.getScore();
-			if(score != undefined){
-				$scope.leftTeamScore = score.points[0];
-				$scope.rightTeamScore = score.points[1];
+			
+			$scope.topicType = TopicService.getTopicType();
+			$scope.setScoreCardUI();
+			if($scope.topicType == "livegame"){
+				console.log("Inside topic set :"+ TopicService.getTeamA());
+				//Score API update
+				$scope.leftTeam = TopicService.getTeamA();
+				$scope.rightTeam = TopicService.getTeamB();
+				var score = TopicService.getScore();
+				if(score != undefined){
+					$scope.leftTeamScore = score.points[0];
+					$scope.rightTeamScore = score.points[1];
+				}
+				$scope.gameStatus = TopicService.getGameStatus();
+				// console.log($scope.gameStatus)
+
+				if($scope.gameStatus == "live") {
+					$scope.gamePeriod = TopicService.getGamePeriod();
+					$scope.gameClock = TopicService.getGameClock();
+				}
+
+				$scope.gameScheduledTime = TopicService.getGameTime();
+
+
+
+				$scope.allScoresTitle = TopicService.getScoresTitle();
+				$scope.allScoresURL = TopicService.getScoresLink();
+
+				renderScoreCard($scope.leftTeam.pColor, $scope.rightTeam.pColor);
 			}
-			$scope.gameStatus = TopicService.getGameStatus();
-			// console.log($scope.gameStatus)
 			$scope.topicTitle = TopicService.getTitle();
-			if($scope.gameStatus == "live") {
-				$scope.gamePeriod = TopicService.getGamePeriod();
-				$scope.gameClock = TopicService.getGameClock();
-			}
-			//Samyukta debug
-//			$scope.gameStatus = "live";
-//			$scope.gamePeriod = "2nd qtr";
-//			$scope.gameClock  = "10:00";
-			$scope.gameScheduledTime = TopicService.getGameTime();
-//			$scope.gameStatus = "future";
-//			$scope.gameScheduledTime = {date:"10/13",
-//					time:"9:30PM PDT"};
-//			var sectionType = TopicService.getSectionType();
-//			if(sectionType == "html")
-			$scope.topicDescHtml = TopicService.getHtml();
-//			else if(sectionType == "media")
-//			$scope.media = TopicService.getMedia();
-//			else if(sectionType == "tweet")
-//			$scope.tweet = TopicService.getTweet();
-//			else if(sectionType == "ogp")
-//			$scope.ogp = TopicService.getOgp();
-//			else if(sectionType == "link")
-//			$scope.link = TopicService.getLink();
+			var thisTopic = TopicService.getTopic();
+			$scope.topicDescHtml = thisTopic.html;
+			console.log("has MEDIA  :"+ thisTopic.type +"thisTopic.mediaUrl"+ thisTopic.mediaUrl);
+			if(thisTopic.type == "media")
+			$scope.topicMediaUrl = thisTopic.mediaUrl;
+//			$scope.topicMediaAspectFeed = thisTopic.mediaAspectFeed;
+//			$scope.topicMediaAspectFull = thisTopic.mediaAspectFull;
 
 			$scope.createdAt = TopicService.getTimeCreatedAt();
 			$scope.liked = TopicService.getLiked();
 			var metrics = TopicService.getMetrics();
 			$scope.likesCount = metrics.likes;
 			$scope.commentsCount = metrics.comments;
-			// console.log("updated topic" +$scope.topicTitle);
-			// console.log("updated time" +$scope.createdAt);
-			// console.log("updated metrics" +$scope.likesCount);
 
-			$scope.allScoresTitle = TopicService.getScoresTitle();
-			$scope.allScoresURL = TopicService.getScoresLink();
-
-			renderScoreCard($scope.leftTeam.pColor, $scope.rightTeam.pColor);
 		}
 	};
 
@@ -127,26 +153,15 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
 		networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
 	};
+	
 
 	$scope.setPeelUI = function(isPeelUser){
-		console.log("isPeelUser :"+isPeelUser);
-		if(isPeelUser === true)
-		{
-			document.getElementById('topicSection').style.paddingTop = "11em";
-			document.getElementById('header').style.height = "11em";
-		}
-		else
-		{
-			document.getElementById('topicSection').style.paddingTop = "8em";
-			document.getElementById('header').style.height = "8em";
-		}
+		//console.log("isPeelUser :"+isPeelUser);
+		$scope.isPeelUser = isPeelUser;
+		
 	}
 
-	$scope.innerButtonTapped = false;
-	if((UserInfoService.isPeelUser() == true))
-		$scope.isPeelUser = true;
-	else
-		$scope.isPeelUser = false;	
+	
 	$scope.setPeelUI($scope.isPeelUser);
 
 	$scope.initPage = function(){
