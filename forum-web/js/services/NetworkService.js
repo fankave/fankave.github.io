@@ -2,16 +2,16 @@ var networkModule = angular.module("NetworkModule", ['ngWebSocket']);
 networkModule.factory("networkService",["$websocket","DataService","UserInfoService",initNetworkService]);
 
 var NETWORK_DEBUG = true;
-var HOST_NAME = window.location.hostname;
+var HOST_NAME = window.location.host;
 var WEBSOCKET_BASE_URI = 'ws://was.fankave.com/ws?';
 var REGISTER_SERVER_URI = 'http://was.fankave.com/v1.0/user/register';
 
 function initNetworkService($websocket,DataService,UserInfoService)
 {
 	if(HOST_NAME == undefined)
-		HOST_NAME = window.location.hostname;;
-	if(HOST_NAME == 'was.fankave.com')
-		WEBSOCKET_BASE_URI = 'ws://was.fankave.com/ws?';
+		HOST_NAME = window.location.host;;
+	if(HOST_NAME == 'dev.fankave.com')
+		WEBSOCKET_BASE_URI = 'ws://dev.fankave.com/ws?';
 	var ws;
 	function initSocket() { 
 		ws = $websocket(getWebsocketUri());
