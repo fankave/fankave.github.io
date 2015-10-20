@@ -4,7 +4,6 @@ topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$route
 function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper,RegistrationService)
 {
 	TopicService.setTopicId($routeParams.topicID);
-	$scope.topicType = "default";
 	$scope.innerButtonTapped = false;
 	if((UserInfoService.isPeelUser() == true))
 		$scope.isPeelUser = true;
