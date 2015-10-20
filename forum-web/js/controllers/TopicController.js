@@ -4,6 +4,7 @@ topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$route
 function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper,RegistrationService)
 {
 	TopicService.setTopicId($routeParams.topicID);
+	$scope.topicType = "default";
 	$scope.innerButtonTapped = false;
 	if((UserInfoService.isPeelUser() == true))
 		$scope.isPeelUser = true;
@@ -40,8 +41,8 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 				document.getElementById('header').style.height = "8em";
 			}
 			else{
-			document.getElementById('topicSection').style.paddingTop = "0em";
-			document.getElementById('header').style.height = "0em";
+				document.getElementById('topicSection').style.paddingTop = "0em";
+				document.getElementById('header').style.height = "0em";
 			}
 		}
 	}
