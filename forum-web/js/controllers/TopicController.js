@@ -39,21 +39,22 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 				document.getElementById('topicSection').style.paddingTop = "8em";
 				document.getElementById('header').style.height = "8em";
 			}
-//			else{
-//			document.getElementById('topicSection').style.paddingTop = "2em";
-//			document.getElementById('header').style.height = "2em";
-//			}
+			else{
+			document.getElementById('topicSection').style.paddingTop = "0em";
+			document.getElementById('header').style.height = "0em";
+			}
 		}
 	}
 	
 	var updateTopic = function(){
 		if(TopicService.getTopic() != undefined){
+			$scope.topicType = TopicService.getTopicType();
 			if(TopicService.isWatchingTopic() == false){
 				networkService.send(TopicService.getFollowChannelRequest());
 				networkService.send(TopicService.watchTopicRequest($routeParams.topicID));
 			}
 			
-			$scope.topicType = TopicService.getTopicType();
+			
 			$scope.setScoreCardUI();
 			if($scope.topicType == "livegame"){
 				console.log("Inside topic set :"+ TopicService.getTeamA());
