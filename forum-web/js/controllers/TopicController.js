@@ -33,6 +33,9 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 			document.getElementById('topicSection').style.paddingTop = "3em";
 			document.getElementById('header').style.height = "3em";
 			document.getElementById('allScoresButtonRow').style.height="0px";
+			var parent = document.getElementById("header");
+			var child = document.getElementById("scoreCardContent");
+			parent.removeChild(child);
 			}
 		}
 		else
@@ -44,7 +47,9 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 			else{
 				document.getElementById('topicSection').style.paddingTop = "0em";
 				document.getElementById('header').style.height = "0em";
-				document.getElementById('allScoresButtonRow').style.height="0px";
+				var parent = document.getElementById("header");
+				var child = document.getElementById("scoreCardContent");
+				parent.removeChild(child);
 			}
 		}
 	}
