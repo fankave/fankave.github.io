@@ -98,12 +98,13 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 			$scope.topicTitle = TopicService.getTitle();
 			var thisTopic = TopicService.getTopic();
 			$scope.topicDescHtml = thisTopic.html;
-			console.log("has MEDIA  :"+ thisTopic.type +"thisTopic.mediaUrl"+ thisTopic.mediaUrl);
-			if(thisTopic.type == "media")
+			//console.log("has MEDIA  :"+ thisTopic.type +"thisTopic.mediaUrl"+ thisTopic.mediaUrl);
+			if(thisTopic.type == "media"){
 			$scope.topicMediaUrl = thisTopic.mediaUrl;
 			$scope.topicMediaAspectFeed = thisTopic.mediaAspectFeed;
-			var width = window.innerWidth;
-			console.log("Image width :"+$scope.topicMediaAspectFeed.w +"  X  " + $scope.topicMediaAspectFeed.h + "xxxx "+width)
+			}
+//			var width = window.innerWidth;
+//			console.log("Image width :"+$scope.topicMediaAspectFeed.w +"  X  " + $scope.topicMediaAspectFeed.h + "xxxx "+width)
 //			$scope.topicMediaAspectFull = thisTopic.mediaAspectFull;
 
 			$scope.createdAt = TopicService.getTimeCreatedAt();
