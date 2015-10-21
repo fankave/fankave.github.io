@@ -92,7 +92,7 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 
 	$scope.triggerRepliesKeyboard = function()
 	{
-		document.getElementById("replyCommentField").focus();
+		document.getElementById("textInputFieldReply").focus();
 	}
 	
 	$scope.initReplyPage = function(){
@@ -139,7 +139,7 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		networkService.send(ReplyService.getPostReplyRequest($scope.topicId,$scope.postID, commentText));
 		}
 		$scope.commentText = "";
-		document.getElementById("replyCommentField").blur();
+		document.getElementById("textInputFieldReply").blur();
 		document.getElementById("postReplyButton").blur();
 		$scope.justReplied = true
 	};
