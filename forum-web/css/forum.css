@@ -551,6 +551,12 @@ body
 	color: black;
 }
 
+.topicPhoto
+{
+	margin-top:0.2em;
+	margin-bottom:0.3em;
+}
+
 .postPhoto
 {
 	max-width:100%;
