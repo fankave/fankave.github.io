@@ -101,7 +101,8 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 			console.log("has MEDIA  :"+ thisTopic.type +"thisTopic.mediaUrl"+ thisTopic.mediaUrl);
 			if(thisTopic.type == "media")
 			$scope.topicMediaUrl = thisTopic.mediaUrl;
-//			$scope.topicMediaAspectFeed = thisTopic.mediaAspectFeed;
+			$scope.topicMediaAspectFeed = thisTopic.mediaAspectFeed;
+			console.log("Image width :"+$scope.topicMediaAspectFeed.w +"  X  " + $scope.topicMediaAspectFeed.h)
 //			$scope.topicMediaAspectFull = thisTopic.mediaAspectFull;
 
 			$scope.createdAt = TopicService.getTimeCreatedAt();
