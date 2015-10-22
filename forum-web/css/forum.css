@@ -853,7 +853,7 @@ input:focus + button {
 #facebookLoginButtonDiv
 {
 	position:fixed;
-	top: 40%;
+	padding-top: 59%;
 	width:80%;
 	left: 49%;
 	margin-left: -40%;
