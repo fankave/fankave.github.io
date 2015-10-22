@@ -101,7 +101,7 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 			//console.log("has MEDIA  :"+ thisTopic.type +"thisTopic.mediaUrl"+ thisTopic.mediaUrl);
 			if(thisTopic.type == "media"){
 			$scope.topicMediaUrl = thisTopic.mediaUrl;
-			$scope.topicMediaAspectFeed = thisTopic.mediaAspectFeed;
+			$scope.topicMediaAspectFeed = thisTopic.mediaAspectFull;
 			}
 //			var width = window.innerWidth;
 //			console.log("Image width :"+$scope.topicMediaAspectFeed.w +"  X  " + $scope.topicMediaAspectFeed.h + "xxxx "+width)
