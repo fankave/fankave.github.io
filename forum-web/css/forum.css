@@ -841,7 +841,7 @@ input:focus + button {
 
 #facebookLoginContainer
 {
-	position:absolute;
+	position:fixed;
 	background-image: url("../img/facebookLoginPage_bkgd-2x.jpg");
     background-repeat: no-repeat;
     background-size: cover;
