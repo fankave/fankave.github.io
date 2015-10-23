@@ -92,7 +92,7 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 
 	$scope.triggerRepliesKeyboard = function()
 	{
-		document.getElementById("textInputFieldReply").focus();
+		document.getElementById("postCommentField").focus();
 	}
 	
 	$scope.initReplyPage = function(){
