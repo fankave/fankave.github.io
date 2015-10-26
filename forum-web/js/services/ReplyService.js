@@ -18,6 +18,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 	var observerCallbacks = [];
 	var _replies = [];
 	var _topicIdFromReply;
+	var _currentCommentId;
 
 	function setReplies(replyData) {
 		_replies = [];
@@ -31,7 +32,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 				if(_replyObject.id != undefined )
 					_replies.push(_replyObject);
 				// console.log("Reply object"+_replyObject);
-				_topicIdFromReply = tempReplyData[i].topicId;
+				_topicIdFromReply = tempReplyData[i].topicId;;
 			}
 			notifyObservers();
 		}
@@ -41,10 +42,14 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 		var tempPostedReply = postReplyData.data;
 		if(tempPostedReply!= undefined){
 			console.log("appendToReplies :"+tempPostedReply);
+			console.log("Reply comment ID :"+ tempPostedReply.commentId);
+			console.log("Current comment ID :"+ _currentCommentId);
+			if(tempPostedReply.commentId == _currentCommentId){
 			var _replyObject = Bant.bant(tempPostedReply);
 			if(_replyObject.id != undefined )
 				_replies.push(_replyObject);
 			notifyObservers();
+			}
 		}
 	}
 
@@ -139,6 +144,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 	}
 	
 	function getRepliesRequest(commentId){
+		_currentCommentId = commentId;
 		var uri = LIST_REPLIES_URI + commentId;
 		return replyGetRequest (uri);
 		
