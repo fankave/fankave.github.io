@@ -3,6 +3,7 @@ topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$route
 
 function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper,RegistrationService)
 {
+	ga('send', 'pageview', '/topic+$routeParams.topicID');
 	TopicService.setTopicId($routeParams.topicID);
 	$scope.topicType = "livegame";
 	$scope.innerButtonTapped = false;
