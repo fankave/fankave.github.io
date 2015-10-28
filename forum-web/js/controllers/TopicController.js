@@ -246,12 +246,14 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 
 	$scope.peelClose = function()
 	{
+		ga('send', 'event', 'Button', 'click', 'PeelBackTopic');
 		console.log("peelClose()");
 		window.location = "peel://home";
 	}
 
 	$scope.peelWatchOnTV = function()
 	{
+		ga('send', 'event', 'Button', 'click', 'PeelWatchOnTV');
 		console.log("peelWatchOnTV()");
 		var showId = URIHelper.getPeelShowId();
 		console.log("Peel show on TV uri :  "+ "peel://tunein/"+showId);

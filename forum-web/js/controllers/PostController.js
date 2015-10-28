@@ -73,6 +73,7 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 
 	$scope.peelWatchOnTV = function()
 	{
+		ga('send', 'event', 'Button', 'click', 'PeelWatchOnTV');
 		console.log("peelWatchOnTV()");
 		var showId = URIHelper.getPeelShowId();
 		if(showId != undefined)
