@@ -3,7 +3,7 @@ postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$routePa
 
 function initPostController($scope, $sce, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService, UserInfoService,URIHelper)
 {
-	ga('send', 'pageview', '/forum/#/reply');
+	ga('send', 'pageview', location.pathname);
 	$scope.pageClass = 'page-post';
 //	$(function() {
 //	    var oldScroll = window.onscroll;
