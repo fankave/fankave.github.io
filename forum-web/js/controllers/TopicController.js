@@ -3,7 +3,7 @@ topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$route
 
 function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper,RegistrationService)
 {
-	//ga('send', 'pageview', location.pathname);
+	ga('send', 'pageview', "/topic/"+$routeParams.topicID);
 	TopicService.setTopicId($routeParams.topicID);
 	$scope.topicType = "livegame";
 	$scope.innerButtonTapped = false;
@@ -247,14 +247,14 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 
 	$scope.peelClose = function()
 	{
-		ga('send', 'event', 'Button', 'click', 'PeelBackTopic');
+		ga('send', 'event', 'Peel', 'click', 'PeelHome');
 		console.log("peelClose()");
 		window.location = "peel://home";
 	}
 
 	$scope.peelWatchOnTV = function()
 	{
-		ga('send', 'event', 'Button', 'click', 'PeelWatchOnTV');
+		ga('send', 'event', 'Peel', 'click', 'PeelWatchOnTV');
 		console.log("peelWatchOnTV()");
 		var showId = URIHelper.getPeelShowId();
 		console.log("Peel show on TV uri :  "+ "peel://tunein/"+showId);
