@@ -1,6 +1,16 @@
 var rootModule = angular.module("Forum", ["ngRoute", "LoginModule","TopicModule", "PostModule", "NetworkModule"]);
 rootModule.config(["$routeProvider", initRootModule]);
+rootModule.run(['$rootScope', '$location', '$window', function($rootScope, $location, $window){
+    $rootScope
+    .$on('$stateChangeSuccess',
+        function(event){
 
+            if (!$window.ga)
+                return;
+
+            $window.ga('send', 'pageview', { page: $location.path() });
+    });
+}]);
 function initRootModule($routeProvider)
 {
 	$routeProvider.when('/channel/:channelID',

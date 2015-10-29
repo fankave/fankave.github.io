@@ -1,4 +1,4 @@
-var networkModule = angular.module("NetworkModule", ['ngWebSocket','angular-google-analytics']);
+var networkModule = angular.module("NetworkModule", ['ngWebSocket']);
 networkModule.factory("networkService",["$websocket","DataService","UserInfoService",initNetworkService]);
 
 var NETWORK_DEBUG = true;
