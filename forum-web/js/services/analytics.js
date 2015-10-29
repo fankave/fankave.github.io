@@ -4,7 +4,7 @@ angular.module('angular-google-analytics', []).run(
     ['gglAnalytics',
         function (gglAnalytics) {
             gglAnalytics;   //needed, not to remove the dependency if minification is set to remove unused parameters
-            _gaq.push(['_setAccount', GA-ID]);  // insert google analytics ID
+            _gaq.push(['_setAccount', 'UA-69086637-1']);  // insert google analytics ID
 
             var ga = document.createElement('script');
             ga.type = 'text/javascript';
