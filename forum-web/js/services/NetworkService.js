@@ -1,10 +1,11 @@
-var networkModule = angular.module("NetworkModule", ['ngWebSocket','angular-google-analytics']);
+var networkModule = angular.module("NetworkModule", ['ngWebSocket']);
 networkModule.factory("networkService",["$websocket","DataService","UserInfoService",initNetworkService]);
 
 var NETWORK_DEBUG = true;
 var HOST_NAME = window.location.host;
-var WEBSOCKET_BASE_URI = 'ws://dev.fankave.com/ws?';
-var REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
+var WEBSOCKET_BASE_URI = 'ws://was.fankave.com/ws?';
+var REGISTER_SERVER_URI = 'http://was.fankave.com/v1.0/user/register';
+var SESSION_LENGTH = 0;
 
 function initNetworkService($websocket,DataService,UserInfoService)
 {

@@ -3,7 +3,9 @@ postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$routePa
 
 function initPostController($scope, $sce, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService, UserInfoService,URIHelper)
 {
-	//ga('send', 'pageview', location.pathname);
+	if(SESSION_LENGTH == 0)
+		SESSION_LENGTH = new Date();
+	//ga('send', 'pageview', "/comment/"+$routeParams.postID);
 	$scope.pageClass = 'page-post';
 //	$(function() {
 //	    var oldScroll = window.onscroll;
@@ -74,7 +76,11 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 
 	$scope.peelWatchOnTV = function()
 	{
-		ga('send', 'event', 'Button', 'click', 'PeelWatchOnTV');
+		var time = new Date();
+		var elapsed = time - SESSION_LENGTH;
+		elapsed = Math.abs(elapsed/1000);
+		ga('send', 'event', 'Time', 'session_length', elapsed);
+		ga('send', 'event', 'Peel', 'click', 'PeelWatchOnTV');
 		console.log("peelWatchOnTV()");
 		var showId = URIHelper.getPeelShowId();
 		if(showId != undefined)
