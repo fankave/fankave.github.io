@@ -5,6 +5,7 @@ var NETWORK_DEBUG = true;
 var HOST_NAME = window.location.host;
 var WEBSOCKET_BASE_URI = 'ws://was.fankave.com/ws?';
 var REGISTER_SERVER_URI = 'http://was.fankave.com/v1.0/user/register';
+var SESSION_LENGTH = 0;
 
 function initNetworkService($websocket,DataService,UserInfoService)
 {
