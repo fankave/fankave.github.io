@@ -9,10 +9,15 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 	TopicService.setTopicId($routeParams.topicID);
 	$scope.topicType = "livegame";
 	$scope.innerButtonTapped = false;
-	if((UserInfoService.isPeelUser() == true))
+	if((UserInfoService.isPeelUser() == true)){
 		$scope.isPeelUser = true;
-	else
+		$scope.hidePeelSplash = false;
+		$timeout(function() {$scope.hidePeelSplash = true; }, 5000);
+	}
+	else {
 		$scope.isPeelUser = false;	
+		$scope.hidePeelSplash = true;
+	}
 //	var tempJasonNFL = {};
 //	
 //	
@@ -24,9 +29,6 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 //	$(window).scroll(function(){
 //	    $("#textInputFieldTopic").css("top", Math.max(160, 250 - $(this).scrollTop()));
 //	});
-	$scope.hidePeelSplash = false;
-
-	$timeout(function() {$scope.hidePeelSplash = true; }, 5000);
 
 	$scope.continueToExperience = function() {
 		$scope.hidePeelSplash = true;
