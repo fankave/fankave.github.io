@@ -3,22 +3,9 @@ postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$routePa
 
 function initPostController($scope, $sce, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService, UserInfoService,URIHelper)
 {
-	if(SESSION_LENGTH == 0)
-		SESSION_LENGTH = new Date();
 	//ga('send', 'pageview', "/comment/"+$routeParams.postID);
 	$scope.pageClass = 'page-post';
-//	$(function() {
-//	    var oldScroll = window.onscroll;
-//	    $(document).on('focus', 'input', function(e) {
-//	        window.onscroll = function () { 
-//	            e.preventDefault(); 
-//	        } ;
-//	        setTimeout(function() {
-//	            window.onscroll = oldScroll;
-//	        }, 100);
-//	    });
-//	    
-//	});
+
 	$scope.postID = $routeParams.postID;
 	$scope.topicId = TopicService.getTopicId();
 	//$scope.replies = networkService.getRepliesForPostID();
@@ -76,10 +63,6 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 
 	$scope.peelWatchOnTV = function()
 	{
-		var time = new Date();
-		var elapsed = time - SESSION_LENGTH;
-		elapsed = Math.abs(elapsed/1000);
-		ga('send', 'event', 'Time', 'session_length', elapsed);
 		ga('send', 'event', 'Peel', 'click', 'PeelWatchOnTV');
 		console.log("peelWatchOnTV()");
 		var showId = URIHelper.getPeelShowId();
