@@ -24,7 +24,14 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 //	$(window).scroll(function(){
 //	    $("#textInputFieldTopic").css("top", Math.max(160, 250 - $(this).scrollTop()));
 //	});
-	
+	$scope.hidePeelSplash = false;
+
+	$timeout(function() {$scope.hidePeelSplash = true; }, 5000);
+
+	$scope.continueToExperience = function() {
+		$scope.hidePeelSplash = true;
+	};
+
 	$scope.setScoreCardUI = function(){
 		if($scope.isPeelUser === true)
 		{
