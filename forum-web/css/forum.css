@@ -875,15 +875,17 @@ input:focus + button {
 	background-color: rgb(0,0,0);
 	background-color: rgba(0,0,0, 0.7);
 	width: 100%;
+	max-width: 950px;
 	height: 100%;
 	z-index: 10001;
 }
 
 #splashOverlay {
 	position: relative;
-	padding: 8% 0%;
+	padding: 4% 0%;
 	background-color: #fff;
 	width: 90%;
+	max-width: 950px;
 	height: 94%;
 	left: 50%;
 	margin-left: -45%;
@@ -897,6 +899,7 @@ input:focus + button {
 #splashGraphic {
 	position: fixed;
 	width: 74%;
+	max-width: 400px;
 	height: auto;
 	left: 50%;
 	margin-left: -37%;
@@ -906,23 +909,12 @@ input:focus + button {
 #continue {
 	position: fixed;
 	width: 80%;
+	max-width: 400px;
 	height: auto;
 	top: 74%;
 	left: 50%;
 	margin-left: -40%;
 	z-index: 10003;
-}
-
-/*#continue > div {
-	position: relative;
-	background: url("../img/peel_join_sprite.png") 0 0;
-	width: 945px;
-	height: 184px;
-}*/
-
-#continue:hover,
-#continue:focus {
-	
 }
 
 #kaveLogo {
@@ -931,5 +923,5 @@ input:focus + button {
 	height: auto;
 	top: 81%;
 	left: 19%;
-	z-index: 10004
+	z-index: 10005
 }
