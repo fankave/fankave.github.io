@@ -867,9 +867,69 @@ input:focus + button {
   overflow: hidden;
 }
 
-#peelSplash > img {
-	position: relative;
+
+/* - - - Peel User Splash Page - - - */
+
+#splashUnderlay {
+	position: fixed;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0, 0.7);
 	width: 100%;
 	height: 100%;
 	z-index: 10001;
+}
+
+#splashOverlay {
+	position: relative;
+	padding: 8% 0%;
+	background-color: #fff;
+	width: 90%;
+	height: 94%;
+	left: 50%;
+	margin-left: -45%;
+	z-index: 10002;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+#splashGraphic {
+	position: fixed;
+	width: 74%;
+	height: auto;
+	left: 50%;
+	margin-left: -37%;
+	z-index: 10003;
+}
+
+#continue {
+	position: fixed;
+	width: 80%;
+	height: auto;
+	top: 74%;
+	left: 50%;
+	margin-left: -40%;
+	z-index: 10003;
+}
+
+/*#continue > div {
+	position: relative;
+	background: url("../img/peel_join_sprite.png") 0 0;
+	width: 945px;
+	height: 184px;
+}*/
+
+#continue:hover,
+#continue:focus {
+	
+}
+
+#kaveLogo {
+	position: fixed;
+	width: 65%;
+	height: auto;
+	top: 81%;
+	left: 19%;
+	z-index: 10004
 }

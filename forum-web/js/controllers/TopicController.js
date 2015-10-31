@@ -9,10 +9,10 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 	TopicService.setTopicId($routeParams.topicID);
 	$scope.topicType = "livegame";
 	$scope.innerButtonTapped = false;
-	if((UserInfoService.isPeelUser() == true)){
+	if((UserInfoService.isPeelUser() === true)){
 		$scope.isPeelUser = true;
 		$scope.hidePeelSplash = false;
-		$timeout(function() {$scope.hidePeelSplash = true; }, 5000);
+		// $timeout(function() {$scope.hidePeelSplash = true; }, 5000);
 	}
 	else {
 		$scope.isPeelUser = false;	
