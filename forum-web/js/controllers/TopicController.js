@@ -16,6 +16,7 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 	else {
 		$scope.isPeelUser = false;	
 		SplashService.hidePeelSplash = true;
+		$scope.hidePeelSplash = SplashService.hidePeelSplash;
 	}
 //	var tempJasonNFL = {};
 //	
