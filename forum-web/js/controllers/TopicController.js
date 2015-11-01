@@ -3,9 +3,9 @@ topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$route
 
 function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper, RegistrationService, SplashService)
 {
-	if(SESSION_LENGTH == 0)
-		SESSION_LENGTH = new Date();
+
 	ga('send', 'pageview', "/topic/"+$routeParams.topicID);
+	
 	TopicService.setTopicId($routeParams.topicID);
 	$scope.topicType = "livegame";
 	$scope.innerButtonTapped = false;
@@ -171,9 +171,6 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 					// console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaAspectFeed);
 
 				}
-				// console.log(i +" : updated comments author name: " +$scope.commentsArray[i].postAuthorName);
-				// console.log(i +" : updated comments author photo: " +$scope.commentsArray[i].postAuthorPhoto);
-				//console.log(i +" : updated comments likes: " +$scope.commentsArray[i].likeCount);
 			}
 		}
 
@@ -200,8 +197,6 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 		$scope.pageClass = 'page-topic';
 
 		$scope.topicID = $routeParams.topicID;
-		//TODO: remove this - usd with static Data
-		//$scope.posts = StaticData.getPostsForTopicID();
 		$scope.init();
 
 		document.getElementById('topicSection').style.paddingBottom = "3.9em";
@@ -237,7 +232,10 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 				});
 	}
 
-
+//	if(URIHelper.isPeelUser())
+//		ga('send', 'event', 'UserType', '0', 'Peel User', { 'nonInteraction': 2 });
+//	else
+//		ga('send', 'event', 'UserType', '0', 'Non Peel User', { 'nonInteraction': 2 });
 	if(UserInfoService.isUserLoggedIn()){
 		if(NETWORK_DEBUG)
 			console.log("User is logged in, checking for connection");
@@ -260,22 +258,13 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 
 	$scope.peelClose = function()
 	{
-		var time = new Date();
-		var elapsed = time - SESSION_LENGTH;
-		elapsed = Math.abs(elapsed/1000);
-		ga('send', 'event', 'Time', 'session_length', elapsed);
 		ga('send', 'event', 'Peel', 'click', 'BackToPeelHome');
-		
 		console.log("peelClose()");
 		window.location = "peel://home";
 	}
 
 	$scope.peelWatchOnTV = function()
 	{
-		var time = new Date();
-		var elapsed = time - SESSION_LENGTH;
-		elapsed = Math.abs(elapsed/1000);
-		ga('send', 'event', 'Time', 'session_length', elapsed);
 		ga('send', 'event', 'Peel', 'click', 'PeelWatchOnTV');
 		console.log("peelWatchOnTV()");
 		var showId = URIHelper.getPeelShowId();
