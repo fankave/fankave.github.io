@@ -1,7 +1,7 @@
-var topicModule = angular.module("TopicModule", ["NetworkModule", "FacebookModule"]);
-topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "facebookService", "UserInfoService","URIHelper","RegistrationService",initTopicController]);
+var topicModule = angular.module("TopicModule", ["NetworkModule", "FacebookModule", "SplashModule"]);
+topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "facebookService", "UserInfoService","URIHelper","RegistrationService","SplashService",initTopicController]);
 
-function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper,RegistrationService)
+function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper, RegistrationService, SplashService)
 {
 
 	ga('send', 'pageview', "/topic/"+$routeParams.topicID);
@@ -9,11 +9,33 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 	TopicService.setTopicId($routeParams.topicID);
 	$scope.topicType = "livegame";
 	$scope.innerButtonTapped = false;
-	if((UserInfoService.isPeelUser() == true))
+	if((UserInfoService.isPeelUser() === true)){
 		$scope.isPeelUser = true;
-	else
+		$timeout(function() {$scope.continueToExperience(); }, 5000);
+	}
+	else {
 		$scope.isPeelUser = false;	
-	
+		SplashService.hidePeelSplash = true;
+		$scope.hidePeelSplash = SplashService.hidePeelSplash;
+	}
+//	var tempJasonNFL = {};
+//	
+//	
+//	console.log("Team Names");
+//	for(i=0;i<tempJasonNFL.results.length;i++){
+//		console.log( "http://was.fankave.com/forum/#/channel/"+tempJasonNFL.results[i].channelId);
+//	}
+	//Samyukta test
+//	$(window).scroll(function(){
+//	    $("#textInputFieldTopic").css("top", Math.max(160, 250 - $(this).scrollTop()));
+//	});
+	$scope.hidePeelSplash = SplashService.hidePeelSplash;
+
+	$scope.continueToExperience = function() {
+		SplashService.hidePeelSplash = true;
+		$scope.hidePeelSplash = SplashService.hidePeelSplash;
+	};
+
 	$scope.setScoreCardUI = function(){
 		if($scope.isPeelUser === true)
 		{

@@ -868,3 +868,81 @@ input:focus + button {
 }
 
 
+/* - - - Peel User Splash Page - - - */
+
+#splashUnderlay {
+	position: fixed;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0, 0.7);
+	width: 100%;
+	max-width: 950px;
+	height: 100%;
+	z-index: 10001;
+}
+
+#splashOverlay {
+	position: relative;
+	text-align: center;
+	padding: 4% 0%;
+	background-color: #fff;
+	width: 90%;
+	max-width: 950px;
+	height: 94%;
+	left: 50%;
+	margin-left: -45%;
+	z-index: 10002;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.graphicContainer {
+	text-align: center;
+	margin-bottom: 5%;
+}
+
+#splashGraphic {
+	position: relative;
+	width: 74%;
+	max-width: 300px;
+	height: auto;
+	z-index: 10003;
+}
+
+#continue {
+	position: fixed;
+	width: 80%;
+	max-width: 350px;
+	height: auto;
+	top: 74%;
+	left: 50%;
+	margin-left: -40%;
+	z-index: 10003;
+}
+
+#continue:hover {
+	cursor: pointer;
+}
+
+#kaveLogo {
+	position: fixed;
+	width: 65%;
+	max-width: 260px;
+	height: auto;
+	top: 81%;
+	left: 19%;
+	z-index: 10005
+}
+
+@media all and (min-width: 440px) {
+	
+	#continue {
+		margin-left: -175px;
+	}
+
+	#kaveLogo {
+		left: 50%;
+		margin-left: -130px;
+	}
+}
