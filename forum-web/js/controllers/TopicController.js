@@ -1,4 +1,4 @@
-var topicModule = angular.module("TopicModule", ["NetworkModule", "FacebookModule"]);
+var topicModule = angular.module("TopicModule", ["NetworkModule", "FacebookModule", "SplashModule"]);
 topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "facebookService", "UserInfoService","URIHelper","RegistrationService","SplashService",initTopicController]);
 
 function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper, RegistrationService, SplashService)
@@ -428,10 +428,3 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 	}
 
 }
-
-topicModule.factory("SplashService", function(){
-	var hidePeelSplash = false;
-	return {
-		hidePeelSplash: hidePeelSplash
-	}
-});
