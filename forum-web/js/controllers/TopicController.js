@@ -1,7 +1,7 @@
 var topicModule = angular.module("TopicModule", ["NetworkModule", "FacebookModule"]);
-topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "facebookService", "UserInfoService","URIHelper","RegistrationService","TestService",initTopicController]);
+topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "facebookService", "UserInfoService","URIHelper","RegistrationService","SplashService",initTopicController]);
 
-function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper, RegistrationService, TestService)
+function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper, RegistrationService, SplashService)
 {
 	if(SESSION_LENGTH == 0)
 		SESSION_LENGTH = new Date();
@@ -11,12 +11,11 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 	$scope.innerButtonTapped = false;
 	if((UserInfoService.isPeelUser() === true)){
 		$scope.isPeelUser = true;
-		// TestService.hidePeelSplash;
 		$timeout(function() {$scope.continueToExperience(); }, 5000);
 	}
 	else {
 		$scope.isPeelUser = false;	
-		TestService.hidePeelSplash = true;
+		SplashService.hidePeelSplash = true;
 	}
 //	var tempJasonNFL = {};
 //	
@@ -29,11 +28,11 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 //	$(window).scroll(function(){
 //	    $("#textInputFieldTopic").css("top", Math.max(160, 250 - $(this).scrollTop()));
 //	});
-	$scope.hidePeelSplash = TestService.hidePeelSplash;
+	$scope.hidePeelSplash = SplashService.hidePeelSplash;
 
 	$scope.continueToExperience = function() {
-		TestService.hidePeelSplash = true;
-		$scope.hidePeelSplash = TestService.hidePeelSplash;
+		SplashService.hidePeelSplash = true;
+		$scope.hidePeelSplash = SplashService.hidePeelSplash;
 	};
 
 	$scope.setScoreCardUI = function(){
@@ -440,7 +439,7 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 
 }
 
-topicModule.factory("TestService", function(){
+topicModule.factory("SplashService", function(){
 	var hidePeelSplash = false;
 	return {
 		hidePeelSplash: hidePeelSplash
