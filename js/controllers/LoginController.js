@@ -1,4 +1,4 @@
-var loginModule = angular.module("LoginModule", ["NetworkModule", "FacebookModule"]);
+var loginModule = angular.module("LoginModule", ["NetworkModule", "AuthModule"]);
 loginModule.controller("LoginController", ["$scope","$sce","$routeParams","networkService", "ChannelService","TopicService","URIHelper","RegistrationService","UserInfoService",initTopicController]);
 
 function initTopicController($scope, $sce,$routeParams,networkService,ChannelService,TopicService, URIHelper, RegistrationService, UserInfoService)

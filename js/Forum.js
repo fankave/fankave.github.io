@@ -1,4 +1,4 @@
-var rootModule = angular.module("Forum", ["ngRoute", "LoginModule","TopicModule", "PostModule", "NetworkModule"]);
+var rootModule = angular.module("Forum", ["ngRoute", "LoginModule","TopicModule", "PostModule", "NetworkModule", "AuthModule"]);
 rootModule.config(["$routeProvider", initRootModule]);
 
 function initRootModule($routeProvider)
@@ -25,7 +25,7 @@ function initRootModule($routeProvider)
 	when('/facebookLogin',
 	{
 		templateUrl:'partials/facebookLogin.html',
-		controller:'FacebookController'
+		controller:'AuthController'
 	}).
 	otherwise(
 	{
