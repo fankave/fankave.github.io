@@ -18,6 +18,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 	
 	var observerCallbacks = [];
 	var _comments = [];
+	var _pinnedComments = 0;
 
 
 	function setComments(commentsData) {
@@ -54,8 +55,18 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 		if(tempComment!= undefined){
 			var _commentObject = {};
 			_commentObject = Bant.bant(tempComment);
-			if(_commentObject.id != undefined && _commentObject.html != undefined)
-				_comments.unshift(_commentObject);
+			if(_commentObject.id != undefined && _commentObject.html != undefined){
+				var i = 0;
+				if(_comments.length >0)
+				while(_comments[i].pin == true)
+					i++; 
+				_pinnedComments = i;
+				//console.log("Pinned comments "+ i);
+				if(_pinnedComments>0)
+					_comments.splice(i,0,_commentObject);
+				else
+					_comments.unshift(_commentObject);
+			}
 			// console.log("appendToComments CommentService"+_commentObject.html );
 		}
 		notifyObservers();
@@ -72,12 +83,13 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 			if(_comments[i].id == commentObj.id){
 				//update
 				_comments[i] = Bant.bant(commentObj);
-				return;
+				return 1;
 			}
 		}
 		appendToComments(commentData);
 		//notifyObservers();
 		console.log("In Comment Service update comment");
+		return 0;
 	}
 	
 	function updateLocalData(newData){
@@ -105,12 +117,16 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 	}
 
 	function removeComment(commentData){
+		var commentObj = commentData.data;
 		for(i=0;i<_comments.length;i++){
-			if(_comments[i].id == commentData.id){
+			if(_comments[i].id == commentObj.id){
 				//remove element
 				_comments.splice(i,1);
+				console.log("found Comment")
+				return 0;
 			}
 		}
+		return 1;
 
 	}
 	
@@ -212,6 +228,27 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 	function isCommentLiked(id){
 		return FDSUtility.isLikedById(_comments,id);
 	}
+	
+	
+	function updateReplyCountById(id, value){
+		if(id != undefined ){
+		//var id = replyData.commentId;
+		var tempStructure = getCommentById(id);
+		if(tempStructure != undefined){
+			if(NETWORK_DEBUG) console.log("found element :"+ tempStructure  + " tempStructure.metrics.replies :"+ tempStructure.metrics.replies);
+			if(value == -1){
+			tempStructure.metrics.replies == undefined ? tempStructure.metrics.replies = 0: tempStructure.metrics.replies = tempStructure.metrics.replies - 1;
+			}
+			else {
+				
+				tempStructure.metrics.replies == undefined ? tempStructure.metrics.replies = 1: tempStructure.metrics.replies = tempStructure.metrics.replies + 1;
+			}
+			updateLocalData(tempStructure);	
+		notifyObservers();
+		}
+		}
+		
+	}
 
 	function updateCommentLocalData(uri,id){
 		if(uri == LIKE_COMMENT_URI+id){
@@ -224,6 +261,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 		else if(uri == DELETE_COMMENT_URI+id){
 			_comments = FDSUtility.deleteById(_comments,id);
 			notifyObservers();
+			return 0;
 		}
 		else if(uri == FLAG_COMMENT_URI+id){
 			_comments = FDSUtility.flagById(_comments, false);
@@ -249,6 +287,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 			appendToComments:appendToComments,
 			updateLikeCommentWithId:updateLikeCommentWithId,
 			updateCommentLocalData:updateCommentLocalData,
+			updateReplyCountById:updateReplyCountById,
 			removeComment:removeComment,
 			postCommentRequest:postCommentRequest,
 			getLikeCommentRequest:likeCommentRequest,
@@ -259,7 +298,10 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 			getCommentByIdRequest:getCommentByIdRequest,
 			deleteCommentRequest:deleteCommentRequest,
 			flagCommentRequest:flagCommentRequest,
-			isCommentLiked:isCommentLiked
+			isCommentLiked:isCommentLiked,
+			getNumPinComments:function(){
+				return _pinnedComments;
+			}
 	};
 
 });

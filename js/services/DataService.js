@@ -1,4 +1,4 @@
-networkModule.service('DataService', function (TopicService, CommentService, ReplyService) {
+networkModule.service('DataService', function (TopicService, CommentService, ReplyService,ChannelService) {
 	
 	var DATA_TYPE_TOPIC = "topic";
 	var DATA_TYPE_COMMENT = "comment";
@@ -13,9 +13,13 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 		}
 		else if(commentsData.push){
 			if(commentsData.method == "UPSERT")
-				CommentService.updateComment(commentsData);
-			else if(commentsData.method == "REMOVE")
-				CommentService.removeComment();	
+				if(CommentService.updateComment(commentsData) == 0)
+					TopicService.updateCommentCount(1);
+			else if(commentsData.method == "REMOVE"){
+				//TODO: Design requirement for how to show a deleted comment
+//				if(CommentService.removeComment(commentsData) == 0)
+//					TopicService.updateCommentCount(-1);	
+			}
 		}
 		else {
 			if(commentsData.method == "POST"){
@@ -26,10 +30,12 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 //					console.log("uri: "+ uri);
 					if(uri == "/v1.0/comment/create"){
 						CommentService.appendToComments(commentsData);
-						TopicService.updateCommentCount();
+						TopicService.updateCommentCount(1);
 					}
-					else
-						CommentService.updateCommentLocalData(uri, commentId);
+					else{
+						if(CommentService.updateCommentLocalData(uri, commentId) == 0)
+							TopicService.updateCommentCount(-1);
+					}
 				}
 			}
 			else
@@ -50,7 +56,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 				TopicService.removeTopic(topicData.data);
 		}
 		else
-			TopicService.setTopic(topicData)
+			TopicService.setTopic(topicData);
 	}
 
 	function delegateSetReplies(replyData)
@@ -61,9 +67,14 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 		else if(replyData.push){
 			console.log("reply pushed ");
 			if(replyData.method == "UPSERT")
-				ReplyService.updateReply(replyData);
-			else if(replyData.method == "REMOVE")
-				ReplyService.removeReply(replyData);
+				if(ReplyService.updateReply(replyData) == 0){
+					if(replyData.data == undefined)
+					CommentService.updateReplyCountById(replyData.data.commentId,1);
+				}
+			else if(replyData.method == "REMOVE"){
+				//TODO: no action required
+				//ReplyService.removeReply(replyData);
+			}
 		}
 		else {
 			if(replyData.method == "POST"){
@@ -72,11 +83,16 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 					var id = uri.slice(-DATA_BANT_ID_LENGTH);
 //					console.log("Comment ID: "+ id);
 //					console.log("uri: "+ uri);
-			 if(uri == "/v1.0/reply/create"){
+					if(uri == "/v1.0/reply/create"){
 						ReplyService.appendToReplies(replyData);
+						if(replyData.data != undefined)
+							CommentService.updateReplyCountById(replyData.data.commentId, 1);
 					}
-			 else
-				 ReplyService.updateReplyLocalData(uri, id);
+					else{
+						var commentId =  ReplyService.getCommentIdByReply(id);
+						if(ReplyService.updateReplyLocalData(uri, id) == 0)
+							CommentService.updateReplyCountById(commentId, -1);
+					}
 				}
 			}
 			else
@@ -84,11 +100,24 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 		}
 			
 	}
+	
+	function delegateSetChannel(topicData)
+	{
+		if(topicData.error){
+			console.log("Topic Error message from network :"+topicData.error);
+		}
+		else
+			ChannelService.setTopicData(topicData);
+	}
 
 	return {
+		setChannel:delegateSetChannel,
 		setTopic:delegateSetTopic,
 		setComments:delegateSetComments,
-		setReplies:delegateSetReplies
+		setReplies:delegateSetReplies,
+		setWatchTopic:function(watched){
+			TopicService.setWatchTopic(watched);
+		}
 	};
 
 });

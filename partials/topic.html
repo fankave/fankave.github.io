@@ -1,91 +1,148 @@
+<section id="peelSplash" ng-hide="hidePeelSplash">
+	<div id="splashUnderlay">
+		<div id="splashOverlay">
+			<div class="graphicContainer">
+				<img src="img/splash_graphic.png" id="splashGraphic"/>
+			</div>
+			<div class="graphicContainer">
+				<img src="img/peel_join.png" id="continue" ng-click="continueToExperience()"/>
+				<img src="img/kave_logo2.png" id="kaveLogo"/>
+			</div>
+		</div>
+	</div>
+</section>
+
+
 <section id="topicSection">
-    
 	<nav class="navbar navbar-fixed-top" id="header">
-       	<canvas id="scoreCardCanvas" width="1" height="1">
-   		</canvas>
-   		<div id="scoreCardContent">
+		<div id="peelNavBar" ng-if="isPeelUser == true">
+			<button class="btn-link peelButton" id="closePeelButton" ng-click="peelClose()"><img src="img/peelBackButton-2x.png"/></button>
+			<button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()"><img src="img/peel_watchOnTVButton.png"/></button>
+		</div>
+ 		<div class="scoreCardContent clearfix">
 
-   			<div id="scoreCardTitlesRow" class="row">
-				<span id="leftTeamSpan">
-					<b>{{leftTeam.name}}</b>
-				</span>
-				<span ng-if="gameStatus == 'live'" id="liveGameIndicatorSpan">
+			<div id="rightColor">
+				<svg 
+					version="1.1"
+					class="svg-content"
+					x="0"
+					y="0"
+					width="100%"
+					height="100%"
+					viewBox="0 0 100 100"
+					preserveAspectRatio="none">
+				  	<polygon points="56,0 100,0 100,100 44,100"/>
+				</svg>
+			</div>
+
+ 			<!-- Left Column -->
+ 			<div class="grid-col grid-col-40">
+				<div>
+					{{leftTeam.name}}
+				</div>
+				<div class="score-row-left">
+					<img src={{leftTeam.logo}} />
+					<span class="score leftScore">{{leftTeamScore}}</span>
+				</div>
+			</div>
+
+			<!-- Center Column -->
+			<div class="grid-col grid-col-20">
+
+				<div ng-if="gameStatus === 'live'" id="liveGameIndicator">
 					<img src="img/live-2x.png"/>
-				</span>
-				<span id="rightTeamSpan">
-					<b>{{rightTeam.name}}</b>
-				</span>
+				</div>
+
+				<div ng-if="gameStatus === 'live' || gameStatus === 'future'" class="time">
+					<div id="gameTimeLine" ng-if="gameStatus === 'live'">
+						{{gameClock}}87:53</div>
+					<div id="gameTimeLine" ng-if="gameStatus === 'future'">
+						{{gameScheduledTime.date}}</div>
+					<div id="gameTimeLine" ng-if="gameStatus === 'live'">
+						{{gamePeriod}}QTR 4</div>
+					<div id="futureTime" ng-if="gameStatus === 'future'">
+						{{gameScheduledTime.time}}</div>
+				</div>
+
+				<div ng-if="gameStatus === 'past'" id="final">
+					<span><b>FINAL</b></span>
+				</div>
+			
+				<div id="allScores">
+						<a id="allScoresLink" href="{{allScoresURL}}">
+							<span id="allScoresSpan">{{allScoresTitle}}</span>
+						</a>
+				</div>
+
 			</div>
 
-			<div id="scoreCardDataRow" class="row">
-				<span id="leftTeamLogo">
-					<span class="helper"></span>
-					<img src={{leftTeam.logo}} class="teamLogo"/>
-				</span>
-				<span id="leftTeamScore">
-					{{leftTeamScore}}
-				</span>
-				<span id="gameTime">
-					<div ng-if="gameStatus == 'live' || gameStatus == 'future'">
-						{{gamePeriod}}
-					</div>
-					<div id="pastGameFinal" ng-if="gameStatus == 'past'">
-						<div id="pastGameFinalText">
-							<span><b>FINAL</b></span>
-						</div>
-					</div>
-					<div ng-if="gameStatus == 'live' || gameStatus == 'future'">
-						{{gameClock}}
-					</div>
-				</span>
-				<span id="rightTeamScore">
-					{{rightTeamScore}}
-				</span>
-				<span id="rightTeamLogo">
-					<span class="helper"></span>
-					<img src={{rightTeam.logo}} class="teamLogo"/>
-				</span>
+			<!-- Right Column -->
+			<div class="grid-col grid-col-40">
+				<div>
+					{{rightTeam.name}}
+				</div>
+				<div class="score-row-right">
+					<span class="score rightScore">{{rightTeamScore}}</span>
+					<img src={{rightTeam.logo}} />
+				</div>
 			</div>
+			
+ 		</div>
+  </nav>
 
-			<div id="allScoresButtonRow">
-				<a href="{{allScoresURL}}">
-				<span id="allScoresButtonSpan">&nbsp;&nbsp;{{allScoresTitle}}&nbsp;&nbsp;</span>
-				</a>
-			</div>
-
-   		</div>
-    </nav>
-
-	<div id="topicDetails" class="row"> 
+	<div id="topicDetails" class="row" style="width=40%"> 
 		<div>
 			<b>{{topicTitle}}</b>
 		</div>
 		<div id="topicDescriptionBody">
 			{{topicDescHtml}}
 		</div>
+		<div id="topicImage">
+		<img ng-src="{{topicMediaUrl}}" class="topicPhoto" ng-click="imageClick(topicMediaUrl);" />
+		</div>		
+							
 		<div class="topicSharingButtonsRow">
-			<button class="btn-link topic-social-btn" ng-click="updateLikeTopic()"><img src="img/likeButton-2x_.png"/> {{likesCount}}</button>
-			<button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/commentButton-2x_.png"/> {{commentsCount}}</button>
+			<button class="btn-link topic-social-btn" ng-click="updateLikeTopic()" ng-switch="liked">
+							<img ng-switch-when="true" src="img/likeBigSelected.png"/> 
+							<img ng-switch-when="false" src="img/likeBig.png"/> 
+							
+							</button>
+							<span class="socialButtonLable">{{likesCount}} </span>
+			<button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/commentBig.png"/> 
+			</button>
+			<span class="socialButtonLable">{{commentsCount}}</span>
 		</div>
 	</div>
 
+	<div class="commentsHeader">Comments</div>
 
-	<!--ul class="nav nav-pills nav-justified">
-			<li role="presentation" class="active"><a>Posts</a></li>
-			<li role="presentation"><a href="#/post/0">Tweets</a></li>
-	</ul-->
-
-	<div class="commentsHeader">
-		Comments
+	<div id="textInputFieldTopic">
+		<form ng-submit="postComment(commentText)">
+			<div class="input-group" style="display: inline; positon: absolute; width:100%">
+				<input id="topicCommentField" type="text" class="form-control"
+					placeholder="Write a comment..." ng-model="commentText"
+					style="display: inline; positon: absolute; width:85%"> 
+					<button id="postCommentButton" class="btn btn-default" type="button" ng-click="postComment(commentText)">Post</button>
+				
+			</div>
+		</form>
 	</div>
+
+
 
 	<div class="commentsContainer">
 		<div ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}">
 
 				<span class="postAuthorPhoto">
-					<a class="thumbnail">
-	  					<img ng-src="{{thisPost.postAuthorPhoto}}" alt="" class="userPhoto">
-				    </a>
+					<div>
+						<a class="thumbnail">
+		  					<img ng-src="{{thisPost.postAuthorPhoto}}" alt="" onerror="this.src='img/default_user_v3.png'" class="userPhoto">
+					    </a>
+				    </div>
+				    <div id="pinIcon" ng-if="thisPost.pin == true">
+					    <img src="img/pin.png"/>
+					    
+				    </div>
 				</span>
 
 				<span class="post">
@@ -108,20 +165,27 @@
 					</div>
 
 					<div ng-switch-when="video">
-						<img ng-src="{{thisPost.mediaThumbUrl}}" class="postVideo"/>
+						<video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
+						  <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
+						</video>
 					</div>	
 
-					<div class="sharingButtonsRow">
+					<div class="socialButtonsRow">
 						<button class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
-							<img ng-switch-when="true" src="img/likeButton_selected-2x.png"/> 
-							<img ng-switch-when="false" src="img/likeButton-2x.png"/> 
-							{{thisPost.likeCount}}
+							<img ng-switch-when="true" src="img/likeSmallSelected.png"/> 
+							<img ng-switch-when="false" src="img/likeSmall.png"/> 
+						
 						</button>
-						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)"><img src="img/commentButton-2x.png"/> {{thisPost.replyCount}}</button>
-						<!--button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button-->
+						<span class="socialButtonLable">{{thisPost.likeCount}}	</span>
+						
+						<button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
+						<img src="img/replySmall.png"/> </button>
+						<span class="socialButtonLable"> {{thisPost.replyCount}}</span>
+					</div>
+					<div class="sharingButtonsRow">
 						<div class="btn-group">
   							<button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
-    							<img src="img/moreButton-2x.png"/>
+    							<img src="img/moreButton.png"/>
   							</button>
 						  <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
 
@@ -129,18 +193,29 @@
 						    <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
 						  </ul>
 						</div>
-					</div>
+						</div>
+					
 				</span>
 		</div>
 	</div>
-	<!--hr/-->
 	
-	<footer class="footer" id="textEntryField">
-        <div class="form-group" >
+<!-- 	<footer class="footer" id="textEntryField">
         <form ng-submit="postComment(commentText)">
-        	<input id="topicCommentField" placeholder="Comment..." class="form-control" ng-model="commentText" type="text">
-        	</form>
-        </div>
-	</footer>
-	
+    		<div class="input-group">
+      			<input id="topicCommentField" type="text" class="form-control" placeholder="Write a comment..." ng-model="commentText" style="display:inline; positon:absolute; top:50px; right: 5%;" >
+      			<span class="input-group-btn">
+        			<button id="postCommentButton" class="btn btn-default" type="button" ng-click="postComment(commentText)">Post</button>
+      			</span>
+    		</div>
+    	</form>
+	</footer> -->
+<hr>
 </section>
+
+<div id="newCommentsAvailableIndicatorDiv" ng-show="showNewCommentsIndicator">
+	<center>
+		<button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()"><img src="img/newCommentIndicator.png"/></button>
+	</center>
+</div>
+
+

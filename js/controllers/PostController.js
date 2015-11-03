@@ -1,13 +1,15 @@
 var postModule = angular.module("PostModule", ["NetworkModule", "FacebookModule"]);
-postModule.controller("PostController", ["$scope", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "facebookService","UserInfoService", initPostController]);
+postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "facebookService","UserInfoService","URIHelper", initPostController]);
 
-function initPostController($scope, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService, UserInfoService)
+function initPostController($scope, $sce, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService, UserInfoService,URIHelper)
 {
+	//ga('send', 'pageview', "/comment/"+$routeParams.postID);
 	$scope.pageClass = 'page-post';
 
 	$scope.postID = $routeParams.postID;
 	$scope.topicId = TopicService.getTopicId();
 	//$scope.replies = networkService.getRepliesForPostID();
+	$scope.justReplied = false;
 	
 	ReplyService.setPostId($routeParams.postID);
 
@@ -15,10 +17,30 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 	{
 		var topicId = TopicService.getTopicId();
 		if(topicId == undefined)
-			topicId = ReplyService.getTopicIdFromReply();
-		window.location = "#/topic/"+topicId;
+			topicId = $scope.comment.topicId;
+		//window.location = "#/topic/"+topicId;
+		window.history.back();
 	}
 
+	$scope.setPeelUI = function(isPeelUser){
+		console.log("isPeelUser :"+isPeelUser);
+//		if(isPeelUser === true)
+//		{
+//			document.getElementById('postSection').style.paddingTop = "2.0em";
+//			document.getElementById('postHeader').style.height = "3.5em";
+//		}
+//		else
+		{
+			document.getElementById('postSection').style.paddingTop = "3.5em";
+			document.getElementById('postHeader').style.height = "3.5em";
+		}
+	}
+
+	if((UserInfoService.isPeelUser() == true))
+		$scope.isPeelUser = true;
+	else
+		$scope.isPeelUser = false;	
+	$scope.setPeelUI($scope.isPeelUser);
 
 	$scope.requestReplies = function(){
 		// console.log("PostController requestReplies Invoked");
@@ -34,34 +56,48 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		}
 	}
 
-	$scope.triggerRepliesKeyboard = function()
+	$scope.peelClose = function()
 	{
-		document.getElementById("replyCommentField").focus();
+		console.log("peelClose()");
 	}
 
-//	if(facebookService.userLoggedInToFacebook === false)
-//	{
-//		window.location = "#/facebookLogin";
-//	}
-//	else
+	$scope.peelWatchOnTV = function()
 	{
+		ga('send', 'event', 'Peel', 'click', 'PeelWatchOnTV');
+		console.log("peelWatchOnTV()");
+		var showId = URIHelper.getPeelShowId();
+		if(showId != undefined)
+			window.location = "peel://tunein/"+showId;
+		else
+			window.location = "peel://home";
+	}
+
+	$scope.showNewRepliesIndicator = false;
+	$scope.newRepliesIndicatorTapped = function()
+	{
+		console.log("newRepliesIndicatorTapped");
+		$scope.showNewRepliesIndicator = false;
+		updateReplies();
+		window.scrollTo(0,document.body.scrollHeight);
+	}
+
+	$scope.triggerRepliesKeyboard = function()
+	{
+		document.getElementById("postCommentField").focus();
+	}
+	
+	$scope.initReplyPage = function(){
 		$scope.pageClass = 'page-post';
 		$scope.paddingTop = "20";
-		$scope.pageStyle = {'padding-top': '10em'};
+		// $scope.pageStyle = {'padding-top': '10em'};
 
 		$scope.requestReplies();
-
-		if(TopicService.directComment === true)
-		{
-			$scope.triggerRepliesKeyboard();
-			TopicService.directComment = false;
-		}
 
 		var replyPostHeader = $("#replyPost").height();
 		// console.log("height of repy header: " + replyPostHeader);
 		var heightString = replyPostHeader + "px";
-		document.getElementById('postHeader').style.height = '3.5em';//heightString;
-		document.getElementById('postSection').style.paddingTop = '3.5em';
+		// document.getElementById('postHeader').style.height = '3.5em';//heightString;
+		// document.getElementById('postSection').style.paddingTop = '3.5em';
 		document.getElementById('postSection').style.paddingBottom = "3.9em";
 
 		$scope.$watch("replies", function (newValue, oldValue)
@@ -78,12 +114,25 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 		});
 	}
 
+	if(UserInfoService.isUserLoggedIn()){
+		if(!networkService.isSocketConnected())
+			networkService.init();
+		$scope.initReplyPage();
+	}
+	else
+	{
+		window.location = "#/facebookLogin";
+	}
+
 	$scope.postReply = function(commentText) {
 		if((commentText != undefined)	 && commentText != ""){
 		console.log("PostController postReply Invoked :"+ commentText + $scope.topicId);
 		networkService.send(ReplyService.getPostReplyRequest($scope.topicId,$scope.postID, commentText));
 		}
 		$scope.commentText = "";
+		document.getElementById("textInputFieldReply").blur();
+		document.getElementById("postReplyButton").blur();
+		$scope.justReplied = true
 	};
 
 	$scope.updateLikeComment = function(id) {
@@ -116,6 +165,34 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 	{
 		console.log("reportReplyAsSpam(" + id + ")");
 		networkService.send(ReplyService.flagReplyRequest(id));
+	}
+
+	$scope.imageClick = function(imageURL)
+	{
+		event.cancelBubble = true;
+	   if(event.stopPropagation) event.stopPropagation();
+
+		$.magnificPopup.open({
+                    items: {
+                    	type:'image',
+                    	src: imageURL,
+                },
+                type: 'inline',
+                callbacks:
+                {
+				    open: function()
+				    {
+				      console.log("popup opened");
+				      $('body').bind('touchmove', function(e){e.preventDefault()})
+				    },
+				    close: function()
+				    {
+				      console.log("popup closed");
+				      $('body').unbind('touchmove')
+				    }
+				    // e.t.c.
+				}
+            });
 	}
 
 	function updateScore(){
@@ -152,6 +229,7 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 			tempComment.replyCount = selectedComment.metrics.replies;
 			tempComment.mediaAspectFeed = selectedComment.mediaAspectFeed;
 			tempComment.isLiked = selectedComment.signal.like;
+			tempComment.topicId = selectedComment.topicId;
 
 			$scope.comment = tempComment;
 
@@ -199,10 +277,56 @@ function initPostController($scope, $timeout, $routeParams, networkService, Repl
 			//console.log(i +" : updated replies likecount : " +$scope.replies[i].likeCount);
 
 		}
+
+		if(TopicService.directComment === true)
+		{
+			$scope.triggerRepliesKeyboard();
+			TopicService.directComment = false;
+		}
+
+		if($scope.justReplied == true)
+		{
+			setTimeout(function()
+				{ 
+					console.log("Scroll to last reply");
+					window.scrollTo(0,document.body.scrollHeight);
+					$scope.justReplied = false;
+				}, 1000);
+		}
 	}
-	ReplyService.registerObserverCallback(updateReplies);
+	 
+	 var notifyNewReplies = function(){
+
+		 if($scope.replies == undefined)
+		 {
+			 updateReplies();
+		 }
+		 else {
+			 var repliesData = ReplyService.replies();
+			 var len = repliesData.length;
+			 if($scope.replies.length < len ){
+				 //console.log("newReplies triggered");
+				 if(!UserInfoService.isCurrentUser(repliesData[len-1].author.id)){
+					 $scope.showNewRepliesIndicator = true;
+				 }
+				 else{
+					 updateReplies();
+				 }
+			 }
+			 else{
+				 updateReplies();
+			 }
+
+		 }
+	 }
+	 
+	ReplyService.registerObserverCallback(notifyNewReplies);
 	TopicService.registerObserverCallback(updateScore);
 	CommentService.registerObserverCallback(updateCommentInReply);
 
+	$scope.trustSrc = function(src)
+	{
+    	return $sce.trustAsResourceUrl(src);
+  	}
 
 }

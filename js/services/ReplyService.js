@@ -18,6 +18,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 	var observerCallbacks = [];
 	var _replies = [];
 	var _topicIdFromReply;
+	var _currentCommentId;
 
 	function setReplies(replyData) {
 		_replies = [];
@@ -31,7 +32,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 				if(_replyObject.id != undefined )
 					_replies.push(_replyObject);
 				// console.log("Reply object"+_replyObject);
-				_topicIdFromReply = tempReplyData[i].topicId;
+				_topicIdFromReply = tempReplyData[i].topicId;;
 			}
 			notifyObservers();
 		}
@@ -41,10 +42,14 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 		var tempPostedReply = postReplyData.data;
 		if(tempPostedReply!= undefined){
 			console.log("appendToReplies :"+tempPostedReply);
+			console.log("Reply comment ID :"+ tempPostedReply.commentId);
+			console.log("Current comment ID :"+ _currentCommentId);
+			if(tempPostedReply.commentId == _currentCommentId){
 			var _replyObject = Bant.bant(tempPostedReply);
 			if(_replyObject.id != undefined )
 				_replies.push(_replyObject);
 			notifyObservers();
+			}
 		}
 	}
 
@@ -57,11 +62,12 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 				//update
 				_replies[i] = Bant.bant(replyObj)
 				console.log("Reply updated");
-				return;
+				return 1;
 			}
 		}
 		appendToReplies(replyData);
 		// console.log("ReplyService update Reply");
+		return 0;
 	}
 	
 	function updateLocalData(newData){
@@ -110,6 +116,16 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 		}
 	}
 	
+	function getCommentIdByReply(id){
+		if(NETWORK_DEBUG) console.log("_replies :"+ _replies.length);
+		for(i=0;i<_replies.length;i++){
+			if(_replies[i].id == id){
+				//remove element
+				return _replies[i].commentId;
+			}
+		}
+	}
+	
 	function replyGetRequest(uri){
 		return  varReplyParams = {"rid": "reply",
 				"timestamp": new Date().getTime(),
@@ -128,6 +144,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 	}
 	
 	function getRepliesRequest(commentId){
+		_currentCommentId = commentId;
 		var uri = LIST_REPLIES_URI + commentId;
 		return replyGetRequest (uri);
 		
@@ -218,6 +235,7 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 		else if(uri == DELETE_REPLY_URI+id){
 			_replies = FDSUtility.deleteById(_replies,id);
 			notifyObservers();
+			return 0;
 		}
 		else if(uri == FLAG_REPLY_URI+id){
 			_replies = FDSUtility.flagById(_replies, true);
@@ -252,7 +270,8 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 		flagReplyRequest:flagReplyRequest,
 		registerObserverCallback:registerObserverCallback,
 		getRepliesRequest:getRepliesRequest,
-		isReplyLiked:isReplyLiked
+		isReplyLiked:isReplyLiked,
+		getCommentIdByReply:getCommentIdByReply
 	};
 
 });

@@ -2,11 +2,25 @@
  * Forum CSS
  *
  */
-
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
 
  /* Page-level / body */
-
-
+ html
+ {
+ 	box-sizing: border-box;
+ 	background-color:#EBF4FA;
+ 	
+ }
+body {
+max-width: 950px;
+min-width:320px;
+margin: 0 auto;
+position: relative; /* Fix for absolute positioning */
+}
 a
 {
 	color: black;
@@ -15,14 +29,12 @@ a
 .page
 {
 	position:absolute;
-
 	top:0;
-
 	bottom:0;
 	padding-bottom:4em;
-	
 	width:100%;
 	height:100%;
+	
 }
 
 .page-topic
@@ -55,206 +67,32 @@ body
 	text-align:center;
 	/*background-color:red;*/
 	color:white;
-
-	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+	max-width: 950px;
+	margin: 0 auto;
+	/* box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3); */
 }
 
-
-/* Score Card */
-
-#scoreCardCanvas
+/* #postHeader
 {
-	text-align:center;
-	color:white;
-	float:left;
-}
-
-#scoreCardContent
+	position:relative;
+	max-width: 680px;
+	margin: 0 auto;
+	position: relative;
+} */ 
+#topicSection
 {
-	width:100%;
-	height:100%;
-	position:absolute;
-	/*background-color:gray;*/
+	position:relative;
+	max-width: 950px;
+	margin: 0 auto;
+	position: relative;
 }
 
-#scoreCardTitlesRow
-{
-	/*background:rgba(0, 0, 0, 0.3);*/
-	/*margin:5px;*/
-	height:20%;
-}
-
-#scoreCardDataRow
-{
-	/*background-color:rgba(0, 0, 0, 0.3);*/
-	height:60%;
-}
-
-#pastGameFinal
-{
-	/*background-color: green;*/
-	height:100%;
-	/*display:table;*/
-	/*line-height:100%;*/
-	/*vertical-align: middle;*/
-}
-
-
-#pastGameFinalText
-{
-	content: '';
-	height: 100%;
-    width: 100%;
-    padding-top:0.8em;
-    /*display: inline-block;*/
-    /*vertical-align: middle;*/
-    /*align-items: center; */
-    /*text-align:center;*/
-}
-
-
-#allScoresButtonRow
-{
-	height:20%;
-	/*background-color: black;*/
-	vertical-align: middle;
-}
-
-#allScoresButtonSpan
-{
-	/*background-color: yellow;*/
-	/*height:100%;*/
-	font-size:1.0em;
-	font-weight:500;
-	line-height: 1.0em;
-	border: 2px solid #EEE;
-	/*margin-top: 40px;*/
-	/*padding-top:10px;*/
-	/*padding-bottom:3px;*/
-	border-radius: 4px 4px 4px 4px !important;
-	vertical-align: middle;
-}
-
-#allScoresButtonRow a
-{
-	color: white;
-}
-
-#leftTeamSpan
-{
-	/*background-color: red;*/
-	width:35%;
-	float:left;
-	font-size:1.1em;
-	text-align: right;
-}
-
-#liveGameIndicatorSpan
-{
-	width: 30%;
-	float:left;
-	/*background-color: green;*/
-}
-
-#liveGameIndicatorSpan img
-{
-	height:1.1em;
-}
-
-#rightTeamSpan
-{
-	/*background-color: blue;*/
-	width:35%;
-	float:right;
-	font-size:1.1em;
-	text-align: left;
-}
-
-
-#leftTeamLogo
-{
-	width:20%;
-	height:100%;
-	float:left;
-	/*background-color:rgba(255, 255, 255, 0.3);*/
-	/*margin:5px;*/
-	text-align: right;
-}
-
-#leftTeamLogo img
-{
-	max-height:100%;
-}
-
-.helper {
-    display: inline-block;
-    max-height: 100%;
-    vertical-align: middle;
-}
-
-#leftTeamScore
-{
-	width:15%;
-	height:80%;
-	max-height:80%;
-	float:left;
-	font-size:2.5em;
-	/*background-color:rgba(255, 255, 0, 0.3);*/
-	margin-bottom:10px;
-	line-height:160%;
-	text-align: right;
-	/*margin:5px;*/
-	/*display: table-cell; */
-	/*vertical-align: middle*/
-}
-
-
-.teamLogo
-{
-	max-width:70%;
-	vertical-align: middle;
-	text-align: right;
-}
-
-#gameTime
-{
-	float:left;
-	/*background-color:rgba(255, 255, 255, 0.3);*/
-	width:30%;
-	height:80%;
-	font-size:1.2em;
-	line-height:180%;
-	/*margin:5px;*/
-	vertical-align: middle;
-}
-
-#rightTeamScore
-{
-	width:15%;
-	height:80%;
-	float:left;
-	font-size:2.5em;
-	/*background-color:rgba(255, 255, 255, 0.3);*/
-	line-height:160%;
-	/*margin:5px;*/
-	vertical-align: middle;
-	text-align:left;
-}
-
-#rightTeamLogo
-{
-	width:20%;
-	height:100%;
-	float:left;
-	/*background-color:rgba(255, 255, 255, 0.3);*/
-	text-align: left;
-	/*margin:5px;*/
-}
-
-#rightTeamLogo img
-{
-	max-height:100%;
-}
+/* #postSection{
+	position:relative;
+	max-width: 680px;
+	margin: 0 auto;
+	position: relative;
+} */
 
 /* Topic Details */
 
@@ -262,8 +100,10 @@ body
 {
 	background-color: white;
 	font-size:1.1em;
-	min-height:4em;
-	margin:10px;
+	min-height:2.8em;
+	padding-top:4px;
+	padding-left:4px;
+	margin:0 auto;
 }
 
 #topicDescriptionBody
@@ -297,12 +137,12 @@ body
 .commentsHeader
 {
 	text-align: center;
-	font-size: 1.2em;
+	font-size: 1.0em;
 	background-color: rgb(248, 248, 248);
 	color: rgb(59, 166, 252);
 	font-weight:500;
-	min-height:2.6em;
-	line-height:2.6em;
+	min-height:2.2em;
+	line-height:2.2em;
 }
 
 
@@ -339,6 +179,16 @@ body
 	padding:5px;
 }
 
+.postAuthorPhoto img/* left-side of each post row */
+{
+	/*background-color: yellow;*/
+	/*width: 15%;*/
+	max-width: 32px !important;
+	/*max-height: 100%;*/
+	/*float:left;*/
+	/*padding:5px;*/
+}
+
 .repliesHeaderPostAuthorPhoto
 {
 	/*background-color: yellow;*/
@@ -352,29 +202,54 @@ body
 {
 	/*background-color: yellow;*/
 	/*width: 15%;*/
-	max-width: 100%;
+	max-width: 42px !important;
 	/*max-height: 100%;*/
 	/*float:left;*/
 	/*padding:5px;*/
 }
 
-.thumbnail {
+.thumbnail
+{
+	padding-top:9px;
     border: 0 none;
     box-shadow: none;
+    background-color:transparent;
 }
 
 .userPhoto
 {
+	background-color:rgb(230, 237, 243);
 	border-radius: 25px;
 	-webkit-border-radius: 25px;
 }
 
+#pinIcon img {
+    display: block;
+    padding-left:10px;
+    margin-left: auto;
+    margin-right: auto;
+}
 .repliesHeaderUserPhoto
 {
 	background-color:rgb(246, 250, 251);
 	border-radius: 25px;
 	-webkit-border-radius: 25px;
-	max-height: 100%;
+	max-height: 32px !important;
+}
+
+#pinIcon
+{
+	font-size: 0.2em;
+	/*background-color:red;*/
+	max-height:15px;
+	text-align: right;
+	margin-top: -15px;
+	padding: 0px;
+}
+
+#pinIcon img
+{
+	max-height: 15px;
 }
 
 .post /* entire right-side of each post row */
@@ -409,7 +284,7 @@ body
 
 .postUsername
 {
-	font-size: 0.35em;
+	font-size: 0.31em;
 	float:left;
 	color: rgb(166, 189, 207);
 	width:80%;
@@ -420,12 +295,12 @@ body
 
 .timestamp
 {
-	font-size: 0.35em;
+	font-size: 0.31em;
 	float:right;
 	color: rgb(166, 189, 207);
 	width:20%;
 	text-align: right;
-	padding-right:0px;
+/* padding-right:10px; */
 }
 
 .replyTimestamp
@@ -444,8 +319,10 @@ body
 	/*background-color: gray;*/
 	/*padding-left: 5px;*/
 	padding-right: 5px;
-	font-size: 0.35em;
+	font-size: 0.34em;
 	margin-bottom:0.3em;
+	/*overflow:hidden;*/
+	word-wrap:break-word;
 }
 
 .replyContent
@@ -454,6 +331,16 @@ body
 	font-size: 1em;
 	margin-bottom: 1em;
 	color: black;
+}
+
+.topicPhoto
+{
+	width:100%;
+	height:auto;
+	/* max-width:100%;
+	max-height:100%; */
+	margin-top:0.2em;
+	margin-bottom:0.3em;
 }
 
 .postPhoto
@@ -487,23 +374,59 @@ body
 	margin-bottom:0.1em;
 }
 
+.socialButtonsRow
+{
+	float:left;
+	/*background-color:gray;*/
+	padding-left:0px;
+	font-size:0.3em;
+	margin-bottom:0.1em;
+}
+
 .social-btn
 {
-	color: rgb(166, 189, 207);
+	float:left;
+	color:gray;
 	padding:0px;
-	margin-right:5px;
+	width:20px;
 }
 
 .social-btn img
 {
-	width:24px;
-	height:24px;
+	width:17px;
+	height:17px;
+}
+.socialButtonLable
+{
+	float:left;
+	min-width:30px;
+	width:30px;
+	height:16px;
+	padding:5px 2px 7px 3px;
+} 
+span.socialButtonLable
+{
+    display: inline-block;
 }
 
+.social-btn-more
+{
+	float:right;
+	color:gray;
+	padding:0px;
+	width:20px;
+}
+
+.social-btn-more img
+{
+	float:right;
+	width:20px;
+	height:20px;
+}
 
 .topicSharingButtonsRow
 {
-	float:right;
+	float:left;
 	/*background-color:gray;*/
 	padding-right:0px;
 	font-size:0.8em;
@@ -514,20 +437,41 @@ body
 .topic-social-btn
 {
 	/*color: rgb(166, 189, 207);*/
+	float:left;
 	color:gray;
 	padding:0px;
-	margin-right:5px;
+	width:24px
 }
 
 .topic-social-btn img
 {
-	width:24px;
-	height:24px;
+	float:left;
+	width:20px;
+	height:20px;
+}
+.topic-social-btn lable
+{
+	float:left;
+	width:32px;
+	height:20px;
 }
 
 
 
 /* Text Field */
+
+/* #textInputFieldTopic
+{
+	background-color:red;
+	display:inline;
+	position:fixed;
+	top:15em;
+	z-index: 10000;
+	
+	width: 75%;
+	left: 50%;
+	margin-left: -37.5%;
+} */
 
 #textEntryField
 {
@@ -538,6 +482,27 @@ body
 	background-color:white;
 	border-top: 1px solid #EEE;
 	height:3.9em;
+}
+
+#postCommentButton{
+	width:15%;
+	height:2.4em;
+	text-align:center;
+	verticle-align:middle;
+	/*color:white;*/	
+}
+
+#postReplyButton{
+	width:15%;
+	height:2.4em;
+	text-align:center;
+	verticle-align:middle;
+	margin-right:0px;
+	/*color:white;*/	
+}
+input:focus + button {
+   background: linear-gradient(#56A5EC,#82CAFF,#56A5EC);
+    
 }
 
 
@@ -585,5 +550,373 @@ body
 #repliesCommentSeparator
 {
 	background-color: rgb(230, 237, 243);
-	font-size:0.2em;
+	font-size:0.13em;
+}
+
+
+/* - - - Peel-specific CSS - - - */
+
+
+#peelNavBar
+{
+	background-color: black;//rgb(16, 93, 110);
+	min-height: 3em;
+}
+
+/*
+.peelButton
+{
+	padding:10px;
+}
+*/
+
+
+#closePeelButton
+{
+	float:left;
+}
+
+#closePeelButton img
+{
+	max-height: 100%;
+	width:2.4em;
+	height:2.4em;
+}
+
+
+
+#peelWatchOnTVButton
+{
+	float:right;
+}
+
+#peelWatchOnTVButton img
+{
+	max-height:2.4em;
+}
+
+
+/* - - - 'New Content Available' indicator - - - */
+
+#newCommentsAvailableIndicatorDiv
+{
+	/*background-color:red;*/
+	position:fixed;
+	top:11em;
+	z-index: 10000;
+	width: 75%;
+	left: 50%;
+	margin-left: -37.5%;
+}
+
+#newRepliesAvailableIndicatorDiv
+{
+	position:fixed;
+	bottom:5em;
+	z-index: 10000;
+	width: 75%;
+	left: 50%;
+	margin-left: -37.5%;
+}
+
+/* - - - disable scrolling (for use with magnific popup) - - - */
+
+.stop-scrolling
+{
+  height: 100%;
+  overflow: hidden;
+}
+
+
+/* - - - Peel User Splash Page - - - */
+
+#splashUnderlay {
+	position: fixed;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0, 0.7);
+	width: 100%;
+	max-width: 950px;
+	height: 100%;
+	z-index: 10001;
+}
+
+#splashOverlay {
+	position: relative;
+	text-align: center;
+	padding: 4% 0%;
+	background-color: #fff;
+	width: 90%;
+	max-width: 950px;
+	height: 94%;
+	left: 50%;
+	margin-left: -45%;
+	z-index: 10002;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.graphicContainer {
+	text-align: center;
+	margin-bottom: 5%;
+}
+
+#splashGraphic {
+	position: relative;
+	width: 74%;
+	max-width: 300px;
+	height: auto;
+	z-index: 10003;
+}
+
+#continue {
+	position: fixed;
+	width: 80%;
+	max-width: 350px;
+	height: auto;
+	top: 74%;
+	left: 50%;
+	margin-left: -40%;
+	z-index: 10003;
+}
+
+#continue:hover {
+	cursor: pointer;
+}
+
+#kaveLogo {
+	position: fixed;
+	width: 65%;
+	max-width: 260px;
+	height: auto;
+	top: 81%;
+	left: 19%;
+	z-index: 10005
+}
+
+@media all and (min-width: 440px) {
+	
+	#continue {
+		margin-left: -175px;
+	}
+
+	#kaveLogo {
+		left: 50%;
+		margin-left: -130px;
+	}
+}
+
+/* - - - Remove Default Browser Input/Button outlining - - - */
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus,
+[contenteditable="true"]:focus {
+    outline: none;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+/* - - - Facebook Landing Page - - - */
+
+#facebookLoginContainer
+{
+	position:fixed;
+	background-image: url("../img/facebookLoginPage_bkgd-2x.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width:100%;
+    height:100%;
+}
+
+
+#facebookLoginButtonDiv
+{
+	position:fixed;
+	top: 59%;
+	width:80%;
+	left: 49%;
+	margin-left: -40%;
+}
+
+/* - - - Scorecard Text Rework - - - */
+
+.scoreCardContent {
+	width:100%;
+	height:8em;
+	max-height:8em;
+	position:absolute;
+	z-index: 1;
+}
+
+.svg-content {
+	fill:rgba(0,0,0,0);
+}
+
+.grid-col {
+  position: relative;
+  height: 100%;
+  float: left;
+  text-align: center;
+  z-index: 10;
+}
+.grid-col-40 {
+  margin-top: 0.5em;
+  width: 40%;
+}
+
+.grid-col-20 {
+  margin: 0.5em 0 1em 0;
+  width: 20%;
+}
+
+.score-row-left {
+  margin: 3% 0%;
+  padding-right: 25%;
+  height: 2.5em;
+}
+
+.score-row-right {
+  margin: 3% 0%;
+  padding-left: 25%;
+  height: 2.5em;
+}
+
+.score {
+	width:15%;
+	height:80%;
+	max-height:80%;
+	float:right;
+	font-size:2.5em;
+	line-height:160%;
+	vertical-align: middle;
+}
+
+.leftScore {
+	float:right;
+}
+
+.rightScore {
+	float:left;
+}
+
+.score-row-left > img,
+.score-row-right > img {
+	max-height: 50px;
+	height: auto;
+	vertical-align: middle;
+
+}
+
+#rightColor {
+	width:100%;
+	height:8em;
+	max-height:8em;
+	position:absolute;
+	z-index: 2;
+}
+
+#final {
+	position: relative;
+	top: 30%;
+	font-size: 1.3em;
+	margin-bottom: 2em;
+}
+
+#liveGameIndicator img {
+	position: relative;
+	height:1.5em;
+	left: -1%;
+}
+
+#gameTimeLine {
+	width:100%;
+	height:50%;
+}
+
+#allScores
+{
+	position: relative;
+	height:25%;
+	top: 15%;
+	vertical-align: middle;
+	line-height:0em;
+	z-index: 5;
+}
+
+#allScoresSpan
+{
+	font-size:0.8em;
+	font-weight:300;
+	line-height: 0.8em;
+	border: 1px solid #EEE;
+	padding: 3px;
+	border-radius: 4px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.time {
+	margin-top: 0.3em;
+}
+
+#allScoresLink {
+	color: white;
+}
+#allScoresSpan:hover {
+	background-color: #EEE;
+}
+#allScoresLink:hover {
+	color: rgb(59, 166, 252);
+}
+a,
+a:hover,
+a:focus {
+	text-decoration: none;
+}
+
+@media all and (max-width: 450px) {
+	
+	#futureTime {
+		font-size: 0.9em;
+	}
+
+}
+
+@media all and (min-width: 400px) {
+	
+	.score-row-left > img,
+	.score-row-right > img {
+		max-height: 60px;
+	}
+
+	.score {
+		font-size: 3em;
+	}
+
+	#final {
+		margin-bottom: 1.5em;
+	}
+
+	#allScores {
+		margin-top: 0.3em;
+	}
+
+	#allScoresSpan {
+		font-size: 0.9em;
+		padding: 3px 5px;
+	}
+
+}
+
+/* - - - UTILITES - - - */
+
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
 }

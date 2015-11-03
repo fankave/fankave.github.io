@@ -1,10 +1,13 @@
 var facebookModule = angular.module("FacebookModule", ["NetworkModule", "TopicModule"]);
-facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$http", "$compile", "facebookService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", initFacebookController]);
+facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$http", "$compile", "facebookService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService",initFacebookController]);
 
-function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo)
+function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo,ChannelService)
 {
 	// console.log("initFacebookController");
-
+	if(HOST_NAME == undefined)
+		HOST_NAME = window.location.host;
+	if(HOST_NAME == 'dev.fanakve.com')
+	REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
 	$scope.loginToFacebook = function()
 	{
 		// console.log("log in to Facebook");
@@ -24,7 +27,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	window.fbAsyncInit = function()
 	{
         FB.init({
-          appId      : '1573356879579907',
+          appId      : '210324962465861',
           xfbml      : true,
           version    : 'v2.4'
         });
@@ -70,7 +73,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 
               $("#landingPageContent").html(
 			  $compile(
-			  		"<button ng-click=loginToFacebook();><img src=img/FacebookLoginButton-2x.png width=235 height=50/></button>"
+			  		"<div id=facebookLoginContainer><center><div id=facebookLoginButtonDiv><button class=btn-link ng-click=loginToFacebook();><img src=img/FacebookLoginButton-2x.png /></button></div></center></div>"
 			  )($scope)
 			  );
             }
@@ -81,7 +84,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 
 	(function(d, s, id)
 	{
-		// console.log('loading FB SDK...');
+		console.log('loading FB SDK...');
 		var js, fjs = d.getElementsByTagName(s)[0];
 		if (d.getElementById(id)) {return;}
 		js = d.createElement(s); js.id = id;
@@ -99,6 +102,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 
        $scope.fbID = uid;
        $scope.fbAccessToken = accessToken;
+       console.log("FB REsPONSE "+ $scope.fbID + "token : "+ $scope.fbAccessToken);
 
        $scope.registerFacebookUser();
 	}
@@ -128,9 +132,8 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	      };
 
 	      // console.log('registration parameters: ' + JSON.stringify(registrationParameters));
-
 	      
-	      $http.post('http://104.197.8.198/v1.0/user/register', registrationParameters).then(
+	      $http.post(REGISTER_SERVER_URI, JSON.stringify(registrationParameters)).then(
 	      function(response)
 	      {
 	          // console.log('success');
@@ -143,7 +146,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 
 	          if(response.status == 200)
 	          {
-	            // console.log("registered user successfully");
+	            console.log("registered user successfully");
 	            var registrationInfoElement = document.getElementById("registrationInfo")
 	            var registrationInfoHTML = "<div>userID: " + response.data.userId + "</div>";
 	            registrationInfoHTML += "<div>sessionID: " + response.data.sessionId + "</div>";
@@ -158,7 +161,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 
 	            facebookService.userLoggedInToFacebook = true;
 	            // console.log("Setting user info in Facebook Service");
-	            UserInfoService.setUserCredentials(response.data.userId, response.data.accessToken, response.data.sessionId);
+	            UserInfoService.setUserCredentials(response.data.userId, response.data.accessToken, response.data.sessionId, "facebook");
 
 	            networkService.init();
 
@@ -169,17 +172,21 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	            	// console.log("found post ID: " + ReplyService.getPostId());
 	            	window.location = "#/post/" + ReplyService.getPostId();
 	            }
-	            else
-	            {
-	            	// console.log("couldn't find a post ID, reverting to topic ID");
-					window.location = "#/topic/" + TopicService.getTopicId();
-				}
+				 else if(TopicService.getTopicId() != undefined)
+		            {
+					 console.log("found Topic ID: " + TopicService.getTopicId());
+						window.location = "#/topic/" + TopicService.getTopicId();
+					}
+					else if(ChannelService.getChannel() != undefined){
+						console.log("found channel ID: " + ChannelService.getChannel());
+						networkService.send(ChannelService.getLiveGameTopic());
+					}
 	          }
 	      },
 	      function(response)
 	      {
 	          console.log('error');
-	          console.log('response:  ' + response);
+	          console.log('response:  ' + JSON.stringify(response));
 	          console.log('response.status: ' + response.status);
 	          console.log('response.data: ' + JSON.stringify(response.data));
 	          console.log('response.headers: ' + response.headers);

@@ -62,7 +62,10 @@ networkModule.factory('Bant', function (DateUtilityService) {
 			_commentObject.signal.like = false;
 		_commentObject.metrics = data.metrics;
 		_commentObject.createdAt = DateUtilityService.getTimeSince(data.createdAt);
-
+		_commentObject.pin = data.pin;
+		_commentObject.commentId = data.commentId;
+		_commentObject.topicId = data.topicId;
+		
 		return _commentObject;
 
 	}

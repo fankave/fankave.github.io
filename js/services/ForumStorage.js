@@ -1,6 +1,6 @@
 networkModule.factory('ForumStorage', function () {
 	var localStorageAvailable = false;
-	if(typeof(Storage) !== "undefined") {
+	if(typeof(Storage) != undefined) {
 		console.log("Local storage available :"+ typeof(Storage));
 		localStorageAvailable = true;
 	}  
@@ -9,18 +9,25 @@ networkModule.factory('ForumStorage', function () {
 	}
 	
 	function setToLocalStorage(key, value){
-		if(localStorageAvailable)
+		if(localStorage!= undefined && localStorageAvailable)
 		localStorage.setItem(key,value);
 	}
 	
 	function getFromLocalStorage(key){
-		if(localStorageAvailable)
+		if(localStorage!= undefined && localStorageAvailable)
 		return localStorage.getItem(key);
+		return undefined;
+	}
+	
+	function clearStorage(){
+		if(localStorage!= undefined && localStorageAvailable)
+		localStorage.clear();
 	}
 	
 	return{
 		getFromLocalStorage:getFromLocalStorage,
-		setToLocalStorage:setToLocalStorage
+		setToLocalStorage:setToLocalStorage,
+		clearStorage:clearStorage
 	}
 	
 	

@@ -5,8 +5,11 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 	var UNLIKE_TOPIC_URI = "/v1.0/topic/unlike/";
 	var WATCH_TOPIC_URI = "/v1.0/topic/watch/";
 	
+	var _channelId;
+	
 	var _isTopicWatched = false;
 	var _topic;
+	var _topicType;
 	var _id;
 	var _title;
 	var _game;
@@ -21,28 +24,34 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 	function setTopicData(topicData) 
 	{
 		if(topicData.data != undefined){
-			if(topicData.data.content != undefined )
+			if(topicData.data.content != undefined ){
 				_title = topicData.data.content.title;
-			_id = topicData.data.id
+			}
 
-			_game = topicData.data.game;
-			if(_game != undefined){
-				_scheduledAt = DateUtilityService.getGameScheduledTime(_game.scheduledAt);
-				_score = _game.score;
-//				Future game: live == false AND final == false.
-//				Live game: live == true.
-//				Past game: final == true.
-				if(_score.live == undefined && _score.final == undefined)
-					_status = "future";
-				else if(_score.live == true)
-					_status = "live";
-				else if(_score.final == true)
-					_status = "past";
-				// console.log("GAME Status  :"+ _status );
 
-				if(_status == "live"){
-					console.log("_gameStats" + _score.status);
-					_gameStats = _score.status;
+			_topicType = topicData.data.topicType;
+			console.log("TOPIC TYPE :"+_topicType );
+			_id = topicData.data.id;
+			if(_topicType == "livegame"){
+				_game = topicData.data.game;
+				if(_game != undefined){
+					_scheduledAt = DateUtilityService.getGameScheduledTime(_game.scheduledAt);
+					_score = _game.score;
+	//				Future game: live == false AND final == false.
+	//				Live game: live == true.
+	//				Past game: final == true.
+					if(_score.live == undefined && _score.final == undefined)
+						_status = "future";
+					else if(_score.live == true)
+						_status = "live";
+					else if(_score.final == true)
+						_status = "past";
+					// console.log("GAME Status  :"+ _status );
+	
+					if(_status == "live"){
+						console.log("_gameStats" + _score.status);
+						_gameStats = _score.status;
+					}
 				}
 			}
 
@@ -81,7 +90,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 	function setScoreData(scoreData) 
 	{
 		_score = scoreData;
-		console.log("TopicService  insideScore"+_score );
+		//console.log("TopicService  insideScore"+_score );
 		if(_score != undefined){
 			if(_score.live == true){
 				_status = "live";
@@ -94,10 +103,13 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 		}
 	}
 	
-	function updateCommentCount(){
-		console.log("Update comment count" + _topic.metrics.comments);
+	function updateCommentCount(value){
+		console.log("Update comment count: " + _topic.metrics.comments + "     Value : "+ value);
 		if(_topic!= undefined && _topic.metrics != undefined){
+			if(value == 1)
 			_topic.metrics.comments == undefined ? _topic.metrics.comments =1: _topic.metrics.comments = _topic.metrics.comments+1;
+			else
+				_topic.metrics.comments == undefined ? _topic.metrics.comments =0: _topic.metrics.comments = _topic.metrics.comments-1;	
 		}
 		notifyObservers();
 	}
@@ -174,6 +186,8 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 			return _topic ;},
 		getTopicId: function(){	
 			return _id ;},
+		getTopicType: function(){	
+			return _topicType ;},
 		getGame: function(){	
 			return _game;},
 		getGameTime: function(){
@@ -181,14 +195,10 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 		},
 		getTeamA: function(){	
 			if(_game != undefined) {
-				if(_id=="53f950aee1c00039")
-				_game.teams[0].name = "SJ Earthquakes";
 				return _game.teams[0];
 			}},
 		getTeamB: function(){	
 			if(_game != undefined) {
-				if(_id=="53f950aee1c00039")
-				_game.teams[1].name = "NYCFC";
 				return _game.teams[1];}
 		},
 		getScoresTitle: function(){		
@@ -250,6 +260,9 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 		setWatchTopic: function(watch){_isTopicWatched = watch;},
 		
 		setTopicId: function(topicId){_id = topicId ;},
+		
+		setChannel: function(channelId){_channelId = channelId; },
+		getChannel: function(){return _channelId ; },
 		
 		setTopic:setTopicData,
 		
