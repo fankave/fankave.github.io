@@ -9,20 +9,19 @@
 }
 
  /* Page-level / body */
- html
- {
+html {
  	box-sizing: border-box;
  	background-color:#EBF4FA;
- 	
- }
+}
+
 body {
 max-width: 950px;
 min-width:320px;
 margin: 0 auto;
 position: relative; /* Fix for absolute positioning */
 }
-a
-{
+
+a {
 	color: black;
 }
 
@@ -723,24 +722,30 @@ button:hover {
 
 /* - - - Facebook Landing Page - - - */
 
-#facebookLoginContainer
-{
-	position:fixed;
-	background-image: url("../img/facebookLoginPage_bkgd-2x.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    width:100%;
-    height:100%;
+#landingContainer {
+	position:relative;
+	background-color: #EBF4FA;
+  width:100%;
+  height:100%;
+  text-align: center;
 }
 
+#landingGraphic > img {
+	width: auto;
+	height: 100vh;
+}
 
-#facebookLoginButtonDiv
-{
+#facebookButtonContainer {
 	position:fixed;
-	top: 59%;
-	width:80%;
-	left: 49%;
-	margin-left: -40%;
+	top: 32vh;
+	width:100%;
+}
+
+#facebookButton {
+	position: absolute;
+	width: 60vw;
+	height: auto;
+	margin-left: -30vw;
 }
 
 /* - - - Scorecard Text Rework - - - */
@@ -749,6 +754,7 @@ button:hover {
 	width:100%;
 	height:8em;
 	max-height:8em;
+	line-height: 1.2em;
 	position:absolute;
 	z-index: 1;
 }
@@ -757,6 +763,7 @@ button:hover {
 	fill:rgba(0,0,0,0);
 }
 
+/* - COLUMNS - */
 .grid-col {
   position: relative;
   height: 100%;
@@ -765,51 +772,68 @@ button:hover {
   z-index: 10;
 }
 .grid-col-40 {
-  margin-top: 0.5em;
   width: 40%;
 }
 
 .grid-col-20 {
-  margin: 0.5em 0 1em 0;
   width: 20%;
 }
 
-.score-row-left {
-  margin: 3% 0%;
-  padding-right: 25%;
-  height: 2.5em;
+/* - ROWS - */
+.grid-row-33 {
+	height: 33%;
 }
 
-.score-row-right {
-  margin: 3% 0%;
-  padding-left: 25%;
-  height: 2.5em;
+.grid-row-34 {
+	height: 34%;
+}
+
+.grid-row-22 {
+	height: 22%;
+}
+
+.grid-row-45 {
+	height: 45%;
+	padding-top: 2px;
+}
+
+.grid-row-33 > span {
+	vertical-align: -50%;
+}
+
+.grid-row-22 > span {
+	vertical-align: -70%;
+}
+
+.teamLogo > img {
+	max-height: 48px;
+	/*max-width: 60px;*/
+}
+
+#teamName {
+	font-weight: 300;
+}
+
+#possession {
+	font-size: 0.9em;
+}
+
+#possession > img {
+	height: 10px;
 }
 
 .score {
-	width:15%;
-	height:80%;
-	max-height:80%;
-	float:right;
-	font-size:2.5em;
-	line-height:160%;
-	vertical-align: middle;
+	font-size:2.8em;
+	font-weight: 300;
+	vertical-align: -15px;
 }
 
-.leftScore {
-	float:right;
+.score-right {
+	padding-right: 8%;
 }
 
-.rightScore {
-	float:left;
-}
-
-.score-row-left > img,
-.score-row-right > img {
-	max-height: 50px;
-	height: auto;
-	vertical-align: middle;
-
+.score-left {
+	padding-left: 8%;
 }
 
 #rightColor {
@@ -829,20 +853,21 @@ button:hover {
 
 #liveGameIndicator img {
 	position: relative;
-	height:1.5em;
-	left: -1%;
+	height:50%;
+	left: -2%;
 }
 
-#gameTimeLine {
-	width:100%;
-	height:50%;
+.gameTimeLine {
+	display: block;
+	font-weight: 200;
+	font-size: 1.1em;
+	line-height: 1.2em;
 }
 
 #allScores
 {
 	position: relative;
 	height:25%;
-	top: 15%;
 	vertical-align: middle;
 	line-height:0em;
 	z-index: 5;
@@ -850,18 +875,11 @@ button:hover {
 
 #allScoresSpan
 {
-	font-size:0.8em;
+	font-size:0.9em;
 	font-weight:300;
-	line-height: 0.8em;
-	border: 1px solid #EEE;
-	padding: 3px;
-	border-radius: 4px;
-	vertical-align: middle;
-	text-align: center;
-}
-
-.time {
-	margin-top: 0.3em;
+	border: 0.1em solid #EEE;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
 }
 
 #allScoresLink {
@@ -879,36 +897,21 @@ a:focus {
 	text-decoration: none;
 }
 
-@media all and (max-width: 450px) {
+@media all and (max-width: 374px) {
 	
-	#futureTime {
-		font-size: 0.9em;
+	#allScoresSpan {
+		font-size: 0.8em;
 	}
 
 }
 
-@media all and (min-width: 400px) {
+@media all and (min-width: 480px) {
 	
-	.score-row-left > img,
-	.score-row-right > img {
-		max-height: 60px;
+	.score-right {
+		padding-right: 14%;
 	}
-
-	.score {
-		font-size: 3em;
-	}
-
-	#final {
-		margin-bottom: 1.5em;
-	}
-
-	#allScores {
-		margin-top: 0.3em;
-	}
-
-	#allScoresSpan {
-		font-size: 0.9em;
-		padding: 3px 5px;
+	.score-left {
+		padding-left: 14%;
 	}
 
 }
