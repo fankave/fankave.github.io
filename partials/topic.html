@@ -31,51 +31,62 @@
         height="100%"
         viewBox="0 0 100 100"
         preserveAspectRatio="none">
-        <polygon points="59,0 100,0 100,100 41,100"/>
+        <polygon points="60,0 100,0 100,100 40,100"/>
       </svg>
     </div>
 
     <!-- Left Column -->
     <div id="L-40" class="grid-col grid-col-40">
+      
+      <!-- Top Row -->
       <div class="grid-row-22">
         <span id="teamName">{{leftTeam.name}}</span>
         <span id="leftTeamRecord" ng-if="gameStatus === 'past' || gameStatus === 'future'">5-3</span>
       </div>
+
+      <!-- Middle Row -->
       <div class="grid-row-45">
-        <span class="teamLogo"><img src={{leftTeam.logo}} /></span>
-        <span class="score score-left" ng-hide="gameStatus === 'past'">{{leftTeamScore}}</span>
+        <span class="teamLogo" ng-class="{largeLogo: gameStatus === 'future'}"><img src={{leftTeam.logo}} /></span>
+
+        <span class="score score-left" ng-if="leftTeamScore.length < 3" ng-hide="gameStatus === 'future'">{{leftTeamScore}}</span>
+        <span class="triple triple-left" ng-if="leftTeamScore.length === 3" ng-hide="gameStatus === 'future'">{{leftTeamScore}}</span>
       </div>
+
+      <!-- Bottom Row -->
       <div class="grid-row-33">
         <span id="possession" ng-if="gameStatus === 'live'"><img src="img/ball_icon.png" /> 1st-10, WAS 15</span>
       </div>
+
     </div>
 
     <!-- Center Column -->
     <div class="grid-col grid-col-20">
-
+      
+      <!-- Top Row -->
       <div id="liveGameIndicator" class="grid-row-22">
         <span ng-if="gameStatus === 'live'"><img src="img/live-2x.png"/></span>
-        <span id="vs" ng-if="gameStatus === 'past'">VS</span>
+        <span id="vs" ng-if="gameStatus === 'future'">VS</span>
       </div>
-
+      
+      <!-- Middle Row -->
       <div class="grid-row-45 time">
         <div class="center" ng-if="gameStatus === 'live'">
-          <span>{{gamePeriod}}QTR 4</span>
-          <span>{{gameClock}}02:45</span>
+          <span>{{gamePeriod}}</span>
+          <span>{{gameClock}}</span>
         </div>
-        <div class="center" ng-if="gameStatus === 'past'">
+        <div class="center" ng-if="gameStatus === 'future'">
           <span>{{gameScheduledTime.date}}</span>
           <span id="futureTime">{{gameScheduledTime.time}}</span>
         </div>
-        <div class="center" ng-if="gameStatus === 'live'">
+        <div class="center" ng-if="gameStatus === 'past'">
           <span id="finalDate">{{gameScheduledTime.date}}</span>
           <span id="final">
             <span>FINAL</span>
           </span>
         </div>
       </div>
-
       
+      <!-- Bottom Row -->
       <div class="grid-row-33">
         <span><a id="allScoresLink" href="{{allScoresURL}}">
           <span id="allScoresSpan">{{allScoresTitle}}</span>
@@ -86,14 +97,23 @@
 
     <!-- Right Column -->
     <div id="R-40" class="grid-col grid-col-40">
+      
+      <!-- Top Row -->
       <div class="grid-row-22">
         <span id="rightTeamRecord" ng-if="gameStatus === 'past' || gameStatus === 'future'">6-2</span>
         <span id="teamName">{{rightTeam.name}}</span>
       </div>
+      
+      <!-- Middle Row -->
       <div class="grid-row-45">
-        <span class="score score-right" ng-hide="gameStatus === 'past'">{{rightTeamScore}}</span>
-        <span class="teamLogo"><img src={{rightTeam.logo}} /></span>
+
+        <span class="score score-right" ng-if="rightTeamScore.length < 3" ng-hide="gameStatus === 'future'">{{rightTeamScore}}</span>
+        <span class="triple triple-right" ng-if="rightTeamScore.length === 3" ng-hide="gameStatus === 'future'">{{rightTeamScore}}</span>
+        
+        <span class="teamLogo" ng-class="{largeLogo: gameStatus === 'future'}"><img src={{rightTeam.logo}} /></span>
       </div>
+      
+      <!-- Bottom Row -->
       <div class="grid-row-33">
         <span id="possession" ng-if="gameStatus === 'live'"></span>
       </div>

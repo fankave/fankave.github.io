@@ -39,6 +39,7 @@ a {
 .page-topic
 {
 	/*padding-top: 8em; */
+	background-color: #EBF4FA;
 }
 
 .page-post
@@ -66,7 +67,7 @@ body
 	text-align:center;
 	/*background-color:red;*/
 	color:white;
-	max-width: 950px;
+	max-width: 768px;
 	margin: 0 auto;
 	/* box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3); */
 }
@@ -81,7 +82,7 @@ body
 #topicSection
 {
 	position:relative;
-	max-width: 950px;
+	max-width: 768px;
 	margin: 0 auto;
 	position: relative;
 }
@@ -571,13 +572,14 @@ input:focus + button {
 */
 
 
-#closePeelButton
-{
-	float:left;
+#closePeelButton {
+	/*float:left;*/
+	position: absolute;
+	left: 0;
+	top: 5px;
 }
 
-#closePeelButton img
-{
+#closePeelButton img {
 	max-height: 100%;
 	width:2.4em;
 	height:2.4em;
@@ -585,16 +587,14 @@ input:focus + button {
 
 
 
-#peelWatchOnTVButton
-{
+#peelWatchOnTVButton {
 	/*float: right;*/
 	position: absolute;
 	right: 0;
 	top: 5px;
 }
 
-#peelWatchOnTVButton img
-{
+#peelWatchOnTVButton img {
 	max-height:2.4em;
 }
 
@@ -757,7 +757,6 @@ button:hover {
 .scoreCardContent {
 	width:100%;
 	height:125px;
-	/*max-height:8em;*/
 	line-height: 1.2em;
 	position:absolute;
 	z-index: 1;
@@ -780,11 +779,11 @@ button:hover {
 }
 
 #L-40 {
-	padding-left: 4%;
+	padding-left: 6%;
 }
 
 #R-40 {
-	padding-right: 4%;
+	padding-right: 6%;
 }
 
 .grid-col-20 {
@@ -806,47 +805,53 @@ button:hover {
 
 .grid-row-45 {
 	height: 45%;
-	/*padding-top: 2px;*/
 }
 
 .grid-row-33 > span {
-	vertical-align: -50%;
+	vertical-align: -80%;
 }
 
 .grid-row-22 > span {
 	vertical-align: -70%;
 }
 
+/* - Elements - */
 .teamLogo > img {
-	max-height: 48px;
-	margin-top: 2px;
+	max-height: 56px;
+	/*max-width: 56px;*/
+	margin-top: 4px;
+}
+
+.largeLogo > img {
+	max-height: 62px;
 }
 
 #teamName {
 	font-weight: 600;
-	font-size: 1.1em;
+	font-size: 14px;
 }
 
 #leftTeamRecord {
 	position: absolute;
-	font-size: 1em;
+	font-size: 12px;
 	top: 11px;
-	left: 85%;
+	right: 0%;
 }
 
 #rightTeamRecord {
 	position: absolute;
-	font-size: 1em;
+	font-size: 12px;
 	top: 11px;
-	right: 85%;
+	left: 0%;
 }
 
 #possession {
-	font-size: 0.9em;
+	font-size: 13px;
 }
 
 #possession > img {
 	height: 10px;
+	vertical-align: baseline;
 }
 
 .score {
@@ -863,22 +868,35 @@ button:hover {
 	padding-left: 8%;
 }
 
+.triple {
+	font-size: 2.4em;
+	font-weight: 300;
+	vertical-align: middle;
+}
+
+.triple-right {
+	padding-right: 8%;
+}
+
+.triple-left {
+	padding-left: 8%;
+}
+
 .center {
 	display: inline-block;
-	vertical-align: -170%;
+	vertical-align: -200%;
 }
 
 .center > span {
 	display: block;
 	font-weight: 200;
 	font-size: 16px;
-	line-height: 1.1em;
+	line-height: 1.2em;
 }
 
 #rightColor {
 	width:100%;
 	height:125px;
-	/*max-height:8em;*/
 	position:absolute;
 	z-index: 2;
 }
@@ -889,7 +907,7 @@ button:hover {
 
 #finalDate {
 	position: relative;
-	top: -6px;
+	top: -5px;
 }
 
 #futureTime {
@@ -903,7 +921,7 @@ button:hover {
 #liveGameIndicator img {
 	position: relative;
 	height: 19px;
-	top: -5px;
+	top: -4px;
 	left: -2%;
 }
 
@@ -917,12 +935,11 @@ button:hover {
 	z-index: 5;
 }
 
-#allScoresSpan
-{
-	font-size:0.9em;
+#allScoresSpan {
+	font-size:13px;
 	font-weight:300;
 	border: 0.1em solid #EEE;
-	padding: 0.2em 0.4em;
+	padding: 3px 6px;
 	border-radius: 3px;
 }
 
@@ -935,31 +952,16 @@ button:hover {
 #allScoresLink:hover {
 	color: rgb(59, 166, 252);
 }
+
 a,
 a:hover,
 a:focus {
 	text-decoration: none;
 }
 
-@media all and (max-width: 340px) {
-	#futureTime {
-		font-size: 0.3em;
-	}
-}
+/* - Media Queries - */
 
-@media all and (max-width: 374px) {
-	#allScoresSpan {
-		font-size: 0.8em;
-	}
-}
-
-@media all and (max-width: 409px) {
-	#futureTime {
-		font-size: 1em;
-	}
-}
-
-@media all and (min-width: 480px) {
+@media all and (min-width: 500px) {
 	
 	.score-right {
 		padding-right: 14%;
@@ -967,7 +969,73 @@ a:focus {
 	.score-left {
 		padding-left: 14%;
 	}
+	#teamName {
+		font-size: 16px;
+	}
+	#rightTeamRecord {
+		font-size: 14px;
+		left: 8%;
+	}
+	#leftTeamRecord {
+		font-size: 14px;
+		right: 8%;
+	}
 
+}
+
+@media all and (max-width: 409px) {
+	
+	#futureTime {
+		font-size: 15px;
+	}
+	.triple-left {
+		padding-left: 0%;
+	}
+	.triple-right {
+		padding-right: 0%;
+	}
+}
+
+@media all and (max-width: 374px) {
+	#allScoresSpan {
+		font-size: 11px;
+	}
+	.score {
+		font-size: 2.4em;
+	}
+	#R-40 {
+		padding-right: 1%;
+	}
+	#L-40 {
+		padding-left: 1%;
+	}
+	#possession {
+		font-size: 11px;
+	}
+	.center {
+		vertical-align: -190%;
+	}
+	.center > span {
+		font-size: 14px;
+	}
+	#teamName {
+		font-size: 13px;
+	}
+	#futureTime {
+		font-size: 14px;
+	}
+}
+
+@media all and (max-width: 350px) {
+	.triple {
+		font-size: 2.2em;
+	}
+	#futureTime {
+		font-size: 13px;
+	}
+	#vs {
+		font-size: 13px;
+	}
 }
 
 /* - - - UTILITES - - - */
