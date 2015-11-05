@@ -1,7 +1,7 @@
 var topicModule = angular.module("TopicModule", ["NetworkModule", "FacebookModule", "SplashModule"]);
-topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "facebookService", "UserInfoService","URIHelper","RegistrationService","SplashService",initTopicController]);
+topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "facebookService", "UserInfoService","URIHelper","RegistrationService","SplashService","MUService",initTopicController]);
 
-function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper, RegistrationService, SplashService)
+function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper, RegistrationService, SplashService,MUService)
 {
 
 	ga('send', 'pageview', "/topic/"+$routeParams.topicID);
@@ -74,6 +74,7 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 	
 	var updateTopic = function(){
 		if(TopicService.getTopic() != undefined){
+			MUService.uploadMedia("some");
 			$scope.topicType = TopicService.getTopicType();
 			if(TopicService.isWatchingTopic() == false){
 				networkService.send(TopicService.getFollowChannelRequest());
