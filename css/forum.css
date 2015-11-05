@@ -9,20 +9,19 @@
 }
 
  /* Page-level / body */
- html
- {
+html {
  	box-sizing: border-box;
  	background-color:#EBF4FA;
- 	
- }
+}
+
 body {
 max-width: 950px;
 min-width:320px;
 margin: 0 auto;
 position: relative; /* Fix for absolute positioning */
 }
-a
-{
+
+a {
 	color: black;
 }
 
@@ -40,6 +39,7 @@ a
 .page-topic
 {
 	/*padding-top: 8em; */
+	background-color: #EBF4FA;
 }
 
 .page-post
@@ -67,7 +67,7 @@ body
 	text-align:center;
 	/*background-color:red;*/
 	color:white;
-	max-width: 950px;
+	max-width: 768px;
 	margin: 0 auto;
 	/* box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3); */
 }
@@ -82,7 +82,7 @@ body
 #topicSection
 {
 	position:relative;
-	max-width: 950px;
+	max-width: 768px;
 	margin: 0 auto;
 	position: relative;
 }
@@ -560,7 +560,8 @@ input:focus + button {
 #peelNavBar
 {
 	background-color: black;//rgb(16, 93, 110);
-	min-height: 3em;
+	/*min-height: 3em;*/
+	height: 52px;
 }
 
 /*
@@ -571,13 +572,14 @@ input:focus + button {
 */
 
 
-#closePeelButton
-{
-	float:left;
+#closePeelButton {
+	/*float:left;*/
+	position: absolute;
+	left: 0;
+	top: 5px;
 }
 
-#closePeelButton img
-{
+#closePeelButton img {
 	max-height: 100%;
 	width:2.4em;
 	height:2.4em;
@@ -585,13 +587,14 @@ input:focus + button {
 
 
 
-#peelWatchOnTVButton
-{
-	float:right;
+#peelWatchOnTVButton {
+	/*float: right;*/
+	position: absolute;
+	right: 0;
+	top: 5px;
 }
 
-#peelWatchOnTVButton img
-{
+#peelWatchOnTVButton img {
 	max-height:2.4em;
 }
 
@@ -723,32 +726,38 @@ button:hover {
 
 /* - - - Facebook Landing Page - - - */
 
-#facebookLoginContainer
-{
-	position:fixed;
-	background-image: url("../img/facebookLoginPage_bkgd-2x.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    width:100%;
-    height:100%;
+#landingContainer {
+	position:relative;
+	background-color: #EBF4FA;
+  width:100%;
+  height:100%;
+  text-align: center;
 }
 
+#landingGraphic > img {
+	width: auto;
+	height: 100vh;
+}
 
-#facebookLoginButtonDiv
-{
+#facebookButtonContainer {
 	position:fixed;
-	top: 59%;
-	width:80%;
-	left: 49%;
-	margin-left: -40%;
+	top: 32vh;
+	width:100%;
+}
+
+#facebookButton {
+	position: absolute;
+	width: 60vw;
+	height: auto;
+	margin-left: -30vw;
 }
 
 /* - - - Scorecard Text Rework - - - */
 
 .scoreCardContent {
 	width:100%;
-	height:8em;
-	max-height:8em;
+	height:125px;
+	line-height: 1.2em;
 	position:absolute;
 	z-index: 1;
 }
@@ -757,6 +766,7 @@ button:hover {
 	fill:rgba(0,0,0,0);
 }
 
+/* - COLUMNS - */
 .grid-col {
   position: relative;
   height: 100%;
@@ -765,103 +775,172 @@ button:hover {
   z-index: 10;
 }
 .grid-col-40 {
-  margin-top: 0.5em;
-  width: 40%;
+  width: 37%;
+}
+
+#L-40 {
+	padding-left: 6%;
+}
+
+#R-40 {
+	padding-right: 6%;
 }
 
 .grid-col-20 {
-  margin: 0.5em 0 1em 0;
-  width: 20%;
+  width: 26%;
 }
 
-.score-row-left {
-  margin: 3% 0%;
-  padding-right: 25%;
-  height: 2.5em;
+/* - ROWS - */
+.grid-row-33 {
+	height: 33%;
 }
 
-.score-row-right {
-  margin: 3% 0%;
-  padding-left: 25%;
-  height: 2.5em;
+.grid-row-34 {
+	height: 34%;
+}
+
+.grid-row-22 {
+	height: 22%;
+}
+
+.grid-row-45 {
+	height: 45%;
+}
+
+.grid-row-33 > span {
+	vertical-align: -80%;
+}
+
+.grid-row-22 > span {
+	vertical-align: -70%;
+}
+
+/* - Elements - */
+.teamLogo > img {
+	max-height: 56px;
+	/*max-width: 56px;*/
+	margin-top: 4px;
+}
+
+.largeLogo > img {
+	max-height: 62px;
+}
+
+#teamName {
+	font-weight: 600;
+	font-size: 14px;
+}
+
+#leftTeamRecord {
+	position: absolute;
+	font-size: 12px;
+	top: 11px;
+	right: 0%;
+}
+
+#rightTeamRecord {
+	position: absolute;
+	font-size: 12px;
+	top: 11px;
+	left: 0%;
+}
+
+#possession {
+	font-size: 13px;
+}
+
+#possession > img {
+	height: 10px;
+	vertical-align: baseline;
 }
 
 .score {
-	width:15%;
-	height:80%;
-	max-height:80%;
-	float:right;
-	font-size:2.5em;
-	line-height:160%;
+	font-size:2.8em;
+	font-weight: 300;
 	vertical-align: middle;
 }
 
-.leftScore {
-	float:right;
+.score-right {
+	padding-right: 8%;
 }
 
-.rightScore {
-	float:left;
+.score-left {
+	padding-left: 8%;
 }
 
-.score-row-left > img,
-.score-row-right > img {
-	max-height: 50px;
-	height: auto;
+.triple {
+	font-size: 2.4em;
+	font-weight: 300;
 	vertical-align: middle;
+}
 
+.triple-right {
+	padding-right: 8%;
+}
+
+.triple-left {
+	padding-left: 8%;
+}
+
+.center {
+	display: inline-block;
+	vertical-align: -200%;
+}
+
+.center > span {
+	display: block;
+	font-weight: 200;
+	font-size: 16px;
+	line-height: 1.2em;
 }
 
 #rightColor {
 	width:100%;
-	height:8em;
-	max-height:8em;
+	height:125px;
 	position:absolute;
 	z-index: 2;
 }
 
 #final {
+	font-size: 1.4em;
+}
+
+#finalDate {
 	position: relative;
-	top: 30%;
-	font-size: 1.3em;
-	margin-bottom: 2em;
+	top: -5px;
+}
+
+#futureTime {
+	/*font-size: 0.9em;*/
+}
+
+#vs {
+	font-size: 1.1em;
 }
 
 #liveGameIndicator img {
 	position: relative;
-	height:1.5em;
-	left: -1%;
+	height: 19px;
+	top: -4px;
+	left: -2%;
 }
 
-#gameTimeLine {
-	width:100%;
-	height:50%;
-}
 
 #allScores
 {
 	position: relative;
 	height:25%;
-	top: 15%;
 	vertical-align: middle;
 	line-height:0em;
 	z-index: 5;
 }
 
-#allScoresSpan
-{
-	font-size:0.8em;
+#allScoresSpan {
+	font-size:13px;
 	font-weight:300;
-	line-height: 0.8em;
-	border: 1px solid #EEE;
-	padding: 3px;
-	border-radius: 4px;
-	vertical-align: middle;
-	text-align: center;
-}
-
-.time {
-	margin-top: 0.3em;
+	border: 0.1em solid #EEE;
+	padding: 3px 6px;
+	border-radius: 3px;
 }
 
 #allScoresLink {
@@ -873,44 +952,90 @@ button:hover {
 #allScoresLink:hover {
 	color: rgb(59, 166, 252);
 }
+
 a,
 a:hover,
 a:focus {
 	text-decoration: none;
 }
 
-@media all and (max-width: 450px) {
+/* - Media Queries - */
+
+@media all and (min-width: 500px) {
 	
-	#futureTime {
-		font-size: 0.9em;
+	.score-right {
+		padding-right: 14%;
+	}
+	.score-left {
+		padding-left: 14%;
+	}
+	#teamName {
+		font-size: 16px;
+	}
+	#rightTeamRecord {
+		font-size: 14px;
+		left: 8%;
+	}
+	#leftTeamRecord {
+		font-size: 14px;
+		right: 8%;
 	}
 
 }
 
-@media all and (min-width: 400px) {
+@media all and (max-width: 409px) {
 	
-	.score-row-left > img,
-	.score-row-right > img {
-		max-height: 60px;
+	#futureTime {
+		font-size: 15px;
 	}
-
-	.score {
-		font-size: 3em;
+	.triple-left {
+		padding-left: 0%;
 	}
-
-	#final {
-		margin-bottom: 1.5em;
+	.triple-right {
+		padding-right: 0%;
 	}
+}
 
-	#allScores {
-		margin-top: 0.3em;
-	}
-
+@media all and (max-width: 374px) {
 	#allScoresSpan {
-		font-size: 0.9em;
-		padding: 3px 5px;
+		font-size: 11px;
 	}
+	.score {
+		font-size: 2.4em;
+	}
+	#R-40 {
+		padding-right: 1%;
+	}
+	#L-40 {
+		padding-left: 1%;
+	}
+	#possession {
+		font-size: 11px;
+	}
+	.center {
+		vertical-align: -190%;
+	}
+	.center > span {
+		font-size: 14px;
+	}
+	#teamName {
+		font-size: 13px;
+	}
+	#futureTime {
+		font-size: 14px;
+	}
+}
 
+@media all and (max-width: 350px) {
+	.triple {
+		font-size: 2.2em;
+	}
+	#futureTime {
+		font-size: 13px;
+	}
+	#vs {
+		font-size: 13px;
+	}
 }
 
 /* - - - UTILITES - - - */

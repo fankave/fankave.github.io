@@ -1,5 +1,14 @@
 <section>
-	<div id="landingPageContent">
-		Loading...
-	</div>
+  <div id="landingContainer">
+
+    <div id="landingGraphic">
+      <img src="img/facebookLoginPage_bkgd-2x.jpg" />
+    </div>
+
+    <div id="facebookButtonContainer" ng-show="showFacebookButton">
+      <button class="btn-link" ng-click="loginToFacebook()">
+        <img id="facebookButton" src="img/FacebookLoginButton-2x.png" />
+      </button>
+    </div>
+  </div>
 </section>
