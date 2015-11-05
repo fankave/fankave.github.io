@@ -55,7 +55,7 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
             // console.log("found Topic ID: " + TopicService.getTopicId());
             window.location = "#/topic/" + TopicService.getTopicId();
           }
-          else if (ReplyService.getPostID() !== undefined) {
+          else if (ReplyService.getPostId() !== undefined) {
             // console.log("found post ID: " + ReplyService.getPostId());
             window.location = "#/post/" + ReplyService.getPostId();
           }
