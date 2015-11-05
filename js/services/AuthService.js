@@ -1,4 +1,5 @@
-authModule.factory("AuthService", ["$http", "$q", function ($http, $q) {
+authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService",
+  function ($http, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService) {
 
   // FACEBOOK AUTH SECTION SRVC
   var userLoggedInToFacebook = false; //is this needed at all?
