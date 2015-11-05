@@ -6,11 +6,11 @@ var DEV_BUILD = true;
 var HOST_NAME = window.location.host;
 var WEBSOCKET_BASE_URI = 'ws://was.fankave.com/ws?';
 var REGISTER_SERVER_URI = 'http://was.fankave.com/v1.0/user/register';
-//if(DEV_BUILD == true)
-//	{
-//	WEBSOCKET_BASE_URI = 'ws://dev.fankave.com/ws?';
-//	REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
-//	}
+if(DEV_BUILD == true)
+	{
+	WEBSOCKET_BASE_URI = 'ws://dev.fankave.com/ws?';
+	REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
+	}
 
 function initNetworkService($websocket,DataService,UserInfoService)
 {
