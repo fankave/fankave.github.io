@@ -734,22 +734,57 @@ button:hover {
   text-align: center;
 }
 
-#landingGraphic > img {
+#landingContainer > div {
+	width: 50%;
+	margin: 0 auto;
+}
+
+#landingGraphic {
 	width: auto;
 	height: 100vh;
 }
 
-#facebookButtonContainer {
-	position:fixed;
-	top: 32vh;
-	width:100%;
-}
-
 #facebookButton {
 	position: absolute;
-	width: 60vw;
-	height: auto;
-	margin-left: -30vw;
+	top: 33vh;
+	width: 63vw;
+	max-width: 250px;
+	transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+}
+
+@media all and (orientation: landscape) and (max-device-width: 736px) {
+	#facebookButton {
+		top: 70vh;
+	}
+	#landingContainer {
+		overflow: hidden;
+	}
+	#landingGraphic {
+		height: 230vh;
+		margin-top: -5vh;
+	}
+}
+
+@media only screen and (min-device-width: 600px) and (max-device-width: 1024px) and (orientation: portrait) {
+	#facebookButton {
+		max-width: 370px;
+	}
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+	#facebookButton {
+		max-width: 280px;
+	}
+}
+
+@media all and (min-device-width: 1025px) {
+	#facebookButton {
+		height: 9vh;
+		width: auto;
+		max-width: 400px;
+	}
 }
 
 /* - - - Scorecard Text Rework - - - */
