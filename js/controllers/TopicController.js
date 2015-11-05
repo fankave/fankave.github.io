@@ -40,8 +40,8 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 		if($scope.isPeelUser === true)
 		{
 			if($scope.topicType == "livegame"){
-				document.getElementById('topicSection').style.paddingTop = "11em";
-				document.getElementById('header').style.height = "11em";	
+				document.getElementById('topicSection').style.paddingTop = "177px";
+				document.getElementById('header').style.height = "177px";	
 			}
 			else{
 			document.getElementById('topicSection').style.paddingTop = "3em";
@@ -56,8 +56,8 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 		else
 		{
 			if($scope.topicType == "livegame"){
-				document.getElementById('topicSection').style.paddingTop = "8em";
-				document.getElementById('header').style.height = "8em";
+				document.getElementById('topicSection').style.paddingTop = "125px";
+				document.getElementById('header').style.height = "125px";
 			}
 			else{
 				document.getElementById('topicSection').style.paddingTop = "0em";

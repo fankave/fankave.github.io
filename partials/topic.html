@@ -36,39 +36,41 @@
     </div>
 
     <!-- Left Column -->
-    <div class="grid-col grid-col-40">
+    <div id="L-40" class="grid-col grid-col-40">
       <div class="grid-row-22">
         <span id="teamName">{{leftTeam.name}}</span>
+        <span id="leftTeamRecord" ng-if="gameStatus === 'past' || gameStatus === 'future'">5-3</span>
       </div>
       <div class="grid-row-45">
         <span class="teamLogo"><img src={{leftTeam.logo}} /></span>
-        <span class="score score-left" ng-hide="gameStatus === 'final'">{{leftTeamScore}}</span>
+        <span class="score score-left" ng-hide="gameStatus === 'past'">{{leftTeamScore}}</span>
       </div>
       <div class="grid-row-33">
-        <span id="possession"><img src="img/ball_icon.png" /> 1st-10, WAS 15</span>
+        <span id="possession" ng-if="gameStatus === 'live'"><img src="img/ball_icon.png" /> 1st-10, WAS 15</span>
       </div>
     </div>
 
     <!-- Center Column -->
     <div class="grid-col grid-col-20">
 
-      <div ng-if="gameStatus === 'past'" id="liveGameIndicator" class="grid-row-33">
-        <span><img src="img/live-2x.png"/></span>
+      <div id="liveGameIndicator" class="grid-row-22">
+        <span ng-if="gameStatus === 'live'"><img src="img/live-2x.png"/></span>
+        <span id="vs" ng-if="gameStatus === 'past'">VS</span>
       </div>
 
-      <div class=" grid-row-34 time">
-        <div id="liveInfo" ng-if="gameStatus === 'past'">
-          <span class="gameTimeLine">{{gamePeriod}}QTR 4</span>
-          <span class="gameTimeLine">{{gameClock}}87:53</span>
+      <div class="grid-row-45 time">
+        <div class="center" ng-if="gameStatus === 'live'">
+          <span>{{gamePeriod}}QTR 4</span>
+          <span>{{gameClock}}02:45</span>
         </div>
-        <div id="futureInfo" ng-if="gameStatus === 'future'">
-          <span class="gameTimeLine">{{gameScheduledTime.date}}</span>
-          <span class="gameTimeLine futureTime">{{gameScheduledTime.time}}</span>
+        <div class="center" ng-if="gameStatus === 'past'">
+          <span>{{gameScheduledTime.date}}</span>
+          <span id="futureTime">{{gameScheduledTime.time}}</span>
         </div>
-        <div id="finalInfo" ng-if="gameStatus === 'final'">
-          <span class="gameTimeLine">{{gameScheduledTime.date}}</span>
-          <span class="gameTimeLine" id="final">
-            <span><b>FINAL</b></span>
+        <div class="center" ng-if="gameStatus === 'live'">
+          <span id="finalDate">{{gameScheduledTime.date}}</span>
+          <span id="final">
+            <span>FINAL</span>
           </span>
         </div>
       </div>
@@ -83,19 +85,20 @@
     </div>
 
     <!-- Right Column -->
-    <div class="grid-col grid-col-40">
+    <div id="R-40" class="grid-col grid-col-40">
       <div class="grid-row-22">
+        <span id="rightTeamRecord" ng-if="gameStatus === 'past' || gameStatus === 'future'">6-2</span>
         <span id="teamName">{{rightTeam.name}}</span>
       </div>
       <div class="grid-row-45">
-        <span class="score score-right" ng-hide="gameStatus === 'final'">{{rightTeamScore}}</span>
+        <span class="score score-right" ng-hide="gameStatus === 'past'">{{rightTeamScore}}</span>
         <span class="teamLogo"><img src={{rightTeam.logo}} /></span>
       </div>
       <div class="grid-row-33">
-        <span id="possession"></span>
+        <span id="possession" ng-if="gameStatus === 'live'"></span>
       </div>
     </div>
-    
+
   </div>
 </nav>
 
@@ -109,12 +112,12 @@
   <div id="topicImage">
     <img ng-src="{{topicMediaUrl}}" class="topicPhoto" ng-click="imageClick(topicMediaUrl);" />
   </div>    
-  
+
   <div class="topicSharingButtonsRow">
     <button class="btn-link topic-social-btn" ng-click="updateLikeTopic()" ng-switch="liked">
       <img ng-switch-when="true" src="img/likeBigSelected.png"/> 
       <img ng-switch-when="false" src="img/likeBig.png"/> 
-      
+
     </button>
     <span class="socialButtonLable">{{likesCount}} </span>
     <button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/commentBig.png"/> 
@@ -132,7 +135,7 @@
       placeholder="Write a comment..." ng-model="commentText"
       style="display: inline; positon: absolute; width:85%"> 
       <button id="postCommentButton" class="btn btn-default" type="button" ng-click="postComment(commentText)">Post</button>
-      
+
     </div>
   </form>
 </div>
@@ -150,7 +153,7 @@
       </div>
       <div id="pinIcon" ng-if="thisPost.pin == true">
         <img src="img/pin.png"/>
-        
+
       </div>
     </span>
 
@@ -186,7 +189,7 @@
             
           </button>
           <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
-          
+
           <button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
             <img src="img/replySmall.png"/> </button>
             <span class="socialButtonLable"> {{thisPost.replyCount}}</span>
@@ -207,7 +210,7 @@
         </span>
       </div>
     </div>
-    
+
 <!--  <footer class="footer" id="textEntryField">
         <form ng-submit="postComment(commentText)">
         <div class="input-group">
