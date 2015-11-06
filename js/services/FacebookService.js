@@ -3,42 +3,42 @@ facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$htt
 
 function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo,ChannelService)
 {
-	// console.log("initFacebookController");
-	if(HOST_NAME == undefined)
-		HOST_NAME = window.location.host;
-	if(HOST_NAME == 'dev.fankave.com')
-	REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
-	$scope.loginToFacebook = function()
-	{
-		// console.log("log in to Facebook");
-		// facebookService.userLoggedInToFacebook = true;
-		// window.location = "#/topic/0";
-		FB.login(function(response)
-		{
-			// console.log("login response: " + JSON.stringify(response));
-			if(response.status === 'connected')
-			{
-				$scope.handleFacebookResponse(response);
-			}
-		});
-	}
+  // console.log("initFacebookController");
+  if(HOST_NAME == undefined)
+    HOST_NAME = window.location.host;
+  if(HOST_NAME == 'dev.fankave.com')
+    REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
+ $scope.loginToFacebook = function()
+ {
+    // console.log("log in to Facebook");
+    // facebookService.userLoggedInToFacebook = true;
+    // window.location = "#/topic/0";
+    FB.login(function(response)
+    {
+      // console.log("login response: " + JSON.stringify(response));
+      if(response.status === 'connected')
+      {
+        $scope.handleFacebookResponse(response);
+      }
+    });
+  }
 
 
-	window.fbAsyncInit = function()
-	{
-        FB.init({
-          appId      : '210324962465861',
-          xfbml      : true,
-          version    : 'v2.4'
-        });
+  window.fbAsyncInit = function()
+  {
+    FB.init({
+      appId      : '210324962465861',
+      xfbml      : true,
+      version    : 'v2.4'
+    });
         // console.log('FB SDK loaded OK');
 
         FB.getLoginStatus(function(response)
         {
-        	// console.log("getLoginStatus response: " + JSON.stringify(response));
+          // console.log("getLoginStatus response: " + JSON.stringify(response));
 
-		   if (response.status === 'connected')
-            {
+          if (response.status === 'connected')
+          {
               // the user is logged in and has authenticated your
               // app, and response.authResponse supplies
               // the user's ID, a valid access token, a signed
@@ -56,7 +56,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
                 // var userPictureURL = "http://graph.facebook.com/" + response.id + "/picture?type=square";
                 // console.log(userPictureURL);
               });
- 
+              
             } 
             else if (response.status === 'not_authorized')
             {
@@ -72,124 +72,117 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
      //          // show the Facebook login button
 
      //          $("#landingPageContent").html(
-			  // $compile(
-			  // 		"<div id=facebookLoginContainer><center><div id=facebookLoginButtonDiv><button class=btn-link ng-click=loginToFacebook();><img src=img/FacebookLoginButton-2x.png /></button></div></center></div>"
-			  // )($scope)
-			  // );
+        // $compile(
+        //    "<div id=facebookLoginContainer><center><div id=facebookLoginButtonDiv><button class=btn-link ng-click=loginToFacebook();><img src=img/FacebookLoginButton-2x.png /></button></div></center></div>"
+        // )($scope)
+        // );
      //        }
 
-		 	// $scope.$apply();
-		});
-     };
+      // $scope.$apply();
+    });
+};
 
-	(function(d, s, id)
-	{
-		console.log('loading FB SDK...');
-		var js, fjs = d.getElementsByTagName(s)[0];
-		if (d.getElementById(id)) {return;}
-		js = d.createElement(s); js.id = id;
-		js.src = "//connect.facebook.net/en_US/sdk.js";
-		fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));
-
-
-	$scope.handleFacebookResponse = function(response)
-	{
-		// console.log("handleFacebookResponse: " + JSON.stringify(response));
-
-		var uid = response.authResponse.userID;
-    var accessToken = response.authResponse.accessToken;
-
-    $scope.fbID = uid;
-    $scope.fbAccessToken = accessToken;
-    console.log("FB Response: " + $scope.fbID);
-    console.log("FB Token : " + $scope.fbAccessToken);
-
-    $scope.registerFacebookUser();
-	}
+(function(d, s, id)
+{
+  console.log('loading FB SDK...');
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
 
 
-	$scope.registerFacebookUser = function()
-	{
-		// console.log("register facebook user");
-		// console.log("fbID: " + $scope.fbID);
-		// console.log("fbAccessToken: " + $scope.fbAccessToken);
+$scope.handleFacebookResponse = function(response) {
+  // console.log("handleFacebookResponse: " + JSON.stringify(response));
 
-		var facebookData = new Object();
-		facebookData.id = $scope.fbID;
-		facebookData.accessToken = $scope.fbAccessToken;
+  var uid = response.authResponse.userID;
+  var accessToken = response.authResponse.accessToken;
+
+  $scope.fbID = uid;
+  $scope.fbAccessToken = accessToken;
+  console.log("FB Response: " + $scope.fbID);
+  console.log("FB Token : " + $scope.fbAccessToken);
+
+  $scope.registerFacebookUser();
+}
+
+
+  $scope.registerFacebookUser = function() {
+    // console.log("register facebook user");
+    // console.log("fbID: " + $scope.fbID);
+    // console.log("fbAccessToken: " + $scope.fbAccessToken);
+
+    var facebookData = new Object();
+    facebookData.id = $scope.fbID;
+    facebookData.accessToken = $scope.fbAccessToken;
     console.log('facebookData object: ', facebookData);
-		var deviceId = ForumDeviceInfo.getDeviceId();
-	      var registrationParameters =
-	      {
-	        "type":"facebook",
-	        "locale":"en_US",
-	        "utcOffset":-25200,
-	        "deviceType":"web",
-	        "deviceId":deviceId,
-	        "deviceModel":"browser",
-	        "appKey":"testKey",
-	        "appVersion":"0.1",
-	        "facebook":facebookData
-	      };
+    var deviceId = ForumDeviceInfo.getDeviceId();
+    var registrationParameters =
+    {
+     "type":"facebook",
+     "locale":"en_US",
+     "utcOffset":-25200,
+     "deviceType":"web",
+     "deviceId":deviceId,
+     "deviceModel":"browser",
+     "appKey":"testKey",
+     "appVersion":"0.1",
+     "facebook":facebookData
+    };
 
-	      console.log('Registration Parameters: ', registrationParameters);
-	      
-	      $http.post(REGISTER_SERVER_URI, JSON.stringify(registrationParameters)).then(
-	      function(response)
-	      {
-	          // console.log('success');
-	          // console.log('response:  ' + response);
-	          // console.log('response.status: ' + response.status);
-	          // console.log('response.data: ' + JSON.stringify(response.data));
-	          // console.log('response.headers: ' + response.headers);
-	          // console.log('response.config: ' + response.config);
-	          // console.log('response.statusText: ' + response.statusText);
+    console.log('Registration Parameters: ', registrationParameters);
+   
+    $http.post(REGISTER_SERVER_URI, JSON.stringify(registrationParameters)).then(
+      function(response) {
+        console.log('FB Response Success', response);
+        // console.log('response:  ' + response);
+        // console.log('response.status: ' + response.status);
+        // console.log('response.data: ' + JSON.stringify(response.data));
+        // console.log('response.headers: ' + response.headers);
+        // console.log('response.config: ' + response.config);
+        // console.log('response.statusText: ' + response.statusText);
 
-	          if(response.status == 200)
-	          {
-	            console.log("registered user successfully");
-	            var registrationInfoElement = document.getElementById("registrationInfo")
-	            var registrationInfoHTML = "<div>userID: " + response.data.userId + "</div>";
-	            registrationInfoHTML += "<div>sessionID: " + response.data.sessionId + "</div>";
-	            registrationInfoHTML += "<div>accessToken: " + response.data.accessToken + "</div>";
-	            // registrationInfoElement.innerHTML = registrationInfoHTML;
+        if(response.status == 200) {
+          console.log("registered user successfully");
+          var registrationInfoElement = document.getElementById("registrationInfo")
+          var registrationInfoHTML = "<div>userID: " + response.data.userId + "</div>";
+          registrationInfoHTML += "<div>sessionID: " + response.data.sessionId + "</div>";
+          registrationInfoHTML += "<div>accessToken: " + response.data.accessToken + "</div>";
+          // registrationInfoElement.innerHTML = registrationInfoHTML;
 
-	            // console.log("user ID: " + response.data.userId);
-	            // console.log("session ID: " + response.data.sessionId);
-	            // console.log("access token: " + response.data.accessToken);
+          // console.log("user ID: " + response.data.userId);
+          // console.log("session ID: " + response.data.sessionId);
+          // console.log("access token: " + response.data.accessToken);
 
-	            // console.log(" - - - > access UserInfoService: " + UserInfoService);
+          // console.log(" - - - > access UserInfoService: " + UserInfoService);
 
-	            facebookService.userLoggedInToFacebook = true;
-	            // console.log("Setting user info in Facebook Service");
-	            UserInfoService.setUserCredentials(response.data.userId, response.data.accessToken, response.data.sessionId, "facebook");
+          facebookService.userLoggedInToFacebook = true;
+          console.log("Setting user info in Facebook Service");
+          UserInfoService.setUserCredentials(response.data.userId, response.data.accessToken, response.data.sessionId, "facebook");
 
-	            networkService.init();
+          networkService.init();
 
-	            // console.log(":: " + TopicService.getTopicId());
-				// window.location = "#/topic/" + TopicService.getTopicId();
-				if(ReplyService.getPostId() != undefined)
-	            {
-	            	// console.log("found post ID: " + ReplyService.getPostId());
-	            	setTimeout(function(){window.location = "#/post/" + ReplyService.getPostId();},0);
-	            }
-				 else if(TopicService.getTopicId() != undefined)
-		            {
-					  console.log("found Topic ID: " + TopicService.getTopicId());
-						setTimeout(function(){window.location = "#/topic/" + TopicService.getTopicId();},0);
-					}
-					else if(ChannelService.getChannel() != undefined){
-						console.log("found channel ID: " + ChannelService.getChannel());
-						networkService.send(ChannelService.getLiveGameTopic());
-					}
-	          }
-	      },
-	      function(error)
-	      {
-	          console.log('FB Response Error: ', error);
-	      });
-	}
+          // console.log(":: " + TopicService.getTopicId());
+          // window.location = "#/topic/" + TopicService.getTopicId();
+          if(ReplyService.getPostId() != undefined) {
+            // console.log("found post ID: " + ReplyService.getPostId());
+            window.location = "#/post/" + ReplyService.getPostId();
+          }
+          else if(TopicService.getTopicId() != undefined) {
+            console.log("found Topic ID: " + TopicService.getTopicId());
+            setTimeout(function(){window.location = "#/topic/" + TopicService.getTopicId();},0);
+          }
+          else if(ChannelService.getChannel() != undefined) {
+            console.log("found channel ID: " + ChannelService.getChannel());
+            networkService.send(ChannelService.getLiveGameTopic());
+          }
+        }
+      },
+      function(error) {
+        console.log('FB Response Error: ', error);
+      });
+  }
 }
 
 
@@ -198,11 +191,11 @@ facebookModule.factory("facebookService", [initFacebookService]);
 
 function initFacebookService()
 {
-	// console.log("initFacebookService");
+  // console.log("initFacebookService");
 
-	var userLoggedInToFacebook = false
+  var userLoggedInToFacebook = false
 
-	return{
-		userLoggedInToFacebook: userLoggedInToFacebook
-	}
+  return{
+    userLoggedInToFacebook: userLoggedInToFacebook
+  }
 }
