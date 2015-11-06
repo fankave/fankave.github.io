@@ -47,22 +47,28 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
 
           // Initialize Network Service and determine what type of resource is being accessed
           networkService.init();
-          if (ChannelService.getChannel() !== undefined) {
-            // console.log("found channel ID: " + ChannelService.getChannel());
-            networkService.send(ChannelService.getLiveGameTopic());
+          if (ReplyService.getPostId() !== undefined) {
+            console.log("found post ID: " + ReplyService.getPostId());
+            window.location = "#/post/" + ReplyService.getPostId();
           }
           else if (TopicService.getTopicId() !== undefined) {
-            // console.log("found Topic ID: " + TopicService.getTopicId());
+            console.log("found Topic ID: " + TopicService.getTopicId());
             window.location = "#/topic/" + TopicService.getTopicId();
           }
-          else if (ReplyService.getPostId() !== undefined) {
-            // console.log("found post ID: " + ReplyService.getPostId());
-            window.location = "#/post/" + ReplyService.getPostId();
+          else if (ChannelService.getChannel() !== undefined) {
+            console.log("found channel ID: " + ChannelService.getChannel());
+            networkService.send(ChannelService.getLiveGameTopic());
           }
         }
       },
       function (response) {
-        //TODO: error handling
+        console.log('error');
+        console.log('response:  ' + JSON.stringify(response));
+        console.log('response.status: ' + response.status);
+        console.log('response.data: ' + JSON.stringify(response.data));
+        console.log('response.headers: ' + response.headers);
+        console.log('response.config: ' + response.config);
+        console.log('response.statusText: ' + response.statusText);
       });
 
   };
