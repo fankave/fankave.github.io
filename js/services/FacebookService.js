@@ -118,6 +118,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 		var facebookData = new Object();
 		facebookData.id = $scope.fbID;
 		facebookData.accessToken = $scope.fbAccessToken;
+    console.log('facebookData object: ', facebookData);
 		var deviceId = ForumDeviceInfo.getDeviceId();
 	      var registrationParameters =
 	      {
@@ -132,7 +133,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	        "facebook":facebookData
 	      };
 
-	      // console.log('registration parameters: ' + JSON.stringify(registrationParameters));
+	      console.log('Registration Parameters: ', registrationParameters);
 	      
 	      $http.post(REGISTER_SERVER_URI, JSON.stringify(registrationParameters)).then(
 	      function(response)
