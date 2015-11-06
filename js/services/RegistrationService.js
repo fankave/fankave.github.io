@@ -64,9 +64,8 @@ function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,network
 //	      };
 			console.log('Peel registration parameters: ' + JSON.stringify(registrationParameters));
 		var registrationSuccess = false;
-		var res = $http.post(REGISTER_SERVER_URI, JSON.stringify(registrationParameters));
-
-		res.then(function (response) {
+		$http.post(REGISTER_SERVER_URI, JSON.stringify(registrationParameters))
+			.then(function (response) {
 			console.log('success', response);
 
 			if(status == 200)
@@ -96,7 +95,7 @@ function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,network
 			}
 		}, 
 		function (response) {
-			console.log('error ' +  response.data);
+			console.log('error ' +  response);
 			console.log('response.code:  ' + response.status);
 		});
 

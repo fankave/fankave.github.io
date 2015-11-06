@@ -134,7 +134,7 @@ $scope.handleFacebookResponse = function(response) {
     console.log('Registration Parameters: ', registrationParameters);
    
     $http.post(REGISTER_SERVER_URI, JSON.stringify(registrationParameters)).then(
-      function(response) {
+      function (response) {
         console.log('FB Response Success', response);
         // console.log('response:  ' + response);
         // console.log('response.status: ' + response.status);
@@ -171,7 +171,7 @@ $scope.handleFacebookResponse = function(response) {
           }
           else if(TopicService.getTopicId() != undefined) {
             console.log("found Topic ID: " + TopicService.getTopicId());
-            setTimeout(function(){window.location = "#/topic/" + TopicService.getTopicId();},0);
+            window.location = "#/topic/" + TopicService.getTopicId();
           }
           else if(ChannelService.getChannel() != undefined) {
             console.log("found channel ID: " + ChannelService.getChannel());
@@ -179,7 +179,7 @@ $scope.handleFacebookResponse = function(response) {
           }
         }
       },
-      function(error) {
+      function (error) {
         console.log('FB Response Error: ', error);
       });
   }
