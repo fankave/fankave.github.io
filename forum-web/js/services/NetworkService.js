@@ -2,18 +2,15 @@ var networkModule = angular.module("NetworkModule", ['ngWebSocket']);
 networkModule.factory("networkService",["$websocket","DataService","UserInfoService",initNetworkService]);
 
 var NETWORK_DEBUG = true;
-var DEV_BUILD = true;
+var DEV_BUILD = false;
 var HOST_NAME = window.location.host;
 var WEBSOCKET_BASE_URI = 'ws://was.fankave.com/ws?';
 var REGISTER_SERVER_URI = 'http://was.fankave.com/v1.0/user/register';
-var MUS_SERVER_URI = 'https://mus.fankave.com';
-
-if(DEV_BUILD == true)
-	{
-	WEBSOCKET_BASE_URI = 'ws://dev.fankave.com/ws?';
-	REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
-	MUS_SERVER_URI = 'https://104.197.8.198:8080';
-	}
+//if(DEV_BUILD == true)
+//	{
+//	WEBSOCKET_BASE_URI = 'ws://dev.fankave.com/ws?';
+//	REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
+//	}
 
 function initNetworkService($websocket,DataService,UserInfoService)
 {
