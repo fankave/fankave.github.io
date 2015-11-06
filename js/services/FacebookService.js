@@ -98,13 +98,13 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 		// console.log("handleFacebookResponse: " + JSON.stringify(response));
 
 		var uid = response.authResponse.userID;
-      	var accessToken = response.authResponse.accessToken;
+    var accessToken = response.authResponse.accessToken;
 
-       $scope.fbID = uid;
-       $scope.fbAccessToken = accessToken;
-       console.log("FB REsPONSE "+ $scope.fbID + "token : "+ $scope.fbAccessToken);
+    $scope.fbID = uid;
+    $scope.fbAccessToken = accessToken;
+    console.log("FB REsPONSE "+ $scope.fbID + "token : "+ $scope.fbAccessToken);
 
-       $scope.registerFacebookUser();
+    $scope.registerFacebookUser();
 	}
 
 
@@ -170,12 +170,12 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 				if(ReplyService.getPostId() != undefined)
 	            {
 	            	// console.log("found post ID: " + ReplyService.getPostId());
-	            	window.location = "#/post/" + ReplyService.getPostId();
+	            	setTimeout(function(){window.location = "#/post/" + ReplyService.getPostId();},0);
 	            }
 				 else if(TopicService.getTopicId() != undefined)
 		            {
-					 console.log("found Topic ID: " + TopicService.getTopicId());
-						window.location = "#/topic/" + TopicService.getTopicId();
+					  console.log("found Topic ID: " + TopicService.getTopicId());
+						setTimeout(function(){window.location = "#/topic/" + TopicService.getTopicId();},0);
 					}
 					else if(ChannelService.getChannel() != undefined){
 						console.log("found channel ID: " + ChannelService.getChannel());
