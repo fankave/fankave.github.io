@@ -6,7 +6,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	// console.log("initFacebookController");
 	if(HOST_NAME == undefined)
 		HOST_NAME = window.location.host;
-	if(HOST_NAME == 'dev.fanakve.com')
+	if(HOST_NAME == 'dev.fankave.com')
 	REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
 	$scope.loginToFacebook = function()
 	{
@@ -102,7 +102,8 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 
     $scope.fbID = uid;
     $scope.fbAccessToken = accessToken;
-    console.log("FB REsPONSE "+ $scope.fbID + "token : "+ $scope.fbAccessToken);
+    console.log("FB Response: " + $scope.fbID);
+    console.log("FB Token : " + $scope.fbAccessToken);
 
     $scope.registerFacebookUser();
 	}
@@ -183,15 +184,9 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 					}
 	          }
 	      },
-	      function(response)
+	      function(error)
 	      {
-	          console.log('error');
-	          console.log('response:  ' + JSON.stringify(response));
-	          console.log('response.status: ' + response.status);
-	          console.log('response.data: ' + JSON.stringify(response.data));
-	          console.log('response.headers: ' + response.headers);
-	          console.log('response.config: ' + response.config);
-	          console.log('response.statusText: ' + response.statusText);
+	          console.log('FB Response Error: ', error);
 	      });
 	}
 }

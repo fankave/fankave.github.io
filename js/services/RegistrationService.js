@@ -3,7 +3,7 @@ networkModule.service('RegistrationService', ["ForumStorage","ForumDeviceInfo","
 function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,networkService,ReplyService,TopicService,ChannelService,URIHelper) {
 	if(HOST_NAME == undefined)
 		HOST_NAME = window.location.hostname;;
-		if(HOST_NAME == 'dev.fanakve.com')
+		if(HOST_NAME == 'dev.fankave.com')
 		REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
 
 	function getPeelRegistrationParams(userId,userName){
@@ -66,21 +66,17 @@ function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,network
 		var registrationSuccess = false;
 		var res = $http.post(REGISTER_SERVER_URI, JSON.stringify(registrationParameters));
 
-		res.then(function (data, status, headers, config) {
-			console.log('success');
-			console.log('response.status: ' + status);
-			console.log('response.data: ' + JSON.stringify(data));
-			console.log('response.headers: ' + headers);
-			console.log('response.config: ' + config);
+		res.then(function (response) {
+			console.log('success', response);
 
 			if(status == 200)
 			{
 				 console.log("registered user successfully");
-				 console.log("user ID: " + data.userId);
-				 console.log("session ID: " + data.sessionId);
-				 console.log("access token: " + data.accessToken);
+				 console.log("user ID: " + response.data.userId);
+				 console.log("session ID: " + response.data.sessionId);
+				 console.log("access token: " + response.data.accessToken);
 				 registrationSuccess = true;
-				 UserInfoService.setUserCredentials(data.userId, data.accessToken, data.sessionId, "peel");
+				 UserInfoService.setUserCredentials(response.data.userId, response.data.accessToken, response.data.sessionId, "peel");
 				
 			}
 			
@@ -99,9 +95,9 @@ function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,network
 				networkService.send(ChannelService.getLiveGameTopic());
 			}
 		}, 
-		function (data, status, headers, config) {
-			console.log('error ' +  data);
-			console.log('response.code:  ' + status);
+		function (response) {
+			console.log('error ' +  response.data);
+			console.log('response.code:  ' + response.status);
 		});
 
 		// res.success(function(data, status, headers, config) {
