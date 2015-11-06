@@ -6,7 +6,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	// console.log("initFacebookController");
 	if(HOST_NAME == undefined)
 		HOST_NAME = window.location.host;
-	if(HOST_NAME == 'dev.fanakve.com')
+	if(HOST_NAME == 'dev.fankave.com')
 	REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
 	$scope.loginToFacebook = function()
 	{
@@ -66,17 +66,17 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
               console.log("login OK, authentication NO");
               FB.login();
             }
-            else
-            {
-              // console.log("Not logged in to Facebook");
-              // show the Facebook login button
+     //        else
+     //        {
+     //          // console.log("Not logged in to Facebook");
+     //          // show the Facebook login button
 
-              $("#landingPageContent").html(
-			  $compile(
-			  		"<div id=facebookLoginContainer><center><div id=facebookLoginButtonDiv><button class=btn-link ng-click=loginToFacebook();><img src=img/FacebookLoginButton-2x.png /></button></div></center></div>"
-			  )($scope)
-			  );
-            }
+     //          $("#landingPageContent").html(
+			  // $compile(
+			  // 		"<div id=facebookLoginContainer><center><div id=facebookLoginButtonDiv><button class=btn-link ng-click=loginToFacebook();><img src=img/FacebookLoginButton-2x.png /></button></div></center></div>"
+			  // )($scope)
+			  // );
+     //        }
 
 		 	// $scope.$apply();
 		});
