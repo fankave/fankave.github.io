@@ -754,6 +754,10 @@ button:hover {
 	-moz-transform: translateX(-50%);
 }
 
+#facebookButton:hover {
+	cursor: pointer;
+}
+
 @media all and (orientation: landscape) and (max-device-width: 736px) {
 	#facebookButton {
 		top: 70vh;
