@@ -559,7 +559,7 @@ input:focus + button {
 
 #peelNavBar
 {
-	background-color: black;//rgb(16, 93, 110);
+	background-color: black;
 	/*min-height: 3em;*/
 	height: 52px;
 }
