@@ -837,26 +837,71 @@ input:focus + button {
 	margin-left: -37.5%;
 }
 
+/* - - - Facebook Landing - - - */
 
-
-#facebookLoginContainer
-{
-	position:fixed;
-	background-image: url("../img/facebookLoginPage_bkgd-2x.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    width:100%;
-    height:100%;
+#landingContainer {
+	position:relative;
+	background-color: #EBF4FA;
+  width:100%;
+  height:100%;
+  text-align: center;
 }
 
+#landingContainer > div {
+	width: 50%;
+	margin: 0 auto;
+}
 
-#facebookLoginButtonDiv
-{
-	position:fixed;
-	top: 59%;
-	width:80%;
-	left: 49%;
-	margin-left: -40%;
+#landingGraphic {
+	width: auto;
+	height: 100vh;
+}
+
+#facebookButton {
+	position: absolute;
+	top: 33vh;
+	width: 63vw;
+	max-width: 250px;
+	transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+}
+
+#facebookButton:hover {
+	cursor: pointer;
+}
+
+@media all and (orientation: landscape) and (max-device-width: 736px) {
+	#facebookButton {
+		top: 70vh;
+	}
+	#landingContainer {
+		overflow: hidden;
+	}
+	#landingGraphic {
+		height: 230vh;
+		margin-top: -5vh;
+	}
+}
+
+@media only screen and (min-device-width: 600px) and (max-device-width: 1024px) and (orientation: portrait) {
+	#facebookButton {
+		max-width: 370px;
+	}
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+	#facebookButton {
+		max-width: 280px;
+	}
+}
+
+@media all and (min-device-width: 1025px) {
+	#facebookButton {
+		height: 9vh;
+		width: auto;
+		max-width: 400px;
+	}
 }
 
 /* - - - disable scrolling (for use with magnific popup) - - - */
@@ -883,7 +928,7 @@ input:focus + button {
 #splashOverlay {
 	position: relative;
 	text-align: center;
-	padding: 4% 0%;
+	padding: 6vh 0%;
 	background-color: #fff;
 	width: 90%;
 	max-width: 950px;

@@ -66,17 +66,17 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
               console.log("login OK, authentication NO");
               FB.login();
             }
-            else
-            {
+            // else
+            // {
               // console.log("Not logged in to Facebook");
               // show the Facebook login button
 
-              $("#landingPageContent").html(
-			  $compile(
-			  		"<div id=facebookLoginContainer><center><div id=facebookLoginButtonDiv><button class=btn-link ng-click=loginToFacebook();><img src=img/FacebookLoginButton-2x.png /></button></div></center></div>"
-			  )($scope)
-			  );
-            }
+     //          $("#landingPageContent").html(
+			  // $compile(
+			  // 		"<div id=facebookLoginContainer><center><div id=facebookLoginButtonDiv><button class=btn-link ng-click=loginToFacebook();><img src=img/FacebookLoginButton-2x.png /></button></div></center></div>"
+			  // )($scope)
+			  // );
+            // }
 
 		 	// $scope.$apply();
 		});
