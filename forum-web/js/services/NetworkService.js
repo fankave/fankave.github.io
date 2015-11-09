@@ -1,7 +1,7 @@
 var networkModule = angular.module("NetworkModule", ['ngWebSocket']);
 networkModule.factory("networkService",["$websocket","DataService","UserInfoService",initNetworkService]);
 
-var NETWORK_DEBUG = false;
+var NETWORK_DEBUG = true;
 var DEV_BUILD = false;
 var HOST_NAME = window.location.host;
 var WEBSOCKET_BASE_URI = 'ws://was.fankave.com/ws?';
