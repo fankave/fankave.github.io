@@ -21,7 +21,7 @@ function initRootModule($routeProvider, $locationProvider) {
 	{
 		templateUrl:'partials/invalidTopic.html'
 	}).
-	when('/',
+	when('/facebookLogin',
 	{
 		templateUrl:'partials/facebookLogin.html',
 		controller:'FacebookController'
@@ -31,7 +31,7 @@ function initRootModule($routeProvider, $locationProvider) {
 		redirectTo:'invalidTopic'
 	});
 
-	$locationProvider.html5Mode(true);
+	// $locationProvider.html5Mode(true);
 }
 
 
