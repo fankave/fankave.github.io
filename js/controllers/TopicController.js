@@ -5,6 +5,7 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 {
 
 	ga('send', 'pageview', "/topic/"+$routeParams.topicID);
+	console.log('Sent Pageview from /topic/' + $routeParams.topicID);
 	
 	TopicService.setTopicId($routeParams.topicID);
 	$scope.topicType = "livegame";
