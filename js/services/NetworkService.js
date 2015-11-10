@@ -12,7 +12,7 @@ if(DEV_BUILD === true) {
 	WEBSOCKET_BASE_URI = 'ws://dev.fankave.com/ws?';
 	REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
 	MUS_SERVER_URI = 'https://104.197.8.198:8080';
-	// ga('create', 'UA-69086637-2', 'auto');
+	ga('create', 'UA-69086637-2', 'auto');
 	ga('send', 'pageview');
 } else {
 	ga('create', 'UA-69086637-1', 'auto');
