@@ -1,60 +1,89 @@
+var visProp = getPrefix();
+
+// Get vendor prefix for document hidden state property
+function getPrefix() {
+  var prefixes = ['webkit','moz','ms','o'];
+
+  // First check if hidden is natively supported
+  if ('hidden' in window.document) return 'hidden';
+  // Then check all known prefixes
+  for (var i = 0; i < prefixes.length; i++){
+    if ((prefixes[i] + 'Hidden') in window.document){
+      return prefixes[i] + 'Hidden';
+    }
+  }
+  // otherwise not supported
+  return null;
+};
+
+// Determine if window is in background or not
+function isHidden() {
+  if (!visProp) return false;
+  return window.document[visProp];
+};
+
+// Event listener for visibility change event
+if (visProp) {
+  var visEvent = visProp.replace(/[H|h]idden/,'') + 'visibilitychange';
+  // add event listener to start/stop TimeOnPage timer
+  window.document.addEventListener(visEvent, function(){
+    visChange(startTimer, stopTimer);
+  });
+}
+
+// Helper function to run on visibility change; takes two callbacks
+  // ** Register a new visibility-state-dependent event listener via:
+  // window.document.addEventListener(event, visChange(vis, hid))
+function visChange(visCallback, hidCallback) {
+  if (isHidden()) {
+    console.log('hidden callback fired');
+    hidCallback();
+  } else {
+    console.log('visible callback fired');
+    visCallback();
+  }
+};
+
+// TimeOnPage Reporting
+var time = 0;
+var count = 1;
+var timer = window.setInterval(timeAndReport, 1000);
+
+// Initial 1 second send
+console.log('TimeOnPage: 1 second');
 ga('send', 'event', 'TimeOnPage', '0', '1 second', { 'nonInteraction': 1 });
-console.log("TimeOnPage :1 second ");
-function timer10(){
-	console.log("TimeOnPage :10 seconds ");
-	ga('send', 'event', 'TimeOnPage', '1', '10 seconds', { 'nonInteraction': 1 });
-	}
-function timer30(){
-	console.log("TimeOnPage :30 seconds ");
-	ga('send', 'event', 'TimeOnPage', '2', '30 seconds', { 'nonInteraction': 1 });
-	}
 
-function timer60(){
-	//console.log("TimeOnPage :60 seconds ");
-	ga('send', 'event', 'TimeOnPage', '3', '60 seconds', { 'nonInteraction': 1 });
-	}
+function startTimer() {
+  console.log('Starting Timer at: ' + time + 'seconds');
+  if (time <= 1800){
+    timer = window.setInterval(timeAndReport, 1000);
+  }
+};
+function stopTimer() {
+  console.log('Stopping Timer at: ' + time + 'seconds');
+  window.clearInterval(timer);
+};
 
-function timer120(){
-	//console.log("TimeOnPage :2 mins ");
-	ga('send', 'event', 'TimeOnPage', '4', '2 mins', { 'nonInteraction': 1 });
-	}
-function timer180(){
-	//console.log("TimeOnPage :3 mins");
-	ga('send', 'event', 'TimeOnPage', '5', '3 mins', { 'nonInteraction': 1 });
-	}
-function timer240(){
-	//console.log("TimeOnPage :4 mins");
-	ga('send', 'event', 'TimeOnPage', '6', '4 mins', { 'nonInteraction': 1 });
-	}
+var minutes = 1;
+// Send analytics to google at appropriate intervals
+function timeAndReport() {
+  time += 1;
 
-function timer300(){
-	//console.log("TimeOnPage :5 mins ");
-	ga('send', 'event', 'TimeOnPage', '7', '5 mins', { 'nonInteraction': 1 });
-	}
-
-function timer600(){
-	//console.log("TimeOnPage :10 mins ");
-	ga('send', 'event', 'TimeOnPage', '8', '10 mins', { 'nonInteraction': 1 });
-	}
-function timer1200(){
-	//console.log("TimeOnPage :20 mins ");
-	ga('send', 'event', 'TimeOnPage', '9', '20 mins', { 'nonInteraction': 1 });
-	}
-function timer1800(){
-	//console.log("TimeOnPage :30 mins ");
-	ga('send', 'event', 'TimeOnPage', '10', '30 mins', { 'nonInteraction': 1 });
-	}
-
-
-
-
-setTimeout(timer10,10000);
-setTimeout(timer30,30000);
-setTimeout(timer60,60000);
-setTimeout(timer120,120000);
-setTimeout(timer180,180000);
-setTimeout(timer240,240000);
-setTimeout(timer300,300000);
-setTimeout(timer600,600000);
-setTimeout(timer1200,1200000);
-setTimeout(timer1800,1800000);
+  if (time > 1800){
+    window.clearInterval(timer);
+    return;
+  }
+  if (time === 10 || time === 30 || time === 60){
+    console.log('TimeOnPage: ' + time + ' seconds | Count: ' + count);
+    ga('send', 'event', 'TimeOnPage', count.toString(), (time + ' seconds'), { 'nonInteraction': 1 });
+    count++;
+  } 
+  if (time > 60 && time % 60 === 0){
+    minutes++;
+    if (minutes <= 5 || minutes === 10 || minutes === 20 || minutes === 30){
+      console.log('TimeOnPage: ' + minutes + ' mins | Count: ' + count);
+      ga('send', 'event', 'TimeOnPage', count.toString(), (minutes + ' mins'), { 'nonInteraction': 1 });
+      count++;
+    }
+  }
+};

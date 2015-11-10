@@ -64,56 +64,18 @@ function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,network
 //	      };
 			console.log('Peel registration parameters: ' + JSON.stringify(registrationParameters));
 		var registrationSuccess = false;
-		$http.post(REGISTER_SERVER_URI, JSON.stringify(registrationParameters))
-			.then(function (response) {
-			console.log('success', response);
-
-			if(status == 200)
-			{
-				 console.log("registered user successfully");
-				 console.log("user ID: " + response.data.userId);
-				 console.log("session ID: " + response.data.sessionId);
-				 console.log("access token: " + response.data.accessToken);
-				 registrationSuccess = true;
-				 UserInfoService.setUserCredentials(response.data.userId, response.data.accessToken, response.data.sessionId, "peel");
-				
-			}
-			
-			networkService.init();
-			
-			if(ReplyService.getPostId() != undefined)
-            {
-            	// console.log("found post ID: " + ReplyService.getPostId());
-            	window.location = "#/post/" + ReplyService.getPostId();
-            }
-            else if(TopicService.getTopicId() != undefined)
-            {
-				window.location = "#/topic/" + TopicService.getTopicId();
-			}
-			else if(ChannelService.getChannel() != undefined){
-				networkService.send(ChannelService.getLiveGameTopic());
-			}
-		}, 
-		function (response) {
-			console.log('error ' +  response);
-			console.log('response.code:  ' + response.status);
-		});
-
-		// res.success(function(data, status, headers, config) {
-		// 	console.log('success');
-		// 	console.log('response.status: ' + status);
-		// 	console.log('response.data: ' + JSON.stringify(data));
-		// 	console.log('response.headers: ' + headers);
-		// 	console.log('response.config: ' + config);
+		// $http.post(REGISTER_SERVER_URI, JSON.stringify(registrationParameters))
+		// 	.then(function (response) {
+		// 	console.log('success', response);
 
 		// 	if(status == 200)
 		// 	{
 		// 		 console.log("registered user successfully");
-		// 		 console.log("user ID: " + data.userId);
-		// 		 console.log("session ID: " + data.sessionId);
-		// 		 console.log("access token: " + data.accessToken);
+		// 		 console.log("user ID: " + response.data.userId);
+		// 		 console.log("session ID: " + response.data.sessionId);
+		// 		 console.log("access token: " + response.data.accessToken);
 		// 		 registrationSuccess = true;
-		// 		 UserInfoService.setUserCredentials(data.userId, data.accessToken, data.sessionId, "peel");
+		// 		 UserInfoService.setUserCredentials(response.data.userId, response.data.accessToken, response.data.sessionId, "peel");
 				
 		// 	}
 			
@@ -131,14 +93,52 @@ function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,network
 		// 	else if(ChannelService.getChannel() != undefined){
 		// 		networkService.send(ChannelService.getLiveGameTopic());
 		// 	}
+		// }, 
+		// function (response) {
+		// 	console.log('error ' +  response);
+		// 	console.log('response.code:  ' + response.status);
 		// });
+		var res = $http.post(REGISTER_SERVER_URI, JSON.stringify(registrationParameters));
+		res.success(function(data, status, headers, config) {
+			console.log('success');
+			console.log('response.status: ' + status);
+			console.log('response.data: ' + JSON.stringify(data));
+			console.log('response.headers: ' + headers);
+			console.log('response.config: ' + config);
+
+			if(status == 200)
+			{
+				 console.log("registered user successfully");
+				 console.log("user ID: " + data.userId);
+				 console.log("session ID: " + data.sessionId);
+				 console.log("access token: " + data.accessToken);
+				 registrationSuccess = true;
+				 UserInfoService.setUserCredentials(data.userId, data.accessToken, data.sessionId, "peel");
+				
+			}
+			
+			networkService.init();
+			
+			if(ReplyService.getPostId() != undefined)
+            {
+            	// console.log("found post ID: " + ReplyService.getPostId());
+            	window.location = "#/post/" + ReplyService.getPostId();
+            }
+            else if(TopicService.getTopicId() != undefined)
+            {
+				window.location = "#/topic/" + TopicService.getTopicId();
+			}
+			else if(ChannelService.getChannel() != undefined){
+				networkService.send(ChannelService.getLiveGameTopic());
+			}
+		});
 				
 				
-	// 	res.error(function(data, status, headers, config)
-	// 			{
-	// 				console.log('error ' +  data);
-	// 				console.log('response.code:  ' + status);
-	// 			});
+		res.error(function(data, status, headers, config)
+				{
+					console.log('error ' +  data);
+					console.log('response.code:  ' + status);
+				});
 	};
 	
 

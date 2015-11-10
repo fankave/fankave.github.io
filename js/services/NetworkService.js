@@ -8,12 +8,16 @@ var WEBSOCKET_BASE_URI = 'ws://was.fankave.com/ws?';
 var REGISTER_SERVER_URI = 'http://was.fankave.com/v1.0/user/register';
 var MUS_SERVER_URI = 'https://mus.fankave.com';
 
-if(DEV_BUILD == true)
-	{
+if(DEV_BUILD === true) {
+	ga('create', 'UA-69086637-2', 'auto');
+	ga('send', 'pageview');
 	WEBSOCKET_BASE_URI = 'ws://dev.fankave.com/ws?';
 	REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
 	MUS_SERVER_URI = 'https://104.197.8.198:8080';
-	}
+} else {
+	ga('create', 'UA-69086637-1', 'auto');
+	ga('send', 'pageview');
+}
 
 function initNetworkService($websocket,DataService,UserInfoService)
 {
