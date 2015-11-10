@@ -29,7 +29,6 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 //	$(window).scroll(function(){
 //	    $("#textInputFieldTopic").css("top", Math.max(160, 250 - $(this).scrollTop()));
 //	});
-
 	$scope.hidePeelSplash = SplashService.hidePeelSplash;
 
 	$scope.continueToExperience = function() {
