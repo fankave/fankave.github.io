@@ -4,7 +4,7 @@ facebookModule.controller("FacebookController", ["$scope", "$routeParams", "$htt
 function initFacebookController($scope, $routeParams, $http, $compile, facebookService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo,ChannelService)
 {
   // console.log("initFacebookController");
-  ga('send', 'pageview', '/facebookLogin');
+  ga('send', 'pageview', '/');
   if(HOST_NAME == undefined)
     HOST_NAME = window.location.host;
   if(HOST_NAME == 'dev.fankave.com')
@@ -169,11 +169,11 @@ $scope.handleFacebookResponse = function(response) {
           // window.location = "#/topic/" + TopicService.getTopicId();
           if(ReplyService.getPostId() != undefined) {
             // console.log("found post ID: " + ReplyService.getPostId());
-            window.location = "#/post/" + ReplyService.getPostId();
+            window.location = "/post/" + ReplyService.getPostId();
           }
           else if(TopicService.getTopicId() != undefined) {
             console.log("found Topic ID: " + TopicService.getTopicId());
-            window.location = "#/topic/" + TopicService.getTopicId();
+            window.location = "/topic/" + TopicService.getTopicId();
           }
           else if(ChannelService.getChannel() != undefined) {
             console.log("found channel ID: " + ChannelService.getChannel());

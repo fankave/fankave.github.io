@@ -34,11 +34,12 @@ function initTopicController($scope, $sce,$routeParams,networkService,ChannelSer
 	var updateTopic = function(){
 		var id = ChannelService.getLiveTopicId();
 		if(id != undefined){
-			console.log("Got Topic id from Channel : " +"#/topic/" + id+$scope.urlQueryStr)
+			console.log("Got Topic id from Channel : " +"/topic/" + id+$scope.urlQueryStr)
 			if($scope.urlQueryStr.charAt(0) == '?')
-				window.location = "#/topic/" + id+$scope.urlQueryStr;
+				// window.location = "#/topic/" + id+$scope.urlQueryStr;
+				window.location = "/topic/" + id+$scope.urlQueryStr;
 			else
-				window.location = "#/topic/" + id
+				window.location = "/topic/" + id
 		}
 
 	};
@@ -62,7 +63,7 @@ function initTopicController($scope, $sce,$routeParams,networkService,ChannelSer
 		}
 		else{
 			// console.log("Not logged in to facebook, take user to login page")
-			window.location = "#/facebookLogin";
+			window.location = "/";
 		}
 	}
 	

@@ -226,7 +226,8 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 								thisPost = $scope.commentsArray[this.id];
 								if($scope.innerButtonTapped == false)
 								{
-									window.location = "#/post/" + thisPost.id;
+									// window.location = "#/post/" + thisPost.id;
+									window.location = "/post/" + thisPost.id;
 								}
 								$scope.innerButtonTapped = false;
 							}
@@ -257,7 +258,8 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 		}
 		else{
 			// console.log("Not logged in to facebook, take user to login page")
-			window.location = "#/facebookLogin";
+			// window.location = "#/facebookLogin";
+			window.location = "/";
 		}
 
 
@@ -395,7 +397,8 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 
 		// console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
 		TopicService.directComment = true;
-		window.location = "#/post/" + id;
+		// window.location = "#/post/" + id;
+		window.location = "/post/" + id;
 	};
 
 
