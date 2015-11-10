@@ -1,8 +1,7 @@
 var rootModule = angular.module("Forum", ["ngRoute", "LoginModule","TopicModule", "PostModule", "NetworkModule"]);
-rootModule.config(["$routeProvider", initRootModule]);
+rootModule.config(["$routeProvider", "$locationProvider", initRootModule]);
 
-function initRootModule($routeProvider)
-{
+function initRootModule($routeProvider, $locationProvider) {
 	$routeProvider.when('/channel/:channelID',
 			{
 				templateUrl:'partials/login.html',
@@ -22,7 +21,7 @@ function initRootModule($routeProvider)
 	{
 		templateUrl:'partials/invalidTopic.html'
 	}).
-	when('/facebookLogin',
+	when('/',
 	{
 		templateUrl:'partials/facebookLogin.html',
 		controller:'FacebookController'
@@ -31,6 +30,8 @@ function initRootModule($routeProvider)
 	{
 		redirectTo:'invalidTopic'
 	});
+
+	$locationProvider.html5Mode(true);
 }
 
 
