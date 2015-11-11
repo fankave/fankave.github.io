@@ -1,7 +1,7 @@
-var loginModule = angular.module("LoginModule", ["NetworkModule", "FacebookModule"]);
-loginModule.controller("LoginController", ["$scope","$sce","$routeParams","networkService", "ChannelService","TopicService","URIHelper","RegistrationService","UserInfoService",initTopicController]);
+var loginModule = angular.module("LoginModule", ["NetworkModule", "AuthModule"]);
+loginModule.controller("LoginController", ["$scope","$sce","$routeParams","networkService", "ChannelService","TopicService","URIHelper","AuthService","UserInfoService",initTopicController]);
 
-function initTopicController($scope, $sce,$routeParams,networkService,ChannelService,TopicService, URIHelper, RegistrationService, UserInfoService)
+function initTopicController($scope, $sce,$routeParams,networkService,ChannelService,TopicService, URIHelper, AuthService, UserInfoService)
 {
 	HOST_NAME = window.location.hostname;
 	if(HOST_NAME == 'was.fankave.com')
@@ -58,7 +58,7 @@ function initTopicController($scope, $sce,$routeParams,networkService,ChannelSer
 	else{
 		if(URIHelper.isPeelUser()){
 			$scope.isPeelUser = true;
-			RegistrationService.registerUser(URIHelper.getPeelUserId(),(URIHelper.getPeelUserName()));
+			AuthService.loginWithPeel();
 		}
 		else{
 			// console.log("Not logged in to facebook, take user to login page")

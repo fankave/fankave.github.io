@@ -5,7 +5,7 @@ function initRootModule($routeProvider, $locationProvider) {
 	$routeProvider.when('/channel/:channelID',
 			{
 				templateUrl:'partials/login.html',
-				controller:'AuthController'
+				controller:'LoginController'
 			}).
 	when('/topic/:topicID',
 	{
