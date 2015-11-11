@@ -135,7 +135,11 @@ $scope.handleFacebookResponse = function(response) {
     };
 
     console.log('Registration Parameters: ', registrationParameters);
-   
+    
+    // $http({
+    //  method: 'POST',
+    //  
+    // })
     $http.post(REGISTER_SERVER_URI, JSON.stringify(registrationParameters)).then(
       function (response) {
         console.log('FB Response Success', response);

@@ -78,7 +78,7 @@
   var REGISTER_SERVER_URI = 'http://was.fankave.com/v1.0/user/register';
   var MUS_SERVER_URI = 'https://mus.fankave.com';
 
-  if(DEV_BUILD == true) {
+  if(DEV_BUILD === true) {
     WEBSOCKET_BASE_URI = 'ws://dev.fankave.com/ws?';
     REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
     MUS_SERVER_URI = 'https://104.197.8.198:8080';
@@ -90,8 +90,6 @@
     console.log('Sending Reports to Prod');
     ga('send', 'pageview');
   }
-
-
 
   </script>
   <script src="js/services/ForumAnalyticsService.js"></script>
@@ -109,6 +107,9 @@
     <!-- Placed at the end of the document so the pages load faster -->
   <script src="lib/bootstrap/bootstrap.js"></script>
   <script src="lib/magnific/jQuery.magnific-popup.js"></script>
+  <script src="bower_components/Autolinker/dist/Autolinker.min.js">
+    var autolinker = new Autolinker({ truncate: { length: 25, location: 'smart' }, className: 'userLink' });
+  </script>
 </body>
 
 </html>

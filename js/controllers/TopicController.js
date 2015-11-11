@@ -140,7 +140,7 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 	var updateComments = function(){
 		var commentsdata = CommentService.comments();
 		if(commentsdata != undefined && commentsdata.length >0){
-			console.log("CommentsData :"+ commentsdata.length);
+			console.log("CommentsData : ", commentsdata);
 			var len = commentsdata.length;
 
 			$scope.commentsArray = [];
@@ -148,6 +148,7 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 			for(i=0;i<len;i++){
 				var tempComment = {};
 				tempComment = commentsdata[i];
+				// tempComment = autolinker.link(commentsdata[i]);
 				tempComment.postAuthorName = commentsdata[i].author.name;
 				tempComment.postAuthorPhoto = commentsdata[i].author.photo;
 				tempComment.isMyComment = UserInfoService.isCurrentUser(commentsdata[i].author.id);
