@@ -1,6 +1,7 @@
 authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "ReplyService", "networkService", "ForumDeviceInfo", "ChannelService", "URIHelper", 
   function ($http, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
+  var userLoggedInToFacebook = false;
   var loginToFacebook = function() {
     FB.login(function (response) {
       if (response.status === 'connected') {
