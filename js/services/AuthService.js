@@ -19,7 +19,7 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
 
     var registerParams = setRegistrationParams("peel", -28800, userData);
     registerUser(registerParams);
-  }
+  };
 
   var setRegistrationParams = function (type, utcOffset, userData) {
     var deviceId = ForumDeviceInfo.getDeviceId();
@@ -94,6 +94,7 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
 
   return {
     loginToFacebook: loginToFacebook,
+    loginWithPeel: loginWithPeel,
     setRegistrationParams: setRegistrationParams,
     registerUser: registerUser,
     initializeContent: initializeContent,
