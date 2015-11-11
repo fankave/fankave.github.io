@@ -107,7 +107,11 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 				$scope.allScoresTitle = TopicService.getScoresTitle();
 				$scope.allScoresURL = TopicService.getScoresLink();
 
-				renderScoreCard($scope.leftTeam.pColor, $scope.rightTeam.pColor);
+				// New Scorecard Rendering
+				var left = $('.scoreCardContent');
+				var right = $('.svg-content');
+				left.css('background-color', $scope.leftTeam.pColor);
+				right.css('fill', $scope.rightTeam.pColor);
 			}
 			$scope.topicTitle = TopicService.getTitle();
 			var thisTopic = TopicService.getTopic();
