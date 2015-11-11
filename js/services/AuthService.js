@@ -1,14 +1,24 @@
-authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService",
-  function ($http, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService) {
+authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "ReplyService", "networkService", "ForumDeviceInfo", "ChannelService", "URIHelper" 
+  function ($http, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
   var loginToFacebook = function() {
     FB.login(function (response) {
       if (response.status === 'connected') {
-        registerFacebookUser(response);
+        var registerParams = setRegistrationParams("facebook", -25200, response.authResponse);
+        registerUser(registerParams);
       }
       // TODO: error handling
     });
   };
+
+  var loginWithPeel = function() {
+    var userData = {};
+    userData.id = URIHelper.getPeelUserId();
+    userData.userName = URIHelper.getPeelUserName();
+
+    var registerParams = setRegistrationParams("peel", -28800, userData);
+    registerUser(registerParams);
+  }
 
   var setRegistrationParams = function (type, utcOffset, userData) {
     var deviceId = ForumDeviceInfo.getDeviceId();
@@ -25,8 +35,8 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
 
     if (type === 'facebook'){
       registerParams.facebook = {
-        "id": userData.authResponse.userID,
-        "accessToken": userData.authResponse.accessToken
+        "id": userData.userID,
+        "accessToken": userData.accessToken
       };
     } else if (type === 'peel'){
       registerParams.peel = {
@@ -53,6 +63,8 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
             response.data.accessToken, 
             response.data.sessionId,
             registerParams.type);
+
+          initializeContent();
 
         },
       function (response) {

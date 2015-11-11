@@ -1,11 +1,11 @@
-var rootModule = angular.module("Forum", ["ngRoute", "LoginModule","TopicModule", "PostModule", "NetworkModule"]);
+var rootModule = angular.module("Forum", ["ngRoute", "AuthModule", "LoginModule","TopicModule", "PostModule", "NetworkModule"]);
 rootModule.config(["$routeProvider", "$locationProvider", initRootModule]);
 
 function initRootModule($routeProvider, $locationProvider) {
 	$routeProvider.when('/channel/:channelID',
 			{
 				templateUrl:'partials/login.html',
-				controller:'LoginController'
+				controller:'AuthController'
 			}).
 	when('/topic/:topicID',
 	{
@@ -24,7 +24,7 @@ function initRootModule($routeProvider, $locationProvider) {
 	when('/facebookLogin',
 	{
 		templateUrl:'partials/facebookLogin.html',
-		controller:'FacebookController'
+		controller:'AuthController'
 	}).
 	otherwise(
 	{

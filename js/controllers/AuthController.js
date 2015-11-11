@@ -1,15 +1,41 @@
 var authModule = angular.module("AuthModule", ["NetworkModule", "TopicModule"]);
 
-authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "AuthService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService",
-  function ($scope, $routeParams, $http, AuthService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService) {
+authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "AuthService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService", "URIHelper"
+  function ($scope, $routeParams, $http, AuthService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
+
+    ChannelService.setChannel($routeParams.channelID);
+    $scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
+    console.log(" $scope.urlQueryStr :" + $scope.urlQueryStr);
+
+    var updateTopic = function(){
+      var id = ChannelService.getLiveTopicId();
+      if (id !== undefined){
+        console.log("Got Topic id from Channel : " + "#/topic/" + id + $scope.urlQueryStr);
+        if ($scope.urlQueryStr.charAt(0) === '?') {
+          window.location = "#/topic/" + id + $scope.urlQueryStr;
+        } else {
+          window.location = "#/topic/" + id;
+        }
+      }
+    };
+
+    ChannelService.registerObserverCallback(updateTopic);
     
-    // Resolve host and set up server uri
-    if(HOST_NAME === undefined)
-      HOST_NAME = window.location.host;
-    if(HOST_NAME === 'dev.fankave.com')
-      REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
-    
-    // FACEBOOK AUTH SECTION CTRL
+    if (UserInfoService.isUserLoggedIn()) {
+      if (NETWORK_DEBUG) {
+        console.log("User is logged in, checking for connection");
+      }
+      AuthService.initializeContent();
+    } else {
+      if (URIHelper.isPeelUser()) {
+        $scope.isPeelUser = true;
+        AuthService.loginWithPeel();
+      } else {
+        window.location = "#/facebookLogin";
+      }
+    }
+
+    // FACEBOOK AUTH SECTION
     $scope.showFacebookButton = true;
 
     $scope.loginToFacebook = function() {
@@ -32,7 +58,8 @@ authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "Aut
         // response.authResponse contains user auth information
         if (response.status === 'connected') {
           $scope.showFacebookButton = false;
-          AuthService.registerFacebookUser(response);
+          var registerParams = AuthService.setRegistrationParams("facebook", -25200, response.authResponse);
+          AuthService.registerUser(registerParams);
         }
         // User is logged in to Facebook but hasn't authenticated our app
         else if (response.status === 'not_authorized') {
