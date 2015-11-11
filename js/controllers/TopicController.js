@@ -181,17 +181,17 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 
 	};
 
-	var autolinker = new Autolinker({
-    truncate: { length: 25, location: 'smart' },
-    className: 'userLink'
-  });
-	setTimeout(function(){
-	  var commentsCollection = window.document.getElementsByClassName('postContent');
-		console.log("Trying to Autolink Comments: ", commentsCollection);
-	  for (var i = 0; i < commentsCollection.length; i++){
-	    commentsCollection[i].innerHTML = autolinker.link(commentsCollection[i].innerText);
-	  }
-	}, 3000);
+	// var autolinker = new Autolinker({
+ //    truncate: { length: 25, location: 'smart' },
+ //    className: 'userLink'
+ //  });
+	// setTimeout(function(){
+	//   var commentsCollection = window.document.getElementsByClassName('postContent');
+	// 	console.log("Trying to Autolink Comments: ", commentsCollection);
+	//   for (var i = 0; i < commentsCollection.length; i++){
+	//     commentsCollection[i].innerHTML = autolinker.link(commentsCollection[i].innerText);
+	//   }
+	// }, 3000);
 
 	$scope.init = function() {
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
