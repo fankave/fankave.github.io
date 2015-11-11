@@ -25,9 +25,7 @@ authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "Aut
       if (NETWORK_DEBUG) {
         console.log("User is logged in, checking for connection");
       }
-      // AuthService.initializeContent();
-      networkService.init();
-      networkService.send(ChannelService.getLiveGameTopic());
+      AuthService.initializeContent();
     } else {
       if (URIHelper.isPeelUser()) {
         $scope.isPeelUser = true;

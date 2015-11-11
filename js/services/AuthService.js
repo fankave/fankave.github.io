@@ -64,17 +64,17 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
             response.data.accessToken, 
             response.data.sessionId,
             registerParams.type);
-
-          initializeContent();
-
         }
       },
       function (response) {
         console.log('Registration Error: ', response);
+      }).then(function (response) {
+        initializeContent();
       });
   };
 
   var initializeContent = function() {
+    console.log("Initializing Content");
     // Initialize Network Service and determine what type of resource is being accessed
     networkService.init();
 
