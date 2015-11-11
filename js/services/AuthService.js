@@ -66,11 +66,11 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
 
           initializeContent();
 
-        },
+        }
+      },
       function (response) {
         console.log('Registration Error: ', response);
-      }
-    });
+      });
   };
 
   var initializeContent = function() {
