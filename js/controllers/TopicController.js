@@ -136,7 +136,6 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 		}
 	};
 
-
 	var updateComments = function(){
 		var commentsdata = CommentService.comments();
 		if(commentsdata != undefined && commentsdata.length >0){
@@ -148,7 +147,6 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 			for(i=0;i<len;i++){
 				var tempComment = {};
 				tempComment = commentsdata[i];
-				// tempComment = autolinker.link(commentsdata[i]);
 				tempComment.postAuthorName = commentsdata[i].author.name;
 				tempComment.postAuthorPhoto = commentsdata[i].author.photo;
 				tempComment.isMyComment = UserInfoService.isCurrentUser(commentsdata[i].author.id);
@@ -182,6 +180,18 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 		}
 
 	};
+
+	var autolinker = new Autolinker({
+    truncate: { length: 25, location: 'smart' },
+    className: 'userLink'
+  });
+	setTimeout(function(){
+	  var commentsCollection = window.document.getElementsByClassName('postContent');
+		console.log("Trying to Autolink Comments: ", commentsCollection);
+	  for (var i = 0; i < commentsCollection.length; i++){
+	    commentsCollection[i].innerHTML = autolinker.link(commentsCollection[i].innerText);
+	  }
+	}, 3000);
 
 	$scope.init = function() {
 		networkService.send(TopicService.getTopicRequest($routeParams.topicID));
