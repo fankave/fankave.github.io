@@ -55,7 +55,7 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
         if (response.status === 200) {
           console.log("Successfully Registered User of Type: " + registerParams.type);
           if (registerParams.type === 'facebook'){
-            var userLoggedInToFacebook = true;
+            userLoggedInToFacebook = true;
           }
 
           // Store user credentials in Local Storage
