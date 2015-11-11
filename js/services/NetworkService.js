@@ -3,10 +3,6 @@ networkModule.factory("networkService",["$websocket","DataService","UserInfoServ
 
 function initNetworkService($websocket,DataService,UserInfoService)
 {
-	if(HOST_NAME == undefined)
-		HOST_NAME = window.location.host;;
-	if(HOST_NAME == 'dev.fankave.com')
-		WEBSOCKET_BASE_URI = 'ws://dev.fankave.com/ws?';
 	var ws;
 	function initSocket() { 
 		ws = $websocket(getWebsocketUri());
@@ -57,7 +53,7 @@ function initNetworkService($websocket,DataService,UserInfoService)
 			'&sessionId='+user.sessionId+
 			'&accessToken='+user.accessToken+
 			'/';
-			if(NETWORK_DEBUG) console.log("socketUri" + socketUri);
+			if(NETWORK_DEBUG) console.log("socketUri: " + socketUri);
 			return socketUri;
 		}
 	}

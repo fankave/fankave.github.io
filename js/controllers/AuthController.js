@@ -31,7 +31,7 @@ authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "Aut
         $scope.isPeelUser = true;
         AuthService.loginWithPeel();
       } else {
-        window.location = "#/facebookLogin";
+        // window.location = "#/facebookLogin";
       }
     }
 
