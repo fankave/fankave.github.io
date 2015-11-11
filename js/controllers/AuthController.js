@@ -58,7 +58,5 @@ authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "Aut
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
-    //FUTURE PEEL AUTH CTRL
-    //TODO...
     
 }]);
