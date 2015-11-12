@@ -37,6 +37,23 @@ networkModule.factory('MUService', ['$http','UserInfoService', function ($http,U
 
 	    return new Blob([ia], {type:mimeString});
 	}
+	
+	function getBase64FromImageUrl(url) {
+	    var img = new Image();
+
+	    img.onload = function () {
+	        var canvas = document.createElement("canvas");
+	        canvas.width =this.width;
+	        canvas.height =this.height;
+
+	        var ctx = canvas.getContext("2d");
+	        ctx.drawImage(this, 0, 0);
+
+	        var dataURL = canvas.toDataURL("image/png");
+	    };
+
+	    img.src = url;
+	}
 
 //Upload Media to FK server
 	uploadMedia = function(file){
@@ -46,8 +63,9 @@ networkModule.factory('MUService', ['$http','UserInfoService', function ($http,U
 //		fd.append('file', file);
 		console.log(" MUS upload");
 		var fd = new FormData();
+		var file = getBase64FromImageUrl('img/kave_logo2.png');
 	    //Take the first selected file
-	    fd.append("file", 'img/kave_logo2.png');
+	    fd.append("file", file);
 
 	    $http.post(MUS_SERVER_URI+UPLOAD_URL, fd, {
 	        
