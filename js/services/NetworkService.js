@@ -24,7 +24,7 @@ function initNetworkService($websocket,DataService,UserInfoService)
       if(type != undefined){
         if(type == "channel"){
           if(NETWORK_DEBUG) console.log("Processing Channel");
-          DataService.setChannel(responseJson);
+          ChannelService.setTopicData(responseJson);
         }
         if(type == "topic" || type == "score"){
           if(NETWORK_DEBUG) console.log("Processing Topic");
