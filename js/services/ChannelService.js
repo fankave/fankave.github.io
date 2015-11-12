@@ -1,4 +1,4 @@
-networkModule.service('ChannelService', function (DateUtilityService,Bant,FDSUtility) {
+channelModule.service('ChannelService', function (DateUtilityService,Bant,FDSUtility) {
 
 	
 	var _channelId;
