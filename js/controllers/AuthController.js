@@ -3,6 +3,8 @@ var authModule = angular.module("AuthModule", ["NetworkModule", "TopicModule"]);
 authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "AuthService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService", "URIHelper",
   function ($scope, $routeParams, $http, AuthService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
+    ga('send', 'pageview', 'Facebook Landing');
+    
     // FACEBOOK AUTH SECTION
     $scope.showFacebookButton = true;
 

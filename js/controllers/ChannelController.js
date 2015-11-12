@@ -42,7 +42,7 @@ function initTopicController($scope, $sce,$routeParams,networkService,ChannelSer
     }
     else{
       // console.log("Not logged in to facebook, take user to login page")
-      window.location = "#/facebookLogin";
+      window.location = "#/";
     }
   }
   

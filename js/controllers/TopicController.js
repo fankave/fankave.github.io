@@ -269,7 +269,7 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
     }
     else{
       // console.log("Not logged in to facebook, take user to login page")
-      window.location = "#/facebookLogin";
+      window.location = "#/";
     }
 
 
@@ -296,7 +296,7 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 //  if(facebookService.userLoggedInToFacebook === false)
 //  {
 //  // console.log("Not logged in to facebook, take user to login page")
-//  window.location = "#/facebookLogin";
+//  window.location = "#/";
 //  }
 //  else
 //  {

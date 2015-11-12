@@ -121,7 +121,7 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 	}
 	else
 	{
-		window.location = "#/facebookLogin";
+		window.location = "#/";
 	}
 
 	$scope.postReply = function(commentText) {

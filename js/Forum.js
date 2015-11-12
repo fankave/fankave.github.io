@@ -1,9 +1,9 @@
 var rootModule = angular.module("Forum", ["ngRoute", "AuthModule", "ChannelModule","TopicModule", "PostModule", "NetworkModule"]);
-rootModule.config(["$routeProvider", "$locationProvider", initRootModule]);
+rootModule.config(["$routeProvider", "$locationProvider",
 
-function initRootModule($routeProvider, $locationProvider) {
+function ($routeProvider, $locationProvider) {
   $routeProvider
-  .when('/facebookLogin', {
+  .when('/', {
     templateUrl:'partials/facebookLogin.html',
     controller:'AuthController'
   })
@@ -27,7 +27,7 @@ function initRootModule($routeProvider, $locationProvider) {
   });
 
   // $locationProvider.html5Mode(true);
-};
+}]);
 
 rootModule.run(function (){
   // Initialize Facebook SDK once loaded
