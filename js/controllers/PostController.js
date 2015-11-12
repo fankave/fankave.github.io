@@ -1,7 +1,7 @@
-var postModule = angular.module("PostModule", ["NetworkModule", "FacebookModule"]);
-postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "facebookService","UserInfoService","URIHelper", initPostController]);
+var postModule = angular.module("PostModule", ["NetworkModule"]);
+postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", initPostController]);
 
-function initPostController($scope, $sce, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService, UserInfoService,URIHelper)
+function initPostController($scope, $sce, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper)
 {
 	//ga('send', 'pageview', "/comment/"+$routeParams.postID);
 	$scope.pageClass = 'page-post';

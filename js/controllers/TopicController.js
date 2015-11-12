@@ -1,7 +1,7 @@
-var topicModule = angular.module("TopicModule", ["NetworkModule", "FacebookModule", "SplashModule"]);
-topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "facebookService", "UserInfoService","URIHelper","RegistrationService","SplashService","MUService",initTopicController]);
+var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule"]);
+topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","RegistrationService","SplashService","MUService",initTopicController]);
 
-function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper, RegistrationService, SplashService,MUService)
+function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, RegistrationService, SplashService,MUService)
 {
 
   ga('send', 'pageview', "/topic/"+$routeParams.topicID);
@@ -291,19 +291,6 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
     else
       window.location = "peel://home";
   }
-
-
-//  if(facebookService.userLoggedInToFacebook === false)
-//  {
-//  // console.log("Not logged in to facebook, take user to login page")
-//  window.location = "#/";
-//  }
-//  else
-//  {
-//  // console.log("TopicController | userLoggedInToFacebook: " + facebookService.userLoggedInToFacebook);
-//  $scope.initPage();
-//  }
-
 
   $scope.showNewCommentsIndicator = false;
   $scope.newCommentsIndicatorTapped = function()
