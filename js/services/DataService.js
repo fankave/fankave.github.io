@@ -68,7 +68,8 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 			console.log("reply pushed ");
 			if(replyData.method == "UPSERT")
 				if(ReplyService.updateReply(replyData) == 0){
-					if(replyData.data == undefined)
+					console.log("update reply is zero ");
+					if(replyData.data != undefined)
 					CommentService.updateReplyCountById(replyData.data.commentId,1);
 				}
 			else if(replyData.method == "REMOVE"){
