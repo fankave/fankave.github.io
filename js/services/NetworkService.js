@@ -23,12 +23,12 @@ function initNetworkService($websocket,DataService,UserInfoService)
 			var type = responseJson.rid;
 			if(type != undefined){
 				if(type == "channel"){
-					DataService.setChannel(responseJson);
 					if(NETWORK_DEBUG) console.log("Processing Channel");
+					DataService.setChannel(responseJson);
 				}
 				if(type == "topic" || type == "score"){
-					DataService.setTopic(responseJson);
 					if(NETWORK_DEBUG) console.log("Processing Topic");
+					DataService.setTopic(responseJson);
 				}else if(type == "comment"){
 					if(NETWORK_DEBUG) console.log("Processing Comments");
 					DataService.setComments(responseJson);
