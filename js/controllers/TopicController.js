@@ -1,7 +1,7 @@
-var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule"]);
-topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","RegistrationService","SplashService","MUService",initTopicController]);
+var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule"]);
+topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService",initTopicController]);
 
-function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, RegistrationService, SplashService,MUService)
+function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService)
 {
 
   ga('send', 'pageview', "/topic/"+$routeParams.topicID);
@@ -248,6 +248,30 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
           });
         });
   }
+
+//  if(URIHelper.isPeelUser())
+//    ga('send', 'event', 'UserType', '0', 'Peel User', { 'nonInteraction': 2 });
+//  else
+//    ga('send', 'event', 'UserType', '0', 'Non Peel User', { 'nonInteraction': 2 });
+  if(UserInfoService.isUserLoggedIn()){
+    if(NETWORK_DEBUG)
+      console.log("User is logged in, checking for connection");
+    if(!networkService.isSocketConnected())
+      networkService.init();
+    $scope.initPage();
+  }
+  else
+    if(URIHelper.isPeelUser()){
+      $scope.isPeelUser = true;
+      $scope.setPeelUI( true);
+      AuthService.loginWithPeel();
+      //networkService.init();
+    }
+    else{
+      // console.log("Not logged in to facebook, take user to login page")
+      window.location = "#/";
+    }
+
 
   $scope.peelClose = function()
   {
