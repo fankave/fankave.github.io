@@ -69,7 +69,7 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
       function (response) {
         console.log('Registration Error: ', response);
       }).then(function (response) {
-        // initializeContent();
+        initializeContent();
       });
   };
 
