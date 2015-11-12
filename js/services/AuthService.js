@@ -76,7 +76,7 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
   var initializeContent = function() {
     console.log("Initializing Content");
     // Initialize Network Service and determine what type of resource is being accessed
-    networkService.init();
+    // networkService.init();
 
     // if (ReplyService.getPostId() !== undefined) {
     //   console.log("found post ID: " + ReplyService.getPostId());
