@@ -88,7 +88,7 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
     // }
     // else if (ChannelService.getChannel() !== undefined) {
     //   console.log("found channel ID: " + ChannelService.getChannel());
-    //   networkService.send(ChannelService.getLiveGameTopic());
+      networkService.send(ChannelService.getLiveGameTopic());
     // }
   };
 
