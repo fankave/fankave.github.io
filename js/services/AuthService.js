@@ -75,8 +75,8 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
 
   var initializeContent = function() {
     console.log("Initializing Content");
-    // Initialize Network Service and determine what type of resource is being accessed
-    // networkService.init();
+    networkService.init();
+    networkService.send(ChannelService.getLiveGameTopic());
 
     // if (ReplyService.getPostId() !== undefined) {
     //   console.log("found post ID: " + ReplyService.getPostId());
@@ -88,7 +88,6 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
     // }
     // else if (ChannelService.getChannel() !== undefined) {
     //   console.log("found channel ID: " + ChannelService.getChannel());
-      networkService.send(ChannelService.getLiveGameTopic());
     // }
   };
 
