@@ -249,30 +249,6 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
         });
   }
 
-//  if(URIHelper.isPeelUser())
-//    ga('send', 'event', 'UserType', '0', 'Peel User', { 'nonInteraction': 2 });
-//  else
-//    ga('send', 'event', 'UserType', '0', 'Non Peel User', { 'nonInteraction': 2 });
-  if(UserInfoService.isUserLoggedIn()){
-    if(NETWORK_DEBUG)
-      console.log("User is logged in, checking for connection");
-    if(!networkService.isSocketConnected())
-      networkService.init();
-    $scope.initPage();
-  }
-  else
-    if(URIHelper.isPeelUser()){
-      $scope.isPeelUser = true;
-      $scope.setPeelUI( true);
-      RegistrationService.registerUser(URIHelper.getPeelUserId(),(URIHelper.getPeelUserName()));
-      //networkService.init();
-    }
-    else{
-      // console.log("Not logged in to facebook, take user to login page")
-      window.location = "#/";
-    }
-
-
   $scope.peelClose = function()
   {
     ga('send', 'event', 'Peel', 'click', 'BackToPeelHome');
