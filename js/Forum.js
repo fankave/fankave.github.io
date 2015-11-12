@@ -32,6 +32,25 @@ function initRootModule($routeProvider, $locationProvider) {
   });
 
   // $locationProvider.html5Mode(true);
-}
+};
 
+rootModule.run(function (){
+  // Initialize Facebook SDK once loaded
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '210324962465861',
+      xfbml      : true,
+      version    : 'v2.4'
+    });
+  };
+  // Load Facebook SDK
+  (function(d, s, id) {
+    console.log('loading FB SDK...');
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
 
+});
