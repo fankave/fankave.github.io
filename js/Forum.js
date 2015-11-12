@@ -2,32 +2,27 @@ var rootModule = angular.module("Forum", ["ngRoute", "AuthModule", "ChannelModul
 rootModule.config(["$routeProvider", "$locationProvider", initRootModule]);
 
 function initRootModule($routeProvider, $locationProvider) {
-  $routeProvider.when('/channel/:channelID',
-      {
-        templateUrl:'partials/login.html',
-        controller:'ChannelController'
-      }).
-  when('/topic/:topicID',
-  {
-    templateUrl:'partials/topic.html',
-    controller:'TopicController'
-  }).
-  when('/post/:postID',
-  {
-    templateUrl:'partials/post.html',
-    controller:'PostController'
-  }).
-  when('/invalidTopic',
-  {
-    templateUrl:'partials/invalidTopic.html'
-  }).
-  when('/facebookLogin',
-  {
+  $routeProvider
+  .when('/facebookLogin', {
     templateUrl:'partials/facebookLogin.html',
     controller:'AuthController'
-  }).
-  otherwise(
-  {
+  })
+  .when('/channel/:channelID', {
+    templateUrl:'partials/login.html',
+    controller:'ChannelController'
+  })
+  .when('/topic/:topicID', {
+    templateUrl:'partials/topic.html',
+    controller:'TopicController'
+  })
+  .when('/post/:postID', {
+    templateUrl:'partials/post.html',
+    controller:'PostController'
+  })
+  .when('/invalidTopic', {
+    templateUrl:'partials/invalidTopic.html'
+  })
+  .otherwise({
     redirectTo:'invalidTopic'
   });
 
