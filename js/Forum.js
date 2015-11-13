@@ -7,9 +7,13 @@ function ($routeProvider, $locationProvider) {
     templateUrl:'partials/facebookLogin.html',
     controller:'AuthController'
   })
+  // .when('/channel/:channelID', {
+  //   templateUrl:'partials/login.html',
+  //   controller:'ChannelController'
+  // })
   .when('/channel/:channelID', {
-    templateUrl:'partials/login.html',
-    controller:'ChannelController'
+    templateUrl:'partials/topic.html',
+    controller:'TopicController'
   })
   .when('/topic/:topicID', {
     templateUrl:'partials/topic.html',

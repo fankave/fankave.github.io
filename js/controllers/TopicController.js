@@ -4,9 +4,19 @@ topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$route
 function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService)
 {
 
-  ga('send', 'pageview', "/topic/"+$routeParams.topicID);
-  console.log('Sent Pageview from /topic/' + $routeParams.topicID);
-  
+  // Channel Service Migration
+  if (!!$routeParams.channelID){
+    ga('send', 'pageview', "/channel/"+$routeParams.channelID);
+    TopicService.setChannel($routeParams.channelID);
+    $scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
+    console.log(" $scope.urlQueryStr :" + $scope.urlQueryStr);
+  }
+
+
+  if (!!$routeParams.topicID){
+    console.log('Sent Pageview from /topic/' + $routeParams.topicID);
+  }
+
   TopicService.setTopicId($routeParams.topicID);
   $scope.topicType = "livegame";
   $scope.innerButtonTapped = false;
@@ -85,7 +95,7 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
       
       $scope.setScoreCardUI();
       if($scope.topicType == "livegame"){
-        console.log("Inside topic set :"+ TopicService.getTeamA());
+        console.log("Inside topic set: ", TopicService.getTeamA());
         //Score API update
         $scope.leftTeam = TopicService.getTeamA();
         $scope.rightTeam = TopicService.getTeamB();

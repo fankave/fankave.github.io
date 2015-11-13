@@ -60,7 +60,7 @@ function initNetworkService($websocket,DataService,UserInfoService,ChannelServic
   return{
     isSocketConnected:function(){
       if(NETWORK_DEBUG){
-        if(ws!= null)
+        if(ws != null)
         console.log("ws status : "+ ws.readyState);
         else
           console.log("ws is null");

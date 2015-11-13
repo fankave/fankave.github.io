@@ -78,15 +78,15 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
     // Initialize Network Service and determine what type of resource is being accessed
     networkService.init();
 
-    if (ReplyService.getPostId() !== undefined) {
+    if (!!ReplyService.getPostId()) {
       console.log("found post ID: " + ReplyService.getPostId());
       window.location = "#/post/" + ReplyService.getPostId();
     }
-    else if (TopicService.getTopicId() !== undefined) {
+    else if (!!TopicService.getTopicId()) {
       console.log("found Topic ID: " + TopicService.getTopicId());
       window.location = "#/topic/" + TopicService.getTopicId();
     }
-    else if (ChannelService.getChannel() !== undefined) {
+    else if (!!ChannelService.getChannel()) {
       console.log("found channel ID: " + ChannelService.getChannel());
       networkService.send(ChannelService.getLiveGameTopic());
     }
