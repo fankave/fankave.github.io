@@ -10,6 +10,7 @@ function initTopicController($scope, $sce,$routeParams,networkService,ChannelSer
 			REGISTER_SERVER_URI = 'http://was.fankave.com/v1.0/user/register';
 			console.log("setting Prod url for "+ HOST_NAME);
 		}
+	ga('set', 'page', '/'+$routeParams.channelID);
 	ChannelService.setChannel($routeParams.channelID);
 	$scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
 	console.log(" $scope.urlQueryStr :" + $scope.urlQueryStr);

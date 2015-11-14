@@ -67,7 +67,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 		else if(replyData.push){
 			console.log("reply pushed ");
 			if(replyData.method == "UPSERT")
-				if(ReplyService.updateReply(replyData) == 0){
+				if(ReplyService.updateReply(replyData) === 0){
 					if(replyData.data != undefined)
 					CommentService.updateReplyCountById(replyData.data.commentId,1);
 				}

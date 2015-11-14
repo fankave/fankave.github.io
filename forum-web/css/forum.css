@@ -2,44 +2,49 @@
  * Forum CSS
  *
  */
-
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
 
  /* Page-level / body */
- html
- {
- 	background-color:#EBF4FA;
- 	
- }
+html {
+  box-sizing: border-box;
+  background-color:#EBF4FA;
+}
+
 body {
 max-width: 950px;
 min-width:320px;
 margin: 0 auto;
 position: relative; /* Fix for absolute positioning */
 }
-a
-{
-	color: black;
+
+a {
+  color: black;
 }
 
 .page
 {
-	position:absolute;
-	top:0;
-	bottom:0;
-	padding-bottom:4em;
-	width:100%;
-	height:100%;
-	
+  position:absolute;
+  top:0;
+  bottom:0;
+  padding-bottom:4em;
+  width:100%;
+  height:100%;
+  
 }
 
 .page-topic
 {
-	/*padding-top: 8em; */
+  /*padding-top: 8em; */
+  background-color: #EBF4FA;
 }
 
 .page-post
 {
-	/*padding-top: 3.5em;*/
+  /*padding-top: 3.5em;*/
 }
 
 body
@@ -50,7 +55,7 @@ body
 
 .container
 {
-	background-color: white;
+  background-color: white;
 }
 
 
@@ -58,275 +63,52 @@ body
 
 #header
 {
-	height: 8em;
-	text-align:center;
-	/*background-color:red;*/
-	color:white;
-	max-width: 950px;
-	margin: 0 auto;
-	/* box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3); */
+  height: 8em;
+  text-align:center;
+  /*background-color:red;*/
+  color:white;
+  max-width: 950px;
+  margin: 0 auto;
+  /* box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3); */
 }
 
 /* #postHeader
 {
-	position:relative;
-	max-width: 680px;
-	margin: 0 auto;
-	position: relative;
+  position:relative;
+  max-width: 680px;
+  margin: 0 auto;
+  position: relative;
 } */ 
 #topicSection
 {
-	position:relative;
-	max-width: 950px;
-	margin: 0 auto;
-	position: relative;
+  position:relative;
+  max-width: 950px;
+  margin: 0 auto;
+  position: relative;
 }
 
 /* #postSection{
-	position:relative;
-	max-width: 680px;
-	margin: 0 auto;
-	position: relative;
+  position:relative;
+  max-width: 680px;
+  margin: 0 auto;
+  position: relative;
 } */
-
-/* Score Card */
-
-#scoreCardCanvas
-{
-	text-align:center;
-	color:white;
-	float:left;
-	width:100%;
-	height:8em;
-	/*max-height:8em;*/
-}
-
-#scoreCardContent
-{
-	width:100%;
-	height:8em;
-	max-height:8em;
-	position:absolute;
-	/*background-color:gray;*/
-}
-
-#scoreCardTitlesRow
-{
-	/*background:rgba(255, 0, 0, 0.3);*/
-	padding-top:1%;
-	/*margin:5px;*/
-	height:23%;
-}
-
-#scoreCardDataRow
-{
-	/*background-color:rgba(0, 255, 0, 0.3);*/
-	height:50%;
-	width:100%;
-	position:absolute;
-	
-}
-
-
-#allScoresButtonRow
-{
-	height:25%;
-	/*background-color: rgba(0, 0, 255, 0.3);*/
-	vertical-align: middle;
-	line-height:900%;
-}
-
-#allScoresButtonSpan
-{
-	/*background-color: yellow;*/
-	/*height:100%;*/
-	font-size:0.8em;
-	font-weight:300;
-	line-height: 0.8em;
-	border: 1px solid #EEE;
-	/*margin-top: 40px;*/
-	padding-top:2px;
-	padding-bottom:3px;
-	border-radius: 4px 4px 4px 4px !important;
-	vertical-align: middle;
-}
-
-#allScoresButtonRow a
-{
-	color: white;
-}
-
-#leftTeamSpan
-{
-	/*background-color: red;*/
-	width:35%;
-	float:left;
-	font-size:.9em;
-	text-align: right;
-}
-
-#liveGameIndicatorSpan
-{
-	width: 30%;
-	float:left;
-	/*background-color: green;*/
-}
-
-#liveGameIndicatorSpan img
-{
-	height:1.1em;
-}
-
-#rightTeamSpan
-{
-	/*background-color: blue;*/
-	width:35%;
-	float:right;
-	font-size:.9em;
-	text-align: left;
-}
-
-
-#leftTeamLogo
-{
-	width:20%;
-	height:100%;
-	float:left;
-	/*background-color:rgba(255, 255, 255, 0.3);*/
-	/*margin:5px;*/
-	text-align: right;
-}
-
-#leftTeamLogo img
-{
-	max-height:100%;
-}
-
-.helper {
-    display: inline-block;
-    max-height: 100%;
-    vertical-align: middle;
-}
-
-#leftTeamScore
-{
-	width:15%;
-	height:80%;
-	max-height:80%;
-	float:left;
-	font-size:2.5em;
-	/*background-color:rgba(255, 255, 0, 0.3);*/
-	margin-bottom:10px;
-	line-height:160%;
-	text-align: right;
-	/*margin:5px;*/
-	/*display: table-cell; */
-	/*vertical-align: middle*/
-}
-
-.teamLogo
-{
-	max-width:100%;
-	vertical-align: middle;
-}
-
-#gameTime
-{
-	float:left;
-	/*background-color:rgba(255, 255, 255, 0.15);*/
-	width:30%;
-	/* height:100%; */
-	font-size:0.9em;
-	padding-top:1%;
-	padding-left:6%;
-	padding-bottom:1%;
-	padding-right:0%;
-/* 	line-height:140%;
-	padding-top:2.5%;
-	padding-left:5%;
-	margin:5px;
-	vertical-align: middle;  */
-}
-
-/*
-#pastGameFinal
-{
-	background-color: green;
-	height:100%;
-}
-*/
-
-#gameTimeTopLine
-{
-	/*background-color:red;*/
-	width:100%;
-	height:50%;
-}
-
-#gameTimeCenterLine
-{
-	/*background-color:green;*/
-	content: '';
-	height: 100%;
-    width: 100%;
-    line-height:190%;
-    font-size:1.3em;
-    /*padding-top: 5%;*/
-}
-
-#gameTimeBottomLine
-{
-	/*background-color:blue;*/
-	width:100%;
-	height:50%;
-}
-
-#rightTeamScore
-{
-	width:15%;
-	height:80%;
-	max-height:80%;
-	float:left;
-	font-size:2.5em;
-	/*background-color:rgba(255, 255, 255, 0.3);*/
-	line-height:160%;
-	/*margin:5px;*/
-	vertical-align: middle;
-	text-align:center;
-}
-
-#rightTeamLogo
-{
-	width:20%;
-	height:100%;
-	float:left;
-	/*background-color:rgba(255, 255, 255, 0.3);*/
-	text-align: center;
-	/*margin:5px;*/
-}
-
-#rightTeamLogo img
-{
-	max-height:100%;
-}
-
-
 
 /* Topic Details */
 
 #topicDetails
 {
-	background-color: white;
-	font-size:1.1em;
-	min-height:2.8em;
-	padding-top:4px;
-	padding-left:4px;
-	margin:0 auto;
+  background-color: white;
+  font-size:1.1em;
+  min-height:2.8em;
+  padding-top:4px;
+  padding-left:4px;
+  margin:0 auto;
 }
 
 #topicDescriptionBody
 {
-	line-height: 1.1;
+  line-height: 1.1;
 }
 
 
@@ -354,81 +136,81 @@ body
 
 .commentsHeader
 {
-	text-align: center;
-	font-size: 1.0em;
-	background-color: rgb(248, 248, 248);
-	color: rgb(59, 166, 252);
-	font-weight:500;
-	min-height:2.2em;
-	line-height:2.2em;
+  text-align: center;
+  font-size: 1.0em;
+  background-color: rgb(248, 248, 248);
+  color: rgb(59, 166, 252);
+  font-weight:500;
+  min-height:2.2em;
+  line-height:2.2em;
 }
 
 
 .commentsContainer
 {
-	background-color: #EEEEEE;
+  background-color: #EEEEEE;
 }
 /* Post */
 
 .postRow
 {
-	font-size:3em;
-	/*max-height:4.4em;*/
-	background-color: white;
-	margin:2px;
-	border-bottom: 1px gray;
+  font-size:3em;
+  /*max-height:4.4em;*/
+  background-color: white;
+  margin:2px;
+  border-bottom: 1px gray;
 }
 
 .repliesCommentRow
 {
-	font-size:3em;
-	/*max-height:4.4em;*/
-	background-color: rgb(248, 249, 251);
-	margin:2px;
-	border-bottom: 1px red;
+  font-size:3em;
+  /*max-height:4.4em;*/
+  background-color: rgb(248, 249, 251);
+  margin:2px;
+  border-bottom: 1px red;
 }
 
 .postAuthorPhoto /* left-side of each post row */
 {
-	/*background-color: yellow;*/
-	width: 15%;
-	/*max-width: 100px;*/
-	float:left;
-	padding:5px;
+  /*background-color: yellow;*/
+  width: 15%;
+  /*max-width: 100px;*/
+  float:left;
+  padding:5px;
 }
 
 .postAuthorPhoto img/* left-side of each post row */
 {
-	/*background-color: yellow;*/
-	/*width: 15%;*/
-	max-width: 32px !important;
-	/*max-height: 100%;*/
-	/*float:left;*/
-	/*padding:5px;*/
+  /*background-color: yellow;*/
+  /*width: 15%;*/
+  max-width: 32px !important;
+  /*max-height: 100%;*/
+  /*float:left;*/
+  /*padding:5px;*/
 }
 
 .repliesHeaderPostAuthorPhoto
 {
-	/*background-color: yellow;*/
-	width: 15%;
-	/*max-width: 100px;*/
-	float:left;
-	padding:5px;
+  /*background-color: yellow;*/
+  width: 15%;
+  /*max-width: 100px;*/
+  float:left;
+  padding:5px;
 }
 
 .repliesHeaderPostAuthorPhoto img
 {
-	/*background-color: yellow;*/
-	/*width: 15%;*/
-	max-width: 42px !important;
-	/*max-height: 100%;*/
-	/*float:left;*/
-	/*padding:5px;*/
+  /*background-color: yellow;*/
+  /*width: 15%;*/
+  max-width: 42px !important;
+  /*max-height: 100%;*/
+  /*float:left;*/
+  /*padding:5px;*/
 }
 
 .thumbnail
 {
-	padding-top:9px;
+  padding-top:9px;
     border: 0 none;
     box-shadow: none;
     background-color:transparent;
@@ -436,9 +218,9 @@ body
 
 .userPhoto
 {
-	background-color:rgb(230, 237, 243);
-	border-radius: 25px;
-	-webkit-border-radius: 25px;
+  background-color:rgb(230, 237, 243);
+  border-radius: 25px;
+  -webkit-border-radius: 25px;
 }
 
 #pinIcon img {
@@ -449,178 +231,178 @@ body
 }
 .repliesHeaderUserPhoto
 {
-	background-color:rgb(246, 250, 251);
-	border-radius: 25px;
-	-webkit-border-radius: 25px;
-	max-height: 32px !important;
+  background-color:rgb(246, 250, 251);
+  border-radius: 25px;
+  -webkit-border-radius: 25px;
+  max-height: 32px !important;
 }
 
 #pinIcon
 {
-	font-size: 0.2em;
-	/*background-color:red;*/
-	max-height:15px;
-	text-align: right;
-	margin-top: -15px;
-	padding: 0px;
+  font-size: 0.2em;
+  /*background-color:red;*/
+  max-height:15px;
+  text-align: right;
+  margin-top: -15px;
+  padding: 0px;
 }
 
 #pinIcon img
 {
-	max-height: 15px;
+  max-height: 15px;
 }
 
 .post /* entire right-side of each post row */
 {
-	width: 85%;
-	/*background-color: #EFF;*/
-	float:right;
-	min-height: 2.0em;
-	padding-left: 5px;
-	padding-right :10px;
-	padding-top: 10px;
-	padding-bottom: 10px;
+  width: 85%;
+  /*background-color: #EFF;*/
+  float:right;
+  min-height: 2.0em;
+  padding-left: 5px;
+  padding-right :10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 #replyPost
 {
-	width: 75%;
-	/*background-color: red;*/
-	min-height: 2.0em;
-	float:left;
-	padding-left: 5px;
+  width: 75%;
+  /*background-color: red;*/
+  min-height: 2.0em;
+  float:left;
+  padding-left: 5px;
 }
 
 .replyUsername
 {
-	font-size: 1em;
-	float:left;
-	color: rgb(166, 189, 207);
-	width:80%;
-	/*padding-left:5px;*/
+  font-size: 1em;
+  float:left;
+  color: rgb(166, 189, 207);
+  width:80%;
+  /*padding-left:5px;*/
 }
 
 .postUsername
 {
-	font-size: 0.31em;
-	float:left;
-	color: rgb(166, 189, 207);
-	width:80%;
-	/*padding-left:5px;*/
+  font-size: 0.31em;
+  float:left;
+  color: rgb(166, 189, 207);
+  width:80%;
+  /*padding-left:5px;*/
 }
 
 
 
 .timestamp
 {
-	font-size: 0.31em;
-	float:right;
-	color: rgb(166, 189, 207);
-	width:20%;
-	text-align: right;
+  font-size: 0.31em;
+  float:right;
+  color: rgb(166, 189, 207);
+  width:20%;
+  text-align: right;
 /* padding-right:10px; */
 }
 
 .replyTimestamp
 {
-	font-size: 1em;
-	float:right;
-	color: rgb(166, 189, 207);
-	width:20%;
-	text-align: right;
-	padding-right:0px;
+  font-size: 1em;
+  float:right;
+  color: rgb(166, 189, 207);
+  width:20%;
+  text-align: right;
+  padding-right:0px;
 }
 
 .postContent
 {
-	/*float:clear;*/
-	/*background-color: gray;*/
-	/*padding-left: 5px;*/
-	padding-right: 5px;
-	font-size: 0.34em;
-	margin-bottom:0.3em;
-	/*overflow:hidden;*/
-	word-wrap:break-word;
+  /*float:clear;*/
+  /*background-color: gray;*/
+  /*padding-left: 5px;*/
+  padding-right: 5px;
+  font-size: 0.34em;
+  margin-bottom:0.3em;
+  /*overflow:hidden;*/
+  word-wrap:break-word;
 }
 
 .replyContent
 {
-	padding-right: 5px;
-	font-size: 1em;
-	margin-bottom: 1em;
-	color: black;
+  padding-right: 5px;
+  font-size: 1em;
+  margin-bottom: 1em;
+  color: black;
 }
 
 .topicPhoto
 {
-	width:100%;
-	height:auto;
-	/* max-width:100%;
-	max-height:100%; */
-	margin-top:0.2em;
-	margin-bottom:0.3em;
+  width:100%;
+  height:auto;
+  /* max-width:100%;
+  max-height:100%; */
+  margin-top:0.2em;
+  margin-bottom:0.3em;
 }
 
 .postPhoto
 {
-	max-width:100%;
-	max-height:100%;
-	margin-top:0.2em;
-	margin-bottom:0.3em;
+  max-width:100%;
+  max-height:100%;
+  margin-top:0.2em;
+  margin-bottom:0.3em;
 }
 
 .postVideo
 {
-	max-width:100%;
-	max-height:100%;
-	margin-top:0.2em;
-	margin-bottom:0.3em;
+  max-width:100%;
+  max-height:100%;
+  margin-top:0.2em;
+  margin-bottom:0.3em;
 }
 
 .playVideoButton
 {
-	position:absolute;
-	float:left;
+  position:absolute;
+  float:left;
 }
 
 .sharingButtonsRow
 {
-	float:right;
-	/*background-color:gray;*/
-	padding-right:0px;
-	font-size:0.3em;
-	margin-bottom:0.1em;
+  float:right;
+  /*background-color:gray;*/
+  padding-right:0px;
+  font-size:0.3em;
+  margin-bottom:0.1em;
 }
 
 .socialButtonsRow
 {
-	float:left;
-	/*background-color:gray;*/
-	padding-left:0px;
-	font-size:0.3em;
-	margin-bottom:0.1em;
+  float:left;
+  /*background-color:gray;*/
+  padding-left:0px;
+  font-size:0.3em;
+  margin-bottom:0.1em;
 }
 
 .social-btn
 {
-	float:left;
-	color:gray;
-	padding:0px;
-	width:20px;
+  float:left;
+  color:gray;
+  padding:0px;
+  width:20px;
 }
 
 .social-btn img
 {
-	width:17px;
-	height:17px;
+  width:17px;
+  height:17px;
 }
 .socialButtonLable
 {
-	float:left;
-	min-width:30px;
-	width:30px;
-	height:16px;
-	padding:5px 2px 7px 3px;
+  float:left;
+  min-width:30px;
+  width:30px;
+  height:16px;
+  padding:5px 2px 7px 3px;
 } 
 span.socialButtonLable
 {
@@ -629,49 +411,49 @@ span.socialButtonLable
 
 .social-btn-more
 {
-	float:right;
-	color:gray;
-	padding:0px;
-	width:20px;
+  float:right;
+  color:gray;
+  padding:0px;
+  width:20px;
 }
 
 .social-btn-more img
 {
-	float:right;
-	width:20px;
-	height:20px;
+  float:right;
+  width:20px;
+  height:20px;
 }
 
 .topicSharingButtonsRow
 {
-	float:left;
-	/*background-color:gray;*/
-	padding-right:0px;
-	font-size:0.8em;
-	margin-top:0.3em;
-	margin-bottom:0.1em;
+  float:left;
+  /*background-color:gray;*/
+  padding-right:0px;
+  font-size:0.8em;
+  margin-top:0.3em;
+  margin-bottom:0.1em;
 }
 
 .topic-social-btn
 {
-	/*color: rgb(166, 189, 207);*/
-	float:left;
-	color:gray;
-	padding:0px;
-	width:24px
+  /*color: rgb(166, 189, 207);*/
+  float:left;
+  color:gray;
+  padding:0px;
+  width:24px
 }
 
 .topic-social-btn img
 {
-	float:left;
-	width:20px;
-	height:20px;
+  float:left;
+  width:20px;
+  height:20px;
 }
 .topic-social-btn lable
 {
-	float:left;
-	width:32px;
-	height:20px;
+  float:left;
+  width:32px;
+  height:20px;
 }
 
 
@@ -680,43 +462,43 @@ span.socialButtonLable
 
 /* #textInputFieldTopic
 {
-	background-color:red;
-	display:inline;
-	position:fixed;
-	top:15em;
-	z-index: 10000;
-	
-	width: 75%;
-	left: 50%;
-	margin-left: -37.5%;
+  background-color:red;
+  display:inline;
+  position:fixed;
+  top:15em;
+  z-index: 10000;
+  
+  width: 75%;
+  left: 50%;
+  margin-left: -37.5%;
 } */
 
 #textEntryField
 {
-	position:fixed;
-	bottom:0;
-	width:100%;
-	padding:10px;
-	background-color:white;
-	border-top: 1px solid #EEE;
-	height:3.9em;
+  position:fixed;
+  bottom:0;
+  width:100%;
+  padding:10px;
+  background-color:white;
+  border-top: 1px solid #EEE;
+  height:3.9em;
 }
 
 #postCommentButton{
-	width:15%;
-	height:2.4em;
-	text-align:center;
-	verticle-align:middle;
-	/*color:white;*/	
+  width:15%;
+  height:2.4em;
+  text-align:center;
+  verticle-align:middle;
+  /*color:white;*/  
 }
 
 #postReplyButton{
-	width:15%;
-	height:2.4em;
-	text-align:center;
-	verticle-align:middle;
-	margin-right:0px;
-	/*color:white;*/	
+  width:15%;
+  height:2.4em;
+  text-align:center;
+  verticle-align:middle;
+  margin-right:0px;
+  /*color:white;*/  
 }
 input:focus + button {
    background: linear-gradient(#56A5EC,#82CAFF,#56A5EC);
@@ -729,16 +511,16 @@ input:focus + button {
 
 #postHeader
 {
-	height: 5em;
-	background-color:rgb(246, 250, 251);
-	/*color:white;*/
-	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);	
+  height: 5em;
+  background-color:rgb(246, 250, 251);
+  /*color:white;*/
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);  
 }
 
 
 #backToTopicButton
 {
-	/*background-color:black;*/
+  /*background-color:black;*/
      vertical-align: middle;
      height:100%;
 }
@@ -746,29 +528,29 @@ input:focus + button {
 
 #backToTopicButton img
 {
-	width:24px;
-	height:33px;
+  width:24px;
+  height:33px;
 }
 
 
 #post_backToTopicButtonSpan
 {
-	width:10%;
-	float:left;
-	/*margin-left:-10px;*/
+  width:10%;
+  float:left;
+  /*margin-left:-10px;*/
 }
 
 
 .repliesContainer
 {
-	background-color: #EEEEEE;
+  background-color: #EEEEEE;
 }
 
 
 #repliesCommentSeparator
 {
-	background-color: rgb(230, 237, 243);
-	font-size:0.13em;
+  background-color: rgb(230, 237, 243);
+  font-size:0.13em;
 }
 
 
@@ -777,40 +559,43 @@ input:focus + button {
 
 #peelNavBar
 {
-	background-color: black;//rgb(16, 93, 110);
-	min-height: 3em;
+  background-color: black;
+  /*min-height: 3em;*/
+  height: 52px;
 }
 
 /*
 .peelButton
 {
-	padding:10px;
+  padding:10px;
 }
 */
 
 
-#closePeelButton
-{
-	float:left;
+#closePeelButton {
+  /*float:left;*/
+  position: absolute;
+  left: 0;
+  top: 5px;
 }
 
-#closePeelButton img
-{
-	max-height: 100%;
-	width:2.4em;
-	height:2.4em;
+#closePeelButton img {
+  max-height: 100%;
+  width:2.4em;
+  height:2.4em;
 }
 
 
 
-#peelWatchOnTVButton
-{
-	float:right;
+#peelWatchOnTVButton {
+  /*float: right;*/
+  position: absolute;
+  right: 0;
+  top: 5px;
 }
 
-#peelWatchOnTVButton img
-{
-	max-height:2.4em;
+#peelWatchOnTVButton img {
+  max-height:2.4em;
 }
 
 
@@ -818,90 +603,23 @@ input:focus + button {
 
 #newCommentsAvailableIndicatorDiv
 {
-	/*background-color:red;*/
-	position:fixed;
-	top:11em;
-	z-index: 10000;
-	width: 75%;
-	left: 50%;
-	margin-left: -37.5%;
+  /*background-color:red;*/
+  position:fixed;
+  top:11em;
+  z-index: 10000;
+  width: 75%;
+  left: 50%;
+  margin-left: -37.5%;
 }
 
 #newRepliesAvailableIndicatorDiv
 {
-	position:fixed;
-	bottom:5em;
-	z-index: 10000;
-	width: 75%;
-	left: 50%;
-	margin-left: -37.5%;
-}
-
-/* - - - Facebook Landing - - - */
-
-#landingContainer {
-	position:relative;
-	background-color: #EBF4FA;
-  width:100%;
-  height:100%;
-  text-align: center;
-}
-
-#landingContainer > div {
-	width: 50%;
-	margin: 0 auto;
-}
-
-#landingGraphic {
-	width: auto;
-	height: 100vh;
-}
-
-#facebookButton {
-	position: absolute;
-	top: 33vh;
-	width: 63vw;
-	max-width: 250px;
-	transform: translateX(-50%);
-	-webkit-transform: translateX(-50%);
-	-moz-transform: translateX(-50%);
-}
-
-#facebookButton:hover {
-	cursor: pointer;
-}
-
-@media all and (orientation: landscape) and (max-device-width: 736px) {
-	#facebookButton {
-		top: 70vh;
-	}
-	#landingContainer {
-		overflow: hidden;
-	}
-	#landingGraphic {
-		height: 230vh;
-		margin-top: -5vh;
-	}
-}
-
-@media only screen and (min-device-width: 600px) and (max-device-width: 1024px) and (orientation: portrait) {
-	#facebookButton {
-		max-width: 370px;
-	}
-}
-
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
-	#facebookButton {
-		max-width: 280px;
-	}
-}
-
-@media all and (min-device-width: 1025px) {
-	#facebookButton {
-		height: 9vh;
-		width: auto;
-		max-width: 400px;
-	}
+  position:fixed;
+  bottom:5em;
+  z-index: 10000;
+  width: 75%;
+  left: 50%;
+  margin-left: -37.5%;
 }
 
 /* - - - disable scrolling (for use with magnific popup) - - - */
@@ -916,78 +634,453 @@ input:focus + button {
 /* - - - Peel User Splash Page - - - */
 
 #splashUnderlay {
-	position: fixed;
-	background-color: rgb(0,0,0);
-	background-color: rgba(0,0,0, 0.7);
-	width: 100%;
-	max-width: 950px;
-	height: 100%;
-	z-index: 10001;
+  position: fixed;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.7);
+  width: 100%;
+  max-width: 950px;
+  height: 100%;
+  z-index: 10001;
 }
 
 #splashOverlay {
-	position: relative;
-	text-align: center;
-	padding: 6vh 0%;
-	background-color: #fff;
-	width: 90%;
-	max-width: 950px;
-	height: 94%;
-	left: 50%;
-	margin-left: -45%;
-	z-index: 10002;
-	top: 50%;
-	-webkit-transform: translateY(-50%);
+  position: relative;
+  text-align: center;
+  padding: 4% 0%;
+  background-color: #fff;
+  width: 90%;
+  max-width: 950px;
+  height: 94%;
+  left: 50%;
+  margin-left: -45%;
+  z-index: 10002;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
 
 .graphicContainer {
-	text-align: center;
-	margin-bottom: 5%;
+  text-align: center;
+  margin-bottom: 5%;
 }
 
 #splashGraphic {
-	position: relative;
-	width: 74%;
-	max-width: 300px;
-	height: auto;
-	z-index: 10003;
+  position: relative;
+  width: 74%;
+  max-width: 300px;
+  height: auto;
+  z-index: 10003;
 }
 
 #continue {
-	position: fixed;
-	width: 80%;
-	max-width: 350px;
-	height: auto;
-	top: 74%;
-	left: 50%;
-	margin-left: -40%;
-	z-index: 10003;
+  position: fixed;
+  width: 80%;
+  max-width: 350px;
+  height: auto;
+  top: 74%;
+  left: 50%;
+  margin-left: -40%;
+  z-index: 10003;
 }
 
 #continue:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 #kaveLogo {
-	position: fixed;
-	width: 65%;
-	max-width: 260px;
-	height: auto;
-	top: 81%;
-	left: 19%;
-	z-index: 10005
+  position: fixed;
+  width: 65%;
+  max-width: 260px;
+  height: auto;
+  top: 81%;
+  left: 19%;
+  z-index: 10005
 }
 
 @media all and (min-width: 440px) {
-	
-	#continue {
-		margin-left: -175px;
-	}
+  
+  #continue {
+    margin-left: -175px;
+  }
 
-	#kaveLogo {
-		left: 50%;
-		margin-left: -130px;
-	}
+  #kaveLogo {
+    left: 50%;
+    margin-left: -130px;
+  }
+}
+
+/* - - - Remove Default Browser Input/Button outlining - - - */
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus,
+[contenteditable="true"]:focus {
+    outline: none;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+/* - - - Facebook Landing Page - - - */
+
+#landingContainer {
+  position:relative;
+  background-color: #EBF4FA;
+  width:100%;
+  height:100%;
+  text-align: center;
+}
+
+#landingContainer > div {
+  width: 50%;
+  margin: 0 auto;
+}
+
+#landingGraphic {
+  width: auto;
+  height: 100vh;
+}
+
+#facebookButton {
+  position: absolute;
+  top: 33vh;
+  width: 63vw;
+  max-width: 250px;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+}
+
+#facebookButton:hover {
+  cursor: pointer;
+}
+
+@media all and (orientation: landscape) and (max-device-width: 736px) {
+  #facebookButton {
+    top: 70vh;
+  }
+  #landingContainer {
+    overflow: hidden;
+  }
+  #landingGraphic {
+    height: 230vh;
+    margin-top: -5vh;
+  }
+}
+
+@media only screen and (min-device-width: 600px) and (max-device-width: 1024px) and (orientation: portrait) {
+  #facebookButton {
+    max-width: 370px;
+  }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  #facebookButton {
+    max-width: 280px;
+  }
+}
+
+@media all and (min-device-width: 1025px) {
+  #facebookButton {
+    height: 9vh;
+    width: auto;
+    max-width: 400px;
+  }
+}
+
+/* - - - Scorecard Text Rework - - - */
+
+.scoreCardContent {
+  width:100%;
+  height:125px;
+  line-height: 1.2em;
+  position:absolute;
+  z-index: 1;
+}
+
+.svg-content {
+  fill:rgba(0,0,0,0);
+}
+
+/* - COLUMNS - */
+.grid-col {
+  position: relative;
+  height: 100%;
+  float: left;
+  text-align: center;
+  z-index: 10;
+}
+.grid-col-40 {
+  width: 37%;
+}
+
+#L-40 {
+  padding-left: 6%;
+}
+
+#R-40 {
+  padding-right: 6%;
+}
+
+.grid-col-20 {
+  width: 26%;
+}
+
+/* - ROWS - */
+.grid-row-33 {
+  height: 33%;
+}
+
+.grid-row-34 {
+  height: 34%;
+}
+
+.grid-row-22 {
+  height: 22%;
+}
+
+.grid-row-45 {
+  height: 45%;
+}
+
+.grid-row-33 > span {
+  vertical-align: -80%;
+}
+
+.grid-row-22 > span {
+  vertical-align: -70%;
+}
+
+/* - Elements - */
+.teamLogo > img {
+  max-height: 56px;
+  /*max-width: 56px;*/
+  margin-top: 4px;
+}
+
+.largeLogo > img {
+  max-height: 62px;
+}
+
+#teamName {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+#leftTeamRecord {
+  position: absolute;
+  font-size: 12px;
+  top: 11px;
+  right: 0%;
+}
+
+#rightTeamRecord {
+  position: absolute;
+  font-size: 12px;
+  top: 11px;
+  left: 0%;
+}
+
+#possession {
+  font-size: 13px;
+}
+
+#possession > img {
+  height: 10px;
+  vertical-align: baseline;
+}
+
+.score {
+  font-size:2.8em;
+  font-weight: 300;
+  vertical-align: middle;
+}
+
+.score-right {
+  padding-right: 8%;
+}
+
+.score-left {
+  padding-left: 8%;
+}
+
+.triple {
+  font-size: 2.4em;
+  font-weight: 300;
+  vertical-align: middle;
+}
+
+.triple-right {
+  padding-right: 8%;
+}
+
+.triple-left {
+  padding-left: 8%;
+}
+
+.center {
+  display: inline-block;
+  vertical-align: -200%;
+}
+
+.center > span {
+  display: block;
+  font-weight: 200;
+  font-size: 16px;
+  line-height: 1.2em;
+}
+
+#rightColor {
+  width:100%;
+  height:125px;
+  position:absolute;
+  z-index: 2;
+}
+
+#final {
+  font-size: 1.4em;
+}
+
+#finalDate {
+  position: relative;
+  top: -5px;
+}
+
+#futureTime {
+  /*font-size: 0.9em;*/
+}
+
+#vs {
+  font-size: 1.1em;
+}
+
+#liveGameIndicator img {
+  position: relative;
+  height: 19px;
+  top: -4px;
+  left: -2%;
+}
+
+
+#allScores
+{
+  position: relative;
+  height:25%;
+  vertical-align: middle;
+  line-height:0em;
+  z-index: 5;
+}
+
+#allScoresSpan {
+  font-size:13px;
+  font-weight:300;
+  border: 0.1em solid #EEE;
+  padding: 3px 6px;
+  border-radius: 3px;
+}
+
+#allScoresLink {
+  color: white;
+}
+#allScoresSpan:hover {
+  background-color: #EEE;
+}
+#allScoresLink:hover {
+  color: rgb(59, 166, 252);
+}
+
+a,
+a:hover,
+a:focus {
+  text-decoration: none;
+}
+
+/* - Media Queries - */
+
+@media all and (min-width: 500px) {
+  
+  .score-right {
+    padding-right: 14%;
+  }
+  .score-left {
+    padding-left: 14%;
+  }
+  #teamName {
+    font-size: 16px;
+  }
+  #rightTeamRecord {
+    font-size: 14px;
+    left: 8%;
+  }
+  #leftTeamRecord {
+    font-size: 14px;
+    right: 8%;
+  }
+
+}
+
+@media all and (max-width: 409px) {
+  
+  #futureTime {
+    font-size: 15px;
+  }
+  .triple-left {
+    padding-left: 0%;
+  }
+  .triple-right {
+    padding-right: 0%;
+  }
+}
+
+@media all and (max-width: 374px) {
+  #allScoresSpan {
+    font-size: 11px;
+  }
+  .score {
+    font-size: 2.4em;
+  }
+  #R-40 {
+    padding-right: 1%;
+  }
+  #L-40 {
+    padding-left: 1%;
+  }
+  #possession {
+    font-size: 11px;
+  }
+  .center {
+    vertical-align: -190%;
+  }
+  .center > span {
+    font-size: 14px;
+  }
+  #teamName {
+    font-size: 13px;
+  }
+  #futureTime {
+    font-size: 14px;
+  }
+}
+
+@media all and (max-width: 350px) {
+  .triple {
+    font-size: 2.2em;
+  }
+  #futureTime {
+    font-size: 13px;
+  }
+  #vs {
+    font-size: 13px;
+  }
+}
+
+/* - - - UTILITES - - - */
+
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
 }

@@ -4,7 +4,7 @@ topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$route
 function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, facebookService, UserInfoService, URIHelper, RegistrationService, SplashService)
 {
 
-	ga('send', 'pageview', "/topic/"+$routeParams.topicID);
+	//ga('send', 'pageview', "/topic/"+$routeParams.topicID);
 	
 	TopicService.setTopicId($routeParams.topicID);
 	$scope.topicType = "livegame";
@@ -40,8 +40,8 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 		if($scope.isPeelUser === true)
 		{
 			if($scope.topicType == "livegame"){
-				document.getElementById('topicSection').style.paddingTop = "11em";
-				document.getElementById('header').style.height = "11em";	
+				document.getElementById('topicSection').style.paddingTop = "177px";
+				document.getElementById('header').style.height = "177px";	
 			}
 			else{
 			document.getElementById('topicSection').style.paddingTop = "3em";
@@ -56,8 +56,8 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 		else
 		{
 			if($scope.topicType == "livegame"){
-				document.getElementById('topicSection').style.paddingTop = "8em";
-				document.getElementById('header').style.height = "8em";
+				document.getElementById('topicSection').style.paddingTop = "125px";
+				document.getElementById('header').style.height = "125px";
 			}
 			else{
 				document.getElementById('topicSection').style.paddingTop = "0em";
@@ -107,7 +107,11 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 				$scope.allScoresTitle = TopicService.getScoresTitle();
 				$scope.allScoresURL = TopicService.getScoresLink();
 
-				renderScoreCard($scope.leftTeam.pColor, $scope.rightTeam.pColor);
+				// New Scorecard Rendering
+				var left = $('.scoreCardContent');
+				var right = $('.svg-content');
+				left.css('background-color', $scope.leftTeam.pColor);
+				right.css('fill', $scope.rightTeam.pColor);
 			}
 			$scope.topicTitle = TopicService.getTitle();
 			var thisTopic = TopicService.getTopic();
