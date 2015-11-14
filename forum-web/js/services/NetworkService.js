@@ -1,13 +1,32 @@
 var networkModule = angular.module("NetworkModule", ['ngWebSocket']);
-networkModule.factory("networkService",["$websocket","DataService","UserInfoService",initNetworkService]);
+networkModule.factory("networkService",["$websocket","$route","DataService","UserInfoService",initNetworkService]);
 
-function initNetworkService($websocket,DataService,UserInfoService)
+function initNetworkService($websocket,$route,DataService,UserInfoService)
 {
 	if(HOST_NAME == undefined)
 		HOST_NAME = window.location.host;;
 	if(HOST_NAME == 'dev.fankave.com')
 		WEBSOCKET_BASE_URI = 'ws://dev.fankave.com/ws?';
 	var ws;
+	
+	disconnectSocket = function(){
+		console.log("Disconnect Callback triggered");
+		if(ws != undefined) {
+			ws.close();
+			ws = undefined;
+		}
+	}
+
+	reconnectSocket = function(){
+		console.log("Reconnect Callback triggered");
+		$route.reload();
+	}
+
+	
+	window.document.addEventListener(visEvent, function(){
+	    visChange(reconnectSocket, disconnectSocket);
+	  });
+
 	function initSocket() { 
 		ws = $websocket(getWebsocketUri());
 		DataService.setWatchTopic(false);
@@ -80,5 +99,6 @@ function initNetworkService($websocket,DataService,UserInfoService)
 			ws.send(JSON.stringify(message));
 			},
 		init:initSocket
+		
 	}
 }
