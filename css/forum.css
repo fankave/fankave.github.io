@@ -1084,3 +1084,7 @@ a:focus {
   display: table;
   clear: both;
 }
+
+a.userLink {
+	color: rgb(59,166,252);
+}
