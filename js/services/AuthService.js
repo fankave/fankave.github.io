@@ -1,7 +1,9 @@
-authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "ReplyService", "networkService", "ForumDeviceInfo", "ChannelService", "URIHelper", 
-  function ($http, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
+authModule.factory("AuthService", ["$http", "$location", "$q", "UserInfoService", "TopicService", "ReplyService", "networkService", "ForumDeviceInfo", "ChannelService", "URIHelper", 
+  function ($http, $location, $q, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
+  var _urlQueryStr;
   var userLoggedInToFacebook = false;
+  
   var loginToFacebook = function() {
     FB.login(function (response) {
       if (response.status === 'connected') {
@@ -73,23 +75,41 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
       });
   };
 
+  var convertChannelToTopic = function(){
+    var deferred = $q.defer();
+    networkService.send(TopicService.getLiveTopicFromChannel(), function(){
+      deferred.resolve();
+    });
+    return deferred.promise;
+  }
+
   var initializeContent = function() {
-    console.log("Initializing Content");
+    console.log("Initializing Content: " + _urlQueryStr);
     // Initialize Network Service and determine what type of resource is being accessed
     networkService.init();
 
-    if (!!ReplyService.getPostId()) {
-      console.log("found post ID: " + ReplyService.getPostId());
-      window.location = "#/post/" + ReplyService.getPostId();
-    }
-    else if (!!TopicService.getTopicId()) {
-      console.log("found Topic ID: " + TopicService.getTopicId());
-      window.location = "#/topic/" + TopicService.getTopicId();
-    }
-    else if (!!ChannelService.getChannel()) {
-      console.log("found channel ID: " + ChannelService.getChannel());
-      networkService.send(ChannelService.getLiveGameTopic());
-    }
+    convertChannelToTopic().then(function(){
+      var topicID = TopicService.getLiveTopicId();
+      console.log("Converted Topic ID: " + topicID);
+      window.location = "#/topic/" + topicID;
+    });
+
+
+    // if (!!ReplyService.getPostId()) {
+    //   console.log("found post ID: " + ReplyService.getPostId());
+    //   window.location = "#/post/" + ReplyService.getPostId();
+    // }
+    // else if (!!TopicService.getTopicId()) {
+    //   console.log("found Topic ID: " + TopicService.getTopicId());
+    //   window.location = "#/topic/" + TopicService.getTopicId();
+    // }
+    // else if (!!TopicService.getChannel()) {
+    //   console.log("found channel ID: " + TopicService.getChannel());
+    //   networkService.send(TopicService.getLiveTopicFromChannel());
+    //   setTimeout(function(){
+    //     console.log("Auth Redirecting To: " + "/topic/", TopicService.getLiveTopicId(), _urlQueryStr);
+    //     $location.url("/topic/" + TopicService.getLiveTopicId() + _urlQueryStr);}, 2000);
+    // }
   };
 
   return {
@@ -98,7 +118,9 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
     setRegistrationParams: setRegistrationParams,
     registerUser: registerUser,
     initializeContent: initializeContent,
-    userLoggedInToFacebook: userLoggedInToFacebook
+    userLoggedInToFacebook: userLoggedInToFacebook,
+    setQueryStr: function(query){_urlQueryStr = query;},
+    getQueryStr: function(){return _urlQueryStr;}
   };
 
 }]);

@@ -34,7 +34,7 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 	}
 
 	function setUserCredentials(userId, accessToken, sessionId, userType){
-		// console.log("setUserCredentials(" + userId + ", " + accessToken + ", " + sessionId);
+		console.log("setUserCredentials(" + userId + ", " + accessToken + ", " + sessionId);
 		_userInfo = {};
 		_userInfo.userId = userId;
 		_userInfo.accessToken = accessToken;
@@ -56,12 +56,12 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 		isCurrentUser:isCurrentUser,
 		isUserLoggedIn:function(){
 
-			//console.log("cached : is user logged in : "+_isUserLoggedIn);
+			console.log("cached : is user logged in : "+_isUserLoggedIn);
 			if(_isUserLoggedIn)
 				return true;
 			else{
 //				var islogged = ForumStorage.getFromLocalStorage("forumIsLoggedIn");
-//				console.log("storage : is user logged in : "+islogged);
+				// console.log("storage : is user logged in : "+islogged);
 				if(ForumStorage.getFromLocalStorage("forumIsLoggedIn"))
 				{
 					_userInfo = {};

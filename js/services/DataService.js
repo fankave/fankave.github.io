@@ -101,6 +101,12 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 		}
 			
 	}
+
+	function convertChannel(topicData) {
+		var id = topicData.data.id;
+		console.log("Live Topic ID: ", id);
+		TopicService.setLiveTopic(id);
+	}
 	
 	function delegateSetChannel(topicData)
 	{
@@ -118,7 +124,8 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 		setReplies:delegateSetReplies,
 		setWatchTopic:function(watched){
 			TopicService.setWatchTopic(watched);
-		}
+		},
+		convertChannel: convertChannel
 	};
 
 });

@@ -32,3 +32,17 @@ function ($routeProvider, $locationProvider) {
 
   // $locationProvider.html5Mode(true);
 }]);
+
+rootModule.run(function ($rootScope, $location, $window, URIHelper, UserInfoService) {
+  $rootScope.$on('$routeChangeStart', function (evt, next, current) {
+    console.log("Route Change Registered");
+    var help = URIHelper.isPeelUser();
+    console.log("help: ", help);
+    if (next.templateUrl !== 'partials/facebookLogin.html' && !UserInfoService.isUserLoggedIn()) {
+      console.log("Denying");
+      $location.url('/');
+    } else {
+      console.log("Allowing");
+    }
+  });
+});

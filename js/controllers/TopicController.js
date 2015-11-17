@@ -1,25 +1,48 @@
 var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule"]);
-topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService",initTopicController]);
+topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$location" ,"$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService",initTopicController]);
 
-function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService)
+function initTopicController($scope, $sce, $timeout, $location ,$routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService)
 {
 
-  // Channel Service Migration
   if (!!$routeParams.channelID){
-    ga('send', 'pageview', "/channel/"+$routeParams.channelID);
+    console.log("Channel ID Found: " + $routeParams.channelID);
     TopicService.setChannel($routeParams.channelID);
-    $scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
-    console.log(" $scope.urlQueryStr :" + $scope.urlQueryStr);
   }
-
-
-  if (!!$routeParams.topicID){
-    console.log('Sent Pageview from /topic/' + $routeParams.topicID);
+  if (!!routeParams.topicID){
+    console.log("Topic ID Found: " + $routeParams.topicID);
+    TopicService.setTopicId($routeParams.topicID);
   }
+  $scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
+  // Channel Service Migration
+    // ga('send', 'pageview', "/channel/" + $routeParams.channelID);
+    // console.log('Sent Pageview from /channel/' + $routeParams.channelID);
+    
 
-  TopicService.setTopicId($routeParams.topicID);
+    // TopicService.registerObserverCallback(convertChannelToTopic);
+    // console.log("Channel ID Found: " + $routeParams.channelID);
+
+  // }
+  // else {
+  // }
+
+  // var convertChannelToTopic = function(){
+  //   // $scope.newTopicId = TopicService.getLiveTopicId();
+  //   // $scope.initPage();
+  //   // TopicService.setTopicId(TopicService);
+  //   var id = TopicService.getTopicId();
+  //   if(id !== undefined){
+  //     console.log("Got Topic id from Channel : " +"#/topic/" + id+$scope.urlQueryStr)
+  //     if($scope.urlQueryStr.charAt(0) === '?')
+  //       window.location = "#/topic/" + id+$scope.urlQueryStr;
+  //     else
+  //       window.location = "#/topic/" + id;
+  //   }
+  // };
+
+
   $scope.topicType = "livegame";
   $scope.innerButtonTapped = false;
+
   if((UserInfoService.isPeelUser() === true)){
     $scope.isPeelUser = true;
     $timeout(function() {$scope.continueToExperience(); }, 5000);
@@ -29,6 +52,7 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
     SplashService.hidePeelSplash = true;
     $scope.hidePeelSplash = SplashService.hidePeelSplash;
   }
+
 //  var tempJasonNFL = {};
 //  
 //  
@@ -205,7 +229,9 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 
   $scope.init = function() {
     networkService.send(TopicService.getTopicRequest($routeParams.topicID));
+    // networkService.send(TopicService.getTopicRequest(topicID));
     networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
+    // networkService.send(CommentService.getCommentsRequest(topicID));
   };
   
 
@@ -219,11 +245,13 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
   $scope.setPeelUI($scope.isPeelUser);
 
   $scope.initPage = function(){
+
     updateTopic();
     updateComments();
     $scope.pageClass = 'page-topic';
 
     $scope.topicID = $routeParams.topicID;
+    // $scope.topicID = topicID;
     $scope.init();
 
     document.getElementById('topicSection').style.paddingBottom = "3.9em";
@@ -248,7 +276,7 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
                 thisPost = $scope.commentsArray[this.id];
                 if($scope.innerButtonTapped == false)
                 {
-                  window.location = "#/post/" + thisPost.id;
+                  $location.path("/post/" + thisPost.id);
                 }
                 $scope.innerButtonTapped = false;
               }
@@ -259,29 +287,34 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
         });
   }
 
+  // Check Auth & Initialize Appropriately
+  // if (UserInfoService.isUserLoggedIn()){
+  //   if(NETWORK_DEBUG)
+  //     console.log("User is logged in, checking for connection");
+    if(!networkService.isSocketConnected()){
+      networkService.init();
+    }
+    $scope.initPage();
+  // }
+  //   if (!!$scope.derivedTopicID){
+  //     $scope.initPage($scope.derivedTopicID);
+  //   } else {
+  //     $scope.initPage($routeParams.topicID);
+  //   }
+  // }
+  // else if (URIHelper.isPeelUser()){
+  //   $scope.isPeelUser = true;
+  //   $scope.setPeelUI(true);
+  //   AuthService.loginWithPeel();
+  // }
+  // else {
+  //   $location.path("/");
+  // }
+
 //  if(URIHelper.isPeelUser())
 //    ga('send', 'event', 'UserType', '0', 'Peel User', { 'nonInteraction': 2 });
 //  else
 //    ga('send', 'event', 'UserType', '0', 'Non Peel User', { 'nonInteraction': 2 });
-  if(UserInfoService.isUserLoggedIn()){
-    if(NETWORK_DEBUG)
-      console.log("User is logged in, checking for connection");
-    if(!networkService.isSocketConnected())
-      networkService.init();
-    $scope.initPage();
-  }
-  else
-    if(URIHelper.isPeelUser()){
-      $scope.isPeelUser = true;
-      $scope.setPeelUI( true);
-      AuthService.loginWithPeel();
-      //networkService.init();
-    }
-    else{
-      // console.log("Not logged in to facebook, take user to login page")
-      window.location = "#/";
-    }
-
 
   $scope.peelClose = function()
   {

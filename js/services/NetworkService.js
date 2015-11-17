@@ -1,7 +1,7 @@
 var networkModule = angular.module("NetworkModule", ['ngWebSocket']);
-networkModule.factory("networkService",["$websocket","DataService","UserInfoService","ChannelService",initNetworkService]);
+networkModule.factory("networkService",["$websocket","DataService","UserInfoService","TopicService",initNetworkService]);
 
-function initNetworkService($websocket,DataService,UserInfoService,ChannelService)
+function initNetworkService($websocket,DataService,UserInfoService,TopicService)
 {
   var ws;
   function initSocket() { 
@@ -24,7 +24,7 @@ function initNetworkService($websocket,DataService,UserInfoService,ChannelServic
       if(type != undefined){
         if(type == "channel"){
           if(NETWORK_DEBUG) console.log("Processing Channel");
-          ChannelService.setTopicData(responseJson);
+          TopicService.setLiveTopic(responseJson.data.id);
         }
         if(type == "topic" || type == "score"){
           if(NETWORK_DEBUG) console.log("Processing Topic");
@@ -70,11 +70,12 @@ function initNetworkService($websocket,DataService,UserInfoService,ChannelServic
       }
       return false;
     },
-    send:function(message) { 
+    send:function(message, callback) { 
       if(ws == undefined){ 
         initSocket();
       }
       ws.send(JSON.stringify(message));
+      callback();
     },
     init:initSocket
   }

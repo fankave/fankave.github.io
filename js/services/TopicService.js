@@ -6,6 +6,7 @@ topicModule.service('TopicService', function (DateUtilityService,Bant,FDSUtility
   var WATCH_TOPIC_URI = "/v1.0/topic/watch/";
   
   var _channelId;
+  var _liveTopicId;
   
   var _isTopicWatched = false;
   var _topic;
@@ -20,6 +21,23 @@ topicModule.service('TopicService', function (DateUtilityService,Bant,FDSUtility
   var _scheduledAt;
   var observerCallbacks = []; 
   var directComment; //bool flag to indicate whether user tapped on a comment's "comment" icon
+
+  function getLiveTopicFromChannel(){
+    var uri = "/v1.0/channel/topic/show/" + _channelId+"?type=livegame";
+
+    return  varTopicParams = {"rid": "channel",
+      "timestamp": new Date().getTime(),
+      "method": "GET",
+      "uri":uri };
+  };
+
+  function setTopicFromChannel(topicData) {
+    if(topicData.data !== undefined){
+      _id = topicData.data.id;
+      console.log("_liveTopicId : "+ _id);
+      notifyObservers();
+    }
+  };
 
   function setTopicData(topicData) 
   {
@@ -261,8 +279,14 @@ topicModule.service('TopicService', function (DateUtilityService,Bant,FDSUtility
     
     setTopicId: function(topicId){_id = topicId ;},
     
-    setChannel: function(channelId){_channelId = channelId; },
-    getChannel: function(){return _channelId ; },
+    setChannel: function(channelId){
+      console.log("Setting Channel: " + channelId);
+      _channelId = channelId;
+    },
+    getChannel: function(){
+      console.log("Getting Channel: ", _channelId);
+      return _channelId;
+    },
     
     setTopic:setTopicData,
     
@@ -272,7 +296,18 @@ topicModule.service('TopicService', function (DateUtilityService,Bant,FDSUtility
     
     registerObserverCallback:registerObserverCallback,
     
-    directoComment:directComment
+    directoComment:directComment,
+
+    getLiveTopicId: function(){return _liveTopicId;},
+
+    setTopicFromChannel: setTopicFromChannel,
+
+    getLiveTopicFromChannel: getLiveTopicFromChannel,
+
+    setLiveTopic: function(id){
+      console.log("Setting Live Topic w/: ", id);
+      _liveTopicId = id;
+    }
 
   };
 

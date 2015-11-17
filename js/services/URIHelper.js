@@ -21,7 +21,7 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 	return {
 		isPeelUser:function(){
 			var vars = getUrlVars();
-			console.log("")
+			console.log("Checking For Peel...")
 			if(vars["peel"]){
 				peelUserId = vars["userId"];
 				peelUserName = vars["userName"];
