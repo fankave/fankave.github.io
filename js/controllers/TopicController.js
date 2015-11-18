@@ -1,8 +1,9 @@
 var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule"]);
-topicModule.controller("TopicController", ["$scope", "$sce", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService",initTopicController]);
+topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage",initTopicController]);
 
-function initTopicController($scope, $sce, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService)
+function initTopicController($scope, $sce, $window, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage)
 {
+  
 
   ga('send', 'pageview', "/topic/"+$routeParams.topicID);
   console.log('Sent Pageview from /topic/' + $routeParams.topicID);
@@ -413,6 +414,10 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
   TopicService.registerObserverCallback(updateTopic);
   CommentService.registerObserverCallback(notifyNewComments);
 
+  $window.addEventListener("beforeunload", function(){
+    console.log("Before Unload");
+    ForumStorage.setToLocalStorage("hasUserVisited", true);
+  });
 
   $scope.trustSrc = function(src)
   {

@@ -50,10 +50,16 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 
 		// console.log("this.userInfo.userId :"+ _userInfo.userId);
 	}
+
+	function hasUserVisited() {
+		return ForumStorage.getFromLocalStorage("hasUserVisited") ? true : false;
+	}
+
 	return{
 		getUserCredentials:getUserCredentials,
 		setUserCredentials:setUserCredentials,
 		isCurrentUser:isCurrentUser,
+		hasUserVisited: hasUserVisited,
 		isUserLoggedIn:function(){
 
 			//console.log("cached : is user logged in : "+_isUserLoggedIn);
