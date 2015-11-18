@@ -44,7 +44,7 @@
 				</span>
 			</div>
 
-			<div class="postContent">
+			<div ng-bind-html="comment.html | linky | hashtags" class="postContent">
 				{{comment.html}} 
 			</div>
 

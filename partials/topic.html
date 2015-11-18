@@ -187,7 +187,7 @@
         </span>
       </div>
 
-      <div class="postContent">
+      <div ng-bind-html="thisPost.html | linky | hashtags" class="postContent">
         {{thisPost.html}} 
       </div>
 

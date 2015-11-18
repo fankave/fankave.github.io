@@ -1,4 +1,4 @@
-var rootModule = angular.module("Forum", ["ngRoute", "AuthModule", "ChannelModule","TopicModule", "PostModule", "NetworkModule"]);
+var rootModule = angular.module("Forum", ["ngRoute", "ngSanitize", "AuthModule", "ChannelModule","TopicModule", "PostModule", "NetworkModule"]);
 rootModule.config(["$routeProvider", "$locationProvider",
 
 function ($routeProvider, $locationProvider) {
@@ -28,3 +28,26 @@ function ($routeProvider, $locationProvider) {
 
   // $locationProvider.html5Mode(true);
 }]);
+
+rootModule.filter('hashtags',['$filter', '$sce',
+  function($filter, $sce) {
+    return function(text, target) {
+      if (!text) return text;
+
+      var replacedText = $filter('linky')(text, target);
+      var targetAttr = "";
+      if (angular.isDefined(target)) {
+          targetAttr = ' target="' + target + '"';
+      }
+      // replace #hashtags and send them to twitter
+      var replacePattern1 = /(^|\s)#(\w*[a-zA-Z_]+\w*)/gim;
+      replacedText = text.replace(replacePattern1, '$1<a href="https://twitter.com/search?q=%23$2"' + targetAttr + '>#$2</a>');
+      // replace @mentions but keep them to our site
+      var replacePattern2 = /(^|\s)\@(\w*[a-zA-Z_]+\w*)/gim;
+      replacedText = replacedText.replace(replacePattern2, '$1<a href="https://twitter.com/$2"' + targetAttr + '>@$2</a>');
+
+      $sce.trustAsHtml(replacedText);
+      return replacedText;
+    };
+  }
+]);
