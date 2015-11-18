@@ -36,11 +36,13 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		}
 	}
 
-	if((UserInfoService.isPeelUser() == true))
+	if((UserInfoService.isPeelUser() == true)){
 		$scope.isPeelUser = true;
 		SplashService.hidePeelSplash = true;
-	else
-		$scope.isPeelUser = false;	
+	}
+	else {
+		$scope.isPeelUser = false;
+	}
 	$scope.setPeelUI($scope.isPeelUser);
 
 	$scope.requestReplies = function(){
