@@ -409,7 +409,17 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
         updateComments();
       }
     }
-  }
+  };
+
+  $scope.showAttachMedia = false;
+  $scope.clickAttachMedia = function() {
+    console.log("Attach Media Clicked");
+    if (!$scope.showAttachMedia){
+      $scope.showAttachMedia = true;
+    } else {
+      $scope.showAttachMedia = false;
+    }
+  };
 
   TopicService.registerObserverCallback(updateTopic);
   CommentService.registerObserverCallback(notifyNewComments);
