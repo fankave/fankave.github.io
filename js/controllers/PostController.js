@@ -1,7 +1,7 @@
-var postModule = angular.module("PostModule", ["NetworkModule"]);
-postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", initPostController]);
+var postModule = angular.module("PostModule", ["NetworkModule", "SplashModule"]);
+postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", initPostController]);
 
-function initPostController($scope, $sce, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper)
+function initPostController($scope, $sce, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService)
 {
 	//ga('send', 'pageview', "/comment/"+$routeParams.postID);
 	$scope.pageClass = 'page-post';
@@ -38,6 +38,7 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 
 	if((UserInfoService.isPeelUser() == true))
 		$scope.isPeelUser = true;
+		SplashService.hidePeelSplash = true;
 	else
 		$scope.isPeelUser = false;	
 	$scope.setPeelUI($scope.isPeelUser);
