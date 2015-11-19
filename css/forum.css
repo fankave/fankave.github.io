@@ -1094,11 +1094,8 @@ img-crop canvas {
   /* mobile webkit */
 }
 
-#postCommentForm {
-	/*font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: rgb(162,177,182);*/
+#textInputFieldTopic {
+	background-color: rgb(248,249,251);
 }
 
 #topicCommentField {
@@ -1108,7 +1105,7 @@ img-crop canvas {
 #attachMediaIcon {
 	height: 40px;
 	/*margin-bottom: 0;*/
-	margin: 0 10px;
+	margin: 0 12px;
 	float: left;
 }
 
@@ -1116,8 +1113,7 @@ img-crop canvas {
 	position: relative;
 	width: 40px;
 	height: auto;
-	padding-left: 5px;
-	top: 20%;
+	top: 15%;
 	/*padding-top: 4px;*/
 }
 
@@ -1126,9 +1122,10 @@ img-crop canvas {
 }
 
 #postCommentButton{
-	width:70px;
+	width:60px;
 	min-width: 50px;
 	height: 40px;
+	margin: 0 15px;
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: 16px;
   font-weight: 600;
@@ -1136,13 +1133,14 @@ img-crop canvas {
 	float: right;
 	border: none;
 	background-color: rgb(248,249,251);
+	padding: 0;
 }
 
 #postCommentDiv {
 	width: 100%;
-	padding:
 	overflow: hidden;
 	background-color: rgb(248,249,251);
+	margin: 9px 0;
 }
 
 #postCommentDiv input {
@@ -1152,7 +1150,6 @@ img-crop canvas {
 #postCommentDiv span {
 	display: block;
 	overflow: hidden;
-	padding: 0 5px;
 }
 
 #fileUpload {
