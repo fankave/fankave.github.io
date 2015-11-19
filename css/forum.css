@@ -1094,37 +1094,55 @@ img-crop canvas {
   /* mobile webkit */
 }
 
+#postCommentForm {
+	/*font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(162,177,182);*/
+}
+
+#topicCommentField {
+	color: rgb(162,177,182);
+}
 
 #attachMediaIcon {
-	/*width: 5%;*/
-	width: 47px;
-	padding-left: 0.5%;
-	padding-right: 0.5%;
-	padding-top: 2px;
-	height: auto;
+	height: 40px;
+	/*margin-bottom: 0;*/
+	margin: 0 10px;
 	float: left;
 }
+
+#attachMediaIcon > img {
+	position: relative;
+	width: 40px;
+	height: auto;
+	padding-left: 5px;
+	top: 20%;
+	/*padding-top: 4px;*/
+}
+
 #attachMediaIcon:hover {
 	cursor: pointer;
 }
 
-#topicCommentField {
-	/*display: inline;*/
-	/*width: 100%;*/
-}
-
 #postCommentButton{
-	width:80px;
+	width:70px;
 	min-width: 50px;
-	height:2.4em;
-	text-align:center;
+	height: 40px;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(162,177,182);
 	float: right;
-	verticle-align: middle;
+	border: none;
+	background-color: rgb(248,249,251);
 }
 
 #postCommentDiv {
 	width: 100%;
+	padding:
 	overflow: hidden;
+	background-color: rgb(248,249,251);
 }
 
 #postCommentDiv input {
@@ -1135,5 +1153,9 @@ img-crop canvas {
 	display: block;
 	overflow: hidden;
 	padding: 0 5px;
+}
+
+#fileUpload {
+	display: none;
 }
 
