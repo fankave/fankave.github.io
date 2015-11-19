@@ -1104,7 +1104,6 @@ img-crop canvas {
 
 #attachMediaIcon {
 	height: 40px;
-	/*margin-bottom: 0;*/
 	margin: 0 12px;
 	float: left;
 }
@@ -1113,8 +1112,7 @@ img-crop canvas {
 	position: relative;
 	width: 40px;
 	height: auto;
-	top: 15%;
-	/*padding-top: 4px;*/
+	top: 12%;
 }
 
 #attachMediaIcon:hover {
