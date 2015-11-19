@@ -61,6 +61,11 @@ function initNetworkService($websocket,$route,DataService,UserInfoService)
 					if(NETWORK_DEBUG) console.log("Processing Reply");
 					DataService.setReplies(responseJson);
 				}
+				else if(type == "social"){
+					//TODO handle Replies
+					if(NETWORK_DEBUG) console.log("Processing Social");
+					DataService.setSocial(responseJson);
+				}
 			}
 		});
 
