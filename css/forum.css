@@ -654,6 +654,7 @@ input:focus + button {
 
 #splashGraphic {
 	position: relative;
+	margin-top: 25px;
 	width: 74%;
 	max-width: 300px;
 	height: auto;
@@ -1201,7 +1202,7 @@ img-crop canvas {
 #backToChat {
 	/*position: absolute;*/
 	height: 50px;
-	padding: 4px;
+	padding: 5px;
 	font-size: 16px;
 	text-align: left;
 }
@@ -1214,3 +1215,4 @@ img-crop canvas {
 	cursor: pointer;
 	color: #EBF4FA;
 }
+

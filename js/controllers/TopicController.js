@@ -178,7 +178,6 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
 
         }
       }
-      setLinks();
     }
 
   };
@@ -222,15 +221,19 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
             if(thisPost != undefined)
             {
               var thisDiv = postDivs[div];
-              thisDiv.onclick = function()
+              thisDiv.onclick = function(e)
               {
-                // console.log("thisDiv.onclick");
-                thisPost = $scope.commentsArray[this.id];
-                if($scope.innerButtonTapped == false)
-                {
-                  // window.location = "#/post/" + thisPost.id;
+                if ($(e.target).is('a')){
+                  return;
+                } else {
+                  // console.log("thisDiv.onclick");
+                  thisPost = $scope.commentsArray[this.id];
+                  if($scope.innerButtonTapped == false)
+                  {
+                    window.location = "#/post/" + thisPost.id;
+                  }
+                  $scope.innerButtonTapped = false;
                 }
-                $scope.innerButtonTapped = false;
               }
             } 
           }
@@ -413,16 +416,6 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
     }
   };
 
-  $scope.showAttachMedia = false;
-  $scope.clickAttachMedia = function() {
-    console.log("Attach Media Clicked");
-    if (!$scope.showAttachMedia){
-      $scope.showAttachMedia = true;
-    } else {
-      $scope.showAttachMedia = false;
-    }
-  };
-
   TopicService.registerObserverCallback(updateTopic);
   CommentService.registerObserverCallback(notifyNewComments);
 
@@ -438,7 +431,7 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
 
   $scope.xLinkActivated = false;
 
-  var setLinks = function() {
+  function setLinks() {
     $('.postContent > a').click(function(){
       $('#xContent').css('display', 'block');
     });

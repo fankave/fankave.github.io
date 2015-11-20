@@ -1,3 +1,16 @@
+<section id="xContent">
+  <div id="xContentUnderlay" ng-click="backToChat()">
+    <div id="xContentOverlay">
+      <div id="backToChat" ng-click="backToChat()"><img src="img/backButton-2x.png" />Back To Live Chat</div>
+      <div id="iframewrapper">
+        <iframe frameborder="0" id="xSrc" src="{{xLinkSrc}}" name="xLinkFrame">
+          
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="postSection">
   <nav class="navbar navbar-fixed-top" id="postHeader">
     <div id="peelNavBar" ng-if="isPeelUser == true">
@@ -78,15 +91,6 @@
   </div>
   
   <div id="textInputFieldTopic" class="clearfix">
-    <!-- <form ng-submit="postReply(commentText)">
-      <div class="input-group" style="display: inline; positon: absolute; width:100%">
-        <input id="postCommentField" type="text" class="form-control"
-          placeholder="Write a reply..." ng-model="commentText" 
-          style="display: inline; positon: absolute; width:85%"> 
-          <button id="postReplyButton" class="btn btn-default" type="button" ng-click="postReply(commentText)">Post</button>
-        
-      </div>
-    </form> -->
     <form id="postCommentForm" ng-submit="postReply(commentText)">
       <div id="postCommentDiv" class="input-group">
         <label for="fileUpload" id="attachMediaIcon">

@@ -19,6 +19,8 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		if(topicId == undefined)
 			topicId = $scope.comment.topicId;
 		//window.location = "#/topic/"+topicId;
+		console.log("User Clicked Back");
+		window.history.back();
 		window.history.back();
 	}
 
@@ -51,7 +53,6 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		var selectedComment = CommentService.getCommentById($scope.postID);
 		if(selectedComment != undefined){
 			updateCommentInReply(selectedComment);
-
 		}
 		else{
 			console.log("No data from comment service : TODO handle this with cookies");
@@ -95,7 +96,6 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		// $scope.pageStyle = {'padding-top': '10em'};
 
 		$scope.requestReplies();
-
 		var replyPostHeader = $("#replyPost").height();
 		// console.log("height of repy header: " + replyPostHeader);
 		var heightString = replyPostHeader + "px";
@@ -107,6 +107,7 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		 {
   			$timeout(function()
   			{
+  				setLinks();
     			$('.commentsContainer').each(function()
     			{
       				$('.image-link').magnificPopup({
@@ -248,7 +249,6 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 	}
 
 	 function updateReplies(){
-
 		//TODO: check with ahmed, these values could be individual scope var.
 		var repliesData = ReplyService.replies();
 		var len = repliesData.length;
@@ -280,7 +280,6 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 			//console.log(i +" : updated replies likecount : " +$scope.replies[i].likeCount);
 
 		}
-
 		if(TopicService.directComment === true)
 		{
 			$scope.triggerRepliesKeyboard();
@@ -331,5 +330,17 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 	{
     	return $sce.trustAsResourceUrl(src);
   	}
+
+  $scope.xLinkActivated = false;
+
+  function setLinks() {
+    $('.postContent > a').click(function(){
+      $('#xContent').css('display', 'block');
+    });
+  };
+  
+  $scope.backToChat = function() {
+    $('#xContent').css('display', 'none');
+  }
 
 }
