@@ -178,6 +178,7 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
 
         }
       }
+      setLinks();
     }
 
   };
@@ -227,13 +228,14 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
                 thisPost = $scope.commentsArray[this.id];
                 if($scope.innerButtonTapped == false)
                 {
-                  window.location = "#/post/" + thisPost.id;
+                  // window.location = "#/post/" + thisPost.id;
                 }
                 $scope.innerButtonTapped = false;
               }
             } 
           }
         }
+        setLinks();
           });
         });
   }
@@ -436,10 +438,14 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
 
   $scope.xLinkActivated = false;
 
-  $scope.displayXLink = function(src) {
-    // $scope.xLinkSrc = src;
-    $scope.xLinkActivated = true;
+  var setLinks = function() {
+    $('.postContent > a').click(function(){
+      $('#xContent').css('display', 'block');
+    });
   };
   
+  $scope.backToChat = function() {
+    $('#xContent').css('display', 'none');
+  }
 
 }

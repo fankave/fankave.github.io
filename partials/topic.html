@@ -12,9 +12,11 @@
   </div>
 </section>
 
-<section id="xContent" ng-show="xLinkActivated">
-  <div id="xContentUnderlay">
+<!-- <section id="xContent" ng-show="xLinkActivated"> -->
+<section id="xContent">
+  <div id="xContentUnderlay" ng-click="backToChat()">
     <div id="xContentOverlay">
+      <div id="backToChat" ng-click="backToChat()"><img src="img/backButton-2x.png" />Back To Live Chat</div>
       <div id="iframewrapper">
         <iframe frameborder="0" id="xSrc" src="{{xLinkSrc}}" name="xLinkFrame">
           

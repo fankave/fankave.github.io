@@ -1155,15 +1155,6 @@ img-crop canvas {
 }
 
 /* - - - External Link iFrame - - - */
-#iframewrapper {
-	width: 100%;
-	height: 100%;
-}
-
-#xSrc {
-	width: 100%;
-	height: 100%;
-}
 
 #xContentUnderlay {
 	position: fixed;
@@ -1178,7 +1169,8 @@ img-crop canvas {
 #xContentOverlay {
 	position: relative;
 	text-align: center;
-	padding-top: 50px;
+	/*box-shadow: 5px 5px 5px #222 inset;*/
+	padding: 0 5px 55px 5px;
 	background-color: #fff;
 	width: 90%;
 	max-width: 950px;
@@ -1190,4 +1182,35 @@ img-crop canvas {
 	-webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
+}
+
+#iframewrapper {
+	width: 100%;
+	height: 100%;
+}
+
+#xSrc {
+	width: 100%;
+	height: 100%;
+}
+
+#xContent {
+	display: none;
+}
+
+#backToChat {
+	/*position: absolute;*/
+	height: 50px;
+	padding: 4px;
+	font-size: 16px;
+	text-align: left;
+}
+
+#backToChat > img {
+	height: 40px;
+}
+
+#backToChat:hover {
+	cursor: pointer;
+	color: #EBF4FA;
 }
