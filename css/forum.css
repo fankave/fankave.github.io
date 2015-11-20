@@ -1154,3 +1154,40 @@ img-crop canvas {
 	display: none;
 }
 
+/* - - - External Link iFrame - - - */
+#iframewrapper {
+	width: 100%;
+	height: 100%;
+}
+
+#xSrc {
+	width: 100%;
+	height: 100%;
+}
+
+#xContentUnderlay {
+	position: fixed;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0, 0.7);
+	width: 100%;
+	max-width: 950px;
+	height: 100%;
+	z-index: 10001;
+}
+
+#xContentOverlay {
+	position: relative;
+	text-align: center;
+	padding-top: 50px;
+	background-color: #fff;
+	width: 90%;
+	max-width: 950px;
+	height: 94%;
+	left: 50%;
+	margin-left: -45%;
+	z-index: 10002;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}

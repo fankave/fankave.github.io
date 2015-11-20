@@ -227,7 +227,7 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
                 thisPost = $scope.commentsArray[this.id];
                 if($scope.innerButtonTapped == false)
                 {
-                  window.location = "#/post/" + thisPost.id;
+                  // window.location = "#/post/" + thisPost.id;
                 }
                 $scope.innerButtonTapped = false;
               }
@@ -424,14 +424,22 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
   TopicService.registerObserverCallback(updateTopic);
   CommentService.registerObserverCallback(notifyNewComments);
 
+  $scope.trustSrc = function(src)
+  {
+    return $sce.trustAsResourceUrl(src);
+  }
+
   $window.addEventListener("beforeunload", function(){
     console.log("Before Unload");
     ForumStorage.setToLocalStorage("hasUserVisited", true);
   });
 
-  $scope.trustSrc = function(src)
-  {
-    return $sce.trustAsResourceUrl(src);
-  }
+  $scope.xLinkActivated = false;
+
+  $scope.displayXLink = function(src) {
+    // $scope.xLinkSrc = src;
+    $scope.xLinkActivated = true;
+  };
+  
 
 }

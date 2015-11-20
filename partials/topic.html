@@ -12,6 +12,17 @@
   </div>
 </section>
 
+<section id="xContent" ng-show="xLinkActivated">
+  <div id="xContentUnderlay">
+    <div id="xContentOverlay">
+      <div id="iframewrapper">
+        <iframe frameborder="0" id="xSrc" src="{{xLinkSrc}}" name="xLinkFrame">
+          
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section id="topicSection">
   <nav class="navbar navbar-fixed-top" id="header">
@@ -161,7 +172,7 @@
       placeholder="Write a comment..." ng-model="commentText"></span>
 
       
-      <input id="fileUpload" filestyle="" type="file" data-button-text="Multiple" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="form.uploader" multiple="" class="form-control" />
+      <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="form.uploader" multiple="" class="form-control" />
 
     </div>
   </form>
@@ -194,7 +205,7 @@
         </span>
       </div>
 
-      <div ng-bind-html="thisPost.html | linky | hashtags" class="postContent">
+      <div ng-bind-html="thisPost.html | linky" class="postContent">
         {{thisPost.html}} 
       </div>
 
