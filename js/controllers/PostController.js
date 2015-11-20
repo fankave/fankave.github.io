@@ -338,6 +338,10 @@ function initPostController($scope, $sce, $timeout, $window, $routeParams, netwo
   
   $scope.backToChat = function() {
     $('#xContent').css('display', 'none');
-  }
+  };
+
+  $scope.clickAttachMedia = function() {
+
+  };
 
 }
