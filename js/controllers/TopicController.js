@@ -227,7 +227,7 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
                 thisPost = $scope.commentsArray[this.id];
                 if($scope.innerButtonTapped == false)
                 {
-                  // window.location = "#/post/" + thisPost.id;
+                  window.location = "#/post/" + thisPost.id;
                 }
                 $scope.innerButtonTapped = false;
               }
