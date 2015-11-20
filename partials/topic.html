@@ -151,16 +151,17 @@
 <div id="textInputFieldTopic" class="clearfix">
   <form id="postCommentForm" ng-submit="postComment(commentText)">
     <div id="postCommentDiv" class="input-group">
+      <label for="fileUpload" id="attachMediaIcon">
+        <img src="img/attach-media.png" ng-click="clickAttachMedia()" />
+      </label>
 
-      <img id="attachMediaIcon" src="img/attach-media.png" ng-click="clickAttachMedia()" />
+      <button id="postCommentButton" class="btn btn-default" type="button" ng-click="postComment(commentText)">POST</button>
 
-      <button id="postCommentButton" class="btn btn-default" type="button" ng-click="postComment(commentText)">Post</button>
-      
       <span><input id="topicCommentField" type="text" class="form-control"
       placeholder="Write a comment..." ng-model="commentText"></span>
 
       
-      <input filestyle="" type="file" data-button-text="Multiple" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="form.uploader" multiple="" class="form-control" ng-show="showAttachMedia" />
+      <input id="fileUpload" filestyle="" type="file" data-button-text="Multiple" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="form.uploader" multiple="" class="form-control" />
 
     </div>
   </form>

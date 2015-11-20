@@ -1094,37 +1094,51 @@ img-crop canvas {
   /* mobile webkit */
 }
 
+#textInputFieldTopic {
+	background-color: rgb(248,249,251);
+}
+
+#topicCommentField {
+	color: rgb(162,177,182);
+}
 
 #attachMediaIcon {
-	/*width: 5%;*/
-	width: 47px;
-	padding-left: 0.5%;
-	padding-right: 0.5%;
-	padding-top: 2px;
-	height: auto;
+	height: 40px;
+	margin: 0 12px;
 	float: left;
 }
+
+#attachMediaIcon > img {
+	position: relative;
+	width: 40px;
+	height: auto;
+	top: 12%;
+}
+
 #attachMediaIcon:hover {
 	cursor: pointer;
 }
 
-#topicCommentField {
-	/*display: inline;*/
-	/*width: 100%;*/
-}
-
 #postCommentButton{
-	width:80px;
+	width:60px;
 	min-width: 50px;
-	height:2.4em;
-	text-align:center;
+	height: 40px;
+	margin: 0 15px;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(162,177,182);
 	float: right;
-	verticle-align: middle;
+	border: none;
+	background-color: rgb(248,249,251);
+	padding: 0;
 }
 
 #postCommentDiv {
 	width: 100%;
 	overflow: hidden;
+	background-color: rgb(248,249,251);
+	margin: 9px 0;
 }
 
 #postCommentDiv input {
@@ -1134,6 +1148,9 @@ img-crop canvas {
 #postCommentDiv span {
 	display: block;
 	overflow: hidden;
-	padding: 0 5px;
+}
+
+#fileUpload {
+	display: none;
 }
 
