@@ -159,7 +159,7 @@
 
 <div class="commentsHeader">Comments</div>
 
-<div id="textInputFieldTopic" class="clearfix">
+<div id="textInputFieldTopic" class="clearfix" ng-controller="MediaController">
   <form id="postCommentForm" ng-submit="postComment(commentText)">
     <div id="postCommentDiv" class="input-group">
       <label for="fileUpload" id="attachMediaIcon">
@@ -172,7 +172,7 @@
       placeholder="Write a comment..." ng-model="commentText"></span>
 
       
-      <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="form.uploader" multiple="" class="form-control" />
+      <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="uploader" class="form-control" />
 
     </div>
   </form>
