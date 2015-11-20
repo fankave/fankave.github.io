@@ -1,7 +1,7 @@
 var postModule = angular.module("PostModule", ["NetworkModule", "SplashModule"]);
-postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", initPostController]);
+postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$window", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", initPostController]);
 
-function initPostController($scope, $sce, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService)
+function initPostController($scope, $sce, $timeout, $window, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService)
 {
 	//ga('send', 'pageview', "/comment/"+$routeParams.postID);
 	$scope.pageClass = 'page-post';
@@ -18,10 +18,7 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		var topicId = TopicService.getTopicId();
 		if(topicId == undefined)
 			topicId = $scope.comment.topicId;
-		//window.location = "#/topic/"+topicId;
-		console.log("User Clicked Back");
-		window.history.back();
-		window.history.back();
+		$window.location = "#/topic/"+topicId;
 	}
 
 	$scope.setPeelUI = function(isPeelUser){
