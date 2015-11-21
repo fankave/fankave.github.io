@@ -1,4 +1,4 @@
-var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule"]);
+var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule"]);
 topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage",initTopicController]);
 
 function initTopicController($scope, $sce, $window, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage)
@@ -439,6 +439,10 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
   
   $scope.backToChat = function() {
     $('#xContent').css('display', 'none');
-  }
+  };
+
+  $scope.clickAttachMedia = function() {
+    $window.location = "#/topic/" + $scope.topicID + "/media";
+  };
 
 }

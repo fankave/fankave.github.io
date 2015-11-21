@@ -1,16 +1,16 @@
-<section id="topicSection">
-  <nav class="navbar navbar-fixed-top" id="header">
+<section id="mediaSection">
+  <!-- <nav class="navbar navbar-fixed-top" id="header">
     <div id="peelNavBar" ng-if="isPeelUser == true">
       <button class="btn-link peelButton" id="closePeelButton" ng-click="peelClose()"><img src="img/peelBackButton-2x.png"/></button>
       <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()"><img src="img/peel_watchOnTVButton.png"/></button>
     </div>
-  </nav>
+  </nav> -->
 
   <div id="textInputFieldTopic" class="clearfix">
     <form id="postCommentForm" ng-submit="postComment(commentText)">
       <div id="postCommentDiv" class="input-group">
         <label for="fileUpload" id="attachMediaIcon">
-          <img src="img/attach-media.png" ng-click="clickAttachMedia()" />
+          <img id="click" src="img/attach-media.png" />
         </label>
 
         <button id="postCommentButton" class="btn btn-default" type="button" ng-click="postComment(commentText)">POST</button>

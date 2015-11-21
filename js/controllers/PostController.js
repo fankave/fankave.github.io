@@ -341,7 +341,7 @@ function initPostController($scope, $sce, $timeout, $window, $routeParams, netwo
   };
 
   $scope.clickAttachMedia = function() {
-
+  	$window.location = "#/topic/" + $scope.topicID + "/media";
   };
 
 }

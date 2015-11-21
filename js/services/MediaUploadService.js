@@ -1,4 +1,4 @@
-networkModule.factory('MUService', ['$http','UserInfoService', function ($http,UserInfoService) {
+mediaModule.factory('MUService', ['$http','UserInfoService', function ($http,UserInfoService) {
 
 	var UPLOAD_URL = '/v1.0/media/upload';
 //	Transport: Multipart Form

@@ -1152,7 +1152,7 @@ img-crop canvas {
 }
 
 #fileUpload {
-	display: none;
+	visibility: hidden;
 }
 
 /* - - - External Link iFrame - - - */

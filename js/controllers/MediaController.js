@@ -1,10 +1,23 @@
 'use strict';
 
-var mediaModule = angular.module('MediaModule', ['angularFileUpload'])
+var mediaModule = angular.module('MediaModule', ['angularFileUpload', 'NetworkModule'])
 
-mediaModule.controller('MediaController', ['$scope', 'FileUploader', function($scope, FileUploader) {
+mediaModule.controller('MediaController', ['$scope', 'FileUploader', 'MUService', 'UserInfoService',
+  function ($scope, FileUploader, MUService, UserInfoService) {
+  
+  var UPLOAD_URL = '/v1.0/media/upload';
+
+  var user = UserInfoService.getUserCredentials();
+
   var uploader = $scope.uploader = new FileUploader({
-    url: 'upload.php'
+    url: MUS_SERVER_URI + UPLOAD_URL,
+    headers: {
+      'Content-Type': undefined,
+      'X-UserId': user.userId,
+      'X-SessionId': user.sessionId,
+      'X-AccessToken': user.accessToken
+    },
+    autoUpload: true
   });
 
   // FILTERS
@@ -53,4 +66,5 @@ mediaModule.controller('MediaController', ['$scope', 'FileUploader', function($s
   };
 
   console.info('uploader', uploader);
+
 }]);
