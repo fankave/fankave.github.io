@@ -2,12 +2,14 @@
 
 var mediaModule = angular.module('MediaModule', ['angularFileUpload', 'NetworkModule'])
 
-mediaModule.controller('MediaController', ['$scope', 'FileUploader', 'MUService', 'UserInfoService',
-  function ($scope, FileUploader, MUService, UserInfoService) {
+mediaModule.controller('MediaController', ['$scope', '$routeParams', 'FileUploader', 'MUService', 'UserInfoService', 'networkService', 'CommentService',
+  function ($scope, $routeParams, FileUploader, MUService, UserInfoService, networkService, CommentService) {
   
   var UPLOAD_URL = '/v1.0/media/upload';
 
   var user = UserInfoService.getUserCredentials();
+  $scope.topicID = $routeParams.topicID;
+  console.log("Media Add ID: ", $scope.topicID);
 
   var uploader = $scope.uploader = new FileUploader({
     url: MUS_SERVER_URI + UPLOAD_URL,
@@ -19,6 +21,17 @@ mediaModule.controller('MediaController', ['$scope', 'FileUploader', 'MUService'
     },
     autoUpload: true
   });
+
+  $scope.postComment = function(commentText) {
+    if((commentText !== undefined)  && commentText !== ""){
+      // console.log("TopicController postComment Invoked :"+ commentText);
+      networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
+    }
+    $scope.commentText = "";
+    document.getElementById("topicCommentField").blur();
+    document.getElementById("postCommentButton").blur();
+    $(document).scrollTop(0);
+  };
 
   // FILTERS
 
