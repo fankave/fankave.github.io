@@ -22,7 +22,7 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
   $scope.postComment = function(commentText) {
     if((commentText !== undefined)  && commentText !== ""){
        console.log("MediaController postComment Invoked :"+ commentText);
-      networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
+      MUService.setCommentParams($scope.topicID, commentText,true);
     }
     $scope.commentText = "";
     $window.location = "#/topic/" + $scope.topicID;
