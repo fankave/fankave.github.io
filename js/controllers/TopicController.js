@@ -76,7 +76,6 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
   
   var updateTopic = function(){
     if(TopicService.getTopic() != undefined){
-      MUService.uploadMedia("some");
       $scope.topicType = TopicService.getTopicType();
       if(TopicService.isWatchingTopic() == false){
         networkService.send(TopicService.getFollowChannelRequest());

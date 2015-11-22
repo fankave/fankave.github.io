@@ -2,14 +2,12 @@
 
 var mediaModule = angular.module('MediaModule', ['angularFileUpload', 'NetworkModule'])
 
-mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 'FileUploader', 'MUService', 'UserInfoService', 'networkService', 'CommentService',
-  function ($scope, $routeParams, $window, FileUploader, MUService, UserInfoService, networkService, CommentService) {
+mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 'FileUploader', 'MUService', 'UserInfoService', 'networkService','CommentService' ,
+  function ($scope, $routeParams, $window, FileUploader, MUService, UserInfoService, networkService,CommentService) {
   
   var MUS_SERVER_URI = 'https://dev.fankave.com:8080';
   var UPLOAD_URL = '/v1.0/media/upload';
-  var isComment = true;
-  var commentText = "test Comment";
-  var topicId = "5440804181400368";
+  
   
 
   var user = UserInfoService.getUserCredentials();
@@ -23,7 +21,7 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
 
   $scope.postComment = function(commentText) {
     if((commentText !== undefined)  && commentText !== ""){
-      // console.log("TopicController postComment Invoked :"+ commentText);
+       console.log("MediaController postComment Invoked :"+ commentText);
       networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
     }
     $scope.commentText = "";
@@ -68,11 +66,8 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
   };
   uploader.onSuccessItem = function(fileItem, response, status, headers) {
 	  console.info('onSuccessItem', fileItem, response, status, headers);
-	  var responseString = JSON.stringify(response);
-	  console.log
-	  if(isComment)
 		  //CommentService.postCommentRequestForMedia(topicId,commentText, response);
-		  networkService.send(CommentService.postCommentRequestForMedia(topicId,commentText, response));
+		  networkService.send(MUService.postMediaRequest(response));
     
   };
   uploader.onErrorItem = function(fileItem, response, status, headers) {
