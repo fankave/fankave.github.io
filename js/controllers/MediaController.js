@@ -2,8 +2,8 @@
 
 var mediaModule = angular.module('MediaModule', ['angularFileUpload', 'NetworkModule'])
 
-mediaModule.controller('MediaController', ['$scope', '$routeParams', 'FileUploader', 'MUService', 'UserInfoService', 'networkService', 'CommentService',
-  function ($scope, $routeParams, FileUploader, MUService, UserInfoService, networkService, CommentService) {
+mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 'FileUploader', 'MUService', 'UserInfoService', 'networkService', 'CommentService',
+  function ($scope, $routeParams, $window, FileUploader, MUService, UserInfoService, networkService, CommentService) {
   
   var UPLOAD_URL = '/v1.0/media/upload';
 
@@ -28,9 +28,7 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', 'FileUpload
       networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
     }
     $scope.commentText = "";
-    document.getElementById("topicCommentField").blur();
-    document.getElementById("postCommentButton").blur();
-    $(document).scrollTop(0);
+    $window.location = "#/topic/" + $scope.topicID;
   };
 
   // FILTERS
