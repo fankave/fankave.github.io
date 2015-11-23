@@ -116,8 +116,8 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
   };
   uploader.onSuccessItem = function(fileItem, response, status, headers) {
 	  console.info('onSuccessItem', fileItem, response, status, headers);
-		  //CommentService.postCommentRequestForMedia(topicId,commentText, response);
 		  networkService.send(MUService.postMediaRequest(response));
+		  MUService.resetCommentParams();
     
   };
   uploader.onErrorItem = function(fileItem, response, status, headers) {

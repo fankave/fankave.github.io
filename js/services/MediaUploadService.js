@@ -2,9 +2,9 @@ mediaModule.factory('MUService',  function () {
 	var POST_COMMENT_URI="/v1.0/comment/create";
 	var POST_REPLY_URI="/v1.0/reply/create";
 	var isComment = true;
-	var commentText = "test Comment media";
-	var topicId = "5440804181400368";
-	var commentId ="";
+	var commentText = "";
+	var topicId = "";
+	var commentId = "";
 	var replyId = "";
 
 	function commentPostRequest(){
@@ -63,6 +63,11 @@ mediaModule.factory('MUService',  function () {
 	}
 	return {
 		postMediaRequest:postMediaRequest,
-		setCommentParams:setCommentParams
+		setCommentParams:setCommentParams,
+		resetCommentParams:function(){
+			topicId = "";
+			commentId = "";
+			commentText = "";
+		}
 	}
 });
