@@ -441,7 +441,7 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
   };
 
   $scope.clickAttachMedia = function() {
-    $window.location = "#/topic/" + $scope.topicID + "/media";
+    $window.location = "#/media/" + $scope.topicID;
   };
 
   $scope.switchTabs = function(tab) {

@@ -1101,7 +1101,15 @@ img-crop canvas {
   background-color: rgb(248,249,251);
 }
 
+#textInputFieldReply {
+  background-color: rgb(248,249,251);
+}
+
 #topicCommentField {
+  color: rgb(162,177,182);
+}
+
+#postCommentField {
   color: rgb(162,177,182);
 }
 

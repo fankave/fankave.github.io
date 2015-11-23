@@ -90,20 +90,20 @@
      &nbsp;
   </div>
   
-  <div id="textInputFieldTopic" class="clearfix">
+  <div id="textInputFieldReply" class="clearfix">
     <form id="postCommentForm" ng-submit="postReply(commentText)">
       <div id="postCommentDiv" class="input-group">
-        <label for="fileUpload" id="attachMediaIcon">
+        <label id="attachMediaIcon">
           <img src="img/attach-media.png" ng-click="clickAttachMedia()" />
         </label>
 
         <button id="postCommentButton" class="btn btn-default" type="button" ng-click="postReply(commentText)">POST</button>
 
-        <span><input id="topicCommentField" type="text" class="form-control"
+        <span><input id="postCommentField" type="text" class="form-control"
         placeholder="Write a reply..." ng-model="commentText"></span>
 
         
-        <input ng-controller="MediaController" id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="uploader" class="form-control" />
+        <!-- <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="uploader" class="form-control" /> -->
 
       </div>
     </form>

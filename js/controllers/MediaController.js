@@ -1,9 +1,9 @@
 'use strict';
 
-var mediaModule = angular.module('MediaModule', ['angularFileUpload', 'NetworkModule'])
+var mediaModule = angular.module('MediaModule', ['angularFileUpload', 'NetworkModule', 'TopicModule'])
 
-mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 'FileUploader', 'MUService', 'UserInfoService', 'networkService', 'CommentService', 'URIHelper',
-  function ($scope, $routeParams, $window, FileUploader, MUService, UserInfoService, networkService, CommentService, URIHelper) {
+mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 'FileUploader', 'MUService', 'UserInfoService', 'networkService', 'CommentService', 'URIHelper', 'TopicService',
+  function ($scope, $routeParams, $window, FileUploader, MUService, UserInfoService, networkService, CommentService, URIHelper, TopicService) {
   
   var MUS_SERVER_URI = 'https://dev.fankave.com:8080';
   var UPLOAD_URL = '/v1.0/media/upload';
@@ -11,31 +11,34 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
   
 
   var user = UserInfoService.getUserCredentials();
+  if ($routeParams.postID){
+    $scope.postID = $routeParams.postID;
+  }
   $scope.topicID = $routeParams.topicID;
-  console.log("Media Add ID: ", $scope.topicID);
 
   var uploader = $scope.uploader = new FileUploader({
 	  url: MUS_SERVER_URI + UPLOAD_URL,
-	  autoUpload: true
+	  autoUpload: false
   });
 
   $scope.postComment = function(commentText) {
     if((commentText !== undefined)  && commentText !== ""){
-       console.log("MediaController postComment Invoked :"+ commentText);
-      MUService.setCommentParams($scope.topicID, commentText,true);
+      console.log("MediaController postComment Invoked :"+ commentText);
+      if ($scope.postID){
+        console.log("Post: ", $scope.postID);
+        MUService.setCommentParams($scope.topicID, commentText, false, $scope.postID);
+      } else {
+        MUService.setCommentParams($scope.topicID, commentText, true);
+      }
     }
+    uploader.uploadAll();
     $scope.commentText = "";
     $window.location = "#/topic/" + $scope.topicID;
   };
 
   $scope.setUI = function() {
-    if($scope.isPeelUser === true) {
-      document.getElementById('mediaSection').style.paddingTop = "52px";
-      document.getElementById('header').style.height = "52px"; 
-    } else {
-      document.getElementById('mediaSection').style.paddingTop = "0px";
-      document.getElementById('header').style.height = "0px";
-    }
+    document.getElementById('mediaSection').style.paddingTop = "52px";
+    document.getElementById('header').style.height = "52px"; 
   };
 
   if (UserInfoService.isPeelUser()) {
@@ -43,7 +46,6 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
     $scope.setUI();
   } else {
     $scope.isPeelUser = false;
-    $scope.setUI();
   }
 
   $scope.peelClose = function() {
@@ -121,6 +123,7 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
   };
   uploader.onCompleteItem = function(fileItem, response, status, headers) {
     console.info('onCompleteItem', fileItem, response, status, headers);
+    uploader.removeFromQueue(fileItem);
   };
   uploader.onCompleteAll = function() {
     console.info('onCompleteAll');

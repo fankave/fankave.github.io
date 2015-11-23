@@ -29,10 +29,10 @@ function initPostController($scope, $sce, $timeout, $window, $routeParams, netwo
 //			document.getElementById('postHeader').style.height = "3.5em";
 //		}
 //		else
-		{
+		// {
 			document.getElementById('postSection').style.paddingTop = "3.5em";
 			document.getElementById('postHeader').style.height = "3.5em";
-		}
+		// }
 	}
 
 	if((UserInfoService.isPeelUser() == true)){
@@ -341,7 +341,7 @@ function initPostController($scope, $sce, $timeout, $window, $routeParams, netwo
   };
 
   $scope.clickAttachMedia = function() {
-  	$window.location = "#/topic/" + $scope.topicID + "/media";
+  	$window.location = "#/media/" + $scope.topicId + "/" + $scope.postID;
   };
 
 }

@@ -19,7 +19,11 @@ function ($routeProvider, $locationProvider) {
     templateUrl:'partials/post.html',
     controller:'PostController'
   })
-  .when('/topic/:topicID/media', {
+  .when('/media/:topicID', {
+    templateUrl:'partials/mediaUpload.html',
+    controller: 'MediaController'
+  })
+  .when('/media/:topicID/:postID', {
     templateUrl:'partials/mediaUpload.html',
     controller: 'MediaController'
   })
