@@ -1,10 +1,11 @@
 <section id="mediaSection">
-  <!-- <nav class="navbar navbar-fixed-top" id="header">
-    <div id="peelNavBar" ng-if="isPeelUser == true">
+  
+  <nav class="navbar navbar-fixed-top" id="header">
+    <div id="peelNavBar" ng-if="isPeelUser === true">
       <button class="btn-link peelButton" id="closePeelButton" ng-click="peelClose()"><img src="img/peelBackButton-2x.png"/></button>
       <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()"><img src="img/peel_watchOnTVButton.png"/></button>
     </div>
-  </nav> -->
+  </nav>
 
   <div id="textInputFieldTopic" class="clearfix">
     <form id="postCommentForm" ng-submit="postComment(commentText)">
@@ -23,6 +24,15 @@
 
       </div>
     </form>
+  </div>
+  <div ng-if="uploader.progress > 0">
+    <div class="progress" style="margin-bottom: 0;">
+      <!-- <div id="progress-bar" role="progressbar" ng-style="{ 'width': 'uploader.progress' + '%', 'background-color': rgb(59,166,252) }"></div> -->
+      <div id="progress-bar" role="progressbar" ng-style="progressFill()"></div>
+    </div>
+    <span id="progressText">
+      Uploading: {{uploader.progress}} of 100%
+    </span>
   </div>
 </section>
 

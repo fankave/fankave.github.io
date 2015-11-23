@@ -158,7 +158,18 @@
   </div>
 </div>
 
-<div class="commentsHeader">Comments</div>
+<div class="commentsHeader clearfix">
+  <!-- <div class="grid-col grid-col-33 tab" ng-style="chatSelected" ng-click="switchTabs('chat')"> -->
+  <div class="grid-col grid-col-33 tab" ng-style="chatSelected" ng-click="switchTabs('chat')">
+    <span class="tabName">Chat</span>
+  </div>
+  <div class="grid-col grid-col-34 tab" ng-style="videoSelected" ng-click="switchTabs('video')">
+    <span class="tabName">Video</span>
+  </div>
+  <div class="grid-col grid-col-33 tab" ng-style="socialSelected" ng-click="switchTabs('social')">
+    <span class="tabName">Social</span>
+  </div>
+</div>
 
 <div id="textInputFieldTopic" class="clearfix">
   <form id="postCommentForm" ng-submit="postComment(commentText)">
