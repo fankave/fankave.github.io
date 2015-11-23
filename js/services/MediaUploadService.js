@@ -28,8 +28,8 @@ mediaModule.factory('MUService',  function () {
 					"topicId": topicId,
 			};
 			createReplyParams.data.target = {
-					"type": targetType, // Target type: “comment” or “reply”.
-					"id":targetId,  // Target bant ID of comment or reply.
+					"type": "comment", // Target type: “comment” or “reply”.
+					"id":commentId,  // Target bant ID of comment or reply.
 			};
 
 			createReplyParams.data.commentId = commentId;
