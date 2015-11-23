@@ -38,7 +38,7 @@ mediaModule.factory('MUService',  function () {
 	}
 
 	function setCommentParams(tId,text,isCom,comId,repId){
-		topicId = id;
+		topicId = tId;
 		commentText = text;
 		isComment = isCom;
 		

@@ -16,7 +16,7 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
 
   var uploader = $scope.uploader = new FileUploader({
 	  url: MUS_SERVER_URI + UPLOAD_URL,
-	  autoUpload: true
+	  autoUpload: false
   });
 
   $scope.postComment = function(commentText) {
