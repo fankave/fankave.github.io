@@ -1,97 +1,68 @@
-mediaModule.factory('MUService', ['$http','UserInfoService', function ($http,UserInfoService) {
+mediaModule.factory('MUService',  function () {
+	var POST_COMMENT_URI="/v1.0/comment/create";
+	var POST_REPLY_URI="/v1.0/reply/create";
+	var isComment = true;
+	var commentText = "test Comment media";
+	var topicId = "5440804181400368";
+	var commentId ="";
+	var replyId = "";
 
-	var UPLOAD_URL = '/v1.0/media/upload';
-//	Transport: Multipart Form
-//	Method: POST
+	function commentPostRequest(){
+		var createCommentParams = {"rid": "comment",
+				"timestamp": new Date().getTime(),
+				"method": "POST",
+				"uri": encodeURI(POST_COMMENT_URI)};
+		createCommentParams.data =
+		{
+				"lang": "en", 
+				"topicId": topicId,
+		};
+		if(!isComment){
+			createCommentParams = {"rid": "reply",
+				"timestamp": new Date().getTime(),
+				"method": "POST",
+				"uri": encodeURI(POST_REPLY_URI)};
+			createCommentParams.data =
+			{
+					"lang": "en", 
+					"topicId": topicId,
+			};
+			createReplyParams.data.target = {
+					"type": targetType, // Target type: “comment” or “reply”.
+					"id":targetId,  // Target bant ID of comment or reply.
+			};
 
-
-//Callback for Media Upload
-	var observerCallbacks = [];
-	function registerObserverCallback(callback){
-		//register an observer
-		// console.log("comments callback registered");
-		var callbackLength  = observerCallbacks.length;
-		while(callbackLength > 0){
-			callbackLength = observerCallbacks.length;
-			observerCallbacks.pop();
+			createReplyParams.data.commentId = commentId;
 		}
-		observerCallbacks.push(callback);
-	}
-	
-	function dataURItoBlob(dataURI) {
-	    // convert base64/URLEncoded data component to raw binary data held in a string
-	    var byteString;
-	    if (dataURI.split(',')[0].indexOf('base64') >= 0)
-	        byteString = atob(dataURI.split(',')[1]);
-	    else
-	        byteString = unescape(dataURI.split(',')[1]);
-
-	    // separate out the mime component
-	    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-
-	    // write the bytes of the string to a typed array
-	    var ia = new Uint8Array(byteString.length);
-	    for (var i = 0; i < byteString.length; i++) {
-	        ia[i] = byteString.charCodeAt(i);
-	    }
-
-	    return new Blob([ia], {type:mimeString});
-	}
-	
-	function getBase64FromImageUrl(url) {
-	    var img = new Image();
-
-	    img.onload = function () {
-	        var canvas = document.createElement("canvas");
-	        canvas.width =this.width;
-	        canvas.height =this.height;
-
-	        var ctx = canvas.getContext("2d");
-	        ctx.drawImage(this, 0, 0);
-
-	        var dataURL = canvas.toDataURL("image/png");
-	    };
-
-	    img.src = url;
+		return createCommentParams;
 	}
 
-//Upload Media to FK server
-	uploadMedia = function(file){
-		var user = UserInfoService.getUserCredentials();
-//		var fd = new FormData();
-//		file = dataURItoBlob('img/kave_logo2.png');
-//		fd.append('file', file);
-		console.log(" MUS upload");
-		var fd = new FormData();
-		var file = getBase64FromImageUrl('img/kave_logo2.png');
-	    //Take the first selected file
-	    fd.append("file", file);
+	function setCommentParams(tId,text,isCom,comId,repId){
+		topicId = id;
+		commentText = text;
+		isComment = isCom;
+		
+		commentId = comId;
+		replyId = repId;
+	}
 
-	    $http.post(MUS_SERVER_URI+UPLOAD_URL, fd, {
-	        
-	        headers: {'Content-Type': undefined ,
-	        	'X-UserId': user.userId,
-            	'X-SessionId': user.sessionId,
-            	'X-AccessToken': user.accessToken},
-	        transformRequest: angular.identity
-	    })
-//	    $http.post(MUS_SERVER_URI+UPLOAD_URL, fd, {
-//	        headers: {'Content-Type': undefined,
-//	        	'X-UserId': user.userId,
-//            	'X-SessionId': user.sessionId,
-//            	'X-AccessToken': user.accessToken},
-//	        transformRequest: angular.identity
-//		})
-		.success(function(){
-			console.log(" MUS Success");
+	function postMediaRequest(mediaData){
+		var m = {"media":[mediaData]};
+		var sections = [];
+		if((commentText != undefined)  && commentText != ""){
+			sections.push({"type": "html","html":commentText});
+		}
+		sections.push({"type": "media", "media" : m.media});
 
-		})
-		.error(function(){
-			console.log("MUS Error");
-		});
+		var createCommentParams = commentPostRequest();
+		
+		var content =  {"sections": sections};
+		createCommentParams.data.content = content;
+		console.log("Media comment Request :"+ JSON.stringify(createCommentParams, null, 10));
+		return createCommentParams;
 	}
 	return {
-		uploadMedia:uploadMedia
+		postMediaRequest:postMediaRequest,
+		setCommentParams:setCommentParams
 	}
-}]);
-	
+});
