@@ -444,4 +444,27 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
     $window.location = "#/topic/" + $scope.topicID + "/media";
   };
 
+  $scope.switchTabs = function(tab) {
+    if (tab === 'chat'){
+      $('#chatTab').addClass('selectedTab');
+      $('#videoTab').removeClass('selectedTab');
+      $('#socialTab').removeClass('selectedTab');
+    }
+    if (tab === 'video'){
+      $('#chatTab').removeClass('selectedTab');
+      $('#videoTab').addClass('selectedTab');
+      $('#socialTab').removeClass('selectedTab');
+    }
+    if (tab === 'social'){
+      $('#chatTab').removeClass('selectedTab');
+      $('#videoTab').removeClass('selectedTab');
+      $('#socialTab').addClass('selectedTab');
+    }
+    $scope.loadTab(tab);
+  };
+
+  $scope.loadTab = function(tab) {
+    console.log("Switched to Tab: ", tab);
+  };
+
 }

@@ -71,25 +71,6 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
     }
   };
 
-  $scope.chatSelected = 'selectedTab';
-  $scope.switchTabs = function(tab) {
-    if (tab === 'chat'){
-      $scope.chatSelected = 'selectedTab';
-      $scope.videoSelected = '';
-      $scope.socialSelected = '';
-    }
-    if (tab === 'video'){
-      $scope.chatSelected = '';
-      $scope.videoSelected = 'selectedTab';
-      $scope.socialSelected = '';
-    }
-    if (tab === 'social'){
-      $scope.chatSelected = '';
-      $scope.videoSelected = '';
-      $scope.socialSelected = 'selectedTab';
-    }
-  }
-
   // FILTERS
 
   uploader.filters.push({
