@@ -1321,5 +1321,19 @@ img-crop canvas {
   text-align: center;
 }
 
+#uploadControls {
+  padding-left: 20px;
+}
 
+#uploadButtons {
+  margin-bottom: 10px;
+}
+
+.thumb {
+  height: 200px;
+}
+
+#preview {
+  margin-bottom: 10px;
+}
 

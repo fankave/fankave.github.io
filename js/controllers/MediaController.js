@@ -21,7 +21,6 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
     autoUpload: false
   });
 
-  var mediaData;
   $scope.postComment = function(commentText) {
     if((commentText !== undefined)  && commentText !== ""){
       console.log("MediaController postComment Invoked :"+ commentText);
@@ -31,16 +30,9 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
       } else {
         MUService.setCommentParams($scope.topicID, commentText, true);
       }
-      if (mediaData){
-        networkService.send(MUService.postMediaRequest(mediaData));
-      }
     }
     $scope.commentText = "";
-    if ($scope.postID){
-      $window.location = "#/post/" + $scope.postID;
-    } else {
-      $window.location = "#/topic/" + $scope.topicID;
-    }
+    uploader.uploadAll();
   };
 
   $scope.setUI = function() {
@@ -86,6 +78,26 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
     }
   });
 
+  function handleFileSelect(evt) {
+    var f = evt.target.files[0];
+    console.log('F:', f);
+    var reader = new FileReader();
+    reader.onload = (function (theFile) {
+      return function (e) {
+        var span = document.createElement('span');
+        span.innerHTML = ['<img class="thumb" src="',
+          e.target.result,
+          '" title="', theFile.name,
+          '"/>'].join('');
+        document.getElementById('preview').insertBefore(span, null);
+        };
+      })(f);
+      reader.readAsDataURL(f);
+    };
+
+  document.getElementById('fileUpload').addEventListener('change',
+    handleFileSelect, false);
+  
   // CALLBACKS
 
   uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
@@ -93,6 +105,7 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
   };
   uploader.onAfterAddingFile = function(fileItem) {
     console.info('onAfterAddingFile', fileItem);
+
   };
   uploader.onAfterAddingAll = function(addedFileItems) {
     console.info('onAfterAddingAll', addedFileItems);
@@ -115,7 +128,7 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
   };
   uploader.onSuccessItem = function(fileItem, response, status, headers) {
     console.info('onSuccessItem', fileItem, response, status, headers);
-      mediaData = response;
+      networkService.send(MUService.postMediaRequest(response));
       uploader.clearQueue();
   };
   uploader.onErrorItem = function(fileItem, response, status, headers) {
@@ -129,6 +142,11 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
   };
   uploader.onCompleteAll = function() {
     console.info('onCompleteAll');
+    if ($scope.postID){
+      $window.location = "#/post/" + $scope.postID;
+    } else {
+      $window.location = "#/topic/" + $scope.topicID;
+    }
   };
 
   console.info('uploader', uploader);
