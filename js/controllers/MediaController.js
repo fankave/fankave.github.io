@@ -77,6 +77,11 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
   uploader.filters.push({
     name: 'customFilter',
     fn: function(item /*{File|FileLikeObject}*/, options) {
+    	var itemType = item.type;
+    	if(itemType.indexOf("image") != -1)
+    		return this.queue.length < 1 && (item.size < 1048576);
+    	else if(itemType.indexOf("video") != -1)
+    		return this.queue.length < 1 && (item.size < 10485760);
       return this.queue.length < 10;
     }
   });
@@ -112,7 +117,6 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
     console.info('onSuccessItem', fileItem, response, status, headers);
       mediaData = response;
       uploader.clearQueue();
-    
   };
   uploader.onErrorItem = function(fileItem, response, status, headers) {
     console.info('onErrorItem', fileItem, response, status, headers);
