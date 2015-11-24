@@ -78,9 +78,14 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
     }
   });
 
-  function handleFileSelect(evt) {
+  function generateImagePreview(evt) {
     var f = evt.target.files[0];
     console.log('F:', f);
+
+    if (!f.type.match('image.*')) {
+      return;
+    }
+
     var reader = new FileReader();
     reader.onload = (function (theFile) {
       return function (e) {
@@ -96,7 +101,7 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
     };
 
   document.getElementById('fileUpload').addEventListener('change',
-    handleFileSelect, false);
+    generateImagePreview, false);
 
   // CALLBACKS
 
