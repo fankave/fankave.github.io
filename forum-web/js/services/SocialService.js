@@ -19,7 +19,7 @@ networkModule.factory('SocialService', function (Bant) {
 				if(_socialObject.id != undefined)
 					_socialArray.push(_socialObject);
 			}
-			_offset = _socialArray.length;
+			_offset = socialData.data.nextOffset;
 			notifyObservers();
 		}
 	}
