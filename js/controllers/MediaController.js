@@ -2,8 +2,8 @@
 
 var mediaModule = angular.module('MediaModule', ['angularFileUpload', 'NetworkModule', 'TopicModule'])
 
-mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 'FileUploader', 'MUService', 'UserInfoService', 'networkService', 'CommentService', 'URIHelper', 'TopicService',
-  function ($scope, $routeParams, $window, FileUploader, MUService, UserInfoService, networkService, CommentService, URIHelper, TopicService) {
+mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', '$sanitize', 'FileUploader', 'MUService', 'UserInfoService', 'networkService', 'CommentService', 'URIHelper', 'TopicService',
+  function ($scope, $routeParams, $window, $sanitize, FileUploader, MUService, UserInfoService, networkService, CommentService, URIHelper, TopicService) {
   
   var MUS_SERVER_URI = 'https://dev.fankave.com:8080';
   var UPLOAD_URL = '/v1.0/media/upload';
@@ -87,7 +87,7 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
         var span = document.createElement('span');
         span.innerHTML = ['<img class="thumb" src="',
           e.target.result,
-          '" title="', theFile.name,
+          '" title="', $sanitize(theFile.name),
           '"/>'].join('');
         document.getElementById('preview').insertBefore(span, null);
         };
@@ -97,7 +97,7 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
 
   document.getElementById('fileUpload').addEventListener('change',
     handleFileSelect, false);
-  
+
   // CALLBACKS
 
   uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
