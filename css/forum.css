@@ -1163,6 +1163,8 @@ img-crop canvas {
 
 #fileUpload {
   visibility: hidden;
+  /*position: absolute;*/
+  /*top: -100px;*/
 }
 
 .progress {

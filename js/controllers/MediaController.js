@@ -64,6 +64,14 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
       window.location = "peel://home";
   };
 
+  $scope.cancelMediaUpload = function() {
+    if ($scope.postID){
+      $window.location = "#/post/" + $scope.postID;
+    } else {
+      $window.location = "#/topic/" + $scope.topicID;
+    }
+  }
+
   // FILTERS
 
   uploader.filters.push({
