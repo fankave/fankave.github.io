@@ -17,10 +17,11 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
   $scope.topicID = $routeParams.topicID;
 
   var uploader = $scope.uploader = new FileUploader({
-	  url: MUS_SERVER_URI + UPLOAD_URL,
-	  autoUpload: false
+    url: MUS_SERVER_URI + UPLOAD_URL,
+    autoUpload: false
   });
 
+  var mediaData;
   $scope.postComment = function(commentText) {
     if((commentText !== undefined)  && commentText !== ""){
       console.log("MediaController postComment Invoked :"+ commentText);
@@ -30,10 +31,16 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
       } else {
         MUService.setCommentParams($scope.topicID, commentText, true);
       }
+      if (mediaData){
+        networkService.send(MUService.postMediaRequest(mediaData));
+      }
     }
-    uploader.uploadAll();
     $scope.commentText = "";
-    $window.location = "#/topic/" + $scope.topicID;
+    if ($scope.postID){
+      $window.location = "#/post/" + $scope.postID;
+    } else {
+      $window.location = "#/topic/" + $scope.topicID;
+    }
   };
 
   $scope.setUI = function() {
@@ -65,14 +72,6 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
       window.location = "peel://home";
   };
 
-  $scope.progressFill = function(progress) {
-
-    return {
-      'width': progress + '%',
-      'background-color': 'rgb(59,166,252)'
-    }
-  };
-
   // FILTERS
 
   uploader.filters.push({
@@ -94,12 +93,12 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
     console.info('onAfterAddingAll', addedFileItems);
   };
   uploader.onBeforeUploadItem = function(item) {
-	  var user = UserInfoService.getUserCredentials();
-	  item.headers = {	
-			  'X-UserId': user.userId,
-			  'X-SessionId': user.sessionId,
-			  'X-AccessToken': user.accessToken};
-	  item.formData =[{'type':item._file.type},{'size': item._file.size},{'file': item._file}];
+    var user = UserInfoService.getUserCredentials();
+    item.headers = {  
+        'X-UserId': user.userId,
+        'X-SessionId': user.sessionId,
+        'X-AccessToken': user.accessToken};
+    item.formData =[{'type':item._file.type},{'size': item._file.size},{'file': item._file}];
 
     console.info('onBeforeUploadItem', item);
   };
@@ -110,9 +109,9 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
     console.info('onProgressAll', progress);
   };
   uploader.onSuccessItem = function(fileItem, response, status, headers) {
-	  console.info('onSuccessItem', fileItem, response, status, headers);
-		  //CommentService.postCommentRequestForMedia(topicId,commentText, response);
-		  networkService.send(MUService.postMediaRequest(response));
+    console.info('onSuccessItem', fileItem, response, status, headers);
+      mediaData = response;
+      uploader.clearQueue();
     
   };
   uploader.onErrorItem = function(fileItem, response, status, headers) {
@@ -123,7 +122,6 @@ mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', 
   };
   uploader.onCompleteItem = function(fileItem, response, status, headers) {
     console.info('onCompleteItem', fileItem, response, status, headers);
-    uploader.removeFromQueue(fileItem);
   };
   uploader.onCompleteAll = function() {
     console.info('onCompleteAll');

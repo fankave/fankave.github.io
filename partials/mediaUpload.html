@@ -24,15 +24,25 @@
 
       </div>
     </form>
-  </div>
-  <div ng-if="uploader.progress > 0">
-    <div class="progress" style="margin-bottom: 0;">
-      <!-- <div id="progress-bar" role="progressbar" ng-style="{ 'width': 'uploader.progress' + '%', 'background-color': rgb(59,166,252) }"></div> -->
-      <div id="progress-bar" role="progressbar" ng-style="progressFill()"></div>
+    <div id="uploadControls" ng-if="uploader.queue.length > 0">
+      <button type="button" class="btn btn-success btn-xs" ng-click="uploader.uploadAll()" ng-disabled="uploader.isReady || uploader.isUploading || uploader.isSuccess">
+        <span class="glyphicon glyphicon-upload"></span> Upload
+      </button>
+      <button type="button" class="btn btn-warning btn-xs" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+      </button>
+      <button type="button" class="btn btn-danger btn-xs" ng-click="uploader.clearQueue()">
+        <span class="glyphicon glyphicon-trash"></span> Remove
+      </button>
+      <div ng-if="uploader.isUploading">
+        <div class="progress" style="margin-bottom: 0;">
+          <div id="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+        </div>
+        <span id="progressText">
+          Uploading: {{uploader.progress}} of 100%
+        </span>
+      </div>
     </div>
-    <span id="progressText">
-      Uploading: {{uploader.progress}} of 100%
-    </span>
   </div>
 </section>
 
