@@ -7,7 +7,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	if(HOST_NAME == undefined)
 		HOST_NAME = window.location.host;
 	if(HOST_NAME == 'dev.fankave.com')
-	REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
+	REGISTER_SERVER_URI = 'https://dev.fankave.com/v1.0/user/register';
 	$scope.loginToFacebook = function()
 	{
 		// console.log("log in to Facebook");
@@ -132,7 +132,7 @@ function initFacebookController($scope, $routeParams, $http, $compile, facebookS
 	      };
 
 	      // console.log('registration parameters: ' + JSON.stringify(registrationParameters));
-	      
+	      console.log('(REGISTER_SERVER_URI)' + REGISTER_SERVER_URI);
 	      $http.post(REGISTER_SERVER_URI, JSON.stringify(registrationParameters)).then(
 	      function(response)
 	      {
