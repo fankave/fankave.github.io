@@ -4,7 +4,7 @@ function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,network
 	if(HOST_NAME == undefined)
 		HOST_NAME = window.location.hostname;;
 		if(HOST_NAME == 'dev.fanakve.com')
-		REGISTER_SERVER_URI = 'https://dev.fankave.com/v1.0/user/register';
+		REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
 
 	function getPeelRegistrationParams(userId,userName){
 		var peelData = new Object();
