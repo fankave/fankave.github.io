@@ -62,7 +62,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 	function delegateSetReplies(replyData)
 	{
 		if(replyData.error){
-			console.log("Topic Error message from network :"+replyData.error);
+			console.log("Topic Error message from network: ", replyData.error);
 		}
 		else if(replyData.push){
 			console.log("reply pushed ");
@@ -105,7 +105,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 	function delegateSetChannel(topicData)
 	{
 		if(topicData.error){
-			console.log("Topic Error message from network :"+topicData.error);
+			console.log("Topic Error message from network :", topicData.error);
 		}
 		else
 			ChannelService.setTopicData(topicData);

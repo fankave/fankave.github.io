@@ -25,6 +25,33 @@
   </div>
 </section>
 
+<!-- <section id="mediaUpload" ng-if="uploader.queue.length > 0"> -->
+<!-- <section id="mediaUpload">
+  <div id="uploadControls">
+
+    <div id="preview"></div>
+
+    <div id="uploadButtons">
+      <button type="button" class="btn btn-warning btn-xs" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+      </button>
+      <button type="button" class="btn btn-danger btn-xs" ng-click="uploader.clearQueue()">
+        <span class="glyphicon glyphicon-trash"></span> Remove
+      </button>
+    </div>
+
+    <div ng-if="uploader.isUploading">
+      <div class="progress" style="margin-bottom: 0;">
+        <div id="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+      </div>
+      <span id="progressText">
+        Uploading: {{uploader.progress}} of 100%
+      </span>
+    </div>
+
+  </div>
+</section> -->
+
 <section id="topicSection">
   <nav class="navbar navbar-fixed-top" id="header">
     <div id="peelNavBar" ng-if="isPeelUser == true">
@@ -175,8 +202,8 @@
 <div id="textInputFieldTopic" class="clearfix">
   <form id="postCommentForm" ng-submit="postComment(commentText)">
     <div id="postCommentDiv" class="input-group">
-      <label id="attachMediaIcon">
-        <img src="img/attach-media.png" ng-click="clickAttachMedia()" />
+      <label for="fileUpload" id="attachMediaIcon">
+        <img src="img/attach-media.png" />
       </label>
 
       <button id="postCommentButton" class="btn btn-default" type="button" ng-click="postComment(commentText)">POST</button>
@@ -185,10 +212,33 @@
       placeholder="Write a comment..." ng-model="commentText"></span>
 
       
-      <!-- <input ng-controller="MediaController" id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="uploader" class="form-control" /> -->
+      <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="uploader" class="form-control" />
 
     </div>
   </form>
+  <div id="uploadControls" ng-if="uploader.queue.length > 0">
+
+    <div id="preview"></div>
+
+    <div id="uploadButtons">
+      <button type="button" class="btn btn-warning btn-xs" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+      </button>
+      <button type="button" class="btn btn-danger btn-xs" ng-click="uploader.clearQueue()">
+        <span class="glyphicon glyphicon-trash"></span> Remove
+      </button>
+    </div>
+
+    <div ng-if="uploader.isUploading">
+    <!-- <div> -->
+      <div class="progress" style="margin-bottom: 0;">
+        <div id="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+      </div>
+      <span id="progressText">
+        Uploading: {{uploader.progress}} of 100%
+      </span>
+    </div>
+  </div>
 </div>
 
 
