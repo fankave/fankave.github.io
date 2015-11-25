@@ -6,7 +6,7 @@ function initNetworkService($websocket,$route,DataService,UserInfoService)
 	if(HOST_NAME == undefined)
 		HOST_NAME = window.location.host;;
 	if(HOST_NAME == 'dev.fankave.com')
-		WEBSOCKET_BASE_URI = 'ws://dev.fankave.com/ws?';
+		WEBSOCKET_BASE_URI = 'wss://dev.fankave.com/ws?';
 	var ws;
 	
 	disconnectSocket = function(){
