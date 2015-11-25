@@ -150,6 +150,10 @@ body
   border-bottom: 1px gray;
 }
 
+.postRow:hover {
+  cursor: pointer;
+}
+
 .repliesCommentRow
 {
   font-size:3em;
@@ -1351,5 +1355,9 @@ img-crop canvas {
 #preview {
   height: 150px;
   margin-bottom: 10px;
+}
+
+#fileWarning {
+  padding-left: 10px;
 }
 

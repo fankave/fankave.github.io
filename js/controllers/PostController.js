@@ -356,14 +356,19 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
     removeAfterUpload: true
   });
 
+  $scope.mediaType;
   uploader.filters.push({
     name: 'customFilter',
     fn: function(item /*{File|FileLikeObject}*/, options) {
       var itemType = item.type;
-      if(itemType.indexOf("image") != -1)
+      if(itemType.indexOf("image") != -1){
+        $scope.mediaType = "image";
         return this.queue.length < 1 && (item.size < 1048576);
-      else if(itemType.indexOf("video") != -1)
+      }
+      else if(itemType.indexOf("video") != -1){
+        $scope.mediaType = "video";
         return this.queue.length < 1 && (item.size < 10485760);
+      }
       return this.queue.length < 10;
     }
   });
@@ -394,9 +399,11 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
     generateImagePreview, false);
 
   // CALLBACKS
-
+  $scope.fileMaxExceeded = false;
   uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
     console.info('onWhenAddingFileFailed', item, filter, options);
+    $scope.fileMaxExceeded = true;
+    $timeout(function(){$scope.fileMaxExceeded = false;}, 5000);
   };
   uploader.onAfterAddingFile = function(fileItem) {
     console.info('onAfterAddingFile', fileItem);
@@ -424,7 +431,6 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
   uploader.onSuccessItem = function(fileItem, response, status, headers) {
     console.info('onSuccessItem', fileItem, response, status, headers);
       networkService.send(MUService.postMediaRequest(response));
-      uploader.clearQueue();
   };
   uploader.onErrorItem = function(fileItem, response, status, headers) {
     console.info('onErrorItem', fileItem, response, status, headers);
@@ -437,6 +443,7 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
   };
   uploader.onCompleteAll = function() {
     console.info('onCompleteAll');
+    uploader.clearQueue();
   };
 
   console.info('uploader', uploader);

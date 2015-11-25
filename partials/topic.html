@@ -216,6 +216,10 @@
 
     </div>
   </form>
+  <div id="fileWarning" ng-if="fileMaxExceeded" ng-switch="mediaType">
+    <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 1MB</span>
+    <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
+  </div>
   <div id="uploadControls" ng-if="uploader.queue.length > 0">
 
     <div id="preview"></div>
@@ -229,7 +233,7 @@
       </button>
     </div>
 
-    <div ng-if="uploader.isUploading">
+    <div ng-if="uploader.isUploading && uploader.queue.length > 0">
     <!-- <div> -->
       <div class="progress" style="margin-bottom: 0;">
         <div id="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
