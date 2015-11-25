@@ -1,20 +1,115 @@
 'use strict';
 
-var mediaModule = angular.module('MediaModule', ['angularFileUpload'])
+var mediaModule = angular.module('MediaModule', ['angularFileUpload', 'NetworkModule', 'TopicModule'])
 
-mediaModule.controller('MediaController', ['$scope', 'FileUploader', function($scope, FileUploader) {
+mediaModule.controller('MediaController', ['$scope', '$routeParams', '$window', '$sanitize', 'FileUploader', 'MUService', 'UserInfoService', 'networkService', 'CommentService', 'URIHelper', 'TopicService',
+  function ($scope, $routeParams, $window, $sanitize, FileUploader, MUService, UserInfoService, networkService, CommentService, URIHelper, TopicService) {
+  
+  var MUS_SERVER_URI = 'https://dev.fankave.com:8080';
+  var UPLOAD_URL = '/v1.0/media/upload';
+  
+  
+
+  var user = UserInfoService.getUserCredentials();
+  if ($routeParams.postID){
+    $scope.postID = $routeParams.postID;
+  }
+  $scope.topicID = $routeParams.topicID;
+
   var uploader = $scope.uploader = new FileUploader({
-    url: 'upload.php'
+    url: MUS_SERVER_URI + UPLOAD_URL,
+    autoUpload: false
   });
+
+  $scope.postComment = function(commentText) {
+    if((commentText !== undefined)  && commentText !== ""){
+      console.log("MediaController postComment Invoked :"+ commentText);
+      if ($scope.postID){
+        console.log("Post: ", $scope.postID);
+        MUService.setCommentParams($scope.topicID, commentText, false, $scope.postID);
+      } else {
+        MUService.setCommentParams($scope.topicID, commentText, true);
+      }
+    }
+    $scope.commentText = "";
+    uploader.uploadAll();
+  };
+
+  $scope.setUI = function() {
+    document.getElementById('mediaSection').style.paddingTop = "52px";
+    document.getElementById('header').style.height = "52px"; 
+  };
+
+  if (UserInfoService.isPeelUser()) {
+    $scope.isPeelUser = true;
+    $scope.setUI();
+  } else {
+    $scope.isPeelUser = false;
+  }
+
+  $scope.peelClose = function() {
+    ga('send', 'event', 'Peel', 'click', 'BackToPeelHome');
+    console.log("peelClose()");
+    window.location = "peel://home";
+  };
+
+  $scope.peelWatchOnTV = function() {
+    ga('send', 'event', 'Peel', 'click', 'PeelWatchOnTV');
+    console.log("peelWatchOnTV()");
+    var showId = URIHelper.getPeelShowId();
+    console.log("Peel show on TV uri :  "+ "peel://tunein/"+showId);
+    if(showId !== undefined)
+      window.location = "peel://tunein/"+showId;
+    else
+      window.location = "peel://home";
+  };
+
+  $scope.cancelMediaUpload = function() {
+    if ($scope.postID){
+      $window.location = "#/post/" + $scope.postID;
+    } else {
+      $window.location = "#/topic/" + $scope.topicID;
+    }
+  }
 
   // FILTERS
 
   uploader.filters.push({
     name: 'customFilter',
     fn: function(item /*{File|FileLikeObject}*/, options) {
+    	var itemType = item.type;
+    	if(itemType.indexOf("image") != -1)
+    		return this.queue.length < 1 && (item.size < 1048576);
+    	else if(itemType.indexOf("video") != -1)
+    		return this.queue.length < 1 && (item.size < 10485760);
       return this.queue.length < 10;
     }
   });
+
+  function generateImagePreview(evt) {
+    var f = evt.target.files[0];
+    console.log('F:', f);
+
+    if (!f.type.match('image.*')) {
+      return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = (function (theFile) {
+      return function (e) {
+        var span = document.createElement('span');
+        span.innerHTML = ['<img class="thumb" src="',
+          e.target.result,
+          '" title="', $sanitize(theFile.name),
+          '"/>'].join('');
+        document.getElementById('preview').insertBefore(span, null);
+        };
+      })(f);
+      reader.readAsDataURL(f);
+    };
+
+  document.getElementById('fileUpload').addEventListener('change',
+    generateImagePreview, false);
 
   // CALLBACKS
 
@@ -23,11 +118,19 @@ mediaModule.controller('MediaController', ['$scope', 'FileUploader', function($s
   };
   uploader.onAfterAddingFile = function(fileItem) {
     console.info('onAfterAddingFile', fileItem);
+
   };
   uploader.onAfterAddingAll = function(addedFileItems) {
     console.info('onAfterAddingAll', addedFileItems);
   };
   uploader.onBeforeUploadItem = function(item) {
+    var user = UserInfoService.getUserCredentials();
+    item.headers = {  
+        'X-UserId': user.userId,
+        'X-SessionId': user.sessionId,
+        'X-AccessToken': user.accessToken};
+    item.formData =[{'type':item._file.type},{'size': item._file.size},{'file': item._file}];
+
     console.info('onBeforeUploadItem', item);
   };
   uploader.onProgressItem = function(fileItem, progress) {
@@ -38,6 +141,8 @@ mediaModule.controller('MediaController', ['$scope', 'FileUploader', function($s
   };
   uploader.onSuccessItem = function(fileItem, response, status, headers) {
     console.info('onSuccessItem', fileItem, response, status, headers);
+      networkService.send(MUService.postMediaRequest(response));
+      uploader.clearQueue();
   };
   uploader.onErrorItem = function(fileItem, response, status, headers) {
     console.info('onErrorItem', fileItem, response, status, headers);
@@ -50,7 +155,13 @@ mediaModule.controller('MediaController', ['$scope', 'FileUploader', function($s
   };
   uploader.onCompleteAll = function() {
     console.info('onCompleteAll');
+    if ($scope.postID){
+      $window.location = "#/post/" + $scope.postID;
+    } else {
+      $window.location = "#/topic/" + $scope.topicID;
+    }
   };
 
   console.info('uploader', uploader);
+
 }]);
