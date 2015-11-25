@@ -16,7 +16,9 @@ networkModule.factory('Bant', function (DateUtilityService) {
 
 				if(_commentObject.type == "media"){
 					_commentObject.media = data.content.sections[j].media;
+					if(_commentObject.media != undefined){
 					var tempMedia = _commentObject.media[0];
+					
 					//if Video update
 					_commentObject.mediaType = tempMedia.mediaType.substring(EXTRACT_MEDIA_TYPE_LENGTH,0);
 					if(_commentObject.mediaType =="video"){
@@ -44,6 +46,7 @@ networkModule.factory('Bant', function (DateUtilityService) {
 						_commentObject.mediaAspectFull.y == undefined ? 0 : _commentObject.mediaAspectFull.y;
 						_commentObject.mediaAspectFull.w == undefined ? 0 : _commentObject.mediaAspectFull.w;
 						_commentObject.mediaAspectFull.h == undefined ? 0 : _commentObject.mediaAspectFull.h;
+					}
 					}
 
 

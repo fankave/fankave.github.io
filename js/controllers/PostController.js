@@ -1,7 +1,7 @@
-var postModule = angular.module("PostModule", ["NetworkModule", "SplashModule"]);
-postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", initPostController]);
+var postModule = angular.module("PostModule", ["NetworkModule", "SplashModule", "MediaModule", "angularFileUpload"]);
+postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$window", "$sanitize", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", "MUService", "FileUploader", initPostController]);
 
-function initPostController($scope, $sce, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService)
+function initPostController($scope, $sce, $timeout, $window, $sanitize, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService,MUService,FileUploader)
 {
 	//ga('send', 'pageview', "/comment/"+$routeParams.postID);
 	$scope.pageClass = 'page-post';
@@ -18,8 +18,7 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		var topicId = TopicService.getTopicId();
 		if(topicId == undefined)
 			topicId = $scope.comment.topicId;
-		//window.location = "#/topic/"+topicId;
-		window.history.back();
+		$window.location = "#/topic/"+topicId;
 	}
 
 	$scope.setPeelUI = function(isPeelUser){
@@ -30,10 +29,10 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 //			document.getElementById('postHeader').style.height = "3.5em";
 //		}
 //		else
-		{
+		// {
 			document.getElementById('postSection').style.paddingTop = "3.5em";
 			document.getElementById('postHeader').style.height = "3.5em";
-		}
+		// }
 	}
 
 	if((UserInfoService.isPeelUser() == true)){
@@ -51,7 +50,6 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		var selectedComment = CommentService.getCommentById($scope.postID);
 		if(selectedComment != undefined){
 			updateCommentInReply(selectedComment);
-
 		}
 		else{
 			console.log("No data from comment service : TODO handle this with cookies");
@@ -95,7 +93,6 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		// $scope.pageStyle = {'padding-top': '10em'};
 
 		$scope.requestReplies();
-
 		var replyPostHeader = $("#replyPost").height();
 		// console.log("height of repy header: " + replyPostHeader);
 		var heightString = replyPostHeader + "px";
@@ -107,6 +104,7 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		 {
   			$timeout(function()
   			{
+  				setLinks();
     			$('.commentsContainer').each(function()
     			{
       				$('.image-link').magnificPopup({
@@ -128,14 +126,20 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 	}
 
 	$scope.postReply = function(commentText) {
-		if((commentText != undefined)	 && commentText != ""){
-		console.log("PostController postReply Invoked :"+ commentText + $scope.topicId);
-		networkService.send(ReplyService.getPostReplyRequest($scope.topicId,$scope.postID, commentText));
+		if((commentText !== undefined) && commentText !== ""){
+			// console.log("PostController postReply Invoked :", commentText, $scope.topicId, $scope.postID);
+			if (uploader.queue.length > 0){
+				MUService.setCommentParams($scope.topicId, commentText, false, $scope.postID);
+			} else {
+				networkService.send(ReplyService.getPostReplyRequest($scope.topicId,$scope.postID, commentText));
+			}
 		}
+		uploader.uploadAll();
 		$scope.commentText = "";
-		document.getElementById("textInputFieldReply").blur();
-		document.getElementById("postReplyButton").blur();
-		$scope.justReplied = true
+		document.getElementById("postCommentField").blur();
+		document.getElementById("postCommentButton").blur();
+		$scope.justReplied = true;
+		// $(document).scrollTop(0);
 	};
 
 	$scope.updateLikeComment = function(id) {
@@ -248,7 +252,6 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 	}
 
 	 function updateReplies(){
-
 		//TODO: check with ahmed, these values could be individual scope var.
 		var repliesData = ReplyService.replies();
 		var len = repliesData.length;
@@ -280,7 +283,6 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 			//console.log(i +" : updated replies likecount : " +$scope.replies[i].likeCount);
 
 		}
-
 		if(TopicService.directComment === true)
 		{
 			$scope.triggerRepliesKeyboard();
@@ -331,5 +333,119 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 	{
     	return $sce.trustAsResourceUrl(src);
   	}
+
+  $scope.xLinkActivated = false;
+
+  function setLinks() {
+    $('.postContent > a').click(function(){
+      $('#xContent').css('display', 'block');
+    });
+  };
+  
+  $scope.backToChat = function() {
+    $('#xContent').css('display', 'none');
+  };
+
+  // ATTACH MEDIA
+  var MUS_SERVER_URI = 'https://dev.fankave.com:8080';
+  var UPLOAD_URL = '/v1.0/media/upload';
+
+  var uploader = $scope.uploader = new FileUploader({
+    url: MUS_SERVER_URI + UPLOAD_URL,
+    autoUpload: false,
+    removeAfterUpload: true
+  });
+
+  $scope.mediaType;
+  uploader.filters.push({
+    name: 'customFilter',
+    fn: function(item /*{File|FileLikeObject}*/, options) {
+      var itemType = item.type;
+      if(itemType.indexOf("image") != -1){
+        $scope.mediaType = "image";
+        return this.queue.length < 1 && (item.size < 1048576);
+      }
+      else if(itemType.indexOf("video") != -1){
+        $scope.mediaType = "video";
+        return this.queue.length < 1 && (item.size < 10485760);
+      }
+      return this.queue.length < 10;
+    }
+  });
+
+  function generateImagePreview(evt) {
+    var f = evt.target.files[0];
+    console.log('F:', f);
+
+    if (!f.type.match('image.*')) {
+      return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = (function (theFile) {
+      return function (e) {
+        var span = document.createElement('span');
+        span.innerHTML = ['<img class="thumb" src="',
+          e.target.result,
+          '" title="', $sanitize(theFile.name),
+          '"/>'].join('');
+        document.getElementById('preview').insertBefore(span, null);
+        };
+      })(f);
+      reader.readAsDataURL(f);
+    };
+
+  document.getElementById('fileUpload').addEventListener('change',
+    generateImagePreview, false);
+
+  // CALLBACKS
+  $scope.fileMaxExceeded = false;
+  uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+    console.info('onWhenAddingFileFailed', item, filter, options);
+    $scope.fileMaxExceeded = true;
+    $timeout(function(){$scope.fileMaxExceeded = false;}, 5000);
+  };
+  uploader.onAfterAddingFile = function(fileItem) {
+    console.info('onAfterAddingFile', fileItem);
+
+  };
+  uploader.onAfterAddingAll = function(addedFileItems) {
+    console.info('onAfterAddingAll', addedFileItems);
+  };
+  uploader.onBeforeUploadItem = function(item) {
+    var user = UserInfoService.getUserCredentials();
+    item.headers = {  
+        'X-UserId': user.userId,
+        'X-SessionId': user.sessionId,
+        'X-AccessToken': user.accessToken};
+    item.formData =[{'type':item._file.type},{'size': item._file.size},{'file': item._file}];
+
+    console.info('onBeforeUploadItem', item);
+  };
+  uploader.onProgressItem = function(fileItem, progress) {
+    console.info('onProgressItem', fileItem, progress);
+  };
+  uploader.onProgressAll = function(progress) {
+    console.info('onProgressAll', progress);
+  };
+  uploader.onSuccessItem = function(fileItem, response, status, headers) {
+    console.info('onSuccessItem', fileItem, response, status, headers);
+      networkService.send(MUService.postMediaRequest(response));
+  };
+  uploader.onErrorItem = function(fileItem, response, status, headers) {
+    console.info('onErrorItem', fileItem, response, status, headers);
+  };
+  uploader.onCancelItem = function(fileItem, response, status, headers) {
+    console.info('onCancelItem', fileItem, response, status, headers);
+  };
+  uploader.onCompleteItem = function(fileItem, response, status, headers) {
+    console.info('onCompleteItem', fileItem, response, status, headers);
+  };
+  uploader.onCompleteAll = function() {
+    console.info('onCompleteAll');
+    uploader.clearQueue();
+  };
+
+  console.info('uploader', uploader);
 
 }

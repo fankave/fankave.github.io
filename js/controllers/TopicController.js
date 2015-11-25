@@ -1,7 +1,7 @@
-var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule"]);
-topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage",initTopicController]);
+var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload"]);
+topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader",initTopicController]);
 
-function initTopicController($scope, $sce, $window, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage)
+function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader)
 {
   
 
@@ -76,7 +76,6 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
   
   var updateTopic = function(){
     if(TopicService.getTopic() != undefined){
-      MUService.uploadMedia("some");
       $scope.topicType = TopicService.getTopicType();
       if(TopicService.isWatchingTopic() == false){
         networkService.send(TopicService.getFollowChannelRequest());
@@ -221,19 +220,24 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
             if(thisPost != undefined)
             {
               var thisDiv = postDivs[div];
-              thisDiv.onclick = function()
+              thisDiv.onclick = function(e)
               {
-                // console.log("thisDiv.onclick");
-                thisPost = $scope.commentsArray[this.id];
-                if($scope.innerButtonTapped == false)
-                {
-                  window.location = "#/post/" + thisPost.id;
+                if ($(e.target).is('a')){
+                  return;
+                } else {
+                  // console.log("thisDiv.onclick");
+                  thisPost = $scope.commentsArray[this.id];
+                  if($scope.innerButtonTapped == false)
+                  {
+                    window.location = "#/post/" + thisPost.id;
+                  }
+                  $scope.innerButtonTapped = false;
                 }
-                $scope.innerButtonTapped = false;
               }
             } 
           }
         }
+        setLinks();
           });
         });
   }
@@ -324,14 +328,19 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
   }
 
   $scope.postComment = function(commentText) {
-    if((commentText != undefined)  && commentText != ""){
+    if((commentText !== undefined) && commentText !== ""){
       // console.log("TopicController postComment Invoked :"+ commentText);
-      networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
+      if (uploader.queue.length > 0){
+        MUService.setCommentParams($scope.topicID, commentText, true);
+      } else {
+        networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
+      }
     }
+    uploader.uploadAll();
     $scope.commentText = "";
     document.getElementById("topicCommentField").blur();
     document.getElementById("postCommentButton").blur();
-    $(document).scrollTop(0);
+    // $(document).scrollTop(0);
   };
 
   $scope.updateLikeTopic = function() {
@@ -411,16 +420,6 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
     }
   };
 
-  $scope.showAttachMedia = false;
-  $scope.clickAttachMedia = function() {
-    console.log("Attach Media Clicked");
-    if (!$scope.showAttachMedia){
-      $scope.showAttachMedia = true;
-    } else {
-      $scope.showAttachMedia = false;
-    }
-  };
-
   TopicService.registerObserverCallback(updateTopic);
   CommentService.registerObserverCallback(notifyNewComments);
 
@@ -436,10 +435,142 @@ function initTopicController($scope, $sce, $window, $timeout, $routeParams,netwo
 
   $scope.xLinkActivated = false;
 
-  $scope.displayXLink = function(src) {
-    // $scope.xLinkSrc = src;
-    $scope.xLinkActivated = true;
+  function setLinks() {
+    $('.postContent > a').click(function(){
+      $('#xContent').css('display', 'block');
+    });
   };
   
+  $scope.backToChat = function() {
+    $('#xContent').css('display', 'none');
+  };
+
+
+  // ATTACH MEDIA
+  var MUS_SERVER_URI = 'https://dev.fankave.com:8080';
+  var UPLOAD_URL = '/v1.0/media/upload';
+
+  var uploader = $scope.uploader = new FileUploader({
+    url: MUS_SERVER_URI + UPLOAD_URL,
+    autoUpload: false,
+    removeAfterUpload: true
+  });
+
+  $scope.mediaType;
+  uploader.filters.push({
+    name: 'customFilter',
+    fn: function(item /*{File|FileLikeObject}*/, options) {
+      var itemType = item.type;
+      if(itemType.indexOf("image") != -1){
+        $scope.mediaType = "image";
+        return this.queue.length < 1 && (item.size < 1048576);
+      }
+      else if(itemType.indexOf("video") != -1){
+        $scope.mediaType = "video";
+        return this.queue.length < 1 && (item.size < 10485760);
+      }
+      return this.queue.length < 10;
+    }
+  });
+
+  function generateImagePreview(evt) {
+    var f = evt.target.files[0];
+    console.log('F:', f);
+
+    if (!f.type.match('image.*')) {
+      return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = (function (theFile) {
+      return function (e) {
+        var span = document.createElement('span');
+        span.innerHTML = ['<img class="thumb" src="',
+          e.target.result,
+          '" title="', $sanitize(theFile.name),
+          '"/>'].join('');
+        document.getElementById('preview').insertBefore(span, null);
+        };
+      })(f);
+      reader.readAsDataURL(f);
+    };
+
+  document.getElementById('fileUpload').addEventListener('change',
+    generateImagePreview, false);
+
+  // CALLBACKS
+  $scope.fileMaxExceeded = false;
+  uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+    console.info('onWhenAddingFileFailed', item, filter, options);
+    $scope.fileMaxExceeded = true;
+    $timeout(function(){$scope.fileMaxExceeded = false;}, 5000);
+  };
+  uploader.onAfterAddingFile = function(fileItem) {
+    console.info('onAfterAddingFile', fileItem);
+
+  };
+  uploader.onAfterAddingAll = function(addedFileItems) {
+    console.info('onAfterAddingAll', addedFileItems);
+  };
+  uploader.onBeforeUploadItem = function(item) {
+    var user = UserInfoService.getUserCredentials();
+    item.headers = {  
+        'X-UserId': user.userId,
+        'X-SessionId': user.sessionId,
+        'X-AccessToken': user.accessToken};
+    item.formData =[{'type':item._file.type},{'size': item._file.size},{'file': item._file}];
+
+    console.info('onBeforeUploadItem', item);
+  };
+  uploader.onProgressItem = function(fileItem, progress) {
+    console.info('onProgressItem', fileItem, progress);
+  };
+  uploader.onProgressAll = function(progress) {
+    console.info('onProgressAll', progress);
+  };
+  uploader.onSuccessItem = function(fileItem, response, status, headers) {
+    console.info('onSuccessItem', fileItem, response, status, headers);
+      networkService.send(MUService.postMediaRequest(response));
+  };
+  uploader.onErrorItem = function(fileItem, response, status, headers) {
+    console.info('onErrorItem', fileItem, response, status, headers);
+  };
+  uploader.onCancelItem = function(fileItem, response, status, headers) {
+    console.info('onCancelItem', fileItem, response, status, headers);
+  };
+  uploader.onCompleteItem = function(fileItem, response, status, headers) {
+    console.info('onCompleteItem', fileItem, response, status, headers);
+  };
+  uploader.onCompleteAll = function() {
+    console.info('onCompleteAll');
+    uploader.clearQueue();
+  };
+
+  console.info('uploader', uploader);
+
+
+  // CONTENT TABS
+  $scope.switchTabs = function(tab) {
+    if (tab === 'chat'){
+      $('#chatTab').addClass('selectedTab');
+      $('#videoTab').removeClass('selectedTab');
+      $('#socialTab').removeClass('selectedTab');
+    }
+    if (tab === 'video'){
+      $('#chatTab').removeClass('selectedTab');
+      $('#videoTab').addClass('selectedTab');
+      $('#socialTab').removeClass('selectedTab');
+    }
+    if (tab === 'social'){
+      $('#chatTab').removeClass('selectedTab');
+      $('#videoTab').removeClass('selectedTab');
+      $('#socialTab').addClass('selectedTab');
+    }
+    $scope.loadTab(tab);
+  };
+
+  $scope.loadTab = function(tab) {
+    console.log("Switched to Tab: ", tab);
+  };
 
 }
