@@ -213,8 +213,8 @@ body
 .userPhoto
 {
   background-color:rgb(230, 237, 243);
-  border-radius: 25px;
-  -webkit-border-radius: 25px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
 
 #pinIcon img {
@@ -339,16 +339,16 @@ body
 
 .postPhoto
 {
-  max-width:100%;
-  max-height:100%;
+  max-width:90%;
+  max-height:200px;
   margin-top:0.2em;
   margin-bottom:0.3em;
 }
 
 .postVideo
 {
-  max-width:100%;
-  max-height:100%;
+  max-width:90%;
+  max-height:200px;
   margin-top:0.2em;
   margin-bottom:0.3em;
 }
@@ -1322,11 +1322,11 @@ img-crop canvas {
 }
 
 #headLike {
-  right: -10%;
+  right: -18%;
 }
 
 #headMore {
-  left: -10%;
+  left: -18%;
   vertical-align: -50%;
 }
 
