@@ -19,6 +19,7 @@ max-width: 950px;
 min-width:320px;
 margin: 0 auto;
 position: relative; /* Fix for absolute positioning */
+font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 a {
@@ -415,16 +416,6 @@ span.socialButtonLable
   float:right;
   width:20px;
   height:20px;
-}
-
-.topicSharingButtonsRow
-{
-  /*float:left;*/
-  /*background-color:gray;*/
-  padding-right:0px;
-  font-size:0.8em;
-  margin-top:0.3em;
-  margin-bottom:0.1em;
 }
 
 .topic-social-btn
@@ -902,17 +893,17 @@ button:hover {
 }
 
 .triple {
-  font-size: 2.4em;
+  font-size: 2.2em;
   font-weight: 300;
   vertical-align: middle;
 }
 
 .triple-right {
-  padding-right: 8%;
+  padding-right: 4%;
 }
 
 .triple-left {
-  padding-left: 8%;
+  padding-left: 4%;
 }
 
 .center {
@@ -1252,22 +1243,7 @@ img-crop canvas {
 
 /* - - - TABS - - - */
 
-.topicSharingButtonsRow {
-  /*float:left;*/
-  /*background-color:gray;*/
-  width: 100%;
-  padding-right:0px;
-  font-size:0.8em;
-  text-align: center;
-  margin-left: 50%;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
-}
-
 .topic-social-btn {
-  /*color: rgb(166, 189, 207);*/
-  /*float:left;*/
   color:gray;
   padding:0px;
   width:24px
@@ -1278,10 +1254,16 @@ img-crop canvas {
   height: auto;
 }
 
-.topic-social-btn lable {
-  /*float:left;*/
-  width:32px;
-  height:20px;
+.socialButtonLabel {
+  position: absolute;
+  bottom: 0px;
+  padding-left: 10px;
+}
+
+.fkFont {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 600;
+  color: #a2b1b6;
 }
 
 .tabContainer {
@@ -1328,6 +1310,24 @@ img-crop canvas {
 .topicSharingButtonsRow {
   width: 100%;
   text-align: center;
+  font-size: 0.9em;
+}
+
+#headComment,
+#headLike,
+#headMore {
+  position: relative;
+  display: inline-block;
+  vertical-align: -80%;
+}
+
+#headLike {
+  right: -10%;
+}
+
+#headMore {
+  left: -10%;
+  vertical-align: -50%;
 }
 
 #uploadControls {

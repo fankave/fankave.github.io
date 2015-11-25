@@ -25,33 +25,6 @@
   </div>
 </section>
 
-<!-- <section id="mediaUpload" ng-if="uploader.queue.length > 0"> -->
-<!-- <section id="mediaUpload">
-  <div id="uploadControls">
-
-    <div id="preview"></div>
-
-    <div id="uploadButtons">
-      <button type="button" class="btn btn-warning btn-xs" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
-        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-      </button>
-      <button type="button" class="btn btn-danger btn-xs" ng-click="uploader.clearQueue()">
-        <span class="glyphicon glyphicon-trash"></span> Remove
-      </button>
-    </div>
-
-    <div ng-if="uploader.isUploading">
-      <div class="progress" style="margin-bottom: 0;">
-        <div id="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
-      </div>
-      <span id="progressText">
-        Uploading: {{uploader.progress}} of 100%
-      </span>
-    </div>
-
-  </div>
-</section> -->
-
 <section id="topicSection">
   <nav class="navbar navbar-fixed-top" id="header">
     <div id="peelNavBar" ng-if="isPeelUser == true">
@@ -172,18 +145,29 @@
     <img ng-src="{{topicMediaUrl}}" class="topicPhoto" ng-click="imageClick(topicMediaUrl);" />
   </div> -->    
 
-  <div class="topicSharingButtonsRow">
-    <button class="btn-link topic-social-btn" ng-click="updateLikeTopic()" ng-switch="liked">
-      <img ng-switch-when="true" src="img/likeBigSelected-3x.png"/> 
-      <img ng-switch-when="false" src="img/likeBig-3x.png"/> 
-
-    </button>
-    <span class="socialButtonLable">{{likesCount}} </span>
-    <button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/comment-3x.png"/> 
-    </button>
-    <span class="socialButtonLable">{{commentsCount}}</span>
-    <button id="moreButton" class="btn-link topic-social-btn" ng-click="moreOptions()"><img src="img/moreButton-3x.png"/> 
-    </button>
+  <div class="topicSharingButtonsRow clearfix">
+    <div class="grid-col grid-col-33">
+      <div id="headLike">
+        <button class="btn-link topic-social-btn" ng-click="updateLikeTopic()" ng-switch="liked">
+          <img ng-switch-when="true" src="img/likeBigSelected-3x.png"/> 
+          <img ng-switch-when="false" src="img/likeBig-3x.png"/> 
+        </button>
+        <span class="socialButtonLabel fkFont">{{likesCount}}99 </span>
+      </div>
+    </div>
+    <div class="grid-col grid-col-34">
+      <div id="headComment">
+        <button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/comment-3x.png"/> 
+        </button>
+        <span class="socialButtonLabel fkFont">{{commentsCount}}</span>
+      </div>
+    </div>
+    <div class="grid-col grid-col-33">
+      <div id="headMore">
+        <button id="moreButton" class="btn-link topic-social-btn" ng-click="moreOptions()"><img src="img/ellipsis@3x.png"/> 
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 
