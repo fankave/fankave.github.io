@@ -1,27 +1,25 @@
-networkModule.factory('SocialService', function (Bant) {
+networkModule.factory('VideoService', function (Bant) {
 	var LIST_SOCIAL_URI = "/v1.0/channel/social/list/";
 
 
 	var observerCallbacks = [];
-	var _socialArray = [];
+	var _videoArray = [];
 	var _offset = 0;
 	var LIMIT = 20;
 
 
-	function setSocialData(socialData) {
+	function setVideoData(videoData) {
 
-		tempData = socialData.data.results;
+		tempData = videoData.data.results;
 		if(tempData!= undefined && tempData.length>0){
 			var len = tempData.length;
 			for(i=0;i<len;i++){
-				var _socialObject = {};
-				_socialObject = Bant.bant(tempData[i]);
-				if(_socialObject.id != undefined)
-					_socialArray.push(_socialObject);
-				console.log("Social data after Parsing :", _socialObject)
-				
+				var _videoObject = {};
+				_videoObject = Bant.bant(tempData[i]);
+				if(_videoObject.id != undefined)
+					_videoArray.push(_videoObject);
 			}
-			_offset = socialData.data.nextOffset;
+			_offset = videoData.data.nextOffset;
 			notifyObservers();
 		}
 	}
@@ -45,19 +43,19 @@ networkModule.factory('SocialService', function (Bant) {
 		observerCallbacks.push(callback);
 	}
 
-	function socialDataGetRequest(id){
-		return  {"rid": "social",
+	function videoDataGetRequest(id){
+		return  {"rid": "video",
 			"timestamp": new Date().getTime(),
 			"method": "GET",
-			"uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+_offset)}
+			"uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+_offset+"&video=true")}
 	}
 
 	return {
-		socialArray: function(){
-			return _socialArray },
+		videoArray: function(){
+			return _videoArray },
 
-			setSocialData:setSocialData,
-			getSocialDataRequest:socialDataGetRequest,
+			setVideoData:setVideoData,
+			getVideoDataRequest:videoDataGetRequest,
 
 			registerObserverCallback:registerObserverCallback
 	};

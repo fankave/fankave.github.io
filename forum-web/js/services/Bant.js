@@ -8,10 +8,12 @@ networkModule.factory('Bant', function (DateUtilityService) {
 			_bantObject.mediaThumbUrl = tempMedia.thumbUrl;
 		}
 		_bantObject.mediaUrl = tempMedia.url;
-		_bantObject.mediaAspectFull = tempMedia.sizes.full;
+		if(tempMedia.sizes != undefined){
+		_bantObject.mediaAspectFull = tempMedia.sizes["full"];
 		_bantObject.mediaAspect16x9 = tempMedia.sizes["16:9"];
 		_bantObject.mediaAspect1x1 = tempMedia.sizes["1:1"];
 		_bantObject.mediaAspect2x1 = tempMedia.sizes["2:1"];
+		}
 		if(_bantObject.mediaAspect16x9 != undefined)
 			_bantObject.mediaAspectFeed = _bantObject.mediaAspect16x9;
 		else if(_bantObject.mediaAspect1x1 != undefined)
@@ -49,14 +51,16 @@ networkModule.factory('Bant', function (DateUtilityService) {
 		_bantObject.embedTitle = embedObject.title;
 		_bantObject.embedText = embedObject.text;
 		_bantObject.embedMedia = {};
+		if(embedObject.type == 'media')
 		_bantObject.embedMedia = extractMediaObject(_bantObject.embedMedia, embedObject.media[0])
 		_bantObject.embedUrl = embedObject.url;
 		_bantObject.embedPlayable = embedObject.playable;
 		_bantObject.embedHtml = embedObject.html;
+		_bantObject.embedMetrics = embedObject.metrics;
 		_bantObject.embedMini = embedObject.mini;
 		_bantObject.embedAuthor = embedObject.author;
 		_bantObject.embedProvider = embedObject.provider;
-		_bantObject.embedCreatedAt = embedObject.createdAt;
+		_bantObject.embedCreatedAt = DateUtilityService.getTimeSince(embedObject.createdAt);
 		
 		
 		return _bantObject;
