@@ -127,19 +127,19 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 
 	$scope.postReply = function(commentText) {
 		if((commentText !== undefined) && commentText !== ""){
-			console.log("PostController postReply Invoked :"+ commentText + $scope.topicId);
-			// if (uploader.queue.length > 0){
-			MUService.setCommentParams($scope.topicID, commentText, false, $scope.postID);
-			// } else {
-				// networkService.send(ReplyService.getPostReplyRequest($scope.topicId,$scope.postID, commentText));
-			// }
+			// console.log("PostController postReply Invoked :", commentText, $scope.topicId, $scope.postID);
+			if (uploader.queue.length > 0){
+				MUService.setCommentParams($scope.topicId, commentText, false, $scope.postID);
+			} else {
+				networkService.send(ReplyService.getPostReplyRequest($scope.topicId,$scope.postID, commentText));
+			}
 		}
+		uploader.uploadAll();
 		$scope.commentText = "";
 		document.getElementById("postCommentField").blur();
 		document.getElementById("postCommentButton").blur();
 		$scope.justReplied = true;
-		$(document).scrollTop(0);
-		uploader.uploadAll();
+		// $(document).scrollTop(0);
 	};
 
 	$scope.updateLikeComment = function(id) {
@@ -352,7 +352,8 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 
   var uploader = $scope.uploader = new FileUploader({
     url: MUS_SERVER_URI + UPLOAD_URL,
-    autoUpload: false
+    autoUpload: false,
+    removeAfterUpload: true
   });
 
   uploader.filters.push({

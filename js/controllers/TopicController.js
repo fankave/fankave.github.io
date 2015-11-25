@@ -330,17 +330,17 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   $scope.postComment = function(commentText) {
     if((commentText !== undefined) && commentText !== ""){
       // console.log("TopicController postComment Invoked :"+ commentText);
-      // if (uploader.queue.length > 0){
-      MUService.setCommentParams($scope.topicID, commentText, true);
-      // } else {
-        // networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
-      // }
+      if (uploader.queue.length > 0){
+        MUService.setCommentParams($scope.topicID, commentText, true);
+      } else {
+        networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
+      }
     }
+    uploader.uploadAll();
     $scope.commentText = "";
     document.getElementById("topicCommentField").blur();
     document.getElementById("postCommentButton").blur();
     $(document).scrollTop(0);
-    uploader.uploadAll();
   };
 
   $scope.updateLikeTopic = function() {

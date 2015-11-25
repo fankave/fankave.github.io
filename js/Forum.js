@@ -19,14 +19,6 @@ function ($routeProvider, $locationProvider) {
     templateUrl:'partials/post.html',
     controller:'PostController'
   })
-  .when('/media/:topicID', {
-    templateUrl:'partials/mediaUpload.html',
-    controller: 'MediaController'
-  })
-  .when('/media/:topicID/:postID', {
-    templateUrl:'partials/mediaUpload.html',
-    controller: 'MediaController'
-  })
   .when('/invalidTopic', {
     templateUrl:'partials/invalidTopic.html'
   })
