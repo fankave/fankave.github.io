@@ -1311,6 +1311,8 @@ img-crop canvas {
   position: fixed;
   top: 177px;
   width: 100%;
+  max-width: 950px;
+  z-index: 2;
 }
 
 .inputBase {

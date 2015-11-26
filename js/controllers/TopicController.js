@@ -588,8 +588,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   var userInput = $('#textInputFieldTopic');
 
   var watchScroll = debounce(function() {
-    // $(document).on('scroll', function(e) {
-    // $('#textInputFieldTopic').css("visibility", "hidden").fadeOut("slow");
       if ($(document).scrollTop() > 77) {
         tabs.addClass('fixTabs');
         userInput.addClass('inputBase');
@@ -597,7 +595,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tabs.removeClass('fixTabs');
         userInput.removeClass('inputBase');
       }
-    // });
   }, 15);
 
   $(document).on('scroll', watchScroll);
