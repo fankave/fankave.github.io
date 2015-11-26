@@ -170,64 +170,64 @@
     </div>
   </div>
 </div>
-
-<div class="tabContainer clearfix">
-  <div id="chatTab" class="grid-col grid-col-33 tab selectedTab" ng-click="switchTabs('chat')">
-    <span class="tabName">Chat</span>
-  </div>
-  <div id="videoTab" class="grid-col grid-col-34 tab" ng-click="switchTabs('video')">
-    <span class="tabName">Video</span>
-  </div>
-  <div id="socialTab" class="grid-col grid-col-33 tab" ng-click="switchTabs('social')">
-    <span class="tabName">Social</span>
-  </div>
-</div>
-
-<div id="textInputFieldTopic" class="clearfix">
-  <form id="postCommentForm" ng-submit="postComment(commentText)">
-    <div id="postCommentDiv" class="input-group">
-      <label for="fileUpload" id="attachMediaIcon">
-        <img src="img/attach-media.png" />
-      </label>
-
-      <button id="postCommentButton" class="btn btn-default" type="button" ng-click="postComment(commentText)">POST</button>
-
-      <span><input id="topicCommentField" type="text" class="form-control"
-      placeholder="Write a comment..." ng-model="commentText"></span>
-
-      <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="uploader" class="form-control" />
-
+<div id="inputControls">
+  <div class="tabContainer clearfix">
+    <div id="chatTab" class="grid-col grid-col-33 tab selectedTab" ng-click="switchTabs('chat')">
+      <span class="tabName">Chat</span>
     </div>
-  </form>
-  <div id="fileWarning" ng-if="fileMaxExceeded" ng-switch="mediaType">
-    <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 1MB</span>
-    <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
-  </div>
-  <div id="uploadControls" ng-if="uploader.queue.length > 0">
-
-    <div id="preview"></div>
-
-    <div id="uploadButtons">
-      <button type="button" class="btn btn-warning btn-xs" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
-        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-      </button>
-      <button type="button" class="btn btn-danger btn-xs" ng-click="uploader.clearQueue()">
-        <span class="glyphicon glyphicon-trash"></span> Remove
-      </button>
+    <div id="videoTab" class="grid-col grid-col-34 tab" ng-click="switchTabs('video')">
+      <span class="tabName">Video</span>
     </div>
+    <div id="socialTab" class="grid-col grid-col-33 tab" ng-click="switchTabs('social')">
+      <span class="tabName">Social</span>
+    </div>
+  </div>
 
-    <div ng-if="uploader.isUploading && uploader.queue.length > 0">
-    <!-- <div> -->
-      <div class="progress" style="margin-bottom: 0;">
-        <div id="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+  <div id="textInputFieldTopic" class="clearfix">
+    <form id="postCommentForm" ng-submit="postComment(commentText)">
+      <div id="postCommentDiv" class="input-group">
+        <label for="fileUpload" id="attachMediaIcon">
+          <img src="img/attach-media.png" />
+        </label>
+
+        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="postComment(commentText)">POST</button>
+
+        <span><input id="topicCommentField" type="text" class="form-control"
+        placeholder="Write a comment..." ng-model="commentText"></span>
+
+        <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="uploader" class="form-control" />
+
       </div>
-      <span id="progressText">
-        Uploading: {{uploader.progress}} of 100%
-      </span>
+    </form>
+    <div id="fileWarning" ng-if="fileMaxExceeded" ng-switch="mediaType">
+      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 1MB</span>
+      <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
+    </div>
+    <div id="uploadControls" ng-if="uploader.queue.length > 0">
+
+      <div id="preview"></div>
+
+      <div id="uploadButtons">
+        <button type="button" class="btn btn-warning btn-xs" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+          <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+        </button>
+        <button type="button" class="btn btn-danger btn-xs" ng-click="uploader.clearQueue()">
+          <span class="glyphicon glyphicon-trash"></span> Remove
+        </button>
+      </div>
+
+      <div ng-if="uploader.isUploading && uploader.queue.length > 0">
+      <!-- <div> -->
+        <div class="progress" style="margin-bottom: 0;">
+          <div id="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+        </div>
+        <span id="progressText">
+          Uploading: {{uploader.progress}} of 100%
+        </span>
+      </div>
     </div>
   </div>
 </div>
-
 
 <div class="commentsContainer">
   <div ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}">

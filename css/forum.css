@@ -1307,6 +1307,16 @@ img-crop canvas {
   color: rgb(22,189,231);
 }
 
+.fixTabs {
+  position: fixed;
+  top: 177px;
+  width: 100%;
+}
+
+.inputBase {
+  border-bottom: 3px solid rgb(192,210,214);
+}
+
 .topicSharingButtonsRow {
   width: 100%;
   text-align: center;

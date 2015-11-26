@@ -569,6 +569,39 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.loadTab(tab);
   };
 
+  function debounce(func, wait, immediate) {
+    var timeout;
+    return function() {
+      var context = this, args = arguments;
+      var later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
+  };
+
+  var tabs = $('#inputControls');
+  var userInput = $('#textInputFieldTopic');
+
+  var watchScroll = debounce(function() {
+    // $(document).on('scroll', function(e) {
+    // $('#textInputFieldTopic').css("visibility", "hidden").fadeOut("slow");
+      if ($(document).scrollTop() > 77) {
+        tabs.addClass('fixTabs');
+        userInput.addClass('inputBase');
+      } else {
+        tabs.removeClass('fixTabs');
+        userInput.removeClass('inputBase');
+      }
+    // });
+  }, 15);
+
+  $(document).on('scroll', watchScroll);
+
   $scope.loadTab = function(tab) {
     console.log("Switched to Tab: ", tab);
   };
