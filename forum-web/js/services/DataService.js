@@ -1,4 +1,4 @@
-networkModule.service('DataService', function (TopicService, CommentService, ReplyService,ChannelService) {
+networkModule.service('DataService', function (TopicService, CommentService, ReplyService,ChannelService,SocialService) {
 	
 	var DATA_TYPE_TOPIC = "topic";
 	var DATA_TYPE_COMMENT = "comment";
@@ -101,16 +101,26 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
 			
 	}
 	
-	function delegateSetChannel(topicData)
+	function delegateSetChannel(data)
 	{
-		if(topicData.error){
-			console.log("Topic Error message from network :"+topicData.error);
+		if(data.error){
+			console.log("Topic Error message from network :"+data.error);
 		}
 		else
-			ChannelService.setTopicData(topicData);
+			ChannelService.setTopicData(data);
+	}
+	
+	function delegateSetSocial(data)
+	{
+		if(data.error){
+			console.log("Social Error message from network :"+data.error);
+		}
+		else
+			SocialService.setSocialData(data);
 	}
 
 	return {
+		setSocial:delegateSetSocial,
 		setChannel:delegateSetChannel,
 		setTopic:delegateSetTopic,
 		setComments:delegateSetComments,
