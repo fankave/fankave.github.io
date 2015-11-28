@@ -4,6 +4,24 @@ networkModule.factory("networkService",["$websocket","DataService","UserInfoServ
 function initNetworkService($websocket,DataService,UserInfoService,ChannelService)
 {
   var ws;
+
+  disconnectSocket = function(){
+    console.log("Disconnect Callback triggered");
+    if(ws !== undefined) {
+      ws.close();
+      ws = undefined;
+    }
+  }
+
+  reconnectSocket = function(){
+    console.log("Reconnect Callback triggered");
+    $route.reload();
+  }
+  
+  window.document.addEventListener(visEvent, function(){
+      visChange(reconnectSocket, disconnectSocket);
+    });
+
   function initSocket() { 
     ws = $websocket(getWebsocketUri());
     DataService.setWatchTopic(false);
