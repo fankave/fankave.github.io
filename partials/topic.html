@@ -183,7 +183,7 @@
     </div>
   </div>
 
-  <div id="textInputFieldTopic" class="clearfix">
+  <div id="textInputFieldTopic" class="clearfix" ng-hide="activeTab !== 'chat'">
     <form id="postCommentForm" ng-submit="postComment(commentText)">
       <div id="postCommentDiv" class="input-group">
         <label for="fileUpload" id="attachMediaIcon">
