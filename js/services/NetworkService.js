@@ -1,7 +1,7 @@
 var networkModule = angular.module("NetworkModule", ['ngWebSocket']);
-networkModule.factory("networkService",["$websocket","DataService","UserInfoService","ChannelService",initNetworkService]);
+networkModule.factory("networkService",["$websocket","$route","DataService","UserInfoService",initNetworkService]);
 
-function initNetworkService($websocket,DataService,UserInfoService,ChannelService)
+function initNetworkService($websocket,$route,DataService,UserInfoService)
 {
   var ws;
 
@@ -18,9 +18,9 @@ function initNetworkService($websocket,DataService,UserInfoService,ChannelServic
     $route.reload();
   }
   
-  window.document.addEventListener(visEvent, function(){
-      visChange(reconnectSocket, disconnectSocket);
-    });
+  // window.document.addEventListener(visEvent, function(){
+  //     visChange(reconnectSocket, disconnectSocket);
+  //   });
 
   function initSocket() { 
     ws = $websocket(getWebsocketUri());
@@ -42,7 +42,7 @@ function initNetworkService($websocket,DataService,UserInfoService,ChannelServic
       if(type != undefined){
         if(type == "channel"){
           if(NETWORK_DEBUG) console.log("Processing Channel");
-          ChannelService.setTopicData(responseJson);
+          DataService.setChannel(responseJson);
         }
         if(type == "topic" || type == "score"){
           if(NETWORK_DEBUG) console.log("Processing Topic");
@@ -55,6 +55,11 @@ function initNetworkService($websocket,DataService,UserInfoService,ChannelServic
           //TODO handle Replies
           if(NETWORK_DEBUG) console.log("Processing Reply");
           DataService.setReplies(responseJson);
+        }
+        else if(type == "social"){
+          //TODO handle Replies
+          if(NETWORK_DEBUG) console.log("Processing Social");
+          DataService.setSocial(responseJson);
         }
       }
     });
