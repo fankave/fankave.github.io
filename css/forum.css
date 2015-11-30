@@ -1344,13 +1344,13 @@ img-crop canvas {
 
 #uploadControls {
   position: absolute;
-  width: 80%;
-  max-width: 500px;
-  height: 250px;
+  width: 320px;
+  /*max-width: 500px;*/
+  /*height: 250px;*/
   left: 10%;
   z-index: 10005;
   background-color: #fff;
-  padding: 10px;
+  padding: 20px;
   border: 2px solid rgb(192,210,214);
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
 }
@@ -1365,6 +1365,7 @@ img-crop canvas {
 }
 
 #preview {
+  position: relative;
   height: 150px;
   margin-bottom: 10px;
 }
@@ -1373,3 +1374,20 @@ img-crop canvas {
   padding-left: 10px;
 }
 
+#removeMedia {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 25px;
+  height: 25px;
+  background-color: #000;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 18px;
+  padding: 0;
+}
+
+#removeMedia:hover {
+  cursor: pointer;
+}

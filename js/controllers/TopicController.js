@@ -340,7 +340,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.commentText = "";
     document.getElementById("topicCommentField").blur();
     document.getElementById("postCommentButton").blur();
-    // $(document).scrollTop(0);
+    $(document).scrollTop(0);
   };
 
   $scope.updateLikeTopic = function() {
