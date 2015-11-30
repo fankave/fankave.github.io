@@ -456,9 +456,9 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   };
 
   var notifyNewSocial = function() {
-    // if (!$scope.socialArray){
+    if (!$scope.socialArray){
       updateSocial();
-    // }
+    }
   };
 
   var updateVideo = function() {
@@ -484,12 +484,12 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempVideo.replyCount = videoData[i].metrics.replies;
 
         tempVideo.embedType = videoData[i].embedType;
-        // if (videoData[i].embedType === "media"){
+        if (videoData[i].embedType === "media"){
           tempVideo.mediaType = videoData[i].embedMedia.mediaType;
           tempVideo.mediaUrl = videoData[i].embedMedia.mediaUrl;
           tempVideo.mediaAspectFeed = videoData[i].embedMedia.mediaAspectFeed;
           tempVideo.mediaAspectFull = videoData[i].embedMedia.mediaAspectFull;
-        // }
+        }
 
         $scope.videoArray.push(tempVideo);
       }
@@ -497,9 +497,9 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   };
 
   var notifyNewVideo = function() {
-    // if (!$scope.socialArray){
+    if (!$scope.socialArray){
       updateVideo();
-    // }
+    }
   };
 
   SocialService.registerObserverCallback(notifyNewSocial);

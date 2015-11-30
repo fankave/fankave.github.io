@@ -167,7 +167,7 @@ body
 .postAuthorPhoto /* left-side of each post row */
 {
   /*background-color: yellow;*/
-  /*width: 15%;*/
+  width: 15%;
   /*max-width: 100px;*/
   float:left;
   padding: 13px 0px 0px 13px;
@@ -359,18 +359,25 @@ body
 
 .postPhoto
 {
-  max-width:90%;
-  max-height:200px;
+  position: relative;
+  width: 100%;
+  height: 100%;
   margin-top:0.2em;
   margin-bottom:0.3em;
 }
 
 .postVideo
 {
-  max-width:90%;
-  max-height:200px;
+  /*max-width:90%;*/
+  /*max-height:200px;*/
   margin-top:0.2em;
   margin-bottom:0.3em;
+}
+
+.cropView {
+  overflow: hidden;
+  max-width: 95%;
+  max-height: 320px;
 }
 
 .playVideoButton
