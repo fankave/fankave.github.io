@@ -112,15 +112,18 @@
     </div>
     <div id="uploadControls" ng-if="uploader.queue.length > 0">
 
-      <div id="preview"></div>
+      <div id="preview">
+        <button type="button" id="removeMedia" class="fkFont" ng-click="uploader.clearQueue()">X
+        </button>
+      </div>
 
       <div id="uploadButtons">
-        <button type="button" class="btn btn-warning btn-xs" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+        <!-- <button type="button" class="btn btn-warning btn-xs" ng-click="uploader.cancelAll()" ng-if="uploader.isUploading">
           <span class="glyphicon glyphicon-ban-circle"></span> Cancel
         </button>
         <button type="button" class="btn btn-danger btn-xs" ng-click="uploader.clearQueue()">
           <span class="glyphicon glyphicon-trash"></span> Remove
-        </button>
+        </button> -->
       </div>
 
       <div ng-if="uploader.isUploading && uploader.queue.length > 0">

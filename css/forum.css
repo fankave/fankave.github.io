@@ -19,6 +19,7 @@ max-width: 950px;
 min-width:320px;
 margin: 0 auto;
 position: relative; /* Fix for absolute positioning */
+font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 a {
@@ -212,8 +213,8 @@ body
 .userPhoto
 {
   background-color:rgb(230, 237, 243);
-  border-radius: 25px;
-  -webkit-border-radius: 25px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
 
 #pinIcon img {
@@ -338,16 +339,16 @@ body
 
 .postPhoto
 {
-  max-width:100%;
-  max-height:100%;
+  max-width:90%;
+  max-height:200px;
   margin-top:0.2em;
   margin-bottom:0.3em;
 }
 
 .postVideo
 {
-  max-width:100%;
-  max-height:100%;
+  max-width:90%;
+  max-height:200px;
   margin-top:0.2em;
   margin-bottom:0.3em;
 }
@@ -415,16 +416,6 @@ span.socialButtonLable
   float:right;
   width:20px;
   height:20px;
-}
-
-.topicSharingButtonsRow
-{
-  /*float:left;*/
-  /*background-color:gray;*/
-  padding-right:0px;
-  font-size:0.8em;
-  margin-top:0.3em;
-  margin-bottom:0.1em;
 }
 
 .topic-social-btn
@@ -902,17 +893,17 @@ button:hover {
 }
 
 .triple {
-  font-size: 2.4em;
+  font-size: 2.2em;
   font-weight: 300;
   vertical-align: middle;
 }
 
 .triple-right {
-  padding-right: 8%;
+  padding-right: 4%;
 }
 
 .triple-left {
-  padding-left: 8%;
+  padding-left: 4%;
 }
 
 .center {
@@ -1252,22 +1243,7 @@ img-crop canvas {
 
 /* - - - TABS - - - */
 
-.topicSharingButtonsRow {
-  /*float:left;*/
-  /*background-color:gray;*/
-  width: 100%;
-  padding-right:0px;
-  font-size:0.8em;
-  text-align: center;
-  margin-left: 50%;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
-}
-
 .topic-social-btn {
-  /*color: rgb(166, 189, 207);*/
-  /*float:left;*/
   color:gray;
   padding:0px;
   width:24px
@@ -1278,10 +1254,16 @@ img-crop canvas {
   height: auto;
 }
 
-.topic-social-btn lable {
-  /*float:left;*/
-  width:32px;
-  height:20px;
+.socialButtonLabel {
+  position: absolute;
+  bottom: 0px;
+  padding-left: 10px;
+}
+
+.fkFont {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 600;
+  color: #a2b1b6;
 }
 
 .tabContainer {
@@ -1325,20 +1307,50 @@ img-crop canvas {
   color: rgb(22,189,231);
 }
 
+.fixTabs {
+  position: fixed;
+  top: 177px;
+  width: 100%;
+  max-width: 950px;
+  z-index: 2;
+}
+
+.inputBase {
+  border-bottom: 3px solid rgb(192,210,214);
+}
+
 .topicSharingButtonsRow {
   width: 100%;
   text-align: center;
+  font-size: 0.9em;
+}
+
+#headComment,
+#headLike,
+#headMore {
+  position: relative;
+  display: inline-block;
+  vertical-align: -80%;
+}
+
+#headLike {
+  right: -18%;
+}
+
+#headMore {
+  left: -18%;
+  vertical-align: -50%;
 }
 
 #uploadControls {
   position: absolute;
-  width: 80%;
-  max-width: 500px;
-  height: 250px;
+  width: 320px;
+  /*max-width: 500px;*/
+  /*height: 250px;*/
   left: 10%;
   z-index: 10005;
   background-color: #fff;
-  padding: 10px;
+  padding: 20px;
   border: 2px solid rgb(192,210,214);
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
 }
@@ -1353,6 +1365,7 @@ img-crop canvas {
 }
 
 #preview {
+  position: relative;
   height: 150px;
   margin-bottom: 10px;
 }
@@ -1361,3 +1374,20 @@ img-crop canvas {
   padding-left: 10px;
 }
 
+#removeMedia {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 25px;
+  height: 25px;
+  background-color: #000;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 18px;
+  padding: 0;
+}
+
+#removeMedia:hover {
+  cursor: pointer;
+}

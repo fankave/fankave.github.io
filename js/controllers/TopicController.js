@@ -1,7 +1,7 @@
 var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload"]);
-topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader",initTopicController]);
+topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService",initTopicController]);
 
-function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader)
+function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService)
 {
   
 
@@ -340,7 +340,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.commentText = "";
     document.getElementById("topicCommentField").blur();
     document.getElementById("postCommentButton").blur();
-    // $(document).scrollTop(0);
+    $(document).scrollTop(0);
   };
 
   $scope.updateLikeTopic = function() {
@@ -420,6 +420,48 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     }
   };
 
+  var updateSocial = function() {
+    var socialData = SocialService.socialArray();
+    if (!!socialData && socialData.length > 0){
+      console.log("Social Data: ", socialData);
+      var len = socialData.length;
+
+      $scope.socialArray = [];
+
+      for (var i = 0; i < len; i++){
+        var tempSocial = socialData[i];
+        tempSocial.postAuthorName = socialData[i].embedAuthor.name;
+        tempSocial.postAuthorAlias = socialData[i].embedAuthor.alias;
+        tempSocial.postAuthorPhoto = socialData[i].embedAuthor.photo;
+        tempSocial.postTimestamp = socialData[i].createdAt;
+
+        tempSocial.isLiked = socialData[i].signal.like;
+        tempSocial.providerName = socialData[i].embedProvider.name;
+        tempSocial.providerLogo = socialData[i].embedProvider.logo;
+        tempSocial.html = socialData[i].embedText;
+        tempSocial.likeCount = socialData[i].metrics.likes;
+        tempSocial.replyCount = socialData[i].metrics.replies;
+
+        tempSocial.embedType = socialData[i].embedType;
+        if (socialData[i].embedType === "media"){
+          tempSocial.mediaType = socialData[i].embedMedia.mediaType;
+          tempSocial.mediaUrl = socialData[i].embedMedia.mediaUrl;
+          tempSocial.mediaAspectFeed = socialData[i].embedMedia.mediaAspectFeed;
+          tempSocial.mediaAspectFull = socialData[i].embedMedia.mediaAspectFull;
+        }
+
+        $scope.socialArray.push(tempSocial);
+      }
+    }
+  };
+
+  var notifyNewSocial = function() {
+    // if (!$scope.socialArray){
+      updateSocial();
+    // }
+  };
+
+  SocialService.registerObserverCallback(notifyNewSocial);
   TopicService.registerObserverCallback(updateTopic);
   CommentService.registerObserverCallback(notifyNewComments);
 
@@ -550,27 +592,68 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 
 
   // CONTENT TABS
+  $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
     if (tab === 'chat'){
       $('#chatTab').addClass('selectedTab');
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
+      $scope.activeTab = 'chat';
     }
     if (tab === 'video'){
       $('#chatTab').removeClass('selectedTab');
       $('#videoTab').addClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
+      $scope.activeTab = 'video';
     }
     if (tab === 'social'){
       $('#chatTab').removeClass('selectedTab');
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').addClass('selectedTab');
+      $scope.activeTab = 'social';
     }
     $scope.loadTab(tab);
   };
 
+  TopicService.setChannel(ChannelService.getChannel());
   $scope.loadTab = function(tab) {
     console.log("Switched to Tab: ", tab);
+    if (tab === 'social' && !$scope.socialArray){
+      // console.log("Tab Channel: ", ChannelService.getChannel());
+      networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()));
+      // updateSocial();
+    }
   };
+
+  function debounce(func, wait, immediate) {
+    var timeout;
+    return function() {
+      var context = this, args = arguments;
+      var later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
+  };
+
+  var tabs = $('#inputControls');
+  var userInput = $('#textInputFieldTopic');
+
+  var watchScroll = debounce(function() {
+      if ($(document).scrollTop() > 77) {
+        tabs.addClass('fixTabs');
+        userInput.addClass('inputBase');
+      } else {
+        tabs.removeClass('fixTabs');
+        userInput.removeClass('inputBase');
+      }
+  }, 15);
+
+  $(document).on('scroll', watchScroll);
+
 
 }
