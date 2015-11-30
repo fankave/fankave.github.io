@@ -229,10 +229,6 @@
   </div>
 </div>
 
-  <!-- Video Tab Content -->
-  <!-- <div ng-switch-when="video" ng-repeat="thisPost in videoArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}"> -->
-  <!-- Social Tab Content -->
-  <!-- <div ng-switch-when="social" ng-repeat="thisPost in socialArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}"> -->
 <div class="commentsContainer" ng-switch="activeTab">
   <!-- Chat Tab Content -->
   <div ng-switch-when="chat" ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}">
@@ -373,7 +369,80 @@
             </div>
           </div>
       </div>
+  <!-- Video Tab Content -->
+  <div ng-switch-when="video" ng-repeat="thisPost in videoArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}">
+    <div>
+      <span class="postAuthorPhoto">
+        <span>
+          <a class="thumbnail">
+            <img ng-src="{{thisPost.postAuthorPhoto}}" alt="" onerror="this.src='img/default_user_v3.png'" class="userPhoto">
+          </a>
+        </span>
+        <span id="pinIcon" ng-if="thisPost.pin == true">
+          <img src="img/pin.png"/>
+        </span>
+      </span>
+
+      <span class="socialPost">
+        <div class="roww">
+          <span class="postUsername">
+            {{thisPost.postAuthorName}}
+          </span>
+          <span class="timestamp">
+            <img id="providerLogo" src="{{thisPost.providerLogo}}" />{{thisPost.postTimestamp}}
+          </span>
+          <span class="socialAlias">
+            @{{thisPost.postAuthorAlias}}
+          </span>
+        </div>
+      </span>
+
     </div>
+    <div class="socialContentContainer">
+      <div ng-bind-html="thisPost.html | linky | hashtags" class="postContent socialContent">
+        <p>{{thisPost.html}}</p><br> 
+      </div>
+
+      <!-- <div ng-switch-when="image">
+        <img ng-src="{{thisPost.mediaUrl}}" class="postPhoto" ng-click="imageClick(thisPost.mediaUrl);" />
+      </div> -->
+
+      <div ng-switch-when="video">
+        <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
+          <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
+          </video>
+      </div> 
+    </div> 
+
+          
+        <!-- </span> -->
+        <div class="socialButtonsRow socialText">
+          <button class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
+            <img ng-switch-when="true" src="img/likeSmallSelected.png"/> 
+            <img ng-switch-when="false" src="img/likeSmall.png"/> 
+            
+          </button>
+          <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
+
+          <button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
+            <img src="img/replySmall.png"/> </button>
+            <span class="socialButtonLable"> {{thisPost.replyCount}}</span>
+          </div>
+          <div class="socialBottomRow">
+            <div class="btn-group">
+              <button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
+                <img src="img/moreButton.png"/>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
+
+                <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
+                <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
+              </ul>
+            </div>
+          </div>
+      </div>
+
+</div>
 
 <!--  <footer class="footer" id="textEntryField">
         <form ng-submit="postComment(commentText)">

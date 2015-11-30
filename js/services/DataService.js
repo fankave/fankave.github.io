@@ -1,4 +1,4 @@
-networkModule.service('DataService', function (TopicService, CommentService, ReplyService,ChannelService,SocialService) {
+networkModule.service('DataService', function (TopicService, CommentService, ReplyService, ChannelService, SocialService, VideoService) {
   
   var DATA_TYPE_TOPIC = "topic";
   var DATA_TYPE_COMMENT = "comment";
@@ -9,7 +9,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
   function delegateSetComments(commentsData) 
   { 
     if(commentsData.error){
-      console.log("Comments Error message from network :"+commentsData.error);
+      console.log("Comments Error message from network: ", commentsData.error);
     }
     else if(commentsData.push){
       if(commentsData.method == "UPSERT")
@@ -47,7 +47,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
   function delegateSetTopic(topicData)
   {
     if(topicData.error){
-      console.log("Topic Error message from network :"+topicData.error);
+      console.log("Topic Error message from network: ", topicData.error);
     }
     else if(topicData.push){
       if(topicData.method == "UPSERT")
@@ -62,7 +62,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
   function delegateSetReplies(replyData)
   {
     if(replyData.error){
-      console.log("Topic Error message from network :"+replyData.error);
+      console.log("Topic Error message from network: ", replyData.error);
     }
     else if(replyData.push){
       console.log("reply pushed ");
@@ -101,25 +101,32 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
       
   }
   
-  function delegateSetChannel(data)
-  {
+  function delegateSetChannel(data) {
     if(data.error){
-      console.log("Topic Error message from network :"+data.error);
+      console.log("Topic Error message from network: ", data.error);
     }
     else
       ChannelService.setTopicData(data);
   }
   
-  function delegateSetSocial(data)
-  {
+  function delegateSetSocial(data) {
     if(data.error){
-      console.log("Social Error message from network :"+data.error);
+      console.log("Social Error message from network: ", data.error);
     }
     else
       SocialService.setSocialData(data);
   }
 
+  function delegateSetVideo(data) {
+    if(data.error){
+      console.log("Video Error message from network: ", data.error);
+    }
+    else
+      VideoService.setVideoData(data);
+  }
+
   return {
+    setVideo:delegateSetVideo,
     setSocial:delegateSetSocial,
     setChannel:delegateSetChannel,
     setTopic:delegateSetTopic,

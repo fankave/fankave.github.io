@@ -1,7 +1,7 @@
 var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload"]);
-topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService",initTopicController]);
+topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","VideoService",initTopicController]);
 
-function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService)
+function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, VideoService)
 {
   
 
@@ -461,7 +461,49 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     // }
   };
 
+  var updateVideo = function() {
+    var videoData = VideoService.videoArray();
+    if (!!videoData && videoData.length > 0){
+      console.log("Video Data: ", videoData);
+      var len = videoData.length;
+
+      $scope.videoArray = [];
+
+      for (var i = 0; i < len; i++){
+        var tempVideo = videoData[i];
+        tempVideo.postAuthorName = videoData[i].embedAuthor.name;
+        tempVideo.postAuthorAlias = videoData[i].embedAuthor.alias;
+        tempVideo.postAuthorPhoto = videoData[i].embedAuthor.photo;
+        tempVideo.postTimestamp = videoData[i].createdAt;
+
+        tempVideo.isLiked = videoData[i].signal.like;
+        tempVideo.providerName = videoData[i].embedProvider.name;
+        tempVideo.providerLogo = videoData[i].embedProvider.logo;
+        tempVideo.html = videoData[i].embedText;
+        tempVideo.likeCount = videoData[i].metrics.likes;
+        tempVideo.replyCount = videoData[i].metrics.replies;
+
+        tempVideo.embedType = videoData[i].embedType;
+        // if (videoData[i].embedType === "media"){
+          tempVideo.mediaType = videoData[i].embedMedia.mediaType;
+          tempVideo.mediaUrl = videoData[i].embedMedia.mediaUrl;
+          tempVideo.mediaAspectFeed = videoData[i].embedMedia.mediaAspectFeed;
+          tempVideo.mediaAspectFull = videoData[i].embedMedia.mediaAspectFull;
+        // }
+
+        $scope.videoArray.push(tempVideo);
+      }
+    }
+  };
+
+  var notifyNewVideo = function() {
+    // if (!$scope.socialArray){
+      updateVideo();
+    // }
+  };
+
   SocialService.registerObserverCallback(notifyNewSocial);
+  VideoService.registerObserverCallback(notifyNewVideo);
   TopicService.registerObserverCallback(updateTopic);
   CommentService.registerObserverCallback(notifyNewComments);
 
@@ -621,7 +663,10 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     if (tab === 'social' && !$scope.socialArray){
       // console.log("Tab Channel: ", ChannelService.getChannel());
       networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()));
-      // updateSocial();
+    }
+    else if (tab === 'video' && !$scope.videoArray){
+      // console.log("Tab Channel: ", ChannelService.getChannel());
+      networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()));
     }
   };
 

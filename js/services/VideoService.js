@@ -43,7 +43,7 @@ networkModule.factory('VideoService', function (Bant) {
 		observerCallbacks.push(callback);
 	}
 
-	function videoDataGetRequest(id){
+	function getVideoDataRequest(id){
 		return  {"rid": "video",
 			"timestamp": new Date().getTime(),
 			"method": "GET",
@@ -55,7 +55,7 @@ networkModule.factory('VideoService', function (Bant) {
 			return _videoArray },
 
 			setVideoData:setVideoData,
-			getVideoDataRequest:videoDataGetRequest,
+			getVideoDataRequest:getVideoDataRequest,
 
 			registerObserverCallback:registerObserverCallback
 	};
