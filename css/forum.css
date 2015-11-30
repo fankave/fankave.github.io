@@ -1176,11 +1176,28 @@ img-crop canvas {
   margin: 9px 0;
 }
 
+#mobilePostCommentDiv {
+  width: 100%;
+  overflow: hidden;
+  background-color: rgb(248,249,251);
+  margin: 0px;
+  border-top: 2px solid rgb(192,210,214);
+}
+
 #postCommentDiv input {
   width: 100%;
 }
 
+#mobilePostCommentDiv input {
+  width: 100%;
+}
+
 #postCommentDiv span {
+  display: block;
+  overflow: hidden;
+}
+
+#mobilePostCommentDiv span {
   display: block;
   overflow: hidden;
 }
@@ -1445,4 +1462,10 @@ img-crop canvas {
 
 .socialText {
   padding-left: 13px;
+}
+
+#mobileUserInput {
+  position: fixed;
+  width: 100%;
+  bottom: 0%;
 }
