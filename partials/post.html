@@ -117,15 +117,6 @@
         </button>
       </div>
 
-      <div id="uploadButtons">
-        <!-- <button type="button" class="btn btn-warning btn-xs" ng-click="uploader.cancelAll()" ng-if="uploader.isUploading">
-          <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-        </button>
-        <button type="button" class="btn btn-danger btn-xs" ng-click="uploader.clearQueue()">
-          <span class="glyphicon glyphicon-trash"></span> Remove
-        </button> -->
-      </div>
-
       <div ng-if="uploader.isUploading && uploader.queue.length > 0">
       <!-- <div> -->
         <div class="progress" style="margin-bottom: 0;">
@@ -142,7 +133,7 @@
      &nbsp;
   </div>
   <div class="repliesContainer">
-    <div ng-repeat="thisReply in replies" class="row postRow" ng-switch="thisReply.mediaType">
+    <div ng-repeat="thisReply in replies" class="row postRow" ng-switch="thisReply.mediaType" repeat-finished-notify>
       
       <span class="postAuthorPhoto">
         <div class="thumbnail">
@@ -200,12 +191,16 @@
     </div>
   </div>
 
-<div id="mobileUserInput" class="clearfix" ng-hide="mobileBrowser === false">
+  <div id="mobileUserInput" class="clearfix" ng-hide="mobileBrowser === false">
+
     <div id="mobileUploadControls" ng-if="uploader.queue.length > 0">
 
       <div id="mobilePreview">
         <button type="button" id="removeMedia" class="fkFont" ng-click="uploader.clearQueue()">X
         </button>
+      </div>
+
+      <div id="uploadButtons">
       </div>
 
       <div ng-if="uploader.isUploading && uploader.queue.length > 0">

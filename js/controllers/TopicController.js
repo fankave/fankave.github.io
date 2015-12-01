@@ -1,7 +1,7 @@
 var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload"]);
-topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService",initTopicController]);
+topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","VideoService",initTopicController]);
 
-function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService)
+function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, VideoService)
 {
   // Check For Mobile Browser
   window.mobileCheck = function() {
@@ -16,20 +16,58 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.mobileBrowser = false;
   }
 
+  // if (ForumStorage.getFromLocalStorage('lastChannel') === undefined){
+    ForumStorage.setToLocalStorage("lastChannel", ChannelService.getChannel());
+  // }
+
+  // Retain & Handle State when Returning From External Links
+  if (ForumStorage.getFromLocalStorage('hasUserVisited') === true){
+    console.log("Checking For Existing Session");
+    
+    $scope.initPage();
+    $scope.channelId = ForumStorage.getFromLocalStorage('lastChannel');
+    $scope.loadTab(ForumStorage.getFromLocalStorage('lastTabActive'), $scope.channelId);
+    setTimeout(function(){
+      $scope.activeTab = ForumStorage.getFromLocalStorage('lastTabActive');
+    }, 100);
+    // updateVideo();
+    // updateSocial();
+  }
+  var headerHeight;
+  $scope.scrollToBookmark = function() {
+    if (ForumStorage.getFromLocalStorage('commentBookmark') !== undefined){
+      setTimeout(function(){
+        var bookmarkedId = parseInt(ForumStorage.getFromLocalStorage('commentBookmark'));
+        var bookmarkedPost = Array.prototype.slice.call(document.getElementsByClassName('postRow'));
+        bookmarkedPost = bookmarkedPost[bookmarkedId];
+        var offElem = $(bookmarkedPost).offset().top - headerHeight;
+        console.log("Bookmarked Post: ", bookmarkedPost);
+        console.log("Bookmarked Post Top Offset: ", offElem);
+        $(document).scrollTop(offElem);
+        ForumStorage.setToLocalStorage('commentBookmark', undefined);
+      }, 100);
+    }
+  };
+
   ga('send', 'pageview', "/topic/"+$routeParams.topicID);
   console.log('Sent Pageview from /topic/' + $routeParams.topicID);
   
   TopicService.setTopicId($routeParams.topicID);
   $scope.topicType = "livegame";
   $scope.innerButtonTapped = false;
-  if((UserInfoService.isPeelUser() === true)){
+  if(UserInfoService.isPeelUser() === true){
     $scope.isPeelUser = true;
-    $timeout(function() {$scope.continueToExperience(); }, 5000);
+    if (!UserInfoService.hasUserVisited()){
+      console.log('USER HASNT VISITED');
+      // SplashService.hidePeelSplash = false;
+      $scope.hidePeelSplash = false;
+      $timeout(function() {$scope.continueToExperience(); }, 5000);
+    }
   }
   else {
     $scope.isPeelUser = false;  
     SplashService.hidePeelSplash = true;
-    $scope.hidePeelSplash = SplashService.hidePeelSplash;
+    $scope.hidePeelSplash = true;
   }
 //  var tempJasonNFL = {};
 //  
@@ -42,19 +80,20 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 //  $(window).scroll(function(){
 //      $("#textInputFieldTopic").css("top", Math.max(160, 250 - $(this).scrollTop()));
 //  });
-  $scope.hidePeelSplash = SplashService.hidePeelSplash;
+  // $scope.hidePeelSplash = true;
 
   $scope.continueToExperience = function() {
+    console.log("CONTINUE XP CLICKED");
     SplashService.hidePeelSplash = true;
-    $scope.hidePeelSplash = SplashService.hidePeelSplash;
+    $scope.hidePeelSplash = true;
   };
-
   $scope.setScoreCardUI = function(){
     if($scope.isPeelUser === true)
     {
       if($scope.topicType == "livegame"){
         document.getElementById('topicSection').style.paddingTop = "177px";
-        document.getElementById('header').style.height = "177px"; 
+        document.getElementById('header').style.height = "177px";
+        headerHeight = 177;
       }
       else{
       document.getElementById('topicSection').style.paddingTop = "3em";
@@ -71,6 +110,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       if($scope.topicType == "livegame"){
         document.getElementById('topicSection').style.paddingTop = "125px";
         document.getElementById('header').style.height = "125px";
+        headerHeight = 125;
       }
       else{
         document.getElementById('topicSection').style.paddingTop = "0em";
@@ -141,8 +181,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $scope.createdAt = TopicService.getTimeCreatedAt();
       $scope.liked = TopicService.getLiked();
       var metrics = TopicService.getMetrics();
-      $scope.likesCount = metrics.likes;
-      $scope.commentsCount = metrics.comments;
+      $scope.likesCount = metrics.likes || 0;
+      $scope.commentsCount = metrics.comments || 0;
 
     }
   };
@@ -215,7 +255,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.topicID = $routeParams.topicID;
     $scope.init();
 
-    document.getElementById('topicSection').style.paddingBottom = "3.9em";
+    // document.getElementById('topicSection').style.paddingBottom = "3.9em";
 
     $scope.$watch("commentsArray", function (newValue, oldValue)
         {
@@ -234,6 +274,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
               thisDiv.onclick = function(e)
               {
                 if ($(e.target).is('a')){
+                  console.log("EXTERNAL LINK: ", e, this.id);
+                  ForumStorage.setToLocalStorage('commentBookmark', this.id);
                   return;
                 } else {
                   // console.log("thisDiv.onclick");
@@ -437,8 +479,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       console.log("Social Data: ", socialData);
       var len = socialData.length;
 
-      $scope.socialArray = [];
-
+      $scope.socialArray = $scope.socialArray || [];
+      console.log("Social Array: ", $scope.socialArray);
       for (var i = 0; i < len; i++){
         var tempSocial = socialData[i];
         tempSocial.postAuthorName = socialData[i].embedAuthor.name;
@@ -450,8 +492,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempSocial.providerName = socialData[i].embedProvider.name;
         tempSocial.providerLogo = socialData[i].embedProvider.logo;
         tempSocial.html = socialData[i].embedText;
-        tempSocial.likeCount = socialData[i].metrics.likes;
-        tempSocial.replyCount = socialData[i].metrics.replies;
+        tempSocial.likeCount = socialData[i].metrics.likes || 0;
+        tempSocial.replyCount = socialData[i].metrics.replies || 0;
 
         tempSocial.embedType = socialData[i].embedType;
         if (socialData[i].embedType === "media"){
@@ -460,19 +502,96 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
           tempSocial.mediaAspectFeed = socialData[i].embedMedia.mediaAspectFeed;
           tempSocial.mediaAspectFull = socialData[i].embedMedia.mediaAspectFull;
         }
-
         $scope.socialArray.push(tempSocial);
       }
     }
   };
 
-  var notifyNewSocial = function() {
-    // if (!$scope.socialArray){
+  var prependSocial = function(newItemId){
+    var socialData = SocialService.socialArrayArchive();
+    for (var i = 0; i < socialData.length; i++){
+      if (socialData[i].id === newItemId){
+        var tempSocial = socialData[i];
+        tempSocial.postAuthorName = socialData[i].embedAuthor.name;
+        tempSocial.postAuthorAlias = socialData[i].embedAuthor.alias;
+        tempSocial.postAuthorPhoto = socialData[i].embedAuthor.photo;
+        tempSocial.postTimestamp = socialData[i].createdAt;
+
+        tempSocial.isLiked = socialData[i].signal.like;
+        tempSocial.providerName = socialData[i].embedProvider.name;
+        tempSocial.providerLogo = socialData[i].embedProvider.logo;
+        tempSocial.html = socialData[i].embedText;
+        tempSocial.likeCount = socialData[i].metrics.likes || 0;
+        tempSocial.replyCount = socialData[i].metrics.replies || 0;
+
+        tempSocial.embedType = socialData[i].embedType;
+        
+        if (socialData[i].embedType === "media"){
+          tempSocial.mediaType = socialData[i].embedMedia.mediaType;
+          tempSocial.mediaUrl = socialData[i].embedMedia.mediaUrl;
+          tempSocial.mediaAspectFeed = socialData[i].embedMedia.mediaAspectFeed;
+          tempSocial.mediaAspectFull = socialData[i].embedMedia.mediaAspectFull;
+        }
+        console.log("Prepending Social Item: ", tempSocial);
+        $scope.socialArray.unshift(tempSocial);
+        $scope.showNewCommentsIndicator = true;
+        return;
+      }
+    }
+  };
+
+  var notifyNewSocial = function(newItemId) {
+    if (!!newItemId){
+      console.log("Incoming Social Item ID: ", newItemId);
+      prependSocial(newItemId);
+    } else {
       updateSocial();
+    }
+  };
+
+  var updateVideo = function() {
+    var videoData = VideoService.videoArray();
+    if (!!videoData && videoData.length > 0){
+      console.log("Video Data: ", videoData);
+      var len = videoData.length;
+
+      $scope.videoArray = $scope.videoArray || [];
+
+      for (var i = 0; i < len; i++){
+        var tempVideo = videoData[i];
+        tempVideo.postAuthorName = videoData[i].embedAuthor.name;
+        tempVideo.postAuthorAlias = videoData[i].embedAuthor.alias;
+        tempVideo.postAuthorPhoto = videoData[i].embedAuthor.photo;
+        tempVideo.postTimestamp = videoData[i].createdAt;
+
+        tempVideo.isLiked = videoData[i].signal.like;
+        tempVideo.providerName = videoData[i].embedProvider.name;
+        tempVideo.providerLogo = videoData[i].embedProvider.logo;
+        tempVideo.html = videoData[i].embedText;
+        tempVideo.likeCount = videoData[i].metrics.likes || 0;
+        tempVideo.replyCount = videoData[i].metrics.replies || 0;
+
+        tempVideo.embedType = videoData[i].embedType;
+        if (videoData[i].embedType === "media"){
+          tempVideo.mediaType = videoData[i].embedMedia.mediaType;
+          tempVideo.mediaUrl = videoData[i].embedMedia.mediaUrl;
+          tempVideo.mediaAspectFeed = videoData[i].embedMedia.mediaAspectFeed;
+          tempVideo.mediaAspectFull = videoData[i].embedMedia.mediaAspectFull;
+        }
+
+        $scope.videoArray.push(tempVideo);
+      }
+    }
+  };
+
+  var notifyNewVideo = function() {
+    // if (!$scope.socialArray){
+      updateVideo();
     // }
   };
 
   SocialService.registerObserverCallback(notifyNewSocial);
+  VideoService.registerObserverCallback(notifyNewVideo);
   TopicService.registerObserverCallback(updateTopic);
   CommentService.registerObserverCallback(notifyNewComments);
 
@@ -484,14 +603,16 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   $window.addEventListener("beforeunload", function(){
     console.log("Before Unload");
     ForumStorage.setToLocalStorage("hasUserVisited", true);
+    ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
   });
 
   $scope.xLinkActivated = false;
 
   function setLinks() {
-    $('.postContent > a').click(function(){
-      $('#xContent').css('display', 'block');
-    });
+    // $('.postContent > a').addClass()
+    // $('.postContent > a').click(function(){
+      // $('#xContent').css('display', 'block');
+    // });
   };
   
   $scope.backToChat = function() {
@@ -630,13 +751,20 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.loadTab(tab);
   };
 
-  TopicService.setChannel(ChannelService.getChannel());
-  $scope.loadTab = function(tab) {
+  var _channelId = ChannelService.getChannel();
+  $scope.channelId = _channelId;
+  TopicService.setChannel(_channelId);
+  // ForumStorage.setToLocalStorage('lastChannel',_channelId);
+  $scope.loadTab = function(tab, channel) {
+    console.log("Channel in Load Tab: ", channel);
     console.log("Switched to Tab: ", tab);
     if (tab === 'social' && !$scope.socialArray){
       // console.log("Tab Channel: ", ChannelService.getChannel());
-      networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()));
-      // updateSocial();
+      networkService.send(SocialService.getSocialDataRequest(channel || ChannelService.getChannel()));
+    }
+    else if (tab === 'video' && !$scope.videoArray){
+      // console.log("Tab Channel: ", ChannelService.getChannel());
+      networkService.send(VideoService.getVideoDataRequest(channel || ChannelService.getChannel()));
     }
   };
 
@@ -668,7 +796,43 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       }
   }, 15);
 
+  // var lastElTop;
+  // var lastElHeight;
+  var clientHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  var scrollAfterLoad = function(pos){
+    setTimeout(function(){
+      $(document).scrollTop(pos);
+    }, 250);
+  };
+  var watchContentScroll = debounce(function() {
+    // lastElTop = $('.postRow').last().offset().top - headerHeight;
+    // lastElHeight = $('.postRow').last().height();
+    // console.log("LAST ELEM TOP: ", lastElTop, lastElHeight, clientHeight);
+    var currentScroll = $(document).height() - clientHeight;
+    if ($(document).scrollTop() === currentScroll) {
+      console.log("LOADING MORE CONTENT");
+      if ($scope.activeTab === 'social'){
+        networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()));
+      }
+      else if ($scope.activeTab === 'video'){
+        networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()));
+      }
+      console.log("SCROLL TO: ", currentScroll);
+      scrollAfterLoad(currentScroll + 90);
+    }
+  }, 500);
+
   // $(document).on('scroll', watchScroll);
+  // if ($scope.activeTab === 'video' || $scope.activeTab === 'social'){
+    $(document).on('scroll', watchContentScroll);
+  // }
 
+};
 
-}
+topicModule.directive('repeatFinishedNotify', function () {
+  return function (scope, element, attrs) {
+    if (scope.$last){
+      scope.scrollToBookmark();
+    }
+  };
+});

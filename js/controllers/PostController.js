@@ -1,8 +1,9 @@
 var postModule = angular.module("PostModule", ["NetworkModule", "SplashModule", "MediaModule", "angularFileUpload"]);
-postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$window", "$sanitize", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", "MUService", "FileUploader", initPostController]);
+postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$window", "$sanitize", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", "MUService", "FileUploader", "ForumStorage", initPostController]);
 
-function initPostController($scope, $sce, $timeout, $window, $sanitize, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService,MUService,FileUploader)
+function initPostController($scope, $sce, $timeout, $window, $sanitize, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService,MUService,FileUploader,ForumStorage)
 {
+
   // Check For Mobile Browser
   window.mobileCheck = function() {
     var check = false;
@@ -15,6 +16,27 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
   } else {
     $scope.mobileBrowser = false;
   }
+
+  // Retain & Handle State when Returning From External Links
+  if (ForumStorage.getFromLocalStorage('hasUserVisited') === true){
+    console.log("Checking For Existing Session");
+    $scope.initPage();
+  }
+  var headerHeight;
+  $scope.scrollToBookmark = function() {
+    if (ForumStorage.getFromLocalStorage('replyBookmark') !== undefined){
+      setTimeout(function(){
+        var bookmarkedId = parseInt(ForumStorage.getFromLocalStorage('replyBookmark'));
+        var bookmarkedPost = Array.prototype.slice.call(document.getElementsByClassName('postRow'));
+        bookmarkedPost = bookmarkedPost[bookmarkedId];
+        var offElem = $(bookmarkedPost).offset().top;
+        console.log("Bookmarked Post: ", bookmarkedPost);
+        console.log("Bookmarked Post Top Offset: ", offElem);
+        $(document).scrollTop(offElem);
+        ForumStorage.setToLocalStorage('replyBookmark', undefined);
+      }, 100);
+    }
+  };
 
 	//ga('send', 'pageview', "/comment/"+$routeParams.postID);
 	$scope.pageClass = 'page-post';
@@ -118,6 +140,22 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
   			$timeout(function()
   			{
   				setLinks();
+          var replyDivs = document.getElementsByClassName("postRow");
+          for (div in replyDivs){
+            if (newValue != undefined){
+              var thisReply = newValue[div];
+              if (thisReply != undefined){
+                var thisDiv = replyDivs[div];
+                thisDiv.onclick = function(e) {
+                  if ($(e.target).is('a')){
+                    console.log("EXTERNAL LINK: ", e, this.id);
+                    ForumStorage.setToLocalStorage('replyBookmark', this.id);
+                    return;
+                  }
+                }
+              }
+            }
+          }
     			$('.commentsContainer').each(function()
     			{
       				$('.image-link').magnificPopup({
@@ -347,11 +385,18 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
     	return $sce.trustAsResourceUrl(src);
   	}
 
+  $window.addEventListener("beforeunload", function(){
+    console.log("Before Unload");
+    ForumStorage.setToLocalStorage("hasUserVisited", true);
+  });
+
   $scope.xLinkActivated = false;
 
   function setLinks() {
     $('.postContent > a').click(function(){
-      $('#xContent').css('display', 'block');
+      // $('#xContent').css('display', 'block');
+      // console.log("Reply ID On Leaving: ", this.id)
+      // ForumStorage.setToLocalStorage('replyBookmark', true)
     });
   };
   
@@ -465,4 +510,12 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 
   console.info('uploader', uploader);
 
-}
+};
+
+postModule.directive('repeatFinishedNotify', function () {
+  return function (scope, element, attrs) {
+    if (scope.$last){
+      scope.scrollToBookmark();
+    }
+  };
+});
