@@ -96,12 +96,13 @@ body
 
  #postSection{
   max-width: 950px;
+  background-color: #fff;
 } 
 
 /* Topic Details */
 
 #topicDetails {
-  background-color: white;
+  background-color: #fff;
   font-size:18px;
   height:86px;
   padding-top:16px;
