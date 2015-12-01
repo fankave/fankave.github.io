@@ -255,7 +255,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.topicID = $routeParams.topicID;
     $scope.init();
 
-    document.getElementById('topicSection').style.paddingBottom = "3.9em";
+    // document.getElementById('topicSection').style.paddingBottom = "3.9em";
 
     $scope.$watch("commentsArray", function (newValue, oldValue)
         {
@@ -479,7 +479,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       console.log("Social Data: ", socialData);
       var len = socialData.length;
 
-      $scope.socialArray = [];
+      $scope.socialArray = $scope.socialArray || [];
 
       for (var i = 0; i < len; i++){
         var tempSocial = socialData[i];
@@ -509,9 +509,9 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   };
 
   var notifyNewSocial = function() {
-    if (!$scope.socialArray){
+    // if (!$scope.socialArray){
       updateSocial();
-    }
+    // }
   };
 
   var updateVideo = function() {
@@ -520,7 +520,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       console.log("Video Data: ", videoData);
       var len = videoData.length;
 
-      $scope.videoArray = [];
+      $scope.videoArray = $scope.videoArray || [];
 
       for (var i = 0; i < len; i++){
         var tempVideo = videoData[i];
@@ -550,9 +550,9 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   };
 
   var notifyNewVideo = function() {
-    if (!$scope.socialArray){
+    // if (!$scope.socialArray){
       updateVideo();
-    }
+    // }
   };
 
   SocialService.registerObserverCallback(notifyNewSocial);
@@ -761,7 +761,36 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       }
   }, 15);
 
+  // var lastElTop;
+  // var lastElHeight;
+  var clientHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  var scrollAfterLoad = function(pos){
+    setTimeout(function(){
+      $(document).scrollTop(pos);
+    }, 250);
+  };
+  var watchContentScroll = debounce(function() {
+    // lastElTop = $('.postRow').last().offset().top - headerHeight;
+    // lastElHeight = $('.postRow').last().height();
+    // console.log("LAST ELEM TOP: ", lastElTop, lastElHeight, clientHeight);
+    var currentScroll = $(document).height() - clientHeight;
+    if ($(document).scrollTop() === currentScroll) {
+      console.log("LOADING MORE CONTENT");
+      if ($scope.activeTab === 'social'){
+        networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()));
+      }
+      else if ($scope.activeTab === 'video'){
+        networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()));
+      }
+      console.log("SCROLL TO: ", currentScroll);
+      scrollAfterLoad(currentScroll + 90);
+    }
+  }, 500);
+
   // $(document).on('scroll', watchScroll);
+  // if ($scope.activeTab === 'video' || $scope.activeTab === 'social'){
+    $(document).on('scroll', watchContentScroll);
+  // }
 
 };
 

@@ -4,12 +4,13 @@ networkModule.factory('SocialService', function (Bant) {
 
 	var observerCallbacks = [];
 	var _socialArray = [];
+	var _socialArrayArchive = [];
 	var _offset = 0;
 	var LIMIT = 20;
 
 
 	function setSocialData(socialData) {
-
+		_socialArray = [];
 		tempData = socialData.data.results;
 		if(tempData!= undefined && tempData.length>0){
 			var len = tempData.length;
@@ -18,6 +19,7 @@ networkModule.factory('SocialService', function (Bant) {
 				_socialObject = Bant.bant(tempData[i]);
 				if(_socialObject.id != undefined)
 					_socialArray.push(_socialObject);
+					_socialArrayArchive.push(_socialObject);
 				console.log("Social data after Parsing :", _socialObject)
 				
 			}
@@ -45,7 +47,7 @@ networkModule.factory('SocialService', function (Bant) {
 		observerCallbacks.push(callback);
 	}
 
-	function socialDataGetRequest(id){
+	function getSocialDataRequest(id){
 		return  {"rid": "social",
 			"timestamp": new Date().getTime(),
 			"method": "GET",
@@ -57,7 +59,7 @@ networkModule.factory('SocialService', function (Bant) {
 			return _socialArray },
 
 			setSocialData:setSocialData,
-			getSocialDataRequest:socialDataGetRequest,
+			getSocialDataRequest:getSocialDataRequest,
 
 			registerObserverCallback:registerObserverCallback
 	};

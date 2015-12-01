@@ -4,12 +4,13 @@ networkModule.factory('VideoService', function (Bant) {
 
 	var observerCallbacks = [];
 	var _videoArray = [];
+	var _videoArrayArchive = [];
 	var _offset = 0;
 	var LIMIT = 20;
 
 
 	function setVideoData(videoData) {
-
+		_videoArray = [];
 		tempData = videoData.data.results;
 		if(tempData!= undefined && tempData.length>0){
 			var len = tempData.length;
@@ -18,6 +19,7 @@ networkModule.factory('VideoService', function (Bant) {
 				_videoObject = Bant.bant(tempData[i]);
 				if(_videoObject.id != undefined)
 					_videoArray.push(_videoObject);
+					_videoArrayArchive.push(_videoObject);
 			}
 			_offset = videoData.data.nextOffset;
 			notifyObservers();
