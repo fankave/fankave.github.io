@@ -232,46 +232,8 @@
 <div class="commentsContainer" ng-switch="activeTab">
   <!-- Chat Tab Content -->
   <div ng-switch-when="chat" ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
-    <div>
-      <span class="postAuthorPhoto">
-        <span>
-          <a class="thumbnail">
-            <img ng-src="{{thisPost.postAuthorPhoto}}" alt="" onerror="this.src='img/default_user_v3.png'" class="userPhoto">
-          </a>
-        </span>
-        <span id="pinIcon" ng-if="thisPost.pin == true">
-          <img src="img/pin.png"/>
-        </span>
-      </span>
 
-      <span class="socialPost">
-        <div class="roww">
-          <span class="postUsername">
-            {{thisPost.postAuthorName}}
-          </span>
-          <span class="timestamp">
-            {{thisPost.postTimestamp}}
-          </span>
-        </div>
-      </span>
-
-    </div>
-    <div class="socialContentContainer">
-      <div ng-bind-html="thisPost.html | linky" class="postContent socialContent">
-        <p>{{thisPost.html}}</p><br> 
-      </div>
-
-      <div ng-switch-when="image" class="cropView ng-style:{ width: thisPost.mediaAspectFeed.w, height: thisPost.mediaAspectFeed.h };">
-        <img ng-src="{{thisPost.mediaUrl}}" class="postPhoto ng-style:{ bottom: thisPost.mediaAspectFeed.y }" ng-click="imageClick(thisPost.mediaUrl);" />
-      </div>
-
-      <div ng-switch-when="video" class="cropView ng-style:{ width: thisPost.mediaAspectFeed.w, height: thisPost.mediaAspectFeed.h };">
-        <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
-          <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
-          </video>
-      </div> 
-    </div>
-    <!-- <span class="postAuthorPhoto">
+    <span class="postAuthorPhoto">
       <div>
         <a class="thumbnail">
           <img ng-src="{{thisPost.postAuthorPhoto}}" alt="" onerror="this.src='img/default_user_v3.png'" class="userPhoto">
@@ -285,30 +247,30 @@
 
     <span class="post">
 
-      <div class="roww">
+      <div class="chatPostHeader">
         <span class="postUsername">
           {{thisPost.postAuthorName}}
         </span>
         <span class="timestamp">
           {{thisPost.postTimestamp}}
         </span>
-      </div> -->
-
-      <!-- <div ng-bind-html="thisPost.html | linky" class="postContent socialContent">
-        <p>{{thisPost.html}}</p> 
       </div>
 
-      <div ng-switch-when="image" class="cropView ng-style:{ width: thisPost.mediaAspectFeed.w, height: thisPost.mediaAspectFeed.h };">
-        <img ng-src="{{thisPost.mediaUrl}}" class="postPhoto ng-style:{ bottom: thisPost.mediaAspectFeed.y };" ng-click="imageClick(thisPost.mediaUrl);" />
+      <div ng-bind-html="thisPost.html | linky" class="postContent">
+        {{thisPost.html}} 
       </div>
 
-      <div ng-switch-when="video" class="cropView ng-style:{ width: thisPost.mediaAspectFeed.w, height: thisPost.mediaAspectFeed.h };">
+      <div ng-switch-when="image">
+        <img ng-src="{{thisPost.mediaUrl}}" class="postPhoto" ng-click="imageClick(thisPost.mediaUrl);" />
+      </div>
+
+      <div ng-switch-when="video">
         <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
           </video>
-        </div>  --> 
+        </div>  
 
-        <div class="socialButtonsRow socialText">
+        <div class="socialButtonsRow">
           <button class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
             <img ng-switch-when="true" src="img/likeSmallSelected.png"/> 
             <img ng-switch-when="false" src="img/likeSmall.png"/> 
@@ -336,7 +298,7 @@
         </span>
       </div>
   <!-- Video Tab Content -->
-  <div ng-switch-when="video" ng-repeat="thisPost in videoArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}">
+  <div ng-switch-when="video" ng-repeat="thisPost in videoArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
     <div>
       <span class="postAuthorPhoto">
         <span>
@@ -350,7 +312,7 @@
       </span>
 
       <span class="socialPost">
-        <div class="roww">
+        <div class="chatPostHeader">
           <span class="postUsername">
             {{thisPost.postAuthorName}}
           </span>
@@ -408,7 +370,7 @@
           </div>
       </div>
   <!-- Social Tab Content -->
-  <div ng-switch-when="social" ng-repeat="thisPost in socialArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}">
+  <div ng-switch-when="social" ng-repeat="thisPost in socialArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
     <div>
       <span class="postAuthorPhoto">
         <span>

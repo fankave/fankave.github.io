@@ -1485,3 +1485,7 @@ img-crop canvas {
   width: 100%;
   bottom: 0%;
 }
+
+.chatPostHeader {
+  min-height: 30px;
+}

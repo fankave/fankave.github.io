@@ -16,10 +16,22 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.mobileBrowser = false;
   }
 
+  // if (ForumStorage.getFromLocalStorage('lastChannel') === undefined){
+    ForumStorage.setToLocalStorage("lastChannel", ChannelService.getChannel());
+  // }
+
   // Retain & Handle State when Returning From External Links
   if (ForumStorage.getFromLocalStorage('hasUserVisited') === true){
     console.log("Checking For Existing Session");
+    
     $scope.initPage();
+    $scope.channelId = ForumStorage.getFromLocalStorage('lastChannel');
+    $scope.loadTab(ForumStorage.getFromLocalStorage('lastTabActive'), $scope.channelId);
+    setTimeout(function(){
+      $scope.activeTab = ForumStorage.getFromLocalStorage('lastTabActive');
+    }, 100);
+    // updateVideo();
+    // updateSocial();
   }
   var headerHeight;
   $scope.scrollToBookmark = function() {
@@ -556,6 +568,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   $window.addEventListener("beforeunload", function(){
     console.log("Before Unload");
     ForumStorage.setToLocalStorage("hasUserVisited", true);
+    ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
   });
 
   $scope.xLinkActivated = false;
@@ -703,16 +716,20 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.loadTab(tab);
   };
 
-  TopicService.setChannel(ChannelService.getChannel());
-  $scope.loadTab = function(tab) {
+  var _channelId = ChannelService.getChannel();
+  $scope.channelId = _channelId;
+  TopicService.setChannel(_channelId);
+  // ForumStorage.setToLocalStorage('lastChannel',_channelId);
+  $scope.loadTab = function(tab, channel) {
+    console.log("Channel in Load Tab: ", channel);
     console.log("Switched to Tab: ", tab);
     if (tab === 'social' && !$scope.socialArray){
       // console.log("Tab Channel: ", ChannelService.getChannel());
-      networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()));
+      networkService.send(SocialService.getSocialDataRequest(channel || ChannelService.getChannel()));
     }
     else if (tab === 'video' && !$scope.videoArray){
       // console.log("Tab Channel: ", ChannelService.getChannel());
-      networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()));
+      networkService.send(VideoService.getVideoDataRequest(channel || ChannelService.getChannel()));
     }
   };
 
