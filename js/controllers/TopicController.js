@@ -16,20 +16,46 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.mobileBrowser = false;
   }
 
+  // Retain & Handle State when Returning From External Links
+  if (ForumStorage.getFromLocalStorage('hasUserVisited') === true){
+    console.log("Checking For Existing Session");
+    $scope.initPage();
+  }
+  var headerHeight;
+  $scope.scrollToBookmark = function() {
+    if (ForumStorage.getFromLocalStorage('commentBookmark') !== undefined){
+      setTimeout(function(){
+        var bookmarkedId = parseInt(ForumStorage.getFromLocalStorage('commentBookmark'));
+        var bookmarkedPost = Array.prototype.slice.call(document.getElementsByClassName('postRow'));
+        bookmarkedPost = bookmarkedPost[bookmarkedId];
+        var offElem = $(bookmarkedPost).offset().top - headerHeight;
+        console.log("Bookmarked Post: ", bookmarkedPost);
+        console.log("Bookmarked Post Top Offset: ", offElem);
+        $(document).scrollTop(offElem);
+        ForumStorage.setToLocalStorage('commentBookmark', undefined);
+      }, 100);
+    }
+  };
+
   ga('send', 'pageview', "/topic/"+$routeParams.topicID);
   console.log('Sent Pageview from /topic/' + $routeParams.topicID);
   
   TopicService.setTopicId($routeParams.topicID);
   $scope.topicType = "livegame";
   $scope.innerButtonTapped = false;
-  if((UserInfoService.isPeelUser() === true)){
+  if(UserInfoService.isPeelUser() === true){
     $scope.isPeelUser = true;
-    $timeout(function() {$scope.continueToExperience(); }, 5000);
+    if (!UserInfoService.hasUserVisited()){
+      console.log('USER HASNT VISITED');
+      // SplashService.hidePeelSplash = false;
+      $scope.hidePeelSplash = false;
+      $timeout(function() {$scope.continueToExperience(); }, 5000);
+    }
   }
   else {
     $scope.isPeelUser = false;  
     SplashService.hidePeelSplash = true;
-    $scope.hidePeelSplash = SplashService.hidePeelSplash;
+    $scope.hidePeelSplash = true;
   }
 //  var tempJasonNFL = {};
 //  
@@ -42,19 +68,20 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 //  $(window).scroll(function(){
 //      $("#textInputFieldTopic").css("top", Math.max(160, 250 - $(this).scrollTop()));
 //  });
-  $scope.hidePeelSplash = SplashService.hidePeelSplash;
+  // $scope.hidePeelSplash = true;
 
   $scope.continueToExperience = function() {
+    console.log("CONTINUE XP CLICKED");
     SplashService.hidePeelSplash = true;
-    $scope.hidePeelSplash = SplashService.hidePeelSplash;
+    $scope.hidePeelSplash = true;
   };
-
   $scope.setScoreCardUI = function(){
     if($scope.isPeelUser === true)
     {
       if($scope.topicType == "livegame"){
         document.getElementById('topicSection').style.paddingTop = "177px";
-        document.getElementById('header').style.height = "177px"; 
+        document.getElementById('header').style.height = "177px";
+        headerHeight = 177;
       }
       else{
       document.getElementById('topicSection').style.paddingTop = "3em";
@@ -71,6 +98,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       if($scope.topicType == "livegame"){
         document.getElementById('topicSection').style.paddingTop = "125px";
         document.getElementById('header').style.height = "125px";
+        headerHeight = 125;
       }
       else{
         document.getElementById('topicSection').style.paddingTop = "0em";
@@ -234,6 +262,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
               thisDiv.onclick = function(e)
               {
                 if ($(e.target).is('a')){
+                  console.log("EXTERNAL LINK: ", e, this.id);
+                  ForumStorage.setToLocalStorage('commentBookmark', this.id);
                   return;
                 } else {
                   // console.log("thisDiv.onclick");
@@ -531,9 +561,10 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   $scope.xLinkActivated = false;
 
   function setLinks() {
-    $('.postContent > a').click(function(){
-      $('#xContent').css('display', 'block');
-    });
+    // $('.postContent > a').addClass()
+    // $('.postContent > a').click(function(){
+      // $('#xContent').css('display', 'block');
+    // });
   };
   
   $scope.backToChat = function() {
@@ -585,6 +616,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
           '" title="', $sanitize(theFile.name),
           '"/>'].join('');
         document.getElementById('preview').insertBefore(span, null);
+        document.getElementById('mobilePreview').insertBefore(span, null);
         };
       })(f);
       reader.readAsDataURL(f);
@@ -709,7 +741,14 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       }
   }, 15);
 
-  $(document).on('scroll', watchScroll);
+  // $(document).on('scroll', watchScroll);
 
+};
 
-}
+topicModule.directive('repeatFinishedNotify', function () {
+  return function (scope, element, attrs) {
+    if (scope.$last){
+      scope.scrollToBookmark();
+    }
+  };
+});

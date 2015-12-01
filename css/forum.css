@@ -83,7 +83,7 @@ body
   position:relative;
   max-width: 950px;
   margin: 0 auto;
-  position: relative;
+  background-color: white;
 }
 
 #mediaSection
@@ -91,7 +91,7 @@ body
   position:relative;
   max-width: 950px;
   margin: 0 auto;
-  position: relative;
+  background-color: white;
 }
 
  #postSection{
@@ -1391,9 +1391,19 @@ img-crop canvas {
 #uploadControls {
   position: absolute;
   width: 320px;
-  /*max-width: 500px;*/
-  /*height: 250px;*/
   left: 10%;
+  z-index: 10005;
+  background-color: #fff;
+  padding: 20px;
+  border: 2px solid rgb(192,210,214);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+#mobileUploadControls {
+  position: absolute;
+  width: 320px;
+  left: 10%;
+  bottom: 44px;
   z-index: 10005;
   background-color: #fff;
   padding: 20px;
