@@ -83,7 +83,7 @@ body
   position:relative;
   max-width: 950px;
   margin: 0 auto;
-  background-color: white;
+  background-color: #fff;
 }
 
 #mediaSection
@@ -96,12 +96,13 @@ body
 
  #postSection{
   max-width: 950px;
+  background-color: #fff;
 } 
 
 /* Topic Details */
 
 #topicDetails {
-  background-color: white;
+  background-color: #fff;
   font-size:18px;
   height:86px;
   padding-top:16px;
@@ -247,7 +248,7 @@ body
 
 .post {
   width: 85%;
-  /*background-color: #EFF;*/
+  background-color: #fff;
   float:right;
   min-height: 2.0em;
   padding-left: 5px;
