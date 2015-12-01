@@ -181,8 +181,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $scope.createdAt = TopicService.getTimeCreatedAt();
       $scope.liked = TopicService.getLiked();
       var metrics = TopicService.getMetrics();
-      $scope.likesCount = metrics.likes;
-      $scope.commentsCount = metrics.comments;
+      $scope.likesCount = metrics.likes || 0;
+      $scope.commentsCount = metrics.comments || 0;
 
     }
   };
@@ -480,7 +480,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       var len = socialData.length;
 
       $scope.socialArray = $scope.socialArray || [];
-
+      console.log("Social Array: ", $scope.socialArray);
       for (var i = 0; i < len; i++){
         var tempSocial = socialData[i];
         tempSocial.postAuthorName = socialData[i].embedAuthor.name;
@@ -492,8 +492,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempSocial.providerName = socialData[i].embedProvider.name;
         tempSocial.providerLogo = socialData[i].embedProvider.logo;
         tempSocial.html = socialData[i].embedText;
-        tempSocial.likeCount = socialData[i].metrics.likes;
-        tempSocial.replyCount = socialData[i].metrics.replies;
+        tempSocial.likeCount = socialData[i].metrics.likes || 0;
+        tempSocial.replyCount = socialData[i].metrics.replies || 0;
 
         tempSocial.embedType = socialData[i].embedType;
         if (socialData[i].embedType === "media"){
@@ -533,8 +533,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempVideo.providerName = videoData[i].embedProvider.name;
         tempVideo.providerLogo = videoData[i].embedProvider.logo;
         tempVideo.html = videoData[i].embedText;
-        tempVideo.likeCount = videoData[i].metrics.likes;
-        tempVideo.replyCount = videoData[i].metrics.replies;
+        tempVideo.likeCount = videoData[i].metrics.likes || 0;
+        tempVideo.replyCount = videoData[i].metrics.replies || 0;
 
         tempVideo.embedType = videoData[i].embedType;
         if (videoData[i].embedType === "media"){

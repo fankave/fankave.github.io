@@ -56,7 +56,11 @@ networkModule.factory('SocialService', function (Bant) {
 
 	return {
 		socialArray: function(){
-			return _socialArray },
+			return _socialArray;
+		},
+		socialArrayArchive: function(){
+			return _socialArrayArchive;
+		},
 
 			setSocialData:setSocialData,
 			getSocialDataRequest:getSocialDataRequest,

@@ -54,7 +54,11 @@ networkModule.factory('VideoService', function (Bant) {
 
 	return {
 		videoArray: function(){
-			return _videoArray },
+			return _videoArray;
+		},
+		videoArrayArchive: function(){
+			return _videoArrayArchive
+		},
 
 			setVideoData:setVideoData,
 			getVideoDataRequest:getVideoDataRequest,
