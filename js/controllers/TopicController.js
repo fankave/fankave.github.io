@@ -615,8 +615,11 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
           e.target.result,
           '" title="', $sanitize(theFile.name),
           '"/>'].join('');
-        document.getElementById('preview').insertBefore(span, null);
-        document.getElementById('mobilePreview').insertBefore(span, null);
+        if ($scope.mobileBrowser === true){
+          document.getElementById('mobilePreview').insertBefore(span, null);
+        } else {
+          document.getElementById('preview').insertBefore(span, null);
+        }
         };
       })(f);
       reader.readAsDataURL(f);

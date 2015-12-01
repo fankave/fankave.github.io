@@ -1426,6 +1426,12 @@ img-crop canvas {
   margin-bottom: 10px;
 }
 
+#mobilePreview {
+  position: relative;
+  height: 150px;
+  margin-bottom: 10px;
+}
+
 #fileWarning {
   padding-left: 10px;
 }
