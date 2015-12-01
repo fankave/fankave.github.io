@@ -83,7 +83,7 @@ body
   position:relative;
   max-width: 950px;
   margin: 0 auto;
-  position: relative;
+  background-color: #fff;
 }
 
 #mediaSection
@@ -249,7 +249,7 @@ body
 .post /* entire right-side of each post row */
 {
   width: 85%;
-  /*background-color: #EFF;*/
+  background-color: #fff;
   float:right;
   min-height: 2.0em;
   padding-left: 5px;
