@@ -54,6 +54,30 @@ networkModule.factory('SocialService', function (Bant) {
 			"uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+_offset)}
 	}
 
+	function appendToFeed(socialData){
+		var socialItem = socialData.data;
+		if (!socialData){
+			return;
+		} else {
+			socialObj = Bant.bant(socialItem);
+			_socialArrayArchive.unshift(socialObj);
+		}
+		notifyObservers(true);
+	}
+
+	function updateFeed(socialData){
+		var socialObj = socialData.data;
+		for (var i = 0; i < _socialArrayArchive.length; i++){
+			if (_socialArrayArchive[i].id === socialObj.id){
+				console.log("Updating Existing Social Item, ID=", socialObj.id);
+				_socialArrayArchive[i] = Bant.bant(socialObj);
+				return;
+			}
+		}
+		console.log("Updating Social Feed, New Item");
+		appendToFeed(socialData);
+	}
+
 	return {
 		socialArray: function(){
 			return _socialArray;
@@ -62,10 +86,10 @@ networkModule.factory('SocialService', function (Bant) {
 			return _socialArrayArchive;
 		},
 
-			setSocialData:setSocialData,
-			getSocialDataRequest:getSocialDataRequest,
-
-			registerObserverCallback:registerObserverCallback
+			setSocialData: setSocialData,
+			getSocialDataRequest: getSocialDataRequest,
+			registerObserverCallback: registerObserverCallback,
+			updateFeed: updateFeed
 	};
 
 });

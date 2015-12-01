@@ -109,12 +109,26 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
       ChannelService.setTopicData(data);
   }
   
-  function delegateSetSocial(data) {
-    if(data.error){
-      console.log("Social Error message from network: ", data.error);
+  function delegateSetSocial(socialData) {
+    // console.log("****Social Method: ", socialData.method, socialData.push);
+    if(socialData.error){
+      console.log("Social Error message from network: ", socialData.error);
     }
-    else
-      SocialService.setSocialData(data);
+    else if(socialData.push){
+      if(socialData.method === "UPSERT"){
+        console.log("SOCIAL UPSERT");
+        SocialService.updateFeed(socialData);
+      }
+      else if(socialData.method === "REMOVE"){
+        console.log("SOCIAL REMOVE");
+        // SocialService.removeItem();  
+      }
+    }
+    else {
+      console.log("SOCIAL GET");
+      SocialService.setSocialData(socialData);
+    }
+
   }
 
   function delegateSetVideo(data) {

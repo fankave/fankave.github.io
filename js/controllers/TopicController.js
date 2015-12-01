@@ -502,16 +502,51 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
           tempSocial.mediaAspectFeed = socialData[i].embedMedia.mediaAspectFeed;
           tempSocial.mediaAspectFull = socialData[i].embedMedia.mediaAspectFull;
         }
-
         $scope.socialArray.push(tempSocial);
       }
     }
   };
 
-  var notifyNewSocial = function() {
-    // if (!$scope.socialArray){
+  var prependSocial = function(newItemId){
+    var socialData = SocialService.socialArrayArchive();
+    for (var i = 0; i < socialData.length; i++){
+      if (socialData[i].id === newItemId){
+        var tempSocial = socialData[i];
+        tempSocial.postAuthorName = socialData[i].embedAuthor.name;
+        tempSocial.postAuthorAlias = socialData[i].embedAuthor.alias;
+        tempSocial.postAuthorPhoto = socialData[i].embedAuthor.photo;
+        tempSocial.postTimestamp = socialData[i].createdAt;
+
+        tempSocial.isLiked = socialData[i].signal.like;
+        tempSocial.providerName = socialData[i].embedProvider.name;
+        tempSocial.providerLogo = socialData[i].embedProvider.logo;
+        tempSocial.html = socialData[i].embedText;
+        tempSocial.likeCount = socialData[i].metrics.likes || 0;
+        tempSocial.replyCount = socialData[i].metrics.replies || 0;
+
+        tempSocial.embedType = socialData[i].embedType;
+        
+        if (socialData[i].embedType === "media"){
+          tempSocial.mediaType = socialData[i].embedMedia.mediaType;
+          tempSocial.mediaUrl = socialData[i].embedMedia.mediaUrl;
+          tempSocial.mediaAspectFeed = socialData[i].embedMedia.mediaAspectFeed;
+          tempSocial.mediaAspectFull = socialData[i].embedMedia.mediaAspectFull;
+        }
+        console.log("Prepending Social Item: ", tempSocial);
+        $scope.socialArray.unshift(tempSocial);
+        $scope.showNewCommentsIndicator = true;
+        return;
+      }
+    }
+  };
+
+  var notifyNewSocial = function(newItemId) {
+    if (!!newItemId){
+      console.log("Incoming Social Item ID: ", newItemId);
+      prependSocial(newItemId);
+    } else {
       updateSocial();
-    // }
+    }
   };
 
   var updateVideo = function() {
