@@ -393,16 +393,16 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
   $scope.xLinkActivated = false;
 
   function setLinks() {
-    $('.postContent > a').click(function(){
+    // $('.postContent > a').click(function(){
       // $('#xContent').css('display', 'block');
       // console.log("Reply ID On Leaving: ", this.id)
       // ForumStorage.setToLocalStorage('replyBookmark', true)
-    });
+    // });
   };
   
-  $scope.backToChat = function() {
-    $('#xContent').css('display', 'none');
-  };
+  // $scope.backToChat = function() {
+  //   $('#xContent').css('display', 'none');
+  // };
 
   // ATTACH MEDIA
   var MUS_SERVER_URI = 'https://dev.fankave.com:8080';
