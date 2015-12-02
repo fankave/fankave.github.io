@@ -256,7 +256,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.init();
 
     if ($scope.mobileBrowser === true){
-      document.getElementById('topicSection').style.paddingBottom = "54px";
+      document.getElementById('topicSection').style.marginBottom = "54px";
     }
 
     $scope.$watch("commentsArray", function (newValue, oldValue)
@@ -800,7 +800,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 
   // var lastElTop;
   // var lastElHeight;
-  var clientHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  // var clientHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  var clientHeight = document.documentElement.clientHeight || window.innerHeight;
   var scrollAfterLoad = function(pos){
     setTimeout(function(){
       $(document).scrollTop(pos);
@@ -810,17 +811,19 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     // lastElTop = $('.postRow').last().offset().top - headerHeight;
     // lastElHeight = $('.postRow').last().height();
     // console.log("LAST ELEM TOP: ", lastElTop, lastElHeight, clientHeight);
-    var currentScroll = $(document).height() - clientHeight;
-    if ($(document).scrollTop() === currentScroll) {
-      console.log("LOADING MORE CONTENT");
+    var currentScroll = $(document).height() - clientHeight - 1;
+    // console.log("currentScroll: ", currentScroll, clientHeight);
+    if ($(document).scrollTop() > currentScroll) {
       if ($scope.activeTab === 'social'){
+        console.log("LOADING MORE SOCIAL");
         networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()));
+        scrollAfterLoad(currentScroll + 90);
       }
       else if ($scope.activeTab === 'video'){
+        console.log("LOADING MORE VIDEO");
         networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()));
+        scrollAfterLoad(currentScroll + 90);
       }
-      console.log("SCROLL TO: ", currentScroll);
-      scrollAfterLoad(currentScroll + 90);
     }
   }, 500);
 

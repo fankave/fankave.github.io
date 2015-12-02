@@ -133,7 +133,9 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 		var heightString = replyPostHeader + "px";
 		// document.getElementById('postHeader').style.height = '3.5em';//heightString;
 		// document.getElementById('postSection').style.paddingTop = '3.5em';
-		document.getElementById('postSection').style.paddingBottom = "3.9em";
+	  if ($scope.mobileBrowser === true){
+      document.getElementById('postSection').style.marginBottom = "54px";
+    }
 
 		$scope.$watch("replies", function (newValue, oldValue)
 		 {

@@ -146,7 +146,7 @@
   </div> -->    
 
   <div class="topicSharingButtonsRow clearfix">
-    <div class="grid-col grid-col-50">
+    <div class="grid-col-alt grid-col-50">
       <div id="headLike">
         <button class="btn-link topic-social-btn" ng-click="updateLikeTopic()" ng-switch="liked">
           <img ng-switch-when="true" src="img/likeBigSelected.png"/> 
@@ -155,7 +155,7 @@
         <span class="socialButtonLabel fkFont">{{likesCount}} </span>
       </div>
     </div>
-    <div class="grid-col grid-col-50">
+    <div class="grid-col-alt grid-col-50">
       <div id="headComment">
         <button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/comment-3x.png"/> 
         </button>
@@ -184,6 +184,15 @@
   </div>
 
   <div id="textInputFieldTopic" class="clearfix" ng-hide="activeTab !== 'chat' || mobileBrowser === true">
+    <div id="preview" ng-if="uploader.queue.length > 0">
+      <button type="button" id="removeMedia" class="fkFont" ng-click="uploader.clearQueue()">X
+      </button>
+    </div>
+    <div id="uploadControls" ng-if="uploader.isUploading && uploader.queue.length > 0">
+        <div class="progress" style="margin-bottom: 0;">
+          <div id="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+        </div>
+    </div>
     <form id="postCommentForm" ng-submit="postComment(commentText)">
       <div id="postCommentDiv" class="input-group">
         <label for="fileUpload" id="attachMediaIcon">
@@ -203,29 +212,28 @@
       <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 1MB</span>
       <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
     </div>
-    <div id="uploadControls" ng-if="uploader.queue.length > 0">
+    <!-- <div id="uploadControls" ng-if="uploader.queue.length > 0"> -->
 
-      <div id="preview">
+      <!-- <div id="preview">
         <button type="button" id="removeMedia" class="fkFont" ng-click="uploader.clearQueue()">X
         </button>
-      </div>
+      </div> -->
 
-      <div id="uploadButtons">
+      <!-- <div id="uploadButtons"> -->
         <!-- <button type="button" class="btn btn-warning btn-xs" ng-click="uploader.cancelAll()" ng-if="uploader.isUploading">
           <span class="glyphicon glyphicon-ban-circle"></span> Cancel
         </button> -->
-      </div>
+      <!-- </div> -->
 
-      <div ng-if="uploader.isUploading && uploader.queue.length > 0">
-      <!-- <div> -->
+      <!-- <div ng-if="uploader.isUploading && uploader.queue.length > 0">
         <div class="progress" style="margin-bottom: 0;">
           <div id="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
         </div>
         <span id="progressText">
           Uploading: {{uploader.progress}} of 100%
         </span>
-      </div>
-    </div>
+      </div> -->
+    <!-- </div> -->
   </div>
 </div>
 
@@ -328,7 +336,7 @@
       </div>
 
       <div ng-switch-when="image" class="cropView ng-style:{ width: thisPost.mediaAspectFeed.w, height: thisPost.mediaAspectFeed.h };">
-        <img ng-src="{{thisPost.mediaUrl}}" class="postPhoto ng-style:{ bottom: thisPost.mediaAspectFeed.y }" ng-click="imageClick(thisPost.mediaUrl);" />
+        <img ng-src="{{thisPost.mediaUrl}}" class="postPhotoSocial ng-style:{ bottom: thisPost.mediaAspectFeed.y }" ng-click="imageClick(thisPost.mediaUrl);" />
       </div>
 
       <div ng-switch-when="video" class="cropView ng-style:{ width: thisPost.mediaAspectFeed.w, height: thisPost.mediaAspectFeed.h };">
@@ -396,7 +404,7 @@
       </div>
 
       <div ng-switch-when="image" class="cropView ng-style:{ width: thisPost.mediaAspectFeed.w, height: thisPost.mediaAspectFeed.h };">
-        <img ng-src="{{thisPost.mediaUrl}}" class="postPhoto ng-style:{ bottom: thisPost.mediaAspectFeed.y };" ng-click="imageClick(thisPost.mediaUrl);" />
+        <img ng-src="{{thisPost.mediaUrl}}" class="postPhotoSocial ng-style:{ bottom: thisPost.mediaAspectFeed.y };" ng-click="imageClick(thisPost.mediaUrl);" />
       </div>
 
       <div ng-switch-when="video" class="cropView ng-style:{ width: thisPost.mediaAspectFeed.w, height: thisPost.mediaAspectFeed.h };">
@@ -436,26 +444,15 @@
 
 </div>
 <div id="mobileUserInput" class="clearfix" ng-hide="activeTab !== 'chat' || mobileBrowser === false">
-    
-    <div id="mobileUploadControls" ng-if="uploader.queue.length > 0">
 
-      <div id="mobilePreview">
+    <div id="mobilePreview" ng-if="uploader.queue.length > 0">
         <button type="button" id="removeMedia" class="fkFont" ng-click="uploader.clearQueue()">X
         </button>
       </div>
-
-      <div id="uploadButtons">
-      </div>
-
-      <div ng-if="uploader.isUploading && uploader.queue.length > 0">
-      <!-- <div> -->
-        <div class="progress" style="margin-bottom: 0;">
+      <div id="mobileUploadControls" ng-if="uploader.isUploading && uploader.queue.length > 0">
+        <div class="progress mobileProgress">
           <div id="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
         </div>
-        <span id="progressText">
-          Uploading: {{uploader.progress}} of 100%
-        </span>
-      </div>
     </div>
     <form id="postCommentForm" ng-submit="postComment(commentText)">
       <div id="mobilePostCommentDiv" class="input-group">
