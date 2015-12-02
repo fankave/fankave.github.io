@@ -39,27 +39,32 @@ function initNetworkService($websocket,$route,DataService,UserInfoService)
       if(NETWORK_DEBUG) console.log("Websocket Message Recieved :  " +evt.data);
       var responseJson = JSON.parse(evt.data);
       var type = responseJson.rid;
-      if(type != undefined){
-        if(type == "channel"){
+      if(type !== undefined){
+        if(type === "channel"){
           if(NETWORK_DEBUG) console.log("Processing Channel");
           DataService.setChannel(responseJson);
         }
-        if(type == "topic" || type == "score"){
+        if(type === "topic" || type === "score"){
           if(NETWORK_DEBUG) console.log("Processing Topic");
           DataService.setTopic(responseJson);
-        }else if(type == "comment"){
+        }else if(type === "comment"){
           if(NETWORK_DEBUG) console.log("Processing Comments");
           DataService.setComments(responseJson);
         }
-        else if(type == "reply"){
+        else if(type === "reply"){
           //TODO handle Replies
           if(NETWORK_DEBUG) console.log("Processing Reply");
           DataService.setReplies(responseJson);
         }
-        else if(type == "social"){
+        else if(type === "social"){
           //TODO handle Replies
           if(NETWORK_DEBUG) console.log("Processing Social");
           DataService.setSocial(responseJson);
+        }
+        else if(type === "video"){
+          //TODO handle Replies
+          if(NETWORK_DEBUG) console.log("Processing Video");
+          DataService.setVideo(responseJson);
         }
       }
     });
