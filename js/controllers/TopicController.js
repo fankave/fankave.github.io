@@ -615,9 +615,9 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     // });
   };
   
-  $scope.backToChat = function() {
-    $('#xContent').css('display', 'none');
-  };
+  // $scope.backToChat = function() {
+  //   $('#xContent').css('display', 'none');
+  // };
 
 
   // ATTACH MEDIA
