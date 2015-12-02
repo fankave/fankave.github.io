@@ -489,14 +489,14 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   $scope.xLinkActivated = false;
 
   function setLinks() {
-    $('.postContent > a').click(function(){
-      $('#xContent').css('display', 'block');
-    });
+    // $('.postContent > a').click(function(){
+    //   $('#xContent').css('display', 'block');
+    // });
   };
   
-  $scope.backToChat = function() {
-    $('#xContent').css('display', 'none');
-  };
+  // $scope.backToChat = function() {
+  //   $('#xContent').css('display', 'none');
+  // };
 
 
   // ATTACH MEDIA

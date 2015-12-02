@@ -350,14 +350,14 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
   $scope.xLinkActivated = false;
 
   function setLinks() {
-    $('.postContent > a').click(function(){
-      $('#xContent').css('display', 'block');
-    });
+    // $('.postContent > a').click(function(){
+    //   $('#xContent').css('display', 'block');
+    // });
   };
   
-  $scope.backToChat = function() {
-    $('#xContent').css('display', 'none');
-  };
+  // $scope.backToChat = function() {
+  //   $('#xContent').css('display', 'none');
+  // };
 
   // ATTACH MEDIA
   var MUS_SERVER_URI = 'https://dev.fankave.com:8080';
