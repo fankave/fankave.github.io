@@ -1233,6 +1233,11 @@ img-crop canvas {
   position: relative;
 }
 
+.mobileProgress {
+  height: 15px;
+  position: relative;
+}
+
 #progress-bar {
   height: 100%;
   background-color: rgb(59,166,252);
@@ -1410,26 +1415,25 @@ img-crop canvas {
 }
 
 #uploadControls {
+  display: inline-block;
   position: absolute;
-  width: 320px;
-  left: 10%;
+  width: 70%;
+  bottom: 30%;
   z-index: 10005;
-  background-color: #fff;
-  padding: 20px;
-  border: 2px solid rgb(192,210,214);
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  padding-right: 20px;
 }
 
 #mobileUploadControls {
+  display: inline-block;
   position: absolute;
-  width: 320px;
-  left: 10%;
-  bottom: 44px;
+  width: 70%;
+  bottom: 42%;
   z-index: 10005;
-  background-color: #fff;
-  padding: 20px;
-  border: 2px solid rgb(192,210,214);
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  padding-right: 20px;
+  padding-left: 40px;
+}
+.mobileProgress {
+  margin-bottom: 0;
 }
 
 #uploadButtons {
@@ -1437,20 +1441,27 @@ img-crop canvas {
 }
 
 .thumb {
-  height: 150px;
+  height: 80px;
+  max-width: 130px;
   border: 1px solid rgb(192,210,214);
 }
 
 #preview {
   position: relative;
-  height: 150px;
-  margin-bottom: 10px;
+  float: left;
+  height: 80px;
+  width: 30%;
+  margin: 12px 0 10px 0;
+  padding-left: 12px;
 }
 
 #mobilePreview {
   position: relative;
-  height: 150px;
-  margin-bottom: 10px;
+  float: left;
+  height: 80px;
+  width: 30%;
+  margin: 12px 0 10px 0;
+  padding-left: 12px;
 }
 
 #fileWarning {
@@ -1459,8 +1470,8 @@ img-crop canvas {
 
 #removeMedia {
   position: absolute;
-  top: -10px;
-  left: -10px;
+  top: -7px;
+  left: 7px;
   width: 25px;
   height: 25px;
   background-color: #000;
@@ -1469,6 +1480,7 @@ img-crop canvas {
   color: #fff;
   font-size: 18px;
   padding: 0;
+  z-index: 1;
 }
 
 #removeMedia:hover {
@@ -1508,6 +1520,7 @@ img-crop canvas {
   width: 100%;
   bottom: 0%;
   z-index: 2;
+  background-color: rgb(248,249,251);
 }
 
 .chatPostHeader {
