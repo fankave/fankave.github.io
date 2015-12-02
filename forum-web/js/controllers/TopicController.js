@@ -335,8 +335,6 @@ function initTopicController($scope, $sce, $timeout, $routeParams,networkService
 	}
 
 	$scope.postComment = function(commentText) {
-		//Test for tweets
-		//networkService.send(SocialService.getSocialDataRequest(27));
 		if((commentText != undefined)	 && commentText != ""){
 			// console.log("TopicController postComment Invoked :"+ commentText);
 			networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));

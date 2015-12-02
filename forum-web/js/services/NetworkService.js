@@ -1,32 +1,13 @@
 var networkModule = angular.module("NetworkModule", ['ngWebSocket']);
-networkModule.factory("networkService",["$websocket","$route","DataService","UserInfoService",initNetworkService]);
+networkModule.factory("networkService",["$websocket","DataService","UserInfoService",initNetworkService]);
 
-function initNetworkService($websocket,$route,DataService,UserInfoService)
+function initNetworkService($websocket,DataService,UserInfoService)
 {
 	if(HOST_NAME == undefined)
 		HOST_NAME = window.location.host;;
 	if(HOST_NAME == 'dev.fankave.com')
-		WEBSOCKET_BASE_URI = 'wss://dev.fankave.com/ws?';
+		WEBSOCKET_BASE_URI = 'ws://dev.fankave.com/ws?';
 	var ws;
-	
-	disconnectSocket = function(){
-		console.log("Disconnect Callback triggered");
-		if(ws != undefined) {
-			ws.close();
-			ws = undefined;
-		}
-	}
-
-	reconnectSocket = function(){
-		console.log("Reconnect Callback triggered");
-		$route.reload();
-	}
-
-	
-	window.document.addEventListener(visEvent, function(){
-	    visChange(reconnectSocket, disconnectSocket);
-	  });
-
 	function initSocket() { 
 		ws = $websocket(getWebsocketUri());
 		DataService.setWatchTopic(false);
@@ -60,11 +41,6 @@ function initNetworkService($websocket,$route,DataService,UserInfoService)
 					//TODO handle Replies
 					if(NETWORK_DEBUG) console.log("Processing Reply");
 					DataService.setReplies(responseJson);
-				}
-				else if(type == "social"){
-					//TODO handle Replies
-					if(NETWORK_DEBUG) console.log("Processing Social");
-					DataService.setSocial(responseJson);
 				}
 			}
 		});
@@ -104,6 +80,5 @@ function initNetworkService($websocket,$route,DataService,UserInfoService)
 			ws.send(JSON.stringify(message));
 			},
 		init:initSocket
-		
 	}
 }
