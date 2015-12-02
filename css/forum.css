@@ -1152,7 +1152,8 @@ img-crop canvas {
   width: 100%;
   overflow: hidden;
   background-color: rgb(248,249,251);
-  margin: 0px;
+  margin-top: 5px;
+  padding: 5px 0;
   border-top: 2px solid rgb(192,210,214);
 }
 
