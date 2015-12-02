@@ -256,7 +256,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.init();
 
     if ($scope.mobileBrowser === true){
-      document.getElementById('topicSection').style.paddingBottom = "3.9em";
+      document.getElementById('topicSection').style.paddingBottom = "54px";
     }
 
     $scope.$watch("commentsArray", function (newValue, oldValue)
