@@ -1,0 +1,242 @@
+<!-- <section id="xContent">
+  <div id="xContentUnderlay" ng-click="backToChat()">
+    <div id="xContentOverlay">
+      <div id="backToChat" ng-click="backToChat()"><img src="img/backButton-2x.png" />Back To Live Chat</div>
+      <div id="iframewrapper">
+        <iframe frameborder="0" id="xSrc" name="xLinkFrame">
+          
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<section id="postSection">
+  <nav class="navbar navbar-fixed-top" id="postHeader">
+    <div id="peelNavBar" ng-if="isPeelUser == true">
+      <button class="btn-link peelButton" id="closePeelButton" ng-click="backToTopicButtonTapped()"><img src="img/peelBackButton-2x.png"/></button>
+      <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()"><img src="img/peel_watchOnTVButton.png"/></button>
+    </div>
+    <div ng-if="isPeelUser != true">
+      <span id="post_backToTopicButtonSpan">
+        <button id="backToTopicButton" class="btn-link" ng-click="backToTopicButtonTapped()">
+          <img src="img/backButton-2x.png"/>
+        </button>
+      </span>
+    </div>
+  </nav>
+
+  <div class="row repliesCommentRow" ng-switch="comment.mediaType">
+    <span class="repliesHeaderPostAuthorPhoto">
+      <div>
+        <a class="thumbnail">
+          <img   ng-src="{{comment.postAuthorPhoto}}" onerror="this.src='img/default_user_v3.png'" class="userPhoto">
+          </a>
+        </div>
+        <div id="pinIcon" ng-if="comment.pin == true">
+          <img src="img/pin.png"/>
+        </div>
+    </span>
+
+    <span class="post">
+      <div class="roww">
+        <span class="postUsername">
+          {{comment.postAuthorName}}
+        </span>
+        <span class="timestamp">
+          {{comment.postTimestamp}}
+        </span>
+      </div>
+
+      <div ng-bind-html="comment.html | linky" class="postContent">
+        {{comment.html}} 
+      </div>
+
+      <div ng-switch-when="image">
+        <img ng-src="{{comment.mediaUrl}}" class="postPhoto" ng-click="imageClick(comment.mediaUrl);" />
+      </div>
+
+      <div ng-switch-when="video">
+        <video controls="controls" poster="{{comment.mediaThumbUrl}}" class="postVideo">
+              <source ng-src="{{trustSrc(comment.mediaUrl)}}" type="video/mp4">
+            </video>
+        </div>  
+
+      <div class="socialButtonsRow">
+        <button class="btn-link social-btn" ng-click="updateLikeComment(comment.id)" ng-switch="comment.isLiked">
+          <img ng-switch-when="true" src="img/likeSmallSelected.png"/> 
+          <img ng-switch-when="false" src="img/likeSmall.png"/> 
+          
+        </button>
+        <span class="socialButtonLable">{{comment.likeCount}}</span>
+        <button class="btn-link social-btn" ng-click="triggerRepliesKeyboard()"><img src="img/replySmall.png"/> 
+        </button>
+        <span class="socialButtonLable">{{comment.replyCount}}</span>
+        <!--button class="btn-link social-btn"><img src="img/moreButton-2x.png"/></button-->
+        <!-- <div class="btn-group">
+            <button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
+            <img src="img/moreButton.png"/>
+            </button>
+          <ul class="dropdown-menu dropdown-menu-right" ng-switch="comment.isMyComment">
+            <li ng-switch-when="true"><a ng-click="deleteComment(comment.id);">Delete Comment</a></li>
+            <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(comment.id);">Report as spam</a></li>
+          </ul>
+        </div> -->
+      </div>
+    </span>
+  </div>
+
+  <div class="roww" id="repliesCommentSeparator">
+     &nbsp;
+  </div>
+  
+  <div id="textInputFieldReply" class="clearfix" ng-hide="mobileBrowser === true">
+    <div id="preview" ng-if="uploader.queue.length > 0">
+      <button type="button" id="removeMedia" class="fkFont" ng-click="removeMedia()">X
+      </button>
+    </div>
+    <div id="uploadControls" ng-if="uploader.isUploading && uploader.queue.length > 0">
+        <div class="progress" style="margin-bottom: 0;">
+          <div id="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+        </div>
+    </div>
+    <form id="postCommentForm" ng-submit="postReply(commentText)">
+      <div id="postCommentDiv" class="input-group">
+        <label for="fileUpload" id="attachMediaIcon">
+          <img src="img/attach-media.png" />
+        </label>
+
+        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="postReply(commentText)">POST</button>
+
+        <span><input id="postCommentField" type="text" class="form-control"
+        placeholder="Write a reply..." ng-model="commentText"></span>
+        
+        <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="uploader" class="form-control" />
+
+      </div>
+    </form>
+    <div id="fileWarning" ng-if="fileMaxExceeded" ng-switch="mediaType">
+      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 1MB</span>
+      <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
+    </div>
+    <div class="fileWarning" ng-if="HTML5warning === true">
+      <span class="text-danger">Please Use a Browser That Supports HTML5</span>
+    </div>
+  </div>
+  
+<div class="roww" id="repliesCommentSeparator">
+     &nbsp;
+  </div>
+  <div class="repliesContainer">
+    <div ng-repeat="thisReply in replies" class="row postRow" ng-switch="thisReply.mediaType" repeat-finished-notify>
+      
+      <span class="postAuthorPhoto">
+        <div class="thumbnail">
+            <img ng-src={{thisReply.postAuthorPhoto}} alt="" onerror="this.src='img/default_user_v3.png'" class="userPhoto">
+          </div>
+      </span>
+
+      <span class="post">
+        <div class="roww">
+          <span class="postUsername">
+            {{thisReply.postAuthorName}}
+          </span>
+          <span class="timestamp">
+            {{thisReply.postTimestamp}}
+          </span>
+        </div>
+
+        <div ng-bind-html="thisReply.html | linky" class="postContent">
+          {{thisReply.html}} 
+        </div>
+
+        <div ng-switch-when="image">
+            <img ng-src="{{thisReply.mediaUrl}}" class="postPhoto" ng-click="imageClick(thisReply.mediaUrl)"/>
+        </div>
+
+        <div ng-switch-when="video">
+          <video controls="controls" poster="{{thisReply.mediaThumbUrl}}" class="postVideo">
+              <source ng-src="{{trustSrc(thisReply.mediaUrl)}}" type="video/mp4">
+            </video>
+        </div>  
+
+        <div class="socialButtonsRow">
+          <button class="btn-link social-btn" ng-click="updateLikeReply(thisReply.id)" ng-switch="thisReply.isLiked">
+            <img ng-switch-when="true" src="img/likeSmallSelected.png"/> 
+              <img ng-switch-when="false" src="img/likeSmall.png"/>
+          </button>
+          <span class="socialButtonLable">{{thisReply.likeCount}}</span>
+          <button class="btn-link social-btn" ng-click="triggerRepliesKeyboard()"><img src="img/replySmall.png"/>
+           </button>
+           <span class="socialButtonLable">{{thisReply.commentCount}}</span>
+          </div>
+          <div class="sharingButtonsRow">
+          <div class="btn-group">
+              <button class="btn-link social-btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img src="img/moreButton.png"/>
+              </button>
+            <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisReply.isMyReply">
+              <li ng-switch-when="true"><a ng-click="deleteReply(thisReply.id);">Delete Comment</a></li>
+              <li ng-switch-when="false"><a ng-click="reportReplyAsSpam(thisReply.id);">Report as spam</a></li>
+            </ul>
+          </div>
+        </div>
+      </span>
+      
+    </div>
+  </div>
+
+  <div id="mobileUserInput" class="clearfix" ng-hide="mobileBrowser === false">
+
+    <div id="mobilePreview" ng-if="uploader.queue.length > 0">
+        <button type="button" id="removeMedia" class="fkFont" ng-click="removeMedia()">X
+        </button>
+      </div>
+      <div id="mobileUploadControls" ng-if="uploader.isUploading && uploader.queue.length > 0">
+        <div class="progress mobileProgress">
+          <div id="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+        </div>
+    </div>
+    <form id="postCommentForm" ng-submit="postReply(commentText)">
+      <div id="mobilePostCommentDiv" class="input-group">
+        <label for="fileUpload" id="attachMediaIcon">
+          <img src="img/attach-media.png" />
+        </label>
+
+        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="postReply(commentText)">POST</button>
+
+        <span><input id="postCommentField" type="text" class="form-control"
+        placeholder="Write a reply..." ng-model="commentText"></span>
+        
+        <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="uploader" class="form-control" />
+
+      </div>
+    </form>
+    <div id="fileWarning" ng-if="fileMaxExceeded" ng-switch="mediaType">
+      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 1MB</span>
+      <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
+    </div>
+    <div class="fileWarning" ng-if="HTML5warning === true">
+      <span class="text-danger">Please Use a Browser That Supports HTML5</span>
+    </div>
+  </div>
+
+   <!--<footer class="footer" id="textEntryField">
+        <form ng-submit="postReply(commentText)">
+        <div class="input-group">
+            <input id="replyCommentField" type="text" class="form-control" placeholder="Write a reply..." ng-model="commentText" onscroll="javascript:document.getElementById('scroll').value = this.scrollTop">
+            <span class="input-group-btn">
+              <button id="postReplyButton" class="btn btn-default" type="button" ng-click="postReply(commentText)">Post</button>
+            </span>
+        </div>/input-group
+      </form> 
+  </footer>-->
+  <!-- <hr> -->
+</section>
+
+
+<div id="newRepliesAvailableIndicatorDiv" ng-show="showNewRepliesIndicator">
+  <center>
+    <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newRepliesIndicatorTapped()"><img src="img/newReplyIndicator.png"/></button>
+  </center>
+</div>
