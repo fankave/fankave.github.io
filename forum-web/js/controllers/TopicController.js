@@ -632,6 +632,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     removeAfterUpload: true
   });
 
+  $scope.isHTML5 = uploader.isHTML5;
   $scope.mediaType;
   uploader.filters.push({
     name: 'customFilter',
@@ -649,6 +650,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     }
   });
 
+  var dontAdd;
   function generateImagePreview(evt) {
     var f = evt.target.files[0];
     console.log('F:', f);
@@ -665,9 +667,9 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
           e.target.result,
           '" title="', $sanitize(theFile.name),
           '"/>'].join('');
-        if ($scope.mobileBrowser === true){
+        if ($scope.mobileBrowser === true && !dontAdd){
           document.getElementById('mobilePreview').insertBefore(span, null);
-        } else {
+        } else if (!dontAdd) {
           document.getElementById('preview').insertBefore(span, null);
         }
         };
@@ -678,12 +680,26 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   document.getElementById('fileUpload').addEventListener('change',
     generateImagePreview, false);
 
+  $scope.removeMedia = function(){
+    uploader.clearQueue();
+    var e = $('#fileUpload');
+    e.wrap('<form>').closest('form').get(0).reset();
+    e.unwrap();
+    dontAdd = false;
+  };
+
   // CALLBACKS
   $scope.fileMaxExceeded = false;
   uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+    dontAdd = true;
     console.info('onWhenAddingFileFailed', item, filter, options);
-    $scope.fileMaxExceeded = true;
-    $timeout(function(){$scope.fileMaxExceeded = false;}, 5000);
+    if (!$scope.isHTML5){
+      console.log("Browser Doesn't Support HTML5");
+      $scope.HTML5warning = true;
+    } else if (uploader.queue.length < 1) {
+      $scope.fileMaxExceeded = true;
+      $timeout(function(){$scope.fileMaxExceeded = false;}, 5000);
+    }
   };
   uploader.onAfterAddingFile = function(fileItem) {
     console.info('onAfterAddingFile', fileItem);
@@ -812,7 +828,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     // lastElHeight = $('.postRow').last().height();
     // console.log("LAST ELEM TOP: ", lastElTop, lastElHeight, clientHeight);
     var currentScroll = $(document).height() - clientHeight - 1;
-    console.log("currentScroll: ", currentScroll, clientHeight);
+    // console.log("currentScroll: ", currentScroll, clientHeight);
     if ($(document).scrollTop() > currentScroll) {
       if ($scope.activeTab === 'social'){
         console.log("LOADING MORE SOCIAL");
