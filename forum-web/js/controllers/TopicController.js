@@ -812,7 +812,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     // lastElHeight = $('.postRow').last().height();
     // console.log("LAST ELEM TOP: ", lastElTop, lastElHeight, clientHeight);
     var currentScroll = $(document).height() - clientHeight - 1;
-    // console.log("currentScroll: ", currentScroll, clientHeight);
+    console.log("currentScroll: ", currentScroll, clientHeight);
     if ($(document).scrollTop() > currentScroll) {
       if ($scope.activeTab === 'social'){
         console.log("LOADING MORE SOCIAL");
