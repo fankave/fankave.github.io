@@ -383,11 +383,12 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   }
 
   $scope.postComment = function(commentText) {
-    if((commentText !== undefined) && commentText !== ""){
+    if((commentText !== undefined)){
       // console.log("TopicController postComment Invoked :"+ commentText);
       if (uploader.queue.length > 0){
         MUService.setCommentParams($scope.topicID, commentText, true);
       } else {
+    	 if(commentText !== "")
         networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
       }
     }
@@ -711,6 +712,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   uploader.onSuccessItem = function(fileItem, response, status, headers) {
     console.info('onSuccessItem', fileItem, response, status, headers);
       networkService.send(MUService.postMediaRequest(response));
+      MUService.resetCommentParams();
   };
   uploader.onErrorItem = function(fileItem, response, status, headers) {
     console.info('onErrorItem', fileItem, response, status, headers);

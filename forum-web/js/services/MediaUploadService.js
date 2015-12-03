@@ -40,8 +40,6 @@ mediaModule.factory('MUService',  function () {
 
 	function setCommentParams(tId,text,isCom,comId,repId){
 		topicId = tId;
-		if(text == undefined)
-			text = "";
 		commentText = text;
 		isComment = isCom;
 		
@@ -52,7 +50,7 @@ mediaModule.factory('MUService',  function () {
 	function postMediaRequest(mediaData){
 		var m = {"media":[mediaData]};
 		var sections = [];
-		if((commentText != undefined)){
+		if((commentText != undefined)  && commentText != ""){
 			sections.push({"type": "html","html":commentText});
 		}
 		sections.push({"type": "media", "media" : m.media});
