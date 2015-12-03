@@ -1,28 +1,31 @@
-angular.module("UserInput", ["NetworkModule","TopicModule","angularFileUpload"])
-  .controller("UserInputController", ["$scope","$window","$routeParams","networkService","TopicService","CommentService","ReplyService","UserInfoService",
-    function ($scope,$window,$routeParams,networkService,TopicService,CommentService,ReplyService,UserInfoService){
+angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angularFileUpload"])
+  .controller("UserInputController", ["$scope","$window","$routeParams","networkService","TopicService","CommentService","ReplyService","UserInfoService","FileUploader","MUService",
+    function ($scope,$window,$routeParams,networkService,TopicService,CommentService,ReplyService,UserInfoService,FileUploader,MUService){
 
+      console.log("Inherited Scope? ", $scope.topicID);
+      console.log("Find Preview Elem? ", $("#mobilePreview"));
       // ATTACH MEDIA
       var MUS_SERVER_URI = 'https://dev.fankave.com:8080';
       var UPLOAD_URL = '/v1.0/media/upload';
 
-      var uploader = $scope.uploader = new FileUploader({
+      var uploader = this.uploader = new FileUploader({
         url: MUS_SERVER_URI + UPLOAD_URL,
         autoUpload: false,
         removeAfterUpload: true
       });
 
-      $scope.mediaType;
-      uploader.filters.push({
+      this.isHTML5 = this.uploader.isHTML5;
+      this.mediaType;
+      this.uploader.filters.push({
         name: 'customFilter',
         fn: function(item /*{File|FileLikeObject}*/, options) {
           var itemType = item.type;
           if(itemType.indexOf("image") != -1){
-            $scope.mediaType = "image";
+            this.mediaType = "image";
             return this.queue.length < 1 && (item.size < 1048576);
           }
           else if(itemType.indexOf("video") != -1){
-            $scope.mediaType = "video";
+            this.mediaType = "video";
             return this.queue.length < 1 && (item.size < 10485760);
           }
           return this.queue.length < 10;
@@ -30,6 +33,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","angularFileUpload"])
       });
 
       // MEDIA PREVIEW
+      var dontAdd;
       function generateImagePreview(evt) {
         var f = evt.target.files[0];
         console.log('F:', f);
@@ -45,9 +49,9 @@ angular.module("UserInput", ["NetworkModule","TopicModule","angularFileUpload"])
             span.innerHTML = ['<img class="thumb" src="',
               e.target.result,
               '"/>'].join('');
-            if ($scope.mobileBrowser === true){
+            if ($scope.mobileBrowser === true && !dontAdd){
               document.getElementById('mobilePreview').insertBefore(span, null);
-            } else {
+            } else if (!dontAdd) {
               document.getElementById('preview').insertBefore(span, null);
             }
             };
@@ -58,21 +62,36 @@ angular.module("UserInput", ["NetworkModule","TopicModule","angularFileUpload"])
       document.getElementById('fileUpload').addEventListener('change',
         generateImagePreview, false);
 
-      // CALLBACKS
-      $scope.fileMaxExceeded = false;
-      uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
-        console.info('onWhenAddingFileFailed', item, filter, options);
-        $scope.fileMaxExceeded = true;
-        $timeout(function(){$scope.fileMaxExceeded = false;}, 5000);
+      this.removeMedia = function(){
+        this.uploader.clearQueue();
+        var e = $('#fileUpload');
+        e.wrap('<form>').closest('form').get(0).reset();
+        e.unwrap();
+        dontAdd = false;
       };
-      uploader.onAfterAddingFile = function(fileItem) {
+
+      // CALLBACKS
+      this.fileMaxExceeded = false;
+      this.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+        dontAdd = true;
+        console.info('onWhenAddingFileFailed', item, filter, options);
+        if (!this.isHTML5){
+          console.log("Browser Doesn't Support HTML5");
+          this.HTML5warning = true;
+        } else if (this.uploader.queue.length < 1) {
+          this.fileMaxExceeded = true;
+          $timeout(function(){this.fileMaxExceeded = false;}, 5000);
+        }
+      };
+      this.uploader.onAfterAddingFile = function(fileItem) {
         console.info('onAfterAddingFile', fileItem);
 
+
       };
-      uploader.onAfterAddingAll = function(addedFileItems) {
+      this.uploader.onAfterAddingAll = function(addedFileItems) {
         console.info('onAfterAddingAll', addedFileItems);
       };
-      uploader.onBeforeUploadItem = function(item) {
+      this.uploader.onBeforeUploadItem = function(item) {
         var user = UserInfoService.getUserCredentials();
         item.headers = {  
             'X-UserId': user.userId,
@@ -82,51 +101,51 @@ angular.module("UserInput", ["NetworkModule","TopicModule","angularFileUpload"])
 
         console.info('onBeforeUploadItem', item);
       };
-      uploader.onProgressItem = function(fileItem, progress) {
+      this.uploader.onProgressItem = function(fileItem, progress) {
         console.info('onProgressItem', fileItem, progress);
       };
-      uploader.onProgressAll = function(progress) {
+      this.uploader.onProgressAll = function(progress) {
         console.info('onProgressAll', progress);
       };
-      uploader.onSuccessItem = function(fileItem, response, status, headers) {
+      this.uploader.onSuccessItem = function(fileItem, response, status, headers) {
         console.info('onSuccessItem', fileItem, response, status, headers);
-          networkService.send(MUService.postMediaRequest(response));
+        networkService.send(MUService.postMediaRequest(response));
       };
-      uploader.onErrorItem = function(fileItem, response, status, headers) {
+      this.uploader.onErrorItem = function(fileItem, response, status, headers) {
         console.info('onErrorItem', fileItem, response, status, headers);
       };
-      uploader.onCancelItem = function(fileItem, response, status, headers) {
+      this.uploader.onCancelItem = function(fileItem, response, status, headers) {
         console.info('onCancelItem', fileItem, response, status, headers);
-        uploader.clearQueue();
       };
-      uploader.onCompleteItem = function(fileItem, response, status, headers) {
+      this.uploader.onCompleteItem = function(fileItem, response, status, headers) {
         console.info('onCompleteItem', fileItem, response, status, headers);
-        uploader.clearQueue();
       };
-      uploader.onCompleteAll = function() {
+      this.uploader.onCompleteAll = function() {
         console.info('onCompleteAll');
-        uploader.clearQueue();
+        this.uploader.clearQueue();
       };
 
-      console.info('uploader', uploader);
+      console.info('uploader', this.uploader);
 
       // POST COMMENT
-      $scope.postComment = function(commentText, isComment) {
-        if (uploader.queue.length > 0 && isComment === true){
+      this.postComment = function(commentText, isComment) {
+        console.log("In New Controller: ", isComment);
+        if (this.uploader.queue.length > 0 && isComment){
           MUService.setCommentParams($scope.topicID, commentText, true);
-        } else if (uploader.queue.length > 0 && isComment === false){
+        } else if (this.uploader.queue.length > 0 && !isComment){
           MUService.setCommentParams($scope.topicId, commentText, false, $scope.postID);
-        } else if (!!commentText && commentText !== "" && isComment === true){
+        } else if (!!commentText && commentText !== "" && isComment){
           networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
-        } else if (!!commentText && commentText !== "" && isComment === false){
+        } else if (!!commentText && commentText !== "" && !isComment){
           networkService.send(ReplyService.getPostReplyRequest($scope.topicId, $scope.postID, commentText));
         }
-        uploader.uploadAll();
+        this.uploader.uploadAll();
         $scope.commentText = "";
-        document.getElementById("topicCommentField").blur();
-        document.getElementById("postCommentField").blur();
-        document.getElementById("postCommentButton").blur();
-        $(document).scrollTop(0);
+        if (isComment){
+          $(document).scrollTop(0);
+        } else {
+          window.scrollTo(0, document.body.scrollHeight);
+        }
       };
 
     }]);
