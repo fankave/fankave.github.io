@@ -212,28 +212,7 @@
       <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 1MB</span>
       <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
     </div>
-    <!-- <div id="uploadControls" ng-if="uploader.queue.length > 0"> -->
-
-      <!-- <div id="preview">
-        <button type="button" id="removeMedia" class="fkFont" ng-click="uploader.clearQueue()">X
-        </button>
-      </div> -->
-
-      <!-- <div id="uploadButtons"> -->
-        <!-- <button type="button" class="btn btn-warning btn-xs" ng-click="uploader.cancelAll()" ng-if="uploader.isUploading">
-          <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-        </button> -->
-      <!-- </div> -->
-
-      <!-- <div ng-if="uploader.isUploading && uploader.queue.length > 0">
-        <div class="progress" style="margin-bottom: 0;">
-          <div id="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
-        </div>
-        <span id="progressText">
-          Uploading: {{uploader.progress}} of 100%
-        </span>
-      </div> -->
-    <!-- </div> -->
+   
   </div>
 </div>
 
@@ -341,7 +320,7 @@
 
       <div ng-switch-when="video" class="cropView ng-style:{ width: thisPost.mediaAspectFeed.w, height: thisPost.mediaAspectFeed.h };">
         <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
-          <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
+          <source ng-src="{{trustSrc(thisPost.embedUrl)}}" type="video/mp4">
           </video>
       </div> 
     </div> 
@@ -409,7 +388,7 @@
 
       <div ng-switch-when="video" class="cropView ng-style:{ width: thisPost.mediaAspectFeed.w, height: thisPost.mediaAspectFeed.h };">
         <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
-          <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
+          <source ng-src="{{trustSrc(thisPost.embedUrl)}}" type="video/mp4">
           </video>
       </div> 
     </div> 
