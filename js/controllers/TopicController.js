@@ -181,7 +181,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $scope.createdAt = TopicService.getTimeCreatedAt();
       $scope.liked = TopicService.getLiked();
       var metrics = TopicService.getMetrics();
-      $scope.likesCount = metrics.likes || 0;
+      $scope.likesCount = metrics.likes;
       $scope.commentsCount = metrics.comments || 0;
 
     }
@@ -474,12 +474,15 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempSocial.postAuthorPhoto = socialData[i].embedAuthor.photo;
         tempSocial.postTimestamp = socialData[i].createdAt;
 
-        tempSocial.isLiked = socialData[i].signal.like;
+        tempSocial.isLiked = socialData[i].signal.like || false;
+        tempSocial.isRetweet = socialData[i].signal.retweet || false;
+        tempSocial.isFavorite = socialData[i].signal.favorite || false;
         tempSocial.providerName = socialData[i].embedProvider.name;
         tempSocial.providerLogo = socialData[i].embedProvider.logo;
         tempSocial.html = socialData[i].embedText;
-        tempSocial.likeCount = socialData[i].metrics.likes || 0;
-        tempSocial.replyCount = socialData[i].metrics.replies || 0;
+        tempSocial.retweetCount = socialData[i].metrics.retweets;
+        tempSocial.favoriteCount = socialData[i].metrics.favorites;
+        tempSocial.replyCount = socialData[i].metrics.replies;
 
         tempSocial.embedType = socialData[i].embedType;
         if (socialData[i].embedType === "media"){
@@ -503,12 +506,15 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempSocial.postAuthorPhoto = socialData[i].embedAuthor.photo;
         tempSocial.postTimestamp = socialData[i].createdAt;
 
-        tempSocial.isLiked = socialData[i].signal.like;
+        tempSocial.isLiked = socialData[i].signal.like || false;
+        tempSocial.isRetweet = socialData[i].signal.retweet || false;
+        tempSocial.isFavorite = socialData[i].signal.favorite || false;
         tempSocial.providerName = socialData[i].embedProvider.name;
         tempSocial.providerLogo = socialData[i].embedProvider.logo;
         tempSocial.html = socialData[i].embedText;
-        tempSocial.likeCount = socialData[i].metrics.likes || 0;
-        tempSocial.replyCount = socialData[i].metrics.replies || 0;
+        tempSocial.retweetCount = socialData[i].metrics.retweets;
+        tempSocial.favoriteCount = socialData[i].metrics.favorites;
+        tempSocial.replyCount = socialData[i].metrics.replies;
 
         tempSocial.embedType = socialData[i].embedType;
         
@@ -551,11 +557,14 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempVideo.postTimestamp = videoData[i].createdAt;
 
         tempVideo.isLiked = videoData[i].signal.like;
+        tempVideo.isRetweet = videoData[i].signal.retweet || false;
+        tempVideo.isFavorite = videoData[i].signal.favorite || false;
         tempVideo.providerName = videoData[i].embedProvider.name;
         tempVideo.providerLogo = videoData[i].embedProvider.logo;
         tempVideo.html = videoData[i].embedText;
-        tempVideo.likeCount = videoData[i].metrics.likes || 0;
-        tempVideo.replyCount = videoData[i].metrics.replies || 0;
+        tempVideo.retweetCount = videoData[i].metrics.retweets;
+        tempVideo.favoriteCount = videoData[i].metrics.favorites;
+        tempVideo.replyCount = videoData[i].metrics.replies;
 
         tempVideo.embedType = videoData[i].embedType;
         if (videoData[i].embedType === "media"){
