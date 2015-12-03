@@ -39,7 +39,7 @@
     </span>
 
     <span class="post">
-      <div class="roww">
+      <div class="chatPostHeader">
         <span class="postUsername">
           {{comment.postAuthorName}}
         </span>
@@ -90,42 +90,37 @@
      &nbsp;
   </div>
   
-  <div id="textInputFieldReply" class="clearfix" ng-hide="mobileBrowser === true">
-    <form id="postCommentForm" ng-submit="postReply(commentText)">
+  <div id="textInputFieldReply" class="clearfix" ng-if="mobileBrowser === false" ng-controller="UserInputController as user">
+    <div id="preview" ng-if="user.uploader.queue.length > 0">
+      <button type="button" id="removeMedia" class="fkFont" ng-click="user.removeMedia()">X
+      </button>
+    </div>
+    <div id="uploadControls" ng-if="user.uploader.isUploading && user.uploader.queue.length > 0">
+        <div class="progress" style="margin-bottom: 0;">
+          <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
+        </div>
+    </div>
+    <form id="postCommentForm" ng-submit="user.postComment(commentText,false)">
       <div id="postCommentDiv" class="input-group">
         <label for="fileUpload" id="attachMediaIcon">
           <img src="img/attach-media.png" />
         </label>
 
-        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="postReply(commentText)">POST</button>
+        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,false)">POST</button>
 
         <span><input id="postCommentField" type="text" class="form-control"
         placeholder="Write a reply..." ng-model="commentText"></span>
         
-        <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="uploader" class="form-control" />
+        <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
 
       </div>
     </form>
-    <div id="fileWarning" ng-if="fileMaxExceeded" ng-switch="mediaType">
+    <div id="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
       <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 1MB</span>
       <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
     </div>
-    <div id="uploadControls" ng-if="uploader.queue.length > 0">
-
-      <div id="preview">
-        <button type="button" id="removeMedia" class="fkFont" ng-click="uploader.clearQueue()">X
-        </button>
-      </div>
-
-      <div ng-if="uploader.isUploading && uploader.queue.length > 0">
-      <!-- <div> -->
-        <div class="progress" style="margin-bottom: 0;">
-          <div id="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
-        </div>
-        <span id="progressText">
-          Uploading: {{uploader.progress}} of 100%
-        </span>
-      </div>
+    <div class="fileWarning" ng-if="user.HTML5warning === true">
+      <span class="text-danger">Please Use a Browser That Supports HTML5</span>
     </div>
   </div>
   
@@ -142,7 +137,7 @@
       </span>
 
       <span class="post">
-        <div class="roww">
+        <div class="chatPostHeader">
           <span class="postUsername">
             {{thisReply.postAuthorName}}
           </span>
@@ -191,46 +186,38 @@
     </div>
   </div>
 
-  <div id="mobileUserInput" class="clearfix" ng-hide="mobileBrowser === false">
+  <div id="mobileUserInput" class="clearfix" ng-if="mobileBrowser === true" ng-controller="UserInputController as user">
 
-    <div id="mobileUploadControls" ng-if="uploader.queue.length > 0">
-
-      <div id="mobilePreview">
-        <button type="button" id="removeMedia" class="fkFont" ng-click="uploader.clearQueue()">X
+    <div id="mobilePreview" ng-if="user.uploader.queue.length > 0">
+        <button type="button" id="removeMedia" class="fkFont" ng-click="user.removeMedia()">X
         </button>
       </div>
-
-      <div id="uploadButtons">
-      </div>
-
-      <div ng-if="uploader.isUploading && uploader.queue.length > 0">
-      <!-- <div> -->
-        <div class="progress" style="margin-bottom: 0;">
-          <div id="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+      <div id="mobileUploadControls" ng-if="user.uploader.isUploading && user.uploader.queue.length > 0">
+        <div class="progress mobileProgress">
+          <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
         </div>
-        <span id="progressText">
-          Uploading: {{uploader.progress}} of 100%
-        </span>
-      </div>
     </div>
-    <form id="postCommentForm" ng-submit="postReply(commentText)">
+    <form id="postCommentForm" ng-submit="user.postComment(commentText,false)">
       <div id="mobilePostCommentDiv" class="input-group">
         <label for="fileUpload" id="attachMediaIcon">
           <img src="img/attach-media.png" />
         </label>
 
-        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="postReply(commentText)">POST</button>
+        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,false)">POST</button>
 
         <span><input id="postCommentField" type="text" class="form-control"
         placeholder="Write a reply..." ng-model="commentText"></span>
         
-        <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="uploader" class="form-control" />
+        <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
 
       </div>
     </form>
-    <div id="fileWarning" ng-if="fileMaxExceeded" ng-switch="mediaType">
+    <div id="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
       <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 1MB</span>
       <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
+    </div>
+    <div class="fileWarning" ng-if="user.HTML5warning === true">
+      <span class="text-danger">Please Use a Browser That Supports HTML5</span>
     </div>
   </div>
 
