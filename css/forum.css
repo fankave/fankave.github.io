@@ -1206,6 +1206,7 @@ img-crop canvas {
   border: none;
   background-color: #fff;
   padding: 0;
+  outline: none;
 }
 
 #postCommentDiv {

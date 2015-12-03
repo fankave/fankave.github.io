@@ -1,4 +1,4 @@
-var rootModule = angular.module("Forum", ["ngRoute", "ngSanitize", "AuthModule", "ChannelModule","TopicModule", "PostModule", "NetworkModule", "MediaModule"]);
+var rootModule = angular.module("Forum", ["ngRoute", "ngSanitize", "AuthModule", "ChannelModule","TopicModule", "PostModule", "NetworkModule", "MediaModule", "UserInput"]);
 rootModule.config(["$routeProvider", "$locationProvider",
 
 function ($routeProvider, $locationProvider) {
