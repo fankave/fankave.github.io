@@ -383,19 +383,19 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   }
 
   $scope.postComment = function(commentText) {
-    if((commentText !== undefined) && commentText !== ""){
-      // console.log("TopicController postComment Invoked :"+ commentText);
-      if (uploader.queue.length > 0){
-        MUService.setCommentParams($scope.topicID, commentText, true);
-      } else {
-        networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
-      }
-    }
-    uploader.uploadAll();
-    $scope.commentText = "";
-    document.getElementById("topicCommentField").blur();
-    document.getElementById("postCommentButton").blur();
-    $(document).scrollTop(0);
+	  // console.log("TopicController postComment Invoked :"+ commentText);
+	  if (uploader.queue.length > 0){
+		  MUService.setCommentParams($scope.topicID, commentText, true);
+	  } else {
+		  if((commentText !== undefined) && (commentText !== "")){ 
+			  networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
+		  }
+	  }
+	  uploader.uploadAll();
+	  $scope.commentText = "";
+	  document.getElementById("topicCommentField").blur();
+	  document.getElementById("postCommentButton").blur();
+	  $(document).scrollTop(0);
   };
 
   $scope.updateLikeTopic = function() {
@@ -727,6 +727,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   uploader.onSuccessItem = function(fileItem, response, status, headers) {
     console.info('onSuccessItem', fileItem, response, status, headers);
       networkService.send(MUService.postMediaRequest(response));
+      MUService.resetCommentParams();
   };
   uploader.onErrorItem = function(fileItem, response, status, headers) {
     console.info('onErrorItem', fileItem, response, status, headers);

@@ -179,11 +179,12 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 	}
 
 	$scope.postReply = function(commentText) {
-		if((commentText !== undefined) && commentText !== ""){
-			// console.log("PostController postReply Invoked :", commentText, $scope.topicId, $scope.postID);
-			if (uploader.queue.length > 0){
-				MUService.setCommentParams($scope.topicId, commentText, false, $scope.postID);
-			} else {
+
+		// console.log("PostController postReply Invoked :", commentText, $scope.topicId, $scope.postID);
+		if (uploader.queue.length > 0){
+			MUService.setCommentParams($scope.topicId, commentText, false, $scope.postID);
+		} else {
+			if((commentText !== undefined) && commentText !== ""){
 				networkService.send(ReplyService.getPostReplyRequest($scope.topicId,$scope.postID, commentText));
 			}
 		}
