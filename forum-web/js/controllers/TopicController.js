@@ -383,20 +383,19 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   }
 
   $scope.postComment = function(commentText) {
-    if((commentText !== undefined)){
-      // console.log("TopicController postComment Invoked :"+ commentText);
-      if (uploader.queue.length > 0){
-        MUService.setCommentParams($scope.topicID, commentText, true);
-      } else {
-    	 if(commentText !== "")
-        networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
-      }
-    }
-    uploader.uploadAll();
-    $scope.commentText = "";
-    document.getElementById("topicCommentField").blur();
-    document.getElementById("postCommentButton").blur();
-    $(document).scrollTop(0);
+	  // console.log("TopicController postComment Invoked :"+ commentText);
+	  if (uploader.queue.length > 0){
+		  MUService.setCommentParams($scope.topicID, commentText, true);
+	  } else {
+		  if((commentText !== undefined) && (commentText !== "")){ 
+			  networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
+		  }
+	  }
+	  uploader.uploadAll();
+	  $scope.commentText = "";
+	  document.getElementById("topicCommentField").blur();
+	  document.getElementById("postCommentButton").blur();
+	  $(document).scrollTop(0);
   };
 
   $scope.updateLikeTopic = function() {
