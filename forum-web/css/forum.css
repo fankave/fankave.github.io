@@ -66,15 +66,16 @@ body
 {
   height: 8em;
   text-align:center;
-  /*background-color:red;*/
   color:white;
   max-width: 950px;
   margin: 0 auto;
-  /* box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3); */
 }
 
  #postHeader
 {
+  height: 8em;
+  text-align:center;
+  color:white;
   max-width: 950px;
   margin: 0 auto;
 }  
@@ -224,10 +225,9 @@ body
 }
 
 #pinIcon img {
-    display: block;
-    padding-left:10px;
-    margin-left: auto;
-    margin-right: auto;
+  display: block;
+  padding-left:10px;
+  margin: 7px auto;
 }
 .repliesHeaderUserPhoto
 {
@@ -237,27 +237,17 @@ body
   max-height: 32px !important;
 }
 
-#pinIcon
-{
-  font-size: 0.2em;
-  /*background-color:red;*/
+#pinIcon {
   max-height:15px;
   text-align: right;
-  margin-top: -15px;
-  padding: 0px;
-}
-
-#pinIcon img
-{
-  max-height: 15px;
 }
 
 .post {
   width: 85%;
   background-color: #fff;
-  float:right;
+  float:left;
   min-height: 2.0em;
-  padding-left: 5px;
+  padding-left: 4%;
   padding-right :10px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -301,22 +291,19 @@ body
 
 .postUsername
 {
-  font-size: 16px;
-  /*font-size: 0.31em;*/
+  font-size: 14px;
   float:left;
-  color: rgb(29,29,29);
-  /*width:80%;*/
-  /*padding-left:13px;*/
+  color: rgb(162,177,182);
+  font-weight: bolder;
 }
 
 .socialPostUsername
 {
   font-size: 16px;
-  /*font-size: 0.31em;*/
   float:left;
   color: rgb(29,29,29);
-  /*width:80%;*/
   padding-left:13px;
+  font-weight: bolder;
 }
 
 .timestamp
@@ -327,6 +314,15 @@ body
   /*width:20%;*/
   text-align: right;
 /* padding-right:10px; */
+}
+
+.chatTimestamp {
+  position: absolute;
+  right: 0;
+  padding-right: 4%;
+  font-size: 0.31em;
+  color: rgb(166, 189, 207);
+  text-align: right;
 }
 
 .replyTimestamp
@@ -341,17 +337,19 @@ body
 
 .postContent
 {
-  padding-right: 5px;
-  font-size: 0.34em;
+  padding-right: 20px;
+  font-size: 16px;
+  line-height: 22px;
   margin-bottom:0.3em;
   word-wrap:break-word;
+  color: rgb(31,35,38);
 }
 
 .socialContent {
-  /*margin-top: 13px;*/
-  /*display: inline-block;*/
   font-size: 16px;
   font-weight: 400;
+  color: rgb(31,35,38);
+  margin-bottom: 0.5em;
 }
 
 .replyContent
@@ -437,18 +435,52 @@ body
   width:20px;
 }
 
-.social-btn img
-{
-  width:17px;
-  height:17px;
+.social-reply {
+  height: 12px;
+  width: auto;
 }
+
+.social-like {
+  height: 14px;
+  width: auto;
+}
+
+.social-more {
+  width: 18px;
+  height: auto;
+}
+
+.social-metrics {
+  height: 12px;
+  width: auto;
+  margin-bottom: 14px;
+  margin-top: 14px;
+}
+
+.socialRetweet {
+  margin-left: 60px;
+}
+
+.socialFavorite {
+  margin-left: 42px;
+}
+
+#chatLike {
+  margin-left: 10px;
+}
+
+#chatReply {
+  margin-left: 35px;
+}
+
 .socialButtonLable
 {
   float:left;
-  min-width:30px;
-  width:30px;
+  /*min-width:30px;*/
+  /*width:30px;*/
   height:16px;
-  padding:5px 2px 7px 3px;
+  padding:3px 2px 7px 5px;
+  font-size: 12px;
 } 
 span.socialButtonLable
 {
@@ -593,12 +625,12 @@ input:focus + button {
   height: 52px;
 }
 
-/*
-.peelButton
-{
-  padding:10px;
-}
-*/
+
+/*.peelButton {
+  wid
+  padding: 6px 9px;
+}*/
+
 
 
 #closePeelButton {
@@ -609,24 +641,33 @@ input:focus + button {
 }
 
 #closePeelButton img {
-  max-height: 100%;
-  width:2.4em;
+  /*max-height: 100%;*/
+  /*width:2.4em;*/
   height:2.4em;
 }
 
 
 
 #peelWatchOnTVButton {
-  /*float: right;*/
   position: absolute;
   right: 0;
-  top: 5px;
+  top: 11px;
+  width: 117px;
+  height: 28px;
+  margin-right: 2%;
+  /*padding: 6px 9px;*/
+  border: 1px solid rgb(87,87,87);
+  color: rgb(90,90,90);
+  font-size: 14px;
+  font-weight: bolder;
 }
 
-#peelWatchOnTVButton img {
-  max-height:2.4em;
+#peelText {
+  color: rgb(90,90,90);
+  font-size: 14px;
+  font-weight: bolder;
+  vertical-align: -80%;
 }
-
 
 /* - - - 'New Content Available' indicator - - - */
 
@@ -970,6 +1011,12 @@ button:hover {
 
 .triple-left {
   padding-left: 4%;
+}
+
+@media all and (min-width: 500px){
+  .triple {
+    font-size: 2.8em;
+  }
 }
 
 .center {
@@ -1374,7 +1421,7 @@ img-crop canvas {
 
 .tabName {
   vertical-align: -50%;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   line-height: 1;
   color: rgb(162,177,182);

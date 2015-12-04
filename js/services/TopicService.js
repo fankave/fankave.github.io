@@ -127,6 +127,7 @@ topicModule.service('TopicService', function (DateUtilityService,Bant,FDSUtility
     var channelId = 0;
     if(_topic!= undefined && _topic.owner!= undefined)
       channelId = _topic.owner.id;
+      _channelId = channelId;
     var uri = "/v1.0/channel/follow/" + channelId;
 
     return  varTopicParams = {"rid": "topic",
