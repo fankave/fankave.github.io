@@ -21,18 +21,18 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   // }
 
   // Retain & Handle State when Returning From External Links
-  if (ForumStorage.getFromLocalStorage('hasUserVisited') === true){
-    console.log("Checking For Existing Session");
+  // if (ForumStorage.getFromLocalStorage('hasUserVisited') === true){
+  //   console.log("Checking For Existing Session");
     
-    $scope.initPage();
-    $scope.channelId = ForumStorage.getFromLocalStorage('lastChannel');
-    $scope.loadTab(ForumStorage.getFromLocalStorage('lastTabActive'), $scope.channelId);
-    setTimeout(function(){
-      $scope.activeTab = ForumStorage.getFromLocalStorage('lastTabActive');
-    }, 100);
-    // updateVideo();
-    // updateSocial();
-  }
+  //   $scope.initPage();
+  //   $scope.channelId = ForumStorage.getFromLocalStorage('lastChannel');
+  //   $scope.loadTab(ForumStorage.getFromLocalStorage('lastTabActive'), $scope.channelId);
+  //   setTimeout(function(){
+  //     $scope.activeTab = ForumStorage.getFromLocalStorage('lastTabActive');
+  //   }, 100);
+  //   // updateVideo();
+  //   // updateSocial();
+  // }
   var headerHeight;
   $scope.scrollToBookmark = function() {
     if (ForumStorage.getFromLocalStorage('commentBookmark') !== undefined){
@@ -636,22 +636,22 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $scope.activeTab = 'social';
     }
     $scope.loadTab(tab);
+    $scope.channelId = ForumStorage.getFromLocalStorage('lastChannel');
   };
 
-  var _channelId = ChannelService.getChannel();
-  $scope.channelId = _channelId;
-  TopicService.setChannel(_channelId);
+  // var _channelId = ChannelService.getChannel();
+  // TopicService.setChannel(_channelId);
   // ForumStorage.setToLocalStorage('lastChannel',_channelId);
   $scope.loadTab = function(tab, channel) {
-    console.log("Channel in Load Tab: ", channel);
+    console.log("Channel in Load Tab: ", $scope.channelId, TopicService.getChannelId());
     console.log("Switched to Tab: ", tab);
-    if (tab === 'social' && !$scope.socialArray){
+    if (tab === 'social'){
       // console.log("Tab Channel: ", ChannelService.getChannel());
-      networkService.send(SocialService.getSocialDataRequest(channel || ChannelService.getChannel()));
+      networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
     }
-    else if (tab === 'video' && !$scope.videoArray){
+    else if (tab === 'video'){
       // console.log("Tab Channel: ", ChannelService.getChannel());
-      networkService.send(VideoService.getVideoDataRequest(channel || ChannelService.getChannel()));
+      networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
     }
   };
 
@@ -701,12 +701,12 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     if ($(document).scrollTop() > currentScroll) {
       if ($scope.activeTab === 'social'){
         console.log("LOADING MORE SOCIAL");
-        networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()));
+        networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
         scrollAfterLoad(currentScroll + 90);
       }
       else if ($scope.activeTab === 'video'){
         console.log("LOADING MORE VIDEO");
-        networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()));
+        networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
         scrollAfterLoad(currentScroll + 90);
       }
     }
