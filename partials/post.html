@@ -69,11 +69,24 @@
           <img class="social-like" ng-switch-when="false" src="img/thumbsUp@3x.png"/> 
           
         </button>
-        <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
+        <span class="socialButtonLable">{{comment.likeCount}}  </span>
 
         <button id="chatReply" class="btn-link social-btn" ng-click="triggerRepliesKeyboard()">
-          <img class="social-reply" src="img/shareCopy@3x.png"/> </button>
-          <span class="socialButtonLable"> Reply</span>
+          <img class="social-reply" src="img/shareCopy@3x.png"/> 
+        </button>
+          <span class="socialButtonLable" ng-click="triggerRepliesKeyboard()"> Reply</span>
+      </div>
+      <div class="sharingButtonsRow">
+        <div class="chatTimestamp">
+          <button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
+            <img class="social-more" src="img/moreButton.png"/>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
+
+            <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
+            <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
+          </ul>
+        </div>
       </div>
     </span>
   </div>
@@ -152,27 +165,33 @@
             </video>
         </div>  
 
-        <div class="socialButtonsRow">
-          <button class="btn-link social-btn" ng-click="updateLikeReply(thisReply.id)" ng-switch="thisReply.isLiked">
-            <img ng-switch-when="true" src="img/likeSmallSelected.png"/> 
-              <img ng-switch-when="false" src="img/likeSmall.png"/>
+        
+      <div class="socialButtonsRow">
+        <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeReply(thisReply.id)" ng-switch="thisReply.isLiked">
+          <img class="social-like" ng-switch-when="true" src="img/thumbsUp_select@3x.png"/> 
+          <img class="social-like" ng-switch-when="false" src="img/thumbsUp@3x.png"/> 
+          
+        </button>
+        <span class="socialButtonLable">{{thisReply.likeCount}}  </span>
+
+        <button id="chatReply" class="btn-link social-btn" ng-click="triggerRepliesKeyboard()">
+          <img class="social-reply" src="img/shareCopy@3x.png"/> </button>
+          <span class="socialButtonLable" ng-click="triggerRepliesKeyboard()"> Reply</span>
+        <span class="socialButtonLable">{{thisReply.commentCount}}</span>
+      </div>
+      <div class="sharingButtonsRow">
+        <div class="chatTimestamp">
+          <button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img class="social-more" src="img/moreButton.png"/>
           </button>
-          <span class="socialButtonLable">{{thisReply.likeCount}}</span>
-          <button class="btn-link social-btn" ng-click="triggerRepliesKeyboard()"><img src="img/replySmall.png"/>
-           </button>
-           <span class="socialButtonLable">{{thisReply.commentCount}}</span>
-          </div>
-          <div class="sharingButtonsRow">
-          <div class="btn-group">
-              <button class="btn-link social-btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img src="img/moreButton.png"/>
-              </button>
-            <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisReply.isMyReply">
-              <li ng-switch-when="true"><a ng-click="deleteReply(thisReply.id);">Delete Comment</a></li>
-              <li ng-switch-when="false"><a ng-click="reportReplyAsSpam(thisReply.id);">Report as spam</a></li>
-            </ul>
-          </div>
+          <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisReply.isMyReply">
+
+            <li ng-switch-when="true"><a ng-click="deleteReply(thisReply.id);">Delete Comment</a></li>
+            <li ng-switch-when="false"><a ng-click="reportReplyAsSpam(thisReply.id);">Report as spam</a></li>
+          </ul>
         </div>
+      </div>
+          
       </span>
       
     </div>
