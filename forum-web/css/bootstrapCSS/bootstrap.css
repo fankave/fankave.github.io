@@ -5,7 +5,7 @@
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
-  font-family: sans-serif;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
@@ -3457,6 +3457,7 @@ fieldset[disabled] .btn-danger.active {
   font-weight: normal;
   color: #337ab7;
   border-radius: 0;
+  text-decoration: none;
 }
 .btn-link,
 .btn-link:active,

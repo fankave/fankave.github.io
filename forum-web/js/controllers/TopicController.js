@@ -21,18 +21,18 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   // }
 
   // Retain & Handle State when Returning From External Links
-  if (ForumStorage.getFromLocalStorage('hasUserVisited') === true){
-    console.log("Checking For Existing Session");
+  // if (ForumStorage.getFromLocalStorage('hasUserVisited') === true){
+  //   console.log("Checking For Existing Session");
     
-    $scope.initPage();
-    $scope.channelId = ForumStorage.getFromLocalStorage('lastChannel');
-    $scope.loadTab(ForumStorage.getFromLocalStorage('lastTabActive'), $scope.channelId);
-    setTimeout(function(){
-      $scope.activeTab = ForumStorage.getFromLocalStorage('lastTabActive');
-    }, 100);
-    // updateVideo();
-    // updateSocial();
-  }
+  //   $scope.initPage();
+  //   $scope.channelId = ForumStorage.getFromLocalStorage('lastChannel');
+  //   $scope.loadTab(ForumStorage.getFromLocalStorage('lastTabActive'), $scope.channelId);
+  //   setTimeout(function(){
+  //     $scope.activeTab = ForumStorage.getFromLocalStorage('lastTabActive');
+  //   }, 100);
+  //   // updateVideo();
+  //   // updateSocial();
+  // }
   var headerHeight;
   $scope.scrollToBookmark = function() {
     if (ForumStorage.getFromLocalStorage('commentBookmark') !== undefined){
@@ -181,7 +181,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $scope.createdAt = TopicService.getTimeCreatedAt();
       $scope.liked = TopicService.getLiked();
       var metrics = TopicService.getMetrics();
-      $scope.likesCount = metrics.likes || 0;
+      $scope.likesCount = metrics.likes;
       $scope.commentsCount = metrics.comments || 0;
 
     }
@@ -474,12 +474,15 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempSocial.postAuthorPhoto = socialData[i].embedAuthor.photo;
         tempSocial.postTimestamp = socialData[i].createdAt;
 
-        tempSocial.isLiked = socialData[i].signal.like;
+        tempSocial.isLiked = socialData[i].signal.like || false;
+        tempSocial.isRetweet = socialData[i].signal.retweet || false;
+        tempSocial.isFavorite = socialData[i].signal.favorite || false;
         tempSocial.providerName = socialData[i].embedProvider.name;
         tempSocial.providerLogo = socialData[i].embedProvider.logo;
         tempSocial.html = socialData[i].embedText;
-        tempSocial.likeCount = socialData[i].metrics.likes || 0;
-        tempSocial.replyCount = socialData[i].metrics.replies || 0;
+        tempSocial.retweetCount = socialData[i].metrics.retweets;
+        tempSocial.favoriteCount = socialData[i].metrics.favorites;
+        tempSocial.replyCount = socialData[i].metrics.replies;
 
         tempSocial.embedType = socialData[i].embedType;
         if (socialData[i].embedType === "media"){
@@ -503,12 +506,15 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempSocial.postAuthorPhoto = socialData[i].embedAuthor.photo;
         tempSocial.postTimestamp = socialData[i].createdAt;
 
-        tempSocial.isLiked = socialData[i].signal.like;
+        tempSocial.isLiked = socialData[i].signal.like || false;
+        tempSocial.isRetweet = socialData[i].signal.retweet || false;
+        tempSocial.isFavorite = socialData[i].signal.favorite || false;
         tempSocial.providerName = socialData[i].embedProvider.name;
         tempSocial.providerLogo = socialData[i].embedProvider.logo;
         tempSocial.html = socialData[i].embedText;
-        tempSocial.likeCount = socialData[i].metrics.likes || 0;
-        tempSocial.replyCount = socialData[i].metrics.replies || 0;
+        tempSocial.retweetCount = socialData[i].metrics.retweets;
+        tempSocial.favoriteCount = socialData[i].metrics.favorites;
+        tempSocial.replyCount = socialData[i].metrics.replies;
 
         tempSocial.embedType = socialData[i].embedType;
         
@@ -551,11 +557,14 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempVideo.postTimestamp = videoData[i].createdAt;
 
         tempVideo.isLiked = videoData[i].signal.like;
+        tempVideo.isRetweet = videoData[i].signal.retweet || false;
+        tempVideo.isFavorite = videoData[i].signal.favorite || false;
         tempVideo.providerName = videoData[i].embedProvider.name;
         tempVideo.providerLogo = videoData[i].embedProvider.logo;
         tempVideo.html = videoData[i].embedText;
-        tempVideo.likeCount = videoData[i].metrics.likes || 0;
-        tempVideo.replyCount = videoData[i].metrics.replies || 0;
+        tempVideo.retweetCount = videoData[i].metrics.retweets;
+        tempVideo.favoriteCount = videoData[i].metrics.favorites;
+        tempVideo.replyCount = videoData[i].metrics.replies;
 
         tempVideo.embedType = videoData[i].embedType;
         if (videoData[i].embedType === "media"){
@@ -627,22 +636,22 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $scope.activeTab = 'social';
     }
     $scope.loadTab(tab);
+    $scope.channelId = ForumStorage.getFromLocalStorage('lastChannel');
   };
 
-  var _channelId = ChannelService.getChannel();
-  $scope.channelId = _channelId;
-  TopicService.setChannel(_channelId);
+  // var _channelId = ChannelService.getChannel();
+  // TopicService.setChannel(_channelId);
   // ForumStorage.setToLocalStorage('lastChannel',_channelId);
   $scope.loadTab = function(tab, channel) {
-    console.log("Channel in Load Tab: ", channel);
+    console.log("Channel in Load Tab: ", $scope.channelId, TopicService.getChannelId());
     console.log("Switched to Tab: ", tab);
-    if (tab === 'social' && !$scope.socialArray){
+    if (tab === 'social'){
       // console.log("Tab Channel: ", ChannelService.getChannel());
-      networkService.send(SocialService.getSocialDataRequest(channel || ChannelService.getChannel()));
+      networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
     }
-    else if (tab === 'video' && !$scope.videoArray){
+    else if (tab === 'video'){
       // console.log("Tab Channel: ", ChannelService.getChannel());
-      networkService.send(VideoService.getVideoDataRequest(channel || ChannelService.getChannel()));
+      networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
     }
   };
 
@@ -692,12 +701,12 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     if ($(document).scrollTop() > currentScroll) {
       if ($scope.activeTab === 'social'){
         console.log("LOADING MORE SOCIAL");
-        networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()));
+        networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
         scrollAfterLoad(currentScroll + 90);
       }
       else if ($scope.activeTab === 'video'){
         console.log("LOADING MORE VIDEO");
-        networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()));
+        networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
         scrollAfterLoad(currentScroll + 90);
       }
     }

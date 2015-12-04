@@ -28,8 +28,9 @@
 <section id="topicSection">
   <nav class="navbar navbar-fixed-top" id="header">
     <div id="peelNavBar" ng-if="isPeelUser == true">
-      <button class="btn-link peelButton" id="closePeelButton" ng-click="peelClose()"><img src="img/peelBackButton-2x.png"/></button>
-      <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()"><img src="img/peel_watchOnTVButton.png"/></button>
+      <button class="btn-link peelButton" id="closePeelButton" ng-click="peelClose()"><img src="img/backButton-2x.png"/></button>
+      <span id="peelText">Peel Bar</span>
+      <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()">Watch Channel</button>
     </div>
     <div class="scoreCardContent clearfix">
 
@@ -149,8 +150,8 @@
     <div class="grid-col-alt grid-col-50">
       <div id="headLike">
         <button class="btn-link topic-social-btn" ng-click="updateLikeTopic()" ng-switch="liked">
-          <img ng-switch-when="true" src="img/likeBigSelected.png"/> 
-          <img ng-switch-when="false" src="img/likeBig-3x.png"/> 
+          <img ng-switch-when="true" src="img/thumbsUp_select@3x.png"/> 
+          <img ng-switch-when="false" src="img/thumbsUp@3x.png"/> 
         </button>
         <span class="socialButtonLabel fkFont">{{likesCount}} </span>
       </div>
@@ -219,6 +220,7 @@
 </div>
 
 <div class="commentsContainer" ng-switch="activeTab">
+
   <!-- Chat Tab Content -->
   <div ng-switch-when="chat" ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
 
@@ -228,10 +230,9 @@
           <img ng-src="{{thisPost.postAuthorPhoto}}" alt="" onerror="this.src='img/default_user_v3.png'" class="userPhoto">
         </a>
       </div>
-      <div id="pinIcon" ng-if="thisPost.pin == true">
-        <img src="img/pin.png"/>
-
-      </div>
+      <span id="pinIcon" ng-if="thisPost.pin == true">
+        <img src="img/pin@3x.png"/>
+      </span>
     </span>
 
     <span class="post">
@@ -240,7 +241,7 @@
         <span class="postUsername">
           {{thisPost.postAuthorName}}
         </span>
-        <span class="timestamp">
+        <span class="chatTimestamp">
           {{thisPost.postTimestamp}}
         </span>
       </div>
@@ -257,35 +258,35 @@
         <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
           </video>
-        </div>  
+      </div>  
 
-        <div class="socialButtonsRow">
-          <button class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
-            <img ng-switch-when="true" src="img/likeSmallSelected.png"/> 
-            <img ng-switch-when="false" src="img/likeSmall.png"/> 
-            
-          </button>
-          <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
-
-          <button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
-            <img src="img/replySmall.png"/> </button>
-            <span class="socialButtonLable"> {{thisPost.replyCount}}</span>
-          </div>
-          <div class="sharingButtonsRow">
-            <div class="btn-group">
-              <button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
-                <img src="img/moreButton.png"/>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
-
-                <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
-                <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
-              </ul>
-            </div>
-          </div>
+      <div class="socialButtonsRow">
+        <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
+          <img class="social-like" ng-switch-when="true" src="img/thumbsUp_select@3x.png"/> 
+          <img class="social-like" ng-switch-when="false" src="img/thumbsUp@3x.png"/> 
           
-        </span>
+        </button>
+        <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
+
+        <button id="chatReply" class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
+          <img class="social-reply" src="img/shareCopy@3x.png"/> </button>
+          <span class="socialButtonLable"> Reply</span>
       </div>
+      <div class="sharingButtonsRow">
+        <div class="chatTimestamp">
+          <button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
+            <img class="social-more" src="img/moreButton.png"/>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
+
+            <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
+            <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
+          </ul>
+        </div>
+      </div>
+    </span>
+  </div>
+
   <!-- Video Tab Content -->
   <div ng-switch-when="video" ng-repeat="thisPost in videoArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
@@ -327,33 +328,28 @@
       </div> 
     </div> 
 
-          
-        <!-- </span> -->
-        <div class="socialButtonsRow socialText">
-          <button class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
-            <img ng-switch-when="true" src="img/likeSmallSelected.png"/> 
-            <img ng-switch-when="false" src="img/likeSmall.png"/> 
-            
-          </button>
-          <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
+    <div class="socialButtonsRow socialText">
+      
+      <button class="btn-link social-btn" ng-click="">
+        <img class="social-metrics" src="img/reply@3x.png"/>
+      </button>
+      <!-- <span class="socialButtonLable"> {{thisPost.replyCount}}</span> -->
 
-          <button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
-            <img src="img/replySmall.png"/> </button>
-            <span class="socialButtonLable"> {{thisPost.replyCount}}</span>
-          </div>
-          <div class="socialBottomRow">
-            <div class="btn-group">
-              <button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
-                <img src="img/moreButton.png"/>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
+      <button class="btn-link social-btn socialRetweet" ng-click="" ng-switch="thisPost.isRetweet">
+        <img class="social-metrics" ng-switch-when="true" src="img/retweet_select@3x.png"/> 
+        <img class="social-metrics" ng-switch-when="false" src="img/retweet@3x.png"/> 
+      </button>
+      <span class="socialButtonLable">{{thisPost.retweetCount}}</span>
 
-                <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
-                <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
-              </ul>
-            </div>
-          </div>
-      </div>
+      <button class="btn-link social-btn socialFavorite" ng-click="" ng-switch="thisPost.isFavorite">
+        <img class="social-metrics" ng-switch-when="true" src="img/heart_select@3x.png"/> 
+        <img class="social-metrics" ng-switch-when="false" src="img/heart@3x.png"/> 
+      </button>
+      <span class="socialButtonLable">{{thisPost.favoriteCount}}</span>
+
+    </div>
+  </div>
+
   <!-- Social Tab Content -->
   <div ng-switch-when="social" ng-repeat="thisPost in socialArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
@@ -395,35 +391,30 @@
       </div> 
     </div> 
 
-          
-        <!-- </span> -->
-        <div class="socialButtonsRow socialText">
-          <button class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
-            <img ng-switch-when="true" src="img/likeSmallSelected.png"/> 
-            <img ng-switch-when="false" src="img/likeSmall.png"/> 
-            
-          </button>
-          <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
+    <div class="socialButtonsRow socialText">
+      
+      <button class="btn-link social-btn" ng-click="">
+        <img class="social-metrics" src="img/reply@3x.png"/>
+      </button>
+      <!-- <span class="socialButtonLable"> {{thisPost.replyCount}}</span> -->
 
-          <button class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
-            <img src="img/replySmall.png"/> </button>
-            <span class="socialButtonLable"> {{thisPost.replyCount}}</span>
-          </div>
-          <div class="socialBottomRow">
-            <div class="btn-group">
-              <button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
-                <img src="img/moreButton.png"/>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
+      <button class="btn-link social-btn socialRetweet" ng-click="" ng-switch="thisPost.isRetweet">
+        <img class="social-metrics" ng-switch-when="true" src="img/retweet_select@3x.png"/> 
+        <img class="social-metrics" ng-switch-when="false" src="img/retweet@3x.png"/> 
+      </button>
+      <span class="socialButtonLable">{{thisPost.retweetCount}}</span>
 
-                <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
-                <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
-              </ul>
-            </div>
-          </div>
-      </div>
+      <button class="btn-link social-btn socialFavorite" ng-click="" ng-switch="thisPost.isFavorite">
+        <img class="social-metrics" ng-switch-when="true" src="img/heart_select@3x.png"/> 
+        <img class="social-metrics" ng-switch-when="false" src="img/heart@3x.png"/> 
+      </button>
+      <span class="socialButtonLable">{{thisPost.favoriteCount}}</span>
+
+    </div>
+  </div>
 
 </div>
+
 <div id="mobileUserInput" class="clearfix" ng-if="activeTab === 'chat' && mobileBrowser === true" ng-controller="UserInputController as user">
 
     <div id="mobilePreview" ng-if="user.uploader.queue.length > 0">
