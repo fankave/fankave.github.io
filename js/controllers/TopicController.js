@@ -485,10 +485,20 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempSocial.replyCount = socialData[i].metrics.replies;
 
         tempSocial.embedType = socialData[i].embedType;
+        if (socialData[i].embedType === "link" && socialData[i].embedPlayable === true){
+          tempSocial.embedHtml = $sce.trustAsHtml(socialData[i].embedHtml);
+          tempSocial.embedPlayable = true;
+        }
         if (socialData[i].embedType === "media"){
           tempSocial.mediaType = socialData[i].embedMedia.mediaType;
           tempSocial.mediaUrl = socialData[i].embedMedia.mediaUrl;
           tempSocial.mediaAspectFeed = socialData[i].embedMedia.mediaAspectFeed;
+          if (!!tempSocial.mediaAspectFeed.y){
+            tempSocial.mediaAspectFeed.y = socialData[i].embedMedia.mediaAspectFeed.y + 'px';
+          }
+          if (!!tempSocial.mediaAspectFeed.x){
+            tempSocial.mediaAspectFeed.x = socialData[i].embedMedia.mediaAspectFeed.x + 'px';
+          }
           tempSocial.mediaAspectFull = socialData[i].embedMedia.mediaAspectFull;
         }
         $scope.socialArray.push(tempSocial);

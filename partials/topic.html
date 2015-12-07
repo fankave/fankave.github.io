@@ -284,7 +284,19 @@
           </ul>
         </div>
       </div>
+      <div class="moreRepliesContainer" ng-if="thisPost.replyCount === 1">
+        {{thisPost.replyCount}} more Reply
+      </div>
+      <div class="moreRepliesContainer" ng-if="thisPost.replyCount > 1">
+        {{thisPost.replyCount}} more Replies
+      </div>
     </span>
+    <!-- <div class="moreRepliesContainer" ng-if="thisPost.replyCount === 1">
+      {{thisPost.replyCount}} more Reply
+    </div>
+    <div class="moreRepliesContainer" ng-if="thisPost.replyCount > 1">
+      {{thisPost.replyCount}} more Replies
+    </div> -->
   </div>
 
   <!-- Video Tab Content -->
@@ -379,14 +391,17 @@
       <div ng-bind-html="thisPost.html | linky" class="postContent socialContent">
         <p>{{thisPost.html}}</p><br> 
       </div>
-
-      <div ng-switch-when="image" class="cropView ng-style:{ width: thisPost.mediaAspectFeed.w, height: thisPost.mediaAspectFeed.h };">
-        <img ng-src="{{thisPost.mediaUrl}}" class="postPhotoSocial ng-style:{ bottom: thisPost.mediaAspectFeed.y };" ng-click="imageClick(thisPost.mediaUrl);" />
+      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent socialContent">
       </div>
 
-      <div ng-switch-when="video" class="cropView ng-style:{ width: thisPost.mediaAspectFeed.w, height: thisPost.mediaAspectFeed.h };">
+      <div ng-switch-when="image" class="cropView ng-style:{ width: thisPost.mediaAspectFeed.w };">
+      <!-- <div ng-switch-when="image" class="cropView ng-style:{ '-webkit-clip-path': 'polygon(100% 100%, 100% 16px, 0% 16px, 0% 100%)' };"> -->
+        <img ng-src="{{thisPost.mediaUrl}}" class="postPhotoSocial ng-style:{ bottom: thisPost.mediaAspectFeed.y, right: thisPost.mediaAspectFeed.x };" ng-click="imageClick(thisPost.mediaUrl);" />
+      </div>
+
+      <div ng-switch-when="video" class="ng-style:{ };">
         <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
-          <source ng-src="{{trustSrc(thisPost.embedUrl)}}" type="video/mp4">
+          <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
           </video>
       </div> 
     </div> 
