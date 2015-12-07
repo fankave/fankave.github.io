@@ -494,10 +494,15 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
           tempSocial.mediaUrl = socialData[i].embedMedia.mediaUrl;
           tempSocial.mediaAspectFeed = socialData[i].embedMedia.mediaAspectFeed;
           if (!!tempSocial.mediaAspectFeed.y){
+            // tempSocial.mediaAspectFeed.dispY = socialData[i].embedMedia.mediaAspectFeed.h - socialData[i].embedMedia.mediaAspectFeed.y;
             tempSocial.mediaAspectFeed.y = socialData[i].embedMedia.mediaAspectFeed.y + 'px';
+          } else {
+            tempSocial.mediaAspectFeed.y = 0;
           }
           if (!!tempSocial.mediaAspectFeed.x){
             tempSocial.mediaAspectFeed.x = socialData[i].embedMedia.mediaAspectFeed.x + 'px';
+          } else {
+            tempSocial.mediaAspectFeed.x = 0;
           }
           tempSocial.mediaAspectFull = socialData[i].embedMedia.mediaAspectFull;
         }
@@ -577,6 +582,12 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempVideo.replyCount = videoData[i].metrics.replies;
 
         tempVideo.embedType = videoData[i].embedType;
+
+        if (videoData[i].embedType === "link" && videoData[i].embedPlayable === true){
+          tempVideo.embedHtml = $sce.trustAsHtml(videoData[i].embedHtml);
+          tempVideo.embedPlayable = true;
+        }
+
         if (videoData[i].embedType === "media"){
           tempVideo.mediaType = videoData[i].embedMedia.mediaType;
           tempVideo.mediaUrl = videoData[i].embedMedia.mediaUrl;
