@@ -2,8 +2,6 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
   .controller("UserInputController", ["$scope","$window","$routeParams","networkService","TopicService","CommentService","ReplyService","UserInfoService","FileUploader","MUService",
     function ($scope,$window,$routeParams,networkService,TopicService,CommentService,ReplyService,UserInfoService,FileUploader,MUService){
 
-      console.log("Inherited Scope? ", $scope.topicID);
-      console.log("Find Preview Elem? ", $("#mobilePreview"));
       // ATTACH MEDIA
       var MUS_SERVER_URI = 'https://dev.fankave.com:8080';
       var UPLOAD_URL = '/v1.0/media/upload';
@@ -129,7 +127,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
 
       // POST COMMENT
       this.postComment = function(commentText, isComment) {
-        console.log("In New Controller: ", isComment);
+        // console.log("In New Controller: ", isComment);
         if (this.uploader.queue.length > 0 && isComment){
           MUService.setCommentParams($scope.topicID, commentText, true);
         } else if (this.uploader.queue.length > 0 && !isComment){
