@@ -11,7 +11,7 @@
  /* Page-level / body */
 html {
   box-sizing: border-box;
-  background-color:#EBF4FA;
+  background-color:rgb(255,255,255);
 }
 
 body {
@@ -150,13 +150,25 @@ body
   /*max-height:4.4em;*/
   background-color: white;
   margin:2px;
+  /*border-bottom: 1px gray;*/
+  border-bottom: 1px solid rgb(238,238,238);
+}
+
+.postRowAlt {
+  font-size:3em;
+  /*max-height:4.4em;*/
+  background-color: white;
+  margin:2px;
   border-bottom: 1px gray;
 }
 
 @media all and (min-width: 500px){
-  .postRow {
+  /*.postRow {
     padding: 0 2%;
-  }
+  }*/
+  /*.postRowAlt {
+    padding: 0 2%;
+  }*/
 }
 
 .postRow:hover {
@@ -167,9 +179,9 @@ body
 {
   font-size:3em;
   /*max-height:4.4em;*/
-  background-color: rgb(248, 249, 251);
+  background-color: rgb(248,248,248);
   margin:2px;
-  border-bottom: 1px red;
+  /*border-bottom: 1px red;*/
 }
 
 .postAuthorPhoto /* left-side of each post row */
@@ -178,13 +190,13 @@ body
   /*width: 15%;*/
   /*max-width: 100px;*/
   float:left;
-  padding: 13px 0px 0px 13px;
+  padding: 11px 0px 0px 13px;
 }
 
 .postAuthorPhoto img/* left-side of each post row */
 {
   /*background-color: yellow;*/
-  width: 32px;
+  width: 35px;
   /*max-width: 32px !important;*/
   /*max-height: 100%;*/
   /*float:left;*/
@@ -203,11 +215,11 @@ body
 .repliesHeaderPostAuthorPhoto img
 {
   /*background-color: yellow;*/
-  /*width: 15%;*/
-  max-width: 42px !important;
+  width: 35px;
+  /*max-width: 42px !important;*/
   /*max-height: 100%;*/
   /*float:left;*/
-  /*padding:5px;*/
+  margin-top: 10px;
 }
 
 .thumbnail
@@ -247,9 +259,20 @@ body
   background-color: #fff;
   float:left;
   min-height: 2.0em;
-  padding-left: 4%;
+  padding-left: 13px;
   padding-right :10px;
   padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.postTopComment {
+  width: 85%;
+  background-color: rgb(248,248,248);
+  float:left;
+  min-height: 2.0em;
+  padding-left: 13px;
+  padding-right :10px;
+  padding-top: 8px;
   padding-bottom: 10px;
 }
 
@@ -293,7 +316,7 @@ body
 {
   font-size: 14px;
   float:left;
-  color: rgb(162,177,182);
+  color: rgb(29,29,29);
   font-weight: bolder;
 }
 
@@ -319,7 +342,7 @@ body
 .chatTimestamp {
   position: absolute;
   right: 0;
-  padding-right: 4%;
+  padding-right: 12px;
   font-size: 0.31em;
   color: rgb(166, 189, 207);
   text-align: right;
@@ -338,18 +361,27 @@ body
 .postContent
 {
   padding-right: 20px;
-  font-size: 16px;
-  line-height: 22px;
-  margin-bottom:0.3em;
+  font-size: 14px;
+  line-height: 18px;
+  margin-bottom:8px;
   word-wrap:break-word;
   color: rgb(31,35,38);
 }
 
 .socialContent {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
+  line-height: 18px;
   color: rgb(31,35,38);
-  margin-bottom: 0.5em;
+  margin-bottom: 8px;
+}
+
+.videoContent {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  color: rgb(31,35,38);
+  margin-bottom: 15px;
 }
 
 .replyContent
@@ -382,7 +414,7 @@ body
 .postPhotoSocial
 {
   position: relative;
-  /*width: 100%;*/
+  width: 100%;
   /*height: 100%;*/
   margin-top:0.2em;
   margin-bottom:0.3em;
@@ -390,16 +422,29 @@ body
 
 .postVideo
 {
-  /*max-width:90%;*/
-  /*max-height:200px;*/
-  margin-top:0.2em;
-  margin-bottom:0.3em;
+  max-width:100%;
+  max-height:320px;
+  margin-top:8px;
+  /*margin-bottom:15px;*/
 }
 
 .cropView {
   overflow: hidden;
-  max-width: 95%;
+  max-width: 100%;
+  max-height: 200px;
   /*max-height: 320px;*/
+}
+
+@media all and (min-width: 600px) {
+  .cropView {
+    max-height: 300px;
+  }
+}
+
+@media all and (min-width: 800px) {
+  .cropView {
+    max-height: 400px;
+  }
 }
 
 .playVideoButton
@@ -446,19 +491,32 @@ body
 }
 
 .social-more {
-  width: 18px;
+  width: 100%;
   height: auto;
 }
 
 .social-metrics {
-  height: 12px;
-  width: auto;
+  width: 100%;
   margin-bottom: 14px;
-  margin-top: 14px;
+  margin-top: 1px;
+}
+
+.social-metrics-retweet {
+  width: 100%;
+  height: auto;
+  margin-bottom: 14px;
+  margin-top: 1px;
+}
+
+.social-metrics-heart {
+  width: 80%;
+  margin-bottom: 14px;
+  /*margin-top: 9px;*/
 }
 
 .socialRetweet {
   margin-left: 60px;
+  margin-top: 1px;
 }
 
 .socialFavorite {
@@ -514,8 +572,8 @@ span.socialButtonLable
 .topic-social-btn img
 {
   float:left;
-  width:20px;
-  height:20px;
+  /*width:20px;*/
+  /*height:20px;*/
 }
 .topic-social-btn lable
 {
@@ -571,46 +629,71 @@ input:focus + button {
 
 #postHeader
 {
-  height: 5em;
-  background-color:rgb(246, 250, 251);
-  /*color:white;*/
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);  
+  height: 47px;
+  background-color:rgb(255,255,255);
+  /*box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);*/
+  border-bottom: 1px solid rgb(230,236,236);
 }
 
 
-#backToTopicButton
-{
-  /*background-color:black;*/
-     vertical-align: middle;
-     height:100%;
+#backToTopicButton {
+  position: relative;
+  float: left;
+  /*vertical-align: -70%;*/
+  height:100%;
+  width: 60%;
+  margin-left: 5px;
 }
 
 
-#backToTopicButton img
-{
-  width:24px;
-  height:33px;
+#backToTopicButton img {
+  float: left;
+  /*width:24px;*/
+  height: 14px;
+  margin-top: 9px;
 }
 
+#backToTopicButton span {
+  position: relative;
+  /*display: inline-block;*/
+  /*width: 80%;*/
+  float: left;
+  font-size: 16px;
+  font-weight: 600;
+  /*color: rgb(179,184,186);*/
+  top: 5px;
+  margin-left: 5px;
+}
 
-#post_backToTopicButtonSpan
-{
-  width:10%;
-  float:left;
+#greySpan {
+  color: rgb(179,184,186);
+  margin-left: 15px;
+}
+
+#blueSpan {
+  color: rgb(22,189,231);
+}
+
+#post_backToTopicButtonSpan {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  top: 4px;
+  /*float:left;*/
   /*margin-left:-10px;*/
 }
 
 
-.repliesContainer
-{
-  background-color: #EEEEEE;
+.repliesContainer {
+  /*background-color: #EEEEEE;*/
+  /*border-bottom: 1px solid rgb(238,238,238);*/
 }
 
 
 #repliesCommentSeparator
 {
-  background-color: rgb(230, 237, 243);
-  font-size:0.13em;
+  background-color: rgb(238,238,238);
+  font-size:0.15em;
 }
 
 
@@ -1206,7 +1289,7 @@ img-crop canvas {
 }
 
 #textInputFieldTopic {
-  background-color: rgb(248,249,251);
+  /*background-color: rgb(248,249,251);*/
 }
 
 #textInputFieldReply {
@@ -1215,12 +1298,12 @@ img-crop canvas {
 
 #topicCommentField {
   color: rgb(162,177,182);
-  background-color: rgb(246,248,247);
+  background-color: rgb(248,248,248);
 }
 
 #postCommentField {
   color: rgb(162,177,182);
-  background-color: rgb(246,248,247);
+  background-color: rgb(248,248,248);
 }
 
 #attachMediaIcon {
@@ -1260,7 +1343,9 @@ img-crop canvas {
   width: 100%;
   overflow: hidden;
   background-color: #fff;
-  margin: 9px 0;
+  /*margin: 9px 0;*/
+  padding: 5px 0;
+  border-bottom: 1px solid rgb(230,236,236);
 }
 
 #mobilePostCommentDiv {
@@ -1391,7 +1476,7 @@ img-crop canvas {
 }
 
 .topic-social-btn img {
-  width: 23px;
+  width: 100%;
   height: auto;
 }
 
@@ -1475,11 +1560,11 @@ img-crop canvas {
 }
 
 #headLike {
-  left: 15%;
+  left: 18%;
 }
 
 #headComment {
-  right: 16%;
+  right: 19%;
 }
 
 #headMore {
@@ -1570,14 +1655,14 @@ img-crop canvas {
 
 #providerLogo {
   margin-right: 5px;
-  height: 22px;
+  height: 14px;
   width: auto;
-  vertical-align: bottom;
+  vertical-align: -5%;
 }
 
 .socialContentContainer {
   width: 100%;
-  padding-left: 13px;
+  padding: 0 13px;
 }
 
 .socialName {
@@ -1597,7 +1682,7 @@ img-crop canvas {
 }
 
 .chatPostHeader {
-  min-height: 30px;
+  min-height: 24px;
 }
 
 #socialHeader {
@@ -1609,10 +1694,26 @@ img-crop canvas {
 
 #socialHeaderContainer {
   width: 100%;
-  min-height: 60px;
+  min-height: 54px;
 }
 
 #inputControls {
   position: relative;
   z-index: 0;
+}
+
+.moreRepliesContainer {
+  position: relative;
+  height: 25px;
+  width: 104%;
+  background-color: rgb(246,248,247);
+  margin: 35px 0 12px 0;
+  text-align: center;
+  font-size: 12px;
+  color: rgb(162,177,182);
+  padding-top: 4px;
+}
+
+.moreReplies {
+  font-size: 12px;
 }

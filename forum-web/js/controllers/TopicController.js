@@ -34,20 +34,20 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   //   // updateSocial();
   // }
   var headerHeight;
-  $scope.scrollToBookmark = function() {
-    if (ForumStorage.getFromLocalStorage('commentBookmark') !== undefined){
-      setTimeout(function(){
-        var bookmarkedId = parseInt(ForumStorage.getFromLocalStorage('commentBookmark'));
-        var bookmarkedPost = Array.prototype.slice.call(document.getElementsByClassName('postRow'));
-        bookmarkedPost = bookmarkedPost[bookmarkedId];
-        var offElem = $(bookmarkedPost).offset().top - headerHeight;
-        console.log("Bookmarked Post: ", bookmarkedPost);
-        console.log("Bookmarked Post Top Offset: ", offElem);
-        $(document).scrollTop(offElem);
-        ForumStorage.setToLocalStorage('commentBookmark', undefined);
-      }, 100);
-    }
-  };
+  // $scope.scrollToBookmark = function() {
+  //   if (ForumStorage.getFromLocalStorage('commentBookmark') !== undefined){
+  //     setTimeout(function(){
+  //       var bookmarkedId = parseInt(ForumStorage.getFromLocalStorage('commentBookmark'));
+  //       var bookmarkedPost = Array.prototype.slice.call(document.getElementsByClassName('postRow'));
+  //       bookmarkedPost = bookmarkedPost[bookmarkedId];
+  //       var offElem = $(bookmarkedPost).offset().top - headerHeight;
+  //       console.log("Bookmarked Post: ", bookmarkedPost);
+  //       console.log("Bookmarked Post Top Offset: ", offElem);
+  //       $(document).scrollTop(offElem);
+  //       ForumStorage.setToLocalStorage('commentBookmark', undefined);
+  //     }, 100);
+  //   }
+  // };
 
   ga('send', 'pageview', "/topic/"+$routeParams.topicID);
   console.log('Sent Pageview from /topic/' + $routeParams.topicID);
@@ -292,7 +292,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
             } 
           }
         }
-        setLinks();
           });
         });
   }
@@ -413,8 +412,15 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   $scope.deleteComment = function(id)
   {
     console.log("deleteComment(" + id + ")");
+    if ($scope.commentsArray.length === 1){
+      console.log("Deleting Final Comment");
+      var lastComment = true;
+    }
     $scope.innerButtonTapped = true;
-    networkService.send(CommentService.deleteCommentRequest(id)); 
+    networkService.send(CommentService.deleteCommentRequest(id));
+    if (lastComment){
+      $window.location.reload();
+    }
   }
 
   $scope.reportCommentAsSpam = function(id)
@@ -478,17 +484,36 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempSocial.isRetweet = socialData[i].signal.retweet || false;
         tempSocial.isFavorite = socialData[i].signal.favorite || false;
         tempSocial.providerName = socialData[i].embedProvider.name;
-        tempSocial.providerLogo = socialData[i].embedProvider.logo;
+        if (tempSocial.providerName === "Twitter"){
+          tempSocial.providerLogo = "img/twitterLogo@2x.png";
+        } else {
+          tempSocial.providerLogo = socialData[i].embedProvider.logo;
+        }
         tempSocial.html = socialData[i].embedText;
         tempSocial.retweetCount = socialData[i].metrics.retweets;
         tempSocial.favoriteCount = socialData[i].metrics.favorites;
         tempSocial.replyCount = socialData[i].metrics.replies;
 
         tempSocial.embedType = socialData[i].embedType;
+        if (socialData[i].embedType === "link" && socialData[i].embedPlayable === true){
+          tempSocial.embedHtml = $sce.trustAsHtml(socialData[i].embedHtml);
+          tempSocial.embedPlayable = true;
+        }
         if (socialData[i].embedType === "media"){
           tempSocial.mediaType = socialData[i].embedMedia.mediaType;
           tempSocial.mediaUrl = socialData[i].embedMedia.mediaUrl;
           tempSocial.mediaAspectFeed = socialData[i].embedMedia.mediaAspectFeed;
+          if (!!tempSocial.mediaAspectFeed.y){
+            // tempSocial.mediaAspectFeed.dispY = socialData[i].embedMedia.mediaAspectFeed.h - socialData[i].embedMedia.mediaAspectFeed.y;
+            tempSocial.mediaAspectFeed.y = socialData[i].embedMedia.mediaAspectFeed.y + 'px';
+          } else {
+            tempSocial.mediaAspectFeed.y = 0;
+          }
+          if (!!tempSocial.mediaAspectFeed.x){
+            tempSocial.mediaAspectFeed.x = socialData[i].embedMedia.mediaAspectFeed.x + 'px';
+          } else {
+            tempSocial.mediaAspectFeed.x = 0;
+          }
           tempSocial.mediaAspectFull = socialData[i].embedMedia.mediaAspectFull;
         }
         $scope.socialArray.push(tempSocial);
@@ -496,41 +521,41 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     }
   };
 
-  var prependSocial = function(newItemId){
-    var socialData = SocialService.socialArrayArchive();
-    for (var i = 0; i < socialData.length; i++){
-      if (socialData[i].id === newItemId){
-        var tempSocial = socialData[i];
-        tempSocial.postAuthorName = socialData[i].embedAuthor.name;
-        tempSocial.postAuthorAlias = socialData[i].embedAuthor.alias;
-        tempSocial.postAuthorPhoto = socialData[i].embedAuthor.photo;
-        tempSocial.postTimestamp = socialData[i].createdAt;
+  // var prependSocial = function(newItemId){
+  //   var socialData = SocialService.socialArrayArchive();
+  //   for (var i = 0; i < socialData.length; i++){
+  //     if (socialData[i].id === newItemId){
+  //       var tempSocial = socialData[i];
+  //       tempSocial.postAuthorName = socialData[i].embedAuthor.name;
+  //       tempSocial.postAuthorAlias = socialData[i].embedAuthor.alias;
+  //       tempSocial.postAuthorPhoto = socialData[i].embedAuthor.photo;
+  //       tempSocial.postTimestamp = socialData[i].createdAt;
 
-        tempSocial.isLiked = socialData[i].signal.like || false;
-        tempSocial.isRetweet = socialData[i].signal.retweet || false;
-        tempSocial.isFavorite = socialData[i].signal.favorite || false;
-        tempSocial.providerName = socialData[i].embedProvider.name;
-        tempSocial.providerLogo = socialData[i].embedProvider.logo;
-        tempSocial.html = socialData[i].embedText;
-        tempSocial.retweetCount = socialData[i].metrics.retweets;
-        tempSocial.favoriteCount = socialData[i].metrics.favorites;
-        tempSocial.replyCount = socialData[i].metrics.replies;
+  //       tempSocial.isLiked = socialData[i].signal.like || false;
+  //       tempSocial.isRetweet = socialData[i].signal.retweet || false;
+  //       tempSocial.isFavorite = socialData[i].signal.favorite || false;
+  //       tempSocial.providerName = socialData[i].embedProvider.name;
+  //       tempSocial.providerLogo = socialData[i].embedProvider.logo;
+  //       tempSocial.html = socialData[i].embedText;
+  //       tempSocial.retweetCount = socialData[i].metrics.retweets;
+  //       tempSocial.favoriteCount = socialData[i].metrics.favorites;
+  //       tempSocial.replyCount = socialData[i].metrics.replies;
 
-        tempSocial.embedType = socialData[i].embedType;
+  //       tempSocial.embedType = socialData[i].embedType;
         
-        if (socialData[i].embedType === "media"){
-          tempSocial.mediaType = socialData[i].embedMedia.mediaType;
-          tempSocial.mediaUrl = socialData[i].embedMedia.mediaUrl;
-          tempSocial.mediaAspectFeed = socialData[i].embedMedia.mediaAspectFeed;
-          tempSocial.mediaAspectFull = socialData[i].embedMedia.mediaAspectFull;
-        }
-        console.log("Prepending Social Item: ", tempSocial);
-        $scope.socialArray.unshift(tempSocial);
-        $scope.showNewCommentsIndicator = true;
-        return;
-      }
-    }
-  };
+  //       if (socialData[i].embedType === "media"){
+  //         tempSocial.mediaType = socialData[i].embedMedia.mediaType;
+  //         tempSocial.mediaUrl = socialData[i].embedMedia.mediaUrl;
+  //         tempSocial.mediaAspectFeed = socialData[i].embedMedia.mediaAspectFeed;
+  //         tempSocial.mediaAspectFull = socialData[i].embedMedia.mediaAspectFull;
+  //       }
+  //       console.log("Prepending Social Item: ", tempSocial);
+  //       $scope.socialArray.unshift(tempSocial);
+  //       $scope.showNewCommentsIndicator = true;
+  //       return;
+  //     }
+  //   }
+  // };
 
   var notifyNewSocial = function(newItemId) {
     if (!!newItemId){
@@ -560,13 +585,23 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempVideo.isRetweet = videoData[i].signal.retweet || false;
         tempVideo.isFavorite = videoData[i].signal.favorite || false;
         tempVideo.providerName = videoData[i].embedProvider.name;
-        tempVideo.providerLogo = videoData[i].embedProvider.logo;
+        if (tempVideo.providerName === "Twitter"){
+          tempVideo.providerLogo = "img/twitterLogo@2x.png";
+        } else {
+          tempVideo.providerLogo = videoData[i].embedProvider.logo;
+        }
         tempVideo.html = videoData[i].embedText;
         tempVideo.retweetCount = videoData[i].metrics.retweets;
         tempVideo.favoriteCount = videoData[i].metrics.favorites;
         tempVideo.replyCount = videoData[i].metrics.replies;
 
         tempVideo.embedType = videoData[i].embedType;
+
+        if (videoData[i].embedType === "link" && videoData[i].embedPlayable === true){
+          tempVideo.embedHtml = $sce.trustAsHtml(videoData[i].embedHtml);
+          tempVideo.embedPlayable = true;
+        }
+
         if (videoData[i].embedType === "media"){
           tempVideo.mediaType = videoData[i].embedMedia.mediaType;
           tempVideo.mediaUrl = videoData[i].embedMedia.mediaUrl;
@@ -603,17 +638,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 
   $scope.xLinkActivated = false;
 
-  function setLinks() {
-    // $('.postContent > a').addClass()
-    // $('.postContent > a').click(function(){
-      // $('#xContent').css('display', 'block');
-    // });
-  };
-  
-  // $scope.backToChat = function() {
-  //   $('#xContent').css('display', 'none');
-  // };
-
   // CONTENT TABS
   $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
@@ -622,20 +646,22 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'chat';
+      $scope.initPage();
     }
     if (tab === 'video'){
       $('#chatTab').removeClass('selectedTab');
       $('#videoTab').addClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'video';
+      $scope.loadTab(tab);
     }
     if (tab === 'social'){
       $('#chatTab').removeClass('selectedTab');
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').addClass('selectedTab');
       $scope.activeTab = 'social';
+      $scope.loadTab(tab);
     }
-    $scope.loadTab(tab);
     $scope.channelId = ForumStorage.getFromLocalStorage('lastChannel');
   };
 
@@ -645,11 +671,11 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   $scope.loadTab = function(tab, channel) {
     console.log("Channel in Load Tab: ", $scope.channelId, TopicService.getChannelId());
     console.log("Switched to Tab: ", tab);
-    if (tab === 'social'){
+    if (tab === 'social' && !$scope.socialArray){
       // console.log("Tab Channel: ", ChannelService.getChannel());
       networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
     }
-    else if (tab === 'video'){
+    else if (tab === 'video' && !$scope.videoArray){
       // console.log("Tab Channel: ", ChannelService.getChannel());
       networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
     }
@@ -670,18 +696,18 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     };
   };
 
-  var tabs = $('#inputControls');
-  var userInput = $('#textInputFieldTopic');
+  // var tabs = $('#inputControls');
+  // var userInput = $('#textInputFieldTopic');
 
-  var watchScroll = debounce(function() {
-      if ($(document).scrollTop() > 77) {
-        tabs.addClass('fixTabs');
-        userInput.addClass('inputBase');
-      } else {
-        tabs.removeClass('fixTabs');
-        userInput.removeClass('inputBase');
-      }
-  }, 15);
+  // var watchScroll = debounce(function() {
+  //     if ($(document).scrollTop() > 77) {
+  //       tabs.addClass('fixTabs');
+  //       userInput.addClass('inputBase');
+  //     } else {
+  //       tabs.removeClass('fixTabs');
+  //       userInput.removeClass('inputBase');
+  //     }
+  // }, 15);
 
   // var lastElTop;
   // var lastElHeight;
@@ -690,7 +716,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   var scrollAfterLoad = function(pos){
     setTimeout(function(){
       $(document).scrollTop(pos);
-    }, 250);
+    }, 150);
   };
   var watchContentScroll = debounce(function() {
     // lastElTop = $('.postRow').last().offset().top - headerHeight;
@@ -710,7 +736,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         scrollAfterLoad(currentScroll + 90);
       }
     }
-  }, 500);
+  }, 100);
 
   // $(document).on('scroll', watchScroll);
   // if ($scope.activeTab === 'video' || $scope.activeTab === 'social'){
@@ -719,10 +745,10 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 
 };
 
-topicModule.directive('repeatFinishedNotify', function () {
-  return function (scope, element, attrs) {
-    if (scope.$last){
-      scope.scrollToBookmark();
-    }
-  };
-});
+// topicModule.directive('repeatFinishedNotify', function () {
+//   return function (scope, element, attrs) {
+//     if (scope.$last){
+//       scope.scrollToBookmark();
+//     }
+//   };
+// });

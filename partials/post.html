@@ -13,38 +13,37 @@
 
 <section id="postSection">
   <nav class="navbar navbar-fixed-top" id="postHeader">
-    <div id="peelNavBar" ng-if="isPeelUser == true">
+    <div id="peelNavBar" ng-if="isPeelUser === true">
       <button class="btn-link peelButton" id="closePeelButton" ng-click="backToTopicButtonTapped()"><img src="img/backButton-2x.png"/></button>
       <span id="peelText">Peel Bar</span>
       <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()">Watch Channel</button>
     </div>
-    <div ng-if="isPeelUser != true">
+    <div>
       <span id="post_backToTopicButtonSpan">
         <button id="backToTopicButton" class="btn-link" ng-click="backToTopicButtonTapped()">
-          <img src="img/backButton-2x.png"/>
+          <img src="img/smallBackChat@2x.png"/>
+          <span id="greySpan">Back to </span><span id="blueSpan">Game Chat</span>
         </button>
       </span>
     </div>
   </nav>
 
   <div class="row repliesCommentRow" ng-switch="comment.mediaType">
-    <span class="repliesHeaderPostAuthorPhoto">
-      <div>
-        <a class="thumbnail">
-          <img   ng-src="{{comment.postAuthorPhoto}}" onerror="this.src='img/default_user_v3.png'" class="userPhoto">
-          </a>
+    <span class="postAuthorPhoto">
+      <div class="thumbnail">
+          <img ng-src="{{comment.postAuthorPhoto}}" onerror="this.src='img/default_user_v3.png'" class="userPhoto">
         </div>
         <div id="pinIcon" ng-if="comment.pin == true">
           <img src="img/pin.png"/>
         </div>
     </span>
 
-    <span class="post">
+    <span class="postTopComment">
       <div class="chatPostHeader">
         <span class="postUsername">
           {{comment.postAuthorName}}
         </span>
-        <span class="timestamp">
+        <span class="chatTimestamp">
           {{comment.postTimestamp}}
         </span>
       </div>
@@ -65,14 +64,14 @@
 
       <div class="socialButtonsRow">
         <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeComment(comment.id)" ng-switch="comment.isLiked">
-          <img class="social-like" ng-switch-when="true" src="img/thumbsUp_select@3x.png"/> 
-          <img class="social-like" ng-switch-when="false" src="img/thumbsUp@3x.png"/> 
+          <img class="social-like" ng-switch-when="true" src="img/thumbsUp_select@2x.png"/> 
+          <img class="social-like" ng-switch-when="false" src="img/thumbsUp@2x.png"/> 
           
         </button>
         <span class="socialButtonLable">{{comment.likeCount}}  </span>
 
         <button id="chatReply" class="btn-link social-btn" ng-click="triggerRepliesKeyboard()">
-          <img class="social-reply" src="img/shareCopy@3x.png"/> 
+          <img class="social-reply" src="img/shareCopy@2x.png"/> 
         </button>
           <span class="socialButtonLable" ng-click="triggerRepliesKeyboard()"> Reply</span>
       </div>
@@ -81,10 +80,10 @@
           <button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
             <img class="social-more" src="img/moreButton.png"/>
           </button>
-          <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
+          <ul class="dropdown-menu dropdown-menu-right" ng-switch="comment.isMyComment">
 
-            <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
-            <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
+            <li ng-switch-when="true"><a ng-click="deleteComment(comment.id);">Delete Comment</a></li>
+            <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(comment.id);">Report as spam</a></li>
           </ul>
         </div>
       </div>
@@ -129,11 +128,8 @@
     </div>
   </div>
   
-<div class="roww" id="repliesCommentSeparator">
-     &nbsp;
-  </div>
   <div class="repliesContainer">
-    <div ng-repeat="thisReply in replies" class="row postRow" ng-switch="thisReply.mediaType" repeat-finished-notify>
+    <div ng-repeat="thisReply in replies" class="row postRow" ng-switch="thisReply.mediaType">
       
       <span class="postAuthorPhoto">
         <div class="thumbnail">
@@ -146,7 +142,7 @@
           <span class="postUsername">
             {{thisReply.postAuthorName}}
           </span>
-          <span class="timestamp">
+          <span class="chatTimestamp">
             {{thisReply.postTimestamp}}
           </span>
         </div>
@@ -168,16 +164,16 @@
         
       <div class="socialButtonsRow">
         <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeReply(thisReply.id)" ng-switch="thisReply.isLiked">
-          <img class="social-like" ng-switch-when="true" src="img/thumbsUp_select@3x.png"/> 
-          <img class="social-like" ng-switch-when="false" src="img/thumbsUp@3x.png"/> 
+          <img class="social-like" ng-switch-when="true" src="img/thumbsUp_select@2x.png"/> 
+          <img class="social-like" ng-switch-when="false" src="img/thumbsUp@2x.png"/> 
           
         </button>
         <span class="socialButtonLable">{{thisReply.likeCount}}  </span>
 
-        <button id="chatReply" class="btn-link social-btn" ng-click="triggerRepliesKeyboard()">
-          <img class="social-reply" src="img/shareCopy@3x.png"/> </button>
+        <!-- <button id="chatReply" class="btn-link social-btn" ng-click="triggerRepliesKeyboard()">
+          <img class="social-reply" src="img/shareCopy@2x.png"/> </button>
           <span class="socialButtonLable" ng-click="triggerRepliesKeyboard()"> Reply</span>
-        <span class="socialButtonLable">{{thisReply.commentCount}}</span>
+        <span class="socialButtonLable">{{thisReply.commentCount}}</span> -->
       </div>
       <div class="sharingButtonsRow">
         <div class="chatTimestamp">
@@ -186,7 +182,7 @@
           </button>
           <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisReply.isMyReply">
 
-            <li ng-switch-when="true"><a ng-click="deleteReply(thisReply.id);">Delete Comment</a></li>
+            <li ng-switch-when="true"><a ng-click="deleteReply(thisReply.id);">Delete Reply</a></li>
             <li ng-switch-when="false"><a ng-click="reportReplyAsSpam(thisReply.id);">Report as spam</a></li>
           </ul>
         </div>

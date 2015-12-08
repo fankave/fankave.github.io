@@ -49,7 +49,7 @@ networkModule.factory('VideoService', function (Bant) {
 		return  {"rid": "video",
 			"timestamp": new Date().getTime(),
 			"method": "GET",
-			"uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+_offset+"&video=true")}
+			"uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+_offset+"&filter=video")}
 	}
 
 	return {
