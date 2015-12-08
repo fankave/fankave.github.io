@@ -292,7 +292,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
             } 
           }
         }
-        setLinks();
           });
         });
   }
@@ -413,8 +412,15 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   $scope.deleteComment = function(id)
   {
     console.log("deleteComment(" + id + ")");
+    if ($scope.commentsArray.length === 1){
+      console.log("Deleting Final Comment");
+      var lastComment = true;
+    }
     $scope.innerButtonTapped = true;
-    networkService.send(CommentService.deleteCommentRequest(id)); 
+    networkService.send(CommentService.deleteCommentRequest(id));
+    if (lastComment){
+      $window.location.reload();
+    }
   }
 
   $scope.reportCommentAsSpam = function(id)
@@ -511,41 +517,41 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     }
   };
 
-  var prependSocial = function(newItemId){
-    var socialData = SocialService.socialArrayArchive();
-    for (var i = 0; i < socialData.length; i++){
-      if (socialData[i].id === newItemId){
-        var tempSocial = socialData[i];
-        tempSocial.postAuthorName = socialData[i].embedAuthor.name;
-        tempSocial.postAuthorAlias = socialData[i].embedAuthor.alias;
-        tempSocial.postAuthorPhoto = socialData[i].embedAuthor.photo;
-        tempSocial.postTimestamp = socialData[i].createdAt;
+  // var prependSocial = function(newItemId){
+  //   var socialData = SocialService.socialArrayArchive();
+  //   for (var i = 0; i < socialData.length; i++){
+  //     if (socialData[i].id === newItemId){
+  //       var tempSocial = socialData[i];
+  //       tempSocial.postAuthorName = socialData[i].embedAuthor.name;
+  //       tempSocial.postAuthorAlias = socialData[i].embedAuthor.alias;
+  //       tempSocial.postAuthorPhoto = socialData[i].embedAuthor.photo;
+  //       tempSocial.postTimestamp = socialData[i].createdAt;
 
-        tempSocial.isLiked = socialData[i].signal.like || false;
-        tempSocial.isRetweet = socialData[i].signal.retweet || false;
-        tempSocial.isFavorite = socialData[i].signal.favorite || false;
-        tempSocial.providerName = socialData[i].embedProvider.name;
-        tempSocial.providerLogo = socialData[i].embedProvider.logo;
-        tempSocial.html = socialData[i].embedText;
-        tempSocial.retweetCount = socialData[i].metrics.retweets;
-        tempSocial.favoriteCount = socialData[i].metrics.favorites;
-        tempSocial.replyCount = socialData[i].metrics.replies;
+  //       tempSocial.isLiked = socialData[i].signal.like || false;
+  //       tempSocial.isRetweet = socialData[i].signal.retweet || false;
+  //       tempSocial.isFavorite = socialData[i].signal.favorite || false;
+  //       tempSocial.providerName = socialData[i].embedProvider.name;
+  //       tempSocial.providerLogo = socialData[i].embedProvider.logo;
+  //       tempSocial.html = socialData[i].embedText;
+  //       tempSocial.retweetCount = socialData[i].metrics.retweets;
+  //       tempSocial.favoriteCount = socialData[i].metrics.favorites;
+  //       tempSocial.replyCount = socialData[i].metrics.replies;
 
-        tempSocial.embedType = socialData[i].embedType;
+  //       tempSocial.embedType = socialData[i].embedType;
         
-        if (socialData[i].embedType === "media"){
-          tempSocial.mediaType = socialData[i].embedMedia.mediaType;
-          tempSocial.mediaUrl = socialData[i].embedMedia.mediaUrl;
-          tempSocial.mediaAspectFeed = socialData[i].embedMedia.mediaAspectFeed;
-          tempSocial.mediaAspectFull = socialData[i].embedMedia.mediaAspectFull;
-        }
-        console.log("Prepending Social Item: ", tempSocial);
-        $scope.socialArray.unshift(tempSocial);
-        $scope.showNewCommentsIndicator = true;
-        return;
-      }
-    }
-  };
+  //       if (socialData[i].embedType === "media"){
+  //         tempSocial.mediaType = socialData[i].embedMedia.mediaType;
+  //         tempSocial.mediaUrl = socialData[i].embedMedia.mediaUrl;
+  //         tempSocial.mediaAspectFeed = socialData[i].embedMedia.mediaAspectFeed;
+  //         tempSocial.mediaAspectFull = socialData[i].embedMedia.mediaAspectFull;
+  //       }
+  //       console.log("Prepending Social Item: ", tempSocial);
+  //       $scope.socialArray.unshift(tempSocial);
+  //       $scope.showNewCommentsIndicator = true;
+  //       return;
+  //     }
+  //   }
+  // };
 
   var notifyNewSocial = function(newItemId) {
     if (!!newItemId){
@@ -624,17 +630,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 
   $scope.xLinkActivated = false;
 
-  function setLinks() {
-    // $('.postContent > a').addClass()
-    // $('.postContent > a').click(function(){
-      // $('#xContent').css('display', 'block');
-    // });
-  };
-  
-  // $scope.backToChat = function() {
-  //   $('#xContent').css('display', 'none');
-  // };
-
   // CONTENT TABS
   $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
@@ -643,20 +638,22 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'chat';
+      $scope.initPage();
     }
     if (tab === 'video'){
       $('#chatTab').removeClass('selectedTab');
       $('#videoTab').addClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'video';
+      $scope.loadTab(tab);
     }
     if (tab === 'social'){
       $('#chatTab').removeClass('selectedTab');
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').addClass('selectedTab');
       $scope.activeTab = 'social';
+      $scope.loadTab(tab);
     }
-    $scope.loadTab(tab);
     $scope.channelId = ForumStorage.getFromLocalStorage('lastChannel');
   };
 
@@ -666,11 +663,11 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   $scope.loadTab = function(tab, channel) {
     console.log("Channel in Load Tab: ", $scope.channelId, TopicService.getChannelId());
     console.log("Switched to Tab: ", tab);
-    if (tab === 'social'){
+    if (tab === 'social' && !$scope.socialArray){
       // console.log("Tab Channel: ", ChannelService.getChannel());
       networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
     }
-    else if (tab === 'video'){
+    else if (tab === 'video' && !$scope.videoArray){
       // console.log("Tab Channel: ", ChannelService.getChannel());
       networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
     }
@@ -691,18 +688,18 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     };
   };
 
-  var tabs = $('#inputControls');
-  var userInput = $('#textInputFieldTopic');
+  // var tabs = $('#inputControls');
+  // var userInput = $('#textInputFieldTopic');
 
-  var watchScroll = debounce(function() {
-      if ($(document).scrollTop() > 77) {
-        tabs.addClass('fixTabs');
-        userInput.addClass('inputBase');
-      } else {
-        tabs.removeClass('fixTabs');
-        userInput.removeClass('inputBase');
-      }
-  }, 15);
+  // var watchScroll = debounce(function() {
+  //     if ($(document).scrollTop() > 77) {
+  //       tabs.addClass('fixTabs');
+  //       userInput.addClass('inputBase');
+  //     } else {
+  //       tabs.removeClass('fixTabs');
+  //       userInput.removeClass('inputBase');
+  //     }
+  // }, 15);
 
   // var lastElTop;
   // var lastElHeight;
@@ -740,10 +737,10 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 
 };
 
-topicModule.directive('repeatFinishedNotify', function () {
-  return function (scope, element, attrs) {
-    if (scope.$last){
-      scope.scrollToBookmark();
-    }
-  };
-});
+// topicModule.directive('repeatFinishedNotify', function () {
+//   return function (scope, element, attrs) {
+//     if (scope.$last){
+//       scope.scrollToBookmark();
+//     }
+//   };
+// });

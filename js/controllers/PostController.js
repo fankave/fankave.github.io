@@ -215,9 +215,10 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
     console.log("deleteComment(" + id + ")");
     // $scope.innerButtonTapped = true;
     networkService.send(CommentService.deleteCommentRequest(id));
-    setTimeout(function(){
+    // setTimeout(function(){
       $window.location = "#/topic/"+$scope.topicId;
-    }, 150);
+    // }, 250);
+    $window.location.reload();
   }
 
   $scope.reportCommentAsSpam = function(id)
@@ -414,10 +415,10 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 
 };
 
-postModule.directive('repeatFinishedNotify', function () {
-  return function (scope, element, attrs) {
-    if (scope.$last){
-      scope.scrollToBookmark();
-    }
-  };
-});
+// postModule.directive('repeatFinishedNotify', function () {
+//   return function (scope, element, attrs) {
+//     if (scope.$last){
+//       scope.scrollToBookmark();
+//     }
+//   };
+// });
