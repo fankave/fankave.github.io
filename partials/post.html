@@ -13,15 +13,16 @@
 
 <section id="postSection">
   <nav class="navbar navbar-fixed-top" id="postHeader">
-    <div id="peelNavBar" ng-if="isPeelUser == true">
+    <div id="peelNavBar" ng-if="isPeelUser === true">
       <button class="btn-link peelButton" id="closePeelButton" ng-click="backToTopicButtonTapped()"><img src="img/backButton-2x.png"/></button>
       <span id="peelText">Peel Bar</span>
       <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()">Watch Channel</button>
     </div>
-    <div ng-if="isPeelUser != true">
+    <div ng-if="isPeelUser !== true">
       <span id="post_backToTopicButtonSpan">
         <button id="backToTopicButton" class="btn-link" ng-click="backToTopicButtonTapped()">
-          <img src="img/backButton-2x.png"/>
+          <img src="img/smallBackChat@2x.png"/>
+          <span id="greySpan">Back to </span><span id="blueSpan">Game Chat</span>
         </button>
       </span>
     </div>
@@ -129,9 +130,6 @@
     </div>
   </div>
   
-<div class="roww" id="repliesCommentSeparator">
-     &nbsp;
-  </div>
   <div class="repliesContainer">
     <div ng-repeat="thisReply in replies" class="row postRow" ng-switch="thisReply.mediaType">
       

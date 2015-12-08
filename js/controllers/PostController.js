@@ -65,8 +65,8 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 //		}
 //		else
 		// {
-			document.getElementById('postSection').style.paddingTop = "3.5em";
-			document.getElementById('postHeader').style.height = "3.5em";
+			document.getElementById('postSection').style.paddingTop = "47px";
+			document.getElementById('postHeader').style.height = "47px";
 		// }
 	}
 
