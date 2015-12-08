@@ -58,16 +58,14 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 
 	$scope.setPeelUI = function(isPeelUser){
 		console.log("isPeelUser :"+isPeelUser);
-//		if(isPeelUser === true)
-//		{
-//			document.getElementById('postSection').style.paddingTop = "2.0em";
-//			document.getElementById('postHeader').style.height = "3.5em";
-//		}
-//		else
-		// {
+		if(isPeelUser === true) {
+			document.getElementById('postSection').style.paddingTop = "99px";
+			document.getElementById('postHeader').style.height = "99px";
+		}
+		else {
 			document.getElementById('postSection').style.paddingTop = "47px";
 			document.getElementById('postHeader').style.height = "47px";
-		// }
+		}
 	}
 
 	if((UserInfoService.isPeelUser() == true)){
