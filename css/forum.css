@@ -1655,9 +1655,9 @@ img-crop canvas {
 
 #providerLogo {
   margin-right: 5px;
-  height: 22px;
+  height: 14px;
   width: auto;
-  vertical-align: bottom;
+  vertical-align: -5%;
 }
 
 .socialContentContainer {

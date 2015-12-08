@@ -484,7 +484,11 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempSocial.isRetweet = socialData[i].signal.retweet || false;
         tempSocial.isFavorite = socialData[i].signal.favorite || false;
         tempSocial.providerName = socialData[i].embedProvider.name;
-        tempSocial.providerLogo = socialData[i].embedProvider.logo;
+        if (tempSocial.providerName === "Twitter"){
+          tempSocial.providerLogo = "img/twitterLogo@2x.png";
+        } else {
+          tempSocial.providerLogo = socialData[i].embedProvider.logo;
+        }
         tempSocial.html = socialData[i].embedText;
         tempSocial.retweetCount = socialData[i].metrics.retweets;
         tempSocial.favoriteCount = socialData[i].metrics.favorites;
@@ -581,7 +585,11 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempVideo.isRetweet = videoData[i].signal.retweet || false;
         tempVideo.isFavorite = videoData[i].signal.favorite || false;
         tempVideo.providerName = videoData[i].embedProvider.name;
-        tempVideo.providerLogo = videoData[i].embedProvider.logo;
+        if (tempVideo.providerName === "Twitter"){
+          tempVideo.providerLogo = "img/twitterLogo@2x.png";
+        } else {
+          tempVideo.providerLogo = videoData[i].embedProvider.logo;
+        }
         tempVideo.html = videoData[i].embedText;
         tempVideo.retweetCount = videoData[i].metrics.retweets;
         tempVideo.favoriteCount = videoData[i].metrics.favorites;
