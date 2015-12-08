@@ -23,20 +23,20 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
     $scope.initPage();
   }
   var headerHeight;
-  $scope.scrollToBookmark = function() {
-    if (ForumStorage.getFromLocalStorage('replyBookmark') !== undefined){
-      setTimeout(function(){
-        var bookmarkedId = parseInt(ForumStorage.getFromLocalStorage('replyBookmark'));
-        var bookmarkedPost = Array.prototype.slice.call(document.getElementsByClassName('postRow'));
-        bookmarkedPost = bookmarkedPost[bookmarkedId];
-        var offElem = $(bookmarkedPost).offset().top;
-        console.log("Bookmarked Post: ", bookmarkedPost);
-        console.log("Bookmarked Post Top Offset: ", offElem);
-        $(document).scrollTop(offElem);
-        ForumStorage.setToLocalStorage('replyBookmark', undefined);
-      }, 100);
-    }
-  };
+  // $scope.scrollToBookmark = function() {
+  //   if (ForumStorage.getFromLocalStorage('replyBookmark') !== undefined){
+  //     setTimeout(function(){
+  //       var bookmarkedId = parseInt(ForumStorage.getFromLocalStorage('replyBookmark'));
+  //       var bookmarkedPost = Array.prototype.slice.call(document.getElementsByClassName('postRow'));
+  //       bookmarkedPost = bookmarkedPost[bookmarkedId];
+  //       var offElem = $(bookmarkedPost).offset().top;
+  //       console.log("Bookmarked Post: ", bookmarkedPost);
+  //       console.log("Bookmarked Post Top Offset: ", offElem);
+  //       $(document).scrollTop(offElem);
+  //       ForumStorage.setToLocalStorage('replyBookmark', undefined);
+  //     }, 100);
+  //   }
+  // };
 
 	//ga('send', 'pageview', "/comment/"+$routeParams.postID);
 	$scope.pageClass = 'page-post';
@@ -58,16 +58,14 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 
 	$scope.setPeelUI = function(isPeelUser){
 		console.log("isPeelUser :"+isPeelUser);
-//		if(isPeelUser === true)
-//		{
-//			document.getElementById('postSection').style.paddingTop = "2.0em";
-//			document.getElementById('postHeader').style.height = "3.5em";
-//		}
-//		else
-		// {
-			document.getElementById('postSection').style.paddingTop = "3.5em";
-			document.getElementById('postHeader').style.height = "3.5em";
-		// }
+		if(isPeelUser === true) {
+			document.getElementById('postSection').style.paddingTop = "99px";
+			document.getElementById('postHeader').style.height = "99px";
+		}
+		else {
+			document.getElementById('postSection').style.paddingTop = "47px";
+			document.getElementById('postHeader').style.height = "47px";
+		}
 	}
 
 	if((UserInfoService.isPeelUser() == true)){
@@ -210,6 +208,24 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 		networkService.send(ReplyService.flagReplyRequest(id));
 	}
 
+  $scope.deleteComment = function(id)
+  {
+    console.log("deleteComment(" + id + ")");
+    // $scope.innerButtonTapped = true;
+    networkService.send(CommentService.deleteCommentRequest(id));
+    // setTimeout(function(){
+      $window.location = "#/topic/"+$scope.topicId;
+    // }, 250);
+    $window.location.reload();
+  }
+
+  $scope.reportCommentAsSpam = function(id)
+  {
+    console.log("reportCommentAsSpam(" + id + ")");
+    // $scope.innerButtonTapped = true;
+    networkService.send(CommentService.flagCommentRequest(id)); 
+  }
+
 	$scope.imageClick = function(imageURL)
 	{
 		event.cancelBubble = true;
@@ -257,7 +273,12 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 	}
 
 	 function updateCommentInReply(selectedComment){
-		if(selectedComment == undefined){
+		console.log("Already Had PostID: ", $scope.postID);
+    if (!$scope.postID){
+      $scope.postID = ReplyService.getPostId();
+      console.log("Regenerated PostID: ", $scope.postID);
+    }
+    if(selectedComment == undefined){
 			selectedComment = CommentService.getCommentById($scope.postID);
 		}
 		if(selectedComment != undefined){
@@ -273,6 +294,7 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 			tempComment.mediaAspectFeed = selectedComment.mediaAspectFeed;
 			tempComment.isLiked = selectedComment.signal.like;
 			tempComment.topicId = selectedComment.topicId;
+      tempComment.isMyComment = UserInfoService.isCurrentUser(selectedComment.author.id);
 
 			$scope.comment = tempComment;
 
@@ -391,10 +413,10 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 
 };
 
-postModule.directive('repeatFinishedNotify', function () {
-  return function (scope, element, attrs) {
-    if (scope.$last){
-      scope.scrollToBookmark();
-    }
-  };
-});
+// postModule.directive('repeatFinishedNotify', function () {
+//   return function (scope, element, attrs) {
+//     if (scope.$last){
+//       scope.scrollToBookmark();
+//     }
+//   };
+// });
