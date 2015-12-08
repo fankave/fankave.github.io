@@ -15,7 +15,7 @@ html {
 }
 
 body {
-max-width: 950px;
+max-width: 768px;
 min-width:320px;
 margin: 0 auto;
 position: relative; /* Fix for absolute positioning */
@@ -67,7 +67,7 @@ body
   height: 8em;
   text-align:center;
   color:white;
-  max-width: 950px;
+  max-width: 768px;
   margin: 0 auto;
 }
 
@@ -76,13 +76,13 @@ body
   height: 8em;
   text-align:center;
   color:white;
-  max-width: 950px;
+  max-width: 768px;
   margin: 0 auto;
 }  
 #topicSection
 {
   position:relative;
-  max-width: 950px;
+  max-width: 768px;
   margin: 0 auto;
   background-color: #fff;
   border-right: 1px solid rgb(238,238,238);
@@ -92,13 +92,13 @@ body
 #mediaSection
 {
   position:relative;
-  max-width: 950px;
+  max-width: 768px;
   margin: 0 auto;
   background-color: white;
 }
 
  #postSection{
-  max-width: 950px;
+  max-width: 768px;
   background-color: #fff;
 } 
 
@@ -793,7 +793,7 @@ input:focus + button {
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0, 0.7);
   width: 100%;
-  max-width: 950px;
+  max-width: 768px;
   height: 100%;
   z-index: 10001;
 }
@@ -804,7 +804,7 @@ input:focus + button {
   padding: 4% 0%;
   background-color: #fff;
   width: 90%;
-  max-width: 950px;
+  max-width: 768px;
   height: 94%;
   left: 50%;
   margin-left: -45%;
@@ -1415,7 +1415,7 @@ img-crop canvas {
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0, 0.7);
   width: 100%;
-  max-width: 950px;
+  max-width: 768px;
   height: 100%;
   z-index: 10001;
 }
@@ -1427,7 +1427,7 @@ img-crop canvas {
   padding: 0 5px 55px 5px;
   background-color: #fff;
   width: 90%;
-  max-width: 950px;
+  max-width: 768px;
   height: 94%;
   left: 50%;
   margin-left: -45%;
@@ -1539,7 +1539,7 @@ img-crop canvas {
   position: fixed;
   top: 177px;
   width: 100%;
-  max-width: 950px;
+  max-width: 768px;
   z-index: 2;
 }
 
@@ -1567,6 +1567,24 @@ img-crop canvas {
 
 #headComment {
   right: 19%;
+}
+
+@media all and (min-width: 500px){
+  #headLike {
+    left: 22%;
+  }
+  #headComment {
+    right: 23%;
+  }
+}
+
+@media all and (min-width: 650px){
+  #headLike {
+    left: 25%;
+  }
+  #headComment {
+    right: 26%;
+  }
 }
 
 #headMore {
