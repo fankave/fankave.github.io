@@ -653,48 +653,48 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $('#videoTab').addClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'video';
-      $scope.loadTab(tab);
+      // $scope.loadTab(tab);
     }
     if (tab === 'social'){
       $('#chatTab').removeClass('selectedTab');
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').addClass('selectedTab');
       $scope.activeTab = 'social';
-      $scope.loadTab(tab);
+      // $scope.loadTab(tab);
     }
-    $scope.channelId = ForumStorage.getFromLocalStorage('lastChannel');
+    // $scope.channelId = ForumStorage.getFromLocalStorage('lastChannel');
   };
 
   // var _channelId = ChannelService.getChannel();
   // TopicService.setChannel(_channelId);
   // ForumStorage.setToLocalStorage('lastChannel',_channelId);
-  $scope.loadTab = function(tab, channel) {
-    console.log("Channel in Load Tab: ", $scope.channelId, TopicService.getChannelId());
-    console.log("Switched to Tab: ", tab);
-    if (tab === 'social' && !$scope.socialArray){
-      // console.log("Tab Channel: ", ChannelService.getChannel());
-      networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
-    }
-    else if (tab === 'video' && !$scope.videoArray){
-      // console.log("Tab Channel: ", ChannelService.getChannel());
-      networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
-    }
-  };
+  // $scope.loadTab = function(tab, channel) {
+  //   console.log("Channel in Load Tab: ", $scope.channelId, TopicService.getChannelId());
+  //   console.log("Switched to Tab: ", tab);
+  //   if (tab === 'social' && !$scope.socialArray){
+  //     // console.log("Tab Channel: ", ChannelService.getChannel());
+  //     networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
+  //   }
+  //   else if (tab === 'video' && !$scope.videoArray){
+  //     // console.log("Tab Channel: ", ChannelService.getChannel());
+  //     networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
+  //   }
+  // };
 
-  function debounce(func, wait, immediate) {
-    var timeout;
-    return function() {
-      var context = this, args = arguments;
-      var later = function() {
-        timeout = null;
-        if (!immediate) func.apply(context, args);
-      };
-      var callNow = immediate && !timeout;
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-      if (callNow) func.apply(context, args);
-    };
-  };
+  // function debounce(func, wait, immediate) {
+  //   var timeout;
+  //   return function() {
+  //     var context = this, args = arguments;
+  //     var later = function() {
+  //       timeout = null;
+  //       if (!immediate) func.apply(context, args);
+  //     };
+  //     var callNow = immediate && !timeout;
+  //     clearTimeout(timeout);
+  //     timeout = setTimeout(later, wait);
+  //     if (callNow) func.apply(context, args);
+  //   };
+  // };
 
   // var tabs = $('#inputControls');
   // var userInput = $('#textInputFieldTopic');
@@ -712,35 +712,35 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   // var lastElTop;
   // var lastElHeight;
   // var clientHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-  var clientHeight = document.documentElement.clientHeight || window.innerHeight;
-  var scrollAfterLoad = function(pos){
-    setTimeout(function(){
-      $(document).scrollTop(pos);
-    }, 150);
-  };
-  var watchContentScroll = debounce(function() {
-    // lastElTop = $('.postRow').last().offset().top - headerHeight;
-    // lastElHeight = $('.postRow').last().height();
-    // console.log("LAST ELEM TOP: ", lastElTop, lastElHeight, clientHeight);
-    var currentScroll = $(document).height() - clientHeight - 1;
-    // console.log("currentScroll: ", currentScroll, clientHeight);
-    if ($(document).scrollTop() > currentScroll) {
-      if ($scope.activeTab === 'social'){
-        console.log("LOADING MORE SOCIAL");
-        networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
-        scrollAfterLoad(currentScroll + 90);
-      }
-      else if ($scope.activeTab === 'video'){
-        console.log("LOADING MORE VIDEO");
-        networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
-        scrollAfterLoad(currentScroll + 90);
-      }
-    }
-  }, 100);
+  // var clientHeight = document.documentElement.clientHeight || window.innerHeight;
+  // var scrollAfterLoad = function(pos){
+  //   setTimeout(function(){
+  //     $(document).scrollTop(pos);
+  //   }, 150);
+  // };
+  // var watchContentScroll = debounce(function() {
+  //   // lastElTop = $('.postRow').last().offset().top - headerHeight;
+  //   // lastElHeight = $('.postRow').last().height();
+  //   // console.log("LAST ELEM TOP: ", lastElTop, lastElHeight, clientHeight);
+  //   var currentScroll = $(document).height() - clientHeight - 1;
+  //   // console.log("currentScroll: ", currentScroll, clientHeight);
+  //   if ($(document).scrollTop() > currentScroll) {
+  //     if ($scope.activeTab === 'social'){
+  //       console.log("LOADING MORE SOCIAL");
+  //       networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
+  //       scrollAfterLoad(currentScroll + 90);
+  //     }
+  //     else if ($scope.activeTab === 'video'){
+  //       console.log("LOADING MORE VIDEO");
+  //       networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
+  //       scrollAfterLoad(currentScroll + 90);
+  //     }
+  //   }
+  // }, 100);
 
   // $(document).on('scroll', watchScroll);
   // if ($scope.activeTab === 'video' || $scope.activeTab === 'social'){
-    $(document).on('scroll', watchContentScroll);
+    // $(document).on('scroll', watchContentScroll);
   // }
 
 };
