@@ -1,4 +1,4 @@
-networkModule.factory('SocialService', function (Bant) {
+socialModule.factory('SocialService', ["Bant", function (Bant) {
   var LIST_SOCIAL_URI = "/v1.0/channel/social/list/";
 
 
@@ -110,4 +110,4 @@ networkModule.factory('SocialService', function (Bant) {
     registerObserverCallback: registerObserverCallback
   };
 
-});
+}]);

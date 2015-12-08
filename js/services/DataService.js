@@ -1,4 +1,4 @@
-networkModule.service('DataService', function (TopicService, CommentService, ReplyService, ChannelService, SocialService, VideoService) {
+networkModule.service('DataService', function (TopicService, CommentService, ReplyService, ChannelService, SocialService) {
   
   var DATA_TYPE_TOPIC = "topic";
   var DATA_TYPE_COMMENT = "comment";
