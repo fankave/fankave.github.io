@@ -475,14 +475,27 @@ body
 }
 
 .social-metrics {
-  height: 12px;
-  width: auto;
+  width: 100%;
   margin-bottom: 14px;
-  margin-top: 14px;
+  margin-top: 10px;
+}
+
+.social-metrics-retweet {
+  width: 100%;
+  height: auto;
+  margin-bottom: 14px;
+  margin-top: 10px;
+}
+
+.social-metrics-heart {
+  width: 80%;
+  margin-bottom: 14px;
+  margin-top: 10px;
 }
 
 .socialRetweet {
   margin-left: 60px;
+  margin-top: 1px;
 }
 
 .socialFavorite {
@@ -538,8 +551,8 @@ span.socialButtonLable
 .topic-social-btn img
 {
   float:left;
-  width:20px;
-  height:20px;
+  /*width:20px;*/
+  /*height:20px;*/
 }
 .topic-social-btn lable
 {
@@ -1417,7 +1430,7 @@ img-crop canvas {
 }
 
 .topic-social-btn img {
-  width: 23px;
+  width: 100%;
   height: auto;
 }
 
@@ -1623,7 +1636,7 @@ img-crop canvas {
 }
 
 .chatPostHeader {
-  min-height: 30px;
+  min-height: 20px;
 }
 
 #socialHeader {
@@ -1635,7 +1648,7 @@ img-crop canvas {
 
 #socialHeaderContainer {
   width: 100%;
-  min-height: 60px;
+  min-height: 54px;
 }
 
 #inputControls {

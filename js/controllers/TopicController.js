@@ -711,7 +711,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   var scrollAfterLoad = function(pos){
     setTimeout(function(){
       $(document).scrollTop(pos);
-    }, 250);
+    }, 150);
   };
   var watchContentScroll = debounce(function() {
     // lastElTop = $('.postRow').last().offset().top - headerHeight;
@@ -731,7 +731,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         scrollAfterLoad(currentScroll + 90);
       }
     }
-  }, 500);
+  }, 100);
 
   // $(document).on('scroll', watchScroll);
   // if ($scope.activeTab === 'video' || $scope.activeTab === 'social'){

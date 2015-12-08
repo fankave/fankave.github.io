@@ -222,7 +222,7 @@
 <div class="commentsContainer" ng-switch="activeTab">
 
   <!-- Chat Tab Content -->
-  <div ng-switch-when="chat" ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="chat" ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}">
 
     <span class="postAuthorPhoto">
       <div>
@@ -300,7 +300,7 @@
   </div>
 
   <!-- Video Tab Content -->
-  <div ng-switch-when="video" ng-repeat="thisPost in videoArray track by $index" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="video" ng-repeat="thisPost in videoArray track by $index" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}">
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -335,7 +335,7 @@
         <img ng-src="{{thisPost.mediaUrl}}" class="postPhotoSocial ng-style:{ bottom: thisPost.mediaAspectFeed.y }" ng-click="imageClick(thisPost.mediaUrl);" />
       </div>
 
-      <div ng-switch-when="video" class="cropView ng-style:{ };">
+      <div ng-switch-when="video" class="ng-style:{ };">
         <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
           </video>
@@ -365,7 +365,7 @@
   </div>
 
   <!-- Social Tab Content -->
-  <div ng-switch-when="social" ng-repeat="thisPost in socialArray track by $index" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="social" ng-repeat="thisPost in socialArray track by $index" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}">
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -397,7 +397,7 @@
       </div>
 
       <!-- <div ng-switch-when="image" class="cropView ng-style:{ 'max-width': thisPost.mediaAspectFeed.w, 'max-height': thisPost.mediaAspectFeed.dispY };"> -->
-      <div ng-switch-when="image" class="cropView" ng-style="{background:'url({{thisPost.mediaUrl}}) no-repeat','background-size':'contain','height':thisPost.mediaAspectFeed.h}" ng-click="imageClick(thisPost.mediaUrl)">
+      <div ng-switch-when="image" class="cropView" ng-style="{background:'url({{thisPost.mediaUrl}}) no-repeat','background-size':'cover','height':thisPost.mediaAspectFeed.h}" ng-click="imageClick(thisPost.mediaUrl)">
       <!-- <div ng-switch-when="image" class="cropView ng-style:{ '-webkit-clip-path': 'polygon(100% 100%, 100% 16px, 0% 16px, 0% 100%)' };"> -->
         <!-- <img ng-src="{{thisPost.mediaUrl}}" class="postPhotoSocial ng-style:{ bottom: thisPost.mediaAspectFeed.y, right: thisPost.mediaAspectFeed.x };" ng-click="imageClick(thisPost.mediaUrl);" /> -->
       </div>
@@ -417,14 +417,14 @@
       <!-- <span class="socialButtonLable"> {{thisPost.replyCount}}</span> -->
 
       <button class="btn-link social-btn socialRetweet" ng-click="" ng-switch="thisPost.isRetweet">
-        <img class="social-metrics" ng-switch-when="true" src="img/retweet_select@3x.png"/> 
-        <img class="social-metrics" ng-switch-when="false" src="img/retweet@3x.png"/> 
+        <img class="social-metrics-retweet" ng-switch-when="true" src="img/retweet_select@3x.png"/> 
+        <img class="social-metrics-retweet" ng-switch-when="false" src="img/retweet@3x.png"/> 
       </button>
       <span class="socialButtonLable">{{thisPost.retweetCount}}</span>
 
       <button class="btn-link social-btn socialFavorite" ng-click="" ng-switch="thisPost.isFavorite">
-        <img class="social-metrics" ng-switch-when="true" src="img/heart_select@3x.png"/> 
-        <img class="social-metrics" ng-switch-when="false" src="img/heart@3x.png"/> 
+        <img class="social-metrics-heart" ng-switch-when="true" src="img/heart_select@3x.png"/> 
+        <img class="social-metrics-heart" ng-switch-when="false" src="img/heart@3x.png"/> 
       </button>
       <span class="socialButtonLable">{{thisPost.favoriteCount}}</span>
 
