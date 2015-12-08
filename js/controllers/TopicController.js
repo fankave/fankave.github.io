@@ -34,20 +34,20 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   //   // updateSocial();
   // }
   var headerHeight;
-  $scope.scrollToBookmark = function() {
-    if (ForumStorage.getFromLocalStorage('commentBookmark') !== undefined){
-      setTimeout(function(){
-        var bookmarkedId = parseInt(ForumStorage.getFromLocalStorage('commentBookmark'));
-        var bookmarkedPost = Array.prototype.slice.call(document.getElementsByClassName('postRow'));
-        bookmarkedPost = bookmarkedPost[bookmarkedId];
-        var offElem = $(bookmarkedPost).offset().top - headerHeight;
-        console.log("Bookmarked Post: ", bookmarkedPost);
-        console.log("Bookmarked Post Top Offset: ", offElem);
-        $(document).scrollTop(offElem);
-        ForumStorage.setToLocalStorage('commentBookmark', undefined);
-      }, 100);
-    }
-  };
+  // $scope.scrollToBookmark = function() {
+  //   if (ForumStorage.getFromLocalStorage('commentBookmark') !== undefined){
+  //     setTimeout(function(){
+  //       var bookmarkedId = parseInt(ForumStorage.getFromLocalStorage('commentBookmark'));
+  //       var bookmarkedPost = Array.prototype.slice.call(document.getElementsByClassName('postRow'));
+  //       bookmarkedPost = bookmarkedPost[bookmarkedId];
+  //       var offElem = $(bookmarkedPost).offset().top - headerHeight;
+  //       console.log("Bookmarked Post: ", bookmarkedPost);
+  //       console.log("Bookmarked Post Top Offset: ", offElem);
+  //       $(document).scrollTop(offElem);
+  //       ForumStorage.setToLocalStorage('commentBookmark', undefined);
+  //     }, 100);
+  //   }
+  // };
 
   ga('send', 'pageview', "/topic/"+$routeParams.topicID);
   console.log('Sent Pageview from /topic/' + $routeParams.topicID);
