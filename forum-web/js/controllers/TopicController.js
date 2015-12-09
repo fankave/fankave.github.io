@@ -3,6 +3,7 @@ topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$saniti
 
 function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, VideoService)
 {
+	var lastComment = false;
   // Check For Mobile Browser
   window.mobileCheck = function() {
     var check = false;
@@ -189,7 +190,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 
   var updateComments = function(){
     var commentsdata = CommentService.comments();
-    if(commentsdata != undefined && commentsdata.length >0){
+    if(commentsdata != undefined && (commentsdata.length >0 || lastComment === true)){
+    	lastComment = false;
       console.log("CommentsData : ", commentsdata);
       var len = commentsdata.length;
 
@@ -414,13 +416,14 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     console.log("deleteComment(" + id + ")");
     if ($scope.commentsArray.length === 1){
       console.log("Deleting Final Comment");
-      var lastComment = true;
+      lastComment = true;
     }
     $scope.innerButtonTapped = true;
     networkService.send(CommentService.deleteCommentRequest(id));
-    if (lastComment){
-      $window.location.reload();
-    }
+    //avoid window reload to improve performance.
+//    if (lastComment){
+//      $window.location.reload();
+//    }
   }
 
   $scope.reportCommentAsSpam = function(id)
