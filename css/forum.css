@@ -1726,6 +1726,7 @@ img-crop canvas {
   border: 1px solid #fff;
   border-radius: 50%;
   color: #fff;
+  text-align: center;
   font-size: 9px;
   padding: 0;
   z-index: 1;

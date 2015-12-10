@@ -209,7 +209,7 @@
 
       </div>
     </form>
-    <div id="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
+    <div class="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
       <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 1MB</span>
       <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
     </div>
