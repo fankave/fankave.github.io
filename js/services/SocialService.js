@@ -70,12 +70,14 @@ socialModule.factory('SocialService', ["Bant", function (Bant) {
   };
 
   function getVideoDataRequest(id){
-    return  {
+    var request = {
       "rid": "video",
       "timestamp": new Date().getTime(),
       "method": "GET",
       "uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+videoLIMIT+"&offset="+_videoOffset+"&filter=video")
     };
+    console.log("Video Request: ", request);
+    return request;
   };
 
   // function appendToFeed(socialData){

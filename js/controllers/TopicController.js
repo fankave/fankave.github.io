@@ -497,34 +497,20 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $('#videoTab').addClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'video';
-      // $(document).scrollTop(0);
+      $(document).scrollTop(0);
     }
     if (tab === 'social'){
       $('#chatTab').removeClass('selectedTab');
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').addClass('selectedTab');
       $scope.activeTab = 'social';
-      // $(document).scrollTop(0);
+      $(document).scrollTop(0);
     }
     console.log("Active Tab: ", $scope.activeTab);
-    // $scope.channelId = ForumStorage.getFromLocalStorage('lastChannel');
   };
 
-  // var _channelId = ChannelService.getChannel();
-  // TopicService.setChannel(_channelId);
-  // ForumStorage.setToLocalStorage('lastChannel',_channelId);
-  // $scope.loadTab = function(tab, channel) {
-  //   console.log("Channel in Load Tab: ", $scope.channelId, TopicService.getChannelId());
-  //   console.log("Switched to Tab: ", tab);
-  //   if (tab === 'social' && !$scope.socialArray){
-  //     // console.log("Tab Channel: ", ChannelService.getChannel());
-  //     networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
-  //   }
-  //   else if (tab === 'video' && !$scope.videoArray){
-  //     // console.log("Tab Channel: ", ChannelService.getChannel());
-  //     networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
-  //   }
-  // };
+  var _channelId = ChannelService.getChannel();
+  TopicService.setChannel(_channelId);
 
   function debounce(func, wait, immediate) {
     var timeout;
@@ -557,39 +543,30 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       }
   }, 5);
 
-  // var lastElTop;
-  // var lastElHeight;
-  // var clientHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-  // var clientHeight = document.documentElement.clientHeight || window.innerHeight;
   // var scrollAfterLoad = function(pos){
   //   setTimeout(function(){
   //     $(document).scrollTop(pos);
   //   }, 150);
   // };
+
+  // var clientHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
   // var watchContentScroll = debounce(function() {
-  //   // lastElTop = $('.postRow').last().offset().top - headerHeight;
-  //   // lastElHeight = $('.postRow').last().height();
-  //   // console.log("LAST ELEM TOP: ", lastElTop, lastElHeight, clientHeight);
-  //   var currentScroll = $(document).height() - clientHeight - 1;
+  //   var currentScroll = $(document).height() - clientHeight - 50;
   //   // console.log("currentScroll: ", currentScroll, clientHeight);
-  //   if ($(document).scrollTop() > currentScroll) {
+  //   if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
   //     if ($scope.activeTab === 'social'){
-  //       console.log("LOADING MORE SOCIAL");
-  //       networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
+  //       loadContent('social');
   //       scrollAfterLoad(currentScroll + 90);
   //     }
   //     else if ($scope.activeTab === 'video'){
-  //       console.log("LOADING MORE VIDEO");
-  //       networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
+  //       loadContent('video');
   //       scrollAfterLoad(currentScroll + 90);
   //     }
   //   }
   // }, 100);
 
   $(document).on('scroll', watchScroll);
-  // if ($scope.activeTab === 'video' || $scope.activeTab === 'social'){
-    // $(document).on('scroll', watchContentScroll);
-  // }
+  // $(document).on('scroll', watchContentScroll);
 
 };
 

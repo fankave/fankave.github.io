@@ -467,7 +467,7 @@ body
 
 @media all and (min-width: 800px) {
   .cropView {
-    max-height: 400px;
+    /*max-height: 400px;*/
   }
 }
 
@@ -1375,7 +1375,7 @@ img-crop canvas {
   background-color: #fff;
   padding: 5px 0;
   border-top: 1px solid rgb(230,236,236);
-  border-bottom: 1px solid rgb(230,236,236);
+  /*border-bottom: 1px solid rgb(230,236,236);*/
 }
 
 #postCommentDivAlt {
@@ -1384,7 +1384,7 @@ img-crop canvas {
   overflow: hidden;
   background-color: #fff;
   padding: 5px 0;
-  border-bottom: 1px solid rgb(230,236,236);
+  /*border-bottom: 1px solid rgb(230,236,236);*/
 }
 
 #mobilePostCommentDiv {
@@ -1394,7 +1394,7 @@ img-crop canvas {
   overflow: hidden;
   background-color: #fff;
   padding: 5px 0;
-  border-top: 1px solid rgb(230,236,236);
+  /*border-top: 1px solid rgb(230,236,236);*/
 }
 
 #postCommentDiv input {
@@ -1679,27 +1679,37 @@ img-crop canvas {
 }
 
 .thumb {
-  height: 80px;
-  max-width: 130px;
-  border: 1px solid rgb(192,210,214);
+  height: 35px;
+  max-width: 35px;
+  /*border: 1px solid rgb(192,210,214);*/
+}
+
+#postCommentForm {
+  background-color: #fff;
+  border-bottom: 1px solid rgb(230,236,236);
+}
+
+#mobilePostCommentForm {
+  background-color: #fff;
+  border-top: 1px solid rgb(230,236,236);
 }
 
 #preview {
   position: relative;
   float: left;
-  height: 80px;
+  height: 30px;
   width: 30%;
   margin: 12px 0 10px 0;
-  padding-left: 12px;
+  padding-left: 48px;
 }
 
 #mobilePreview {
   position: relative;
   float: left;
-  height: 80px;
+  height: 30px;
   width: 30%;
   margin: 12px 0 10px 0;
-  padding-left: 12px;
+  padding-left: 48px;
 }
 
 .fileWarning {
@@ -1709,14 +1719,14 @@ img-crop canvas {
 #removeMedia {
   position: absolute;
   top: -7px;
-  left: 7px;
-  width: 25px;
-  height: 25px;
+  left: 76px;
+  width: 15px;
+  height: 15px;
   background-color: #000;
-  border: none;
+  border: 1px solid #fff;
   border-radius: 50%;
   color: #fff;
-  font-size: 18px;
+  font-size: 9px;
   padding: 0;
   z-index: 1;
 }
