@@ -11,7 +11,25 @@
  /* Page-level / body */
 html {
   box-sizing: border-box;
-  background-color:rgb(255,255,255);
+  background-color:rgb(248,248,248);
+}
+
+@font-face {
+  font-family: "Proxima-Nova";
+  font-weight: 200;
+  src: url('../img/ProximaNova-Light.otf');
+}
+
+@font-face {
+  font-family: "Proxima-Nova";
+  font-weight: 400;
+  src: url('../img/ProximaNova-Reg.otf');
+}
+
+@font-face {
+  font-family: "Proxima-Nova";
+  font-weight: 500;
+  src: url('../img/ProximaNova-Sbold.otf');
 }
 
 body {
@@ -19,7 +37,7 @@ max-width: 768px;
 min-width:320px;
 margin: 0 auto;
 position: relative; /* Fix for absolute positioning */
-font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+font-family: "Proxima-Nova","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
 }
 
 a {
@@ -85,8 +103,14 @@ body
   max-width: 768px;
   margin: 0 auto;
   background-color: #fff;
-  border-right: 1px solid rgb(238,238,238);
-  border-left: 1px solid rgb(238,238,238);
+  /*border-right: 1px solid rgb(238,238,238);
+  border-left: 1px solid rgb(238,238,238);*/
+}
+@media all and (min-width: 770px) {
+  #topicSection {
+    /*border-right: 1px solid rgb(238,238,238);*/
+    /*border-left: 1px solid rgb(238,238,238);*/
+  }
 }
 
 #mediaSection
@@ -107,8 +131,8 @@ body
 #topicDetails {
   background-color: #fff;
   font-size:18px;
-  height:86px;
-  padding-top:16px;
+  height:78px;
+  padding-top:12px;
   margin:0 auto;
   text-align: center;
 }
@@ -151,17 +175,16 @@ body
   font-size:3em;
   /*max-height:4.4em;*/
   background-color: white;
-  margin:2px;
-  /*border-bottom: 1px gray;*/
-  /*border-bottom: 1px solid rgb(238,238,238);*/
+  margin:0px;
+  border-bottom: 1px solid rgb(238,238,238);
 }
 
 .postRowAlt {
   font-size:3em;
   /*max-height:4.4em;*/
   background-color: white;
-  margin:2px;
-  border-bottom: 1px gray;
+  margin:0px;
+  border-bottom: 1px solid rgb(238,238,238);
 }
 
 @media all and (min-width: 500px){
@@ -180,10 +203,9 @@ body
 .repliesCommentRow
 {
   font-size:3em;
-  /*max-height:4.4em;*/
   background-color: rgb(248,248,248);
-  margin:2px;
-  /*border-bottom: 1px red;*/
+  margin:0px;
+  border-bottom: 1px solid rgb(238,238,238)
 }
 
 .postAuthorPhoto /* left-side of each post row */
@@ -477,9 +499,8 @@ body
 .social-btn
 {
   float:left;
-  color:gray;
   padding:0px;
-  width:20px;
+  margin-bottom: 2px;
 }
 
 .social-reply {
@@ -493,7 +514,7 @@ body
 }
 
 .social-more {
-  width: 100%;
+  width: 18px;
   height: auto;
 }
 
@@ -504,16 +525,21 @@ body
 }
 
 .social-metrics-retweet {
-  width: 100%;
+  width: 19px;
   height: auto;
   margin-bottom: 14px;
-  margin-top: 1px;
 }
 
 .social-metrics-heart {
-  width: 80%;
+  width: 12px;
+  height: auto;
   margin-bottom: 14px;
-  /*margin-top: 9px;*/
+}
+
+.social-metrics-reply {
+  width: 14px;
+  height: auto;
+  margin-bottom: 14px;
 }
 
 .socialRetweet {
@@ -552,14 +578,14 @@ span.socialButtonLable
   float:right;
   color:gray;
   padding:0px;
-  width:20px;
+  width:18px;
 }
 
 .social-btn-more img
 {
   float:right;
-  width:20px;
-  height:20px;
+  width:18px;
+  height:auto;
 }
 
 .topic-social-btn
@@ -652,7 +678,7 @@ input:focus + button {
   float: left;
   /*width:24px;*/
   height: 14px;
-  margin-top: 9px;
+  margin-top: 10px;
 }
 
 #backToTopicButton span {
@@ -663,7 +689,7 @@ input:focus + button {
   font-size: 16px;
   font-weight: 600;
   /*color: rgb(179,184,186);*/
-  top: 5px;
+  top: 6px;
   margin-left: 5px;
 }
 
@@ -702,12 +728,14 @@ input:focus + button {
 /* - - - Peel-specific CSS - - - */
 
 
-#peelNavBar
-{
-  /*background-color: black;*/
+#peelNavBar {
+  position: fixed;
+  top: 0;
   background-color: rgb(48,48,48);
-  /*min-height: 3em;*/
-  height: 52px;
+  height: 54px;
+  z-index: 10;
+  width: 100%;
+  max-width: 768px;
 }
 
 
@@ -951,7 +979,7 @@ button:hover {
 
 .scoreCardContent {
   width:100%;
-  height:125px;
+  height:114px;
   line-height: 1.2em;
   position:absolute;
   z-index: 1;
@@ -1033,18 +1061,18 @@ button:hover {
 
 /* - Scorecard Elements - */
 .teamLogo > img {
-  max-height: 56px;
+  max-height: 50px;
   /*max-width: 56px;*/
-  margin-top: 4px;
+  margin-top: 8px;
 }
 
 .largeLogo > img {
-  max-height: 62px;
+  max-height: 56px;
 }
 
 #teamName {
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: 15px;
 }
 
 #leftTeamRecord {
@@ -1118,7 +1146,7 @@ button:hover {
 
 #rightColor {
   width:100%;
-  height:125px;
+  height:114px;
   position:absolute;
   z-index: 2;
 }
@@ -1160,7 +1188,8 @@ button:hover {
 #allScoresSpan {
   font-size:13px;
   font-weight:300;
-  border: 0.1em solid #EEE;
+  color: rgb(255,255,255);
+  border: 0.1em solid rgb(255,255,255);
   padding: 3px 6px;
   border-radius: 3px;
 }
@@ -1192,7 +1221,7 @@ a:focus {
     padding-left: 14%;
   }
   #teamName {
-    font-size: 16px;
+    font-size: 18px;
   }
   #rightTeamRecord {
     font-size: 14px;
@@ -1299,26 +1328,26 @@ img-crop canvas {
 }
 
 #topicCommentField {
-  color: rgb(162,177,182);
+  color: rgb(29,29,29);
   background-color: rgb(248,248,248);
 }
 
 #postCommentField {
-  color: rgb(162,177,182);
+  color: rgb(29,29,29);
   background-color: rgb(248,248,248);
 }
 
 #attachMediaIcon {
-  height: 40px;
+  height: 30px;
   margin: 0 12px;
   float: left;
 }
 
 #attachMediaIcon > img {
   position: relative;
-  width: 40px;
+  width: 24px;
   height: auto;
-  top: 12%;
+  vertical-align: -44%;
 }
 
 #attachMediaIcon:hover {
@@ -1326,14 +1355,12 @@ img-crop canvas {
 }
 
 #postCommentButton{
-  width:60px;
-  min-width: 50px;
-  height: 40px;
+  width: 35px;
+  height: 30px;
   margin: 0 15px;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
-  color: rgb(162,177,182);
+  color: rgb(211,214,215);
   float: right;
   border: none;
   background-color: #fff;
@@ -1343,25 +1370,38 @@ img-crop canvas {
 
 #postCommentDiv {
   width: 100%;
+  max-width: 768px;
   overflow: hidden;
   background-color: #fff;
-  /*margin: 9px 0;*/
+  padding: 5px 0;
+  border-top: 1px solid rgb(230,236,236);
+  border-bottom: 1px solid rgb(230,236,236);
+}
+
+#postCommentDivAlt {
+  width: 100%;
+  max-width: 768px;
+  overflow: hidden;
+  background-color: #fff;
   padding: 5px 0;
   border-bottom: 1px solid rgb(230,236,236);
 }
 
 #mobilePostCommentDiv {
   position: relative;
-  /*z-index: 2;*/
   width: 100%;
+  max-width: 768px;
   overflow: hidden;
   background-color: #fff;
-  /*margin-top: 5px;*/
   padding: 5px 0;
-  border-top: 2px solid rgb(192,210,214);
+  border-top: 1px solid rgb(230,236,236);
 }
 
 #postCommentDiv input {
+  width: 100%;
+}
+
+#postCommentDivAlt input {
   width: 100%;
 }
 
@@ -1370,6 +1410,11 @@ img-crop canvas {
 }
 
 #postCommentDiv span {
+  display: block;
+  overflow: hidden;
+}
+
+#postCommentDivAlt span {
   display: block;
   overflow: hidden;
 }
@@ -1489,8 +1534,8 @@ img-crop canvas {
 }
 
 .fkFont {
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  font-weight: 600;
+  font-family: "Proxima-Nova","HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 400;
   color: #a2b1b6;
 }
 
@@ -1498,12 +1543,22 @@ img-crop canvas {
   text-align: center;
   font-size: 1.0em;
   background-color: rgb(248, 248, 248);
-  color: rgb(59, 166, 252);
+  /*color: rgb(59, 166, 252);*/
   font-weight:500;
-  min-height:2.2em;
-  line-height:2.2em;
-  height: 47px;
-  background-color: rgb(246,248,247);
+  line-height:1.8em;
+  height: 42px;
+  background-color: rgb(248,248,248);
+}
+
+.fixTabContainer {
+  text-align: center;
+  font-size: 1.0em;
+  background-color: rgb(248, 248, 248);
+  /*color: rgb(59, 166, 252);*/
+  font-weight:500;
+  line-height:1.5;
+  height: 40px;
+  background-color: rgb(248,248,248);
 }
 
 .tabName {
@@ -1515,8 +1570,13 @@ img-crop canvas {
 }
 
 .tab {
-  border: 1px solid rgb(192,210,214);
+  border-bottom: 1px solid rgb(192,210,214);
   border-top: 2px solid rgb(192,210,214);
+}
+
+#socialTab,
+#videoTab {
+  border-left: 1px solid rgb(192,210,214);
 }
 
 .tab:hover {
@@ -1537,10 +1597,10 @@ img-crop canvas {
 
 .fixTabs {
   position: fixed;
-  top: 177px;
+  top: 54px;
   width: 100%;
   max-width: 768px;
-  z-index: 2;
+  z-index: 10010;
 }
 
 .inputBase {
@@ -1667,8 +1727,9 @@ img-crop canvas {
 
 .socialAlias {
   /*display: block;*/
-  color: rgb(162,177,182);
+  color: rgb(179,184,186);
   font-size: 14px;
+  font-weight: 500;
   float: left;
   padding-left: 13px;
 }
@@ -1702,7 +1763,7 @@ img-crop canvas {
 }
 
 .chatPostHeader {
-  min-height: 24px;
+  min-height: 22px;
 }
 
 #socialHeader {
@@ -1718,16 +1779,16 @@ img-crop canvas {
 }
 
 #inputControls {
-  position: relative;
-  z-index: 0;
+  /*position: relative;*/
+  /*z-index: 0;*/
 }
 
 .moreRepliesContainer {
   position: relative;
   height: 25px;
   width: 104%;
-  background-color: rgb(246,248,247);
-  margin: 35px 0 12px 0;
+  background-color: rgb(248,248,248);
+  margin: 35px 0 2px 0;
   text-align: center;
   font-size: 12px;
   color: rgb(162,177,182);

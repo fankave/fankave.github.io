@@ -1,11 +1,14 @@
 var socialModule = angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"]);
 socialModule.controller("SocialController", ["$scope","$sce","$window","$routeParams","SocialService","networkService","ChannelService","TopicService",
   function ($scope,$sce,$window,$routeParams,SocialService,networkService,ChannelService,TopicService){
-
-    this.initFeed = function(tab) {
+    console.log("Social Control");
+    $scope.initFeed = function(tab) {
       if (tab === 'social'){
+        // $scope.activeTab = 'social';
+        SocialService.resetSocialOffset();
         loadContent('social');
       } else {
+        SocialService.resetVideoOffset();
         loadContent('video');
       }
     };
@@ -14,7 +17,7 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
     function loadContent(type) {
       if (type === 'social'){
-        console.log("LOADING SOCIAL");
+        console.log("LOADING SOCIAL: ", channelID);
         networkService.send(SocialService.getSocialDataRequest(channelID));
       } else {
         console.log("LOADING VIDEO");
@@ -22,7 +25,9 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
       }
     };
 
-    var updateFeed = function(tab) {
+    // $scope.socialArray;
+    // $scope.videoArray;
+    function updateFeed(tab) {
 
       // Get Appropriate Content
       var feedData;
@@ -88,6 +93,13 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
       }
     };
 
+    $scope.trustSrc = function(src) {
+      return $sce.trustAsResourceUrl(src);
+    }
+
+    SocialService.registerObserverCallback('social',function(){updateFeed('social');});
+    SocialService.registerObserverCallback('video',function(){updateFeed('video');});
+    // $scope.initFeed('social');
     // Limit Rate that Function Can be Called
     function debounce(func, wait, immediate) {
       var timeout;
@@ -113,9 +125,9 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
     var clientHeight = document.documentElement.clientHeight || window.innerHeight;
     var watchContentScroll = debounce(function() {
-      var currentScroll = $(document).height() - clientHeight - 1;
+      var currentScroll = $(document).height() - clientHeight - 50;
       // console.log("currentScroll: ", currentScroll, clientHeight);
-      if ($(document).scrollTop() > currentScroll) {
+      if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
         if ($scope.activeTab === 'social'){
           loadContent('social');
           scrollAfterLoad(currentScroll + 90);
@@ -129,8 +141,8 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
     $(document).on('scroll', watchContentScroll);
 
-    SocialService.registerObserverCallback('social',updateFeed('social'));
-    SocialService.registerObserverCallback('video',updateFeed('video'));
+    // SocialService.registerObserverCallback('social',updateFeed('social'));
+    // SocialService.registerObserverCallback('video',updateFeed('video'));
 
 
 }]);

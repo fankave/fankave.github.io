@@ -89,10 +89,6 @@
       </div>
     </span>
   </div>
-
-  <div class="roww" id="repliesCommentSeparator">
-     &nbsp;
-  </div>
   
   <div id="textInputFieldReply" class="clearfix" ng-if="mobileBrowser === false" ng-controller="UserInputController as user">
     <div id="preview" ng-if="user.uploader.queue.length > 0">
@@ -105,12 +101,12 @@
         </div>
     </div>
     <form id="postCommentForm" ng-submit="user.postComment(commentText,false)">
-      <div id="postCommentDiv" class="input-group">
+      <div id="postCommentDivAlt" class="input-group">
         <label for="fileUpload" id="attachMediaIcon">
           <img src="img/attach-media.png" />
         </label>
 
-        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,false)">POST</button>
+        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,false)">Post</button>
 
         <span><input id="postCommentField" type="text" class="form-control"
         placeholder="Write a reply..." ng-model="commentText"></span>
@@ -210,7 +206,7 @@
           <img src="img/attach-media.png" />
         </label>
 
-        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,false)">POST</button>
+        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,false)">Post</button>
 
         <span><input id="postCommentField" type="text" class="form-control"
         placeholder="Write a reply..." ng-model="commentText"></span>

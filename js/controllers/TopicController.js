@@ -1,4 +1,4 @@
-var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload"]);
+var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"]);
 topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService",initTopicController]);
 
 function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService)
@@ -91,8 +91,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     if($scope.isPeelUser === true)
     {
       if($scope.topicType == "livegame"){
-        document.getElementById('topicSection').style.paddingTop = "177px";
-        document.getElementById('header').style.height = "177px";
+        document.getElementById('topicSection').style.paddingTop = "54px";
+        document.getElementById('header').style.height = "114px";
         headerHeight = 177;
       }
       else{
@@ -108,8 +108,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     else
     {
       if($scope.topicType == "livegame"){
-        document.getElementById('topicSection').style.paddingTop = "125px";
-        document.getElementById('header').style.height = "125px";
+        document.getElementById('topicSection').style.paddingTop = "114px";
+        document.getElementById('header').style.height = "114px";
         headerHeight = 125;
       }
       else{
@@ -489,6 +489,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'chat';
+      $(document).scrollTop(0);
       $scope.initPage();
     }
     if (tab === 'video'){
@@ -496,15 +497,16 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $('#videoTab').addClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'video';
-      // $scope.loadTab(tab);
+      // $(document).scrollTop(0);
     }
     if (tab === 'social'){
       $('#chatTab').removeClass('selectedTab');
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').addClass('selectedTab');
       $scope.activeTab = 'social';
-      // $scope.loadTab(tab);
+      // $(document).scrollTop(0);
     }
+    console.log("Active Tab: ", $scope.activeTab);
     // $scope.channelId = ForumStorage.getFromLocalStorage('lastChannel');
   };
 
@@ -524,33 +526,36 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   //   }
   // };
 
-  // function debounce(func, wait, immediate) {
-  //   var timeout;
-  //   return function() {
-  //     var context = this, args = arguments;
-  //     var later = function() {
-  //       timeout = null;
-  //       if (!immediate) func.apply(context, args);
-  //     };
-  //     var callNow = immediate && !timeout;
-  //     clearTimeout(timeout);
-  //     timeout = setTimeout(later, wait);
-  //     if (callNow) func.apply(context, args);
-  //   };
-  // };
+  function debounce(func, wait, immediate) {
+    var timeout;
+    return function() {
+      var context = this, args = arguments;
+      var later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
+  };
 
-  // var tabs = $('#inputControls');
-  // var userInput = $('#textInputFieldTopic');
+  var tabs = $('#inputControls');
+  var tabContainer = $('.tabContainer');
+  var userInput = $('#textInputFieldTopic');
 
-  // var watchScroll = debounce(function() {
-  //     if ($(document).scrollTop() > 77) {
-  //       tabs.addClass('fixTabs');
-  //       userInput.addClass('inputBase');
-  //     } else {
-  //       tabs.removeClass('fixTabs');
-  //       userInput.removeClass('inputBase');
-  //     }
-  // }, 15);
+  var watchScroll = debounce(function() {
+      if ($(document).scrollTop() > 186) {
+        tabs.addClass('fixTabs');
+        tabContainer.addClass('fixTabContainer');
+        userInput.addClass('inputBase');
+      } else {
+        tabs.removeClass('fixTabs');
+        tabContainer.removeClass('fixTabContainer');
+        userInput.removeClass('inputBase');
+      }
+  }, 5);
 
   // var lastElTop;
   // var lastElHeight;
@@ -581,7 +586,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   //   }
   // }, 100);
 
-  // $(document).on('scroll', watchScroll);
+  $(document).on('scroll', watchScroll);
   // if ($scope.activeTab === 'video' || $scope.activeTab === 'social'){
     // $(document).on('scroll', watchContentScroll);
   // }

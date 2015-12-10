@@ -2,12 +2,13 @@ socialModule.factory('SocialService', ["Bant", function (Bant) {
   var LIST_SOCIAL_URI = "/v1.0/channel/social/list/";
 
 
-  var observerCallbacks = {social:[],video:[]};
+  var observerCallbacks = {'social':[],'video':[]};
   var _socialArray = [];
   var _videoArray = [];
   var _socialOffset = 0;
   var _videoOffset = 0;
-  var LIMIT = 20;
+  var socialLIMIT = 20;
+  var videoLIMIT = 10;
 
 
   function setData(feedData, tab) {
@@ -40,28 +41,32 @@ socialModule.factory('SocialService', ["Bant", function (Bant) {
   };
 
   var notifyObservers = function(tab){
-    angular.forEach(observerCallbacks.tab, function(callback){
+    console.log("notifyObservers: ", tab, observerCallbacks[tab]);
+    angular.forEach(observerCallbacks[tab], function(callback){
       callback();
     });
   };
 
   function registerObserverCallback(tab, callback){
     // register an observer for provided feed
-    var callbackLength  = observerCallbacks.tab.length;
+    var callbackLength  = observerCallbacks[tab].length;
     while(callbackLength > 0){
-      callbackLength = observerCallbacks.tab.length;
-      observerCallbacks.tab.pop();
+      callbackLength = observerCallbacks[tab].length;
+      observerCallbacks[tab].pop();
     }
-    observerCallbacks.tab.push(callback);
+    console.log("Obs Callback: ", tab, callback, observerCallbacks[tab]);
+    observerCallbacks[tab].push(callback);
   };
 
   function getSocialDataRequest(id){
-    return  {
+    var request = {
       "rid": "social",
       "timestamp": new Date().getTime(),
       "method": "GET",
-      "uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+_socialOffset)
+      "uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+socialLIMIT+"&offset="+_socialOffset)
     };
+    console.log("Social Request: ", request);
+    return request;
   };
 
   function getVideoDataRequest(id){
@@ -69,7 +74,7 @@ socialModule.factory('SocialService', ["Bant", function (Bant) {
       "rid": "video",
       "timestamp": new Date().getTime(),
       "method": "GET",
-      "uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+_videoOffset+"&filter=video")
+      "uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+videoLIMIT+"&offset="+_videoOffset+"&filter=video")
     };
   };
 
@@ -103,6 +108,13 @@ socialModule.factory('SocialService', ["Bant", function (Bant) {
     },
     videoArray: function(){
       return _videoArray;
+    },
+    resetSocialOffset: function(){
+      console.log("SOCIAL RESET");
+      _socialOffset = 0;
+    },
+    resetVideoOffset: function(){
+      _videoOffset = 0;
     },
     setData: setData,
     getSocialDataRequest: getSocialDataRequest,
