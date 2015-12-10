@@ -1,4 +1,4 @@
-networkModule.service('DataService', function (TopicService, CommentService, ReplyService, ChannelService, SocialService, VideoService) {
+networkModule.service('DataService', function (TopicService, CommentService, ReplyService, ChannelService, SocialService) {
   
   var DATA_TYPE_TOPIC = "topic";
   var DATA_TYPE_COMMENT = "comment";
@@ -109,34 +109,24 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
       ChannelService.setTopicData(data);
   }
   
-  function delegateSetSocial(socialData) {
-    // console.log("****Social Method: ", socialData.method, socialData.push);
-    if(socialData.error){
-      console.log("Social Error message from network: ", socialData.error);
-    }
-    else if(socialData.push){
-      if(socialData.method === "UPSERT"){
-        console.log("SOCIAL UPSERT");
-        SocialService.updateFeed(socialData);
-      }
-      else if(socialData.method === "REMOVE"){
-        console.log("SOCIAL REMOVE");
-        // SocialService.removeItem();  
-      }
+  function delegateSetSocial(data) {
+    if(data.error){
+      console.log("Social Error message from network: ", data.error);
     }
     else {
       console.log("SOCIAL GET");
-      SocialService.setSocialData(socialData);
+      SocialService.setData(data,'social');
     }
-
   }
 
   function delegateSetVideo(data) {
     if(data.error){
       console.log("Video Error message from network: ", data.error);
     }
-    else
-      VideoService.setVideoData(data);
+    else {
+      console.log("VIDEO GET");
+      SocialService.setData(data,'video');
+    }
   }
 
   return {

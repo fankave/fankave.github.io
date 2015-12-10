@@ -1,6 +1,6 @@
 angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angularFileUpload"])
-  .controller("UserInputController", ["$scope","$window","$routeParams","networkService","TopicService","CommentService","ReplyService","UserInfoService","FileUploader","MUService",
-    function ($scope,$window,$routeParams,networkService,TopicService,CommentService,ReplyService,UserInfoService,FileUploader,MUService){
+  .controller("UserInputController", ["$scope","$window","$timeout","$routeParams","networkService","TopicService","CommentService","ReplyService","UserInfoService","FileUploader","MUService",
+    function ($scope,$window,$timeout,$routeParams,networkService,TopicService,CommentService,ReplyService,UserInfoService,FileUploader,MUService){
 
       // ATTACH MEDIA
       var MUS_SERVER_URI = 'https://dev.fankave.com:8080';
@@ -12,6 +12,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         removeAfterUpload: true
       });
 
+      var _this = this;
       this.isHTML5 = this.uploader.isHTML5;
       this.mediaType;
       this.uploader.filters.push({
@@ -19,11 +20,11 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         fn: function(item /*{File|FileLikeObject}*/, options) {
           var itemType = item.type;
           if(itemType.indexOf("image") != -1){
-            this.mediaType = "image";
+            _this.mediaType = "image";
             return this.queue.length < 1 && (item.size < 1048576);
           }
           else if(itemType.indexOf("video") != -1){
-            this.mediaType = "video";
+            _this.mediaType = "video";
             return this.queue.length < 1 && (item.size < 10485760);
           }
           return this.queue.length < 10;
@@ -61,7 +62,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         generateImagePreview, false);
 
       this.removeMedia = function(){
-        this.uploader.clearQueue();
+        _this.uploader.clearQueue();
         var e = $('#fileUpload');
         e.wrap('<form>').closest('form').get(0).reset();
         e.unwrap();
@@ -73,12 +74,13 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       this.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
         dontAdd = true;
         console.info('onWhenAddingFileFailed', item, filter, options);
-        if (!this.isHTML5){
+        if (!_this.isHTML5){
           console.log("Browser Doesn't Support HTML5");
-          this.HTML5warning = true;
-        } else if (this.uploader.queue.length < 1) {
-          this.fileMaxExceeded = true;
-          $timeout(function(){this.fileMaxExceeded = false;}, 5000);
+          _this.HTML5warning = true;
+        } else if (_this.uploader.queue.length < 1) {
+          _this.fileMaxExceeded = true;
+          _this.removeMedia();
+          $timeout(function(){_this.fileMaxExceeded = false;}, 5000);
         }
       };
       this.uploader.onAfterAddingFile = function(fileItem) {
@@ -120,7 +122,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       };
       this.uploader.onCompleteAll = function() {
         console.info('onCompleteAll');
-        this.uploader.clearQueue();
+        _this.uploader.clearQueue();
       };
 
       console.info('uploader', this.uploader);
@@ -128,16 +130,16 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       // POST COMMENT
       this.postComment = function(commentText, isComment) {
         // console.log("In New Controller: ", isComment);
-        if (this.uploader.queue.length > 0 && isComment){
+        if (_this.uploader.queue.length > 0 && isComment){
           MUService.setCommentParams($scope.topicID, commentText, true);
-        } else if (this.uploader.queue.length > 0 && !isComment){
+        } else if (_this.uploader.queue.length > 0 && !isComment){
           MUService.setCommentParams($scope.topicId, commentText, false, $scope.postID);
         } else if (!!commentText && commentText !== "" && isComment){
           networkService.send(CommentService.postCommentRequest($scope.topicID, commentText));
         } else if (!!commentText && commentText !== "" && !isComment){
           networkService.send(ReplyService.getPostReplyRequest($scope.topicId, $scope.postID, commentText));
         }
-        this.uploader.uploadAll();
+        _this.uploader.uploadAll();
         $scope.commentText = "";
         if (isComment){
           $(document).scrollTop(0);
