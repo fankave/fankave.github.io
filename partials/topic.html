@@ -210,7 +210,7 @@
       </div>
     </form>
     <div class="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
-      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 1MB</span>
+      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 5MB</span>
       <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
     </div>
     <div class="fileWarning" ng-if="user.HTML5warning === true">
@@ -463,7 +463,7 @@
       </div>
     </form>
     <div class="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
-      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 1MB</span>
+      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 5MB</span>
       <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
     </div>
     <div class="fileWarning" ng-if="user.HTML5warning === true">
@@ -471,23 +471,12 @@
     </div>
   </div>
 
-<!--  <footer class="footer" id="textEntryField">
-        <form ng-submit="postComment(commentText)">
-        <div class="input-group">
-            <input id="topicCommentField" type="text" class="form-control" placeholder="Write a comment..." ng-model="commentText" style="display:inline; positon:absolute; top:50px; right: 5%;" >
-            <span class="input-group-btn">
-              <button id="postCommentButton" class="btn btn-default" type="button" ng-click="postComment(commentText)">Post</button>
-            </span>
-        </div>
-      </form>
-    </footer> -->
-    <!-- <hr> -->
-  </section>
+</section>
 
-  <div id="newCommentsAvailableIndicatorDiv" ng-show="showNewCommentsIndicator && activeTab === 'chat'">
-    <center>
-      <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()"><img src="img/newCommentIndicator.png"/></button>
-    </center>
-  </div>
+<div id="newCommentsAvailableIndicatorDiv" ng-show="showNewCommentsIndicator && activeTab === 'chat'">
+  <center>
+    <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()"><img src="img/newCommentIndicator.png"/></button>
+  </center>
+</div>
 
 

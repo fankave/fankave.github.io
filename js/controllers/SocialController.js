@@ -2,6 +2,7 @@ var socialModule = angular.module("SocialModule", ["NetworkModule","ChannelModul
 socialModule.controller("SocialController", ["$scope","$sce","$window","$routeParams","SocialService","VideoService","networkService","ChannelService","TopicService",
   function ($scope,$sce,$window,$routeParams,SocialService,VideoService,networkService,ChannelService,TopicService){
     console.log("Social Control");
+    
     var _this = this;
     this.initFeed = function(tab) {
       if (tab === 'social'){

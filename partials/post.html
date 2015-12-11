@@ -116,7 +116,7 @@
       </div>
     </form>
     <div class="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
-      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 1MB</span>
+      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 5MB</span>
       <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
     </div>
     <div class="fileWarning" ng-if="user.HTML5warning === true">
@@ -216,7 +216,7 @@
       </div>
     </form>
     <div class="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
-      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 1MB</span>
+      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 5MB</span>
       <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
     </div>
     <div class="fileWarning" ng-if="user.HTML5warning === true">
@@ -224,17 +224,6 @@
     </div>
   </div>
 
-   <!--<footer class="footer" id="textEntryField">
-        <form ng-submit="postReply(commentText)">
-        <div class="input-group">
-            <input id="replyCommentField" type="text" class="form-control" placeholder="Write a reply..." ng-model="commentText" onscroll="javascript:document.getElementById('scroll').value = this.scrollTop">
-            <span class="input-group-btn">
-              <button id="postReplyButton" class="btn btn-default" type="button" ng-click="postReply(commentText)">Post</button>
-            </span>
-        </div>/input-group
-      </form> 
-  </footer>-->
-  <!-- <hr> -->
 </section>
 
 

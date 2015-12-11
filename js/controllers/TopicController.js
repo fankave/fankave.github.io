@@ -17,10 +17,10 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   }
 
   // if (ForumStorage.getFromLocalStorage('lastChannel') === undefined){
-    ForumStorage.setToLocalStorage("lastChannel", ChannelService.getChannel());
+  // ForumStorage.setToLocalStorage("lastChannel", ChannelService.getChannel());
   // }
 
-  // Retain & Handle State when Returning From External Links
+  // Retain & Handle State when Returning From External Links ---> KEEP IN CASE
   // if (ForumStorage.getFromLocalStorage('hasUserVisited') === true){
   //   console.log("Checking For Existing Session");
     
@@ -529,10 +529,18 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 
   var tabs = $('#inputControls');
   var tabContainer = $('.tabContainer');
-  var userInput = $('#textInputFieldTopic');
 
   var watchScroll = debounce(function() {
+    if ($scope.isPeelUser){
       if ($(document).scrollTop() > 186) {
+        tabs.addClass('fixTabsPeel');
+        tabContainer.addClass('fixTabContainer');
+      } else {
+        tabs.removeClass('fixTabsPeel');
+        tabContainer.removeClass('fixTabContainer');
+      }
+    } else {
+      if ($(document).scrollTop() > 132) {
         tabs.addClass('fixTabs');
         tabContainer.addClass('fixTabContainer');
         userInput.addClass('inputBase');
@@ -541,32 +549,10 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tabContainer.removeClass('fixTabContainer');
         userInput.removeClass('inputBase');
       }
+    }
   }, 5);
 
-  // var scrollAfterLoad = function(pos){
-  //   setTimeout(function(){
-  //     $(document).scrollTop(pos);
-  //   }, 150);
-  // };
-
-  // var clientHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-  // var watchContentScroll = debounce(function() {
-  //   var currentScroll = $(document).height() - clientHeight - 50;
-  //   // console.log("currentScroll: ", currentScroll, clientHeight);
-  //   if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
-  //     if ($scope.activeTab === 'social'){
-  //       loadContent('social');
-  //       scrollAfterLoad(currentScroll + 90);
-  //     }
-  //     else if ($scope.activeTab === 'video'){
-  //       loadContent('video');
-  //       scrollAfterLoad(currentScroll + 90);
-  //     }
-  //   }
-  // }, 100);
-
   $(document).on('scroll', watchScroll);
-  // $(document).on('scroll', watchContentScroll);
 
 };
 
