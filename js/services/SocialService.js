@@ -2,60 +2,42 @@ socialModule.factory('SocialService', ["Bant", function (Bant) {
   var LIST_SOCIAL_URI = "/v1.0/channel/social/list/";
 
 
-  var observerCallbacks = {'social':[],'video':[]};
+  var observerCallbacks = [];
   var _socialArray = [];
-  var _videoArray = [];
-  var _socialOffset = 0;
-  var _videoOffset = 0;
-  var socialLIMIT = 20;
-  var videoLIMIT = 10;
+  var _offset = 0;
+  var LIMIT = 20;
 
 
-  function setData(feedData, tab) {
-    var tempData = feedData.data.results;
+  function setSocialData(socialData) {
+    _socialArray = [];
+    var tempData = socialData.data.results;
     var len = tempData.length;
 
-    if (tab === 'social'){
-      _socialArray = [];
-      if (!!tempData && len > 0){
-        for (i = 0; i < len; i++){
-          var _socialObject = Bant.bant(tempData[i]);
-          if (!!_socialObject.id)
-            _socialArray.push(_socialObject);
-        }
-        _socialOffset = feedData.data.nextOffset;
-        notifyObservers(tab);
+    if (!!tempData && len > 0){
+      for (i = 0; i < len; i++){
+        var _socialObject = Bant.bant(tempData[i]);
+        if (!!_socialObject.id)
+          _socialArray.push(_socialObject);
       }
-    } else if (tab === 'video'){
-      _videoArray = [];
-      if (!!tempData && len > 0){
-        for (i = 0; i < len; i++){
-          var _videoObject = Bant.bant(tempData[i]);
-          if (!!_videoObject.id)
-            _videoArray.push(_videoObject);
-        }
-        _videoOffset = feedData.data.nextOffset;
-        notifyObservers(tab);
-      }
+      _offset = socialData.data.nextOffset;
+      notifyObservers();
     }
   };
 
-  var notifyObservers = function(tab){
-    console.log("notifyObservers: ", tab, observerCallbacks[tab]);
-    angular.forEach(observerCallbacks[tab], function(callback){
+  var notifyObservers = function(){
+    angular.forEach(observerCallbacks, function(callback){
       callback();
     });
   };
 
-  function registerObserverCallback(tab, callback){
+  function registerObserverCallback(callback){
     // register an observer for provided feed
-    var callbackLength  = observerCallbacks[tab].length;
+    var callbackLength  = observerCallbacks.length;
     while(callbackLength > 0){
-      callbackLength = observerCallbacks[tab].length;
-      observerCallbacks[tab].pop();
+      callbackLength = observerCallbacks.length;
+      observerCallbacks.pop();
     }
-    console.log("Obs Callback: ", tab, callback, observerCallbacks[tab]);
-    observerCallbacks[tab].push(callback);
+    observerCallbacks.push(callback);
   };
 
   function getSocialDataRequest(id){
@@ -63,64 +45,21 @@ socialModule.factory('SocialService', ["Bant", function (Bant) {
       "rid": "social",
       "timestamp": new Date().getTime(),
       "method": "GET",
-      "uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+socialLIMIT+"&offset="+_socialOffset)
+      "uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+_offset)
     };
     console.log("Social Request: ", request);
     return request;
   };
 
-  function getVideoDataRequest(id){
-    var request = {
-      "rid": "video",
-      "timestamp": new Date().getTime(),
-      "method": "GET",
-      "uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+videoLIMIT+"&offset="+_videoOffset+"&filter=video")
-    };
-    console.log("Video Request: ", request);
-    return request;
-  };
-
-  // function appendToFeed(socialData){
-  //   var socialItem = socialData.data;
-  //   if (!socialData){
-  //     return;
-  //   } else {
-  //     socialObj = Bant.bant(socialItem);
-  //     _socialArrayArchive.unshift(socialObj);
-  //   }
-  //   notifyObservers(true);
-  // }
-
-  // function updateFeed(socialData){
-  //   var socialObj = socialData.data;
-  //   for (var i = 0; i < _socialArrayArchive.length; i++){
-  //     if (_socialArrayArchive[i].id === socialObj.id){
-  //       console.log("Updating Existing Social Item, ID=", socialObj.id);
-  //       _socialArrayArchive[i] = Bant.bant(socialObj);
-  //       return;
-  //     }
-  //   }
-  //   console.log("Updating Social Feed, New Item");
-  //   appendToFeed(socialData);
-  // }
-
   return {
     socialArray: function(){
       return _socialArray;
     },
-    videoArray: function(){
-      return _videoArray;
-    },
     resetSocialOffset: function(){
-      console.log("SOCIAL RESET");
-      _socialOffset = 0;
+      _offset = 0;
     },
-    resetVideoOffset: function(){
-      _videoOffset = 0;
-    },
-    setData: setData,
+    setSocialData: setSocialData,
     getSocialDataRequest: getSocialDataRequest,
-    getVideoDataRequest: getVideoDataRequest,
     registerObserverCallback: registerObserverCallback
   };
 

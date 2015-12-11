@@ -21,7 +21,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
           var itemType = item.type;
           if(itemType.indexOf("image") != -1){
             _this.mediaType = "image";
-            return this.queue.length < 1 && (item.size < 1048576);
+            return this.queue.length < 1 && (item.size < 5242880);
           }
           else if(itemType.indexOf("video") != -1){
             _this.mediaType = "video";
