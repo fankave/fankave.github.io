@@ -1,4 +1,4 @@
-networkModule.service('DataService', function (TopicService, CommentService, ReplyService, ChannelService, SocialService) {
+networkModule.service('DataService', function (TopicService, CommentService, ReplyService, ChannelService, SocialService, VideoService) {
   
   var DATA_TYPE_TOPIC = "topic";
   var DATA_TYPE_COMMENT = "comment";
@@ -115,7 +115,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
     }
     else {
       console.log("SOCIAL GET");
-      SocialService.setData(data,'social');
+      SocialService.setSocialData(data);
     }
   }
 
@@ -125,7 +125,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
     }
     else {
       console.log("VIDEO GET");
-      SocialService.setData(data,'video');
+      VideoService.setVideoData(data);
     }
   }
 
