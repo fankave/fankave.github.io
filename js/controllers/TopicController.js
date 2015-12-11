@@ -182,7 +182,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $scope.liked = TopicService.getLiked();
       var metrics = TopicService.getMetrics();
       $scope.likesCount = metrics.likes;
-      $scope.commentsCount = metrics.comments || 0;
+      $scope.commentsCount = metrics.comments;
 
     }
   };
@@ -247,7 +247,13 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   
   $scope.setPeelUI($scope.isPeelUser);
 
+  $scope.hideLoading = function(){
+    console.log("HIDING LOAD");
+    $scope.loadingChat = false;
+    $scope.loadingSocial = false;
+  };
   $scope.initPage = function(){
+    $scope.loadingChat = true;
     updateTopic();
     updateComments();
     $scope.pageClass = 'page-topic';
@@ -554,12 +560,15 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 
   $(document).on('scroll', watchScroll);
 
+
 };
 
-// topicModule.directive('repeatFinishedNotify', function () {
-//   return function (scope, element, attrs) {
-//     if (scope.$last){
-//       scope.scrollToBookmark();
-//     }
-//   };
-// });
+topicModule.directive('repeatFinishedNotify', function () {
+  return function (scope, element, attrs) {
+    if (scope.$last){
+      // scope.scrollToBookmark();
+      console.log("DONE LOADING COMMENTS");
+      scope.hideLoading();
+    }
+  };
+});

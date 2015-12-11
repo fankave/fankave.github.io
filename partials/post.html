@@ -125,6 +125,19 @@
   </div>
   
   <div class="repliesContainer">
+
+    <!-- <div id="loadChatFill" ng-repeat="item in [1,2,3]" ng-if="loadingReply">
+      <span class="load loadProfilePhoto"></span>
+      <span class="loadPost">
+        <div class="clearfix">
+          <span class="load loadChatUsername"></span>
+          <span class="load loadChatTimestamp"></span>
+        </div>
+        <div class="load loadChatBody"></div>
+        <div class="load loadChatFooter"></div>
+      </span>
+    </div> -->
+
     <div ng-repeat="thisReply in replies" class="row postRow" ng-switch="thisReply.mediaType">
       
       <span class="postAuthorPhoto">

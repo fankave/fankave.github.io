@@ -126,6 +126,7 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 		// $scope.pageStyle = {'padding-top': '10em'};
 
 		$scope.requestReplies();
+    // $scope.loadingReply = true;
 		var replyPostHeader = $("#replyPost").height();
 		// console.log("height of repy header: " + replyPostHeader);
 		var heightString = replyPostHeader + "px";
@@ -139,7 +140,7 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 		 {
   			$timeout(function()
   			{
-  				setLinks();
+  				// setLinks();
           var replyDivs = document.getElementsByClassName("postRow");
           for (div in replyDivs){
             if (newValue != undefined){
@@ -309,7 +310,12 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 		}
 	}
 
-	 function updateReplies(){
+  // $scope.hideLoading = function(){
+  //   console.log("HIDING LOAD");
+  //   $scope.loadingReply = false;
+  // };
+
+	function updateReplies(){
 		//TODO: check with ahmed, these values could be individual scope var.
 		var repliesData = ReplyService.replies();
 		var len = repliesData.length;
@@ -399,24 +405,15 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 
   $scope.xLinkActivated = false;
 
-  function setLinks() {
-    // $('.postContent > a').click(function(){
-      // $('#xContent').css('display', 'block');
-      // console.log("Reply ID On Leaving: ", this.id)
-      // ForumStorage.setToLocalStorage('replyBookmark', true)
-    // });
-  };
-  
-  // $scope.backToChat = function() {
-  //   $('#xContent').css('display', 'none');
-  // };
 
 };
 
-// postModule.directive('repeatFinishedNotify', function () {
+// postModule.directive('repeatReplyFinished', function () {
 //   return function (scope, element, attrs) {
 //     if (scope.$last){
-//       scope.scrollToBookmark();
+//       // scope.scrollToBookmark();
+//       console.log("DONE LOADING REPLIES");
+//       scope.hideLoading();
 //     }
 //   };
 // });

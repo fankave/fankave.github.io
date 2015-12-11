@@ -2,9 +2,10 @@ var socialModule = angular.module("SocialModule", ["NetworkModule","ChannelModul
 socialModule.controller("SocialController", ["$scope","$sce","$window","$routeParams","SocialService","VideoService","networkService","ChannelService","TopicService",
   function ($scope,$sce,$window,$routeParams,SocialService,VideoService,networkService,ChannelService,TopicService){
     console.log("Social Control");
-    
+
     var _this = this;
     this.initFeed = function(tab) {
+      $scope.$parent.loadingSocial = true;
       if (tab === 'social'){
         $scope.$parent.switchTabs('social');
         _this.socialArray = [];
@@ -142,3 +143,14 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
 
 }]);
+
+// socialModule.directive('repeatFinishedSocial', function () {
+//   return function (scope, element, attrs) {
+//     if (scope.$last){
+//       // scope.scrollToBookmark();
+//       console.log("DONE LOADING COMMENTS");
+//       // scope.loadingChat = false;
+//       scope.hideLoading();
+//     }
+//   };
+// });
