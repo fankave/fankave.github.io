@@ -1619,6 +1619,7 @@ img-crop canvas {
   position: relative;
   display: inline-block;
   vertical-align: -80%;
+  margin-bottom: 5px;
 }
 
 #headLike {
@@ -1819,6 +1820,6 @@ img-crop canvas {
 }
 
 .vineVideo {
-  
+
 }
 
