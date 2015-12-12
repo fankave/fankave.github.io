@@ -1609,8 +1609,8 @@ img-crop canvas {
   font-size: 1.0em;
   background-color: rgb(248, 248, 248);
   font-weight:500;
-  line-height:1.5;
-  height: 40px;
+  /*line-height:1.5;*/
+  height: 42px;
   background-color: rgb(248,248,248);
 }
 

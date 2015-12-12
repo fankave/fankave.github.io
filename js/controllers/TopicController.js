@@ -539,9 +539,9 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   var tabs = $('#inputControls');
   var tabContainer = $('.tabContainer');
 
-  var watchScroll = debounce(function() {
+  var watchScroll = function() {
     if ($scope.isPeelUser){
-      if ($(document).scrollTop() > 186) {
+      if ($(document).scrollTop() > 150) {
         tabs.addClass('fixTabsPeel');
         tabContainer.addClass('fixTabContainer');
       } else {
@@ -549,7 +549,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tabContainer.removeClass('fixTabContainer');
       }
     } else {
-      if ($(document).scrollTop() > 132) {
+      if ($(document).scrollTop() > 96) {
         tabs.addClass('fixTabs');
         tabContainer.addClass('fixTabContainer');
       } else {
@@ -557,9 +557,9 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tabContainer.removeClass('fixTabContainer');
       }
     }
-  }, 5);
+  };
 
-  // $(document).on('scroll', watchScroll);
+  $(document).on('scroll', watchScroll);
 
 
 };
