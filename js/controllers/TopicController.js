@@ -108,8 +108,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     else
     {
       if($scope.topicType == "livegame"){
-        document.getElementById('topicSection').style.paddingTop = "114px";
-        document.getElementById('header').style.height = "114px";
+        document.getElementById('topicSection').style.paddingTop = "0px";
+        document.getElementById('header').style.height = "0px";
         headerHeight = 125;
       }
       else{
@@ -549,16 +549,14 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       if ($(document).scrollTop() > 132) {
         tabs.addClass('fixTabs');
         tabContainer.addClass('fixTabContainer');
-        userInput.addClass('inputBase');
       } else {
         tabs.removeClass('fixTabs');
         tabContainer.removeClass('fixTabContainer');
-        userInput.removeClass('inputBase');
       }
     }
   }, 5);
 
-  $(document).on('scroll', watchScroll);
+  // $(document).on('scroll', watchScroll);
 
 
 };
