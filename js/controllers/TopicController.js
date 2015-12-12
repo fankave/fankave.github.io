@@ -109,7 +109,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     {
       if($scope.topicType == "livegame"){
         document.getElementById('topicSection').style.paddingTop = "0px";
-        document.getElementById('header').style.height = "0px";
+        document.getElementById('header').style.height = "114px";
         headerHeight = 125;
       }
       else{
@@ -183,6 +183,9 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       var metrics = TopicService.getMetrics();
       $scope.likesCount = metrics.likes;
       $scope.commentsCount = metrics.comments;
+      if (!$scope.commentsCount || $scope.commentsCount === 0){
+        $scope.loadingChat = false;
+      }
 
     }
   };
