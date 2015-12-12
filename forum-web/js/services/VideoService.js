@@ -1,25 +1,23 @@
-networkModule.factory('VideoService', function (Bant) {
+socialModule.factory('VideoService', function (Bant) {
 	var LIST_SOCIAL_URI = "/v1.0/channel/social/list/";
 
 
 	var observerCallbacks = [];
 	var _videoArray = [];
-	var _videoArrayArchive = [];
 	var _offset = 0;
-	var LIMIT = 20;
+	var LIMIT = 10;
 
 
 	function setVideoData(videoData) {
 		_videoArray = [];
-		tempData = videoData.data.results;
-		if(tempData!= undefined && tempData.length>0){
-			var len = tempData.length;
-			for(i=0;i<len;i++){
-				var _videoObject = {};
-				_videoObject = Bant.bant(tempData[i]);
-				if(_videoObject.id != undefined)
+		var tempData = videoData.data.results;
+		var len = tempData.length;
+
+		if (!!tempData && len > 0){
+			for (i = 0; i < len; i++){
+				var _videoObject = Bant.bant(tempData[i]);
+				if (!!_videoObject.id)
 					_videoArray.push(_videoObject);
-					_videoArrayArchive.push(_videoObject);
 			}
 			_offset = videoData.data.nextOffset;
 			notifyObservers();
@@ -36,7 +34,6 @@ networkModule.factory('VideoService', function (Bant) {
 
 	function registerObserverCallback(callback){
 		//register an observer
-		// console.log("comments callback registered");
 		var callbackLength  = observerCallbacks.length;
 		while(callbackLength > 0){
 			callbackLength = observerCallbacks.length;
@@ -46,24 +43,26 @@ networkModule.factory('VideoService', function (Bant) {
 	}
 
 	function getVideoDataRequest(id){
-		return  {"rid": "video",
+		var request = {
+			"rid": "video",
 			"timestamp": new Date().getTime(),
 			"method": "GET",
-			"uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+_offset+"&filter=video")}
+			"uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+_offset+"&filter=video")
+		};
+		console.log("Video Request: ", request);
+		return request;
 	}
 
 	return {
 		videoArray: function(){
 			return _videoArray;
 		},
-		videoArrayArchive: function(){
-			return _videoArrayArchive
-		},
-
-			setVideoData:setVideoData,
-			getVideoDataRequest:getVideoDataRequest,
-
-			registerObserverCallback:registerObserverCallback
+		resetVideoOffset: function(){
+      _offset = 0;
+    },
+		setVideoData:setVideoData,
+		getVideoDataRequest:getVideoDataRequest,
+		registerObserverCallback:registerObserverCallback
 	};
 
 });

@@ -1,9 +1,9 @@
-var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload"]);
-topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","VideoService",initTopicController]);
+var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"]);
+topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService",initTopicController]);
 
-function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, VideoService)
+function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService)
 {
-	var lastComment = false;
+  var lastComment = false;
   // Check For Mobile Browser
   window.mobileCheck = function() {
     var check = false;
@@ -18,10 +18,10 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   }
 
   // if (ForumStorage.getFromLocalStorage('lastChannel') === undefined){
-    ForumStorage.setToLocalStorage("lastChannel", ChannelService.getChannel());
+  // ForumStorage.setToLocalStorage("lastChannel", ChannelService.getChannel());
   // }
 
-  // Retain & Handle State when Returning From External Links
+  // Retain & Handle State when Returning From External Links ---> KEEP IN CASE
   // if (ForumStorage.getFromLocalStorage('hasUserVisited') === true){
   //   console.log("Checking For Existing Session");
     
@@ -92,8 +92,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     if($scope.isPeelUser === true)
     {
       if($scope.topicType == "livegame"){
-        document.getElementById('topicSection').style.paddingTop = "177px";
-        document.getElementById('header').style.height = "177px";
+        document.getElementById('topicSection').style.paddingTop = "54px";
+        document.getElementById('header').style.height = "114px";
         headerHeight = 177;
       }
       else{
@@ -109,8 +109,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     else
     {
       if($scope.topicType == "livegame"){
-        document.getElementById('topicSection').style.paddingTop = "125px";
-        document.getElementById('header').style.height = "125px";
+        document.getElementById('topicSection').style.paddingTop = "0px";
+        document.getElementById('header').style.height = "114px";
         headerHeight = 125;
       }
       else{
@@ -183,7 +183,10 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $scope.liked = TopicService.getLiked();
       var metrics = TopicService.getMetrics();
       $scope.likesCount = metrics.likes;
-      $scope.commentsCount = metrics.comments || 0;
+      $scope.commentsCount = metrics.comments;
+      if (!$scope.commentsCount || $scope.commentsCount === 0){
+        $scope.loadingChat = false;
+      }
 
     }
   };
@@ -191,7 +194,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   var updateComments = function(){
     var commentsdata = CommentService.comments();
     if(commentsdata != undefined && (commentsdata.length >0 || lastComment === true)){
-    	lastComment = false;
+      lastComment = false;
       console.log("CommentsData : ", commentsdata);
       var len = commentsdata.length;
 
@@ -249,10 +252,17 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   
   $scope.setPeelUI($scope.isPeelUser);
 
+  $scope.hideLoading = function(){
+    console.log("HIDING LOAD");
+    $scope.loadingChat = false;
+    $scope.loadingSocial = false;
+  };
   $scope.initPage = function(){
+    $scope.loadingChat = true;
     updateTopic();
     updateComments();
     $scope.pageClass = 'page-topic';
+    $scope.showNewCommentsIndicator = false;
 
     $scope.topicID = $routeParams.topicID;
     $scope.init();
@@ -421,9 +431,9 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.innerButtonTapped = true;
     networkService.send(CommentService.deleteCommentRequest(id));
     //avoid window reload to improve performance.
-//    if (lastComment){
-//      $window.location.reload();
-//    }
+    // if (lastComment){
+    //   $window.location.reload();
+    // }
   }
 
   $scope.reportCommentAsSpam = function(id)
@@ -468,163 +478,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     }
   };
 
-  var updateSocial = function() {
-    var socialData = SocialService.socialArray();
-    if (!!socialData && socialData.length > 0){
-      console.log("Social Data: ", socialData);
-      var len = socialData.length;
-
-      $scope.socialArray = $scope.socialArray || [];
-      console.log("Social Array: ", $scope.socialArray);
-      for (var i = 0; i < len; i++){
-        var tempSocial = socialData[i];
-        tempSocial.postAuthorName = socialData[i].embedAuthor.name;
-        tempSocial.postAuthorAlias = socialData[i].embedAuthor.alias;
-        tempSocial.postAuthorPhoto = socialData[i].embedAuthor.photo;
-        tempSocial.postTimestamp = socialData[i].createdAt;
-
-        tempSocial.isLiked = socialData[i].signal.like || false;
-        tempSocial.isRetweet = socialData[i].signal.retweet || false;
-        tempSocial.isFavorite = socialData[i].signal.favorite || false;
-        tempSocial.providerName = socialData[i].embedProvider.name;
-        if (tempSocial.providerName === "Twitter"){
-          tempSocial.providerLogo = "img/twitterLogo@2x.png";
-        } else {
-          tempSocial.providerLogo = socialData[i].embedProvider.logo;
-        }
-        tempSocial.html = socialData[i].embedText;
-        tempSocial.retweetCount = socialData[i].metrics.retweets;
-        tempSocial.favoriteCount = socialData[i].metrics.favorites;
-        tempSocial.replyCount = socialData[i].metrics.replies;
-
-        tempSocial.embedType = socialData[i].embedType;
-        if (socialData[i].embedType === "link" && socialData[i].embedPlayable === true){
-          tempSocial.embedHtml = $sce.trustAsHtml(socialData[i].embedHtml);
-          tempSocial.embedPlayable = true;
-        }
-        if (socialData[i].embedType === "media"){
-          tempSocial.mediaType = socialData[i].embedMedia.mediaType;
-          tempSocial.mediaUrl = socialData[i].embedMedia.mediaUrl;
-          tempSocial.mediaAspectFeed = socialData[i].embedMedia.mediaAspectFeed;
-          if (!!tempSocial.mediaAspectFeed.y){
-            // tempSocial.mediaAspectFeed.dispY = socialData[i].embedMedia.mediaAspectFeed.h - socialData[i].embedMedia.mediaAspectFeed.y;
-            tempSocial.mediaAspectFeed.y = socialData[i].embedMedia.mediaAspectFeed.y + 'px';
-          } else {
-            tempSocial.mediaAspectFeed.y = 0;
-          }
-          if (!!tempSocial.mediaAspectFeed.x){
-            tempSocial.mediaAspectFeed.x = socialData[i].embedMedia.mediaAspectFeed.x + 'px';
-          } else {
-            tempSocial.mediaAspectFeed.x = 0;
-          }
-          tempSocial.mediaAspectFull = socialData[i].embedMedia.mediaAspectFull;
-        }
-        $scope.socialArray.push(tempSocial);
-      }
-    }
-  };
-
-  // var prependSocial = function(newItemId){
-  //   var socialData = SocialService.socialArrayArchive();
-  //   for (var i = 0; i < socialData.length; i++){
-  //     if (socialData[i].id === newItemId){
-  //       var tempSocial = socialData[i];
-  //       tempSocial.postAuthorName = socialData[i].embedAuthor.name;
-  //       tempSocial.postAuthorAlias = socialData[i].embedAuthor.alias;
-  //       tempSocial.postAuthorPhoto = socialData[i].embedAuthor.photo;
-  //       tempSocial.postTimestamp = socialData[i].createdAt;
-
-  //       tempSocial.isLiked = socialData[i].signal.like || false;
-  //       tempSocial.isRetweet = socialData[i].signal.retweet || false;
-  //       tempSocial.isFavorite = socialData[i].signal.favorite || false;
-  //       tempSocial.providerName = socialData[i].embedProvider.name;
-  //       tempSocial.providerLogo = socialData[i].embedProvider.logo;
-  //       tempSocial.html = socialData[i].embedText;
-  //       tempSocial.retweetCount = socialData[i].metrics.retweets;
-  //       tempSocial.favoriteCount = socialData[i].metrics.favorites;
-  //       tempSocial.replyCount = socialData[i].metrics.replies;
-
-  //       tempSocial.embedType = socialData[i].embedType;
-        
-  //       if (socialData[i].embedType === "media"){
-  //         tempSocial.mediaType = socialData[i].embedMedia.mediaType;
-  //         tempSocial.mediaUrl = socialData[i].embedMedia.mediaUrl;
-  //         tempSocial.mediaAspectFeed = socialData[i].embedMedia.mediaAspectFeed;
-  //         tempSocial.mediaAspectFull = socialData[i].embedMedia.mediaAspectFull;
-  //       }
-  //       console.log("Prepending Social Item: ", tempSocial);
-  //       $scope.socialArray.unshift(tempSocial);
-  //       $scope.showNewCommentsIndicator = true;
-  //       return;
-  //     }
-  //   }
-  // };
-
-  var notifyNewSocial = function(newItemId) {
-    if (!!newItemId){
-      console.log("Incoming Social Item ID: ", newItemId);
-      prependSocial(newItemId);
-    } else {
-      updateSocial();
-    }
-  };
-
-  var updateVideo = function() {
-    var videoData = VideoService.videoArray();
-    if (!!videoData && videoData.length > 0){
-      console.log("Video Data: ", videoData);
-      var len = videoData.length;
-
-      $scope.videoArray = $scope.videoArray || [];
-
-      for (var i = 0; i < len; i++){
-        var tempVideo = videoData[i];
-        tempVideo.postAuthorName = videoData[i].embedAuthor.name;
-        tempVideo.postAuthorAlias = videoData[i].embedAuthor.alias;
-        tempVideo.postAuthorPhoto = videoData[i].embedAuthor.photo;
-        tempVideo.postTimestamp = videoData[i].createdAt;
-
-        tempVideo.isLiked = videoData[i].signal.like;
-        tempVideo.isRetweet = videoData[i].signal.retweet || false;
-        tempVideo.isFavorite = videoData[i].signal.favorite || false;
-        tempVideo.providerName = videoData[i].embedProvider.name;
-        if (tempVideo.providerName === "Twitter"){
-          tempVideo.providerLogo = "img/twitterLogo@2x.png";
-        } else {
-          tempVideo.providerLogo = videoData[i].embedProvider.logo;
-        }
-        tempVideo.html = videoData[i].embedText;
-        tempVideo.retweetCount = videoData[i].metrics.retweets;
-        tempVideo.favoriteCount = videoData[i].metrics.favorites;
-        tempVideo.replyCount = videoData[i].metrics.replies;
-
-        tempVideo.embedType = videoData[i].embedType;
-
-        if (videoData[i].embedType === "link" && videoData[i].embedPlayable === true){
-          tempVideo.embedHtml = $sce.trustAsHtml(videoData[i].embedHtml);
-          tempVideo.embedPlayable = true;
-        }
-
-        if (videoData[i].embedType === "media"){
-          tempVideo.mediaType = videoData[i].embedMedia.mediaType;
-          tempVideo.mediaUrl = videoData[i].embedMedia.mediaUrl;
-          tempVideo.mediaAspectFeed = videoData[i].embedMedia.mediaAspectFeed;
-          tempVideo.mediaAspectFull = videoData[i].embedMedia.mediaAspectFull;
-        }
-
-        $scope.videoArray.push(tempVideo);
-      }
-    }
-  };
-
-  var notifyNewVideo = function() {
-    // if (!$scope.socialArray){
-      updateVideo();
-    // }
-  };
-
-  SocialService.registerObserverCallback(notifyNewSocial);
-  VideoService.registerObserverCallback(notifyNewVideo);
   TopicService.registerObserverCallback(updateTopic);
   CommentService.registerObserverCallback(notifyNewComments);
 
@@ -649,6 +502,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'chat';
+      $(document).scrollTop(0);
       $scope.initPage();
     }
     if (tab === 'video'){
@@ -656,33 +510,20 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $('#videoTab').addClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'video';
-      $scope.loadTab(tab);
+      $(document).scrollTop(0);
     }
     if (tab === 'social'){
       $('#chatTab').removeClass('selectedTab');
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').addClass('selectedTab');
       $scope.activeTab = 'social';
-      $scope.loadTab(tab);
+      $(document).scrollTop(0);
     }
-    $scope.channelId = ForumStorage.getFromLocalStorage('lastChannel');
+    console.log("Active Tab: ", $scope.activeTab);
   };
 
-  // var _channelId = ChannelService.getChannel();
-  // TopicService.setChannel(_channelId);
-  // ForumStorage.setToLocalStorage('lastChannel',_channelId);
-  $scope.loadTab = function(tab, channel) {
-    console.log("Channel in Load Tab: ", $scope.channelId, TopicService.getChannelId());
-    console.log("Switched to Tab: ", tab);
-    if (tab === 'social' && !$scope.socialArray){
-      // console.log("Tab Channel: ", ChannelService.getChannel());
-      networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
-    }
-    else if (tab === 'video' && !$scope.videoArray){
-      // console.log("Tab Channel: ", ChannelService.getChannel());
-      networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
-    }
-  };
+  var _channelId = ChannelService.getChannel();
+  TopicService.setChannel(_channelId);
 
   function debounce(func, wait, immediate) {
     var timeout;
@@ -699,59 +540,40 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     };
   };
 
-  // var tabs = $('#inputControls');
-  // var userInput = $('#textInputFieldTopic');
+  var tabs = $('#inputControls');
+  var tabContainer = $('.tabContainer');
 
-  // var watchScroll = debounce(function() {
-  //     if ($(document).scrollTop() > 77) {
-  //       tabs.addClass('fixTabs');
-  //       userInput.addClass('inputBase');
-  //     } else {
-  //       tabs.removeClass('fixTabs');
-  //       userInput.removeClass('inputBase');
-  //     }
-  // }, 15);
-
-  // var lastElTop;
-  // var lastElHeight;
-  // var clientHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-  var clientHeight = document.documentElement.clientHeight || window.innerHeight;
-  var scrollAfterLoad = function(pos){
-    setTimeout(function(){
-      $(document).scrollTop(pos);
-    }, 150);
-  };
-  var watchContentScroll = debounce(function() {
-    // lastElTop = $('.postRow').last().offset().top - headerHeight;
-    // lastElHeight = $('.postRow').last().height();
-    // console.log("LAST ELEM TOP: ", lastElTop, lastElHeight, clientHeight);
-    var currentScroll = $(document).height() - clientHeight - 1;
-    // console.log("currentScroll: ", currentScroll, clientHeight);
-    if ($(document).scrollTop() > currentScroll) {
-      if ($scope.activeTab === 'social'){
-        console.log("LOADING MORE SOCIAL");
-        networkService.send(SocialService.getSocialDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
-        scrollAfterLoad(currentScroll + 90);
+  var watchScroll = function() {
+    if ($scope.isPeelUser){
+      if ($(document).scrollTop() > 150) {
+        tabs.addClass('fixTabsPeel');
+        tabContainer.addClass('fixTabContainer');
+      } else {
+        tabs.removeClass('fixTabsPeel');
+        tabContainer.removeClass('fixTabContainer');
       }
-      else if ($scope.activeTab === 'video'){
-        console.log("LOADING MORE VIDEO");
-        networkService.send(VideoService.getVideoDataRequest(ChannelService.getChannel()||TopicService.getChannelId()));
-        scrollAfterLoad(currentScroll + 90);
+    } else {
+      if ($(document).scrollTop() > 96) {
+        tabs.addClass('fixTabs');
+        tabContainer.addClass('fixTabContainer');
+      } else {
+        tabs.removeClass('fixTabs');
+        tabContainer.removeClass('fixTabContainer');
       }
     }
-  }, 100);
+  };
 
-  // $(document).on('scroll', watchScroll);
-  // if ($scope.activeTab === 'video' || $scope.activeTab === 'social'){
-    $(document).on('scroll', watchContentScroll);
-  // }
+  $(document).on('scroll', watchScroll);
+
 
 };
 
-// topicModule.directive('repeatFinishedNotify', function () {
-//   return function (scope, element, attrs) {
-//     if (scope.$last){
-//       scope.scrollToBookmark();
-//     }
-//   };
-// });
+topicModule.directive('repeatFinishedNotify', function () {
+  return function (scope, element, attrs) {
+    if (scope.$last){
+      // scope.scrollToBookmark();
+      console.log("DONE LOADING COMMENTS");
+      scope.hideLoading();
+    }
+  };
+});
