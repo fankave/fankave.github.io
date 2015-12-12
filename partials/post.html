@@ -89,10 +89,6 @@
       </div>
     </span>
   </div>
-
-  <div class="roww" id="repliesCommentSeparator">
-     &nbsp;
-  </div>
   
   <div id="textInputFieldReply" class="clearfix" ng-if="mobileBrowser === false" ng-controller="UserInputController as user">
     <div id="preview" ng-if="user.uploader.queue.length > 0">
@@ -105,12 +101,12 @@
         </div>
     </div>
     <form id="postCommentForm" ng-submit="user.postComment(commentText,false)">
-      <div id="postCommentDiv" class="input-group">
+      <div id="postCommentDivAlt" class="input-group">
         <label for="fileUpload" id="attachMediaIcon">
           <img src="img/attach-media.png" />
         </label>
 
-        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,false)">POST</button>
+        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,false)">Post</button>
 
         <span><input id="postCommentField" type="text" class="form-control"
         placeholder="Write a reply..." ng-model="commentText"></span>
@@ -119,8 +115,8 @@
 
       </div>
     </form>
-    <div id="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
-      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 1MB</span>
+    <div class="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
+      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 5MB</span>
       <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
     </div>
     <div class="fileWarning" ng-if="user.HTML5warning === true">
@@ -129,6 +125,19 @@
   </div>
   
   <div class="repliesContainer">
+
+    <!-- <div id="loadChatFill" ng-repeat="item in [1,2,3]" ng-if="loadingReply">
+      <span class="load loadProfilePhoto"></span>
+      <span class="loadPost">
+        <div class="clearfix">
+          <span class="load loadChatUsername"></span>
+          <span class="load loadChatTimestamp"></span>
+        </div>
+        <div class="load loadChatBody"></div>
+        <div class="load loadChatFooter"></div>
+      </span>
+    </div> -->
+
     <div ng-repeat="thisReply in replies" class="row postRow" ng-switch="thisReply.mediaType">
       
       <span class="postAuthorPhoto">
@@ -204,13 +213,13 @@
           <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
         </div>
     </div>
-    <form id="postCommentForm" ng-submit="user.postComment(commentText,false)">
+    <form id="mobilePostCommentForm" ng-submit="user.postComment(commentText,false)">
       <div id="mobilePostCommentDiv" class="input-group">
         <label for="fileUpload" id="attachMediaIcon">
           <img src="img/attach-media.png" />
         </label>
 
-        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,false)">POST</button>
+        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,false)">Post</button>
 
         <span><input id="postCommentField" type="text" class="form-control"
         placeholder="Write a reply..." ng-model="commentText"></span>
@@ -219,8 +228,8 @@
 
       </div>
     </form>
-    <div id="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
-      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 1MB</span>
+    <div class="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
+      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 5MB</span>
       <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
     </div>
     <div class="fileWarning" ng-if="user.HTML5warning === true">
@@ -228,17 +237,6 @@
     </div>
   </div>
 
-   <!--<footer class="footer" id="textEntryField">
-        <form ng-submit="postReply(commentText)">
-        <div class="input-group">
-            <input id="replyCommentField" type="text" class="form-control" placeholder="Write a reply..." ng-model="commentText" onscroll="javascript:document.getElementById('scroll').value = this.scrollTop">
-            <span class="input-group-btn">
-              <button id="postReplyButton" class="btn btn-default" type="button" ng-click="postReply(commentText)">Post</button>
-            </span>
-        </div>/input-group
-      </form> 
-  </footer>-->
-  <!-- <hr> -->
 </section>
 
 
