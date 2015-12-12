@@ -260,6 +260,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     updateTopic();
     updateComments();
     $scope.pageClass = 'page-topic';
+    $scope.showNewCommentsIndicator = false;
 
     $scope.topicID = $routeParams.topicID;
     $scope.init();
