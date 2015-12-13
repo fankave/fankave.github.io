@@ -11522,6 +11522,12 @@ function LocationHashbangInHtml5Url(appBase, hashPrefix) {
 var locationPrototype = {
 
   /**
+   * Ensure absolute url is initalized
+   * @private
+   */
+  $$absUrl:'',
+
+  /**
    * Are we in html5 mode?
    * @private
    */
