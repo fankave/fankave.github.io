@@ -46,35 +46,6 @@ networkModule.factory('Bant', function (DateUtilityService) {
 						_commentObject.mediaAspectFull.h == undefined ? 0 : _commentObject.mediaAspectFull.h;
 					}
 
-<<<<<<< HEAD
-        if(_bantObject.type == "media"){
-          _bantObject.media = data.content.sections[j].media;
-          _bantObject = extractMediaObject(_bantObject, _bantObject.media[0]);
-        }
-        if(_bantObject.type == "embed" || _bantObject.type == "tweet"){
-          _bantObject = extractEmbedObject(_bantObject,data.content.sections[j].embed);
-          }
-        _bantObject.tweet = data.content.sections[j].tweet;
-        _bantObject.ogp = data.content.sections[j].ogp;
-        _bantObject.link = data.content.sections[j].link;
-      }
-    }
-    _bantObject.signal = data.signal;
-    if(_bantObject.signal == undefined){
-      var likeObject = {like:false};
-      _bantObject.signal = likeObject;
-    }
-    else if(_bantObject.signal.like == undefined)
-      _bantObject.signal.like = false;
-    _bantObject.metrics = data.metrics;
-    _bantObject.createdAt = DateUtilityService.getTimeSince(data.createdAt);
-    _bantObject.pin = data.pin;
-    _bantObject.commentId = data.commentId;
-    _bantObject.topicId = data.topicId;
-    
-    return _bantObject;
-=======
->>>>>>> parent of 84f491c... Merge pull request #19 from fankave/dev
 
 				}
 				_commentObject.tweet = data.content.sections[j].tweet;
