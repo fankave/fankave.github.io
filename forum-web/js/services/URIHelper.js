@@ -28,8 +28,8 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 				peelShowId = vars["showId"];
 				//If diff previous peel user, clear storage
 				var prevPeelUser = ForumStorage.getFromLocalStorage("forumUserType");
-				// if(prevPeelUser != undefined && prevPeelUser == "peel" && ForumStorage.setToLocalStorage("forumPeelUserId") != peelUserId)
-					// ForumStorage.clearStorage();
+				if(prevPeelUser != undefined && prevPeelUser == "peel" && ForumStorage.setToLocalStorage("forumPeelUserId") != peelUserId)
+					ForumStorage.clearStorage();
 				ForumStorage.setToLocalStorage("forumPeelUserId",peelUserId);
 				ForumStorage.setToLocalStorage("forumPeelShowId",peelShowId);
 				return true;

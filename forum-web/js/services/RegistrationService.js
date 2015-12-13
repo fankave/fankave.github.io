@@ -3,8 +3,8 @@ networkModule.service('RegistrationService', ["ForumStorage","ForumDeviceInfo","
 function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,networkService,ReplyService,TopicService,ChannelService,URIHelper) {
 	if(HOST_NAME == undefined)
 		HOST_NAME = window.location.hostname;;
-		if(HOST_NAME == 'dev.fankave.com')
-		REGISTER_SERVER_URI = 'https://dev.fankave.com/v1.0/user/register';
+		if(HOST_NAME == 'dev.fanakve.com')
+		REGISTER_SERVER_URI = 'http://dev.fankave.com/v1.0/user/register';
 
 	function getPeelRegistrationParams(userId,userName){
 		var peelData = new Object();
@@ -64,40 +64,6 @@ function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,network
 //	      };
 			console.log('Peel registration parameters: ' + JSON.stringify(registrationParameters));
 		var registrationSuccess = false;
-		// $http.post(REGISTER_SERVER_URI, JSON.stringify(registrationParameters))
-		// 	.then(function (response) {
-		// 	console.log('success', response);
-
-		// 	if(status == 200)
-		// 	{
-		// 		 console.log("registered user successfully");
-		// 		 console.log("user ID: " + response.data.userId);
-		// 		 console.log("session ID: " + response.data.sessionId);
-		// 		 console.log("access token: " + response.data.accessToken);
-		// 		 registrationSuccess = true;
-		// 		 UserInfoService.setUserCredentials(response.data.userId, response.data.accessToken, response.data.sessionId, "peel");
-				
-		// 	}
-			
-		// 	networkService.init();
-			
-		// 	if(ReplyService.getPostId() != undefined)
-  //           {
-  //           	// console.log("found post ID: " + ReplyService.getPostId());
-  //           	window.location = "#/post/" + ReplyService.getPostId();
-  //           }
-  //           else if(TopicService.getTopicId() != undefined)
-  //           {
-		// 		window.location = "#/topic/" + TopicService.getTopicId();
-		// 	}
-		// 	else if(ChannelService.getChannel() != undefined){
-		// 		networkService.send(ChannelService.getLiveGameTopic());
-		// 	}
-		// }, 
-		// function (response) {
-		// 	console.log('error ' +  response);
-		// 	console.log('response.code:  ' + response.status);
-		// });
 		var res = $http.post(REGISTER_SERVER_URI, JSON.stringify(registrationParameters));
 		res.success(function(data, status, headers, config) {
 			console.log('success');
@@ -139,13 +105,13 @@ function registration(ForumStorage,ForumDeviceInfo,$http,UserInfoService,network
 					console.log('error ' +  data);
 					console.log('response.code:  ' + status);
 				});
-	};
+	}
 	
 
 	
 	function isUserRegistered(){
 		//TODO
-	};
+	}
 
 	return{
 		isUserRegistered:isUserRegistered,
