@@ -85,6 +85,7 @@ networkModule.factory('Bant', function (DateUtilityService) {
           _bantObject = extractMediaObject(_bantObject, _bantObject.media[0]);
         }
         if(_bantObject.type == "embed" || _bantObject.type == "tweet"){
+        	if(data.content.sections[j].embed != null)
           _bantObject = extractEmbedObject(_bantObject,data.content.sections[j].embed);
           }
         _bantObject.tweet = data.content.sections[j].tweet;
