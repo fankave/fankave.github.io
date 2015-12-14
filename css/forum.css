@@ -581,9 +581,8 @@ span.socialButtonLable
 .social-btn-more
 {
   float:right;
-  color:gray;
   padding:0px;
-  width:18px;
+  /*width:18px;*/
 }
 
 .social-btn-more img
