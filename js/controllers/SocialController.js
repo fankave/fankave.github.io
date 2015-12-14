@@ -10,17 +10,17 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
         $scope.$parent.switchTabs('social');
         _this.socialArray = [];
         SocialService.resetSocialOffset();
-        loadContent('social');
+        _this.loadContent('social');
       } else {
         $scope.$parent.switchTabs('video');
         _this.videoArray = [];
         VideoService.resetVideoOffset();
-        loadContent('video');
+        _this.loadContent('video');
       }
     };
 
 
-    function loadContent(type) {
+    this.loadContent = function(type) {
       var channelID = ChannelService.getChannel()||TopicService.getChannelId();
       if (type === 'social'){
         console.log("LOADING SOCIAL: ", channelID);
@@ -129,11 +129,11 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
       // console.log("currentScroll: ", currentScroll, clientHeight);
       if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
         if ($scope.activeTab === 'social'){
-          loadContent('social');
+          _this.loadContent('social');
           scrollAfterLoad(currentScroll + 90);
         }
         else if ($scope.activeTab === 'video'){
-          loadContent('video');
+          _this.loadContent('video');
           scrollAfterLoad(currentScroll + 90);
         }
       }

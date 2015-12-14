@@ -458,6 +458,12 @@
     </div>
   </div>
 
+  <div id="moreContentBar" ng-if="activeTab === 'social'" ng-click="social.loadContent('social')">
+    <span id="moreContentText">Load More Social</span>
+  </div>
+  <div id="moreContentBar" ng-if="activeTab === 'video'" ng-click="social.loadContent('video')">
+    <span id="moreContentText">Load More Videos</span>
+  </div>
 </div>
 
 <div id="mobileUserInput" class="clearfix" ng-if="activeTab === 'chat' && mobileBrowser === true" ng-controller="UserInputController as user">
