@@ -141,11 +141,22 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         }
         _this.uploader.uploadAll();
         $scope.commentText = "";
+        $('#postCommentButton').css('color','rgb(211,214,215)');
         if (isComment){
           $(document).scrollTop(0);
         } else {
           window.scrollTo(0, document.body.scrollHeight);
         }
+      };
+
+      this.highlightPost = function(){
+        console.log("Styling post");
+        $('#postCommentButton').css('color','rgb(22,189,231)');
+      };
+
+      this.unhighlightPost = function(){
+        console.log("Styling post");
+        $('#postCommentButton').css('color','rgb(211,214,215)');
       };
 
     }]);
