@@ -105,6 +105,7 @@ networkModule.factory('Bant', function (DateUtilityService) {
     else if(_bantObject.signal.like == undefined)
       _bantObject.signal.like = false;
     _bantObject.metrics = data.metrics;
+    _bantObject.createdAtFull = data.createdAt;
     _bantObject.createdAt = DateUtilityService.getTimeSince(data.createdAt);
     _bantObject.pin = data.pin;
     _bantObject.commentId = data.commentId;

@@ -1,6 +1,6 @@
 var socialModule = angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"]);
-socialModule.controller("SocialController", ["$scope","$sce","$window","$routeParams","SocialService","VideoService","networkService","ChannelService","TopicService",
-  function ($scope,$sce,$window,$routeParams,SocialService,VideoService,networkService,ChannelService,TopicService){
+socialModule.controller("SocialController", ["$scope","$sce","$window","$routeParams","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService",
+  function ($scope,$sce,$window,$routeParams,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService){
     console.log("Social Control");
 
     var _this = this;
@@ -10,10 +10,16 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
         $scope.$parent.loadingSocial = true;
       }
       if (tab === 'social'){
+        if (!!_this.socialArray){
+          updateTimestamps('social');
+        }
         $scope.$parent.switchTabs('social');
         SocialService.resetSocialOffset();
         _this.loadContent('social');
       } else {
+        if (!!_this.videoArray){
+          updateTimestamps('video');
+        }
         $scope.$parent.switchTabs('video');
         VideoService.resetVideoOffset();
         _this.loadContent('video');
@@ -112,6 +118,18 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
           } else {
             _this.videoArray.push(tempItem);
           }
+        }
+      }
+    };
+
+    function updateTimestamps(tab){
+      if (tab === 'social'){
+        for (var i = 0; i < _this.socialArray.length; i++){
+          _this.socialArray[i].postTimestamp = DateUtilityService.getTimeSince(_this.socialArray[i].createdAtFull);
+        }
+      } else {
+        for (var i = 0; i < _this.videoArray.length; i++){
+          _this.videoArray[i].postTimestamp = DateUtilityService.getTimeSince(_this.videoArray[i].createdAtFull);
         }
       }
     };
