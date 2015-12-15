@@ -227,7 +227,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.loadingSocial = false;
   };
   $scope.initPage = function(){
-    // $scope.loadingChat = true;
     updateTopic();
     updateComments();
     $scope.pageClass = 'page-topic';
@@ -471,7 +470,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'chat';
       $(document).scrollTop(0);
-      $scope.initPage();
+      updateTopic();
+      updateComments();
     }
     if (tab === 'video'){
       $('#chatTab').removeClass('selectedTab');

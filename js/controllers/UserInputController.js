@@ -9,7 +9,8 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       var uploader = this.uploader = new FileUploader({
         url: MUS_SERVER_URI + UPLOAD_URL,
         autoUpload: false,
-        removeAfterUpload: true
+        removeAfterUpload: true,
+        queueLimit: 1
       });
 
       var _this = this;
@@ -158,5 +159,13 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         console.log("Styling post");
         $('#postCommentButton').css('color','rgb(211,214,215)');
       };
+
+      $('input#topicCommentField').bind('focusin focus', function(e){
+        e.preventDefault();
+      });
+
+      $('input').bind('focusin focus', function(e){
+        e.preventDefault();
+      });
 
     }]);
