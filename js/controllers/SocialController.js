@@ -5,44 +5,49 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
     var _this = this;
     this.initFeed = function(tab) {
+      // Show Loading UI Once On Each Tab
       if (!_this.socialArray || !_this.videoArray){
         $scope.$parent.loadingSocial = true;
       }
       if (tab === 'social'){
         $scope.$parent.switchTabs('social');
-        _this.socialArray = [];
         SocialService.resetSocialOffset();
         _this.loadContent('social');
       } else {
         $scope.$parent.switchTabs('video');
-        _this.videoArray = [];
         VideoService.resetVideoOffset();
         _this.loadContent('video');
       }
     };
 
 
-    this.loadContent = function(type) {
+    this.loadContent = function(type, offset) {
       var channelID = ChannelService.getChannel()||TopicService.getChannelId();
       if (type === 'social'){
         console.log("LOADING SOCIAL: ", channelID);
-        networkService.send(SocialService.getSocialDataRequest(channelID));
+        networkService.send(SocialService.getSocialDataRequest(channelID,offset));
       } else {
         console.log("LOADING VIDEO: ", channelID);
-        networkService.send(VideoService.getVideoDataRequest(channelID));
+        networkService.send(VideoService.getVideoDataRequest(channelID,offset));
       }
     };
 
     function updateFeed(tab) {
 
       // Get Appropriate Content
-      var feedData;
+      var feedData,
+          existingLength,
+          tabArray;
       if (tab === 'social'){
         feedData = SocialService.socialArray();
         _this.socialArray = _this.socialArray || [];
+        existingLength = _this.socialArray.length;
+        tabArray = _this.socialArray;
       } else {
         feedData = VideoService.videoArray();
         _this.videoArray = _this.videoArray || [];
+        existingLength = _this.videoArray.length;
+        tabArray = _this.videoArray;
       }
 
       var len = feedData.length;
@@ -51,6 +56,18 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
         for (var i = 0; i < len; i++){
           var tempItem = feedData[i];
+
+          // Check to See if Item Already Exists in Scope Array
+          var itemExists = false;
+          for (var j = 0; j < existingLength; j++){
+            if (tempItem.id === tabArray[j].id){
+              itemExists = true;
+            }
+          }
+          // If Exists, Skip To Next Item
+          if (itemExists){
+            continue;
+          }
           
           tempItem.postAuthorName = feedData[i].embedAuthor.name;
           tempItem.postAuthorAlias = feedData[i].embedAuthor.alias;
@@ -128,14 +145,17 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
     var clientHeight = document.documentElement.clientHeight || window.innerHeight;
     var watchContentScroll = debounce(function() {
       var currentScroll = $(document).height() - clientHeight - 50;
-      // console.log("currentScroll: ", currentScroll, clientHeight);
       if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
         if ($scope.activeTab === 'social'){
-          _this.loadContent('social');
+          // We are Loading More Content -->
+          // Base offset on Current Length of Scope Array
+          _this.loadContent('social',_this.socialArray.length);
           scrollAfterLoad(currentScroll + 90);
         }
         else if ($scope.activeTab === 'video'){
-          _this.loadContent('video');
+          // We are Loading More Content -->
+          // Base offset on Current Length of Scope Array
+          _this.loadContent('video',_this.videoArray.length);
           scrollAfterLoad(currentScroll + 90);
         }
       }
