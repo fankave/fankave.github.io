@@ -51,8 +51,10 @@ networkModule.factory('Bant', function (DateUtilityService) {
     _bantObject.embedTitle = embedObject.title;
     _bantObject.embedText = embedObject.text;
     _bantObject.embedMedia = {};
-    if(embedObject.type == 'media')
-    _bantObject.embedMedia = extractMediaObject(_bantObject.embedMedia, embedObject.media[0])
+    if(embedObject.type == 'media'){
+      // console.log("*****!!embedObject.media",embedObject.media,embedObject);
+    _bantObject.embedMedia = extractMediaObject(_bantObject.embedMedia, embedObject.media[0]);
+    }
     _bantObject.embedUrl = embedObject.url;
     _bantObject.embedPlayable = embedObject.playable;
     _bantObject.embedHtml = embedObject.html;
@@ -85,8 +87,11 @@ networkModule.factory('Bant', function (DateUtilityService) {
           _bantObject = extractMediaObject(_bantObject, _bantObject.media[0]);
         }
         if(_bantObject.type == "embed" || _bantObject.type == "tweet"){
-          _bantObject = extractEmbedObject(_bantObject,data.content.sections[j].embed);
+          if (data.content.sections[j].embed !== null){
+            // console.log("!!!!!Fiding ID:",data.content.sections[j]);
+            _bantObject = extractEmbedObject(_bantObject,data.content.sections[j].embed);
           }
+        }
         _bantObject.tweet = data.content.sections[j].tweet;
         _bantObject.ogp = data.content.sections[j].ogp;
         _bantObject.link = data.content.sections[j].link;
