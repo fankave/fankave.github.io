@@ -5,7 +5,9 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
     var _this = this;
     this.initFeed = function(tab) {
-      $scope.$parent.loadingSocial = true;
+      if (!_this.socialArray || !_this.videoArray){
+        $scope.$parent.loadingSocial = true;
+      }
       if (tab === 'social'){
         $scope.$parent.switchTabs('social');
         _this.socialArray = [];
