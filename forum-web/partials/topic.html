@@ -274,17 +274,15 @@
         {{thisPost.html}} 
       </div>
 
-      <div ng-switch-when="image">
-        <img ng-src="{{thisPost.mediaUrl}}" class="postPhoto" ng-click="imageClick(thisPost.mediaUrl);" />
+      <div class="imageContainer" ng-switch-when="image">
+        <div class="cropView" ng-style="{background:'url({{thisPost.mediaUrl}}) no-repeat','background-size':'cover','height':thisPost.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(thisPost.mediaUrl)">
+        </div>
       </div>
 
-      <!-- <div ng-switch-when="image" class="cropView" ng-style="{background:'url({{thisPost.mediaUrl}}) no-repeat','background-size':'cover','height':thisPost.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(thisPost.mediaUrl)">
-      </div> -->
-
-      <div ng-switch-when="video">
-        <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
+      <div ng-switch-when="video" class="mp4VideoContainer">
+        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="chatVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
-          </video>
+        </video>
       </div>  
 
       <div class="socialButtonsRow">
@@ -327,7 +325,7 @@
   </div>
 
   <!-- Video Tab Content -->
-  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray track by $index" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | orderBy: '-id'" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -352,20 +350,20 @@
       </div>
     </div>
     <div class="socialContentContainer">
-      <div ng-bind-html="thisPost.html | linky" class="postContent videoContent">
+      <div ng-bind-html="thisPost.html | linky" class="postContent">
         <p>{{thisPost.html}}</p><br> 
       </div>
-      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent">
+      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
       </div>
 
-      <div ng-switch-when="image" class="cropView ng-style:{ width: thisPost.mediaAspectFeed.w, height: thisPost.mediaAspectFeed.h, 'margin-bottom':'15px' };">
+      <!-- <div ng-switch-when="image" class="cropView ng-style:{ width: thisPost.mediaAspectFeed.w, height: thisPost.mediaAspectFeed.h, 'margin-bottom':'15px' };">
         <img ng-src="{{thisPost.mediaUrl}}" class="postPhotoSocial ng-style:{ bottom: thisPost.mediaAspectFeed.y }" ng-click="imageClick(thisPost.mediaUrl);" />
-      </div>
+      </div> -->
 
-      <div ng-switch-when="video" class="ng-style:{'margin-bottom':'15px'}">
-        <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
+      <div ng-switch-when="video" class="mp4VideoContainer">
+        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
-          </video>
+        </video>
       </div> 
     </div> 
 
@@ -392,7 +390,7 @@
   </div>
 
   <!-- Social Tab Content -->
-  <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray track by $index" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray | orderBy: '-id'" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -420,17 +418,16 @@
       <div ng-bind-html="thisPost.html | linky" class="postContent socialContent">
         <p>{{thisPost.html}}</p><br> 
       </div>
-      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent socialContent">
+      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent socialContent" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
       </div>
 
-      <!-- <div ng-switch-when="image" class="cropView ng-style:{ 'max-width': thisPost.mediaAspectFeed.w, 'max-height': thisPost.mediaAspectFeed.dispY };"> -->
-      <div ng-switch-when="image" class="cropView" ng-style="{background:'url({{thisPost.mediaUrl}}) no-repeat','background-size':'cover','height':thisPost.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(thisPost.mediaUrl)">
-      <!-- <div ng-switch-when="image" class="cropView ng-style:{ '-webkit-clip-path': 'polygon(100% 100%, 100% 16px, 0% 16px, 0% 100%)' };"> -->
-        <!-- <img ng-src="{{thisPost.mediaUrl}}" class="postPhotoSocial ng-style:{ bottom: thisPost.mediaAspectFeed.y, right: thisPost.mediaAspectFeed.x };" ng-click="imageClick(thisPost.mediaUrl);" /> -->
+      <div class="imageContainer">
+        <div ng-switch-when="image" class="cropView" ng-style="{background:'url({{thisPost.mediaUrl}}) no-repeat','background-size':'cover','height':thisPost.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(thisPost.mediaUrl)">
+        </div>
       </div>
 
-      <div ng-switch-when="video" class="ng-style:{'margin-bottom':'15px'};">
-        <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
+      <div ng-switch-when="video" class="mp4VideoContainer">
+        <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
           </video>
       </div> 
@@ -458,6 +455,12 @@
     </div>
   </div>
 
+  <div id="moreContentBar" ng-if="activeTab === 'social'" ng-click="social.loadContent('social',social.socialArray.length)">
+    <span id="moreContentText">Load More Social</span>
+  </div>
+  <div id="moreContentBar" ng-if="activeTab === 'video'" ng-click="social.loadContent('video',social.videoArray.length)">
+    <span id="moreContentText">Load More Videos</span>
+  </div>
 </div>
 
 <div id="mobileUserInput" class="clearfix" ng-if="activeTab === 'chat' && mobileBrowser === true" ng-controller="UserInputController as user">

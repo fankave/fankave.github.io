@@ -42,12 +42,13 @@ socialModule.factory('VideoService', function (Bant) {
 		observerCallbacks.push(callback);
 	}
 
-	function getVideoDataRequest(id){
+	function getVideoDataRequest(id, offset){
+		var reqOffset = offset || _offset;
 		var request = {
 			"rid": "video",
 			"timestamp": new Date().getTime(),
 			"method": "GET",
-			"uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+_offset+"&filter=video")
+			"uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+reqOffset+"&filter=video")
 		};
 		console.log("Video Request: ", request);
 		return request;

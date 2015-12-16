@@ -40,12 +40,13 @@ socialModule.factory('SocialService', ["Bant", function (Bant) {
     observerCallbacks.push(callback);
   };
 
-  function getSocialDataRequest(id){
+  function getSocialDataRequest(id, offset){
+    var reqOffset = offset || _offset;
     var request = {
       "rid": "social",
       "timestamp": new Date().getTime(),
       "method": "GET",
-      "uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+_offset)
+      "uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+reqOffset)
     };
     console.log("Social Request: ", request);
     return request;

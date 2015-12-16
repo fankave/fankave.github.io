@@ -273,7 +273,7 @@ topicModule.service('TopicService', function (DateUtilityService,Bant,FDSUtility
     
     registerObserverCallback:registerObserverCallback,
     
-    directoComment:directComment
+    directComment:directComment
 
   };
 
