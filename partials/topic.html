@@ -279,10 +279,10 @@
         </div>
       </div>
 
-      <div ng-switch-when="video">
-        <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo">
+      <div ng-switch-when="video" class="mp4VideoContainer">
+        <video controls="controls" ng-attr-poster="{{trustSrc(thisPost.mediaThumbUrl)}}" class="chatVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
-          </video>
+        </video>
       </div>  
 
       <div class="socialButtonsRow">
@@ -361,7 +361,7 @@
       </div> -->
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" preload="none" ng-attr-poster="{{trustSrc(thisPost.mediaThumbUrl)}}" class="postVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
+        <video controls="controls" ng-attr-poster="{{trustSrc(thisPost.mediaThumbUrl)}}" class="postVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
         </video>
       </div> 

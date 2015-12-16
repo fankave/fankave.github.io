@@ -465,6 +465,12 @@ body
   /*margin-bottom:15px;*/
 }
 
+.chatVideo {
+  width:100%;
+  max-width: 400px;
+  margin-top:8px;
+}
+
 .imageContainer {
   position: relative;
 }
