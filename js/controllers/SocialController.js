@@ -1,46 +1,62 @@
 var socialModule = angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"]);
-socialModule.controller("SocialController", ["$scope","$sce","$window","$routeParams","SocialService","VideoService","networkService","ChannelService","TopicService",
-  function ($scope,$sce,$window,$routeParams,SocialService,VideoService,networkService,ChannelService,TopicService){
+socialModule.controller("SocialController", ["$scope","$sce","$window","$routeParams","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService",
+  function ($scope,$sce,$window,$routeParams,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService){
     console.log("Social Control");
 
     var _this = this;
     this.initFeed = function(tab) {
-      $scope.$parent.loadingSocial = true;
+      // Show Loading UI Once On Each Tab
       if (tab === 'social'){
+        if (!_this.socialArray){
+          $scope.$parent.loadingSocial = true;
+        }
+        if (!!_this.socialArray){
+          updateTimestamps('social');
+        }
         $scope.$parent.switchTabs('social');
-        _this.socialArray = [];
         SocialService.resetSocialOffset();
         _this.loadContent('social');
       } else {
+        if (!_this.videoArray){
+          $scope.$parent.loadingSocial = true;
+        }
+        if (!!_this.videoArray){
+          updateTimestamps('video');
+        }
         $scope.$parent.switchTabs('video');
-        _this.videoArray = [];
         VideoService.resetVideoOffset();
         _this.loadContent('video');
       }
     };
 
 
-    this.loadContent = function(type) {
+    this.loadContent = function(type, offset) {
       var channelID = ChannelService.getChannel()||TopicService.getChannelId();
       if (type === 'social'){
         console.log("LOADING SOCIAL: ", channelID);
-        networkService.send(SocialService.getSocialDataRequest(channelID));
+        networkService.send(SocialService.getSocialDataRequest(channelID,offset));
       } else {
         console.log("LOADING VIDEO: ", channelID);
-        networkService.send(VideoService.getVideoDataRequest(channelID));
+        networkService.send(VideoService.getVideoDataRequest(channelID,offset));
       }
     };
 
     function updateFeed(tab) {
 
       // Get Appropriate Content
-      var feedData;
+      var feedData,
+          existingLength,
+          tabArray;
       if (tab === 'social'){
         feedData = SocialService.socialArray();
         _this.socialArray = _this.socialArray || [];
+        existingLength = _this.socialArray.length;
+        tabArray = _this.socialArray;
       } else {
         feedData = VideoService.videoArray();
         _this.videoArray = _this.videoArray || [];
+        existingLength = _this.videoArray.length;
+        tabArray = _this.videoArray;
       }
 
       var len = feedData.length;
@@ -49,6 +65,18 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
         for (var i = 0; i < len; i++){
           var tempItem = feedData[i];
+
+          // Check to See if Item Already Exists in Scope Array
+          var itemExists = false;
+          for (var j = 0; j < existingLength; j++){
+            if (tempItem.id === tabArray[j].id){
+              itemExists = true;
+            }
+          }
+          // If Exists, Skip To Next Item
+          if (itemExists){
+            continue;
+          }
           
           tempItem.postAuthorName = feedData[i].embedAuthor.name;
           tempItem.postAuthorAlias = feedData[i].embedAuthor.alias;
@@ -97,6 +125,18 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
       }
     };
 
+    function updateTimestamps(tab){
+      if (tab === 'social'){
+        for (var i = 0; i < _this.socialArray.length; i++){
+          _this.socialArray[i].postTimestamp = DateUtilityService.getTimeSince(_this.socialArray[i].createdAtFull);
+        }
+      } else {
+        for (var i = 0; i < _this.videoArray.length; i++){
+          _this.videoArray[i].postTimestamp = DateUtilityService.getTimeSince(_this.videoArray[i].createdAtFull);
+        }
+      }
+    };
+
     SocialService.registerObserverCallback(function(){updateFeed('social');});
     VideoService.registerObserverCallback(function(){updateFeed('video');});
     
@@ -126,14 +166,17 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
     var clientHeight = document.documentElement.clientHeight || window.innerHeight;
     var watchContentScroll = debounce(function() {
       var currentScroll = $(document).height() - clientHeight - 50;
-      // console.log("currentScroll: ", currentScroll, clientHeight);
       if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
         if ($scope.activeTab === 'social'){
-          _this.loadContent('social');
+          // We are Loading More Content -->
+          // Base offset on Current Length of Scope Array
+          _this.loadContent('social',_this.socialArray.length);
           scrollAfterLoad(currentScroll + 90);
         }
         else if ($scope.activeTab === 'video'){
-          _this.loadContent('video');
+          // We are Loading More Content -->
+          // Base offset on Current Length of Scope Array
+          _this.loadContent('video',_this.videoArray.length);
           scrollAfterLoad(currentScroll + 90);
         }
       }

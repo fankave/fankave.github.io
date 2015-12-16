@@ -406,6 +406,7 @@ body
   line-height: 18px;
   color: rgb(31,35,38);
   margin-bottom: 15px;
+  text-align: center;
 }
 
 .replyContent
@@ -429,10 +430,22 @@ body
 .postPhoto
 {
   position: relative;
-  width: 95%;
+  width: 100%;
   /*height: 100%;*/
   margin-top:0.2em;
   margin-bottom:0.3em;
+}
+
+.portrait {
+  max-height: 300px;
+  max-width: 240px;
+  margin: 0 auto;
+}
+
+.landscape {
+  max-width: 500px;
+  max-height: 300px;
+  margin: 0 auto;
 }
 
 .postPhotoSocial
@@ -446,17 +459,22 @@ body
 
 .postVideo
 {
-  max-width:100%;
-  max-height:320px;
+  /*max-width:100%;*/
+  /*max-height:320px;*/
   margin-top:8px;
   /*margin-bottom:15px;*/
 }
 
+.imageContainer {
+  position: relative;
+}
+
 .cropView {
   overflow: hidden;
-  max-width: 100%;
-  max-height: 200px;
-  /*max-height: 320px;*/
+  width: 100%;
+  max-width: 500px;
+  max-height: 300px;
+  margin: 0 auto;
 }
 
 .cropView:hover,
@@ -693,7 +711,7 @@ input:focus + button {
   font-size: 16px;
   font-weight: 600;
   /*color: rgb(179,184,186);*/
-  top: 6px;
+  top: 7px;
   margin-left: 5px;
 }
 
@@ -774,7 +792,7 @@ input:focus + button {
   margin-right: 2%;
   border: 1px solid rgb(87,87,87);
   color: rgb(90,90,90);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bolder;
 }
 
@@ -1819,15 +1837,34 @@ img-crop canvas {
 }
 
 .twitterVideo {
-
+  width: 100%;
+  max-width: 400px;
+  max-height: 300px;
+  padding-right: 0px;
 }
 
 .youtubeVideo {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  padding-right: 0px;
+  margin: 0 auto;
+}
 
+.youtubeVideo > iframe {
+  height: 300px;
 }
 
 .vineVideo {
+  width: 100%;
+  height: auto;
+  max-width: 300px;
+  padding-right: 0px;
+}
 
+.mp4VideoContainer {
+  margin-bottom: 15px;
+  text-align: center;
 }
 
 #loadChatFill {
