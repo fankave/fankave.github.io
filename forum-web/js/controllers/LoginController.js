@@ -6,8 +6,8 @@ function initTopicController($scope, $sce,$routeParams,networkService,ChannelSer
 	HOST_NAME = window.location.hostname;
 	if(HOST_NAME == 'was.fankave.com')
 		{
-			WEBSOCKET_BASE_URI = 'ws://was.fankave.com/ws?';
-			REGISTER_SERVER_URI = 'http://was.fankave.com/v1.0/user/register';
+			WEBSOCKET_BASE_URI = 'wss://was.fankave.com/ws?';
+			REGISTER_SERVER_URI = 'https://was.fankave.com/v1.0/user/register';
 			console.log("setting Prod url for "+ HOST_NAME);
 		}
 	ga('set', 'page', '/'+$routeParams.channelID);
