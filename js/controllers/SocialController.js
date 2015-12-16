@@ -6,10 +6,10 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
     var _this = this;
     this.initFeed = function(tab) {
       // Show Loading UI Once On Each Tab
-      if (!_this.socialArray || !_this.videoArray){
-        $scope.$parent.loadingSocial = true;
-      }
       if (tab === 'social'){
+        if (!_this.socialArray){
+          $scope.$parent.loadingSocial = true;
+        }
         if (!!_this.socialArray){
           updateTimestamps('social');
         }
@@ -17,6 +17,9 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
         SocialService.resetSocialOffset();
         _this.loadContent('social');
       } else {
+        if (!_this.videoArray){
+          $scope.$parent.loadingSocial = true;
+        }
         if (!!_this.videoArray){
           updateTimestamps('video');
         }
