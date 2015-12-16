@@ -70,13 +70,6 @@
   <script src="js/services/SocialService.js"></script>
   <script src="js/services/VideoService.js"></script>
   
-  <script type="text/javascript">
-      if (window.location.protocol == "http:") {
-          var restOfUrl = window.location.href.substr(5);
-          window.location = "https:" + restOfUrl;
-      }
-  </script>
-  
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -86,8 +79,8 @@
   var NETWORK_DEBUG = true;
   var DEV_BUILD = true;
   var HOST_NAME = window.location.host;
-  var WEBSOCKET_BASE_URI = 'wss://was.fankave.com/ws?';
-  var REGISTER_SERVER_URI = 'https://was.fankave.com/v1.0/user/register';
+  var WEBSOCKET_BASE_URI = 'wss://cas.fankave.com:80/ws?';
+  var REGISTER_SERVER_URI = 'https://cas.fankave.com/v1.0/user/register';
   var MUS_SERVER_URI = 'https://mus.fankave.com';
 
   if(DEV_BUILD === true) {
