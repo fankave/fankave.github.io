@@ -56,6 +56,11 @@
         <img ng-src="{{comment.mediaUrl}}" class="postPhoto" ng-click="imageClick(comment.mediaUrl);" />
       </div>
 
+      <div class="imageContainer" ng-switch-when="image">
+        <div class="cropView" ng-style="{background:'url({{comment.mediaUrl}}) no-repeat','background-size':'cover','height':comment.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(comment.mediaUrl)">
+        </div>
+      </div>
+
       <div ng-switch-when="video">
         <video controls="controls" poster="{{comment.mediaThumbUrl}}" class="postVideo">
               <source ng-src="{{trustSrc(comment.mediaUrl)}}" type="video/mp4">
@@ -160,8 +165,13 @@
           {{thisReply.html}} 
         </div>
 
-        <div ng-switch-when="image">
+        <!-- <div ng-switch-when="image">
             <img ng-src="{{thisReply.mediaUrl}}" class="postPhoto" ng-click="imageClick(thisReply.mediaUrl)"/>
+        </div> -->
+
+        <div class="imageContainer" ng-switch-when="image">
+          <div class="cropView" ng-style="{background:'url({{thisReply.mediaUrl}}) no-repeat','background-size':'cover','height':thisReply.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(thisReply.mediaUrl)">
+          </div>
         </div>
 
         <div ng-switch-when="video">
