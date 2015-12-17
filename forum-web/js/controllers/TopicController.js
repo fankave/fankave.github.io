@@ -180,27 +180,14 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         tempComment.replyCount = commentsdata[i].metrics.replies;
 
         tempComment.postTimestamp = commentsdata[i].createdAt;
-        tempComment.mediaAspectFeed = commentsdata[i].mediaAspectFeed;
-        tempComment.mediaAspectFull = commentsdata[i].mediaAspectFull;
-        tempComment.isLiked = commentsdata[i].signal.like;
-        $scope.commentsArray.push(tempComment);
-
-        // console.log(i +" : updated comments html : " +$scope.commentsArray[i].html);
-
-        if($scope.commentsArray[i].type == "media"){
-//          console.log("Media Aspect feed x: "+tempComment.mediaAspectFeed.x + 
-//          "y: "+ tempComment.mediaAspectFeed.y + 
-//          "w: "+ tempComment.mediaAspectFeed.w +
-//          "h: "+ tempComment.mediaAspectFeed.h );
-
-//          console.log("Media Aspect full x: "+tempComment.mediaAspectFull.x + 
-//          "y: "+ tempComment.mediaAspectFull.y + 
-//          "w: "+ tempComment.mediaAspectFull.w +
-//          "h: "+ tempComment.mediaAspectFull.h );
-          // console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaUrl);
-          // console.log(i +" : updated comments media : " +$scope.commentsArray[i].mediaAspectFeed);
-
+        if (tempComment.type === 'media'){
+          tempComment.mediaAspectFeed = commentsdata[i].mediaAspectFeed;
+          tempComment.mediaAspectFull = commentsdata[i].mediaAspectFull;
+          tempComment.mediaThumbUrl = commentsdata[i].mediaThumbUrl;
         }
+        tempComment.isLiked = commentsdata[i].signal.like;
+
+        $scope.commentsArray.push(tempComment);
       }
     }
 
