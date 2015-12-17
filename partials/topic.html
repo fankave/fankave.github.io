@@ -361,7 +361,7 @@
       </div> -->
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" ng-cloak ng-attr-poster="{{trustSrc(thisPost.mediaThumbUrl)}}" class="postVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
+        <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
         </video>
       </div> 

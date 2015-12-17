@@ -102,6 +102,7 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
           if (feedData[i].embedType === "media"){
             tempItem.mediaType = feedData[i].embedMedia.mediaType;
             tempItem.mediaUrl = feedData[i].embedMedia.mediaUrl;
+            tempItem.mediaThumbUrl = feedData[i].embedMedia.mediaThumbUrl;
             tempItem.mediaAspectFeed = feedData[i].embedMedia.mediaAspectFeed;
             if (!!tempItem.mediaAspectFeed.y){
               tempItem.mediaAspectFeed.y = feedData[i].embedMedia.mediaAspectFeed.y + 'px';
@@ -120,6 +121,7 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
             _this.socialArray.push(tempItem);
           } else {
             _this.videoArray.push(tempItem);
+            console.log("Video Array Push: ", _this.videoArray);
           }
         }
       }
