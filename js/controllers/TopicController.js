@@ -17,15 +17,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.mobileBrowser = false;
   }
 
-  // Check Specifically for iOS Safari
-  function isMobileSafari() {
-      return navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/);
-  };
-
-  if (isMobileSafari()){
-    $scope.isMobileSafari = true;
-  }
-
   if (!$scope.commentsArray){
     $scope.loadingChat = true;
   }
