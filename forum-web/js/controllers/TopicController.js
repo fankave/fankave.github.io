@@ -17,38 +17,9 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.mobileBrowser = false;
   }
 
-  // if (ForumStorage.getFromLocalStorage('lastChannel') === undefined){
-  // ForumStorage.setToLocalStorage("lastChannel", ChannelService.getChannel());
-  // }
-
-  // Retain & Handle State when Returning From External Links ---> KEEP IN CASE
-  // if (ForumStorage.getFromLocalStorage('hasUserVisited') === true){
-  //   console.log("Checking For Existing Session");
-    
-  //   $scope.initPage();
-  //   $scope.channelId = ForumStorage.getFromLocalStorage('lastChannel');
-  //   $scope.loadTab(ForumStorage.getFromLocalStorage('lastTabActive'), $scope.channelId);
-  //   setTimeout(function(){
-  //     $scope.activeTab = ForumStorage.getFromLocalStorage('lastTabActive');
-  //   }, 100);
-  //   // updateVideo();
-  //   // updateSocial();
-  // }
-  var headerHeight;
-  // $scope.scrollToBookmark = function() {
-  //   if (ForumStorage.getFromLocalStorage('commentBookmark') !== undefined){
-  //     setTimeout(function(){
-  //       var bookmarkedId = parseInt(ForumStorage.getFromLocalStorage('commentBookmark'));
-  //       var bookmarkedPost = Array.prototype.slice.call(document.getElementsByClassName('postRow'));
-  //       bookmarkedPost = bookmarkedPost[bookmarkedId];
-  //       var offElem = $(bookmarkedPost).offset().top - headerHeight;
-  //       console.log("Bookmarked Post: ", bookmarkedPost);
-  //       console.log("Bookmarked Post Top Offset: ", offElem);
-  //       $(document).scrollTop(offElem);
-  //       ForumStorage.setToLocalStorage('commentBookmark', undefined);
-  //     }, 100);
-  //   }
-  // };
+  if (!$scope.commentsArray){
+    $scope.loadingChat = true;
+  }
 
   ga('send', 'pageview', "/topic/"+$routeParams.topicID);
   console.log('Sent Pageview from /topic/' + $routeParams.topicID);
@@ -94,7 +65,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       if($scope.topicType == "livegame"){
         document.getElementById('topicSection').style.paddingTop = "54px";
         document.getElementById('header').style.height = "114px";
-        headerHeight = 177;
       }
       else{
       document.getElementById('topicSection').style.paddingTop = "3em";
@@ -111,7 +81,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       if($scope.topicType == "livegame"){
         document.getElementById('topicSection').style.paddingTop = "0px";
         document.getElementById('header').style.height = "114px";
-        headerHeight = 125;
       }
       else{
         document.getElementById('topicSection').style.paddingTop = "0em";
@@ -258,7 +227,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.loadingSocial = false;
   };
   $scope.initPage = function(){
-    $scope.loadingChat = true;
     updateTopic();
     updateComments();
     $scope.pageClass = 'page-topic';
@@ -268,7 +236,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.init();
 
     if ($scope.mobileBrowser === true){
-      document.getElementById('topicSection').style.marginBottom = "54px";
+      document.getElementById('topicSection').style.paddingBottom = "42px";
     }
 
     $scope.$watch("commentsArray", function (newValue, oldValue)
@@ -430,7 +398,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     }
     $scope.innerButtonTapped = true;
     networkService.send(CommentService.deleteCommentRequest(id));
-    //avoid window reload to improve performance.
     // if (lastComment){
     //   $window.location.reload();
     // }
@@ -503,7 +470,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'chat';
       $(document).scrollTop(0);
-      $scope.initPage();
+      updateTopic();
+      updateComments();
     }
     if (tab === 'video'){
       $('#chatTab').removeClass('selectedTab');
@@ -544,6 +512,9 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   var tabContainer = $('.tabContainer');
 
   var watchScroll = function() {
+    if ($scope.showNewCommentsIndicator){
+      $scope.showNewCommentsIndicator = false;
+    }
     if ($scope.isPeelUser){
       if ($(document).scrollTop() > 150) {
         tabs.addClass('fixTabsPeel');

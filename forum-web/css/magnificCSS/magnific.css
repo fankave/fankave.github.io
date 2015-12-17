@@ -134,13 +134,14 @@ button::-moz-focus-inner {
   top: 0;
   text-decoration: none;
   text-align: center;
-  opacity: 0.65;
+  /*opacity: 0.65;*/
   filter: alpha(opacity=65);
   padding: 0 0 18px 10px;
   color: #FFF;
   font-style: normal;
-  font-size: 28px;
-  font-family: Arial, Baskerville, monospace; }
+  font-size: 48px;
+  /*font-family: Arial, Baskerville, monospace;*/
+}
   .mfp-close:hover,
   .mfp-close:focus {
     opacity: 1;
@@ -155,7 +156,7 @@ button::-moz-focus-inner {
 .mfp-iframe-holder .mfp-close {
   color: #FFF;
   right: -6px;
-  text-align: right;
+  text-align: left;
   padding-right: 6px;
   width: 100%; }
 

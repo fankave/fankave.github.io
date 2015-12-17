@@ -9,7 +9,8 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       var uploader = this.uploader = new FileUploader({
         url: MUS_SERVER_URI + UPLOAD_URL,
         autoUpload: false,
-        removeAfterUpload: true
+        removeAfterUpload: true,
+        queueLimit: 1
       });
 
       var _this = this;
@@ -38,7 +39,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         console.log('F:', f);
 
         if (!f.type.match('image.*')) {
-          return;
+          var previewSrc = "img/videoPrevIcon@2x.png";
         }
 
         var reader = new FileReader();
@@ -46,7 +47,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
           return function (e) {
             var span = document.createElement('span');
             span.innerHTML = ['<img class="thumb" src="',
-              e.target.result,
+              previewSrc || e.target.result,
               '"/>'].join('');
             if ($scope.mobileBrowser === true && !dontAdd){
               document.getElementById('mobilePreview').insertBefore(span, null);
@@ -67,6 +68,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         e.wrap('<form>').closest('form').get(0).reset();
         e.unwrap();
         dontAdd = false;
+        _this.unhighlightPost();
       };
 
       // CALLBACKS
@@ -85,8 +87,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       };
       this.uploader.onAfterAddingFile = function(fileItem) {
         console.info('onAfterAddingFile', fileItem);
-
-
+        _this.highlightPost();
       };
       this.uploader.onAfterAddingAll = function(addedFileItems) {
         console.info('onAfterAddingAll', addedFileItems);
@@ -150,11 +151,21 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       };
 
       this.highlightPost = function(){
+        console.log("Styling post");
         $('#postCommentButton').css('color','rgb(22,189,231)');
       };
 
       this.unhighlightPost = function(){
+        console.log("Styling post");
         $('#postCommentButton').css('color','rgb(211,214,215)');
       };
+
+      $('input#topicCommentField').bind('focusin focus', function(e){
+        e.preventDefault();
+      });
+
+      $('input').bind('focusin focus', function(e){
+        e.preventDefault();
+      });
 
     }]);
