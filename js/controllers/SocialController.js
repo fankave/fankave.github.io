@@ -121,7 +121,6 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
             _this.socialArray.push(tempItem);
           } else {
             _this.videoArray.push(tempItem);
-            console.log("Video Array Push: ", _this.videoArray);
           }
         }
       }
