@@ -186,8 +186,9 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
           tempComment.mediaThumbUrl = commentsdata[i].mediaThumbUrl;
         }
         tempComment.isLiked = commentsdata[i].signal.like;
-
+        
         $scope.commentsArray.push(tempComment);
+
       }
     }
 
