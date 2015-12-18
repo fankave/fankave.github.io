@@ -483,20 +483,22 @@ body
   margin: 0 auto;
 }
 
+.chatCropView {
+  overflow: hidden;
+  width: 100%;
+  max-width: 500px;
+  max-height: 250px;
+  margin: 0 auto;
+}
+
 .cropView:hover,
 .postPhoto:hover {
   cursor: pointer;
 }
 
 @media all and (min-width: 600px) {
-  .cropView {
+  .chatCropView {
     max-height: 300px;
-  }
-}
-
-@media all and (min-width: 800px) {
-  .cropView {
-    /*max-height: 400px;*/
   }
 }
 
