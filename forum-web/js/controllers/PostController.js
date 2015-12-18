@@ -1,8 +1,43 @@
-var postModule = angular.module("PostModule", ["NetworkModule", "FacebookModule"]);
-postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "facebookService","UserInfoService","URIHelper", initPostController]);
+var postModule = angular.module("PostModule", ["NetworkModule", "SplashModule", "MediaModule", "angularFileUpload"]);
+postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$window", "$sanitize", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", "MUService", "FileUploader", "ForumStorage", initPostController]);
 
-function initPostController($scope, $sce, $timeout, $routeParams, networkService, ReplyService, TopicService, CommentService, facebookService, UserInfoService,URIHelper)
+function initPostController($scope, $sce, $timeout, $window, $sanitize, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService,MUService,FileUploader,ForumStorage)
 {
+
+  // Check For Mobile Browser
+  window.mobileCheck = function() {
+    var check = false;
+    (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4)))check = true})(navigator.userAgent||navigator.vendor||window.opera);
+    return check;
+  }
+  if (mobileCheck() === true){
+    console.log("MOBILE BROWSER DETECTED");
+    $scope.mobileBrowser = true;
+  } else {
+    $scope.mobileBrowser = false;
+  }
+
+  // Retain & Handle State when Returning From External Links
+  if (ForumStorage.getFromLocalStorage('hasUserVisited') === true){
+    console.log("Checking For Existing Session");
+    $scope.initPage();
+  }
+  var headerHeight;
+  // $scope.scrollToBookmark = function() {
+  //   if (ForumStorage.getFromLocalStorage('replyBookmark') !== undefined){
+  //     setTimeout(function(){
+  //       var bookmarkedId = parseInt(ForumStorage.getFromLocalStorage('replyBookmark'));
+  //       var bookmarkedPost = Array.prototype.slice.call(document.getElementsByClassName('postRow'));
+  //       bookmarkedPost = bookmarkedPost[bookmarkedId];
+  //       var offElem = $(bookmarkedPost).offset().top;
+  //       console.log("Bookmarked Post: ", bookmarkedPost);
+  //       console.log("Bookmarked Post Top Offset: ", offElem);
+  //       $(document).scrollTop(offElem);
+  //       ForumStorage.setToLocalStorage('replyBookmark', undefined);
+  //     }, 100);
+  //   }
+  // };
+
 	//ga('send', 'pageview', "/comment/"+$routeParams.postID);
 	$scope.pageClass = 'page-post';
 
@@ -18,28 +53,28 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		var topicId = TopicService.getTopicId();
 		if(topicId == undefined)
 			topicId = $scope.comment.topicId;
-		//window.location = "#/topic/"+topicId;
-		window.history.back();
+		$window.location = "#/topic/"+topicId;
 	}
 
 	$scope.setPeelUI = function(isPeelUser){
 		console.log("isPeelUser :"+isPeelUser);
-//		if(isPeelUser === true)
-//		{
-//			document.getElementById('postSection').style.paddingTop = "2.0em";
-//			document.getElementById('postHeader').style.height = "3.5em";
-//		}
-//		else
-		{
-			document.getElementById('postSection').style.paddingTop = "3.5em";
-			document.getElementById('postHeader').style.height = "3.5em";
+		if(isPeelUser === true) {
+			document.getElementById('postSection').style.paddingTop = "54px";
+			// document.getElementById('postHeader').style.height = "99px";
+		}
+		else {
+			document.getElementById('postSection').style.paddingTop = "0px";
+			// document.getElementById('postHeader').style.height = "47px";
 		}
 	}
 
-	if((UserInfoService.isPeelUser() == true))
+	if((UserInfoService.isPeelUser() == true)){
 		$scope.isPeelUser = true;
-	else
-		$scope.isPeelUser = false;	
+		SplashService.hidePeelSplash = true;
+	}
+	else {
+		$scope.isPeelUser = false;
+	}
 	$scope.setPeelUI($scope.isPeelUser);
 
 	$scope.requestReplies = function(){
@@ -48,7 +83,6 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		var selectedComment = CommentService.getCommentById($scope.postID);
 		if(selectedComment != undefined){
 			updateCommentInReply(selectedComment);
-
 		}
 		else{
 			console.log("No data from comment service : TODO handle this with cookies");
@@ -92,18 +126,37 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		// $scope.pageStyle = {'padding-top': '10em'};
 
 		$scope.requestReplies();
-
+    // $scope.loadingReply = true;
 		var replyPostHeader = $("#replyPost").height();
 		// console.log("height of repy header: " + replyPostHeader);
 		var heightString = replyPostHeader + "px";
 		// document.getElementById('postHeader').style.height = '3.5em';//heightString;
 		// document.getElementById('postSection').style.paddingTop = '3.5em';
-		document.getElementById('postSection').style.paddingBottom = "3.9em";
+	  if ($scope.mobileBrowser === true){
+      document.getElementById('postSection').style.paddingBottom = "42px";
+    }
 
 		$scope.$watch("replies", function (newValue, oldValue)
 		 {
   			$timeout(function()
   			{
+  				// setLinks();
+          var replyDivs = document.getElementsByClassName("postRow");
+          for (div in replyDivs){
+            if (newValue != undefined){
+              var thisReply = newValue[div];
+              if (thisReply != undefined){
+                var thisDiv = replyDivs[div];
+                thisDiv.onclick = function(e) {
+                  if ($(e.target).is('a')){
+                    console.log("EXTERNAL LINK: ", e, this.id);
+                    ForumStorage.setToLocalStorage('replyBookmark', this.id);
+                    return;
+                  }
+                }
+              }
+            }
+          }
     			$('.commentsContainer').each(function()
     			{
       				$('.image-link').magnificPopup({
@@ -121,19 +174,8 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 	}
 	else
 	{
-		window.location = "#/facebookLogin";
+		window.location = "#/";
 	}
-
-	$scope.postReply = function(commentText) {
-		if((commentText != undefined)	 && commentText != ""){
-		console.log("PostController postReply Invoked :"+ commentText + $scope.topicId);
-		networkService.send(ReplyService.getPostReplyRequest($scope.topicId,$scope.postID, commentText));
-		}
-		$scope.commentText = "";
-		document.getElementById("textInputFieldReply").blur();
-		document.getElementById("postReplyButton").blur();
-		$scope.justReplied = true
-	};
 
 	$scope.updateLikeComment = function(id) {
 		// console.log("PostController updateLikeComment(" + id + ")");
@@ -166,6 +208,24 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		console.log("reportReplyAsSpam(" + id + ")");
 		networkService.send(ReplyService.flagReplyRequest(id));
 	}
+
+  $scope.deleteComment = function(id)
+  {
+    console.log("deleteComment(" + id + ")");
+    // $scope.innerButtonTapped = true;
+    networkService.send(CommentService.deleteCommentRequest(id));
+    // setTimeout(function(){
+      $window.location = "#/topic/"+$scope.topicId;
+    // }, 250);
+    $window.location.reload();
+  }
+
+  $scope.reportCommentAsSpam = function(id)
+  {
+    console.log("reportCommentAsSpam(" + id + ")");
+    // $scope.innerButtonTapped = true;
+    networkService.send(CommentService.flagCommentRequest(id)); 
+  }
 
 	$scope.imageClick = function(imageURL)
 	{
@@ -214,7 +274,12 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 	}
 
 	 function updateCommentInReply(selectedComment){
-		if(selectedComment == undefined){
+		console.log("Already Had PostID: ", $scope.postID);
+    if (!$scope.postID){
+      $scope.postID = ReplyService.getPostId();
+      console.log("Regenerated PostID: ", $scope.postID);
+    }
+    if(selectedComment == undefined){
 			selectedComment = CommentService.getCommentById($scope.postID);
 		}
 		if(selectedComment != undefined){
@@ -230,6 +295,7 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 			tempComment.mediaAspectFeed = selectedComment.mediaAspectFeed;
 			tempComment.isLiked = selectedComment.signal.like;
 			tempComment.topicId = selectedComment.topicId;
+      tempComment.isMyComment = UserInfoService.isCurrentUser(selectedComment.author.id);
 
 			$scope.comment = tempComment;
 
@@ -244,8 +310,12 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 		}
 	}
 
-	 function updateReplies(){
+  // $scope.hideLoading = function(){
+  //   console.log("HIDING LOAD");
+  //   $scope.loadingReply = false;
+  // };
 
+	function updateReplies(){
 		//TODO: check with ahmed, these values could be individual scope var.
 		var repliesData = ReplyService.replies();
 		var len = repliesData.length;
@@ -277,7 +347,6 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
 			//console.log(i +" : updated replies likecount : " +$scope.replies[i].likeCount);
 
 		}
-
 		if(TopicService.directComment === true)
 		{
 			$scope.triggerRepliesKeyboard();
@@ -329,4 +398,22 @@ function initPostController($scope, $sce, $timeout, $routeParams, networkService
     	return $sce.trustAsResourceUrl(src);
   	}
 
-}
+  $window.addEventListener("beforeunload", function(){
+    console.log("Before Unload");
+    ForumStorage.setToLocalStorage("hasUserVisited", true);
+  });
+
+  $scope.xLinkActivated = false;
+
+
+};
+
+// postModule.directive('repeatReplyFinished', function () {
+//   return function (scope, element, attrs) {
+//     if (scope.$last){
+//       // scope.scrollToBookmark();
+//       console.log("DONE LOADING REPLIES");
+//       scope.hideLoading();
+//     }
+//   };
+// });
