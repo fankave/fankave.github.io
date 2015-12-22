@@ -135,16 +135,16 @@
   </div>
 </nav>
 
-<div id="topicDetails" class="row" style="width=40%"> 
+<div id="topicDetails" class="topicDetailsHeight row" style="width=40%"> 
   <div>
     <b>{{topicTitle}}</b>
   </div>
   <div id="topicDescriptionBody">
     {{topicDescHtml}}
   </div>
-  <!-- <div id="topicImage">
+  <div id="topicImage" ng-if="topicMediaUrl">
     <img ng-src="{{topicMediaUrl}}" class="topicPhoto" ng-click="imageClick(topicMediaUrl);" />
-  </div> -->    
+  </div>    
 
   <div class="topicSharingButtonsRow clearfix">
     <div class="grid-col-alt grid-col-50">
