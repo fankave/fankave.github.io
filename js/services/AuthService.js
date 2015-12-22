@@ -1,5 +1,5 @@
-authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "ReplyService", "networkService", "ForumDeviceInfo", "ChannelService", "URIHelper", 
-  function ($http, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
+authModule.factory("AuthService", ["$http","$window","$location","UserInfoService", "TopicService", "ReplyService", "networkService", "ForumDeviceInfo", "ChannelService", "URIHelper", 
+  function ($http, $window, $location, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
   var userLoggedInToFacebook = false;
   var loginToFacebook = function() {
@@ -80,15 +80,15 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
 
     if (ReplyService.getPostId() !== undefined) {
       console.log("found post ID: " + ReplyService.getPostId());
-      window.location = "#/post/" + ReplyService.getPostId();
+      $location.path("/post/" + ReplyService.getPostId());
     }
     else if (TopicService.getTopicId() !== undefined) {
       console.log("found Topic ID: " + TopicService.getTopicId());
-      window.location = "#/topic/" + TopicService.getTopicId();
+      $location.path("/topic/" + TopicService.getTopicId());
     }
-    else if (ChannelService.getChannel() !== undefined) {
+    else if (!!ChannelService.getChannel()) {
       console.log("found channel ID: " + ChannelService.getChannel());
-      networkService.send(ChannelService.getLiveGameTopic());
+      networkService.send(ChannelService.getLiveGameTopic(ChannelService.getChannel()));
     }
   };
 

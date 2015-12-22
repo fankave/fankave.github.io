@@ -1,7 +1,7 @@
 var postModule = angular.module("PostModule", ["NetworkModule", "SplashModule", "MediaModule", "angularFileUpload"]);
-postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$window", "$sanitize", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", "MUService", "FileUploader", "ForumStorage", initPostController]);
+postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$window", "$location","$sanitize", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", "MUService", "FileUploader", "ForumStorage", initPostController]);
 
-function initPostController($scope, $sce, $timeout, $window, $sanitize, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService,MUService,FileUploader,ForumStorage)
+function initPostController($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService,MUService,FileUploader,ForumStorage)
 {
 
   // Check For Mobile Browser
@@ -53,7 +53,7 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 		var topicId = TopicService.getTopicId();
 		if(topicId == undefined)
 			topicId = $scope.comment.topicId;
-		$window.location = "#/topic/"+topicId;
+		$location.path("/topic/"+topicId);
 	}
 
 	$scope.setPeelUI = function(isPeelUser){
@@ -174,7 +174,7 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 	}
 	else
 	{
-		window.location = "#/";
+		$location.path("/login");
 	}
 
 	$scope.updateLikeComment = function(id) {
@@ -215,7 +215,7 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
     // $scope.innerButtonTapped = true;
     networkService.send(CommentService.deleteCommentRequest(id));
     // setTimeout(function(){
-      $window.location = "#/topic/"+$scope.topicId;
+      $location.path("/topic/"+$scope.topicId);
     // }, 250);
     $window.location.reload();
   }

@@ -32,7 +32,7 @@
       <span id="peelText">Peel Bar</span>
       <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()">Watch Channel</button>
     </div>
-    <div class="scoreCardContent clearfix">
+    <div class="scoreCardContent clearfix" ng-if="topicType === 'livegame'">
 
       <div id="rightColor">
         <svg 
@@ -135,16 +135,16 @@
   </div>
 </nav>
 
-<div id="topicDetails" class="row" style="width=40%"> 
+<div id="topicDetails" class="topicDetailsHeight row" style="width=40%"> 
   <div>
     <b>{{topicTitle}}</b>
   </div>
   <div id="topicDescriptionBody">
     {{topicDescHtml}}
   </div>
-  <!-- <div id="topicImage">
+  <div id="topicImage" ng-if="topicMediaUrl">
     <img ng-src="{{topicMediaUrl}}" class="topicPhoto" ng-click="imageClick(topicMediaUrl);" />
-  </div> -->    
+  </div>    
 
   <div class="topicSharingButtonsRow clearfix">
     <div class="grid-col-alt grid-col-50">
@@ -259,7 +259,7 @@
       </span>
     </span>
 
-    <span class="post">
+    <div class="post">
 
       <div class="chatPostHeader">
         <span class="postUsername">
@@ -275,12 +275,12 @@
       </div>
 
       <div class="imageContainer" ng-switch-when="image">
-        <div class="cropView" ng-style="{background:'url({{thisPost.mediaUrl}}) no-repeat','background-size':'cover','height':thisPost.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(thisPost.mediaUrl)">
+        <div class="chatCropView" ng-style="{background:'url({{thisPost.mediaUrl}}) no-repeat','background-size':'cover','height':thisPost.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(thisPost.mediaUrl)">
         </div>
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="chatVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
+        <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="chatVideo">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
         </video>
       </div>  
@@ -315,7 +315,7 @@
       <div class="moreRepliesContainer" ng-if="thisPost.replyCount > 1">
         {{thisPost.replyCount}} more Replies
       </div>
-    </span>
+    </div>
     <!-- <div class="moreRepliesContainer" ng-if="thisPost.replyCount === 1">
       {{thisPost.replyCount}} more Reply
     </div>
@@ -355,10 +355,6 @@
       </div>
       <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
       </div>
-
-      <!-- <div ng-switch-when="image" class="cropView ng-style:{ width: thisPost.mediaAspectFeed.w, height: thisPost.mediaAspectFeed.h, 'margin-bottom':'15px' };">
-        <img ng-src="{{thisPost.mediaUrl}}" class="postPhotoSocial ng-style:{ bottom: thisPost.mediaAspectFeed.y }" ng-click="imageClick(thisPost.mediaUrl);" />
-      </div> -->
 
       <div ng-switch-when="video" class="mp4VideoContainer">
         <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">

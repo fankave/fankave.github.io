@@ -3,7 +3,7 @@ rootModule.config(["$routeProvider", "$locationProvider",
 
 function ($routeProvider, $locationProvider) {
   $routeProvider
-  .when('/', {
+  .when('/login', {
     templateUrl:'partials/facebookLogin.html',
     controller:'AuthController'
   })
@@ -26,7 +26,11 @@ function ($routeProvider, $locationProvider) {
     redirectTo:'invalidTopic'
   });
 
-  // $locationProvider.html5Mode(true);
+  if (window.history && window.history.pushState){
+    $locationProvider.html5Mode({
+      enabled:true
+    });
+  }
 }]);
 
 rootModule.filter('hashtags',['$filter', '$sce',

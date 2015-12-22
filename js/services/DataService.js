@@ -106,6 +106,7 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
       console.log("Topic Error message from network: ", data.error);
     }
     else
+      console.log("delegateSetChannel: ", data);
       ChannelService.setTopicData(data);
   }
   

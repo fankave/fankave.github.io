@@ -131,10 +131,13 @@ body
 #topicDetails {
   background-color: #fff;
   font-size:18px;
-  height:78px;
   padding-top:12px;
   margin:0 auto;
   text-align: center;
+}
+
+.topicDetailsHeight {
+  height:78px;
 }
 
 #topicDescriptionBody {
@@ -419,10 +422,8 @@ body
 
 .topicPhoto
 {
-  width:100%;
-  height:auto;
-  /* max-width:100%;
-  max-height:100%; */
+  width:auto;
+  height:50px;
   margin-top:0.2em;
   margin-bottom:0.3em;
 }
@@ -483,20 +484,22 @@ body
   margin: 0 auto;
 }
 
+.chatCropView {
+  overflow: hidden;
+  width: 100%;
+  max-width: 500px;
+  max-height: 250px;
+  margin: 0 auto;
+}
+
 .cropView:hover,
 .postPhoto:hover {
   cursor: pointer;
 }
 
 @media all and (min-width: 600px) {
-  .cropView {
+  .chatCropView {
     max-height: 300px;
-  }
-}
-
-@media all and (min-width: 800px) {
-  .cropView {
-    /*max-height: 400px;*/
   }
 }
 
@@ -1047,6 +1050,18 @@ button:hover {
 
 .grid-col-34 {
   width: 34%;
+}
+
+.grid-col-11 {
+  width: 11%;
+}
+
+.grid-col-16 {
+  width: 16%;
+}
+
+.grid-col-73 {
+  width: 73%;
 }
 
 #L-40 {

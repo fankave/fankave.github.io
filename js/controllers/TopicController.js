@@ -1,7 +1,7 @@
 var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"]);
-topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService",initTopicController]);
+topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService",initTopicController]);
 
-function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService)
+function initTopicController($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService)
 {
   var lastComment = false;
   // Check For Mobile Browser
@@ -15,15 +15,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     $scope.mobileBrowser = true;
   } else {
     $scope.mobileBrowser = false;
-  }
-
-  // Check Specifically for iOS Safari
-  function isMobileSafari() {
-      return navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/);
-  };
-
-  if (isMobileSafari()){
-    $scope.isMobileSafari = true;
   }
 
   if (!$scope.commentsArray){
@@ -42,6 +33,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       console.log('USER HASNT VISITED');
       // SplashService.hidePeelSplash = false;
       $scope.hidePeelSplash = false;
+      ForumStorage.setToLocalStorage("hasUserVisited", true);
       $timeout(function() {$scope.continueToExperience(); }, 5000);
     }
   }
@@ -76,8 +68,9 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         document.getElementById('header').style.height = "114px";
       }
       else{
-      document.getElementById('topicSection').style.paddingTop = "3em";
-      document.getElementById('header').style.height = "3em";
+      document.getElementById('topicSection').style.paddingTop = "0px";
+      document.getElementById('header').style.height = "0px";
+      $('#topicDetails').removeClass('topicDetailsHeight');
       
       var parent = document.getElementById("allScoresButtonLink");
       var child = document.getElementById("allScoresButtonSpan");
@@ -93,7 +86,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       }
       else{
         document.getElementById('topicSection').style.paddingTop = "0em";
-        document.getElementById('header').style.height = "0em";
+        $('#header').css('display','none');
+        $('#topicDetails').removeClass('topicDetailsHeight');
 //        var parent = document.getElementById("header");
 //        var child = document.getElementById("scoreCardContent");
         var parent = document.getElementById("allScoresButtonLink");
@@ -235,42 +229,28 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     if ($scope.mobileBrowser === true){
       document.getElementById('topicSection').style.paddingBottom = "42px";
     }
+  }
 
-    $scope.$watch("commentsArray", function (newValue, oldValue)
-        {
-      $timeout(function()
-          {
-        var postDivs = document.getElementsByClassName("postRow");
-        for(div in postDivs)
-        {
-          if(newValue != undefined)
-          {
-            var thisPost = newValue[div];
-
-            if(thisPost != undefined)
-            {
-              var thisDiv = postDivs[div];
-              thisDiv.onclick = function(e)
-              {
-                if ($(e.target).is('a')){
-                  console.log("EXTERNAL LINK: ", e, this.id);
-                  ForumStorage.setToLocalStorage('commentBookmark', this.id);
-                  return;
-                } else {
-                  // console.log("thisDiv.onclick");
-                  thisPost = $scope.commentsArray[this.id];
-                  if($scope.innerButtonTapped == false)
-                  {
-                    window.location = "#/post/" + thisPost.id;
-                  }
-                  $scope.innerButtonTapped = false;
-                }
-              }
-            } 
+  $scope.setLinksOnComments = function(){
+    var postDivs = document.getElementsByClassName("postRow");
+    for (div in postDivs) {
+      var thisDiv = postDivs[div];
+      thisDiv.onclick = function(e) {
+        if ($(e.target).is('a')) {
+          console.log("EXTERNAL LINK: ", e, this.id);
+          return;
+        } 
+        thisPost = $scope.commentsArray[this.id];
+        if ($scope.innerButtonTapped === false) {
+          console.log("Post Click Active: ", thisPost.id);
+          $location.path("/post/" + thisPost.id);
+          if (!$scope.$$phase){
+            $scope.$apply();
           }
         }
-          });
-        });
+        $scope.innerButtonTapped = false;
+      }
+    }
   }
 
 //  if(URIHelper.isPeelUser())
@@ -293,7 +273,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     }
     else{
       // console.log("Not logged in to facebook, take user to login page")
-      window.location = "#/";
+      $location.path("/login");
     }
 
 
@@ -395,9 +375,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     }
     $scope.innerButtonTapped = true;
     networkService.send(CommentService.deleteCommentRequest(id));
-    // if (lastComment){
-    //   $window.location.reload();
-    // }
   }
 
   $scope.reportCommentAsSpam = function(id)
@@ -414,7 +391,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 
     // console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
     TopicService.directComment = true;
-    window.location = "#/post/" + id;
+    $location.path("/post/" + id);
   };
 
 
@@ -452,7 +429,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 
   $window.addEventListener("beforeunload", function(){
     console.log("Before Unload");
-    ForumStorage.setToLocalStorage("hasUserVisited", true);
     ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
   });
 
@@ -542,6 +518,7 @@ topicModule.directive('repeatFinishedNotify', function () {
       // scope.scrollToBookmark();
       console.log("DONE LOADING COMMENTS");
       scope.hideLoading();
+      scope.setLinksOnComments();
     }
   };
 });
