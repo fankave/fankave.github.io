@@ -299,8 +299,8 @@
           <span class="socialButtonLable"> Reply</span>
       </div>
       <div class="sharingButtonsRow">
-        <div class="chatTimestamp">
-          <button class="btn-link social-btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
+        <div class="chatMore" ng-click="moreButtonTapped()">
+          <button class="btn-link social-btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img class="social-more" ng-src="img/moreButton.png"/>
           </button>
           <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">

@@ -379,6 +379,16 @@ body
   text-align: right;
 }
 
+.chatMore {
+  position: absolute;
+  height: 28px;
+  right: 0;
+  padding: 0 12px 12px 12px;
+  font-size: 0.31em;
+  color: rgb(166, 189, 207);
+  text-align: right;
+}
+
 .replyTimestamp
 {
   font-size: 1em;
