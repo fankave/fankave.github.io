@@ -388,8 +388,8 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
 
   $scope.goToRepliesWithKeyboardTriggered = function(id)
   {
-    event.cancelBubble = true;
-    if(event.stopPropagation) event.stopPropagation();
+    // event.cancelBubble = true;
+    // if(event.stopPropagation) event.stopPropagation();
 
     // console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
     TopicService.directComment = true;
