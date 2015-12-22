@@ -716,7 +716,7 @@ input:focus + button {
   position: relative;
   float: left;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   top: 7px;
   margin-left: 5px;
 }
