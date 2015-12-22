@@ -144,6 +144,10 @@ body
   line-height: 1.1;
 }
 
+#topicTitle {
+  font-weight: 500;
+}
+
 
 /* - - - Tab-Bar for Posts / Tweets - - - */
 
@@ -344,7 +348,7 @@ body
   font-size: 14px;
   float:left;
   color: rgb(29,29,29);
-  font-weight: bolder;
+  font-weight: 500;
 }
 
 .socialPostUsername
@@ -353,7 +357,7 @@ body
   float:left;
   color: rgb(29,29,29);
   padding-left:13px;
-  font-weight: bolder;
+  font-weight: 500;
 }
 
 .timestamp
@@ -802,13 +806,13 @@ input:focus + button {
   border: 1px solid rgb(87,87,87);
   color: rgb(90,90,90);
   font-size: 12px;
-  font-weight: bolder;
+  font-weight: 500;
 }
 
 #peelText {
   color: rgb(90,90,90);
   font-size: 14px;
-  font-weight: bolder;
+  font-weight: 500;
   vertical-align: -90%;
 }
 
