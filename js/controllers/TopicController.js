@@ -353,6 +353,8 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   };
 
   $scope.updateLikeComment = function(id) {
+    $scope.innerButtonTapped = true;
+    
     event.cancelBubble = true;
     if(event.stopPropagation) event.stopPropagation();
 
