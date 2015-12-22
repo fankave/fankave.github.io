@@ -17,19 +17,19 @@ html {
 @font-face {
   font-family: "Proxima-Nova";
   font-weight: 200;
-  src: url('../img/ProximaNova-Light.otf');
+  src: url('http://fankave.github.io/img/ProximaNovaLight.otf');
 }
 
 @font-face {
   font-family: "Proxima-Nova";
   font-weight: 400;
-  src: url('../img/ProximaNova-Reg.otf');
+  src: url('http://fankave.github.io/img/ProximaNovaReg.otf');
 }
 
 @font-face {
   font-family: "Proxima-Nova";
   font-weight: 500;
-  src: url('../img/ProximaNova-Sbold.otf');
+  src: url('http://fankave.github.io/img/ProximaNovaSbold.otf');
 }
 
 body {
