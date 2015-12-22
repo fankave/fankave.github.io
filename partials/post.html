@@ -31,7 +31,7 @@
   <div class="row repliesCommentRow" ng-switch="comment.mediaType">
     <span class="postAuthorPhoto">
       <div class="thumbnail">
-          <img ng-src="{{comment.postAuthorPhoto}}" onerror="this.ng-src='img/default_user_v3.png'" class="userPhoto">
+          <img ng-src="{{comment.postAuthorPhoto}}" onerror="this.src='img/default_user_v3.png'" class="userPhoto">
         </div>
         <div id="pinIcon" ng-if="comment.pin == true">
           <img ng-src="img/pin.png"/>
@@ -143,7 +143,7 @@
       
       <span class="postAuthorPhoto">
         <div class="thumbnail">
-            <img ng-src="{{thisReply.postAuthorPhoto}}" alt="" onerror="this.ng-src='img/default_user_v3.png'" class="userPhoto">
+            <img ng-src="{{thisReply.postAuthorPhoto}}" alt="" onerror="this.src='img/default_user_v3.png'" class="userPhoto">
           </div>
       </span>
 
