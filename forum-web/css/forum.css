@@ -131,10 +131,13 @@ body
 #topicDetails {
   background-color: #fff;
   font-size:18px;
-  height:78px;
   padding-top:12px;
   margin:0 auto;
   text-align: center;
+}
+
+.topicDetailsHeight {
+  height:78px;
 }
 
 #topicDescriptionBody {
@@ -419,10 +422,8 @@ body
 
 .topicPhoto
 {
-  width:100%;
-  height:auto;
-  /* max-width:100%;
-  max-height:100%; */
+  width:auto;
+  height:50px;
   margin-top:0.2em;
   margin-bottom:0.3em;
 }

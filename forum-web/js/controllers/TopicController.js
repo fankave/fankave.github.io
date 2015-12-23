@@ -67,8 +67,9 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
         document.getElementById('header').style.height = "114px";
       }
       else{
-      document.getElementById('topicSection').style.paddingTop = "3em";
-      document.getElementById('header').style.height = "3em";
+      document.getElementById('topicSection').style.paddingTop = "0px";
+      document.getElementById('header').style.height = "0px";
+      $('#topicDetails').removeClass('topicDetailsHeight');
       
       var parent = document.getElementById("allScoresButtonLink");
       var child = document.getElementById("allScoresButtonSpan");
@@ -84,7 +85,8 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       }
       else{
         document.getElementById('topicSection').style.paddingTop = "0em";
-        document.getElementById('header').style.height = "0em";
+        $('#header').css('display','none');
+        $('#topicDetails').removeClass('topicDetailsHeight');
 //        var parent = document.getElementById("header");
 //        var child = document.getElementById("scoreCardContent");
         var parent = document.getElementById("allScoresButtonLink");
