@@ -27,7 +27,7 @@ function initTopicController($scope,$window,$location,$sce,$routeParams,networkS
           $location.path("/topic/" + id);
       } else {
         if(!!$scope.urlQueryStr)
-          $window.location = "/#/topic/" + id + $scope.urlQueryStr);
+          $window.location = "/#/topic/" + id + $scope.urlQueryStr;
         else
           $window.location = "/#/topic/" + id;
       }
