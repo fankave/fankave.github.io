@@ -76,7 +76,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       // var child = document.getElementById("allScoresButtonSpan");
       // if(parent != null && child != null )
       //   parent.removeChild(child);
-      // }
+      }
     }
     else
     {
