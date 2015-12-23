@@ -101,7 +101,7 @@
       
       <!-- Bottom Row (All Scores Button) -->
       <div class="grid-row-33">
-        <span><a id="allScoresLink" href="{{allScoresURL}}" target="_blank">
+        <span ng-if="allScoresURL"><a id="allScoresLink" href="{{allScoresURL}}" target="_blank">
           <span id="allScoresSpan">{{allScoresTitle}}</span>
         </a></span>
       </div>
