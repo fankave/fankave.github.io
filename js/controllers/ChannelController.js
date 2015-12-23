@@ -20,10 +20,17 @@ function initTopicController($scope,$window,$location,$sce,$routeParams,networkS
     var id = ChannelService.getLiveTopicId();
     if(id !== undefined){
       console.log("Got Topic id from Channel : " +"/topic/" + id + $scope.urlQueryStr);
-      if(!!$scope.urlQueryStr)
-        $location.path("/topic/" + id).search($scope.urlQueryStr);
-      else
-        $location.path("/topic/" + id);
+      if (HTML5_LOC){
+        if(!!$scope.urlQueryStr)
+          $location.path("/topic/" + id).search($scope.urlQueryStr);
+        else
+          $location.path("/topic/" + id);
+      } else {
+        if(!!$scope.urlQueryStr)
+          $window.location = "/#/topic/" + id + $scope.urlQueryStr);
+        else
+          $window.location = "/#/topic/" + id;
+      }
     }
 
   };
@@ -43,8 +50,11 @@ function initTopicController($scope,$window,$location,$sce,$routeParams,networkS
       AuthService.loginWithPeel();
     }
     else{
-      // console.log("Not logged in to facebook, take user to login page")
+      if (HTML5_LOC){
         $location.path("/login");
+      } else {
+        $window.location = "/#/login";
+      }
     }
   }
   

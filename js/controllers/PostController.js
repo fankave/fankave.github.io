@@ -53,7 +53,11 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
 		var topicId = TopicService.getTopicId();
 		if(topicId == undefined)
 			topicId = $scope.comment.topicId;
-		$location.path("/topic/"+topicId);
+    if (HTML5_LOC){
+		  $location.path("/topic/"+topicId);
+    } else {
+      $window.location = "/#/topic/" + topicId;
+    }
 	}
 
 	$scope.setPeelUI = function(isPeelUser){
@@ -174,7 +178,11 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
 	}
 	else
 	{
-		$location.path("/login");
+		if (HTML5_LOC){
+      $location.path("/login");
+    } else {
+      $window.location = "/#/login";
+    }
 	}
 
 	$scope.updateLikeComment = function(id) {
@@ -214,9 +222,11 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
     console.log("deleteComment(" + id + ")");
     // $scope.innerButtonTapped = true;
     networkService.send(CommentService.deleteCommentRequest(id));
-    // setTimeout(function(){
-      $location.path("/topic/"+$scope.topicId);
-    // }, 250);
+    if (HTML5_LOC){
+      $location.path("/topic/" + $scope.topicId);
+    } else {
+      $window.location = "/#/topic/" + $scope.topicId;
+    }
     $window.location.reload();
   }
 

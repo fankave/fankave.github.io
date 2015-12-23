@@ -243,9 +243,13 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
         thisPost = $scope.commentsArray[this.id];
         if ($scope.innerButtonTapped === false) {
           console.log("Post Click Active: ", thisPost.id);
-          $location.path("/post/" + thisPost.id);
-          if (!$scope.$$phase){
-            $scope.$apply();
+          if (HTML5_LOC){
+            $location.path("/post/" + thisPost.id);
+            if (!$scope.$$phase){
+              $scope.$apply();
+            }
+          } else {
+            $window.location = "/#/post/" + thisPost.id;
           }
         }
         $scope.innerButtonTapped = false;
@@ -273,7 +277,11 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     }
     else{
       // console.log("Not logged in to facebook, take user to login page")
-      $location.path("/login");
+      if (HTML5_LOC){
+        $location.path("/login");
+      } else {
+        $window.location = "/#/login";
+      }
     }
 
 
@@ -393,7 +401,11 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
 
     // console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
     TopicService.directComment = true;
-    $location.path("/post/" + id);
+    if (HTML5_LOC){
+      $location.path("/post/" + id);
+    } else {
+      $window.location = "/#/post/" + id;
+    }
   };
 
 
