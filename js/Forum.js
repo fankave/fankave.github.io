@@ -4,26 +4,26 @@ rootModule.config(["$routeProvider", "$locationProvider",
 function ($routeProvider, $locationProvider) {
   $routeProvider
   .when('/login', {
-    templateUrl:'partials/facebookLogin.html',
+    templateUrl:'/partials/facebookLogin.html',
     controller:'AuthController'
   })
   .when('/channel/:channelID', {
-    templateUrl:'partials/login.html',
+    templateUrl:'/partials/login.html',
     controller:'ChannelController'
   })
   .when('/topic/:topicID', {
-    templateUrl:'partials/topic.html',
+    templateUrl:'/partials/topic.html',
     controller:'TopicController'
   })
   .when('/post/:postID', {
-    templateUrl:'partials/post.html',
+    templateUrl:'/partials/post.html',
     controller:'PostController'
   })
   .when('/invalidTopic', {
-    templateUrl:'partials/invalidTopic.html'
+    templateUrl:'/partials/invalidTopic.html'
   })
   .otherwise({
-    redirectTo:'invalidTopic'
+    redirectTo:'/invalidTopic'
   });
 
   if (window.history && window.history.pushState){
