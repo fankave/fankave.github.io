@@ -72,11 +72,11 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       document.getElementById('header').style.height = "0px";
       $('#topicDetails').removeClass('topicDetailsHeight');
       
-      var parent = document.getElementById("allScoresButtonLink");
-      var child = document.getElementById("allScoresButtonSpan");
-      if(parent != null && child != null )
-        parent.removeChild(child);
-      }
+      // var parent = document.getElementById("allScoresButtonLink");
+      // var child = document.getElementById("allScoresButtonSpan");
+      // if(parent != null && child != null )
+      //   parent.removeChild(child);
+      // }
     }
     else
     {
@@ -90,10 +90,10 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
         $('#topicDetails').removeClass('topicDetailsHeight');
 //        var parent = document.getElementById("header");
 //        var child = document.getElementById("scoreCardContent");
-        var parent = document.getElementById("allScoresButtonLink");
-        var child = document.getElementById("allScoresButtonSpan");
-        if(parent != null && child != null )
-          parent.removeChild(child);
+        // var parent = document.getElementById("allScoresButtonLink");
+        // var child = document.getElementById("allScoresButtonSpan");
+        // if(parent != null && child != null )
+        //   parent.removeChild(child);
       }
     }
   }
