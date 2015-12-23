@@ -26,7 +26,7 @@ function ($routeProvider, $locationProvider) {
     redirectTo:'/invalidTopic'
   });
 
-  if (window.history && window.history.pushState){
+  if (window.history && window.history.pushState && HTML5_LOC){
     $locationProvider.html5Mode({
       enabled:true
     });
