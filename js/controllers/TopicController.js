@@ -500,6 +500,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       tabContainer,
       tabsTop,
       tabsHeight,
+      inputHeight,
       clientHeight,
       docHeight;
   $scope.setDocVars = function() {
@@ -508,6 +509,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       tabContainer = $('.tabContainer');
       tabsTop = tabs.offset().top;
       tabsHeight = tabContainer.height();
+      inputHeight = tabs.height();
       clientHeight = document.documentElement.clientHeight;
       docHeight = $(document).height();
       docVarsSet = true;
@@ -520,7 +522,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       $scope.showNewCommentsIndicator = false;
     }
     // if ($scope.isPeelUser){
-      if ($(document).scrollTop() > (tabsTop - 54) && (docHeight - clientHeight) > tabsTop) {
+      if ($(document).scrollTop() > (tabsTop - 54) && (docHeight - clientHeight) > tabsTop + inputHeight - tabsHeight) {
         tabs.addClass('fixTabsPeel');
         tabContainer.addClass('fixTabContainer');
       } else {
