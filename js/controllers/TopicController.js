@@ -522,7 +522,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       $scope.showNewCommentsIndicator = false;
     }
     // if ($scope.isPeelUser){
-      if ($(document).scrollTop() > (tabsTop - 54) && (docHeight - clientHeight) > tabsTop + inputHeight - tabsHeight) {
+      if ($(document).scrollTop() > (tabsTop - 54) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
         tabs.addClass('fixTabsPeel');
         tabContainer.addClass('fixTabContainer');
       } else {
