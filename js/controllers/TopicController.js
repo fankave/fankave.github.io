@@ -498,6 +498,9 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   var tabs = $('#inputControls');
   var tabContainer = $('.tabContainer');
   var tabsTop = tabs.offset().top;
+  var tabsHeight = tabContainer.height();
+  var clientHeight = document.documentElement.clientHeight;
+  var docHeight = $(document).height();
 
   var watchScroll = function() {
     console.log("Tabs Top: ", tabsTop);
@@ -505,7 +508,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       $scope.showNewCommentsIndicator = false;
     }
     // if ($scope.isPeelUser){
-      if ($(document).scrollTop() > tabsTop) {
+      if ($(document).scrollTop() > tabsTop && (docHeight - clientHeight) > (tabsHeight + tabsTop)) {
         tabs.addClass('fixTabsPeel');
         tabContainer.addClass('fixTabContainer');
       } else {
