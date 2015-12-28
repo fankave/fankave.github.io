@@ -1,6 +1,6 @@
 var socialModule = angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"]);
-socialModule.controller("SocialController", ["$scope","$sce","$window","$routeParams","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService",
-  function ($scope,$sce,$window,$routeParams,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService){
+socialModule.controller("SocialController", ["$scope","$sce","$window","$routeParams","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService",
+  function ($scope,$sce,$window,$routeParams,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService){
     console.log("Social Control");
 
     var _this = this;
@@ -185,6 +185,13 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
     }, 100);
 
     $(document).on('scroll', watchContentScroll);
+
+    this.retweetPost = function(id) {
+      $http({
+        method: 'GET',
+        url: 'http://twitter.com/intent/retweet?tweet_id=' + id;
+      });
+    };
 
 
 }]);
