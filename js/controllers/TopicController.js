@@ -520,7 +520,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       $scope.showNewCommentsIndicator = false;
     }
     // if ($scope.isPeelUser){
-      if ($(document).scrollTop() > tabsTop && (docHeight - clientHeight) > tabsTop) {
+      if ($(document).scrollTop() > (tabsTop - 54) && (docHeight - clientHeight) > tabsTop) {
         tabs.addClass('fixTabsPeel');
         tabContainer.addClass('fixTabContainer');
       } else {
