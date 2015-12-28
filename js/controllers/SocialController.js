@@ -91,9 +91,9 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
             tempItem.providerLogo = feedData[i].embedProvider.logo;
           }
           tempItem.html = feedData[i].embedText;
-          tempItem.retweetCount = feedData[i].metrics.retweets;
-          tempItem.favoriteCount = feedData[i].metrics.favorites;
-          tempItem.replyCount = feedData[i].metrics.replies;
+          tempItem.retweetCount = feedData[i].tweet.metrics.retweetCount;
+          tempItem.likeCount = feedData[i].tweet.metrics.likeCount;
+          tempItem.replyCount = feedData[i].tweet.metrics.replyCount;
 
           tempItem.embedType = feedData[i].embedType;
           if (feedData[i].embedType === "link" && feedData[i].embedPlayable === true){

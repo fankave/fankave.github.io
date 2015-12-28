@@ -367,11 +367,11 @@
     <div class="socialButtonsRow socialText">
       
       <button class="btn-link social-btn" ng-click="">
-        <a href="https://twitter.com/intent/tweet?in_reply_to={{thisPost.tweetId}}">
+        <a href="https://twitter.com/intent/tweet?via=FanKave&in_reply_to={{thisPost.tweetId}}">
           <img class="social-metrics-reply" ng-src="img/reply@2x.png"/>
         </a>
       </button>
-      <!-- <span class="socialButtonLable"> {{thisPost.replyCount}}</span> -->
+      <span class="socialButtonLable"> {{thisPost.replyCount}}</span>
 
       <button class="btn-link social-btn socialRetweet" ng-click="">
         <!-- <img class="social-metrics-retweet" ng-switch-when="true" src="img/retweet_select@2x.png"/>  -->
@@ -387,7 +387,7 @@
           <img class="social-metrics-heart" ng-src="img/heart@2x.png" />
         </a> 
       </button>
-      <span class="socialButtonLable">{{thisPost.favoriteCount}}</span>
+      <span class="socialButtonLable">{{thisPost.likeCount}}</span>
 
     </div>
   </div>
@@ -439,11 +439,11 @@
     <div class="socialButtonsRow socialText">
       
       <button class="btn-link social-btn" ng-click="">
-        <a href="https://twitter.com/intent/tweet?in_reply_to={{thisPost.tweetId}}">
+        <a href="https://twitter.com/intent/tweet?via=FanKave&in_reply_to={{thisPost.tweetId}}">
           <img class="social-metrics-reply" ng-src="img/reply@2x.png"/>
         </a>
       </button>
-      <!-- <span class="socialButtonLable"> {{thisPost.replyCount}}</span> -->
+      <span class="socialButtonLable"> {{thisPost.replyCount}}</span>
 
       <button class="btn-link social-btn socialRetweet" ng-click="">
         <!-- <img class="social-metrics-retweet" ng-switch-when="true" src="img/retweet_select@2x.png"/>  -->
@@ -459,7 +459,18 @@
           <img class="social-metrics-heart" ng-src="img/heart@2x.png" />
         </a>
       </button>
-      <span class="socialButtonLable">{{thisPost.favoriteCount}}</span>
+      <span class="socialButtonLable">{{thisPost.likeCount}}</span>
+
+      <div class="social-share-container">
+        <button class="btn-link social-btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img class="social-share" ng-src="img/share@2x.png"/>
+          <span class="socialButtonLable">Share</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li><a ng-click="shareTweetToChat(thisPost.id)">Live Chat</a></li>
+          <li><a ng-click="reportCommentAsSpam(thisPost.id)">Facebook</a></li>
+        </ul>
+      </div>
 
     </div>
   </div>

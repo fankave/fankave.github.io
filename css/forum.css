@@ -597,6 +597,17 @@ body
   margin-left: 42px;
 }
 
+.social-share-container {
+  position: relative;
+  display: inline-block;
+  float: right;
+}
+
+.social-share {
+  width: 17px;
+  height: auto;
+}
+
 #chatLike {
   margin-left: 10px;
 }
