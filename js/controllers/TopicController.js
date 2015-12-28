@@ -495,12 +495,24 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     };
   };
 
-  var tabs = $('#inputControls');
-  var tabContainer = $('.tabContainer');
-  var tabsTop = tabs.offset().top;
-  var tabsHeight = tabContainer.height();
-  var clientHeight = document.documentElement.clientHeight;
-  var docHeight = $(document).height();
+  var docVarsSet = false;
+  var tabs,
+      tabContainer,
+      tabsTop,
+      tabsHeight,
+      clientHeight,
+      docHeight;
+  $scope.setDocVars = function() {
+    if (!docVarsSet){
+      tabs = $('#inputControls');
+      tabContainer = $('.tabContainer');
+      tabsTop = tabs.offset().top;
+      tabsHeight = tabContainer.height();
+      clientHeight = document.documentElement.clientHeight;
+      docHeight = $(document).height();
+      docVarsSet = true;
+    }
+  };
 
   var watchScroll = function() {
     console.log("Tabs Top: ", tabsTop);
@@ -538,6 +550,7 @@ topicModule.directive('repeatFinishedNotify', function () {
       console.log("DONE LOADING COMMENTS");
       scope.hideLoading();
       scope.setLinksOnComments();
+      scope.setDocVars();
     }
   };
 });
