@@ -189,7 +189,10 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
     this.retweetPost = function(id) {
       $http({
         method: 'GET',
-        url: 'http://twitter.com/intent/retweet?tweet_id=' + id
+        url: 'http://twitter.com/intent/retweet?tweet_id=' + id,
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        }
       });
     };
 
