@@ -196,9 +196,6 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 	function postCommentRequestForMedia(topicId, commentData, mediaData){
 		var m = {"media":[mediaData]};
 		
-
-//		var media = [{"id": mediaData.id, "mediaType": mediaData.mediaType, "url": mediaData.url, 
-//			"sizes": {"1:1":{"h":mediaData.sizes["1:1"].h,"w":mediaData.sizes["1:1"].w,"y":mediaData.sizes["1:1"].y},"full":{"h":mediaData.sizes["full"].h,"w":mediaData.sizes["full"].w}}}];
 		var createCommentParams = commentPostRequest(POST_COMMENT_URI);
 		createCommentParams.data =
 				{
@@ -208,6 +205,20 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 					"topicId": topicId,
 				};
 		createCommentParams.data.content.sections[1].media = m.media;
+		console.log("Media comment Request :"+ JSON.stringify(createCommentParams, null, 10));
+		return createCommentParams;
+	}
+	
+	function postCommentRequestForShare(topicId, commentData, embedData){
+		var createCommentParams = commentPostRequest(POST_COMMENT_URI);
+		createCommentParams.data =
+				{
+					"lang": "en", 
+					"content": {"sections":[{"type":"html","html":commentData},{"type":"embed"}]},
+					
+					"topicId": topicId,
+				};
+		createCommentParams.data.content.sections[1].embed = embedData;
 		console.log("Media comment Request :"+ JSON.stringify(createCommentParams, null, 10));
 		return createCommentParams;
 	}
@@ -309,6 +320,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 			removeComment:removeComment,
 			postCommentRequest:postCommentRequest,
 			postCommentRequestForMedia:postCommentRequestForMedia,
+			postCommentRequestForShare:postCommentRequestForShare,
 			getLikeCommentRequest:likeCommentRequest,
 			getUnlikeCommentRequest:unlikeCommentRequest,
 			registerObserverCallback:registerObserverCallback,

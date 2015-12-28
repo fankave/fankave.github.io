@@ -116,7 +116,7 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
             }
             tempItem.mediaAspectFull = feedData[i].embedMedia.mediaAspectFull;
           }
-
+          //tempItem.embed = feedData[i].embed;
           if (tab === 'social'){
             _this.socialArray.push(tempItem);
           } else {
