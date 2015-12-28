@@ -516,6 +516,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     }
   };
 
+  var fixed = false;
   var watchScroll = function() {
     console.log("Tabs Top: ", tabsTop);
     if ($scope.showNewCommentsIndicator){
@@ -525,9 +526,11 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       if ($(document).scrollTop() > (tabsTop - 54) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
         tabs.addClass('fixTabsPeel');
         tabContainer.addClass('fixTabContainer');
-      } else {
+        fixed = true;
+      } else if (fixed) {
         tabs.removeClass('fixTabsPeel');
         tabContainer.removeClass('fixTabContainer');
+        fixed = false;
       }
     // } else {
     //   if ($(document).scrollTop() > 96) {
