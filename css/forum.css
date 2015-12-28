@@ -615,6 +615,12 @@ body
   padding-left: 2px;
 }
 
+.social-metrics-label {
+  float: left;
+  font-size: 12px;
+  padding-left: 2px;
+}
+
 .share-dd {
   border-color: transparent;
   background-color: transparent;
