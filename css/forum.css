@@ -604,8 +604,21 @@ body
 }
 
 .social-share {
+  vertical-align: text-top;
   width: 17px;
   height: auto;
+}
+
+.social-share-label {
+  font-size: 12px;
+  color: rgb(179,184,186);
+  padding-left: 2px;
+}
+
+.share-dd {
+  border-color: transparent;
+  background-color: transparent;
+  box-shadow: none;
 }
 
 #chatLike {

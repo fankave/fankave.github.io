@@ -95,7 +95,9 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
           tempItem.likeCount = feedData[i].tweet.metrics.likeCount;
           tempItem.replyCount = feedData[i].tweet.metrics.replyCount;
 
+          tempItem.embed = feedData[i].embed;
           tempItem.embedType = feedData[i].embedType;
+          tempItem.embedUrl = feedData[i].embedUrl;
           if (feedData[i].embedType === "link" && feedData[i].embedPlayable === true){
             tempItem.embedHtml = $sce.trustAsHtml(feedData[i].embedHtml);
             tempItem.embedPlayable = true;
