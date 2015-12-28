@@ -81,6 +81,7 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
           tempItem.postAuthorName = feedData[i].embedAuthor.name;
           tempItem.postAuthorAlias = feedData[i].embedAuthor.alias;
           tempItem.postAuthorPhoto = feedData[i].embedAuthor.photo;
+          tempItem.tweetId = feedData[i].tweet.id;
           
           tempItem.postTimestamp = feedData[i].createdAt;
           tempItem.providerName = feedData[i].embedProvider.name;
