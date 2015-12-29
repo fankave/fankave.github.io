@@ -195,7 +195,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
           tempComment.embed = commentsdata[i].embed;
           tempComment.embed.embedCreatedAt = commentsdata[i].embedCreatedAt;
           tempComment.embed.embedCreatedAtFull = commentsdata[i].embedCreatedAtFull;
-          // tempComment.embed.media = tempComment.embed.media[0];
+          tempComment.embed.media = commentsdata[i].embed.media[0];
 
           if (tempComment.providerName === "Twitter"){
             tempComment.embed.embedLogo = "img/twitterLogo@2x.png";
