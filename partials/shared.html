@@ -35,7 +35,7 @@
 
     <div ng-switch-when="video/mp4" class="mp4VideoContainer">
       <video controls="controls" ng-attr-poster="{{thisPost.media.thumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.provider.name === 'Twitter', youtubeVideo: thisPost.provider.name === 'Youtube', vineVideo: thisPost.provider.name === 'Vine'}">
-        <source ng-src="{{topic.trustSrc(thisPost.media.url)}}" type="video/mp4">
+        <source ng-src="topic.trustSrc(thisPost.media.url)" type="video/mp4">
         </video>
     </div> 
   </div>
