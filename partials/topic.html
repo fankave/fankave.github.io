@@ -353,47 +353,43 @@
           </button>
           <span class="social-metrics-label">{{thisPost.embedLikeCount}}</span>
         </div>
-    </div>
+      </div>
       <!-- End Embed Content Shared to Chat -->
-    <div>
-      <div class="socialButtonsRow">
-        <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
-          <img class="social-like" ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png" /> 
-          <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUp@2x.png" /> 
-        </button>
-        <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
-      </div>
-      <div class="socialButtonsRow">  
-        <button id="chatReply" class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
-          <img class="social-reply" ng-src="img/shareCopy@2x.png" />
-        </button>
-          <span class="socialButtonLable"> Reply</span>
-      </div>
-      <div class="sharingButtonsRow">
-        <div class="chatMore" ng-click="moreButtonTapped()">
-          <button class="btn-link social-btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img class="social-more" ng-src="img/moreButton.png"/>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
 
-            <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
-            <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
-          </ul>
+      <div>
+        <div class="socialButtonsRow">
+          <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
+            <img class="social-like" ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png" /> 
+            <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUp@2x.png" /> 
+          </button>
+          <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
+        </div>
+        <div class="socialButtonsRow">  
+          <button id="chatReply" class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
+            <img class="social-reply" ng-src="img/shareCopy@2x.png" />
+          </button>
+            <span class="socialButtonLable"> Reply</span>
+        </div>
+        <div class="sharingButtonsRow">
+          <div class="chatMore" ng-click="moreButtonTapped()">
+            <button class="btn-link social-btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img class="social-more" ng-src="img/moreButton.png"/>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
+
+              <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
+              <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="moreRepliesContainer" ng-if="thisPost.replyCount === 1">
+          1 more Reply
+        </div>
+        <div class="moreRepliesContainer" ng-if="thisPost.replyCount > 1">
+          {{thisPost.replyCount}} more Replies
         </div>
       </div>
-      <div class="moreRepliesContainer" ng-if="thisPost.replyCount === 1">
-        1 more Reply
-      </div>
-      <div class="moreRepliesContainer" ng-if="thisPost.replyCount > 1">
-        {{thisPost.replyCount}} more Replies
-      </div>
     </div>
-    <!-- <div class="moreRepliesContainer" ng-if="thisPost.replyCount === 1">
-      {{thisPost.replyCount}} more Reply
-    </div>
-    <div class="moreRepliesContainer" ng-if="thisPost.replyCount > 1">
-      {{thisPost.replyCount}} more Replies
-    </div> -->
   </div>
 
   <!-- Video Tab Content -->
