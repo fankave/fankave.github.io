@@ -1,6 +1,6 @@
 var socialModule = angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"]);
-socialModule.controller("SocialController", ["$scope","$sce","$window","$routeParams","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService",
-  function ($scope,$sce,$window,$routeParams,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService){
+socialModule.controller("SocialController", ["$scope","$sce","$window","$routeParams","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService",
+  function ($scope,$sce,$window,$routeParams,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService){
     console.log("Social Control");
 
     var _this = this;
@@ -195,6 +195,21 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
         headers: {
           'Access-Control-Allow-Origin': '*'
         }
+      });
+    };
+
+    this.shareTweetToChat = function (id,html,embed) {
+      console.log("topicID From Parent: ", $scope.$parent.topicID);
+      CommentService.postCommentRequestForShare($scope.$parent.topicID,html,embed);
+    };
+
+    this.shareToFacebook = function (id,embedUrl) {
+      FB.ui({
+        method: 'share',
+        href: embedUrl
+      }, function (response){
+        // Keep Track of User Shares to Facebook?
+        console.log("FB Response Post-Share: ", response);
       });
     };
 
