@@ -627,6 +627,10 @@ body
   box-shadow: none;
 }
 
+.dropdown-menu > li:hover {
+  cursor: pointer;
+}
+
 #chatLike {
   margin-left: 10px;
 }

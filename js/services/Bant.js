@@ -90,6 +90,7 @@ networkModule.factory('Bant', function (DateUtilityService) {
           if (data.content.sections[j].embed !== null){
             // console.log("!!!!!Fiding ID:",data.content.sections[j]);
             _bantObject = extractEmbedObject(_bantObject,data.content.sections[j].embed);
+            _bantObject.embed = data.content.sections[j].embed;
           }
         }
         _bantObject.tweet = data.content.sections[j].tweet;
