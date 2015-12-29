@@ -496,6 +496,7 @@ body
   max-width: 500px;
   max-height: 300px;
   margin: 0 auto;
+  margin-bottom: 14px;
 }
 
 .chatCropView {
