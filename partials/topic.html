@@ -396,7 +396,7 @@
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
           <li><a ng-click="social.shareTweetToChat(thisPost.id,thisPost.html,thisPost.embed)">Share to Live Chat</a></li>
-          <li><a ng-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
+          <li  ng-if="isPeelUser === true"><a ng-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
         </ul>
       </div>
 
@@ -479,7 +479,7 @@
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
           <li><a ng-click="social.shareTweetToChat(thisPost.id,thisPost.html,thisPost.embed)">Share to Live Chat</a></li>
-          <li><a ng-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
+          <li ng-if="isPeelUser === true"><a ng-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
         </ul>
       </div>
 
