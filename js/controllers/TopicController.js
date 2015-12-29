@@ -602,7 +602,6 @@ topicModule.directive('embedSharedContent', function() {
       trustSource: '&',
       preventNav: '&'      
     },
-    templateUrl: '/partials/shared.html',
-    replace: true
+    templateUrl: '/partials/shared.html'
   };
 });
