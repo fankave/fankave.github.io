@@ -1,4 +1,4 @@
-<div class="chatEmbedContainer" ng-switch="thisPost.media.mediaType">
+<div class="chatEmbedContainer" ng-switch="thisPost.media[0].mediaType">
   <!-- Embed Header -->
   <div id="socialHeaderContainer">
     <span class="postAuthorPhoto">
@@ -30,12 +30,12 @@
     </div>
 
     <div class="imageContainer" ng-switch-when="image">
-      <img ng-src="{{thisPost.media.url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.media.url})" onerror="this.style.display='none';" />
+      <img ng-src="{{thisPost.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.media[0].url})" onerror="this.style.display='none';" />
     </div>
 
     <div ng-switch-when="video/mp4" class="mp4VideoContainer">
-      <video controls="controls" ng-attr-poster="{{thisPost.media.thumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.provider.name === 'Twitter', youtubeVideo: thisPost.provider.name === 'Youtube', vineVideo: thisPost.provider.name === 'Vine'}">
-        <source ng-src="trustSource({videoSrc: thisPost.media.url})" type="video/mp4">
+      <video controls="controls" ng-attr-poster="{{thisPost.media[0].thumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.provider.name === 'Twitter', youtubeVideo: thisPost.provider.name === 'Youtube', vineVideo: thisPost.provider.name === 'Vine'}">
+        <source ng-src="trustSource({videoSrc: thisPost.media[0].url})" type="video/mp4">
         </video>
     </div> 
   </div>
