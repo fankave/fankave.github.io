@@ -189,6 +189,37 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
           tempComment.mediaThumbUrl = commentsdata[i].mediaThumbUrl;
         }
         tempComment.isLiked = commentsdata[i].signal.like;
+
+        if (tempComment.type === 'embed'){
+          tempComment.shared = true;
+          tempComment.embedProvider = commentsdata[i].embed.provider.name;
+          if (tempComment.embedProvider === "Twitter"){
+            tempComment.embedLogo = "img/twitterLogo@2x.png";
+          } else {
+            tempComment.embedLogo = commentsdata[i].embed.provider.logo;
+          }
+
+          tempComment.embedAuthorName = commentsdata[i].embed.author.name;
+          tempComment.embedAuthorAlias = commentsdata[i].embed.author.alias;
+          tempComment.embedAuthorPhoto = commentsdata[i].embed.author.photo;
+
+          tempComment.embedRetweetCount = commentsdata[i].embed.metrics.retweetCount;
+          tempComment.embedLikeCount = commentsdata[i].embed.metrics.likeCount;
+          tempComment.embedReplyCount = commentsdata[i].embed.metrics.replyCount;
+
+          tempComment.embedText = commentsdata[i].embed.text;
+          tempComment.embedUrl = commentsdata[i].embed.url;
+          tempComment.embedType = commentsdata[i].embed.type;
+          
+          if (tempComment.embedType === 'media'){
+            tempComment.embedPlayable = commentsdata[i].embed.playable;
+            tempComment.embedMediaType = commentsdata[i].embedMedia.mediaType;
+            tempComment.embedMediaUrl = commentsdata[i].embed.media[0].url;
+            tempComment.embedMediaThumbUrl = commentsdata[i].embed.media[0].thumbUrl;
+            tempComment.embedMediaSizes = commentsdata[i].embed.media[0].sizes;
+          }
+
+        }
         
         $scope.commentsArray.push(tempComment);
 
