@@ -192,6 +192,8 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
 
         if (tempComment.type === 'embed'){
           tempComment.shared = true;
+          tempComment.embed = commentsdata[i].embed;
+          tempComment.embedTweetId = commentsdata[i].embed.tweetId;
           tempComment.embedProvider = commentsdata[i].embed.provider.name;
           if (tempComment.embedProvider === "Twitter"){
             tempComment.embedLogo = "img/twitterLogo@2x.png";
@@ -210,7 +212,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
           tempComment.embedText = commentsdata[i].embed.text;
           tempComment.embedUrl = commentsdata[i].embed.url;
           tempComment.embedType = commentsdata[i].embed.type;
-          
+
           if (tempComment.embedType === 'media'){
             tempComment.embedPlayable = commentsdata[i].embed.playable;
             tempComment.embedMediaType = commentsdata[i].embedMedia.mediaType;

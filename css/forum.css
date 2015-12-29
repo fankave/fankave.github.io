@@ -2016,3 +2016,11 @@ img-crop canvas {
   color: rgb(162,177,182);
   vertical-align: -40%;
 }
+
+
+/* Chat Embed Content */
+.chatEmbedContainer {
+  border: 1px solid rgb(211,214,215);
+  border-radius: 2px;
+  padding: 11px;
+}

@@ -96,6 +96,7 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
           tempItem.replyCount = feedData[i].tweet.metrics.replyCount;
 
           tempItem.embed = feedData[i].embed;
+          tempItem.embed.tweetId = feedData[i].tweet.id;
           tempItem.embedType = feedData[i].embedType;
           tempItem.embedUrl = feedData[i].embedUrl;
           if (feedData[i].embedType === "link" && feedData[i].embedPlayable === true){
@@ -200,6 +201,7 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
     this.shareTweetToChat = function (id,html,embed) {
       console.log("topicID From Parent: ", $scope.$parent.topicID);
+      console.log("Embed Object: ", embed);
       CommentService.postCommentRequestForShare($scope.$parent.topicID,html,embed);
     };
 
