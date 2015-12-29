@@ -532,11 +532,7 @@ body
   margin-bottom:0.1em;
 }
 
-.socialButtonsRow
-{
-  /*float:left;*/
-  /*background-color:gray;*/
-  /*padding-left: 13px;*/
+.socialButtonsRow {
   font-size: 12px;
   color: rgb(162,177,182);
   margin-bottom:0.1em;
@@ -2022,5 +2018,14 @@ img-crop canvas {
 .chatEmbedContainer {
   border: 1px solid rgb(211,214,215);
   border-radius: 2px;
-  padding: 11px;
+  /*padding: 11px;*/
+  margin-bottom: 14px;
+  margin-top: 10px;
+}
+
+.embedSocialButtonsRow {
+  font-size: 12px;
+  color: rgb(162,177,182);
+  margin-bottom:0.1em;
+  height: 24px;
 }
