@@ -30,35 +30,35 @@
     </div>
 
     <div class="imageContainer" ng-switch-when="image">
-      <img ng-src="{{thisPost.media.url}}" class="cropView" ng-click="topic.imageClick(thisPost.media.url)" onerror="this.style.display='none';" />
+      <img ng-src="{{thisPost.media.url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.media.url})" onerror="this.style.display='none';" />
     </div>
 
     <div ng-switch-when="video/mp4" class="mp4VideoContainer">
       <video controls="controls" ng-attr-poster="{{thisPost.media.thumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.provider.name === 'Twitter', youtubeVideo: thisPost.provider.name === 'Youtube', vineVideo: thisPost.provider.name === 'Vine'}">
-        <source ng-src="topic.trustSrc(thisPost.media.url)" type="video/mp4">
+        <source ng-src="trustSource({videoSrc: thisPost.media.url})" type="video/mp4">
         </video>
     </div> 
   </div>
 
   <!-- Embed Metrics -->
   <div class="embedSocialButtonsRow socialText">
-    <button class="btn-link social-btn" ng-click="topic.moreButtonTapped()">
+    <button class="btn-link social-btn" ng-click="preventNav()">
       <!-- <a href="https://twitter.com/intent/tweet?via=FanKave&in_reply_to={{thisPost.tweetId}}"> -->
-        <img class="social-metrics-reply" ng-src="img/reply@2x.png" />
+      <img class="social-metrics-reply" ng-src="img/reply@2x.png" />
       <!-- </a> -->
     </button>
     <span class="social-metrics-label"> {{thisPost.metrics.replyCount}}</span>
 
-    <button class="btn-link social-btn socialRetweet" ng-click="topic.moreButtonTapped()">
+    <button class="btn-link social-btn socialRetweet" ng-click="preventNav()">
       <!-- <a href="https://twitter.com/intent/retweet?tweet_id={{thisPost.tweetId}}"> -->
-        <img class="social-metrics-retweet" ng-src="img/retweet@2x.png" />
+      <img class="social-metrics-retweet" ng-src="img/retweet@2x.png" />
       <!-- </a>  -->
     </button>
     <span class="social-metrics-label">{{thisPost.metrics.retweetCount}}</span>
 
-    <button class="btn-link social-btn socialFavorite" ng-click="topic.moreButtonTapped()">
+    <button class="btn-link social-btn socialFavorite" ng-click="preventNav()">
       <!-- <a href="https://twitter.com/intent/like?tweet_id={{thisPost.tweetId}}"> -->
-        <img class="social-metrics-heart" ng-src="img/heart@2x.png" />
+      <img class="social-metrics-heart" ng-src="img/heart@2x.png" />
       <!-- </a> -->
     </button>
     <span class="social-metrics-label">{{thisPost.metrics.likeCount}}</span>

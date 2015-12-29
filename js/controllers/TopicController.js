@@ -597,11 +597,12 @@ topicModule.directive('embedSharedContent', function() {
   return {
     restrict: 'E',
     scope: {
-      thisPost: '=embedPost'
+      thisPost: '=embedPost',
+      imageZoom: '&',
+      trustSource: '&',
+      preventNav: '&'      
     },
     templateUrl: '/partials/shared.html',
-    replace: true,
-    controller: 'TopicController',
-    controllerAs: 'topic'
+    replace: true
   };
 });
