@@ -332,21 +332,21 @@
 
         <!-- Embed Metrics -->
         <div class="embedSocialButtonsRow socialText">
-          <button class="btn-link social-btn" ng-click="">
+          <button class="btn-link social-btn" ng-click="moreButtonTapped()">
             <a href="https://twitter.com/intent/tweet?via=FanKave&in_reply_to={{thisPost.embedTweetId}}">
               <img class="social-metrics-reply" ng-src="img/reply@2x.png"/>
             </a>
           </button>
           <span class="social-metrics-label"> {{thisPost.embedReplyCount}}</span>
 
-          <button class="btn-link social-btn socialRetweet" ng-click="">
+          <button class="btn-link social-btn socialRetweet" ng-click="moreButtonTapped()">
             <a href="https://twitter.com/intent/retweet?tweet_id={{thisPost.embedTweetId}}">
               <img class="social-metrics-retweet" ng-src="img/retweet@2x.png" />
             </a> 
           </button>
           <span class="social-metrics-label">{{thisPost.embedRetweetCount}}</span>
 
-          <button class="btn-link social-btn socialFavorite" ng-click="">
+          <button class="btn-link social-btn socialFavorite" ng-click="moreButtonTapped()">
             <a href="https://twitter.com/intent/like?tweet_id={{thisPost.embedTweetId}}">
               <img class="social-metrics-heart" ng-src="img/heart@2x.png" />
             </a>
