@@ -85,11 +85,6 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
           
           tempItem.postTimestamp = feedData[i].createdAt;
           tempItem.providerName = feedData[i].embedProvider.name;
-          if (tempItem.providerName === "Twitter"){
-            tempItem.providerLogo = "img/twitterLogo@2x.png";
-          } else {
-            tempItem.providerLogo = feedData[i].embedProvider.logo;
-          }
           tempItem.html = feedData[i].embedText;
           tempItem.retweetCount = feedData[i].tweet.metrics.retweetCount;
           tempItem.likeCount = feedData[i].tweet.metrics.likeCount;
@@ -101,6 +96,14 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
           tempItem.embed.embedCreatedAtFull = feedData[i].embedCreatedAtFull;
           tempItem.embed.media = tempItem.embed.media[0];
           
+          if (tempItem.providerName === "Twitter"){
+            tempItem.providerLogo = "img/twitterLogo@2x.png";
+            tempItem.embed.embedLogo = "img/twitterLogo@2x.png";
+          } else {
+            tempItem.providerLogo = feedData[i].embedProvider.logo;
+            tempItem.embed.embedLogo = feedData[i].embedProvider.logo;
+          }
+
           tempItem.embedType = feedData[i].embedType;
           tempItem.embedUrl = feedData[i].embedUrl;
           if (feedData[i].embedType === "link" && feedData[i].embedPlayable === true){
