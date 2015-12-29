@@ -503,7 +503,7 @@
       </div>
 
       <div class="imageContainer">
-        <div ng-switch-when="image" class="cropView" ng-style="{background:'url({{thisPost.mediaUrl}}) no-repeat','background-size':'cover','height':thisPost.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(thisPost.mediaUrl)">
+        <div ng-switch-when="image" class="cropView" ng-style="{background:'url({{thisPost.mediaUrl}}) no-repeat','background-size':'cover','height':thisPost.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(thisPost.mediaUrl)" onerror="this.style='display:none;'">
         </div>
       </div>
 
