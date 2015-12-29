@@ -508,7 +508,7 @@
       </div> -->
 
       <div class="imageContainer" ng-switch-when="image">
-        <img ng-src="{{thisPost.mediaUrl}}" class="cropView" ng-click="imageClick(thisPost.mediaUrl)" onerror="this.style='display: none;'" />
+        <img ng-src="{{thisPost.mediaUrl}}" class="cropView" ng-click="imageClick(thisPost.mediaUrl)" onerror="this.style.display='none';" />
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
