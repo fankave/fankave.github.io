@@ -502,9 +502,13 @@
       <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent socialContent" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
       </div>
 
-      <div class="imageContainer">
+      <!-- <div class="imageContainer">
         <div ng-switch-when="image" class="cropView" ng-style="{background:'url({{thisPost.mediaUrl}}) no-repeat','background-size':'cover','height':thisPost.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(thisPost.mediaUrl)" onerror="this.style='display:none;'">
         </div>
+      </div> -->
+
+      <div class="imageContainer" ng-switch-when="image">
+        <img ng-src="{{thisPost.mediaUrl}}" class="cropView" ng-click="imageClick(thisPost.mediaUrl)" onerror="this.style='display: none;'" />
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">

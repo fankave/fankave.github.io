@@ -618,9 +618,11 @@ body
 }
 
 .share-dd {
+  position: relative;
   border-color: transparent;
   background-color: transparent;
   box-shadow: none;
+  top: -4px;
 }
 
 .dropdown-menu > li:hover {
