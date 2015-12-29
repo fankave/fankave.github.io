@@ -95,12 +95,17 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
           tempItem.likeCount = feedData[i].tweet.metrics.likeCount;
           tempItem.replyCount = feedData[i].tweet.metrics.replyCount;
 
+          // Embed Object for Sharing
           tempItem.embed = feedData[i].embed;
-          tempItem.embed.tweetId = feedData[i].tweet.id;
+          tempItem.embed.embedCreatedAt = feedData[i].embedCreatedAt;
+          tempItem.embed.embedCreatedAtFull = feedData[i].embedCreatedAtFull;
+          tempItem.embed.media = tempItem.embed.media[0];
+          
           tempItem.embedType = feedData[i].embedType;
           tempItem.embedUrl = feedData[i].embedUrl;
           if (feedData[i].embedType === "link" && feedData[i].embedPlayable === true){
             tempItem.embedHtml = $sce.trustAsHtml(feedData[i].embedHtml);
+            tempItem.embed.embedHtml = $sce.trustAsHtml(feedData[i].embedHtml);
             tempItem.embedPlayable = true;
           }
           if (feedData[i].embedType === "media"){

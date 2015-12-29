@@ -593,9 +593,12 @@ topicModule.directive('repeatFinishedNotify', function () {
   };
 });
 
-topicModule.directive('chatSharedContent', function() {
+topicModule.directive('embedSharedContent', function() {
   return {
-    scope: {},
+    restrict: 'E',
+    scope: {
+      thisPost: '=embedPost'
+    },
     templateUrl: '/partials/shared.html',
     replace: true,
     controller: 'TopicController',
