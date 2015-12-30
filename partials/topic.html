@@ -491,7 +491,7 @@
   </div>
 </div>
 
-<share-to-chat-dialog ng-if="social.showShareDialog" this-post="social.embedShareContent" trust-source="trustSrc(videoSrc)" share-submit="social.submitSharedPost(commentData,embedData)"></share-to-chat-dialog>
+<share-to-chat-dialog ng-if="social.showShareDialog" this-post="social.embedShareContent" trust-source="trustSrc(videoSrc)" share-submit="social.submitSharedPost(commentData,embedData)" exit-share="social.exitShare()"></share-to-chat-dialog>
 
 <div id="mobileUserInput" class="clearfix" ng-if="activeTab === 'chat' && mobileBrowser === true" ng-controller="UserInputController as user">
 

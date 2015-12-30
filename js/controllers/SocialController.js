@@ -214,6 +214,10 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
       _this.embedShareContent = embed;
       _this.showShareDialog = true;
       console.log("Embed Object: ", embed);
+      if ($scope.$parent.isPeelUser){
+        var fullClient = (document.documentElement.clientHeight - 54) + 'px';
+        $('#sharePreviewContainer').css({top: '54px', height: fullClient});
+      }
     };
 
     this.submitSharedPost = function (commentData,embedData) {
@@ -233,6 +237,10 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
         console.log("FB Response Post-Share: ", response);
       });
     };
+
+    this.exitShare = function () {
+      _this.showShareDialog = false;
+    }
 
 
 }]);
