@@ -2072,8 +2072,10 @@ img-crop canvas {
   z-index: 12;
   background-color: #fff;
   padding: 15px;
-  width: 100%;
+  width: 95%;
   min-height: 200px;
+  margin-left: 2.5%;
+  border: 1px solid rgb(211,214,215);
 }
 
 .shareFormContainer {
@@ -2085,7 +2087,8 @@ img-crop canvas {
   font-size: 14px;
   color: rgb(31,35,38);
   padding: 5px;
-  height: 50px;
+  min-height: 75px;
+  width: 80%;
 }
 
 #postShareContent {
@@ -2093,5 +2096,6 @@ img-crop canvas {
   font-size: 16px;
   font-weight: 600;
   color: rgb(211,214,215);
+  width: 20%;
 }
 
