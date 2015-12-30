@@ -443,7 +443,7 @@
         <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
           </video>
-      </div> 
+      </div>
     </div> 
 
     <div class="socialButtonsRow socialText">
@@ -475,7 +475,7 @@
           <span class="social-share-label">Share</span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
-          <li><a ng-click="social.shareTweetToChat(thisPost.id,thisPost.html,thisPost.embed)">Share to Live Chat</a></li>
+          <li><a ng-click="social.shareTweetToChat(thisPost.embed)">Share to Live Chat</a></li>
           <li ng-if="isPeelUser === false"><a ng-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
         </ul>
       </div>
@@ -490,6 +490,8 @@
     <span id="moreContentText">Load More Videos</span>
   </div>
 </div>
+
+<share-to-chat-dialog ng-if="social.showShareDialog" this-post="social.embedShareContent" trust-source="trustSrc(videoSrc)" share-submit="social.submitSharedPost(commentData,embedData)"></share-to-chat-dialog>
 
 <div id="mobileUserInput" class="clearfix" ng-if="activeTab === 'chat' && mobileBrowser === true" ng-controller="UserInputController as user">
 

@@ -519,7 +519,8 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       tabsHeight,
       inputHeight,
       clientHeight,
-      docHeight;
+      docHeight,
+      headerHeight;
   $scope.setDocVars = function() {
     if (!docVarsSet){
       tabs = $('#inputControls');
@@ -530,6 +531,11 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       clientHeight = document.documentElement.clientHeight;
       docHeight = $(document).height();
       docVarsSet = true;
+      if ($scope.isPeelUser){
+        headerHeight = 54;
+      } else {
+        headerHeight = 0;
+      }
     }
   };
 
@@ -540,7 +546,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       $scope.showNewCommentsIndicator = false;
     }
     // if ($scope.isPeelUser){
-      if ($(document).scrollTop() > (tabsTop - 54) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
+      if ($(document).scrollTop() > (tabsTop - headerHeight) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
         tabs.addClass('fixTabsPeel');
         tabContainer.addClass('fixTabContainer');
         fixed = true;

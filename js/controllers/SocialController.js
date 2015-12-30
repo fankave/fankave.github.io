@@ -202,10 +202,18 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
       });
     };
 
-    this.shareTweetToChat = function (id,html,embed) {
-      console.log("topicID From Parent: ", $scope.$parent.topicID);
+    this.shareTweetToChat = function (embed) {
+      _this.embedShareContent = embed;
+      _this.showShareDialog = true;
       console.log("Embed Object: ", embed);
-      CommentService.postCommentRequestForShare($scope.$parent.topicID,html,embed);
+    };
+
+    this.submitSharedPost = function (commentData,embedData) {
+      var topicID = $scope.$parent.topicID;
+      console.log("topicID From Parent: ", topicID);
+      networkService.send(CommentService.postCommentRequestForShare(topicID,commentData,embedData));
+      _this.showShareDialog = false;
+      $scope.$parent.switchTabs('chat');
     };
 
     this.shareToFacebook = function (id,embedUrl) {
@@ -221,13 +229,3 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
 }]);
 
-// socialModule.directive('repeatFinishedSocial', function () {
-//   return function (scope, element, attrs) {
-//     if (scope.$last){
-//       // scope.scrollToBookmark();
-//       console.log("DONE LOADING COMMENTS");
-//       // scope.loadingChat = false;
-//       scope.hideLoading();
-//     }
-//   };
-// });

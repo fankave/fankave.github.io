@@ -26,15 +26,15 @@
     <div ng-bind-html="thisPost.text | linky" class="postContent socialContent">
       <p>{{thisPost.text}}</p><br> 
     </div>
-    <div ng-if="thisPost.playable === true && thisPost.embedHtml !== undefined" ng-bind-html="thisPost.embedHtml" class="postContent socialContent" ng-class="{twitterVideo: thisPost.provider.name === 'Twitter', youtubeVideo: thisPost.provider.name === 'Youtube', vineVideo: thisPost.provider.name === 'Vine'}">
+    <div ng-if="thisPost.playable === true && thisPost.embedHtml !== undefined" ng-bind-html="thisPost.embedHtml" class="postContent socialContent" ng-class="{embedTwitterVideo: thisPost.provider.name === 'Twitter', embedYoutubeVideo: thisPost.provider.name === 'Youtube', embedVineVideo: thisPost.provider.name === 'Vine'}">
     </div>
 
     <div class="imageContainer" ng-switch-when="image">
       <img ng-src="{{thisPost.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.media[0].url})" onerror="this.style.display='none';" />
     </div>
 
-    <div ng-switch-when="video/mp4" class="mp4VideoContainer">
-      <video controls="controls" ng-attr-poster="{{thisPost.media[0].thumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.provider.name === 'Twitter', youtubeVideo: thisPost.provider.name === 'Youtube', vineVideo: thisPost.provider.name === 'Vine'}">
+    <div ng-switch-when="video/mp4" class="mp4EmbedVideoContainer">
+      <video controls="controls" ng-attr-poster="{{thisPost.media[0].thumbUrl}}" class="postVideo" ng-class="{embedTwitterVideo: thisPost.provider.name === 'Twitter', embedYoutubeVideo: thisPost.provider.name === 'Youtube', embedVineVideo: thisPost.provider.name === 'Vine'}">
         <source ng-src="{{trustSource({videoSrc: thisPost.media[0].url})}}" type="video/mp4">
         </video>
     </div> 
