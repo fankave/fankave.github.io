@@ -2067,7 +2067,7 @@ img-crop canvas {
 
 /* Share Embed Dialog */
 #sharePreviewContainer {
-  position: absolute;
+  position: fixed;
   top: 200px;
   z-index: 12;
   background-color: #fff;
@@ -2076,6 +2076,7 @@ img-crop canvas {
   min-height: 200px;
   margin-left: 2.5%;
   border: 1px solid rgb(211,214,215);
+  box-shadow: 0px 5px 5px rgb(179,184,186);
 }
 
 .shareFormContainer {
@@ -2089,6 +2090,8 @@ img-crop canvas {
   padding: 5px;
   min-height: 75px;
   width: 80%;
+  border: none;
+  resize: none;
 }
 
 #postShareContent {
@@ -2097,5 +2100,13 @@ img-crop canvas {
   font-weight: 600;
   color: rgb(211,214,215);
   width: 20%;
+  text-align: center;
+}
+
+.embedTimestamp {
+  float: right;
+  color: rgb(166,189,207);
+  text-align: right;
+  font-size: 12px;
 }
 

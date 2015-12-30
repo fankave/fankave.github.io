@@ -2,11 +2,11 @@
 
   <div class="shareFormContainer">
     <form class="shareEmbedForm" ng-submit="shareSubmit({commentData:commentData,embedData:thisPost})">
-      <input id="shareEmbedComment" type="text" placeholder="Say something about this post..." ng-model="commentData" />
+      <textarea id="shareEmbedComment" cols="40" rows="3" placeholder="Say something about this post..." ng-model="commentData"></textarea>
       <button id="postShareContent" class="btn btn-default" type="button" ng-click="shareSubmit({commentData:commentData,embedData:thisPost})">Share</button>
     </form>
   </div>
 
-  <embed-shared-content embed-post="thisPost" image-zoom="" trust-source="trustSrc({videoSrc:videoSrc})" prevent-nav=""></embed-shared-content>
+  <embed-shared-content embed-post="thisPost" image-zoom="" trust-source="trustSrc(videoSrc)" prevent-nav=""></embed-shared-content>
 
 </div>
