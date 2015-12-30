@@ -63,6 +63,8 @@
         </video>
       </div>
 
+      <embed-shared-content embed-post="comment.embed" ng-if="comment.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav=""></embed-shared-content>
+
       <div class="socialButtonsRow">
         <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeComment(comment.id)" ng-switch="comment.isLiked">
           <img class="social-like" ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png"/> 
@@ -170,7 +172,9 @@
           <video controls="controls" ng-attr-poster="{{thisReply.mediaThumbUrl}}" class="chatVideo">
             <source ng-src="{{trustSrc(thisReply.mediaUrl)}}" type="video/mp4">
           </video>
-        </div>  
+        </div>
+
+        <embed-shared-content embed-post="thisReply.embed" ng-if="thisReply.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav=""></embed-shared-content>  
 
         
       <div class="socialButtonsRow">

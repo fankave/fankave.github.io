@@ -307,16 +307,24 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
 			tempComment.topicId = selectedComment.topicId;
       tempComment.isMyComment = UserInfoService.isCurrentUser(selectedComment.author.id);
 
-			$scope.comment = tempComment;
+      if (tempComment.type === 'embed'){
+        tempComment.shared = true;
+        tempComment.embed = selectedComment.embed;
+        tempComment.embed.embedCreatedAt = selectedComment.embedCreatedAt;
+        tempComment.embed.embedCreatedAtFull = selectedComment.embedCreatedAtFull;
 
-//			 console.log("comments html : " +$scope.comment.html);
-//			 console.log("updated comments author name: " +$scope.comment.postAuthorName);
-//			 console.log("updated comments author photo: " +$scope.comment.postAuthorPhoto);
-//			if($scope.comment.type == "media"){
-//				 console.log("updated comments media : " +$scope.comment.mediaUrl);
-//				 console.log("updated comments media : " +$scope.comment.mediaAspectFeed);
-//
-//			}
+        if (tempComment.providerName === "Twitter"){
+          tempComment.embed.embedLogo = "img/twitterLogo@2x.png";
+        } else {
+          tempComment.embed.embedLogo = selectedComment.embed.provider.logo;
+        }
+
+        if (selectedComment.embed.type === 'link' && selectedComment.embed.playable === true){
+          tempComment.embed.embedHtml = $sce.trustAsHtml(selectedComment.embedHtml);
+        }
+      }
+
+			$scope.comment = tempComment;
 		}
 	}
 
@@ -344,7 +352,25 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
 			tempReply.replyCount = repliesData[i].metrics.replies;
 			tempReply.mediaAspectFeed = repliesData[i].mediaAspectFeed;
 			tempReply.isLiked = repliesData[i].signal.like;
-			$scope.replies.push(tempReply);
+			
+      if (tempReply.type === 'embed'){
+        tempReply.shared = true;
+        tempReply.embed = repliesData[i].embed;
+        tempReply.embed.embedCreatedAt = repliesData[i].embedCreatedAt;
+        tempReply.embed.embedCreatedAtFull = repliesData[i].embedCreatedAtFull;
+
+        if (tempReply.providerName === "Twitter"){
+          tempReply.embed.embedLogo = "img/twitterLogo@2x.png";
+        } else {
+          tempReply.embed.embedLogo = repliesData[i].embed.provider.logo;
+        }
+
+        if (repliesData[i].embed.type === 'link' && repliesData[i].embed.playable === true){
+          tempReply.embed.embedHtml = $sce.trustAsHtml(repliesData[i].embedHtml);
+        }
+      }
+
+      $scope.replies.push(tempReply);
 
 			// console.log(i +" : updated replies html : " +$scope.replies[i].html);
 			// console.log(i +" : updated replies author name: " +$scope.replies[i].postAuthorName);
