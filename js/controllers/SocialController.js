@@ -115,16 +115,16 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
             tempItem.mediaUrl = feedData[i].embedMedia.mediaUrl;
             tempItem.mediaThumbUrl = feedData[i].embedMedia.mediaThumbUrl;
             tempItem.mediaAspectFeed = feedData[i].embedMedia.mediaAspectFeed;
-            if (!!tempItem.mediaAspectFeed.y){
-              tempItem.mediaAspectFeed.y = feedData[i].embedMedia.mediaAspectFeed.y + 'px';
-            } else {
-              tempItem.mediaAspectFeed.y = 0;
-            }
-            if (!!tempItem.mediaAspectFeed.x){
-              tempItem.mediaAspectFeed.x = feedData[i].embedMedia.mediaAspectFeed.x + 'px';
-            } else {
-              tempItem.mediaAspectFeed.x = 0;
-            }
+            // if (!!tempItem.mediaAspectFeed.y){
+            //   tempItem.mediaAspectFeed.y = feedData[i].embedMedia.mediaAspectFeed.y + 'px';
+            // } else {
+            //   tempItem.mediaAspectFeed.y = 0;
+            // }
+            // if (!!tempItem.mediaAspectFeed.x){
+            //   tempItem.mediaAspectFeed.x = feedData[i].embedMedia.mediaAspectFeed.x + 'px';
+            // } else {
+            //   tempItem.mediaAspectFeed.x = 0;
+            // }
             tempItem.mediaAspectFull = feedData[i].embedMedia.mediaAspectFull;
           }
 
