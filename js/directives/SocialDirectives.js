@@ -5,7 +5,9 @@ socialModule.directive('shareToChatDialog', function () {
       thisPost: '=',
       trustSource: '&',
       shareSubmit: '&',
-      exitShare: '&'
+      exitShare: '&',
+      highlight: '&',
+      unhighlight: '&'
     },
     templateUrl: '/partials/sharePreview.html'
   };

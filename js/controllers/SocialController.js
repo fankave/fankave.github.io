@@ -240,7 +240,15 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
     this.exitShare = function () {
       _this.showShareDialog = false;
-    }
+    };
+
+    this.highlightPost = function(){
+      $('#postShareContent').css('color','rgb(22,189,231)');
+    };
+
+    this.unhighlightPost = function(){
+      $('#postShareContent').css('color','rgb(211,214,215)');
+    };
 
 
 }]);
