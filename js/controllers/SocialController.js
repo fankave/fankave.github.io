@@ -92,22 +92,22 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
           // Embed Object for Sharing
           tempItem.embed = feedData[i].embed;
-          tempItem.embed.embedCreatedAt = feedData[i].embedCreatedAt;
-          tempItem.embed.embedCreatedAtFull = feedData[i].embedCreatedAtFull;
+          // tempItem.embed.embedCreatedAt = feedData[i].embedCreatedAt;
+          // tempItem.embed.embedCreatedAtFull = feedData[i].embedCreatedAtFull;
 
           if (tempItem.providerName === "Twitter"){
             tempItem.providerLogo = "img/twitterLogo@2x.png";
-            tempItem.embed.embedLogo = "img/twitterLogo@2x.png";
+            tempItem.embed.provider.logo = "img/twitterLogo@2x.png";
           } else {
             tempItem.providerLogo = feedData[i].embedProvider.logo;
-            tempItem.embed.embedLogo = feedData[i].embedProvider.logo;
+            tempItem.embed.provider.logo = feedData[i].embedProvider.logo;
           }
 
           tempItem.embedType = feedData[i].embedType;
           tempItem.embedUrl = feedData[i].embedUrl;
           if (feedData[i].embedType === "link" && feedData[i].embedPlayable === true){
             tempItem.embedHtml = $sce.trustAsHtml(feedData[i].embedHtml);
-            tempItem.embed.embedHtml = tempItem.embedHtml;
+            // tempItem.embed.embedHtml = tempItem.embedHtml;
             tempItem.embedPlayable = true;
           }
           if (feedData[i].embedType === "media"){
