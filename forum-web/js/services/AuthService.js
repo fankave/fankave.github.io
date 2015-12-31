@@ -1,5 +1,5 @@
-authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "ReplyService", "networkService", "ForumDeviceInfo", "ChannelService", "URIHelper", 
-  function ($http, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
+authModule.factory("AuthService", ["$http","$window","$location","UserInfoService", "TopicService", "ReplyService", "networkService", "ForumDeviceInfo", "ChannelService", "URIHelper", 
+  function ($http, $window, $location, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
   var userLoggedInToFacebook = false;
   var loginToFacebook = function() {
@@ -78,17 +78,31 @@ authModule.factory("AuthService", ["$http", "UserInfoService", "TopicService", "
     // Initialize Network Service and determine what type of resource is being accessed
     networkService.init();
 
-    if (ReplyService.getPostId() !== undefined) {
-      console.log("found post ID: " + ReplyService.getPostId());
-      window.location = "#/post/" + ReplyService.getPostId();
+    var initChannel = ChannelService.getChannel();
+    var initTopic = TopicService.getTopicId();
+
+    if (!!initChannel) {
+      console.log("found channel ID: " + initChannel);
+      networkService.send(ChannelService.getLiveGameTopic(initChannel));
     }
-    else if (TopicService.getTopicId() !== undefined) {
-      console.log("found Topic ID: " + TopicService.getTopicId());
-      window.location = "#/topic/" + TopicService.getTopicId();
+    else if (!!initTopic) {
+      console.log("found Topic ID: " + initTopic);
+      if (HTML5_LOC){
+        $location.path("/topic/" + initTopic);
+      } else {
+        $window.location = "/#/topic/" + initTopic;
+      }
     }
-    else if (ChannelService.getChannel() !== undefined) {
-      console.log("found channel ID: " + ChannelService.getChannel());
-      networkService.send(ChannelService.getLiveGameTopic());
+    else {
+      var initPost = ReplyService.getPostId();
+      if (!!initPost){
+        console.log("found post ID: " + initPost);
+        if (HTML5_LOC){
+          $location.path("/post/" + initPost);
+        } else {
+          $window.location = "/#/post/" + initPost;
+        }
+      }
     }
   };
 

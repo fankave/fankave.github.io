@@ -1,6 +1,6 @@
 var socialModule = angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"]);
-socialModule.controller("SocialController", ["$scope","$sce","$window","$routeParams","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService",
-  function ($scope,$sce,$window,$routeParams,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService){
+socialModule.controller("SocialController", ["$scope","$sce","$window","$routeParams","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService",
+  function ($scope,$sce,$window,$routeParams,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService){
     console.log("Social Control");
 
     var _this = this;
@@ -81,20 +81,30 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
           tempItem.postAuthorName = feedData[i].embedAuthor.name;
           tempItem.postAuthorAlias = feedData[i].embedAuthor.alias;
           tempItem.postAuthorPhoto = feedData[i].embedAuthor.photo;
+          tempItem.tweetId = feedData[i].tweet.id;
           
           tempItem.postTimestamp = feedData[i].createdAt;
           tempItem.providerName = feedData[i].embedProvider.name;
+          tempItem.html = feedData[i].embedText;
+          tempItem.retweetCount = feedData[i].tweet.metrics.retweetCount;
+          tempItem.likeCount = feedData[i].tweet.metrics.likeCount;
+          tempItem.replyCount = feedData[i].tweet.metrics.replyCount;
+
+          // Embed Object for Sharing
+          tempItem.embed = feedData[i].embed;
+          tempItem.embed.embedCreatedAt = feedData[i].embedCreatedAt;
+          // tempItem.embed.embedCreatedAtFull = feedData[i].embedCreatedAtFull;
+
           if (tempItem.providerName === "Twitter"){
             tempItem.providerLogo = "img/twitterLogo@2x.png";
+            tempItem.embed.provider.logo = "img/twitterLogo@2x.png";
           } else {
             tempItem.providerLogo = feedData[i].embedProvider.logo;
+            tempItem.embed.provider.logo = feedData[i].embedProvider.logo;
           }
-          tempItem.html = feedData[i].embedText;
-          tempItem.retweetCount = feedData[i].metrics.retweets;
-          tempItem.favoriteCount = feedData[i].metrics.favorites;
-          tempItem.replyCount = feedData[i].metrics.replies;
 
           tempItem.embedType = feedData[i].embedType;
+          tempItem.embedUrl = feedData[i].embedUrl;
           if (feedData[i].embedType === "link" && feedData[i].embedPlayable === true){
             tempItem.embedHtml = $sce.trustAsHtml(feedData[i].embedHtml);
             tempItem.embedPlayable = true;
@@ -104,19 +114,9 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
             tempItem.mediaUrl = feedData[i].embedMedia.mediaUrl;
             tempItem.mediaThumbUrl = feedData[i].embedMedia.mediaThumbUrl;
             tempItem.mediaAspectFeed = feedData[i].embedMedia.mediaAspectFeed;
-            if (!!tempItem.mediaAspectFeed.y){
-              tempItem.mediaAspectFeed.y = feedData[i].embedMedia.mediaAspectFeed.y + 'px';
-            } else {
-              tempItem.mediaAspectFeed.y = 0;
-            }
-            if (!!tempItem.mediaAspectFeed.x){
-              tempItem.mediaAspectFeed.x = feedData[i].embedMedia.mediaAspectFeed.x + 'px';
-            } else {
-              tempItem.mediaAspectFeed.x = 0;
-            }
             tempItem.mediaAspectFull = feedData[i].embedMedia.mediaAspectFull;
           }
-          //tempItem.embed = feedData[i].embed;
+
           if (tab === 'social'){
             _this.socialArray.push(tempItem);
           } else {
@@ -124,6 +124,10 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
           }
         }
       }
+    };
+
+    function trustSrc(src) {
+      return $sce.trustAsResourceUrl(src);
     };
 
     function updateTimestamps(tab){
@@ -185,16 +189,59 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
     $(document).on('scroll', watchContentScroll);
 
+    this.retweetPost = function(id) {
+      $http({
+        method: 'GET',
+        url: 'https://twitter.com/intent/retweet?tweet_id=' + id,
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        }
+      });
+    };
+
+    this.shareTweetToChat = function (embed) {
+      _this.embedShareContent = embed;
+      _this.showShareDialog = true;
+      console.log("Embed Object: ", embed);
+      if ($scope.$parent.isPeelUser){
+        var fullClient = document.documentElement.clientHeight - 54;
+        console.log("fullClient Height: ", fullClient);
+        setTimeout(function(){
+          $('#sharePreviewContainer').css({top: '54px'}).height(fullClient);
+        },25);
+      }
+    };
+
+    this.submitSharedPost = function (commentData,embedData) {
+      var topicID = $scope.$parent.topicID;
+      console.log("topicID From Parent: ", topicID);
+      networkService.send(CommentService.postCommentRequestForShare(topicID,commentData,embedData));
+      _this.showShareDialog = false;
+      $scope.$parent.switchTabs('chat');
+    };
+
+    this.shareToFacebook = function (id,embedUrl) {
+      FB.ui({
+        method: 'share',
+        href: embedUrl
+      }, function (response){
+        // Keep Track of User Shares to Facebook?
+        console.log("FB Response Post-Share: ", response);
+      });
+    };
+
+    this.exitShare = function () {
+      _this.showShareDialog = false;
+    };
+
+    this.highlightPost = function(){
+      $('#postShareContent').css('color','rgb(22,189,231)');
+    };
+
+    this.unhighlightPost = function(){
+      $('#postShareContent').css('color','rgb(211,214,215)');
+    };
+
 
 }]);
 
-// socialModule.directive('repeatFinishedSocial', function () {
-//   return function (scope, element, attrs) {
-//     if (scope.$last){
-//       // scope.scrollToBookmark();
-//       console.log("DONE LOADING COMMENTS");
-//       // scope.loadingChat = false;
-//       scope.hideLoading();
-//     }
-//   };
-// });

@@ -1,11 +1,13 @@
 var channelModule = angular.module("ChannelModule", ["NetworkModule", "AuthModule"]);
-channelModule.controller("ChannelController", ["$scope","$sce","$routeParams","networkService", "ChannelService","TopicService","URIHelper","AuthService","UserInfoService",initTopicController]);
+channelModule.controller("ChannelController", ["$scope","$window","$location","$sce","$routeParams","networkService", "ChannelService","TopicService","URIHelper","AuthService","UserInfoService",initTopicController]);
 
-function initTopicController($scope, $sce,$routeParams,networkService,ChannelService,TopicService, URIHelper, AuthService, UserInfoService)
+function initTopicController($scope,$window,$location,$sce,$routeParams,networkService,ChannelService,TopicService, URIHelper, AuthService, UserInfoService)
 {
   ChannelService.setChannel($routeParams.channelID);
-  $scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
-  console.log(" $scope.urlQueryStr :" + $scope.urlQueryStr);
+  if (window.location.href.indexOf('?') !== -1){
+    $scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
+    console.log(" $scope.urlQueryStr: " + $scope.urlQueryStr);
+  }
   
   $scope.init = function() {
     console.log("Init all connections");
@@ -16,12 +18,19 @@ function initTopicController($scope, $sce,$routeParams,networkService,ChannelSer
   
   var updateTopic = function(){
     var id = ChannelService.getLiveTopicId();
-    if(id != undefined){
-      console.log("Got Topic id from Channel : " +"#/topic/" + id+$scope.urlQueryStr)
-      if($scope.urlQueryStr.charAt(0) == '?')
-        window.location = "#/topic/" + id+$scope.urlQueryStr;
-      else
-        window.location = "#/topic/" + id
+    if(id !== undefined){
+      console.log("Got Topic id from Channel : " +"/topic/" + id + $scope.urlQueryStr);
+      if (HTML5_LOC){
+        if(!!$scope.urlQueryStr)
+          $location.path("/topic/" + id).search($scope.urlQueryStr);
+        else
+          $location.path("/topic/" + id);
+      } else {
+        if(!!$scope.urlQueryStr)
+          $window.location = "/#/topic/" + id + "?" + $scope.urlQueryStr;
+        else
+          $window.location = "/#/topic/" + id;
+      }
     }
 
   };
@@ -41,8 +50,11 @@ function initTopicController($scope, $sce,$routeParams,networkService,ChannelSer
       AuthService.loginWithPeel();
     }
     else{
-      // console.log("Not logged in to facebook, take user to login page")
-      window.location = "#/";
+      if (HTML5_LOC){
+        $location.path("/login");
+      } else {
+        $window.location = "/#/login";
+      }
     }
   }
   

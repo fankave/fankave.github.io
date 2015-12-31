@@ -1,7 +1,7 @@
 var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"]);
-topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService",initTopicController]);
+topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService",initTopicController]);
 
-function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService)
+function initTopicController($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService)
 {
   var lastComment = false;
   // Check For Mobile Browser
@@ -33,6 +33,7 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       console.log('USER HASNT VISITED');
       // SplashService.hidePeelSplash = false;
       $scope.hidePeelSplash = false;
+      ForumStorage.setToLocalStorage("hasUserVisited", true);
       $timeout(function() {$scope.continueToExperience(); }, 5000);
     }
   }
@@ -188,6 +189,23 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
           tempComment.mediaThumbUrl = commentsdata[i].mediaThumbUrl;
         }
         tempComment.isLiked = commentsdata[i].signal.like;
+
+        if (tempComment.type === 'embed'){
+          tempComment.shared = true;
+          tempComment.embed = commentsdata[i].embed;
+          tempComment.embed.embedCreatedAt = commentsdata[i].embedCreatedAt;
+          tempComment.embed.embedCreatedAtFull = commentsdata[i].embedCreatedAtFull;
+
+          if (tempComment.providerName === "Twitter"){
+            tempComment.embed.embedLogo = "img/twitterLogo@2x.png";
+          } else {
+            tempComment.embed.embedLogo = commentsdata[i].embed.provider.logo;
+          }
+
+          if (commentsdata[i].embed.type === 'link' && commentsdata[i].embed.playable === true){
+            tempComment.embed.embedHtml = $sce.trustAsHtml(commentsdata[i].embedHtml);
+          }
+        }
         
         $scope.commentsArray.push(tempComment);
 
@@ -228,42 +246,32 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     if ($scope.mobileBrowser === true){
       document.getElementById('topicSection').style.paddingBottom = "42px";
     }
+  }
 
-    $scope.$watch("commentsArray", function (newValue, oldValue)
-        {
-      $timeout(function()
-          {
-        var postDivs = document.getElementsByClassName("postRow");
-        for(div in postDivs)
-        {
-          if(newValue != undefined)
-          {
-            var thisPost = newValue[div];
-
-            if(thisPost != undefined)
-            {
-              var thisDiv = postDivs[div];
-              thisDiv.onclick = function(e)
-              {
-                if ($(e.target).is('a')){
-                  console.log("EXTERNAL LINK: ", e, this.id);
-                  ForumStorage.setToLocalStorage('commentBookmark', this.id);
-                  return;
-                } else {
-                  // console.log("thisDiv.onclick");
-                  thisPost = $scope.commentsArray[this.id];
-                  if($scope.innerButtonTapped == false)
-                  {
-                    window.location = "#/post/" + thisPost.id;
-                  }
-                  $scope.innerButtonTapped = false;
-                }
-              }
-            } 
+  $scope.setLinksOnComments = function(){
+    var postDivs = document.getElementsByClassName("postRow");
+    for (div in postDivs) {
+      var thisDiv = postDivs[div];
+      thisDiv.onclick = function(e) {
+        if ($(e.target).is('a')) {
+          console.log("EXTERNAL LINK: ", e, this.id);
+          return;
+        } 
+        thisPost = $scope.commentsArray[this.id];
+        if ($scope.innerButtonTapped === false) {
+          console.log("Post Click Active: ", thisPost.id);
+          if (HTML5_LOC){
+            $location.path("/post/" + thisPost.id);
+            if (!$scope.$$phase){
+              $scope.$apply();
+            }
+          } else {
+            $window.location = "/#/post/" + thisPost.id;
           }
         }
-          });
-        });
+        $scope.innerButtonTapped = false;
+      }
+    }
   }
 
 //  if(URIHelper.isPeelUser())
@@ -286,7 +294,11 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     }
     else{
       // console.log("Not logged in to facebook, take user to login page")
-      window.location = "#/";
+      if (HTML5_LOC){
+        $location.path("/login");
+      } else {
+        $window.location = "/#/login";
+      }
     }
 
 
@@ -366,8 +378,10 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   };
 
   $scope.updateLikeComment = function(id) {
-    event.cancelBubble = true;
-    if(event.stopPropagation) event.stopPropagation();
+    $scope.innerButtonTapped = true;
+    
+    // event.cancelBubble = true;
+    // if(event.stopPropagation) event.stopPropagation();
 
     console.log("TopicController updateLike (" + id + ")");
     if(CommentService.isCommentLiked(id)){
@@ -388,9 +402,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     }
     $scope.innerButtonTapped = true;
     networkService.send(CommentService.deleteCommentRequest(id));
-    // if (lastComment){
-    //   $window.location.reload();
-    // }
   }
 
   $scope.reportCommentAsSpam = function(id)
@@ -402,12 +413,16 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 
   $scope.goToRepliesWithKeyboardTriggered = function(id)
   {
-    event.cancelBubble = true;
-    if(event.stopPropagation) event.stopPropagation();
+    // event.cancelBubble = true;
+    // if(event.stopPropagation) event.stopPropagation();
 
     // console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
     TopicService.directComment = true;
-    window.location = "#/post/" + id;
+    if (HTML5_LOC){
+      $location.path("/post/" + id);
+    } else {
+      $window.location = "/#/post/" + id;
+    }
   };
 
 
@@ -445,7 +460,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 
   $window.addEventListener("beforeunload", function(){
     console.log("Before Unload");
-    ForumStorage.setToLocalStorage("hasUserVisited", true);
     ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
   });
 
@@ -498,30 +512,58 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     };
   };
 
-  var tabs = $('#inputControls');
-  var tabContainer = $('.tabContainer');
+  var docVarsSet = false;
+  var tabs,
+      tabContainer,
+      tabsTop,
+      tabsHeight,
+      inputHeight,
+      clientHeight,
+      docHeight,
+      headerHeight;
+  $scope.setDocVars = function() {
+    if (!docVarsSet){
+      tabs = $('#inputControls');
+      tabContainer = $('.tabContainer');
+      tabsTop = tabs.offset().top;
+      tabsHeight = tabContainer.height();
+      inputHeight = tabs.height();
+      clientHeight = document.documentElement.clientHeight;
+      docHeight = $(document).height();
+      docVarsSet = true;
+      if ($scope.isPeelUser){
+        headerHeight = 54;
+      } else {
+        headerHeight = 0;
+      }
+    }
+  };
 
+  var fixed = false;
   var watchScroll = function() {
+    console.log("Tabs Top: ", tabsTop);
     if ($scope.showNewCommentsIndicator){
       $scope.showNewCommentsIndicator = false;
     }
-    if ($scope.isPeelUser){
-      if ($(document).scrollTop() > 150) {
+    // if ($scope.isPeelUser){
+      if ($(document).scrollTop() > (tabsTop - headerHeight) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
         tabs.addClass('fixTabsPeel');
         tabContainer.addClass('fixTabContainer');
-      } else {
+        fixed = true;
+      } else if (fixed) {
         tabs.removeClass('fixTabsPeel');
         tabContainer.removeClass('fixTabContainer');
+        fixed = false;
       }
-    } else {
-      if ($(document).scrollTop() > 96) {
-        tabs.addClass('fixTabs');
-        tabContainer.addClass('fixTabContainer');
-      } else {
-        tabs.removeClass('fixTabs');
-        tabContainer.removeClass('fixTabContainer');
-      }
-    }
+    // } else {
+    //   if ($(document).scrollTop() > 96) {
+    //     tabs.addClass('fixTabs');
+    //     tabContainer.addClass('fixTabContainer');
+    //   } else {
+    //     tabs.removeClass('fixTabs');
+    //     tabContainer.removeClass('fixTabContainer');
+    //   }
+    // }
   };
 
   $(document).on('scroll', watchScroll);
@@ -529,12 +571,3 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 
 };
 
-topicModule.directive('repeatFinishedNotify', function () {
-  return function (scope, element, attrs) {
-    if (scope.$last){
-      // scope.scrollToBookmark();
-      console.log("DONE LOADING COMMENTS");
-      scope.hideLoading();
-    }
-  };
-});

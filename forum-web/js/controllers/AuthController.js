@@ -3,6 +3,15 @@ var authModule = angular.module("AuthModule", ["NetworkModule", "TopicModule"]);
 authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "AuthService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService", "URIHelper",
   function ($scope, $routeParams, $http, AuthService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
+    (function(d, s, id) {
+      console.log('loading FB SDK...');
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    
     ga('send', 'pageview', 'Facebook Landing');
     // FACEBOOK AUTH SECTION
     $scope.showFacebookButton = true;
@@ -45,14 +54,6 @@ authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "Aut
 
     };
 
-    (function(d, s, id) {
-      console.log('loading FB SDK...');
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {return;}
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
 
     
 }]);
