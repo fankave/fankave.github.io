@@ -206,7 +206,7 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
       if ($scope.$parent.isPeelUser){
         var fullClient = document.documentElement.clientHeight - 54;
         console.log("fullClient Height: ", fullClient);
-        $('#sharePreviewContainer').css({top: '54px'}).height(fullClient);
+        $('#sharePreviewContainer').css({top: '54px'});
       }
     };
 
