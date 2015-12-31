@@ -266,7 +266,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
               $scope.$apply();
             }
           } else {
-            $window.location = "/#/post/" + thisPost.id;
+            $window.location = "#/post/" + thisPost.id;
           }
         }
         $scope.innerButtonTapped = false;
@@ -297,7 +297,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       if (HTML5_LOC){
         $location.path("/login");
       } else {
-        $window.location = "/#/login";
+        $window.location = "#/login";
       }
     }
 
@@ -421,7 +421,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     if (HTML5_LOC){
       $location.path("/post/" + id);
     } else {
-      $window.location = "/#/post/" + id;
+      $window.location = "#/post/" + id;
     }
   };
 
