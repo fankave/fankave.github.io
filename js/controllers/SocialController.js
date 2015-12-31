@@ -97,10 +97,10 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
           if (tempItem.providerName === "Twitter"){
             tempItem.providerLogo = "img/twitterLogo@2x.png";
-            tempItem.embed.provider.logo = "img/twitterLogo@2x.png";
+            // tempItem.embed.provider.logo = "img/twitterLogo@2x.png";
           } else {
             tempItem.providerLogo = feedData[i].embedProvider.logo;
-            tempItem.embed.provider.logo = feedData[i].embedProvider.logo;
+            // tempItem.embed.provider.logo = feedData[i].embedProvider.logo;
           }
 
           tempItem.embedType = feedData[i].embedType;
@@ -216,7 +216,7 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
       console.log("Embed Object: ", embed);
       if ($scope.$parent.isPeelUser){
         var fullClient = (document.documentElement.clientHeight - 54) + 'px';
-        $('#sharePreviewContainer').css({top: '54px', height: fullClient});
+        $('#sharePreviewContainer').css({top: '54px'}).height(fullClient);
       }
     };
 
