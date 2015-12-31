@@ -138,7 +138,8 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
     };
 
     function trustSrc(src) {
-      return $sce.trustAsResourceUrl(src);
+      var copy = src.slice(0);
+      return $sce.trustAsResourceUrl(copy);
     };
 
     function updateTimestamps(tab){
