@@ -204,7 +204,8 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
       _this.showShareDialog = true;
       console.log("Embed Object: ", embed);
       if ($scope.$parent.isPeelUser){
-        var fullClient = (document.documentElement.clientHeight - 54) + 'px';
+        var fullClient = document.documentElement.clientHeight - 54;
+        console.log("fullClient Height: ", fullClient);
         $('#sharePreviewContainer').css({top: '54px'}).height(fullClient);
       }
     };
