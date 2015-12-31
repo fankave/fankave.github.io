@@ -1,7 +1,7 @@
 var postModule = angular.module("PostModule", ["NetworkModule", "SplashModule", "MediaModule", "angularFileUpload"]);
-postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$window", "$sanitize", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", "MUService", "FileUploader", "ForumStorage", initPostController]);
+postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$window", "$location","$sanitize", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", "MUService", "FileUploader", "ForumStorage", initPostController]);
 
-function initPostController($scope, $sce, $timeout, $window, $sanitize, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService,MUService,FileUploader,ForumStorage)
+function initPostController($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService,MUService,FileUploader,ForumStorage)
 {
 
   // Check For Mobile Browser
@@ -53,7 +53,11 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 		var topicId = TopicService.getTopicId();
 		if(topicId == undefined)
 			topicId = $scope.comment.topicId;
-		$window.location = "#/topic/"+topicId;
+    if (HTML5_LOC){
+		  $location.path("/topic/"+topicId);
+    } else {
+      $window.location = "/#/topic/" + topicId;
+    }
 	}
 
 	$scope.setPeelUI = function(isPeelUser){
@@ -174,7 +178,11 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 	}
 	else
 	{
-		window.location = "#/";
+		if (HTML5_LOC){
+      $location.path("/login");
+    } else {
+      $window.location = "/#/login";
+    }
 	}
 
 	$scope.updateLikeComment = function(id) {
@@ -214,9 +222,11 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
     console.log("deleteComment(" + id + ")");
     // $scope.innerButtonTapped = true;
     networkService.send(CommentService.deleteCommentRequest(id));
-    // setTimeout(function(){
-      $window.location = "#/topic/"+$scope.topicId;
-    // }, 250);
+    if (HTML5_LOC){
+      $location.path("/topic/" + $scope.topicId);
+    } else {
+      $window.location = "/#/topic/" + $scope.topicId;
+    }
     $window.location.reload();
   }
 
@@ -297,16 +307,24 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 			tempComment.topicId = selectedComment.topicId;
       tempComment.isMyComment = UserInfoService.isCurrentUser(selectedComment.author.id);
 
-			$scope.comment = tempComment;
+      if (tempComment.type === 'embed'){
+        tempComment.shared = true;
+        tempComment.embed = selectedComment.embed;
+        tempComment.embed.embedCreatedAt = selectedComment.embedCreatedAt;
+        tempComment.embed.embedCreatedAtFull = selectedComment.embedCreatedAtFull;
 
-//			 console.log("comments html : " +$scope.comment.html);
-//			 console.log("updated comments author name: " +$scope.comment.postAuthorName);
-//			 console.log("updated comments author photo: " +$scope.comment.postAuthorPhoto);
-//			if($scope.comment.type == "media"){
-//				 console.log("updated comments media : " +$scope.comment.mediaUrl);
-//				 console.log("updated comments media : " +$scope.comment.mediaAspectFeed);
-//
-//			}
+        if (tempComment.providerName === "Twitter"){
+          tempComment.embed.embedLogo = "img/twitterLogo@2x.png";
+        } else {
+          tempComment.embed.embedLogo = selectedComment.embed.provider.logo;
+        }
+
+        if (selectedComment.embed.type === 'link' && selectedComment.embed.playable === true){
+          tempComment.embed.embedHtml = $sce.trustAsHtml(selectedComment.embedHtml);
+        }
+      }
+
+			$scope.comment = tempComment;
 		}
 	}
 
@@ -334,7 +352,25 @@ function initPostController($scope, $sce, $timeout, $window, $sanitize, $routePa
 			tempReply.replyCount = repliesData[i].metrics.replies;
 			tempReply.mediaAspectFeed = repliesData[i].mediaAspectFeed;
 			tempReply.isLiked = repliesData[i].signal.like;
-			$scope.replies.push(tempReply);
+			
+      if (tempReply.type === 'embed'){
+        tempReply.shared = true;
+        tempReply.embed = repliesData[i].embed;
+        tempReply.embed.embedCreatedAt = repliesData[i].embedCreatedAt;
+        tempReply.embed.embedCreatedAtFull = repliesData[i].embedCreatedAtFull;
+
+        if (tempReply.providerName === "Twitter"){
+          tempReply.embed.embedLogo = "img/twitterLogo@2x.png";
+        } else {
+          tempReply.embed.embedLogo = repliesData[i].embed.provider.logo;
+        }
+
+        if (repliesData[i].embed.type === 'link' && repliesData[i].embed.playable === true){
+          tempReply.embed.embedHtml = $sce.trustAsHtml(repliesData[i].embedHtml);
+        }
+      }
+
+      $scope.replies.push(tempReply);
 
 			// console.log(i +" : updated replies html : " +$scope.replies[i].html);
 			// console.log(i +" : updated replies author name: " +$scope.replies[i].postAuthorName);

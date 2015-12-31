@@ -63,6 +63,7 @@ networkModule.factory('Bant', function (DateUtilityService) {
     _bantObject.embedAuthor = embedObject.author;
     _bantObject.embedProvider = embedObject.provider;
     _bantObject.embedCreatedAt = DateUtilityService.getTimeSince(embedObject.createdAt);
+    _bantObject.embedCreatedAtFull = embedObject.createdAt;
     
     
     return _bantObject;

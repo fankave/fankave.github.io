@@ -39,33 +39,29 @@
   <!-- Forum-related Javascript -->
   <script src="js/Forum.js"></script>
   
-  <script src="js/controllers/AuthController.js"></script>
   <script src="js/controllers/ChannelController.js"></script>
+  <script src="js/controllers/AuthController.js"></script>
   <script src="js/controllers/TopicController.js"></script>
-  <!-- <script src="js/controllers/PostController.js"></script> -->
   <script src="js/controllers/UserInputController.js"></script>
-  <!-- <script src="js/controllers/SocialController.js"></script> -->
   
   <script src="js/services/NetworkService.js"></script>
   <script src="js/services/ForumStorage.js"></script>
   <script src="js/services/ForumDeviceInfo.js"></script>
   <script src="js/services/URIHelper.js"></script>
   <script src="js/services/ChannelService.js"></script>
+  <script src="js/directives/TopicDirectives.js"></script>
   
   <script src="js/services/DataService.js"></script>
   <script src="js/services/TopicService.js"></script>
   <script src="js/services/SplashService.js"></script>
   <script src="js/services/CommentService.js"></script>
   <script src="js/services/DateUtilityService.js"></script>
-  <!-- <script src="js/services/ReplyService.js"></script> -->
   <script src="js/services/Bant.js"></script>
   <script src="js/services/UserInfoService.js"></script>
   <script src="js/services/AuthService.js"></script>
   <script src="js/services/StaticData.js"></script>
   <script src="js/services/ForumDSUtility.js"></script>
   <script src="js/services/MediaUploadService.js"></script>
-  <!-- <script src="js/services/SocialService.js"></script>
-  <script src="js/services/VideoService.js"></script> -->
   
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -75,6 +71,7 @@
 
   var NETWORK_DEBUG = true;
   var DEV_BUILD = true;
+  var HTML5_LOC = false;
   var HOST_NAME = window.location.host;
   var WEBSOCKET_BASE_URI = 'wss://cas.fankave.com:80/ws?';
   var REGISTER_SERVER_URI = 'https://cas.fankave.com:80/v1.0/user/register';
@@ -97,6 +94,7 @@
   <script src="js/services/ForumAnalyticsService.js"></script>
 
 </head>
+<base href="/">
 
 <body>
   <div class="containerr">
@@ -109,6 +107,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
   <script src="js/controllers/PostController.js"></script>
   <script src="js/controllers/SocialController.js"></script>
+  <script src="js/directives/SocialDirectives.js"></script>
 
   <script src="js/services/ReplyService.js"></script>
   <script src="js/services/SocialService.js"></script>
@@ -116,6 +115,25 @@
 
   <script src="lib/bootstrap/bootstrap.min.js"></script>
   <script src="lib/magnific/jQuery.magnific-popup.min.js"></script>
+
+  <script>
+    window.twttr = (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+     
+      t._e = [];
+      t.ready = function(f) {
+        t._e.push(f);
+      };
+     
+      return t;
+    }(document, "script", "twitter-wjs"));
+  </script>
 </body>
 
 </html>
