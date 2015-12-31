@@ -545,7 +545,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     if ($scope.showNewCommentsIndicator){
       $scope.showNewCommentsIndicator = false;
     }
-    // if ($scope.isPeelUser){
+    if ($scope.isPeelUser){
       if ($(document).scrollTop() > (tabsTop - headerHeight) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
         tabs.addClass('fixTabsPeel');
         tabContainer.addClass('fixTabContainer');
@@ -555,15 +555,17 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
         tabContainer.removeClass('fixTabContainer');
         fixed = false;
       }
-    // } else {
-    //   if ($(document).scrollTop() > 96) {
-    //     tabs.addClass('fixTabs');
-    //     tabContainer.addClass('fixTabContainer');
-    //   } else {
-    //     tabs.removeClass('fixTabs');
-    //     tabContainer.removeClass('fixTabContainer');
-    //   }
-    // }
+    } else {
+      if ($(document).scrollTop() > (tabsTop - headerHeight) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
+        tabs.addClass('fixTabs');
+        tabContainer.addClass('fixTabContainer');
+        fixed = true;
+      } else if (fixed) {
+        tabs.removeClass('fixTabs');
+        tabContainer.removeClass('fixTabContainer');
+        fixed = false;
+      }
+    }
   };
 
   $(document).on('scroll', watchScroll);
