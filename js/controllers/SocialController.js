@@ -92,22 +92,21 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
           // Embed Object for Sharing
           tempItem.embed = feedData[i].embed;
-          // tempItem.embed.embedCreatedAt = feedData[i].embedCreatedAt;
+          tempItem.embed.embedCreatedAt = feedData[i].embedCreatedAt;
           // tempItem.embed.embedCreatedAtFull = feedData[i].embedCreatedAtFull;
 
           if (tempItem.providerName === "Twitter"){
             tempItem.providerLogo = "img/twitterLogo@2x.png";
-            // tempItem.embed.provider.logo = "img/twitterLogo@2x.png";
+            tempItem.embed.provider.logo = "img/twitterLogo@2x.png";
           } else {
             tempItem.providerLogo = feedData[i].embedProvider.logo;
-            // tempItem.embed.provider.logo = feedData[i].embedProvider.logo;
+            tempItem.embed.provider.logo = feedData[i].embedProvider.logo;
           }
 
           tempItem.embedType = feedData[i].embedType;
           tempItem.embedUrl = feedData[i].embedUrl;
           if (feedData[i].embedType === "link" && feedData[i].embedPlayable === true){
             tempItem.embedHtml = $sce.trustAsHtml(feedData[i].embedHtml);
-            // tempItem.embed.embedHtml = tempItem.embedHtml;
             tempItem.embedPlayable = true;
           }
           if (feedData[i].embedType === "media"){
@@ -115,16 +114,6 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
             tempItem.mediaUrl = feedData[i].embedMedia.mediaUrl;
             tempItem.mediaThumbUrl = feedData[i].embedMedia.mediaThumbUrl;
             tempItem.mediaAspectFeed = feedData[i].embedMedia.mediaAspectFeed;
-            // if (!!tempItem.mediaAspectFeed.y){
-            //   tempItem.mediaAspectFeed.y = feedData[i].embedMedia.mediaAspectFeed.y + 'px';
-            // } else {
-            //   tempItem.mediaAspectFeed.y = 0;
-            // }
-            // if (!!tempItem.mediaAspectFeed.x){
-            //   tempItem.mediaAspectFeed.x = feedData[i].embedMedia.mediaAspectFeed.x + 'px';
-            // } else {
-            //   tempItem.mediaAspectFeed.x = 0;
-            // }
             tempItem.mediaAspectFull = feedData[i].embedMedia.mediaAspectFull;
           }
 
@@ -138,8 +127,7 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
     };
 
     function trustSrc(src) {
-      var copy = src.slice(0);
-      return $sce.trustAsResourceUrl(copy);
+      return $sce.trustAsResourceUrl(src);
     };
 
     function updateTimestamps(tab){
