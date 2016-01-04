@@ -315,13 +315,9 @@
             </ul>
           </div>
         </div>
-        <div class="moreRepliesContainer" ng-if="thisPost.replyCount === 1">
-          1 more Reply
-        </div>
-        <div class="moreRepliesContainer" ng-if="thisPost.replyCount > 1">
-          {{thisPost.replyCount}} more Replies
-        </div>
       </div>
+      <div class="moreRepliesContainer" ng-if="thisPost.replyCount === 1">1 more Reply</div>
+      <div class="moreRepliesContainer" ng-if="thisPost.replyCount > 1">{{thisPost.replyCount}} more Replies</div>
     </div>
   </div>
 
