@@ -3,7 +3,7 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 	var peelUserName;
 	var peelUserId;
 	var peelShowId;
-	
+
 	var ssUserName;
 	var ssUserId;
 
@@ -43,7 +43,7 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 			if(vars["smartStadium"]){
 				ssUserId = vars["userId"];
 				ssUserName = vars["userName"];
-				ForumStorage.setToLocalStorage("smartStadiumUserId",ssUserId);
+				ForumStorage.setToLocalStorage("forumSmartStadiumUserId",ssUserId);
 				return true;
 			}
 			return false;

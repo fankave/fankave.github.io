@@ -82,10 +82,21 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 		isPeelUser:function(){
 			URIHelper.isPeelUser();
 			console.log("ForumStorage.getFromLocalStorage: "+ForumStorage.getFromLocalStorage("forumUserType"));
-			if(_userType == "peel")
+			if(_userType === "peel")
 				return true;
 			if(ForumStorage.getFromLocalStorage("forumUserType") == "peel")
 				return true;
+			return false;
+		},
+		isSmartStadiumUser:function(){
+			var ssUser = URIHelper.isSmartStadiumUser();
+			console.log("ForumStorage.getFromLocalStorage: ", ForumStorage.getFromLocalStorage("forumUserType"));
+			if(ssUser){
+				return true;
+			}
+			if(_userType === "smartStadium"){
+				return true;
+			}
 			return false;
 		}
 
