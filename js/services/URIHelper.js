@@ -3,7 +3,9 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 	var peelUserName;
 	var peelUserId;
 	var peelShowId;
-	var peelParmas;
+	
+	var ssUserName;
+	var ssUserId;
 
 	function getUrlVars() {
 		var vars = [], hash;
@@ -34,6 +36,16 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 				return true;
 			}
 			else
+			return false;
+		},
+		isSmartStadiumUser:function(){
+			var vars = getUrlVars();
+			if(vars["smartStadium"]){
+				ssUserId = vars["userId"];
+				ssUserName = vars["userName"];
+				ForumStorage.setToLocalStorage("smartStadiumUserId",ssUserId);
+				return true;
+			}
 			return false;
 		},
 		getPeelUserId:function(){
