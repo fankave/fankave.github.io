@@ -300,6 +300,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   }
   else if (URIHelper.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
+    console.log("SS User? ", $scope.isSmartStadiumUser);
     AuthService.loginWithEmail();
   }
   else if (URIHelper.isPeelUser()){
