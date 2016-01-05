@@ -124,6 +124,7 @@ authModule.factory("AuthService", ["$http","$window","$location","UserInfoServic
   return {
     loginToFacebook: loginToFacebook,
     loginWithPeel: loginWithPeel,
+    loginWithEmail: loginWithEmail,
     setRegistrationParams: setRegistrationParams,
     registerUser: registerUser,
     initializeContent: initializeContent,
