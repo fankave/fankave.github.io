@@ -63,19 +63,19 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     SplashService.hidePeelSplash = true;
     $scope.hidePeelSplash = true;
   };
-  // $scope.setScoreCardUI = function() {
-  //   if ($scope.topicType === 'livegame'){
-  //     if ($scope.isPeelUser){
-  //       $('#topicSection').css('padding-top','54px');
-  //     } else if ($scope.isSmartStadiumUser){
-  //       $('#topicSection').css('padding-top','30px');
-  //     } else {
-  //       $('#topicSection').css('padding-top','0px');
-  //     }
-  //   } else {
-  //     $('#topicDetails').removeClass('topicDetailsHeight');
-  //   }
-  // };
+  $scope.setScoreCardUI = function() {
+    if ($scope.topicType === 'livegame'){
+      if ($scope.isPeelUser){
+        $('#topicSection').css('padding-top','54px');
+      } else if ($scope.isSmartStadiumUser){
+        $('#topicSection').css('padding-top','30px');
+      } else {
+        $('#topicSection').css('padding-top','0px');
+      }
+    } else {
+      $('#topicDetails').removeClass('topicDetailsHeight');
+    }
+  };
 //   $scope.setScoreCardUI = function(){
 //     if($scope.isPeelUser === true)
 //     {
@@ -123,7 +123,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       }
       
       
-      // $scope.setScoreCardUI();
+      $scope.setScoreCardUI();
       if($scope.topicType == "livegame"){
         console.log("Inside topic set :"+ TopicService.getTeamA());
         //Score API update
