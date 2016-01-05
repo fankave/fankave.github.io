@@ -59,6 +59,12 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 		},
 		getPeelParams:function(){
 			return window.location.search.substring(1);
+		},
+		getSSUserId:function(){
+			return ssUserId;
+		},
+		getSSUserName:function(){
+			return ssUserName;
 		}
 
 

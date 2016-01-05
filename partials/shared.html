@@ -29,13 +29,13 @@
     <div ng-if="thisPost.playable === true && thisPost.embedHtml !== undefined" ng-bind-html="thisPost.embedHtml" class="postContent socialContent" ng-class="{embedTwitterVideo: thisPost.provider.name === 'Twitter', embedYoutubeVideo: thisPost.provider.name === 'Youtube', embedVineVideo: thisPost.provider.name === 'Vine'}">
     </div>
 
-    <div class="imageContainer" ng-switch-when="image/jpeg && !thisPost.embedHtml">
+    <div class="imageContainer" ng-switch-when="image/jpeg" ng-if="thisPost.embedHtml === undefined">
       <img ng-src="{{thisPost.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.media[0].url})" onerror="this.style.display='none';" />
     </div>
-    <div class="imageContainer" ng-switch-when="image/png && !thisPost.embedHtml">
+    <div class="imageContainer" ng-switch-when="image/png" ng-if="thisPost.embedHtml === undefined">
       <img ng-src="{{thisPost.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.media[0].url})" onerror="this.style.display='none';" />
     </div>
-    <div class="imageContainer" ng-switch-when="image/gif && !thisPost.embedHtml">
+    <div class="imageContainer" ng-switch-when="image/gif" ng-if="thisPost.embedHtml === undefined">
       <img ng-src="{{thisPost.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.media[0].url})" onerror="this.style.display='none';" />
     </div>
 

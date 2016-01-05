@@ -21,13 +21,13 @@ authModule.factory("AuthService", ["$http","$window","$location","UserInfoServic
     registerUser(registerParams);
   };
 
-  var loginWithSmartStadium = function() {
+  var loginWithEmail = function() {
     var userData = {
       "id": URIHelper.getSSUserId(),
       "userName": URIHelper.getSSUserName()
     };
 
-    var registerParams = setRegistrationParams("smartStadium", -28800, userData);
+    var registerParams = setRegistrationParams("email", -28800, userData);
     registerUser(registerParams);
   };
 
@@ -54,8 +54,8 @@ authModule.factory("AuthService", ["$http","$window","$location","UserInfoServic
         "id": userData.id,
         "name": userData.userName
       }; 
-    } else if (type === 'smartStadium'){
-      registerParams.smartStadium = {
+    } else if (type === 'email'){
+      registerParams.email = {
         "id": userData.id,
         "name": userData.userName
       }

@@ -285,21 +285,23 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       networkService.init();
     $scope.initPage();
   }
-  else
-    if(URIHelper.isPeelUser()){
-      $scope.isPeelUser = true;
-      $scope.setPeelUI( true);
-      AuthService.loginWithPeel();
-      //networkService.init();
+  else if (URIHelper.isSmartStadiumUser()){
+    $scope.isSmartStadiumUser = true;
+    AuthService.loginWithEmail();
+  }
+  else if (URIHelper.isPeelUser()){
+    $scope.isPeelUser = true;
+    $scope.setPeelUI(true);
+    AuthService.loginWithPeel();
+  }
+  else {
+    // console.log("Not logged in to facebook, take user to login page")
+    if (HTML5_LOC){
+      $location.path("/login");
+    } else {
+      $window.location = "/#/login";
     }
-    else{
-      // console.log("Not logged in to facebook, take user to login page")
-      if (HTML5_LOC){
-        $location.path("/login");
-      } else {
-        $window.location = "/#/login";
-      }
-    }
+  }
 
 
   $scope.peelClose = function()

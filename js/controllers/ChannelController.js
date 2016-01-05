@@ -44,7 +44,11 @@ function initTopicController($scope,$window,$location,$sce,$routeParams,networkS
       console.log("User is logged in, checking for connection");
     $scope.init();
   }
-  else{
+  else if (URIHelper.isSmartStadiumUser()){
+    $scope.isSmartStadiumUser = true;
+    AuthService.loginWithEmail();
+  }
+  else {
     if(URIHelper.isPeelUser()){
       $scope.isPeelUser = true;
       AuthService.loginWithPeel();
