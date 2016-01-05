@@ -1057,7 +1057,6 @@ button:hover {
   max-width: 768px;
   height:114px;
   line-height: 1.2em;
-  position:absolute;
   z-index: 1;
 }
 
