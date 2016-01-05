@@ -23,20 +23,6 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
     $scope.initPage();
   }
   var headerHeight;
-  // $scope.scrollToBookmark = function() {
-  //   if (ForumStorage.getFromLocalStorage('replyBookmark') !== undefined){
-  //     setTimeout(function(){
-  //       var bookmarkedId = parseInt(ForumStorage.getFromLocalStorage('replyBookmark'));
-  //       var bookmarkedPost = Array.prototype.slice.call(document.getElementsByClassName('postRow'));
-  //       bookmarkedPost = bookmarkedPost[bookmarkedId];
-  //       var offElem = $(bookmarkedPost).offset().top;
-  //       console.log("Bookmarked Post: ", bookmarkedPost);
-  //       console.log("Bookmarked Post Top Offset: ", offElem);
-  //       $(document).scrollTop(offElem);
-  //       ForumStorage.setToLocalStorage('replyBookmark', undefined);
-  //     }, 100);
-  //   }
-  // };
 
 	//ga('send', 'pageview', "/comment/"+$routeParams.postID);
 	$scope.pageClass = 'page-post';
@@ -60,26 +46,26 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
     }
 	}
 
-	$scope.setPeelUI = function(isPeelUser){
-		console.log("isPeelUser :"+isPeelUser);
-		if(isPeelUser === true) {
-			document.getElementById('postSection').style.paddingTop = "54px";
-			// document.getElementById('postHeader').style.height = "99px";
-		}
-		else {
-			document.getElementById('postSection').style.paddingTop = "0px";
-			// document.getElementById('postHeader').style.height = "47px";
-		}
+	$scope.setPeelUI = function(userType){
+		console.log("Post User Type: ", userType);
+		if (userType === 'peel') {
+			$('#postSection').css('padding-top','54px');
+		} else if (userType === 'email') {
+      $('#postSection').css('padding-top','30px');
+		} else {
+      $('#postSection').css('padding-top','0px');
+    }
 	}
 
-	if((UserInfoService.isPeelUser() == true)){
+  var _userType = UserInfoService.getUserType();
+	if (_userType === 'peel'){
 		$scope.isPeelUser = true;
 		SplashService.hidePeelSplash = true;
 	}
-	else {
-		$scope.isPeelUser = false;
+	else if (_userType === 'email'){
+		$scope.isSmartStadiumUser = true;
 	}
-	$scope.setPeelUI($scope.isPeelUser);
+	$scope.setPeelUI(_userType);
 
 	$scope.requestReplies = function(){
 		// console.log("PostController requestReplies Invoked");
@@ -176,8 +162,7 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
 			networkService.init();
 		$scope.initReplyPage();
 	}
-	else
-	{
+	else {
 		if (HTML5_LOC){
       $location.path("/login");
     } else {

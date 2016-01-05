@@ -561,7 +561,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   };
 
   var fixed = false;
-  var watchScroll = function() {
+  var watchScroll = function watchScroll() {
     console.log("Tabs Top: ", tabsTop);
     if ($scope.showNewCommentsIndicator){
       $scope.showNewCommentsIndicator = false;
@@ -589,6 +589,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     // }
   };
 
+  $(document).off('scroll');
   $(document).on('scroll', watchScroll);
 
 

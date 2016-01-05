@@ -40,7 +40,7 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 		_userInfo.accessToken = accessToken;
 		_userInfo.sessionId = sessionId;
 		_isUserLoggedIn = true;
-		_userType =userType
+		_userType = userType
 		// ForumStorage.clearStorage();
 		ForumStorage.setToLocalStorage("forumIsLoggedIn",_isUserLoggedIn);
 		ForumStorage.setToLocalStorage("forumUserId",userId);
@@ -94,10 +94,14 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 			if(ssUser){
 				return true;
 			}
-			if(_userType === "smartStadium"){
+			if(_userType === "email"){
 				return true;
 			}
 			return false;
+		},
+		getUserType:function(){
+			console.log("UIS _userType - - - ", _userType);
+			return _userType;
 		}
 
 	}
