@@ -76,43 +76,6 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       $('#topicDetails').removeClass('topicDetailsHeight');
     }
   };
-//   $scope.setScoreCardUI = function(){
-//     if($scope.isPeelUser === true)
-//     {
-//       if($scope.topicType === "livegame"){
-//         document.getElementById('topicSection').style.paddingTop = "54px";
-//         // document.getElementById('header').style.height = "114px";
-//       }
-//       else{
-//       document.getElementById('topicSection').style.paddingTop = "0px";
-//       // document.getElementById('header').style.height = "0px";
-//       $('#topicDetails').removeClass('topicDetailsHeight');
-      
-//       var parent = document.getElementById("allScoresButtonLink");
-//       var child = document.getElementById("allScoresButtonSpan");
-//       if(parent !== null && child !== null )
-//         parent.removeChild(child);
-//       }
-//     }
-//     else
-//     {
-//       if($scope.topicType === "livegame"){
-//         document.getElementById('topicSection').style.paddingTop = "0px";
-//         document.getElementById('header').style.height = "114px";
-//       }
-//       else{
-//         document.getElementById('topicSection').style.paddingTop = "0px";
-//         $('#header').css('display','none');
-//         $('#topicDetails').removeClass('topicDetailsHeight');
-// //        var parent = document.getElementById("header");
-// //        var child = document.getElementById("scoreCardContent");
-//         var parent = document.getElementById("allScoresButtonLink");
-//         var child = document.getElementById("allScoresButtonSpan");
-//         if(parent !== null && child !== null )
-//           parent.removeChild(child);
-//       }
-//     }
-//   }
   
   var updateTopic = function(){
     if(TopicService.getTopic() !== undefined){
@@ -282,7 +245,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
               $scope.$apply();
             }
           } else {
-            $window.location = "/#/post/" + thisPost.id;
+            $window.location = "#/post/" + thisPost.id;
           }
         }
         $scope.innerButtonTapped = false;
@@ -316,7 +279,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     if (HTML5_LOC){
       $location.path("/login");
     } else {
-      $window.location = "/#/login";
+      $window.location = "#/login";
     }
   }
 
@@ -440,7 +403,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     if (HTML5_LOC){
       $location.path("/post/" + id);
     } else {
-      $window.location = "/#/post/" + id;
+      $window.location = "#/post/" + id;
     }
   };
 
