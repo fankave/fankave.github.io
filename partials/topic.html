@@ -26,12 +26,16 @@
 </section> -->
 
 <section id="topicSection" ng-controller="SocialController as social">
-  <nav class="navbar navbar-fixed-top" id="header">
-    <div id="peelNavBar" ng-if="isPeelUser == true">
+  <nav class="navbar navbar-fixed-top" id="header" ng-if="isPeelUser === true || isSmartStadiumUser === true">
+    <div id="peelNavBar" ng-if="isPeelUser === true">
       <button class="btn-link peelButton" id="closePeelButton" ng-click="peelClose()"><img ng-src="img/backButton-2x.png"/></button>
       <span id="peelText">Peel Bar</span>
       <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()">Watch Channel</button>
     </div>
+    <div id="smartStadiumHeader" ng-if="isSmartStadiumUser === true">
+      <span>Arsenal @ Sunderland</span>
+    </div>
+  </nav>
     <div class="scoreCardContent clearfix" ng-if="topicType === 'livegame'">
 
       <div id="rightColor">
@@ -133,7 +137,6 @@
     </div>
 
   </div>
-</nav>
 
 <div id="topicDetails" class="topicDetailsHeight row" style="width=40%"> 
   <div id="topicTitle">
