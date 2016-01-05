@@ -187,6 +187,7 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
       }
     }, 100);
 
+    $(document).off('scroll');
     $(document).on('scroll', watchContentScroll);
 
     this.retweetPost = function(id) {

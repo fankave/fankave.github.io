@@ -125,6 +125,7 @@ body
 }
 
  #postSection{
+  width: 100%;
   max-width: 768px;
   /*background-color: #fff;*/
 } 
