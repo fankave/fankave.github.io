@@ -2153,3 +2153,18 @@ img-crop canvas {
   vertical-align: -10%;
 }
 
+#ssHighImg {
+  height: 20px;
+  width: auto;
+}
+
+#ssRostImg {
+  height: 17px;
+  width: auto;
+}
+
+#ssStatImg {
+  height: 17px;
+  width: auto;
+}
+
