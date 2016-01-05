@@ -589,6 +589,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     // }
   };
 
+  $(document).off('scroll');
   $(document).on('scroll', watchScroll);
 
 
