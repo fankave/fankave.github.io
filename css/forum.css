@@ -1674,7 +1674,7 @@ img-crop canvas {
 
 .fixTabsPeel {
   position: fixed;
-  top: 54px;
+  /*top: 54px;*/
   width: 100%;
   max-width: 768px;
   z-index: 10010;
@@ -1682,7 +1682,7 @@ img-crop canvas {
 
 .fixTabs {
   position: fixed;
-  top: 0px;
+  /*top: 0px;*/
   width: 100%;
   max-width: 768px;
   z-index: 10010;

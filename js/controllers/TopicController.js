@@ -550,7 +550,9 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       clientHeight = document.documentElement.clientHeight;
       docHeight = $(document).height();
       docVarsSet = true;
-      if ($scope.isPeelUser){
+      if ($scope.isSmartStadiumUser){
+        headerHeight = 30;
+      } else if ($scope.isPeelUser){
         headerHeight = 54;
       } else {
         headerHeight = 0;
@@ -567,10 +569,12 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     // if ($scope.isPeelUser){
       if ($(document).scrollTop() > (tabsTop - headerHeight) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
         tabs.addClass('fixTabsPeel');
+        tabs.css('top',headerHeight);
         tabContainer.addClass('fixTabContainer');
         fixed = true;
       } else if (fixed) {
         tabs.removeClass('fixTabsPeel');
+        tabs.css('top','');
         tabContainer.removeClass('fixTabContainer');
         fixed = false;
       }
