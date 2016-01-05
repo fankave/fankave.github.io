@@ -1058,6 +1058,7 @@ button:hover {
   height:114px;
   line-height: 1.2em;
   z-index: 1;
+  color: #fff;
 }
 
 .svg-content {
@@ -2125,5 +2126,18 @@ img-crop canvas {
   height: 42px;
   padding-top: 12px;
   text-align: center;
+}
+
+#ssHighlights {
+  text-align: right;
+}
+
+#ssStats {
+  text-align: left;
+}
+
+#ssTeamsSpan {
+  position: relative;
+  text-align: -10%;
 }
 

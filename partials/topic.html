@@ -32,7 +32,7 @@
     <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()">Watch Channel</button>
   </div>
   <div id="smartStadiumHeader" ng-if="isSmartStadiumUser === true">
-    <span>Arsenal @ Sunderland</span>
+    <span id="ssTeamsSpan">Arsenal @ Sunderland</span>
   </div>
 </nav>
 <section id="topicSection" ng-controller="SocialController as social">
@@ -175,18 +175,18 @@
   </div>
 </div>
 <div id="ssTopicControls" ng-if="isSmartStadiumUser === true">
-  <div class="grid-col-alt grid-col-33">
-    <button id="ssHighlights">
+  <div id="ssHighlights" class="grid-col-alt grid-col-33">
+    <button class="">
       <img ng-src="" />
     </button>
   </div>
-  <div class="grid-col-alt grid-col-33">
-    <button id="ssRoster">
+  <div id="ssRoster" class="grid-col-alt grid-col-34">
+    <button class="">
       <img ng-src="" />
     </button>
   </div>
-  <div class="grid-col-alt grid-col-33">
-    <button id="ssStats">
+  <div id="ssStats" class="grid-col-alt grid-col-33">
+    <button class="">
       <img ng-src="" />
     </button>
   </div>
