@@ -2136,6 +2136,7 @@ img-crop canvas {
 #ssTopicControls {
   background-color: #fff;
   height: 42px;
+  padding-top: 1px;
   text-align: center;
 }
 
