@@ -120,7 +120,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       }
       
       
-      $scope.setScoreCardUI();
+      // $scope.setScoreCardUI();
       if($scope.topicType == "livegame"){
         console.log("Inside topic set :"+ TopicService.getTeamA());
         //Score API update
