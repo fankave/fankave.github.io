@@ -2168,3 +2168,8 @@ img-crop canvas {
   width: auto;
 }
 
+.ss-btn {
+  position: relative;
+  vertical-align: -50%;
+}
+
