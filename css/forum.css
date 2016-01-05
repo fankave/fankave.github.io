@@ -2136,12 +2136,12 @@ img-crop canvas {
 #ssTopicControls {
   background-color: #fff;
   height: 42px;
-  padding-top: 12px;
   text-align: center;
 }
 
 #ssHighlights {
   text-align: right;
+  padding-top: 2px;
 }
 
 #ssStats {
