@@ -27,6 +27,9 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   TopicService.setTopicId($routeParams.topicID);
   $scope.topicType = "livegame";
   $scope.innerButtonTapped = false;
+  if (UserInfoService.isSmartStadiumUser()){
+    $scope.isSmartStadiumUser = true;
+  }
   if(UserInfoService.isPeelUser() === true){
     $scope.isPeelUser = true;
     if (!UserInfoService.hasUserVisited()){
