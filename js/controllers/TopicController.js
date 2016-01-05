@@ -4,7 +4,6 @@ topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$locati
 function initTopicController($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService)
 {
   var lastComment = false;
-  $(document).off('scroll');
   // Check For Mobile Browser
   window.mobileCheck = function() {
     var check = false;
