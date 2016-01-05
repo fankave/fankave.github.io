@@ -52,6 +52,7 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
 			$('#postSection').css('padding-top','54px');
 		} else if (userType === 'email') {
       $('#postSection').css('padding-top','30px');
+      $('#smartStadiumHeader').css('top','0');
 		} else {
       $('#postSection').css('padding-top','0px');
     }
