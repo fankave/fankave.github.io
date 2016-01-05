@@ -2155,18 +2155,18 @@ img-crop canvas {
 }
 
 #ssHighImg {
-  height: 20px;
+  height: 21px;
   width: auto;
   right: -9px;
 }
 
 #ssRostImg {
-  height: 17px;
+  height: 18px;
   width: auto;
 }
 
 #ssStatImg {
-  height: 17px;
+  height: 18px;
   width: auto;
   left: -9px;
 }
