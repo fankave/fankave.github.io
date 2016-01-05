@@ -60,20 +60,56 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     SplashService.hidePeelSplash = true;
     $scope.hidePeelSplash = true;
   };
-  
-  $scope.setScoreCardUI = function() {
-    if ($scope.topicType === 'livegame'){
-      if ($scope.isPeelUser){
-        $('#topicSection').css('padding-top','54px');
-      } else if ($scope.isSmartStadiumUser){
-        $('#topicSection').css('padding-top','30px');
-      } else {
-        $('#topicSection').css('padding-top','0px');
-      }
-    } else {
-      $('#topicDetails').removeClass('topicDetailsHeight');
-    }
-  };
+  // $scope.setScoreCardUI = function() {
+  //   if ($scope.topicType === 'livegame'){
+  //     if ($scope.isPeelUser){
+  //       $('#topicSection').css('padding-top','54px');
+  //     } else if ($scope.isSmartStadiumUser){
+  //       $('#topicSection').css('padding-top','30px');
+  //     } else {
+  //       $('#topicSection').css('padding-top','0px');
+  //     }
+  //   } else {
+  //     $('#topicDetails').removeClass('topicDetailsHeight');
+  //   }
+  // };
+//   $scope.setScoreCardUI = function(){
+//     if($scope.isPeelUser === true)
+//     {
+//       if($scope.topicType === "livegame"){
+//         document.getElementById('topicSection').style.paddingTop = "54px";
+//         // document.getElementById('header').style.height = "114px";
+//       }
+//       else{
+//       document.getElementById('topicSection').style.paddingTop = "0px";
+//       // document.getElementById('header').style.height = "0px";
+//       $('#topicDetails').removeClass('topicDetailsHeight');
+      
+//       var parent = document.getElementById("allScoresButtonLink");
+//       var child = document.getElementById("allScoresButtonSpan");
+//       if(parent !== null && child !== null )
+//         parent.removeChild(child);
+//       }
+//     }
+//     else
+//     {
+//       if($scope.topicType === "livegame"){
+//         document.getElementById('topicSection').style.paddingTop = "0px";
+//         document.getElementById('header').style.height = "114px";
+//       }
+//       else{
+//         document.getElementById('topicSection').style.paddingTop = "0px";
+//         $('#header').css('display','none');
+//         $('#topicDetails').removeClass('topicDetailsHeight');
+// //        var parent = document.getElementById("header");
+// //        var child = document.getElementById("scoreCardContent");
+//         var parent = document.getElementById("allScoresButtonLink");
+//         var child = document.getElementById("allScoresButtonSpan");
+//         if(parent !== null && child !== null )
+//           parent.removeChild(child);
+//       }
+//     }
+//   }
   
   var updateTopic = function(){
     if(TopicService.getTopic() !== undefined){
