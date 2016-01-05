@@ -21,6 +21,16 @@ authModule.factory("AuthService", ["$http","$window","$location","UserInfoServic
     registerUser(registerParams);
   };
 
+  var loginWithEmail = function() {
+    var userData = {
+      "id": URIHelper.getSSUserId(),
+      "userName": URIHelper.getSSUserName()
+    };
+
+    var registerParams = setRegistrationParams("email", -28800, userData);
+    registerUser(registerParams);
+  };
+
   var setRegistrationParams = function (type, utcOffset, userData) {
     var deviceId = ForumDeviceInfo.getDeviceId();
     var registerParams = {
@@ -44,6 +54,11 @@ authModule.factory("AuthService", ["$http","$window","$location","UserInfoServic
         "id": userData.id,
         "name": userData.userName
       }; 
+    } else if (type === 'email'){
+      registerParams.email = {
+        "id": userData.id,
+        "name": userData.userName
+      }
     }
     return registerParams;
   };
@@ -90,7 +105,7 @@ authModule.factory("AuthService", ["$http","$window","$location","UserInfoServic
       if (HTML5_LOC){
         $location.path("/topic/" + initTopic);
       } else {
-        $window.location = "#/topic/" + initTopic;
+        $window.location = "/#/topic/" + initTopic;
       }
     }
     else {
@@ -100,7 +115,7 @@ authModule.factory("AuthService", ["$http","$window","$location","UserInfoServic
         if (HTML5_LOC){
           $location.path("/post/" + initPost);
         } else {
-          $window.location = "#/post/" + initPost;
+          $window.location = "/#/post/" + initPost;
         }
       }
     }
@@ -109,6 +124,7 @@ authModule.factory("AuthService", ["$http","$window","$location","UserInfoServic
   return {
     loginToFacebook: loginToFacebook,
     loginWithPeel: loginWithPeel,
+    loginWithEmail: loginWithEmail,
     setRegistrationParams: setRegistrationParams,
     registerUser: registerUser,
     initializeContent: initializeContent,

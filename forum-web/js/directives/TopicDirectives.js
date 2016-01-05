@@ -19,7 +19,7 @@ topicModule.directive('embedSharedContent', function() {
       trustSource: '&',
       preventNav: '&'      
     },
-    templateUrl: 'partials/shared.html'
+    templateUrl: '/partials/shared.html'
   };
 });
 

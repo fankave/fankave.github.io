@@ -3,7 +3,9 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 	var peelUserName;
 	var peelUserId;
 	var peelShowId;
-	var peelParmas;
+
+	var ssUserName;
+	var ssUserId;
 
 	function getUrlVars() {
 		var vars = [], hash;
@@ -36,6 +38,16 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 			else
 			return false;
 		},
+		isSmartStadiumUser:function(){
+			var vars = getUrlVars();
+			if(vars["smartStadium"]){
+				ssUserId = vars["userId"];
+				ssUserName = vars["userName"];
+				ForumStorage.setToLocalStorage("forumSmartStadiumUserId",ssUserId);
+				return true;
+			}
+			return false;
+		},
 		getPeelUserId:function(){
 			return peelUserId;
 		},
@@ -47,6 +59,12 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 		},
 		getPeelParams:function(){
 			return window.location.search.substring(1);
+		},
+		getSSUserId:function(){
+			return ssUserId;
+		},
+		getSSUserName:function(){
+			return ssUserName;
 		}
 
 
