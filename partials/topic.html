@@ -138,7 +138,7 @@
 
   </div>
 
-<div id="topicDetails" class="topicDetailsHeight row" style="width=40%"> 
+<div id="topicDetails" class="topicDetailsHeight row" ng-if="isSmartStadiumUser === false"> 
   <div id="topicTitle">
     {{topicTitle}}
   </div>
@@ -172,6 +172,23 @@
         </button>
       </div>
     </div> -->
+  </div>
+</div>
+<div id="ssTopicControls" ng-if="isSmartStadiumUser === true">
+  <div class="grid-col-alt grid-col-33">
+    <button id="ssHighlights">
+      <img ng-src="" />
+    </button>
+  </div>
+  <div class="grid-col-alt grid-col-33">
+    <button id="ssRoster">
+      <img ng-src="" />
+    </button>
+  </div>
+  <div class="grid-col-alt grid-col-33">
+    <button id="ssStats">
+      <img ng-src="" />
+    </button>
   </div>
 </div>
 <div id="inputControls">

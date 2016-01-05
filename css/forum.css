@@ -2119,3 +2119,11 @@ img-crop canvas {
   padding-left: 5px;
 }
 
+/* Smart Stadium */
+#ssTopicControls {
+  background-color: #fff;
+  height: 42px;
+  padding-top: 12px;
+  text-align: center;
+}
+
