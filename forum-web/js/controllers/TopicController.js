@@ -27,6 +27,9 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   TopicService.setTopicId($routeParams.topicID);
   $scope.topicType = "livegame";
   $scope.innerButtonTapped = false;
+  if (UserInfoService.isSmartStadiumUser()){
+    $scope.isSmartStadiumUser = true;
+  }
   if(UserInfoService.isPeelUser() === true){
     $scope.isPeelUser = true;
     if (!UserInfoService.hasUserVisited()){
@@ -60,48 +63,24 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     SplashService.hidePeelSplash = true;
     $scope.hidePeelSplash = true;
   };
-  $scope.setScoreCardUI = function(){
-    if($scope.isPeelUser === true)
-    {
-      if($scope.topicType == "livegame"){
-        document.getElementById('topicSection').style.paddingTop = "54px";
-        document.getElementById('header').style.height = "114px";
+  $scope.setScoreCardUI = function() {
+    if ($scope.topicType === 'livegame'){
+      if ($scope.isPeelUser){
+        $('#topicSection').css('padding-top','54px');
+      } else if ($scope.isSmartStadiumUser){
+        $('#topicSection').css('padding-top','30px');
+      } else {
+        $('#topicSection').css('padding-top','0px');
       }
-      else{
-      document.getElementById('topicSection').style.paddingTop = "0px";
-      document.getElementById('header').style.height = "0px";
+    } else {
       $('#topicDetails').removeClass('topicDetailsHeight');
-      
-      var parent = document.getElementById("allScoresButtonLink");
-      var child = document.getElementById("allScoresButtonSpan");
-      if(parent != null && child != null )
-        parent.removeChild(child);
-      }
     }
-    else
-    {
-      if($scope.topicType == "livegame"){
-        document.getElementById('topicSection').style.paddingTop = "0px";
-        document.getElementById('header').style.height = "114px";
-      }
-      else{
-        document.getElementById('topicSection').style.paddingTop = "0em";
-        $('#header').css('display','none');
-        $('#topicDetails').removeClass('topicDetailsHeight');
-//        var parent = document.getElementById("header");
-//        var child = document.getElementById("scoreCardContent");
-        var parent = document.getElementById("allScoresButtonLink");
-        var child = document.getElementById("allScoresButtonSpan");
-        if(parent != null && child != null )
-          parent.removeChild(child);
-      }
-    }
-  }
+  };
   
   var updateTopic = function(){
-    if(TopicService.getTopic() != undefined){
+    if(TopicService.getTopic() !== undefined){
       $scope.topicType = TopicService.getTopicType();
-      if(TopicService.isWatchingTopic() == false){
+      if(TopicService.isWatchingTopic() === false){
         networkService.send(TopicService.getFollowChannelRequest());
         networkService.send(TopicService.watchTopicRequest($routeParams.topicID));
       }
@@ -285,21 +264,24 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       networkService.init();
     $scope.initPage();
   }
-  else
-    if(URIHelper.isPeelUser()){
-      $scope.isPeelUser = true;
-      $scope.setPeelUI( true);
-      AuthService.loginWithPeel();
-      //networkService.init();
+  else if (URIHelper.isSmartStadiumUser()){
+    $scope.isSmartStadiumUser = true;
+    console.log("SS User? ", $scope.isSmartStadiumUser);
+    AuthService.loginWithEmail();
+  }
+  else if (URIHelper.isPeelUser()){
+    $scope.isPeelUser = true;
+    $scope.setPeelUI(true);
+    AuthService.loginWithPeel();
+  }
+  else {
+    // console.log("Not logged in to facebook, take user to login page")
+    if (HTML5_LOC){
+      $location.path("/login");
+    } else {
+      $window.location = "#/login";
     }
-    else{
-      // console.log("Not logged in to facebook, take user to login page")
-      if (HTML5_LOC){
-        $location.path("/login");
-      } else {
-        $window.location = "#/login";
-      }
-    }
+  }
 
 
   $scope.peelClose = function()
@@ -531,7 +513,9 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       clientHeight = document.documentElement.clientHeight;
       docHeight = $(document).height();
       docVarsSet = true;
-      if ($scope.isPeelUser){
+      if ($scope.isSmartStadiumUser){
+        headerHeight = 30;
+      } else if ($scope.isPeelUser){
         headerHeight = 54;
       } else {
         headerHeight = 0;
@@ -540,34 +524,35 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   };
 
   var fixed = false;
-  var watchScroll = function() {
+  var watchScroll = function watchScroll() {
     console.log("Tabs Top: ", tabsTop);
     if ($scope.showNewCommentsIndicator){
       $scope.showNewCommentsIndicator = false;
     }
-    if ($scope.isPeelUser){
+    // if ($scope.isPeelUser){
       if ($(document).scrollTop() > (tabsTop - headerHeight) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
         tabs.addClass('fixTabsPeel');
+        tabs.css('top',headerHeight);
         tabContainer.addClass('fixTabContainer');
         fixed = true;
       } else if (fixed) {
         tabs.removeClass('fixTabsPeel');
+        tabs.css('top','');
         tabContainer.removeClass('fixTabContainer');
         fixed = false;
       }
-    } else {
-      if ($(document).scrollTop() > (tabsTop - headerHeight) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
-        tabs.addClass('fixTabs');
-        tabContainer.addClass('fixTabContainer');
-        fixed = true;
-      } else if (fixed) {
-        tabs.removeClass('fixTabs');
-        tabContainer.removeClass('fixTabContainer');
-        fixed = false;
-      }
-    }
+    // } else {
+    //   if ($(document).scrollTop() > 96) {
+    //     tabs.addClass('fixTabs');
+    //     tabContainer.addClass('fixTabContainer');
+    //   } else {
+    //     tabs.removeClass('fixTabs');
+    //     tabContainer.removeClass('fixTabContainer');
+    //   }
+    // }
   };
 
+  $(document).off('scroll');
   $(document).on('scroll', watchScroll);
 
 
