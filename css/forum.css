@@ -2138,6 +2138,6 @@ img-crop canvas {
 
 #ssTeamsSpan {
   position: relative;
-  text-align: -10%;
+  vertical-align: -10%;
 }
 
