@@ -68,7 +68,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       if ($scope.isPeelUser){
         $('#topicSection').css('padding-top','54px');
       } else if ($scope.isSmartStadiumUser){
-        $('#topicSection').css('padding-top','30px');
+        $('#topicSection').css('padding-top','54px');
       } else {
         $('#topicSection').css('padding-top','0px');
       }
