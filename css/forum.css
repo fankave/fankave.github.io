@@ -2151,7 +2151,7 @@ img-crop canvas {
 
 #ssTeamsSpan {
   position: relative;
-  vertical-align: -10%;
+  vertical-align: -24px;
 }
 
 #ssHighImg {
@@ -2184,5 +2184,6 @@ img-crop canvas {
   width: 100%;
   max-width: 768px;
   height: 100vh;
+  background-repeat: no-repeat;
 }
 
