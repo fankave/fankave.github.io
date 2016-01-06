@@ -51,7 +51,7 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
 		if (userType === 'peel') {
 			$('#postSection').css('padding-top','54px');
 		} else if (userType === 'email') {
-      $('#postSection').css('padding-top','30px');
+      $('#postSection').css('padding-top','54px');
 		} else {
       $('#postSection').css('padding-top','0px');
     }

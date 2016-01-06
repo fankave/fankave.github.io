@@ -12,19 +12,6 @@
   </div>
 </section>
 
-<!-- <section id="xContent">
-  <div id="xContentUnderlay" ng-click="backToChat()">
-    <div id="xContentOverlay">
-      <div id="backToChat" ng-click="backToChat()"><img src="img/backButton-2x.png" />Back To Live Chat</div>
-      <div id="iframewrapper">
-        <iframe frameborder="0" id="xSrc" name="xLinkFrame">
-          
-        </iframe>
-      </div>
-    </div>
-  </div>
-</section> -->
-
 <nav class="navbar navbar-fixed-top" id="header" ng-if="isPeelUser === true || isSmartStadiumUser === true">
   <div id="peelNavBar" ng-if="isPeelUser === true">
     <button class="btn-link peelButton" id="closePeelButton" ng-click="peelClose()"><img ng-src="img/backButton-2x.png"/></button>
@@ -174,23 +161,37 @@
     </div> -->
   </div>
 </div>
-<div id="ssTopicControls" ng-if="isSmartStadiumUser === true">
-  <div id="ssHighlights" class="grid-col-alt grid-col-33">
-    <button class="btn-link">
-      <img id="ssHighImg" class="ss-btn" ng-src="img/SS/highlights@3x.png" />
-    </button>
+
+<!-- Smart Stadium -->
+<div ng-if="isSmartStadiumUser === true" ng-controller="SmartStadiumController as smart">
+  <div id="ssTopicControls">
+    <div id="ssHighlights" class="grid-col-alt grid-col-33">
+      <button class="btn-link" ng-click="smart.viewHighlights()">
+        <img id="ssHighImg" class="ss-btn" ng-src="img/SS/highlights@3x.png" />
+      </button>
+    </div>
+    <div id="ssRoster" class="grid-col-alt grid-col-34">
+      <button class="btn-link" ng-click="smart.viewRoster()">
+        <img id="ssRostImg" class="ss-btn" ng-src="img/SS/roster@3x.png" />
+      </button>
+    </div>
+    <div id="ssStats" class="grid-col-alt grid-col-33">
+      <button class="btn-link" ng-click="smart.viewStats()">
+        <img id="ssStatImg" class="ss-btn" ng-src="img/SS/stats@3x.png" />
+      </button>
+    </div>
   </div>
-  <div id="ssRoster" class="grid-col-alt grid-col-34">
-    <button class="btn-link">
-      <img id="ssRostImg" class="ss-btn" ng-src="img/SS/roster@3x.png" />
-    </button>
-  </div>
-  <div id="ssStats" class="grid-col-alt grid-col-33">
-    <button class="btn-link">
-      <img id="ssStatImg" class="ss-btn" ng-src="img/SS/stats@3x.png" />
-    </button>
+
+  <div id="ssStaticContainer" ng-if="smart.viewScreen === true" ng-switch="smart.ssActiveScreen">
+    <div id="ssHighlightsView" ng-switch-when="highlights"></div>
+    <div id="ssRosterView" ng-switch-when="roster" ng-click="smart.viewProfileStats()"></div>
+    <div id="ssStatsView" ng-switch-when="stats"></div>
+    <div id="ssProfileStatsView" ng-switch-when="profileStats"></div>
+    <div id="ssExitView" ng-click="smart.exitView()"></div>
   </div>
 </div>
+
+
 <div id="inputControls">
   <div class="tabContainer clearfix">
     <div id="chatTab" class="grid-col grid-col-33 tab selectedTab" ng-click="switchTabs('chat')">
