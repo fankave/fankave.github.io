@@ -2193,7 +2193,7 @@ img-crop canvas {
   height: 100vh;
   max-width: 768px;
   z-index: 31;
-  background: url("img/SS/ss_highlights@3x.png") no-repeat;
+  background: url("/img/SS/ss_highlights@3x.png") no-repeat;
 }
 
 #ssRosterView {
@@ -2203,7 +2203,7 @@ img-crop canvas {
   height: 100vh;
   max-width: 768px;
   z-index: 31;
-  background: url("img/SS/ss_roster@3x.png") no-repeat;
+  background: url("/img/SS/ss_roster@3x.png") no-repeat;
 }
 
 #ssStatsView {
@@ -2213,7 +2213,7 @@ img-crop canvas {
   height: 100vh;
   max-width: 768px;
   z-index: 31;
-  background: url("img/SS/ss_stats@3x.png") no-repeat;
+  background: url("/img/SS/ss_stats@3x.png") no-repeat;
 }
 
 #ssProfileStatsView {
@@ -2223,7 +2223,7 @@ img-crop canvas {
   height: 100vh;
   max-width: 768px;
   z-index: 31;
-  background: url("img/SS/ss_profile_stats@3x.png") no-repeat;
+  background: url("/img/SS/ss_profile_stats@3x.png") no-repeat;
 }
 
 #ssExitView {
