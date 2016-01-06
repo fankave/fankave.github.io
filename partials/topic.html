@@ -125,7 +125,7 @@
 
   </div>
 
-<div id="topicDetails" class="topicDetailsHeight row" ng-if="isSmartStadiumUser === false"> 
+<div id="topicDetails" class="topicDetailsHeight row" ng-if="!isSmartStadiumUser"> 
   <div id="topicTitle">
     {{topicTitle}}
   </div>
@@ -184,10 +184,11 @@
 
   <div id="ssStaticContainer" ng-if="smart.viewScreen === true" ng-switch="smart.ssActiveScreen">
     <div id="ssHighlightsView" ng-switch-when="highlights"></div>
-    <div id="ssRosterView" ng-switch-when="roster" ng-click="smart.viewProfileStats()"></div>
+    <div id="ssRosterView" ng-switch-when="roster"></div>
     <div id="ssStatsView" ng-switch-when="stats"></div>
     <div id="ssProfileStatsView" ng-switch-when="profileStats"></div>
     <div id="ssExitView" ng-click="smart.exitView()"></div>
+    <div id="PSVHidden" ng-if="smart.ssActiveScreen === 'roster'" ng-click="smart.viewProfileStats()"></div>
   </div>
 </div>
 

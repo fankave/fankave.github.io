@@ -2244,3 +2244,13 @@ img-crop canvas {
   z-index: 35;
 }
 
+#PSVHidden {
+  position: fixed;
+  top: 72px;
+  background-color: transparent;
+  width: 100%;
+  max-width: 768px;
+  height: 600px;
+  z-index: 35;
+}
+
