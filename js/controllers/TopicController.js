@@ -551,7 +551,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       docHeight = $(document).height();
       docVarsSet = true;
       if ($scope.isSmartStadiumUser){
-        headerHeight = 30;
+        headerHeight = 54;
       } else if ($scope.isPeelUser){
         headerHeight = 54;
       } else {
