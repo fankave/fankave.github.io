@@ -30,7 +30,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   if (UserInfoService.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
   }
-  if (UserInfoService.getUserType() === 'MI16'){
+  if (URIHelper.isTechMUser()){
     $scope.isMI16User = true;
   }
   if(UserInfoService.isPeelUser() === true){
