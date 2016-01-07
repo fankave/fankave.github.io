@@ -34,7 +34,7 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 	}
 
 	function setUserCredentials(userId, accessToken, sessionId, userType){
-		// console.log("setUserCredentials(" + userId + ", " + accessToken + ", " + sessionId);
+		console.log("setUserCredentials: ", userId, accessToken, sessionId, userType);
 		_userInfo = {};
 		_userInfo.userId = userId;
 		_userInfo.accessToken = accessToken;
@@ -84,7 +84,7 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 			console.log("ForumStorage.getFromLocalStorage: "+ForumStorage.getFromLocalStorage("forumUserType"));
 			if(_userType === "peel")
 				return true;
-			if(ForumStorage.getFromLocalStorage("forumUserType") == "peel")
+			if(ForumStorage.getFromLocalStorage("forumUserType") === "peel")
 				return true;
 			return false;
 		},
@@ -92,9 +92,13 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 			var ssUser = URIHelper.isSmartStadiumUser();
 			console.log("ForumStorage.getFromLocalStorage: ", ForumStorage.getFromLocalStorage("forumUserType"));
 			if(ssUser){
+				_userType = 'email';
 				return true;
 			}
 			if(_userType === "email"){
+				return true;
+			}
+			if (ForumStorage.getFromLocalStorage("forumUserType") === "email"){
 				return true;
 			}
 			return false;
@@ -103,9 +107,13 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 			var MI16User = URIHelper.isTechMUser();
 			console.log("ForumStorage.getFromLocalStorage: ", ForumStorage.getFromLocalStorage("forumUserType"));
 			if(MI16User){
+				_userType = 'MI16';
 				return true;
 			}
 			if(_userType === "MI16"){
+				return true;
+			}
+			if (ForumStorage.getFromLocalStorage("forumUserType") === "MI16"){
 				return true;
 			}
 			return false;

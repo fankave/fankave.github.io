@@ -1,16 +1,3 @@
-<!-- <section id="xContent">
-  <div id="xContentUnderlay" ng-click="backToChat()">
-    <div id="xContentOverlay">
-      <div id="backToChat" ng-click="backToChat()"><img src="img/backButton-2x.png" />Back To Live Chat</div>
-      <div id="iframewrapper">
-        <iframe frameborder="0" id="xSrc" name="xLinkFrame">
-          
-        </iframe>
-      </div>
-    </div>
-  </div>
-</section> -->
-
 <section id="postSection">
   <nav class="navbar navbar-fixed-top" id="postHeader">
     <div id="peelNavBar" ng-if="isPeelUser === true">
@@ -132,19 +119,7 @@
   
   <div class="repliesContainer">
 
-    <!-- <div id="loadChatFill" ng-repeat="item in [1,2,3]" ng-if="loadingReply">
-      <span class="load loadProfilePhoto"></span>
-      <span class="loadPost">
-        <div class="clearfix">
-          <span class="load loadChatUsername"></span>
-          <span class="load loadChatTimestamp"></span>
-        </div>
-        <div class="load loadChatBody"></div>
-        <div class="load loadChatFooter"></div>
-      </span>
-    </div> -->
-
-    <div ng-repeat="thisReply in replies" class="row postRow" ng-switch="thisReply.mediaType">
+    <div ng-repeat="thisReply in replies | orderBy: $index" class="row postRow" ng-switch="thisReply.mediaType">
       
       <span class="postAuthorPhoto">
         <div class="thumbnail">
