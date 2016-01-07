@@ -129,6 +129,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       this.uploader.onCompleteAll = function() {
         console.info('onCompleteAll');
         _this.uploader.clearQueue();
+        MUService.resetCommentParams();
       };
 
       console.info('uploader', this.uploader);

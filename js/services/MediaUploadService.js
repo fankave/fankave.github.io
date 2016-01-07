@@ -39,10 +39,10 @@ mediaModule.factory('MUService',  function () {
 	}
 
 	function setCommentParams(tId,text,isCom,comId,repId){
-		console.log("Setting Comment Params: ", tId, text, isCom, comId, repId);
 		if (text === undefined){
 			text = "";
 		}
+		console.log("Setting Comment Params: ", tId, text, isCom, comId, repId);
 		topicId = tId;
 		commentText = text;
 		isComment = isCom;
