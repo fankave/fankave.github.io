@@ -92,6 +92,7 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 			var ssUser = URIHelper.isSmartStadiumUser();
 			console.log("ForumStorage.getFromLocalStorage: ", ForumStorage.getFromLocalStorage("forumUserType"));
 			if(ssUser){
+				_userType = 'email';
 				return true;
 			}
 			if(_userType === "email"){
@@ -103,6 +104,7 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 			var MI16User = URIHelper.isTechMUser();
 			console.log("ForumStorage.getFromLocalStorage: ", ForumStorage.getFromLocalStorage("forumUserType"));
 			if(MI16User){
+				_userType = 'MI16';
 				return true;
 			}
 			if(_userType === "MI16"){

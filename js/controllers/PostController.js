@@ -59,17 +59,17 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
     }
 	}
 
-  var _userType = UserInfoService.getUserType();
-	if (_userType === 'peel'){
-		$scope.isPeelUser = true;
-		SplashService.hidePeelSplash = true;
-	}
-	else if (_userType === 'email'){
-		$scope.isSmartStadiumUser = true;
-	}
-  else if (_userType === 'MI16'){
+  if (UserInfoService.isPeelUser()){
+    $scope.isPeelUser = true;
+    SplashService.hidePeelSplash = true;
+  }
+  else if (UserInfoService.isSmartStadiumUser()){
+    $scope.isSmartStadiumUser = true;
+  }
+  else if (UserInfoService.isMI16User()){
     $scope.isMI16User = true;
   }
+  var _userType = UserInfoService.getUserType();
 	$scope.setPeelUI(_userType);
 
 	$scope.requestReplies = function(){
