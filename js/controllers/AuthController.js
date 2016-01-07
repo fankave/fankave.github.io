@@ -9,10 +9,10 @@ authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "Aut
       if (urlQueryStr === 'MI16=true'){
         $scope.techMIUser = true;
         $scope.facebookUser = false;
-      } else {
-        $scope.techMIUser = false;
-        $scope.facebookUser = true;
       }
+    } else {
+      $scope.techMIUser = false;
+      $scope.facebookUser = true;
     }
 
     if ($scope.facebookUser){
