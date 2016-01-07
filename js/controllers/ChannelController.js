@@ -50,7 +50,7 @@ function initTopicController($scope,$window,$location,$sce,$routeParams,networkS
   }
   else if (URIHelper.isTechMUser()){
     console.log("MI16 User Detected");
-    $window.location = "/#/login?MI16";
+    $window.location = "/#/login?MI16=true";
   }
   else {
     if(URIHelper.isPeelUser()){

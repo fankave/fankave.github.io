@@ -30,10 +30,10 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   if (UserInfoService.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
   }
-  if (URIHelper.isTechMUser()){
+  else if (UserInfoService.isMI16User()){
     $scope.isMI16User = true;
   }
-  if(UserInfoService.isPeelUser() === true){
+  else if(UserInfoService.isPeelUser() === true){
     $scope.isPeelUser = true;
     if (!UserInfoService.hasUserVisited()){
       console.log('USER HASNT VISITED');
@@ -273,7 +273,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     AuthService.loginWithEmail();
   }
   else if (URIHelper.isTechMUser()){
-    $window.location = "/#/login?MI16";
+    $window.location = "/#/login?MI16=true";
   }
   else if (URIHelper.isPeelUser()){
     $scope.isPeelUser = true;

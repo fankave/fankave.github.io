@@ -6,7 +6,7 @@ authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "Aut
     if (window.location.href.indexOf('?') !== -1){
       var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
       console.log("urlQueryStr: ", urlQueryStr);
-      if (urlQueryStr === 'MI16'){
+      if (urlQueryStr === 'MI16=true'){
         $scope.techMIUser = true;
         $scope.facebookUser = false;
       } else {

@@ -99,6 +99,17 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 			}
 			return false;
 		},
+		isMI16User:function(){
+			var MI16User = URIHelper.isTechMUser();
+			console.log("ForumStorage.getFromLocalStorage: ", ForumStorage.getFromLocalStorage("forumUserType"));
+			if(MI16User){
+				return true;
+			}
+			if(_userType === "MI16"){
+				return true;
+			}
+			return false;
+		},
 		getUserType:function(){
 			console.log("UIS _userType - - - ", _userType);
 			return _userType;
