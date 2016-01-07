@@ -52,6 +52,8 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
 			$('#postSection').css('padding-top','54px');
 		} else if (userType === 'email') {
       $('#postSection').css('padding-top','54px');
+    } else if (userType === 'MI16') {
+      // $('#postSection').css('padding-top','54px');
 		} else {
       $('#postSection').css('padding-top','0px');
     }
@@ -65,6 +67,9 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
 	else if (_userType === 'email'){
 		$scope.isSmartStadiumUser = true;
 	}
+  else if (_userType === 'MI16'){
+    $scope.isMI16User = true;
+  }
 	$scope.setPeelUI(_userType);
 
 	$scope.requestReplies = function(){

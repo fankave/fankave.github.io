@@ -31,6 +31,16 @@ authModule.factory("AuthService", ["$http","$window","$location","UserInfoServic
     registerUser(registerParams);
   };
 
+  var techMLogin = function (name, email) {
+    var userData = {
+      "id": email,
+      "userName": name
+    };
+
+    var registerParams = setRegistrationParams("email", -28800, userData);
+    registerUser(registerParams, true);
+  };
+
   var setRegistrationParams = function (type, utcOffset, userData) {
     var deviceId = ForumDeviceInfo.getDeviceId();
     var registerParams = {
@@ -63,12 +73,16 @@ authModule.factory("AuthService", ["$http","$window","$location","UserInfoServic
     return registerParams;
   };
 
-  var registerUser = function(registerParams) {
+  var registerUser = function(registerParams, isMI16) {
     // Post request to our api to register/retrieve user
+    var userType = registerParams.type;
+    if (isMI16){
+      userType = 'MI16';
+    }
     $http.post(REGISTER_SERVER_URI, JSON.stringify(registerParams))
       .then(function (response) {
         if (response.status === 200) {
-          console.log("Successfully Registered User of Type: " + registerParams.type);
+          console.log("Successfully Registered User of Type: " + userType);
           if (registerParams.type === 'facebook'){
             userLoggedInToFacebook = true;
           }
@@ -78,7 +92,7 @@ authModule.factory("AuthService", ["$http","$window","$location","UserInfoServic
             response.data.userId, 
             response.data.accessToken, 
             response.data.sessionId,
-            registerParams.type);
+            userType);
         }
       },
       function (response) {
@@ -125,6 +139,7 @@ authModule.factory("AuthService", ["$http","$window","$location","UserInfoServic
     loginToFacebook: loginToFacebook,
     loginWithPeel: loginWithPeel,
     loginWithEmail: loginWithEmail,
+    techMLogin: techMLogin,
     setRegistrationParams: setRegistrationParams,
     registerUser: registerUser,
     initializeContent: initializeContent,

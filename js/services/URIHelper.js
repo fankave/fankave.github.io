@@ -48,6 +48,14 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 			}
 			return false;
 		},
+		isTechMUser:function(){
+			var vars = getUrlVars();
+			if (vars["MI16"]){
+				ForumStorage.setToLocalStorage("techMIUser",true);
+				return true;
+			}
+			return false;
+		},
 		getPeelUserId:function(){
 			return peelUserId;
 		},

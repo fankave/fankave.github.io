@@ -2254,3 +2254,33 @@ img-crop canvas {
   z-index: 35;
 }
 
+/* Tech MI16 */
+
+#techLoginContainer {
+  position: fixed;
+  width: 100%;
+  max-width: 768px;
+  height: 100vh;
+  background: #90beef;
+  background: -webkit-linear-gradient(#f3fbfe, #1342c4);
+  background: -o-linear-gradient(#f3fbfe, #1342c4);
+  background: -moz-linear-gradient(#f3fbfe, #1342c4);
+  background: linear-gradient(#f3fbfe, #1342c4);
+}
+
+#techLoginHeader {
+
+}
+
+#techLogin {
+
+}
+
+#techLoginButton {
+
+}
+
+#techLoginDescription {
+
+}
+

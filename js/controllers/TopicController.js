@@ -30,6 +30,9 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   if (UserInfoService.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
   }
+  if (UserInfoService.getUserType() === 'MI16'){
+    $scope.isMI16User = true;
+  }
   if(UserInfoService.isPeelUser() === true){
     $scope.isPeelUser = true;
     if (!UserInfoService.hasUserVisited()){
@@ -69,6 +72,8 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
         $('#topicSection').css('padding-top','54px');
       } else if ($scope.isSmartStadiumUser){
         $('#topicSection').css('padding-top','54px');
+      } else if ($scope.isMI16User){
+        // $('#topicSection').css('padding-top','54px');
       } else {
         $('#topicSection').css('padding-top','0px');
       }
@@ -76,43 +81,6 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       $('#topicDetails').removeClass('topicDetailsHeight');
     }
   };
-//   $scope.setScoreCardUI = function(){
-//     if($scope.isPeelUser === true)
-//     {
-//       if($scope.topicType === "livegame"){
-//         document.getElementById('topicSection').style.paddingTop = "54px";
-//         // document.getElementById('header').style.height = "114px";
-//       }
-//       else{
-//       document.getElementById('topicSection').style.paddingTop = "0px";
-//       // document.getElementById('header').style.height = "0px";
-//       $('#topicDetails').removeClass('topicDetailsHeight');
-      
-//       var parent = document.getElementById("allScoresButtonLink");
-//       var child = document.getElementById("allScoresButtonSpan");
-//       if(parent !== null && child !== null )
-//         parent.removeChild(child);
-//       }
-//     }
-//     else
-//     {
-//       if($scope.topicType === "livegame"){
-//         document.getElementById('topicSection').style.paddingTop = "0px";
-//         document.getElementById('header').style.height = "114px";
-//       }
-//       else{
-//         document.getElementById('topicSection').style.paddingTop = "0px";
-//         $('#header').css('display','none');
-//         $('#topicDetails').removeClass('topicDetailsHeight');
-// //        var parent = document.getElementById("header");
-// //        var child = document.getElementById("scoreCardContent");
-//         var parent = document.getElementById("allScoresButtonLink");
-//         var child = document.getElementById("allScoresButtonSpan");
-//         if(parent !== null && child !== null )
-//           parent.removeChild(child);
-//       }
-//     }
-//   }
   
   var updateTopic = function(){
     if(TopicService.getTopic() !== undefined){
@@ -305,6 +273,9 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     $scope.isSmartStadiumUser = true;
     console.log("SS User? ", $scope.isSmartStadiumUser);
     AuthService.loginWithEmail();
+  }
+  else if (URIHelper.isTechMUser()){
+    $window.location = "/#/login?MI16";
   }
   else if (URIHelper.isPeelUser()){
     $scope.isPeelUser = true;
