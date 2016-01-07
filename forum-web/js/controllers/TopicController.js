@@ -1,7 +1,7 @@
 var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"]);
-topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService",initTopicController]);
+topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService",initTopicController]);
 
-function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService)
+function initTopicController($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService)
 {
   var lastComment = false;
   // Check For Mobile Browser
@@ -27,12 +27,19 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   TopicService.setTopicId($routeParams.topicID);
   $scope.topicType = "livegame";
   $scope.innerButtonTapped = false;
-  if(UserInfoService.isPeelUser() === true){
+  if (UserInfoService.isSmartStadiumUser()){
+    $scope.isSmartStadiumUser = true;
+  }
+  else if (UserInfoService.isMI16User()){
+    $scope.isMI16User = true;
+  }
+  else if(UserInfoService.isPeelUser() === true){
     $scope.isPeelUser = true;
     if (!UserInfoService.hasUserVisited()){
       console.log('USER HASNT VISITED');
       // SplashService.hidePeelSplash = false;
       $scope.hidePeelSplash = false;
+      ForumStorage.setToLocalStorage("hasUserVisited", true);
       $timeout(function() {$scope.continueToExperience(); }, 5000);
     }
   }
@@ -59,46 +66,24 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     SplashService.hidePeelSplash = true;
     $scope.hidePeelSplash = true;
   };
-  $scope.setScoreCardUI = function(){
-    if($scope.isPeelUser === true)
-    {
-      if($scope.topicType == "livegame"){
-        document.getElementById('topicSection').style.paddingTop = "54px";
-        document.getElementById('header').style.height = "114px";
-      }
-      else{
-      document.getElementById('topicSection').style.paddingTop = "3em";
-      document.getElementById('header').style.height = "3em";
-      
-      var parent = document.getElementById("allScoresButtonLink");
-      var child = document.getElementById("allScoresButtonSpan");
-      if(parent != null && child != null )
-        parent.removeChild(child);
+  $scope.setScoreCardUI = function() {
+    if ($scope.topicType === 'livegame'){
+      if ($scope.isPeelUser){
+        $('#topicSection').css('padding-top','54px');
+      } else if ($scope.isSmartStadiumUser){
+        $('#topicSection').css('padding-top','54px');
+      } else if ($scope.isMI16User){
+        // $('#topicSection').css('padding-top','54px');
+      } else {
+        $('#topicSection').css('padding-top','0px');
       }
     }
-    else
-    {
-      if($scope.topicType == "livegame"){
-        document.getElementById('topicSection').style.paddingTop = "0px";
-        document.getElementById('header').style.height = "114px";
-      }
-      else{
-        document.getElementById('topicSection').style.paddingTop = "0em";
-        document.getElementById('header').style.height = "0em";
-//        var parent = document.getElementById("header");
-//        var child = document.getElementById("scoreCardContent");
-        var parent = document.getElementById("allScoresButtonLink");
-        var child = document.getElementById("allScoresButtonSpan");
-        if(parent != null && child != null )
-          parent.removeChild(child);
-      }
-    }
-  }
+  };
   
   var updateTopic = function(){
-    if(TopicService.getTopic() != undefined){
+    if(TopicService.getTopic() !== undefined){
       $scope.topicType = TopicService.getTopicType();
-      if(TopicService.isWatchingTopic() == false){
+      if(TopicService.isWatchingTopic() === false){
         networkService.send(TopicService.getFollowChannelRequest());
         networkService.send(TopicService.watchTopicRequest($routeParams.topicID));
       }
@@ -186,6 +171,23 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
           tempComment.mediaThumbUrl = commentsdata[i].mediaThumbUrl;
         }
         tempComment.isLiked = commentsdata[i].signal.like;
+
+        if (tempComment.type === 'embed'){
+          tempComment.shared = true;
+          tempComment.embed = commentsdata[i].embed;
+          tempComment.embed.embedCreatedAt = commentsdata[i].embedCreatedAt;
+          tempComment.embed.embedCreatedAtFull = commentsdata[i].embedCreatedAtFull;
+
+          if (tempComment.providerName === "Twitter"){
+            tempComment.embed.embedLogo = "img/twitterLogo@2x.png";
+          } else {
+            tempComment.embed.embedLogo = commentsdata[i].embed.provider.logo;
+          }
+
+          if (commentsdata[i].embed.type === 'link' && commentsdata[i].embed.playable === true){
+            tempComment.embed.embedHtml = $sce.trustAsHtml(commentsdata[i].embedHtml);
+          }
+        }
         
         $scope.commentsArray.push(tempComment);
 
@@ -226,42 +228,32 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     if ($scope.mobileBrowser === true){
       document.getElementById('topicSection').style.paddingBottom = "42px";
     }
+  }
 
-    $scope.$watch("commentsArray", function (newValue, oldValue)
-        {
-      $timeout(function()
-          {
-        var postDivs = document.getElementsByClassName("postRow");
-        for(div in postDivs)
-        {
-          if(newValue != undefined)
-          {
-            var thisPost = newValue[div];
-
-            if(thisPost != undefined)
-            {
-              var thisDiv = postDivs[div];
-              thisDiv.onclick = function(e)
-              {
-                if ($(e.target).is('a')){
-                  console.log("EXTERNAL LINK: ", e, this.id);
-                  ForumStorage.setToLocalStorage('commentBookmark', this.id);
-                  return;
-                } else {
-                  // console.log("thisDiv.onclick");
-                  thisPost = $scope.commentsArray[this.id];
-                  if($scope.innerButtonTapped == false)
-                  {
-                    window.location = "#/post/" + thisPost.id;
-                  }
-                  $scope.innerButtonTapped = false;
-                }
-              }
-            } 
+  $scope.setLinksOnComments = function(){
+    var postDivs = document.getElementsByClassName("postRow");
+    for (div in postDivs) {
+      var thisDiv = postDivs[div];
+      thisDiv.onclick = function(e) {
+        if ($(e.target).is('a')) {
+          console.log("EXTERNAL LINK: ", e, this.id);
+          return;
+        } 
+        thisPost = $scope.commentsArray[this.id];
+        if ($scope.innerButtonTapped === false) {
+          console.log("Post Click Active: ", thisPost.id);
+          if (HTML5_LOC){
+            $location.path("/post/" + thisPost.id);
+            if (!$scope.$$phase){
+              $scope.$apply();
+            }
+          } else {
+            $window.location = "#/post/" + thisPost.id;
           }
         }
-          });
-        });
+        $scope.innerButtonTapped = false;
+      }
+    }
   }
 
 //  if(URIHelper.isPeelUser())
@@ -275,17 +267,27 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
       networkService.init();
     $scope.initPage();
   }
-  else
-    if(URIHelper.isPeelUser()){
-      $scope.isPeelUser = true;
-      $scope.setPeelUI( true);
-      AuthService.loginWithPeel();
-      //networkService.init();
+  else if (URIHelper.isSmartStadiumUser()){
+    $scope.isSmartStadiumUser = true;
+    console.log("SS User? ", $scope.isSmartStadiumUser);
+    AuthService.loginWithEmail();
+  }
+  else if (URIHelper.isTechMUser()){
+    $window.location = "#/login?MI16=true";
+  }
+  else if (URIHelper.isPeelUser()){
+    $scope.isPeelUser = true;
+    $scope.setPeelUI(true);
+    AuthService.loginWithPeel();
+  }
+  else {
+    // console.log("Not logged in to facebook, take user to login page")
+    if (HTML5_LOC){
+      $location.path("/login");
+    } else {
+      $window.location = "#/login";
     }
-    else{
-      // console.log("Not logged in to facebook, take user to login page")
-      window.location = "#/";
-    }
+  }
 
 
   $scope.peelClose = function()
@@ -364,8 +366,10 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
   };
 
   $scope.updateLikeComment = function(id) {
-    event.cancelBubble = true;
-    if(event.stopPropagation) event.stopPropagation();
+    $scope.innerButtonTapped = true;
+    
+    // event.cancelBubble = true;
+    // if(event.stopPropagation) event.stopPropagation();
 
     console.log("TopicController updateLike (" + id + ")");
     if(CommentService.isCommentLiked(id)){
@@ -386,9 +390,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     }
     $scope.innerButtonTapped = true;
     networkService.send(CommentService.deleteCommentRequest(id));
-    // if (lastComment){
-    //   $window.location.reload();
-    // }
   }
 
   $scope.reportCommentAsSpam = function(id)
@@ -400,12 +401,16 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 
   $scope.goToRepliesWithKeyboardTriggered = function(id)
   {
-    event.cancelBubble = true;
-    if(event.stopPropagation) event.stopPropagation();
+    // event.cancelBubble = true;
+    // if(event.stopPropagation) event.stopPropagation();
 
     // console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
     TopicService.directComment = true;
-    window.location = "#/post/" + id;
+    if (HTML5_LOC){
+      $location.path("/post/" + id);
+    } else {
+      $window.location = "#/post/" + id;
+    }
   };
 
 
@@ -443,7 +448,6 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
 
   $window.addEventListener("beforeunload", function(){
     console.log("Before Unload");
-    ForumStorage.setToLocalStorage("hasUserVisited", true);
     ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
   });
 
@@ -496,43 +500,67 @@ function initTopicController($scope, $sce, $window, $sanitize, $timeout, $routeP
     };
   };
 
-  var tabs = $('#inputControls');
-  var tabContainer = $('.tabContainer');
-
-  var watchScroll = function() {
-    if ($scope.showNewCommentsIndicator){
-      $scope.showNewCommentsIndicator = false;
-    }
-    if ($scope.isPeelUser){
-      if ($(document).scrollTop() > 150) {
-        tabs.addClass('fixTabsPeel');
-        tabContainer.addClass('fixTabContainer');
+  var docVarsSet = false;
+  var tabs,
+      tabContainer,
+      tabsTop,
+      tabsHeight,
+      inputHeight,
+      clientHeight,
+      docHeight,
+      headerHeight;
+  $scope.setDocVars = function() {
+    if (!docVarsSet){
+      tabs = $('#inputControls');
+      tabContainer = $('.tabContainer');
+      tabsTop = tabs.offset().top;
+      tabsHeight = tabContainer.height();
+      inputHeight = tabs.height();
+      clientHeight = document.documentElement.clientHeight;
+      docHeight = $(document).height();
+      docVarsSet = true;
+      if ($scope.isSmartStadiumUser){
+        headerHeight = 54;
+      } else if ($scope.isPeelUser){
+        headerHeight = 54;
       } else {
-        tabs.removeClass('fixTabsPeel');
-        tabContainer.removeClass('fixTabContainer');
-      }
-    } else {
-      if ($(document).scrollTop() > 96) {
-        tabs.addClass('fixTabs');
-        tabContainer.addClass('fixTabContainer');
-      } else {
-        tabs.removeClass('fixTabs');
-        tabContainer.removeClass('fixTabContainer');
+        headerHeight = 0;
       }
     }
   };
 
+  var fixed = false;
+  var watchScroll = function watchScroll() {
+    console.log("Tabs Top: ", tabsTop);
+    if ($scope.showNewCommentsIndicator){
+      $scope.showNewCommentsIndicator = false;
+    }
+    // if ($scope.isPeelUser){
+      if ($(document).scrollTop() > (tabsTop - headerHeight) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
+        tabs.addClass('fixTabsPeel');
+        tabs.css('top',headerHeight);
+        tabContainer.addClass('fixTabContainer');
+        fixed = true;
+      } else if (fixed) {
+        tabs.removeClass('fixTabsPeel');
+        tabs.css('top','');
+        tabContainer.removeClass('fixTabContainer');
+        fixed = false;
+      }
+    // } else {
+    //   if ($(document).scrollTop() > 96) {
+    //     tabs.addClass('fixTabs');
+    //     tabContainer.addClass('fixTabContainer');
+    //   } else {
+    //     tabs.removeClass('fixTabs');
+    //     tabContainer.removeClass('fixTabContainer');
+    //   }
+    // }
+  };
+
+  $(document).off('scroll');
   $(document).on('scroll', watchScroll);
 
 
 };
 
-topicModule.directive('repeatFinishedNotify', function () {
-  return function (scope, element, attrs) {
-    if (scope.$last){
-      // scope.scrollToBookmark();
-      console.log("DONE LOADING COMMENTS");
-      scope.hideLoading();
-    }
-  };
-});

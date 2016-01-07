@@ -5,34 +5,25 @@
         <img src="img/splash_graphic.png" id="splashGraphic"/>
       </div>
       <div class="graphicContainer">
-        <img src="img/peel_join.png" id="continue" ng-click="continueToExperience()"/>
+        <img ng-src="img/peel_join.png" id="continue" ng-click="continueToExperience()"/>
         <!-- <img src="img/kave_logo2.png" id="kaveLogo"/> -->
       </div>
     </div>
   </div>
 </section>
 
-<!-- <section id="xContent">
-  <div id="xContentUnderlay" ng-click="backToChat()">
-    <div id="xContentOverlay">
-      <div id="backToChat" ng-click="backToChat()"><img src="img/backButton-2x.png" />Back To Live Chat</div>
-      <div id="iframewrapper">
-        <iframe frameborder="0" id="xSrc" name="xLinkFrame">
-          
-        </iframe>
-      </div>
-    </div>
+<nav class="navbar navbar-fixed-top" id="header" ng-if="isPeelUser === true || isSmartStadiumUser === true">
+  <div id="peelNavBar" ng-if="isPeelUser === true">
+    <button class="btn-link peelButton" id="closePeelButton" ng-click="peelClose()"><img ng-src="img/backButton-2x.png"/></button>
+    <span id="peelText">Peel Bar</span>
+    <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()">Watch Channel</button>
   </div>
-</section> -->
-
+  <div id="smartStadiumHeader" ng-if="isSmartStadiumUser === true">
+    <span id="ssTeamsSpan">Arsenal @ Sunderland</span>
+  </div>
+</nav>
 <section id="topicSection" ng-controller="SocialController as social">
-  <nav class="navbar navbar-fixed-top" id="header">
-    <div id="peelNavBar" ng-if="isPeelUser == true">
-      <button class="btn-link peelButton" id="closePeelButton" ng-click="peelClose()"><img src="img/backButton-2x.png"/></button>
-      <span id="peelText">Peel Bar</span>
-      <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()">Watch Channel</button>
-    </div>
-    <div class="scoreCardContent clearfix">
+    <div class="scoreCardContent clearfix" ng-if="topicType === 'livegame' && !isMI16User">
 
       <div id="rightColor">
         <svg 
@@ -59,7 +50,7 @@
 
       <!-- Middle Row (Logo & Score) -->
       <div class="grid-row-45">
-        <span class="teamLogo" ng-class="{largeLogo: gameStatus === 'future'}"><img src={{leftTeam.logo}} /></span>
+        <span class="teamLogo" ng-class="{largeLogo: gameStatus === 'future'}"><img ng-src="{{leftTeam.logo}}" /></span>
 
         <span class="score score-left" ng-if="leftTeamScore.length < 3 && rightTeamScore.length < 3" ng-hide="gameStatus === 'future'">{{leftTeamScore}}</span>
         <span class="triple triple-left" ng-if="leftTeamScore.length === 3 || rightTeamScore.length === 3" ng-hide="gameStatus === 'future'">{{leftTeamScore}}</span>
@@ -77,7 +68,7 @@
       
       <!-- Top Row (Live OR VS) -->
       <div id="liveGameIndicator" class="grid-row-22">
-        <span ng-if="gameStatus === 'live'"><img src="img/live-2x.png"/></span>
+        <span ng-if="gameStatus === 'live'"><img ng-src="img/live-2x.png"/></span>
         <span id="vs" ng-if="gameStatus === 'future'">VS</span>
       </div>
       
@@ -101,7 +92,7 @@
       
       <!-- Bottom Row (All Scores Button) -->
       <div class="grid-row-33">
-        <span><a id="allScoresLink" href="{{allScoresURL}}" target="_blank">
+        <span ng-if="allScoresURL"><a id="allScoresLink" href="{{allScoresURL}}" target="_blank">
           <span id="allScoresSpan">{{allScoresTitle}}</span>
         </a></span>
       </div>
@@ -123,7 +114,7 @@
         <span class="score score-right" ng-if="rightTeamScore.length < 3 && leftTeamScore.length < 3" ng-hide="gameStatus === 'future'">{{rightTeamScore}}</span>
         <span class="triple triple-right" ng-if="rightTeamScore.length === 3 || leftTeamScore.length === 3" ng-hide="gameStatus === 'future'">{{rightTeamScore}}</span>
         
-        <span class="teamLogo" ng-class="{largeLogo: gameStatus === 'future'}"><img src={{rightTeam.logo}} /></span>
+        <span class="teamLogo" ng-class="{largeLogo: gameStatus === 'future'}"><img ng-src="{{rightTeam.logo}}" /></span>
       </div>
       
       <!-- Bottom Row (Ball Possession) -->
@@ -133,32 +124,39 @@
     </div>
 
   </div>
-</nav>
+<div ng-if="isMI16User">
+  <img id="MI16Banner" ng-src="img/MI16/MI16banner@3x.png" />
+</div>
+<div id="topicDetails" class="row" ng-if="isMI16User">
+  <div id="MI16Title">
+    Welcome to this year's MI16! Here we'll post highlights from the event
+  </div>
+</div>
 
-<div id="topicDetails" class="row" style="width=40%"> 
-  <div>
-    <b>{{topicTitle}}</b>
+<div id="topicDetails" class="row" ng-if="!isSmartStadiumUser && !isMI16User"> 
+  <div id="topicTitle">
+    {{topicTitle}}
   </div>
   <div id="topicDescriptionBody">
     {{topicDescHtml}}
   </div>
-  <!-- <div id="topicImage">
+  <div id="topicImage" ng-if="topicMediaUrl">
     <img ng-src="{{topicMediaUrl}}" class="topicPhoto" ng-click="imageClick(topicMediaUrl);" />
-  </div> -->    
+  </div>    
 
   <div class="topicSharingButtonsRow clearfix">
     <div class="grid-col-alt grid-col-50">
       <div id="headLike">
         <button class="btn-link topic-social-btn" ng-click="updateLikeTopic()" ng-switch="liked">
-          <img ng-switch-when="true" src="img/thumbsUp_select@2x.png"/> 
-          <img ng-switch-when="false" src="img/thumbsUp@2x.png"/> 
+          <img ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png"/> 
+          <img ng-switch-when="false" ng-src="img/thumbsUp@2x.png"/> 
         </button>
         <span class="socialButtonLabel fkFont">{{likesCount}} </span>
       </div>
     </div>
     <div class="grid-col-alt grid-col-50">
       <div id="headComment">
-        <button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img src="img/comment-3x.png"/> 
+        <button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img ng-src="img/comment-3x.png"/> 
         </button>
         <span class="socialButtonLabel fkFont">{{commentsCount}}</span>
       </div>
@@ -171,8 +169,50 @@
     </div> -->
   </div>
 </div>
+
+<!-- Smart Stadium -->
+<div ng-if="isSmartStadiumUser === true" ng-controller="SmartStadiumController as smart">
+  <div id="ssTopicControls">
+    <div id="ssHighlights" class="grid-col-alt grid-col-33">
+      <button class="btn-link" ng-click="smart.viewHighlights()">
+        <img id="ssHighImg" class="ss-btn" ng-src="img/SS/highlights@3x.png" />
+      </button>
+    </div>
+    <div id="ssRoster" class="grid-col-alt grid-col-34">
+      <button class="btn-link" ng-click="smart.viewRoster()">
+        <img id="ssRostImg" class="ss-btn" ng-src="img/SS/roster@3x.png" />
+      </button>
+    </div>
+    <div id="ssStats" class="grid-col-alt grid-col-33">
+      <button class="btn-link" ng-click="smart.viewStats()">
+        <img id="ssStatImg" class="ss-btn" ng-src="img/SS/stats@3x.png" />
+      </button>
+    </div>
+  </div>
+
+  <div id="ssStaticContainer" ng-if="smart.viewScreen === true" ng-switch="smart.ssActiveScreen">
+    <div id="ssHighlightsView" ng-switch-when="highlights"></div>
+    <div id="ssRosterView" ng-switch-when="roster"></div>
+    <div id="ssStatsView" ng-switch-when="stats"></div>
+    <div id="ssProfileStatsView" ng-switch-when="profileStats"></div>
+    <div id="ssExitView" ng-click="smart.exitView()"></div>
+    <div id="PSVHidden" ng-if="smart.ssActiveScreen === 'roster'" ng-click="smart.viewProfileStats()"></div>
+  </div>
+</div>
+
+
 <div id="inputControls">
-  <div class="tabContainer clearfix">
+  <!-- Tech MI16 Tabs -->
+  <div class="tabContainer clearfix" ng-if="isMI16User">
+    <div id="chatTab" class="grid-col grid-col-50 tab selectedTab" ng-click="switchTabs('chat')">
+      <span class="tabName">Chat</span>
+    </div>
+    <div id="socialTab" class="grid-col grid-col-50 tab" ng-click="social.initFeed('social')">
+      <span class="tabName">Social</span>
+    </div>
+  </div>
+  <!-- All Other Tabs -->
+  <div class="tabContainer clearfix" ng-if="!isMI16User">
     <div id="chatTab" class="grid-col grid-col-33 tab selectedTab" ng-click="switchTabs('chat')">
       <span class="tabName">Chat</span>
     </div>
@@ -197,7 +237,7 @@
     <form id="postCommentForm" ng-submit="user.postComment(commentText, true)">
       <div id="postCommentDiv" class="input-group">
         <label for="fileUpload" id="attachMediaIcon">
-          <img src="img/attach-media.png" />
+          <img ng-src="img/attach-media.png" />
         </label>
 
         <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText, true)">Post</button>
@@ -255,7 +295,7 @@
         </a>
       </div>
       <span id="pinIcon" ng-if="thisPost.pin == true">
-        <img src="img/pin@3x.png"/>
+        <img ng-src="img/pin@3x.png"/>
       </span>
     </span>
 
@@ -280,48 +320,45 @@
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="chatVideo">
+        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="chatVideo">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
         </video>
-      </div>  
-
-      <div class="socialButtonsRow">
-        <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
-          <img class="social-like" ng-switch-when="true" src="img/thumbsUp_select@2x.png"/> 
-          <img class="social-like" ng-switch-when="false" src="img/thumbsUp@2x.png"/> 
-          
-        </button>
-        <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
-
-        <button id="chatReply" class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
-          <img class="social-reply" src="img/shareCopy@2x.png"/> </button>
-          <span class="socialButtonLable"> Reply</span>
       </div>
-      <div class="sharingButtonsRow">
-        <div class="chatTimestamp">
-          <button class="btn-link social-btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
-            <img class="social-more" src="img/moreButton.png"/>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
 
-            <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
-            <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
-          </ul>
+      <!-- Begin Embed Content Shared to Chat -->
+      <embed-shared-content embed-post="thisPost.embed" ng-if="thisPost.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav="moreButtonTapped()"></embed-shared-content>
+      <!-- End Embed Content Shared to Chat -->
+
+      <div>
+        <div class="socialButtonsRow">
+          <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
+            <img class="social-like" ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png" /> 
+            <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUp@2x.png" /> 
+          </button>
+          <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
+        </div>
+        <div class="socialButtonsRow">  
+          <button id="chatReply" class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
+            <img class="social-reply" ng-src="img/shareCopy@2x.png" />
+          </button>
+            <span class="socialButtonLable"> Reply</span>
+        </div>
+        <div class="sharingButtonsRow">
+          <div class="chatMore" ng-click="moreButtonTapped()">
+            <button class="btn-link social-btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img class="social-more" ng-src="img/moreButton.png"/>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
+
+              <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
+              <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="moreRepliesContainer" ng-if="thisPost.replyCount === 1">
-        {{thisPost.replyCount}} more Reply
-      </div>
-      <div class="moreRepliesContainer" ng-if="thisPost.replyCount > 1">
-        {{thisPost.replyCount}} more Replies
-      </div>
+      <div class="moreRepliesContainer" ng-if="thisPost.replyCount === 1">1 more Reply</div>
+      <div class="moreRepliesContainer" ng-if="thisPost.replyCount > 1">{{thisPost.replyCount}} more Replies</div>
     </div>
-    <!-- <div class="moreRepliesContainer" ng-if="thisPost.replyCount === 1">
-      {{thisPost.replyCount}} more Reply
-    </div>
-    <div class="moreRepliesContainer" ng-if="thisPost.replyCount > 1">
-      {{thisPost.replyCount}} more Replies
-    </div> -->
   </div>
 
   <!-- Video Tab Content -->
@@ -334,7 +371,7 @@
           </a>
         </span>
         <span id="pinIcon" ng-if="thisPost.pin == true">
-          <img src="img/pin.png" />
+          <img ng-src="img/pin.png" />
         </span>
       </span>
       <div id="socialHeader">
@@ -342,7 +379,7 @@
           {{thisPost.postAuthorName}}
         </span>
         <span class="timestamp">
-          <img id="providerLogo" src="{{thisPost.providerLogo}}" />{{thisPost.postTimestamp}}
+          <img id="providerLogo" ng-src="{{thisPost.providerLogo}}" />{{thisPost.postTimestamp}}
         </span>
       </div>
       <div class="socialAlias">
@@ -357,7 +394,7 @@
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
+        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
         </video>
       </div> 
@@ -366,21 +403,38 @@
     <div class="socialButtonsRow socialText">
       
       <button class="btn-link social-btn" ng-click="">
-        <img class="social-metrics-reply" src="img/reply@2x.png"/>
+        <a href="https://twitter.com/intent/tweet?via=FanKave&in_reply_to={{thisPost.tweetId}}">
+          <img class="social-metrics-reply" ng-src="img/reply@2x.png"/>
+        </a>
       </button>
-      <!-- <span class="socialButtonLable"> {{thisPost.replyCount}}</span> -->
+      <span class="social-metrics-label"> {{thisPost.replyCount}}</span>
 
       <button class="btn-link social-btn socialRetweet" ng-click="">
         <!-- <img class="social-metrics-retweet" ng-switch-when="true" src="img/retweet_select@2x.png"/>  -->
-        <img class="social-metrics-retweet" src="img/retweet@2x.png" /> 
+        <a href="https://twitter.com/intent/retweet?tweet_id={{thisPost.tweetId}}">
+          <img class="social-metrics-retweet" ng-src="img/retweet@2x.png" />
+        </a>
       </button>
-      <span class="socialButtonLable">{{thisPost.retweetCount}}</span>
+      <span class="social-metrics-label">{{thisPost.retweetCount}}</span>
 
       <button class="btn-link social-btn socialFavorite" ng-click="">
         <!-- <img class="social-metrics-heart" ng-switch-when="true" src="img/heart_select@2x.png"/> --> 
-        <img class="social-metrics-heart" src="img/heart@2x.png" /> 
+        <a href="https://twitter.com/intent/like?tweet_id={{thisPost.tweetId}}">
+          <img class="social-metrics-heart" ng-src="img/heart@2x.png" />
+        </a> 
       </button>
-      <span class="socialButtonLable">{{thisPost.favoriteCount}}</span>
+      <span class="social-metrics-label">{{thisPost.likeCount}}</span>
+
+      <div class="social-share-container">
+        <button class="share-dd dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img class="social-share" ng-src="img/share@2x.png"/>
+          <span class="social-share-label">Share</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li><a ng-click="social.shareTweetToChat(thisPost.embed)">Share to Live Chat</a></li>
+          <li  ng-if="isPeelUser === false"><a ng-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
+        </ul>
+      </div>
 
     </div>
   </div>
@@ -395,7 +449,7 @@
           </a>
         </span>
         <span id="pinIcon" ng-if="thisPost.pin == true">
-          <img src="img/pin.png" />
+          <img ng-src="img/pin.png" />
         </span>
       </span>
       <div id="socialHeader">
@@ -403,7 +457,7 @@
           {{thisPost.postAuthorName}}
         </span>
         <span class="timestamp">
-          <img id="providerLogo" src="{{thisPost.providerLogo}}" />{{thisPost.postTimestamp}}
+          <img id="providerLogo" ng-src="{{thisPost.providerLogo}}" />{{thisPost.postTimestamp}}
         </span>
       </div>
       <div class="socialAlias">
@@ -417,36 +471,50 @@
       <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent socialContent" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
       </div>
 
-      <div class="imageContainer">
-        <div ng-switch-when="image" class="cropView" ng-style="{background:'url({{thisPost.mediaUrl}}) no-repeat','background-size':'cover','height':thisPost.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(thisPost.mediaUrl)">
-        </div>
+      <div class="imageContainer" ng-switch-when="image">
+        <img ng-src="{{thisPost.mediaUrl}}" class="cropView" ng-click="imageClick(thisPost.mediaUrl)" onerror="this.style.display='none';" />
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" poster="{{thisPost.mediaThumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
+        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
           </video>
-      </div> 
+      </div>
     </div> 
 
     <div class="socialButtonsRow socialText">
       
       <button class="btn-link social-btn" ng-click="">
-        <img class="social-metrics-reply" src="img/reply@2x.png"/>
+        <a href="https://twitter.com/intent/tweet?via=FanKave&in_reply_to={{thisPost.tweetId}}">
+          <img class="social-metrics-reply" ng-src="img/reply@2x.png"/>
+        </a>
       </button>
-      <!-- <span class="socialButtonLable"> {{thisPost.replyCount}}</span> -->
+      <span class="social-metrics-label"> {{thisPost.replyCount}}</span>
 
       <button class="btn-link social-btn socialRetweet" ng-click="">
-        <!-- <img class="social-metrics-retweet" ng-switch-when="true" src="img/retweet_select@2x.png"/>  -->
-        <img class="social-metrics-retweet" src="img/retweet@2x.png" /> 
+        <a href="https://twitter.com/intent/retweet?tweet_id={{thisPost.tweetId}}">
+          <img class="social-metrics-retweet" ng-src="img/retweet@2x.png" />
+        </a> 
       </button>
-      <span class="socialButtonLable">{{thisPost.retweetCount}}</span>
+      <span class="social-metrics-label">{{thisPost.retweetCount}}</span>
 
       <button class="btn-link social-btn socialFavorite" ng-click="">
-        <!-- <img class="social-metrics-heart" ng-switch-when="true" src="img/heart_select@2x.png"/> --> 
-        <img class="social-metrics-heart" src="img/heart@2x.png" /> 
+        <a href="https://twitter.com/intent/like?tweet_id={{thisPost.tweetId}}">
+          <img class="social-metrics-heart" ng-src="img/heart@2x.png" />
+        </a>
       </button>
-      <span class="socialButtonLable">{{thisPost.favoriteCount}}</span>
+      <span class="social-metrics-label">{{thisPost.likeCount}}</span>
+
+      <div class="social-share-container">
+        <button class="share-dd dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img class="social-share" ng-src="img/share@2x.png"/>
+          <span class="social-share-label">Share</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li><a ng-click="social.shareTweetToChat(thisPost.embed)">Share to Live Chat</a></li>
+          <li ng-if="isPeelUser === false"><a ng-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
+        </ul>
+      </div>
 
     </div>
   </div>
@@ -458,6 +526,8 @@
     <span id="moreContentText">Load More Videos</span>
   </div>
 </div>
+
+<share-to-chat-dialog ng-if="social.showShareDialog" this-post="social.embedShareContent" trust-source="trustSrc(videoSrc)" share-submit="social.submitSharedPost(commentData,embedData)" exit-share="social.exitShare()" highlight="social.highlightPost()" unhighlight="social.unhighlightPost()"></share-to-chat-dialog>
 
 <div id="mobileUserInput" class="clearfix" ng-if="activeTab === 'chat' && mobileBrowser === true" ng-controller="UserInputController as user">
 
@@ -473,7 +543,7 @@
     <form id="mobilePostCommentForm" ng-submit="user.postComment(commentText,true)">
       <div id="mobilePostCommentDiv" class="input-group">
         <label for="fileUpload" id="attachMediaIcon">
-          <img src="img/attach-media.png" />
+          <img ng-src="img/attach-media.png" />
         </label>
 
         <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,true)">Post</button>
@@ -498,7 +568,7 @@
 
 <div id="newCommentsAvailableIndicatorDiv" ng-show="showNewCommentsIndicator && activeTab === 'chat'">
   <center>
-    <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()"><img src="img/newCommentIndicator.png"/></button>
+    <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()"><img ng-src="img/newCommentIndicator.png"/></button>
   </center>
 </div>
 

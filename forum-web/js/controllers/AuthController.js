@@ -3,12 +3,45 @@ var authModule = angular.module("AuthModule", ["NetworkModule", "TopicModule"]);
 authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "AuthService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService", "URIHelper",
   function ($scope, $routeParams, $http, AuthService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
-    ga('send', 'pageview', 'Facebook Landing');
+    if (window.location.href.indexOf('?') !== -1){
+      var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
+      console.log("urlQueryStr: ", urlQueryStr);
+      if (urlQueryStr === 'MI16=true'){
+        $scope.techMIUser = true;
+        $scope.facebookUser = false;
+      }
+    } else {
+      $scope.facebookUser = true;
+      $scope.techMIUser = false;
+    }
+
+    if ($scope.facebookUser){
+      (function(d, s, id) {
+        console.log('loading FB SDK...');
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+      ga('send', 'pageview', 'Facebook Landing');
+    }
+    else {
+      ga('send', 'pageview', 'Tech MI16 Landing');
+    }
     // FACEBOOK AUTH SECTION
     $scope.showFacebookButton = true;
 
     $scope.loginToFacebook = function() {
       AuthService.loginToFacebook();
+    };
+
+
+    $scope.techMLogin = function(name, email, isValid) {
+      if (isValid){
+        AuthService.techMLogin(name, email);
+      }
+      $scope.submitted = true;
     };
 
     // load Facebook SDK and initialize
@@ -45,14 +78,6 @@ authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "Aut
 
     };
 
-    (function(d, s, id) {
-      console.log('loading FB SDK...');
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {return;}
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
 
     
 }]);

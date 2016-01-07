@@ -3,7 +3,11 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 	var peelUserName;
 	var peelUserId;
 	var peelShowId;
-	var peelParmas;
+
+	var ssUserName;
+	var ssUserId;
+
+	var _MI16;
 
 	function getUrlVars() {
 		var vars = [], hash;
@@ -21,7 +25,6 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 	return {
 		isPeelUser:function(){
 			var vars = getUrlVars();
-			console.log("")
 			if(vars["peel"]){
 				peelUserId = vars["userId"];
 				peelUserName = vars["userName"];
@@ -37,6 +40,28 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 			else
 			return false;
 		},
+		isSmartStadiumUser:function(){
+			var vars = getUrlVars();
+			if(vars["smartStadium"]){
+				ssUserId = vars["userId"];
+				ssUserName = vars["userName"];
+				ForumStorage.setToLocalStorage("forumSmartStadiumUserId",ssUserId);
+				return true;
+			}
+			return false;
+		},
+		isTechMUser:function(){
+			var vars = getUrlVars();
+			if (vars["MI16"]){
+				_MI16 = true;
+				ForumStorage.setToLocalStorage("techMIUser",true);
+				return true;
+			}
+			if (_MI16){
+				return true;
+			}
+			return false;
+		},
 		getPeelUserId:function(){
 			return peelUserId;
 		},
@@ -48,6 +73,12 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 		},
 		getPeelParams:function(){
 			return window.location.search.substring(1);
+		},
+		getSSUserId:function(){
+			return ssUserId;
+		},
+		getSSUserName:function(){
+			return ssUserName;
 		}
 
 

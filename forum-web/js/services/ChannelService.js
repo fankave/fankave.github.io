@@ -1,6 +1,6 @@
-channelModule.service('ChannelService', function (DateUtilityService,Bant,FDSUtility) {
+channelModule.factory('ChannelService', function (DateUtilityService,Bant,FDSUtility) {
 
-  
+
   var _channelId;
   var _liveTopicId;
 
@@ -15,13 +15,18 @@ channelModule.service('ChannelService', function (DateUtilityService,Bant,FDSUti
     }
   }
 
-  function getLiveGameTopic(){
-    var uri = "/v1.0/channel/topic/show/" + _channelId+"?type=livegame";
+  function getLiveGameTopic(channelId){
+    var reqChannelId = channelId || _channelId;
+    var uri = "/v1.0/channel/topic/show/" + reqChannelId + "?type=livegame";
+    if(reqChannelId == "404")
+    uri = "/v1.0/channel/topic/show/" + reqChannelId;
 
-    return  varTopicParams = {"rid": "channel",
-        "timestamp": new Date().getTime(),
-        "method": "GET",
-        "uri":uri };
+    var topicParams = {"rid": "channel",
+      "timestamp": new Date().getTime(),
+      "method": "GET",
+      "uri":uri };
+    console.log("Ch.getLiveGameTopic: ", topicParams);
+    return topicParams;
   }
 
   //call this when you know 'data' has been changed
@@ -46,8 +51,12 @@ channelModule.service('ChannelService', function (DateUtilityService,Bant,FDSUti
     setTopicData:setTopicData,
     getLiveTopicId:function(){ return _liveTopicId;},
     getLiveGameTopic:getLiveGameTopic,
-    setChannel: function(channelId){_channelId = channelId; },
-    getChannel: function(){return _channelId ; },
+    setChannel: function(channelId){
+      _channelId = channelId;
+    },
+    getChannel: function(){
+      return _channelId;
+    },
     registerObserverCallback:registerObserverCallback
 
 

@@ -1,9 +1,9 @@
-var rootModule = angular.module("Forum", ["ngRoute","ngSanitize","AuthModule","ChannelModule","TopicModule","PostModule","NetworkModule","MediaModule","SocialModule","UserInput"]);
+var rootModule = angular.module("Forum", ["ngRoute","ngSanitize","AuthModule","ChannelModule","TopicModule","PostModule","NetworkModule","MediaModule","SocialModule","UserInput","SmartStadiumModule"]);
 rootModule.config(["$routeProvider", "$locationProvider",
 
 function ($routeProvider, $locationProvider) {
   $routeProvider
-  .when('/', {
+  .when('/login', {
     templateUrl:'partials/facebookLogin.html',
     controller:'AuthController'
   })
@@ -23,10 +23,14 @@ function ($routeProvider, $locationProvider) {
     templateUrl:'partials/invalidTopic.html'
   })
   .otherwise({
-    redirectTo:'invalidTopic'
+    redirectTo:'/invalidTopic'
   });
 
-  // $locationProvider.html5Mode(true);
+  if (window.history && window.history.pushState && HTML5_LOC){
+    $locationProvider.html5Mode({
+      enabled:true
+    });
+  }
 }]);
 
 rootModule.filter('hashtags',['$filter', '$sce',

@@ -17,19 +17,19 @@ html {
 @font-face {
   font-family: "Proxima-Nova";
   font-weight: 200;
-  src: url('../img/ProximaNova-Light.otf');
+  src: url('http://fankave.github.io/img/ProximaNovaLight.otf');
 }
 
 @font-face {
   font-family: "Proxima-Nova";
   font-weight: 400;
-  src: url('../img/ProximaNova-Reg.otf');
+  src: url('http://fankave.github.io/img/ProximaNovaReg.otf');
 }
 
 @font-face {
   font-family: "Proxima-Nova";
   font-weight: 500;
-  src: url('../img/ProximaNova-Sbold.otf');
+  src: url('http://fankave.github.io/img/ProximaNovaSbold.otf');
 }
 
 body {
@@ -80,37 +80,51 @@ body
 
 /* Header / Nav Bars */
 
-#header
-{
-  height: 8em;
+#header {
+  /*height: 114px;*/
   text-align:center;
   color:white;
   max-width: 768px;
   margin: 0 auto;
 }
 
- #postHeader
-{
-  height: 8em;
+#postHeader {
   text-align:center;
   color:white;
   max-width: 768px;
   margin: 0 auto;
-}  
-#topicSection
-{
+}
+
+#topicSection {
   position:relative;
   max-width: 768px;
   margin: 0 auto;
-  background-color: #fff;
+  /*background-color: #fff;*/
   /*border-right: 1px solid rgb(238,238,238);
   border-left: 1px solid rgb(238,238,238);*/
 }
-@media all and (min-width: 770px) {
-  #topicSection {
-    /*border-right: 1px solid rgb(238,238,238);*/
-    /*border-left: 1px solid rgb(238,238,238);*/
-  }
+
+#smartStadiumHeader {
+  position: fixed;
+  z-index: 25;
+  height: 54px;
+  width: 100%;
+  max-width: 768px;
+  background-color: #ec2324;
+  text-align: center;
+  font-size: 18px;
+}
+
+#postSmartStadiumHeader {
+  position: fixed;
+  top: 0;
+  z-index: 25;
+  height: 54px;
+  width: 100%;
+  max-width: 768px;
+  background-color: #ec2324;
+  text-align: center;
+  font-size: 18px;
 }
 
 #mediaSection
@@ -122,8 +136,9 @@ body
 }
 
  #postSection{
+  width: 100%;
   max-width: 768px;
-  background-color: #fff;
+  /*background-color: #fff;*/
 } 
 
 /* Topic Details */
@@ -131,7 +146,6 @@ body
 #topicDetails {
   background-color: #fff;
   font-size:18px;
-  height:78px;
   padding-top:12px;
   margin:0 auto;
   text-align: center;
@@ -139,6 +153,11 @@ body
 
 #topicDescriptionBody {
   line-height: 1.1;
+}
+
+#topicTitle {
+  font-weight: 500;
+  margin-bottom: 5px;
 }
 
 
@@ -341,7 +360,7 @@ body
   font-size: 14px;
   float:left;
   color: rgb(29,29,29);
-  font-weight: bolder;
+  font-weight: 500;
 }
 
 .socialPostUsername
@@ -350,7 +369,7 @@ body
   float:left;
   color: rgb(29,29,29);
   padding-left:13px;
-  font-weight: bolder;
+  font-weight: 500;
 }
 
 .timestamp
@@ -367,6 +386,16 @@ body
   position: absolute;
   right: 0;
   padding-right: 12px;
+  font-size: 0.31em;
+  color: rgb(166, 189, 207);
+  text-align: right;
+}
+
+.chatMore {
+  position: absolute;
+  height: 28px;
+  right: 0;
+  padding: 0 12px 12px 12px;
   font-size: 0.31em;
   color: rgb(166, 189, 207);
   text-align: right;
@@ -419,10 +448,8 @@ body
 
 .topicPhoto
 {
-  width:100%;
-  height:auto;
-  /* max-width:100%;
-  max-height:100%; */
+  width:auto;
+  height:50px;
   margin-top:0.2em;
   margin-bottom:0.3em;
 }
@@ -473,6 +500,7 @@ body
 
 .imageContainer {
   position: relative;
+  text-align: center;
 }
 
 .cropView {
@@ -481,6 +509,7 @@ body
   max-width: 500px;
   max-height: 300px;
   margin: 0 auto;
+  margin-bottom: 14px;
 }
 
 .chatCropView {
@@ -517,11 +546,7 @@ body
   margin-bottom:0.1em;
 }
 
-.socialButtonsRow
-{
-  /*float:left;*/
-  /*background-color:gray;*/
-  /*padding-left: 13px;*/
+.socialButtonsRow {
   font-size: 12px;
   color: rgb(162,177,182);
   margin-bottom:0.1em;
@@ -570,7 +595,7 @@ body
 .social-metrics-reply {
   width: 14px;
   height: auto;
-  margin-bottom: 14px;
+  margin-bottom: 6px;
 }
 
 .socialRetweet {
@@ -580,6 +605,42 @@ body
 
 .socialFavorite {
   margin-left: 42px;
+}
+
+.social-share-container {
+  position: relative;
+  display: inline-block;
+  float: right;
+}
+
+.social-share {
+  vertical-align: text-top;
+  width: 17px;
+  height: auto;
+}
+
+.social-share-label {
+  font-size: 12px;
+  color: rgb(179,184,186);
+  padding-left: 2px;
+}
+
+.social-metrics-label {
+  float: left;
+  font-size: 12px;
+  padding-left: 2px;
+}
+
+.share-dd {
+  position: relative;
+  border-color: transparent;
+  background-color: transparent;
+  box-shadow: none;
+  top: -4px;
+}
+
+.dropdown-menu > li:hover {
+  cursor: pointer;
 }
 
 #chatLike {
@@ -687,7 +748,7 @@ input:focus + button {
 
 #postHeader
 {
-  height: 47px;
+  /*height: 47px;*/
   background-color:rgb(255,255,255);
   /*box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);*/
   border-bottom: 1px solid rgb(230,236,236);
@@ -696,29 +757,22 @@ input:focus + button {
 
 #backToTopicButton {
   position: relative;
-  float: left;
-  /*vertical-align: -70%;*/
-  height:100%;
-  width: 60%;
+  width: 100%;
   margin-left: 8px;
 }
 
 
 #backToTopicButton img {
   float: left;
-  /*width:24px;*/
   height: 14px;
   margin-top: 10px;
 }
 
 #backToTopicButton span {
   position: relative;
-  /*display: inline-block;*/
-  /*width: 80%;*/
   float: left;
   font-size: 16px;
-  font-weight: 600;
-  /*color: rgb(179,184,186);*/
+  font-weight: 500;
   top: 7px;
   margin-left: 5px;
 }
@@ -733,12 +787,13 @@ input:focus + button {
 }
 
 #post_backToTopicButtonSpan {
-  position: relative;
-  width: 100%;
-  height: 100%;
+  position: absolute;
   top: 4px;
-  /*float:left;*/
-  /*margin-left:-10px;*/
+  left: 0%;
+}
+
+#backToChatContainer {
+  height: 50px;
 }
 
 
@@ -763,7 +818,7 @@ input:focus + button {
   top: 0;
   background-color: rgb(48,48,48);
   height: 54px;
-  z-index: 10;
+  z-index: 25;
   width: 100%;
   max-width: 768px;
 }
@@ -801,13 +856,13 @@ input:focus + button {
   border: 1px solid rgb(87,87,87);
   color: rgb(90,90,90);
   font-size: 12px;
-  font-weight: bolder;
+  font-weight: 500;
 }
 
 #peelText {
   color: rgb(90,90,90);
   font-size: 14px;
-  font-weight: bolder;
+  font-weight: 500;
   vertical-align: -90%;
 }
 
@@ -1008,10 +1063,11 @@ button:hover {
 
 .scoreCardContent {
   width:100%;
+  max-width: 768px;
   height:114px;
   line-height: 1.2em;
-  position:absolute;
   z-index: 1;
+  color: #fff;
 }
 
 .svg-content {
@@ -1049,6 +1105,18 @@ button:hover {
 
 .grid-col-34 {
   width: 34%;
+}
+
+.grid-col-11 {
+  width: 11%;
+}
+
+.grid-col-16 {
+  width: 16%;
+}
+
+.grid-col-73 {
+  width: 73%;
 }
 
 #L-40 {
@@ -1616,7 +1684,7 @@ img-crop canvas {
 
 .fixTabsPeel {
   position: fixed;
-  top: 54px;
+  /*top: 54px;*/
   width: 100%;
   max-width: 768px;
   z-index: 10010;
@@ -1624,7 +1692,7 @@ img-crop canvas {
 
 .fixTabs {
   position: fixed;
-  top: 0px;
+  /*top: 0px;*/
   width: 100%;
   max-width: 768px;
   z-index: 10010;
@@ -1831,9 +1899,9 @@ img-crop canvas {
 .moreRepliesContainer {
   position: relative;
   height: 25px;
-  width: 104%;
+  width: 100%;
   background-color: rgb(248,248,248);
-  margin: 35px 0 2px 0;
+  margin: 40px 0 2px 0;
   text-align: center;
   font-size: 12px;
   color: rgb(162,177,182);
@@ -1844,6 +1912,7 @@ img-crop canvas {
   font-size: 12px;
 }
 
+/* Social/Video Tab Videos */
 .twitterVideo {
   width: 100%;
   max-width: 400px;
@@ -1871,7 +1940,38 @@ img-crop canvas {
 }
 
 .mp4VideoContainer {
-  margin-bottom: 15px;
+  /*margin-bottom: 15px;*/
+  text-align: center;
+}
+
+/* Embedded Videos */
+.embedTwitterVideo {
+  width: 100%;
+  max-width: 400px;
+  max-height: 250px;
+  padding-right: 0px;
+}
+
+.embedYoutubeVideo {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  padding-right: 0px;
+  margin: 0 auto;
+}
+
+.embedYoutubeVideo > iframe {
+  height: 250px;
+}
+
+.embedVineVideo {
+  width: 100%;
+  height: auto;
+  max-width: 300px;
+  padding-right: 0px;
+}
+
+.mp4EmbedVideoContainer {
   text-align: center;
 }
 
@@ -1961,3 +2061,321 @@ img-crop canvas {
   color: rgb(162,177,182);
   vertical-align: -40%;
 }
+
+
+/* Chat Embed Content */
+.chatEmbedContainer {
+  border: 1px solid rgb(211,214,215);
+  border-radius: 2px;
+  margin-bottom: 14px;
+  margin-top: 10px;
+}
+
+.embedSocialButtonsRow {
+  font-size: 12px;
+  color: rgb(162,177,182);
+  margin-bottom:0.1em;
+  height: 24px;
+}
+
+/* Share Embed Dialog */
+#sharePreviewContainer {
+  position: fixed;
+  top: 0px;
+  z-index: 20;
+  background-color: #fff;
+  padding: 15px;
+  width: 100%;
+  max-width: 768px;
+  height: 100vh;
+  border: 1px solid rgb(211,214,215);
+  box-shadow: 0px 5px 5px rgb(179,184,186);
+}
+
+.shareFormContainer {
+  position: relative;
+  width: 100%;
+}
+
+#shareEmbedComment {
+  font-size: 16px;
+  color: rgb(31,35,38);
+  padding: 5px 5px 0px 5px;
+  height: 50px;
+  width: 80%;
+  border: none;
+  resize: none;
+}
+
+#postShareContent {
+  float: right;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(211,214,215);
+  width: 20%;
+  text-align: center;
+}
+
+.embedTimestamp {
+  float: right;
+  color: rgb(166,189,207);
+  text-align: right;
+  font-size: 12px;
+}
+
+.exitShare {
+  font-size: 20px;
+  font-weight: 600;
+  padding-left: 5px;
+}
+
+/* Smart Stadium */
+#ssTopicControls {
+  background-color: #fff;
+  height: 42px;
+  padding-top: 1px;
+  text-align: center;
+}
+
+#ssHighlights {
+  text-align: right;
+  padding-top: 2px;
+}
+
+#ssStats {
+  text-align: left;
+}
+
+#ssTeamsSpan {
+  position: relative;
+  vertical-align: -24px;
+}
+
+#ssHighImg {
+  height: 21px;
+  width: auto;
+  right: -9px;
+}
+
+#ssRostImg {
+  height: 18px;
+  width: auto;
+}
+
+#ssStatImg {
+  height: 18px;
+  width: auto;
+  left: -9px;
+}
+
+.ss-btn {
+  position: relative;
+  vertical-align: -50%;
+}
+
+#ssStaticContainer {
+  position: fixed;
+  top: 0px;
+  background-color: #fff;
+  z-index: 30;
+  width: 100%;
+  max-width: 768px;
+  height: 100vh;
+}
+
+#ssHighlightsView {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 100vh;
+  max-width: 768px;
+  z-index: 31;
+  background: url("http://fankave.github.io/img/SS/ss_highlights@3x.png") no-repeat;
+  background-size: cover;
+  background-attachment: scroll;
+}
+
+#ssRosterView {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 100vh;
+  max-width: 768px;
+  z-index: 31;
+  background: url("http://fankave.github.io/img/SS/ss_roster@3x.png") no-repeat;
+  background-size: cover;
+  background-attachment: scroll;
+}
+
+#ssStatsView {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 100vh;
+  max-width: 768px;
+  z-index: 31;
+  background: url("http://fankave.github.io/img/SS/ss_stats@3x.png") no-repeat;
+  background-size: cover;
+  background-attachment: scroll;
+}
+
+#ssProfileStatsView {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 100vh;
+  max-width: 768px;
+  z-index: 31;
+  background: url("http://fankave.github.io/img/SS/ss_profile_stats@3x.png") no-repeat;
+  background-size: cover;
+  background-attachment: scroll;
+}
+
+#ssExitView {
+  position: fixed;
+  top: 0px;
+  background-color: transparent;
+  width: 100%;
+  max-width: 768px;
+  height: 72px;
+  z-index: 35;
+}
+
+#PSVHidden {
+  position: fixed;
+  top: 72px;
+  background-color: transparent;
+  width: 100%;
+  max-width: 768px;
+  height: 600px;
+  z-index: 35;
+}
+
+/* Tech MI16 */
+
+#techPage {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #90beef;
+  background: -webkit-linear-gradient(rgb(244,252,255), rgb(131,178,234), rgb(18,65,195));
+  background: -o-linear-gradient(rgb(244,252,255), rgb(131,178,234), rgb(18,65,195));
+  background: -moz-linear-gradient(rgb(244,252,255), rgb(131,178,234), rgb(18,65,195));
+  background: linear-gradient(rgb(244,252,255), rgb(131,178,234), rgb(18,65,195));
+}
+
+#techLoginContainer {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 500px;
+  height: 100vh;
+  padding: 40px 35px;
+}
+
+#techLoginHeader h1 {
+  font-size: 60px;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+
+#techLoginHeader h3 {
+  font-size: 22px;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+
+#techLoginHeader h4 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom:34px;
+}
+
+.techHelp {
+  position: absolute;
+  margin: 0;
+}
+.nameHelp {
+  top: 271px;
+}
+.emailHelp {
+  top: 338px;
+}
+
+#techLoginButton {
+  width: 100%;
+  height: 70px;
+  margin: 30px 0;
+  font-size: 28px;
+  color: #fff;
+  background-color: rgb(186,186,186);
+  border-radius: 35px;
+  border: none;
+}
+#techLoginButton:hover {
+  cursor: pointer;
+}
+
+#techLoginDescription {
+  color: #fff;
+}
+
+#formInstruct {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.techMInput {
+  width: 100%;
+  height: 46px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 20px;
+  padding-left: 15px;
+  font-size: 20px;
+  font-weight: 200;
+  color: #000;
+}
+
+.techMInput::-moz-placeholder {
+  font-size: 20px;
+  font-weight: 200;
+  color: rgb(167,167,167);
+  opacity: 1;
+}
+.techMInput:-ms-input-placeholder {
+  font-size: 20px;
+  font-weight: 200;
+  color: rgb(167,167,167);
+  opacity: 1;
+}
+.techMInput::-webkit-input-placeholder {
+  font-size: 20px;
+  font-weight: 200;
+  color: rgb(167,167,167);
+  opacity: 1;
+}
+.techMInput:focus {
+  border-color: rgb(22,189,231);
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+#MI16Title {
+  font-weight: 500;
+  margin-bottom: 5px;
+  text-align: left;
+  padding: 0 20px;
+}
+
+#MI16Banner {
+  width: 100%;
+  max-width: 768px;
+  height: auto;
+}
+

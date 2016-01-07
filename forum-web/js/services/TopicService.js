@@ -6,6 +6,7 @@ topicModule.service('TopicService', function (DateUtilityService,Bant,FDSUtility
   var WATCH_TOPIC_URI = "/v1.0/topic/watch/";
   
   var _channelId;
+  var _userType;
   
   var _isTopicWatched = false;
   var _topic;

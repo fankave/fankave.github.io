@@ -105,8 +105,10 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
     if(data.error){
       console.log("Topic Error message from network: ", data.error);
     }
-    else
+    else {
+      console.log("delegateSetChannel: ", data);
       ChannelService.setTopicData(data);
+    }
   }
   
   function delegateSetSocial(data) {

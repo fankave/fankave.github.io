@@ -1,0 +1,16 @@
+<div id="sharePreviewContainer">
+
+  <div class="exitShare" ng-click="exitShare()">
+    <span>X</span>
+  </div>
+
+  <div class="shareFormContainer">
+    <form class="shareEmbedForm" ng-submit="shareSubmit({commentData:commentData,embedData:thisPost})">
+      <textarea id="shareEmbedComment" cols="40" rows="3" placeholder="Say something about this post..." ng-model="commentData" ng-focus="highlight()" ng-blur="unhighlight()"></textarea>
+      <button id="postShareContent" class="btn btn-default" type="button" ng-click="shareSubmit({commentData:commentData,embedData:thisPost})">Share</button>
+    </form>
+  </div>
+
+  <embed-shared-content embed-post="thisPost" image-zoom="" trust-source="trustSrc(videoSrc)" prevent-nav=""></embed-shared-content>
+
+</div>
