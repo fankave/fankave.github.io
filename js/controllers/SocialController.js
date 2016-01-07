@@ -90,6 +90,7 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
           tempItem.tweetId = feedData[i].tweet.id;
           
           tempItem.postTimestamp = feedData[i].embedCreatedAt;
+          tempItem.orderTime = feedData[i].embedCreatedAtFull;
           tempItem.providerName = feedData[i].embedProvider.name;
           tempItem.html = feedData[i].embedText;
           tempItem.retweetCount = feedData[i].tweet.metrics.retweetCount;
