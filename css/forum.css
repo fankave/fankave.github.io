@@ -2374,6 +2374,8 @@ img-crop canvas {
 }
 
 #MI16Banner {
-
+  width: 100%;
+  max-width: 768px;
+  height: auto;
 }
 
