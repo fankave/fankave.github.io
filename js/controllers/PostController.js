@@ -62,15 +62,15 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
   if (UserInfoService.isPeelUser()){
     $scope.isPeelUser = true;
     SplashService.hidePeelSplash = true;
+    $scope.setPeelUI('peel');
   }
   else if (UserInfoService.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
+    $scope.setPeelUI('email');
   }
   else if (UserInfoService.isMI16User()){
     $scope.isMI16User = true;
   }
-  var _userType = UserInfoService.getUserType();
-	$scope.setPeelUI(_userType);
 
 	$scope.requestReplies = function(){
 		// console.log("PostController requestReplies Invoked");
