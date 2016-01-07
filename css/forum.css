@@ -2290,9 +2290,10 @@ img-crop canvas {
 }
 
 #techLoginHeader h4 {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   margin-top: 0;
+  margin-bottom:34px;
 }
 
 #techLogin {
@@ -2308,6 +2309,7 @@ img-crop canvas {
 }
 
 #formInstruct {
+  display: block;
   margin-bottom: 14px;
 }
 
@@ -2317,23 +2319,24 @@ img-crop canvas {
   border-radius: 5px;
   border: none;
   margin-bottom: 20px;
+  padding-left: 15px;
 }
 
 .techMInput::-moz-placeholder {
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 20px;
+  font-weight: 200;
   color: rgb(167,167,167);
   opacity: 1;
 }
 .techMInput:-ms-input-placeholder {
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 20px;
+  font-weight: 200;
   color: rgb(167,167,167);
   opacity: 1;
 }
 .techMInput::-webkit-input-placeholder {
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 20px;
+  font-weight: 200;
   color: rgb(167,167,167);
   opacity: 1;
 }
