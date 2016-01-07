@@ -7,6 +7,8 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 	var ssUserName;
 	var ssUserId;
 
+	var _MI16;
+
 	function getUrlVars() {
 		var vars = [], hash;
 		var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
@@ -44,6 +46,18 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 				ssUserId = vars["userId"];
 				ssUserName = vars["userName"];
 				ForumStorage.setToLocalStorage("forumSmartStadiumUserId",ssUserId);
+				return true;
+			}
+			return false;
+		},
+		isTechMUser:function(){
+			var vars = getUrlVars();
+			if (vars["MI16"]){
+				_MI16 = true;
+				ForumStorage.setToLocalStorage("techMIUser",true);
+				return true;
+			}
+			if (_MI16){
 				return true;
 			}
 			return false;

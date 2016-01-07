@@ -30,7 +30,10 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   if (UserInfoService.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
   }
-  if(UserInfoService.isPeelUser() === true){
+  else if (UserInfoService.isMI16User()){
+    $scope.isMI16User = true;
+  }
+  else if(UserInfoService.isPeelUser() === true){
     $scope.isPeelUser = true;
     if (!UserInfoService.hasUserVisited()){
       console.log('USER HASNT VISITED');
@@ -69,11 +72,11 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
         $('#topicSection').css('padding-top','54px');
       } else if ($scope.isSmartStadiumUser){
         $('#topicSection').css('padding-top','54px');
+      } else if ($scope.isMI16User){
+        // $('#topicSection').css('padding-top','54px');
       } else {
         $('#topicSection').css('padding-top','0px');
       }
-    } else {
-      $('#topicDetails').removeClass('topicDetailsHeight');
     }
   };
   
@@ -268,6 +271,9 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     $scope.isSmartStadiumUser = true;
     console.log("SS User? ", $scope.isSmartStadiumUser);
     AuthService.loginWithEmail();
+  }
+  else if (URIHelper.isTechMUser()){
+    $window.location = "#/login?MI16=true";
   }
   else if (URIHelper.isPeelUser()){
     $scope.isPeelUser = true;
