@@ -48,7 +48,7 @@ function initTopicController($scope,$window,$location,$sce,$routeParams,networkS
     $scope.isSmartStadiumUser = true;
     AuthService.loginWithEmail();
   }
-  else if (URIHelper.isTechMUser()){
+  else if ($scope.urlQueryStr === 'MI16=true'){
     $window.location = "/#/login?MI16";
   }
   else {
