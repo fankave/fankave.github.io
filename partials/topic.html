@@ -136,7 +136,7 @@
     <img ng-src="{{topicMediaUrl}}" class="topicPhoto" ng-click="imageClick(topicMediaUrl);" />
   </div>    
 
-  <div class="topicSharingButtonsRow clearfix">
+  <div class="topicSharingButtonsRow clearfix" ng-if="!isMI16User">
     <div class="grid-col-alt grid-col-50">
       <div id="headLike">
         <button class="btn-link topic-social-btn" ng-click="updateLikeTopic()" ng-switch="liked">

@@ -77,8 +77,6 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       } else {
         $('#topicSection').css('padding-top','0px');
       }
-    } else {
-      $('#topicDetails').removeClass('topicDetailsHeight');
     }
   };
   
