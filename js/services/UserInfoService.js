@@ -34,7 +34,7 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 	}
 
 	function setUserCredentials(userId, accessToken, sessionId, userType){
-		// console.log("setUserCredentials(" + userId + ", " + accessToken + ", " + sessionId);
+		console.log("setUserCredentials: ", userId, accessToken, sessionId, userType);
 		_userInfo = {};
 		_userInfo.userId = userId;
 		_userInfo.accessToken = accessToken;
