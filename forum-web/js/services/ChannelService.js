@@ -18,6 +18,8 @@ channelModule.factory('ChannelService', function (DateUtilityService,Bant,FDSUti
   function getLiveGameTopic(channelId){
     var reqChannelId = channelId || _channelId;
     var uri = "/v1.0/channel/topic/show/" + reqChannelId + "?type=livegame";
+    if(reqChannelId == "404")
+    uri = "/v1.0/channel/topic/show/" + reqChannelId;
 
     var topicParams = {"rid": "channel",
       "timestamp": new Date().getTime(),
