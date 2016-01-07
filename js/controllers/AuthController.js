@@ -3,18 +3,19 @@ var authModule = angular.module("AuthModule", ["NetworkModule", "TopicModule"]);
 authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "AuthService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService", "URIHelper",
   function ($scope, $routeParams, $http, AuthService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
-    $scope.techMIUser = false;
-    $scope.facebookUser = true;
     if (window.location.href.indexOf('?') !== -1){
       var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
       console.log("urlQueryStr: ", urlQueryStr);
       if (urlQueryStr === 'MI16'){
         $scope.techMIUser = true;
         $scope.facebookUser = false;
+      } else {
+        $scope.techMIUser = false;
+        $scope.facebookUser = true;
       }
     }
 
-    if ($scope.facebookUser || $scope.techMIUser === false){
+    if ($scope.facebookUser){
       (function(d, s, id) {
         console.log('loading FB SDK...');
         var js, fjs = d.getElementsByTagName(s)[0];
