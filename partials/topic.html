@@ -286,7 +286,7 @@
   </div>
 
   <!-- Chat Tab Content -->
-  <div ng-switch-when="chat" ng-repeat="thisPost in commentsArray | orderBy: '-createdAtFull' track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="chat" ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
 
     <span class="postAuthorPhoto">
       <div>
