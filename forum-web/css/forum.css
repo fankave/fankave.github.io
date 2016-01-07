@@ -151,16 +151,13 @@ body
   text-align: center;
 }
 
-.topicDetailsHeight {
-  min-height:78px;
-}
-
 #topicDescriptionBody {
   line-height: 1.1;
 }
 
 #topicTitle {
   font-weight: 500;
+  margin-bottom: 5px;
 }
 
 
@@ -2240,17 +2237,145 @@ img-crop canvas {
   background-color: transparent;
   width: 100%;
   max-width: 768px;
-  height: 80px;
+  height: 72px;
   z-index: 35;
 }
 
 #PSVHidden {
   position: fixed;
-  top: 80px;
+  top: 72px;
   background-color: transparent;
   width: 100%;
   max-width: 768px;
   height: 600px;
   z-index: 35;
+}
+
+/* Tech MI16 */
+
+#techPage {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #90beef;
+  background: -webkit-linear-gradient(rgb(244,252,255), rgb(131,178,234), rgb(18,65,195));
+  background: -o-linear-gradient(rgb(244,252,255), rgb(131,178,234), rgb(18,65,195));
+  background: -moz-linear-gradient(rgb(244,252,255), rgb(131,178,234), rgb(18,65,195));
+  background: linear-gradient(rgb(244,252,255), rgb(131,178,234), rgb(18,65,195));
+}
+
+#techLoginContainer {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 500px;
+  height: 100vh;
+  padding: 40px 35px;
+}
+
+#techLoginHeader h1 {
+  font-size: 60px;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+
+#techLoginHeader h3 {
+  font-size: 22px;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+
+#techLoginHeader h4 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom:34px;
+}
+
+.techHelp {
+  position: absolute;
+  margin: 0;
+}
+.nameHelp {
+  top: 271px;
+}
+.emailHelp {
+  top: 338px;
+}
+
+#techLoginButton {
+  width: 100%;
+  height: 70px;
+  margin: 30px 0;
+  font-size: 28px;
+  color: #fff;
+  background-color: rgb(186,186,186);
+  border-radius: 35px;
+  border: none;
+}
+#techLoginButton:hover {
+  cursor: pointer;
+}
+
+#techLoginDescription {
+  color: #fff;
+}
+
+#formInstruct {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.techMInput {
+  width: 100%;
+  height: 46px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 20px;
+  padding-left: 15px;
+  font-size: 20px;
+  font-weight: 200;
+  color: #000;
+}
+
+.techMInput::-moz-placeholder {
+  font-size: 20px;
+  font-weight: 200;
+  color: rgb(167,167,167);
+  opacity: 1;
+}
+.techMInput:-ms-input-placeholder {
+  font-size: 20px;
+  font-weight: 200;
+  color: rgb(167,167,167);
+  opacity: 1;
+}
+.techMInput::-webkit-input-placeholder {
+  font-size: 20px;
+  font-weight: 200;
+  color: rgb(167,167,167);
+  opacity: 1;
+}
+.techMInput:focus {
+  border-color: rgb(22,189,231);
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+#MI16Title {
+  font-weight: 500;
+  margin-bottom: 5px;
+  text-align: left;
+  padding: 0 20px;
+}
+
+#MI16Banner {
+  width: 100%;
+  max-width: 768px;
+  height: auto;
 }
 

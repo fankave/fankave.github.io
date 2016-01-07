@@ -23,7 +23,7 @@
   </div>
 </nav>
 <section id="topicSection" ng-controller="SocialController as social">
-    <div class="scoreCardContent clearfix" ng-if="topicType === 'livegame'">
+    <div class="scoreCardContent clearfix" ng-if="topicType === 'livegame' && !isMI16User">
 
       <div id="rightColor">
         <svg 
@@ -124,8 +124,16 @@
     </div>
 
   </div>
+<div ng-if="isMI16User">
+  <img id="MI16Banner" ng-src="img/MI16/MI16banner@3x.png" />
+</div>
+<div id="topicDetails" class="row" ng-if="isMI16User">
+  <div id="MI16Title">
+    Welcome to this year's MI16! Here we'll post highlights from the event
+  </div>
+</div>
 
-<div id="topicDetails" class="topicDetailsHeight row" ng-if="!isSmartStadiumUser"> 
+<div id="topicDetails" class="row" ng-if="!isSmartStadiumUser && !isMI16User"> 
   <div id="topicTitle">
     {{topicTitle}}
   </div>
@@ -194,7 +202,17 @@
 
 
 <div id="inputControls">
-  <div class="tabContainer clearfix">
+  <!-- Tech MI16 Tabs -->
+  <div class="tabContainer clearfix" ng-if="isMI16User">
+    <div id="chatTab" class="grid-col grid-col-50 tab selectedTab" ng-click="switchTabs('chat')">
+      <span class="tabName">Chat</span>
+    </div>
+    <div id="socialTab" class="grid-col grid-col-50 tab" ng-click="social.initFeed('social')">
+      <span class="tabName">Social</span>
+    </div>
+  </div>
+  <!-- All Other Tabs -->
+  <div class="tabContainer clearfix" ng-if="!isMI16User">
     <div id="chatTab" class="grid-col grid-col-33 tab selectedTab" ng-click="switchTabs('chat')">
       <span class="tabName">Chat</span>
     </div>

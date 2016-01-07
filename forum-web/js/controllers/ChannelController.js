@@ -48,6 +48,10 @@ function initTopicController($scope,$window,$location,$sce,$routeParams,networkS
     $scope.isSmartStadiumUser = true;
     AuthService.loginWithEmail();
   }
+  else if (URIHelper.isTechMUser()){
+    console.log("MI16 User Detected");
+    $window.location = "#/login?MI16=true";
+  }
   else {
     if(URIHelper.isPeelUser()){
       $scope.isPeelUser = true;
