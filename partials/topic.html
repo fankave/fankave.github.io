@@ -194,7 +194,17 @@
 
 
 <div id="inputControls">
-  <div class="tabContainer clearfix">
+  <!-- Tech MI16 Tabs -->
+  <div class="tabContainer clearfix" ng-if="isMI16User">
+    <div id="chatTab" class="grid-col grid-col-50 tab selectedTab" ng-click="switchTabs('chat')">
+      <span class="tabName">Chat</span>
+    </div>
+    <div id="socialTab" class="grid-col grid-col-50 tab" ng-click="social.initFeed('social')">
+      <span class="tabName">Social</span>
+    </div>
+  </div>
+  <!-- All Other Tabs -->
+  <div class="tabContainer clearfix" ng-if="!isMI16User">
     <div id="chatTab" class="grid-col grid-col-33 tab selectedTab" ng-click="switchTabs('chat')">
       <span class="tabName">Chat</span>
     </div>
