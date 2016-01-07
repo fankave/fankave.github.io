@@ -54,7 +54,9 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
         tabArray = _this.socialArray;
       } else {
         feedData = VideoService.videoArray();
+        debugger;
         _this.videoArray = _this.videoArray || [];
+        debugger;
         existingLength = _this.videoArray.length;
         tabArray = _this.videoArray;
       }
@@ -65,16 +67,20 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
         for (var i = 0; i < len; i++){
           var tempItem = feedData[i];
+          debugger;
 
           // Check to See if Item Already Exists in Scope Array
           var itemExists = false;
           for (var j = 0; j < existingLength; j++){
+            debugger;
             if (tempItem.id === tabArray[j].id){
               itemExists = true;
+              debugger;
             }
           }
           // If Exists, Skip To Next Item
           if (itemExists){
+            debugger;
             continue;
           }
           
@@ -116,10 +122,11 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
             tempItem.mediaAspectFeed = feedData[i].embedMedia.mediaAspectFeed;
             tempItem.mediaAspectFull = feedData[i].embedMedia.mediaAspectFull;
           }
-
+          debugger;
           if (tab === 'social'){
             _this.socialArray.push(tempItem);
           } else {
+            debugger;
             _this.videoArray.push(tempItem);
           }
         }
