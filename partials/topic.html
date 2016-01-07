@@ -229,7 +229,7 @@
       <button type="button" id="removeMedia" class="fkFont" ng-click="user.removeMedia()">X
       </button>
     </div>
-    <div id="uploadControls" ng-if="user.uploader.queue.length > 0">
+    <div id="uploadControls" ng-if="user.uploader.isUploading && user.uploader.queue.length > 0">
         <div class="progress" style="margin-bottom: 0;">
           <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
         </div>
@@ -535,7 +535,7 @@
       <button type="button" id="removeMedia" class="fkFont" ng-click="user.removeMedia()">X
       </button>
     </div>
-    <div id="mobileUploadControls" ng-if="user.uploader.queue.length > 0">
+    <div id="mobileUploadControls" ng-if="user.uploader.isUploading && user.uploader.queue.length > 0">
       <div class="progress mobileProgress">
         <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
       </div>
