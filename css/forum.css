@@ -2256,10 +2256,9 @@ img-crop canvas {
 
 /* Tech MI16 */
 
-#techLoginContainer {
+#techPage {
   position: fixed;
   width: 100%;
-  max-width: 768px;
   height: 100vh;
   background: #90beef;
   background: -webkit-linear-gradient(#f3fbfe, #1342c4);
@@ -2268,8 +2267,27 @@ img-crop canvas {
   background: linear-gradient(#f3fbfe, #1342c4);
 }
 
-#techLoginHeader {
+#techLoginContainer {
+  position: fixed;
+  width: 100%;
+  max-width: 500px;
+  height: 100vh;
+  padding: 40px 35px;
+}
 
+#techLoginHeader h1 {
+  font-size: 54px;
+  font-weight: 600;
+}
+
+#techLoginHeader h3 {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+#techLoginHeader h4 {
+  font-size: 16px;
+  font-weight: 500;
 }
 
 #techLogin {

@@ -10,33 +10,35 @@
   </div>
 </section>
 <!-- Tech MI16 Login -->
-<section ng-if="techMIUser" id="techLoginContainer">
+<section ng-if="techMIUser" id="techPage">
+  <div id="techLoginContainer">
 
-  <div id="techLoginHeader">
-    <h1>MI16</h1>
-    <h3>Mission Innovation</h3>
-    <h4>Tech Mahindra</h4>
+    <div id="techLoginHeader">
+      <h1>MI16</h1>
+      <h3>Mission Innovation</h3>
+      <h4>Tech Mahindra</h4>
+    </div>
+
+    <div id="techLogin">
+
+      <span id="formInstruct">Log in by providing your name and email</span>
+      <form id="techLoginForm" name="techMForm" ng-submit="techMLogin(name,email,techMForm.$valid)" novalidate>
+
+        <div>
+          <input type="text" name="name" ng-class="{ 'has-error' : techMForm.name.$invalid && !techMForm.name.$pristine && submitted }" class="techMInput" ng-model="name" placeholder="Enter name" ng-focus="" ng-blur="" required>
+          <p ng-show="techMForm.name.$invalid && !techMForm.name.$pristine" class="techHelp">Your name is required.</p>
+        </div>
+        <div>
+          <input type="email" name="email" ng-class="{ 'has-error' : techMForm.email.$invalid && !techMForm.email.$pristine && submitted }" class="techMInput" ng-model="email" placeholder="Enter email" ng-focus="" ng-blur="" required>
+          <p ng-show="techMForm.email.$invalid && !techMForm.email.$pristine" class="techHelp">Enter a valid email.</p>
+        </div>
+        <button type="submit" id="techLoginButton" class="btn btn-default" ng-disabled="techMForm.name === '' || techMForm.email === ''">Log In</button>
+
+      </form>
+
+    </div>
+
+    <div id="techLoginDescription"></div>
+
   </div>
-
-  <div id="techLogin">
-
-    <span id="formInstruct">Log in by providing your name and email</span>
-    <form id="techLoginForm" name="techMForm" ng-submit="techMLogin(name,email,techMForm.$valid)" novalidate>
-
-      <div>
-        <input type="text" name="name" ng-class="{ 'has-error' : techMForm.name.$invalid && !techMForm.name.$pristine && submitted }" class="techMInput" ng-model="name" placeholder="Enter name" ng-focus="" ng-blur="" required>
-        <p ng-show="techMForm.name.$invalid && !techMForm.name.$pristine" class="techHelp">Your name is required.</p>
-      </div>
-      <div>
-        <input type="email" name="email" ng-class="{ 'has-error' : techMForm.email.$invalid && !techMForm.email.$pristine && submitted }" class="techMInput" ng-model="email" placeholder="Enter email" ng-focus="" ng-blur="" required>
-        <p ng-show="techMForm.email.$invalid && !techMForm.email.$pristine" class="techHelp">Enter a valid email.</p>
-      </div>
-      <button type="submit" id="techLoginButton" class="btn btn-default" ng-disabled="techMForm.name === '' || techMForm.email === ''">Log In</button>
-
-    </form>
-
-  </div>
-
-  <div id="techLoginDescription"></div>
-
 </section>
