@@ -84,7 +84,7 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 			console.log("ForumStorage.getFromLocalStorage: "+ForumStorage.getFromLocalStorage("forumUserType"));
 			if(_userType === "peel")
 				return true;
-			if(ForumStorage.getFromLocalStorage("forumUserType") == "peel")
+			if(ForumStorage.getFromLocalStorage("forumUserType") === "peel")
 				return true;
 			return false;
 		},
@@ -98,6 +98,9 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 			if(_userType === "email"){
 				return true;
 			}
+			if (ForumStorage.getFromLocalStorage("forumUserType") === "email"){
+				return true;
+			}
 			return false;
 		},
 		isMI16User:function(){
@@ -108,6 +111,9 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 				return true;
 			}
 			if(_userType === "MI16"){
+				return true;
+			}
+			if (ForumStorage.getFromLocalStorage("forumUserType") === "MI16"){
 				return true;
 			}
 			return false;
