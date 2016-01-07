@@ -3,7 +3,6 @@ var authModule = angular.module("AuthModule", ["NetworkModule", "TopicModule"]);
 authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "AuthService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService", "URIHelper",
   function ($scope, $routeParams, $http, AuthService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
-    $scope.facebookUser = true;
     if (window.location.href.indexOf('?') !== -1){
       var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
       console.log("urlQueryStr: ", urlQueryStr);
@@ -11,6 +10,9 @@ authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "Aut
         $scope.techMIUser = true;
         $scope.facebookUser = false;
       }
+    } else {
+      $scope.facebookUser = true;
+      $scope.techMIUser = false;
     }
 
     if ($scope.facebookUser){
