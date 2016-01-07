@@ -3,7 +3,6 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
     function ($scope,$window,$timeout,$routeParams,networkService,TopicService,CommentService,ReplyService,UserInfoService,FileUploader,MUService){
 
       // ATTACH MEDIA
-      var MUS_SERVER_URI = 'https://dev.fankave.com:8080';
       var UPLOAD_URL = '/v1.0/media/upload';
 
       var uploader = this.uploader = new FileUploader({
