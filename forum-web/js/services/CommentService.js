@@ -55,7 +55,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
     if(tempComment!= undefined){
       var _commentObject = {};
       _commentObject = Bant.bant(tempComment);
-      if(_commentObject.id != undefined && _commentObject.html != undefined){
+      if(_commentObject.id != undefined && (_commentObject.html != undefined || _commentObject.media != undefined){
         var i = 0;
         if(_comments.length >0)
         while(_comments[i].pin == true)
