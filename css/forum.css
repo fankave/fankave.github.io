@@ -2382,7 +2382,8 @@ img-crop canvas {
   margin-bottom: 15px;
 }
 
-.video-js-chat {
+.video-js-chat,
+.video-js-embed {
   display: inline-block;
   margin-bottom: 15px;
   color: #fff;
@@ -2409,11 +2410,21 @@ img-crop canvas {
     width: 300px;
     height: 150px;
   }
+  .video-js-embed {
+    width: 200px;
+    height: 100px;
+  }
   .youtubeVideo {
     width: 350px;
   }
   .youtubeVideo > iframe {
     height: 175px;
+  }
+  .embedYoutubeVideo {
+    width: 250px;
+  }
+  .embedYoutubeVideo > iframe {
+    height: 125px;
   }
 }
 
@@ -2426,11 +2437,21 @@ img-crop canvas {
     width: 350px;
     height: 175px;
   }
+  .video-js-embed {
+    width: 300px;
+    height: 150px;
+  }
   .youtubeVideo {
     width: 400px;
   }
   .youtubeVideo > iframe {
     height: 200px;
+  }
+  .embedYoutubeVideo {
+    width: 300px;
+  }
+  .embedYoutubeVideo > iframe {
+    height: 150px;
   }
 }
 
@@ -2443,11 +2464,21 @@ img-crop canvas {
     width: 450px;
     height: 225px;
   }
+  .video-js-embed {
+    width: 400px;
+    height: 200px;
+  }
   .youtubeVideo {
     width: 500px;
   }
   .youtubeVideo > iframe {
     height: 250px;
+  }
+  .embedYoutubeVideo {
+    width: 400px;
+  }
+  .embedYoutubeVideo > iframe {
+    height: 200px;
   }
 }
 
