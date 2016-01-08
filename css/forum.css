@@ -2401,9 +2401,29 @@ img-crop canvas {
 }
 
 @media all and (max-width: 374px){
+  .video-js {
+    width: 350px;
+    height: 175px;
+  }
   .video-js-chat {
     width: 275px;
     height: 138px;
+  }
+  .video-js-embed {
+    width: 250px;
+    height: 125px;
+  }
+  .youtubeVideo {
+    width: 350px;
+  }
+  .youtubeVideo > iframe {
+    height: 175px;
+  }
+  .embedYoutubeVideo {
+    width: 250px;
+  }
+  .embedYoutubeVideo > iframe {
+    height: 125px;
   }
 }
 
