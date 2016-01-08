@@ -12,17 +12,14 @@ socialModule.factory('VideoService', function (Bant) {
 		_videoArray = [];
 		var tempData = videoData.data.results;
 		var len = tempData.length;
-		debugger;
 
 		if (!!tempData && len > 0){
 			for (i = 0; i < len; i++){
-				debugger;
 				var _videoObject = Bant.bant(tempData[i]);
 				if (!!_videoObject.id)
 					_videoArray.push(_videoObject);
 			}
 			_offset = videoData.data.nextOffset;
-			debugger;
 			notifyObservers();
 		}
 	}

@@ -2380,3 +2380,30 @@ img-crop canvas {
   height: auto;
 }
 
+.video-js {
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+@media all and (min-width: 375px){
+  .video-js {
+    width: 350px;
+    height: 125px;
+  }
+  .youtubeVideo {
+    width: 350px;
+    height: 125px;
+  }
+}
+
+@media all and (min-width: 530px){
+  .video-js {
+    width: 500px;
+    height: 250px;
+  }
+  .youtubeVideo {
+    width: 500px;
+    height: 250px;
+  }
+}
+
