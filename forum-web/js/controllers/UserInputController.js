@@ -129,6 +129,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       this.uploader.onCompleteAll = function() {
         console.info('onCompleteAll');
         _this.uploader.clearQueue();
+        MUService.resetCommentParams();
       };
 
       console.info('uploader', this.uploader);
@@ -164,6 +165,16 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         console.log("Styling post");
         $('#postCommentButton').css('color','rgb(211,214,215)');
       };
+
+      this.mobileHighlightPost = function(){
+        $('#postCommentButton').css('color','rgb(22,189,231)');
+        var viewport = document.querySelector("meta[name=viewport]");
+        var viewportAlt = $('meta[name=viewport]');
+        viewport.setAttribute('content', 'height=auto');
+        var viewHeight = viewport.height();
+        var viewHeightAlt = viewportAlt.height();
+        console.log("Viewports: ", viewport,viewportAlt,viewHeight,viewHeightAlt);
+      }
 
       $('input#topicCommentField').bind('focusin focus', function(e){
         e.preventDefault();
