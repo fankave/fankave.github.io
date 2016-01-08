@@ -2402,8 +2402,8 @@ img-crop canvas {
 
 @media all and (max-width: 374px){
   .video-js {
-    width: 350px;
-    height: 175px;
+    width: 325px;
+    height: 163px;
   }
   .video-js-chat {
     width: 275px;
@@ -2414,10 +2414,10 @@ img-crop canvas {
     height: 125px;
   }
   .youtubeVideo {
-    width: 350px;
+    width: 325px;
   }
   .youtubeVideo > iframe {
-    height: 175px;
+    height: 163px;
   }
   .embedYoutubeVideo {
     width: 250px;
