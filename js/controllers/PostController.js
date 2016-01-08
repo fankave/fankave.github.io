@@ -42,7 +42,7 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
     if (HTML5_LOC){
 		  $location.path("/topic/"+topicId);
     } else {
-      $window.location = "/#/topic/" + topicId;
+      $window.location = "#/topic/" + topicId;
     }
 	}
 
@@ -171,7 +171,7 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
 		if (HTML5_LOC){
       $location.path("/login");
     } else {
-      $window.location = "/#/login";
+      $window.location = "#/login";
     }
 	}
 
@@ -215,7 +215,7 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
     if (HTML5_LOC){
       $location.path("/topic/" + $scope.topicId);
     } else {
-      $window.location = "/#/topic/" + $scope.topicId;
+      $window.location = "#/topic/" + $scope.topicId;
     }
     $window.location.reload();
   }

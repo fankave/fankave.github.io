@@ -9,6 +9,6 @@ socialModule.directive('shareToChatDialog', function () {
       highlight: '&',
       unhighlight: '&'
     },
-    templateUrl: '/partials/sharePreview.html'
+    templateUrl: 'partials/sharePreview.html'
   };
 });

@@ -54,9 +54,7 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
         tabArray = _this.socialArray;
       } else {
         feedData = VideoService.videoArray();
-        debugger;
         _this.videoArray = _this.videoArray || [];
-        debugger;
         existingLength = _this.videoArray.length;
         tabArray = _this.videoArray;
       }
@@ -67,20 +65,16 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
 
         for (var i = 0; i < len; i++){
           var tempItem = feedData[i];
-          debugger;
 
           // Check to See if Item Already Exists in Scope Array
           var itemExists = false;
           for (var j = 0; j < existingLength; j++){
-            debugger;
             if (tempItem.id === tabArray[j].id){
               itemExists = true;
-              debugger;
             }
           }
           // If Exists, Skip To Next Item
           if (itemExists){
-            debugger;
             continue;
           }
           
@@ -89,8 +83,7 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
           tempItem.postAuthorPhoto = feedData[i].embedAuthor.photo;
           tempItem.tweetId = feedData[i].tweet.id;
           
-          tempItem.postTimestamp = feedData[i].embedCreatedAt;
-          tempItem.orderTime = feedData[i].embedCreatedAtFull;
+          tempItem.postTimestamp = feedData[i].createdAt;
           tempItem.providerName = feedData[i].embedProvider.name;
           tempItem.html = feedData[i].embedText;
           tempItem.retweetCount = feedData[i].tweet.metrics.retweetCount;
@@ -100,7 +93,7 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
           // Embed Object for Sharing
           tempItem.embed = feedData[i].embed;
           tempItem.embed.embedCreatedAt = feedData[i].embedCreatedAt;
-          tempItem.embed.embedCreatedAtFull = feedData[i].embedCreatedAtFull;
+          // tempItem.embed.embedCreatedAtFull = feedData[i].embedCreatedAtFull;
 
           if (tempItem.providerName === "Twitter"){
             tempItem.providerLogo = "img/twitterLogo@2x.png";
@@ -123,11 +116,10 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
             tempItem.mediaAspectFeed = feedData[i].embedMedia.mediaAspectFeed;
             tempItem.mediaAspectFull = feedData[i].embedMedia.mediaAspectFull;
           }
-          debugger;
+
           if (tab === 'social'){
             _this.socialArray.push(tempItem);
           } else {
-            debugger;
             _this.videoArray.push(tempItem);
           }
         }
@@ -141,11 +133,11 @@ socialModule.controller("SocialController", ["$scope","$sce","$window","$routePa
     function updateTimestamps(tab){
       if (tab === 'social'){
         for (var i = 0; i < _this.socialArray.length; i++){
-          _this.socialArray[i].postTimestamp = DateUtilityService.getTimeSince(_this.socialArray[i].embedCreatedAtFull);
+          _this.socialArray[i].postTimestamp = DateUtilityService.getTimeSince(_this.socialArray[i].createdAtFull);
         }
       } else {
         for (var i = 0; i < _this.videoArray.length; i++){
-          _this.videoArray[i].postTimestamp = DateUtilityService.getTimeSince(_this.videoArray[i].embedCreatedAtFull);
+          _this.videoArray[i].postTimestamp = DateUtilityService.getTimeSince(_this.videoArray[i].createdAtFull);
         }
       }
     };

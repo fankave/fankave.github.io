@@ -27,9 +27,9 @@ function initTopicController($scope,$window,$location,$sce,$routeParams,networkS
           $location.path("/topic/" + id);
       } else {
         if(!!$scope.urlQueryStr)
-          $window.location = "/#/topic/" + id + "?" + $scope.urlQueryStr;
+          $window.location = "#/topic/" + id + "?" + $scope.urlQueryStr;
         else
-          $window.location = "/#/topic/" + id;
+          $window.location = "#/topic/" + id;
       }
     }
 
@@ -50,7 +50,7 @@ function initTopicController($scope,$window,$location,$sce,$routeParams,networkS
   }
   else if (URIHelper.isTechMUser()){
     console.log("MI16 User Detected");
-    $window.location = "/#/login?MI16=true";
+    $window.location = "#/login?MI16=true";
   }
   else {
     if(URIHelper.isPeelUser()){
@@ -61,7 +61,7 @@ function initTopicController($scope,$window,$location,$sce,$routeParams,networkS
       if (HTML5_LOC){
         $location.path("/login");
       } else {
-        $window.location = "/#/login";
+        $window.location = "#/login";
       }
     }
   }

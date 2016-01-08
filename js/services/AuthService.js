@@ -120,7 +120,7 @@ authModule.factory("AuthService", ["$http","$window","$location","UserInfoServic
       if (HTML5_LOC){
         $location.path("/topic/" + initTopic);
       } else {
-        $window.location = "/#/topic/" + initTopic;
+        $window.location = "#/topic/" + initTopic;
       }
     }
     else {
@@ -130,7 +130,7 @@ authModule.factory("AuthService", ["$http","$window","$location","UserInfoServic
         if (HTML5_LOC){
           $location.path("/post/" + initPost);
         } else {
-          $window.location = "/#/post/" + initPost;
+          $window.location = "#/post/" + initPost;
         }
       }
     }
