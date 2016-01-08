@@ -98,18 +98,6 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         console.info('onAfterAddingAll', addedFileItems);
       };
       this.uploader.onBeforeUploadItem = function(item) {
-        console.log("Item: ", item);
-        if (item._file.type === 'video/quicktime'){
-          var tempName = item._file.name;
-          var len = tempName.length;
-          var newName = tempName.slice(0,len-4) + ".mp4";
-          console.log("newName", newName);
-          item._file.name = newName;
-          item.file.name = newName;
-          item._file.type = "video/mp4";
-          item.file.type = "video/mp4";
-        }
-        console.log("Item after Rename: ", item);
         var user = UserInfoService.getUserCredentials();
         item.headers = {  
             'X-UserId': user.userId,
