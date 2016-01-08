@@ -390,7 +390,7 @@
       <div ng-bind-html="thisPost.html | linky" class="postContent">
         <p>{{thisPost.html}}</p><br> 
       </div>
-      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent" ng-class="youtubeVideo">
+      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent youtubeVideo">
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
