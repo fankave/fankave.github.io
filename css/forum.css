@@ -2385,7 +2385,7 @@ img-crop canvas {
   margin-bottom: 15px;
 }
 
-@media all and (min-width: 375px){
+@media all and (max-width: 430px){
   .video-js {
     width: 350px;
     height: 125px;
@@ -2395,6 +2395,19 @@ img-crop canvas {
   }
   .youtubeVideo > iframe {
     height: 125px;
+  }
+}
+
+@media all and (min-width: 431px) and (max-width: 529px){
+  .video-js {
+    width: 400px;
+    height: 200px;
+  }
+  .youtubeVideo {
+    width: 400px;
+  }
+  .youtubeVideo > iframe {
+    height: 200px;
   }
 }
 
