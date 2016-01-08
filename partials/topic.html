@@ -394,8 +394,12 @@
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
+        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js vjs-default-skin" width="264" height="640">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
         </video>
       </div> 
     </div> 
