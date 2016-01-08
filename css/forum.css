@@ -2385,7 +2385,6 @@ img-crop canvas {
 .video-js-chat,
 .video-js-embed {
   display: inline-block;
-  margin-bottom: 15px;
   color: #fff;
   background-color: #000;
   position: relative;
@@ -2399,6 +2398,13 @@ img-crop canvas {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+@media all and (max-width: 374px){
+  .video-js-chat {
+    width: 275px;
+    height: 138px;
+  }
 }
 
 @media all and (max-width: 430px){
