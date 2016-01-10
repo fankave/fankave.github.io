@@ -526,6 +526,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   };
 
   var fixed = false;
+  $scope.focused = false;
   var watchScroll = function watchScroll() {
     console.log("Tabs Top: ", tabsTop);
     if ($scope.showNewCommentsIndicator){
@@ -537,7 +538,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
         tabs.css('top',headerHeight);
         tabContainer.addClass('fixTabContainer');
         fixed = true;
-      } else if (fixed) {
+      } else if (fixed || $scope.focused) {
         tabs.removeClass('fixTabsPeel');
         tabs.css('top','');
         tabContainer.removeClass('fixTabContainer');
