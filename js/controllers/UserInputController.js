@@ -171,8 +171,8 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         var viewport = document.querySelector("meta[name=viewport]");
         var viewportAlt = $('meta[name=viewport]');
         // viewport.setAttribute('content', 'height=auto');
-        var viewHeight = viewport.height();
-        var viewHeightAlt = viewportAlt.height();
+        // var viewHeight = viewport.height();
+        // var viewHeightAlt = viewportAlt.height();
         console.log("Viewports: ", viewport,viewportAlt,viewHeight,viewHeightAlt);
       }
 
