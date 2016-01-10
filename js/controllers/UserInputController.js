@@ -168,6 +168,12 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
 
       this.mobileHighlightPost = function(){
         $('#postCommentButton').css('color','rgb(22,189,231)');
+        $('#mobileUserInput').css('position','absolute');
+      }
+
+      this.mobileUnhighlightPost = function(){
+        $('#postCommentButton').css('color','rgb(22,189,231)');
+        $('#mobileUserInput').css('position','fixed');
       }
 
       $('input#topicCommentField').bind('focusin focus', function(e){
