@@ -533,12 +533,12 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       $scope.showNewCommentsIndicator = false;
     }
     // if ($scope.isPeelUser){
-      if (!focused && $(document).scrollTop() > (tabsTop - headerHeight) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
+      if (!$scope.focused && $(document).scrollTop() > (tabsTop - headerHeight) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
         tabs.addClass('fixTabsPeel');
         tabs.css('top',headerHeight);
         tabContainer.addClass('fixTabContainer');
         fixed = true;
-      } else if (fixed) {
+      } else if (fixed || $scope.focused) {
         tabs.removeClass('fixTabsPeel');
         tabs.css('top','');
         tabContainer.removeClass('fixTabContainer');
