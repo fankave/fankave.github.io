@@ -168,12 +168,6 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
 
       this.mobileHighlightPost = function(){
         $('#postCommentButton').css('color','rgb(22,189,231)');
-        var viewport = document.querySelector("meta[name=viewport]");
-        var viewportAlt = $('meta[name=viewport]');
-        // viewport.setAttribute('content', 'height=auto');
-        // var viewHeight = viewport.height();
-        // var viewHeightAlt = viewportAlt.height();
-        console.log("Viewports: ", viewport,viewportAlt);
       }
 
       $('input#topicCommentField').bind('focusin focus', function(e){
