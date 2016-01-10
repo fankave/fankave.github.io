@@ -538,7 +538,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
         tabs.css('top',headerHeight);
         tabContainer.addClass('fixTabContainer');
         fixed = true;
-      } else if (fixed || $scope.focused) {
+      } else if (fixed) {
         tabs.removeClass('fixTabsPeel');
         tabs.css('top','');
         tabContainer.removeClass('fixTabContainer');
