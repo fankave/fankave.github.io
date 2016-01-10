@@ -526,29 +526,18 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   };
 
   var fixed = false;
-  $scope.focused = false;
-
-  $scope.mobileHighlightPost = function(){
-    $scope.focused = true;
-    $('#postCommentButton').css('color','rgb(22,189,231)');
-  };
-  $scope.mobileUnhighlightPost = function(){
-    $scope.focused = false;
-    $('#postCommentButton').css('color','rgb(22,189,231)');
-  };
-
   var watchScroll = function watchScroll() {
-    console.log("Tabs Top: ", tabsTop, $scope.focused);
+    console.log("Tabs Top: ", tabsTop);
     if ($scope.showNewCommentsIndicator){
       $scope.showNewCommentsIndicator = false;
     }
     // if ($scope.isPeelUser){
-      if (!$scope.focused && $(document).scrollTop() > (tabsTop - headerHeight) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
+      if ($(document).scrollTop() > (tabsTop - headerHeight) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
         tabs.addClass('fixTabsPeel');
         tabs.css('top',headerHeight);
         tabContainer.addClass('fixTabContainer');
         fixed = true;
-      } else if (fixed || $scope.focused) {
+      } else if (fixed) {
         tabs.removeClass('fixTabsPeel');
         tabs.css('top','');
         tabContainer.removeClass('fixTabContainer');

@@ -167,12 +167,10 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       };
 
       this.mobileHighlightPost = function(){
-        $scope.$parent.focused = true;
         $('#postCommentButton').css('color','rgb(22,189,231)');
       }
 
       this.mobileUnhighlightPost = function(){
-        $scope.$parent.focused = false;
         $('#postCommentButton').css('color','rgb(22,189,231)');
       }
 
