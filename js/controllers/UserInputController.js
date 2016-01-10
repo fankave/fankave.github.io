@@ -167,13 +167,16 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       };
 
       this.mobileHighlightPost = function(){
+        var tempPos = document.height - 42;
         $('#postCommentButton').css('color','rgb(22,189,231)');
         $('#mobileUserInput').css('position','absolute');
+        $('#mobileUserInput').css('top',tempPos);
       }
 
       this.mobileUnhighlightPost = function(){
         $('#postCommentButton').css('color','rgb(22,189,231)');
         $('#mobileUserInput').css('position','fixed');
+        $('#mobileUserInput').css('top','');
       }
 
       $('input#topicCommentField').bind('focusin focus', function(e){
