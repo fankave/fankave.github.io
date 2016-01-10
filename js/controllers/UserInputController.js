@@ -169,16 +169,16 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       this.mobileHighlightPost = function(){
         var tempPos = document.height - 42;
         $('#postCommentButton').css('color','rgb(22,189,231)');
+        $('#topicSection').css('padding-bottom','0');
         $('#mobileUserInput').css('position','absolute');
         $('#mobileUserInput').css('top',tempPos);
-        $('#topicSection').css('padding-bottom','0');
       }
 
       this.mobileUnhighlightPost = function(){
         $('#postCommentButton').css('color','rgb(22,189,231)');
+        $('#topicSection').css('padding-bottom','42px');
         $('#mobileUserInput').css('position','fixed');
         $('#mobileUserInput').css('top','');
-        $('#topicSection').css('padding-bottom','42px');
       }
 
       $('input#topicCommentField').bind('focusin focus', function(e){
