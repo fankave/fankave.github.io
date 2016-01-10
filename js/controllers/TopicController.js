@@ -528,7 +528,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   var fixed = false;
   $scope.focused = false;
   var watchScroll = function watchScroll() {
-    console.log("Tabs Top: ", tabsTop);
+    console.log("Tabs Top: ", tabsTop, $scope.focused);
     if ($scope.showNewCommentsIndicator){
       $scope.showNewCommentsIndicator = false;
     }
