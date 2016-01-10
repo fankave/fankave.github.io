@@ -527,6 +527,16 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
 
   var fixed = false;
   $scope.focused = false;
+
+  $scope.mobileHighlightPost = function(){
+    $scope.focused = true;
+    $('#postCommentButton').css('color','rgb(22,189,231)');
+  };
+  $scope.mobileUnhighlightPost = function(){
+    $scope.focused = false;
+    $('#postCommentButton').css('color','rgb(22,189,231)');
+  };
+
   var watchScroll = function watchScroll() {
     console.log("Tabs Top: ", tabsTop, $scope.focused);
     if ($scope.showNewCommentsIndicator){
