@@ -167,7 +167,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       };
 
       this.mobileHighlightPost = function(){
-        var tempPos = document.height - 42;
+        var tempPos = document.height - 86;
         $('#postCommentButton').css('color','rgb(22,189,231)');
         $('#topicSection').css('padding-bottom','0');
         $('#mobileUserInput').css('position','absolute');
