@@ -173,7 +173,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         // viewport.setAttribute('content', 'height=auto');
         // var viewHeight = viewport.height();
         // var viewHeightAlt = viewportAlt.height();
-        console.log("Viewports: ", viewport,viewportAlt,viewHeight,viewHeightAlt);
+        console.log("Viewports: ", viewport,viewportAlt);
       }
 
       $('input#topicCommentField').bind('focusin focus', function(e){
