@@ -202,6 +202,11 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
 
   };
 
+  $scope.loadRemainingComments = function() {
+    console.log("LOADING REST OF COMMENTS...");
+    networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
+  };
+
   $scope.init = function() {
     networkService.send(TopicService.getTopicRequest($routeParams.topicID));
     networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
