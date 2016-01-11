@@ -19,13 +19,14 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
   var observerCallbacks = [];
   var _comments = [];
   var _pinnedComments = 0;
+  var _offset = 0;
 
 
   function setComments(commentsData) {
     //TODO clear comments for complete refresh Comments API
     _comments = [];
     tempCommentsData = commentsData.data.results;
-    if(tempCommentsData!= undefined && tempCommentsData.length>0){
+    if(tempCommentsData != undefined && tempCommentsData.length>0){
       var len = tempCommentsData.length;
       for(i=0;i<len;i++){
         var _commentObject = {};
@@ -34,6 +35,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
           _comments.push(_commentObject);
         // console.log("Comments in set comment Service type:"+_commentObject.type + "  " +_commentObject.html );
       }
+      _offset = commentsData.data.nextOffset;
       notifyObservers();
     }
     else{
@@ -162,10 +164,16 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
   }
   
   function commentGetRequest(uri){
+    var queryStr;
+    if (_offset === 0){
+      queryStr = "?limit=10&offset=" + _offset;
+    } else {
+      queryStr = "?offset=" + _offset;
+    }
     return  {"rid": "comment",
       "timestamp": new Date().getTime(),
       "method": "GET",
-      "uri": encodeURI(uri)}
+      "uri": encodeURI(uri + queryStr)}
   }
   function commentPostRequest(uri){
     return  {"rid": "comment",
