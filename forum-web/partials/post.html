@@ -123,7 +123,7 @@
     </form>
     <div class="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
       <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 5MB</span>
-      <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
+      <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 256MB</span>
     </div>
     <div class="fileWarning" ng-if="user.HTML5warning === true">
       <span class="text-danger">Please Use a Browser That Supports HTML5</span>
@@ -239,7 +239,7 @@
     </form>
     <div class="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
       <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 5MB</span>
-      <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
+      <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 256MB</span>
     </div>
     <div class="fileWarning" ng-if="user.HTML5warning === true">
       <span class="text-danger">Please Use a Browser That Supports HTML5</span>
