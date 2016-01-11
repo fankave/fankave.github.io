@@ -25,6 +25,12 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   $scope.innerButtonTapped = false;
   if (UserInfoService.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
+    if (!UserInfoService.hasUserVisited()){
+      console.log('SS USER HASNT VISITED');
+      $scope.hideSSSplash = false;
+      ForumStorage.setToLocalStorage("hasUserVisited", true);
+      $timeout(function() {$scope.continueToExperience('smartS'); }, 5000);
+    }
   }
   else if (UserInfoService.isMI16User()){
     $scope.isMI16User = true;
@@ -32,17 +38,16 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   else if(UserInfoService.isPeelUser()){
     $scope.isPeelUser = true;
     if (!UserInfoService.hasUserVisited()){
-      console.log('USER HASNT VISITED');
-      // SplashService.hidePeelSplash = false;
+      console.log('PEEL USER HASNT VISITED');
       $scope.hidePeelSplash = false;
       ForumStorage.setToLocalStorage("hasUserVisited", true);
-      $timeout(function() {$scope.continueToExperience(); }, 5000);
+      $timeout(function() {$scope.continueToExperience('peel'); }, 5000);
     }
   }
   else {
     $scope.isPeelUser = false;  
-    SplashService.hidePeelSplash = true;
     $scope.hidePeelSplash = true;
+    $scope.hideSSSplash = true;
   }
 //  var tempJasonNFL = {};
 //  
@@ -57,10 +62,15 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
 //  });
   // $scope.hidePeelSplash = true;
 
-  $scope.continueToExperience = function() {
+  $scope.continueToExperience = function(env) {
     console.log("CONTINUE XP CLICKED");
-    SplashService.hidePeelSplash = true;
-    $scope.hidePeelSplash = true;
+    if (env === 'peel'){
+      SplashService.setPeelSplash(true);
+      $scope.hidePeelSplash = true;
+    } else if (env === 'smartS'){
+      SplashService.setSSSplash(true);
+      $scope.hideSSSplash = true;
+    }
   };
   $scope.setScoreCardUI = function() {
     if ($scope.topicType === 'livegame'){

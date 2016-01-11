@@ -908,6 +908,7 @@ input:focus + button {
   max-width: 768px;
   height: 100%;
   z-index: 10001;
+  text-align: center;
 }
 
 #splashOverlay {
@@ -918,8 +919,9 @@ input:focus + button {
   width: 90%;
   max-width: 768px;
   height: 94%;
-  left: 50%;
-  margin-left: -45%;
+  /*left: 50%;*/
+  /*margin-left: -45%;*/
+  margin: 0 auto;
   z-index: 10002;
   top: 50%;
   -webkit-transform: translateY(-50%);
@@ -2249,6 +2251,92 @@ img-crop canvas {
   z-index: 35;
 }
 
+#ssSplashHeader h1 {
+  font-size: 30px;
+  font-weight: 500;
+  margin-top: 4%;
+}
+
+#ssSplashHeader h3 {
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+#ssSplashHeader {
+  height: 18%;
+}
+
+#ssSplashGraphics {
+  /*height: 45%;*/
+  margin-bottom: 12%;
+}
+
+#ssScoreboard {
+  margin-bottom: 12%;
+}
+
+.ssIcon {
+  position: relative;
+  height: 100%;
+  float: left;
+  z-index: 10002;
+}
+
+#ssNews,
+#ssVid {
+  position: relative;
+  width: 36%;
+}
+
+#ssTw {
+  position: relative;
+  width: 28%;
+  text-align: center;
+}
+
+#ssNews {
+  text-align: right;
+  padding-right: 3%;
+}
+
+#ssVid {
+  text-align: left;
+  padding-left: 3%;
+}
+
+#ssSplashDesc {
+  height: 15%;
+  font-size: 19px;
+  font-weight: 400;
+  padding: 0 3%;
+}
+
+#ssSplashJoin {
+  margin-top: 3%;
+}
+
+#ssSplashJoinBtn {
+  width: 80%;
+  max-width: 350px;
+  height: 60px;
+  font-size: 24px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #5ba7ff;
+  border-radius: 3px;
+  border: none;
+}
+
+#ssSplashX {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 3% 4%;
+  color: #b3b8ba;
+  font-size: 22px;
+}
+
 /* Tech MI16 */
 
 #techPage {
@@ -2507,4 +2595,6 @@ img-crop canvas {
     height: 200px;
   }
 }
+
+
 
