@@ -5,8 +5,42 @@
         <img src="img/splash_graphic.png" id="splashGraphic"/>
       </div>
       <div class="graphicContainer">
-        <img ng-src="img/peel_join.png" id="continue" ng-click="continueToExperience()"/>
+        <img ng-src="img/peel_join.png" id="continue" ng-click="continueToExperience('peel')"/>
         <!-- <img src="img/kave_logo2.png" id="kaveLogo"/> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ssSplash" ng-if="hideSSSplash === false">
+  <div id="splashUnderlay">
+    <div id="splashOverlay">
+      <span id="ssSplashX" ng-click="continueToExperience('smartS')">X</span>
+      <div id="ssSplashHeader">
+        <h3>Welcome to Arsenal</h3>
+        <h1>Live Game Chat</h1>
+      </div>
+      <div id="ssSplashGraphics">
+        <div id="ssScoreboard">
+          <img ng-src="img/SS/scoreboard@2x.png" />
+        </div>
+        <div id="ssIcons" class="clearfix">
+          <div id="ssNews" class="ssIcon">
+            <img ng-src="img/SS/news@2x.png" />
+          </div>
+          <div id="ssTw" class="ssIcon">
+            <img ng-src="img/SS/tw@2x.png" />
+          </div>
+          <div id="ssVid" class="ssIcon">
+            <img ng-src="img/SS/vid@2x.png" />
+          </div>
+        </div>
+      </div>
+      <div id="ssSplashDesc">
+        Discuss the game live with peers, team news, videos and more!
+      </div>
+      <div id="ssSplashJoin">
+        <button id="ssSplashJoinBtn" class="btn btn-default" ng-click="continueToExperience('smartS')">Join Chat</button>
       </div>
     </div>
   </div>
@@ -251,7 +285,7 @@
     </form>
     <div class="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
       <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 5MB</span>
-      <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
+      <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 256MB</span>
     </div>
     <div class="fileWarning" ng-if="user.HTML5warning === true">
       <span class="text-danger">Please Use a Browser That Supports HTML5</span>
@@ -541,7 +575,9 @@
 
 <share-to-chat-dialog ng-if="social.showShareDialog" this-post="social.embedShareContent" trust-source="trustSrc(videoSrc)" share-submit="social.submitSharedPost(commentData,embedData)" exit-share="social.exitShare()" highlight="social.highlightPost()" unhighlight="social.unhighlightPost()"></share-to-chat-dialog>
 
-<div id="mobileUserInput" class="clearfix" ng-if="activeTab === 'chat' && mobileBrowser === true" ng-controller="UserInputController as user">
+
+</section>
+<section id="mobileUserInput" class="clearfix" ng-if="activeTab === 'chat' && mobileBrowser === true" ng-controller="UserInputController as user">
 
     <div id="mobilePreview" ng-if="user.uploader.queue.length > 0">
       <button type="button" id="removeMedia" class="fkFont" ng-click="user.removeMedia()">X
@@ -561,7 +597,7 @@
         <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,true)">Post</button>
 
         <span><input id="topicCommentField" type="text" class="form-control"
-        placeholder="Write a comment..." ng-model="commentText" ng-focus="user.mobileHighlightPost()" ng-blur="user.unhighlightPost()"></span>
+        placeholder="Write a comment..." ng-model="commentText" ng-focus="user.mobileHighlightPost()" ng-blur="user.mobileUnhighlightPost()"></span>
 
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
 
@@ -569,14 +605,12 @@
     </form>
     <div class="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
       <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 5MB</span>
-      <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 10MB</span>
+      <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 256MB</span>
     </div>
     <div class="fileWarning" ng-if="user.HTML5warning === true">
       <span class="text-danger">Please Use a Browser That Supports HTML5</span>
     </div>
-  </div>
-
-</section>
+  </section>
 
 <div id="newCommentsAvailableIndicatorDiv" ng-show="showNewCommentsIndicator && activeTab === 'chat'">
   <center>
