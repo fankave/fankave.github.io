@@ -17,10 +17,12 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
   var UNFLAG_COMMENT_URI = "/v1.0/comment/unflag/";
   
   var observerCallbacks = [];
+  var tempObserverCallbacks = [];
   var _comments = [];
   var _pinnedComments = 0;
   var _offset = 0;
 
+  var _loadedComments = false;
 
   function setComments(commentsData) {
     //TODO clear comments for complete refresh Comments API
@@ -35,8 +37,12 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
           _comments.push(_commentObject);
         // console.log("Comments in set comment Service type:"+_commentObject.type + "  " +_commentObject.html );
       }
+      if (commentsData.data.prevOffset === ""){
+        notifyObservers(true);
+      } else {
+        notifyObservers();
+      }
       _offset = commentsData.data.nextOffset;
-      notifyObservers();
     }
     else{
       //PArticular case when user is on reply page and requires comment by comment ID
@@ -146,21 +152,27 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 
 
   //call this when you know 'comments' has been changed
-  var notifyObservers = function(){
-    angular.forEach(observerCallbacks, function(callback){
-      callback();
-    });
+  var notifyObservers = function(temp){
+    if (temp){
+      console.log("IN TEMP");
+      angular.forEach(tempObserverCallbacks, function(callback){
+        callback();
+      });
+    } else {
+      console.log("IN REG");
+      angular.forEach(observerCallbacks, function(callback){
+        callback();
+      });
+    }
   };
   
-  function registerObserverCallback(callback){
+  function registerObserverCallback(callback, temp){
     //register an observer
-    // console.log("comments callback registered");
-    var callbackLength  = observerCallbacks.length;
-    while(callbackLength > 0){
-      callbackLength = observerCallbacks.length;
-      observerCallbacks.pop();
+    if (temp){
+      tempObserverCallbacks.push(callback);
+    } else {
+      observerCallbacks.push(callback);
     }
-    observerCallbacks.push(callback);
   }
   
   function commentGetRequest(uri){
@@ -340,6 +352,12 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
       isCommentLiked:isCommentLiked,
       getNumPinComments:function(){
         return _pinnedComments;
+      },
+      loadedComments: function(){
+        return _loadedComments;
+      },
+      setLoadedComments: function(val){
+        _loadedComments = val;
       }
   };
 

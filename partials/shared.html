@@ -26,7 +26,7 @@
     <div ng-bind-html="thisPost.text | linky" class="postContent socialContent">
       <p>{{thisPost.text}}</p><br> 
     </div>
-    <div ng-if="thisPost.playable === true && thisPost.embedHtml !== undefined" ng-bind-html="thisPost.embedHtml" class="postContent videoContent embedYoutubeVideo">
+    <div ng-if="thisPost.playable === true && thisPost.embedHtml !== undefined" ng-bind-html="thisPost.embedHtml" class="postContent videoContent embedYoutubeVideo" ng-class="{ 'embed-youtube-android': mobileUserAgent === 'android' }">
     </div>
 
     <div class="imageContainer" ng-switch-when="image/jpeg" ng-if="thisPost.embedHtml === undefined">
@@ -40,7 +40,7 @@
     </div>
 
     <div ng-switch-when="video/mp4" class="mp4EmbedVideoContainer">
-      <video controls="controls" ng-attr-poster="{{thisPost.media[0].thumbUrl}}" class="video-js-embed vjs-default-skin">
+      <video controls="controls" ng-attr-poster="{{thisPost.media[0].thumbUrl}}" class="video-js-embed vjs-default-skin" ng-class="{ 'video-embed-android': mobileUserAgent === 'android' }">
         <source ng-src="{{trustSource({videoSrc: thisPost.media[0].url})}}" type="video/mp4">
         <p class="vjs-no-js">
           To view this video please enable JavaScript, and consider upgrading to a web browser that
