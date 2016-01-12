@@ -2264,7 +2264,7 @@ img-crop canvas {
 }
 
 #ssSplashHeader {
-  height: 18%;
+  /*height: 18%;*/
 }
 
 #ssSplashGraphics {
@@ -2273,7 +2273,8 @@ img-crop canvas {
 }
 
 #ssScoreboard {
-  margin-bottom: 12%;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .ssIcon {
@@ -2306,7 +2307,7 @@ img-crop canvas {
 }
 
 #ssSplashDesc {
-  height: 15%;
+  /*height: 15%;*/
   font-size: 19px;
   font-weight: 400;
   padding: 0 3%;
@@ -2326,6 +2327,7 @@ img-crop canvas {
   background-color: #5ba7ff;
   border-radius: 3px;
   border: none;
+  margin-top: 30px;
 }
 
 #ssSplashX {

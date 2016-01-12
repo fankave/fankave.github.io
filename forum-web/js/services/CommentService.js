@@ -17,15 +17,17 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
   var UNFLAG_COMMENT_URI = "/v1.0/comment/unflag/";
   
   var observerCallbacks = [];
+  var tempObserverCallbacks = [];
   var _comments = [];
   var _pinnedComments = 0;
+  var _offset = 0;
 
 
   function setComments(commentsData) {
     //TODO clear comments for complete refresh Comments API
     _comments = [];
     tempCommentsData = commentsData.data.results;
-    if(tempCommentsData!= undefined && tempCommentsData.length>0){
+    if(tempCommentsData != undefined && tempCommentsData.length>0){
       var len = tempCommentsData.length;
       for(i=0;i<len;i++){
         var _commentObject = {};
@@ -34,7 +36,12 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
           _comments.push(_commentObject);
         // console.log("Comments in set comment Service type:"+_commentObject.type + "  " +_commentObject.html );
       }
-      notifyObservers();
+      if (commentsData.data.prevOffset === ""){
+        notifyObservers(true);
+      } else {
+        notifyObservers();
+      }
+      _offset = commentsData.data.nextOffset;
     }
     else{
       //PArticular case when user is on reply page and requires comment by comment ID
@@ -144,28 +151,40 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
 
 
   //call this when you know 'comments' has been changed
-  var notifyObservers = function(){
-    angular.forEach(observerCallbacks, function(callback){
-      callback();
-    });
+  var notifyObservers = function(temp){
+    if (temp){
+      console.log("IN TEMP");
+      angular.forEach(tempObserverCallbacks, function(callback){
+        callback();
+      });
+    } else {
+      console.log("IN REG");
+      angular.forEach(observerCallbacks, function(callback){
+        callback();
+      });
+    }
   };
   
-  function registerObserverCallback(callback){
+  function registerObserverCallback(callback, temp){
     //register an observer
-    // console.log("comments callback registered");
-    var callbackLength  = observerCallbacks.length;
-    while(callbackLength > 0){
-      callbackLength = observerCallbacks.length;
-      observerCallbacks.pop();
+    if (temp){
+      tempObserverCallbacks.push(callback);
+    } else {
+      observerCallbacks.push(callback);
     }
-    observerCallbacks.push(callback);
   }
   
   function commentGetRequest(uri){
+    var queryStr;
+    if (_offset === 0){
+      queryStr = "?limit=10&offset=" + _offset;
+    } else {
+      queryStr = "?offset=" + _offset;
+    }
     return  {"rid": "comment",
       "timestamp": new Date().getTime(),
       "method": "GET",
-      "uri": encodeURI(uri)}
+      "uri": encodeURI(uri + queryStr)}
   }
   function commentPostRequest(uri){
     return  {"rid": "comment",

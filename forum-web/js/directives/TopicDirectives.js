@@ -6,6 +6,7 @@ topicModule.directive('repeatFinishedNotify', function () {
       scope.hideLoading();
       scope.setLinksOnComments();
       scope.setDocVars();
+      scope.continueToExperience('smartS');
     }
   };
 });
