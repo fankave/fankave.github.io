@@ -565,6 +565,9 @@
     </div>
   </div>
 
+  <div id="moreContentBar" ng-if="activeTab === 'chat' && !loadedAllComments" ng-click="loadRemainingComments()">
+    <span id="moreContentText">Load Remaining Comments</span>
+  </div>
   <div id="moreContentBar" ng-if="activeTab === 'social'" ng-click="social.loadContent('social',social.socialArray.length)">
     <span id="moreContentText">Load More Social</span>
   </div>

@@ -26,12 +26,12 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   $scope.innerButtonTapped = false;
   if (UserInfoService.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
-    if (!UserInfoService.hasUserVisited()){
+    // if (!UserInfoService.hasUserVisited()){
       console.log('SS USER HASNT VISITED');
       $scope.hideSSSplash = false;
-      ForumStorage.setToLocalStorage("hasUserVisited", true);
+      // ForumStorage.setToLocalStorage("hasUserVisited", true);
       $timeout(function() {$scope.continueToExperience('smartS'); }, 5000);
-    }
+    // }
   }
   else if (UserInfoService.isMI16User()){
     $scope.isMI16User = true;
@@ -201,6 +201,12 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
       }
     }
 
+  };
+
+  $scope.loadRemainingComments = function() {
+    console.log("LOADING REST OF COMMENTS...");
+    networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
+    $scope.loadedAllComments = true;
   };
 
   $scope.init = function() {
@@ -449,6 +455,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
 
   TopicService.registerObserverCallback(updateTopic);
   CommentService.registerObserverCallback(notifyNewComments);
+  CommentService.registerObserverCallback(updateComments, true);
 
   $scope.trustSrc = function(src)
   {
