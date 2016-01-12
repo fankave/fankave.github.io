@@ -43,6 +43,7 @@ function initNetworkService($websocket,$route,DataService,UserInfoService)
         if(type === "channel"){
           if(NETWORK_DEBUG) console.log("Processing Channel");
           DataService.setChannel(responseJson);
+          DataService.setTopic(responseJson);
         }
         if(type === "topic" || type === "score"){
           if(NETWORK_DEBUG) console.log("Processing Topic");

@@ -3,6 +3,7 @@ topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$locati
 
 function initTopicController($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
+  var fisrtTime = true;
   var lastComment = false;
   // Check For Mobile Browser
   if (UserAgentService.isMobileUser()){
@@ -203,8 +204,10 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   };
 
   $scope.init = function() {
+    if(!fisrtTime && TopicService.getTopic() != null)
     networkService.send(TopicService.getTopicRequest($routeParams.topicID));
     networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
+    firstTime = false;
   };
   
 
