@@ -37,6 +37,7 @@ authModule.factory("AuthService", ["$http","$window","$location","UserInfoServic
       "userName": name
     };
 
+    console.log("techMLogin: ", userData);
     var registerParams = setRegistrationParams("email", -28800, userData);
     registerUser(registerParams, true);
   };

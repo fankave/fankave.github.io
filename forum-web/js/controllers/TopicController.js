@@ -33,7 +33,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   else if (UserInfoService.isMI16User()){
     $scope.isMI16User = true;
   }
-  else if(UserInfoService.isPeelUser() === true){
+  else if(UserInfoService.isPeelUser()){
     $scope.isPeelUser = true;
     if (!UserInfoService.hasUserVisited()){
       console.log('USER HASNT VISITED');
@@ -547,15 +547,6 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
         tabContainer.removeClass('fixTabContainer');
         fixed = false;
       }
-    // } else {
-    //   if ($(document).scrollTop() > 96) {
-    //     tabs.addClass('fixTabs');
-    //     tabContainer.addClass('fixTabContainer');
-    //   } else {
-    //     tabs.removeClass('fixTabs');
-    //     tabContainer.removeClass('fixTabContainer');
-    //   }
-    // }
   };
 
   $(document).off('scroll');

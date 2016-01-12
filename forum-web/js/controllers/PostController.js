@@ -59,18 +59,18 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
     }
 	}
 
-  var _userType = UserInfoService.getUserType();
-	if (_userType === 'peel'){
-		$scope.isPeelUser = true;
-		SplashService.hidePeelSplash = true;
-	}
-	else if (_userType === 'email'){
-		$scope.isSmartStadiumUser = true;
-	}
-  else if (_userType === 'MI16'){
+  if (UserInfoService.isPeelUser()){
+    $scope.isPeelUser = true;
+    SplashService.hidePeelSplash = true;
+    $scope.setPeelUI('peel');
+  }
+  else if (UserInfoService.isSmartStadiumUser()){
+    $scope.isSmartStadiumUser = true;
+    $scope.setPeelUI('email');
+  }
+  else if (UserInfoService.isMI16User()){
     $scope.isMI16User = true;
   }
-	$scope.setPeelUI(_userType);
 
 	$scope.requestReplies = function(){
 		// console.log("PostController requestReplies Invoked");

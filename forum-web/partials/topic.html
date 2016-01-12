@@ -286,7 +286,7 @@
   </div>
 
   <!-- Chat Tab Content -->
-  <div ng-switch-when="chat" ng-repeat="thisPost in commentsArray track by $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="chat" ng-repeat="thisPost in commentsArray | orderBy: $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
 
     <span class="postAuthorPhoto">
       <div>
@@ -320,8 +320,12 @@
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="chatVideo">
+        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js-chat vjs-default-skin">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
         </video>
       </div>
 
@@ -356,8 +360,8 @@
           </div>
         </div>
       </div>
-      <div class="moreRepliesContainer" ng-if="thisPost.replyCount === 1">1 more Reply</div>
-      <div class="moreRepliesContainer" ng-if="thisPost.replyCount > 1">{{thisPost.replyCount}} more Replies</div>
+      <div class="moreRepliesContainer" ng-if="thisPost.replyCount === 1">1 Reply</div>
+      <div class="moreRepliesContainer" ng-if="thisPost.replyCount > 1">{{thisPost.replyCount}} Replies</div>
     </div>
   </div>
 
@@ -390,12 +394,16 @@
       <div ng-bind-html="thisPost.html | linky" class="postContent">
         <p>{{thisPost.html}}</p><br> 
       </div>
-      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
+      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent youtubeVideo">
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
+        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js vjs-default-skin">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
         </video>
       </div> 
     </div> 
@@ -468,7 +476,7 @@
       <div ng-bind-html="thisPost.html | linky" class="postContent socialContent">
         <p>{{thisPost.html}}</p><br> 
       </div>
-      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent socialContent" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
+      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent youtubeVideo">
       </div>
 
       <div class="imageContainer" ng-switch-when="image">
@@ -476,9 +484,13 @@
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="postVideo" ng-class="{twitterVideo: thisPost.providerName === 'Twitter', youtubeVideo: thisPost.providerName === 'Youtube', vineVideo: thisPost.providerName === 'Vine'}">
+        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js vjs-default-skin">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
-          </video>
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
+        </video>
       </div>
     </div> 
 
@@ -549,7 +561,7 @@
         <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,true)">Post</button>
 
         <span><input id="topicCommentField" type="text" class="form-control"
-        placeholder="Write a comment..." ng-model="commentText" ng-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
+        placeholder="Write a comment..." ng-model="commentText" ng-focus="user.mobileHighlightPost()" ng-blur="user.unhighlightPost()"></span>
 
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
 
