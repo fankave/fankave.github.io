@@ -244,6 +244,11 @@
     <div id="socialTab" class="grid-col grid-col-50 tab" ng-click="social.initFeed('social')">
       <span class="tabName">Social</span>
     </div>
+    <div id="newCommentsAvailableIndicatorDiv" ng-show="showNewCommentsIndicator && activeTab === 'chat'">
+      <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
+        <img ng-src="img/newCommentIndicator.png" />
+      </button>
+    </div>
   </div>
   <!-- All Other Tabs -->
   <div class="tabContainer clearfix" ng-if="!isMI16User">
@@ -255,6 +260,11 @@
     </div>
     <div id="socialTab" class="grid-col grid-col-33 tab" ng-click="social.initFeed('social')">
       <span class="tabName">Social</span>
+    </div>
+    <div id="newCommentsAvailableIndicatorDiv" ng-show="showNewCommentsIndicator && activeTab === 'chat'">
+      <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
+        <img ng-src="img/newCommentIndicator.png" />
+      </button>
     </div>
   </div>
 
@@ -354,7 +364,7 @@
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js-chat vjs-default-skin">
+        <video controls="controls" preload="auto" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js-chat vjs-default-skin">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
           <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to a web browser that
@@ -432,7 +442,7 @@
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js vjs-default-skin">
+        <video controls="controls" preload="auto" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js vjs-default-skin">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
           <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to a web browser that
@@ -518,7 +528,7 @@
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js vjs-default-skin">
+        <video controls="controls" preload="auto" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js vjs-default-skin">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
           <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to a web browser that
@@ -614,11 +624,4 @@
       <span class="text-danger">Please Use a Browser That Supports HTML5</span>
     </div>
   </section>
-
-<div id="newCommentsAvailableIndicatorDiv" ng-show="showNewCommentsIndicator && activeTab === 'chat'">
-  <center>
-    <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()"><img ng-src="img/newCommentIndicator.png"/></button>
-  </center>
-</div>
-
 

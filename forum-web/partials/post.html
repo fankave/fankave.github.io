@@ -48,8 +48,12 @@
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" ng-attr-poster="{{comment.mediaThumbUrl}}" class="chatVideo">
+        <video controls="controls" preload="auto" ng-attr-poster="{{comment.mediaThumbUrl}}" class="video-js-chat vjs-default-skin">
           <source ng-src="{{trustSrc(comment.mediaUrl)}}" type="video/mp4">
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
         </video>
       </div>
 
@@ -147,8 +151,12 @@
         </div>
 
         <div ng-switch-when="video" class="mp4VideoContainer">
-          <video controls="controls" ng-attr-poster="{{thisReply.mediaThumbUrl}}" class="chatVideo">
+          <video controls="controls" preload="auto" ng-attr-poster="{{thisReply.mediaThumbUrl}}" class="video-js-chat vjs-default-skin">
             <source ng-src="{{trustSrc(thisReply.mediaUrl)}}" type="video/mp4">
+            <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider upgrading to a web browser that
+              <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
           </video>
         </div>
 
@@ -225,7 +233,7 @@
 
 
 <div id="newRepliesAvailableIndicatorDiv" ng-show="showNewRepliesIndicator">
-  <center>
-    <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newRepliesIndicatorTapped()"><img ng-src="img/newReplyIndicator.png"/></button>
-  </center>
+  <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newRepliesIndicatorTapped()">
+    <img ng-src="img/newReplyIndicator.png" />
+  </button>
 </div>
