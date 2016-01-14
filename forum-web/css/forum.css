@@ -868,25 +868,19 @@ input:focus + button {
 
 /* - - - 'New Content Available' indicator - - - */
 
-#newCommentsAvailableIndicatorDiv
-{
-  /*background-color:red;*/
+#newCommentsAvailableIndicatorDiv {
   position:fixed;
-  top:11em;
   z-index: 10000;
-  width: 75%;
-  left: 50%;
-  margin-left: -37.5%;
+  width: 100%;
+  margin-top: 41px;
 }
 
-#newRepliesAvailableIndicatorDiv
-{
+#newRepliesAvailableIndicatorDiv {
   position:fixed;
   bottom:5em;
   z-index: 10000;
-  width: 75%;
-  left: 50%;
-  margin-left: -37.5%;
+  width: 100%;
+  text-align: center;
 }
 
 /* - - - disable scrolling (for use with magnific popup) - - - */
@@ -2516,6 +2510,18 @@ img-crop canvas {
   .embedYoutubeVideo > iframe {
     height: 125px;
   }
+
+  .video-chat-android {
+    height: 203px;
+  }
+  .youtube-android > iframe,
+  .video-android {
+    height: 228px;
+  }
+  .video-embed-android,
+  .embed-youtube-android > iframe {
+    height: 190px;
+  }
 }
 
 @media all and (min-width: 375px) and (max-width: 430px){
@@ -2542,6 +2548,18 @@ img-crop canvas {
   }
   .embedYoutubeVideo > iframe {
     height: 125px;
+  }
+
+  .video-chat-android {
+    height: 215px;
+  }
+  .youtube-android > iframe,
+  .video-android {
+    height: 240px;
+  }
+  .video-embed-android,
+  .embed-youtube-android > iframe {
+    height: 190px;
   }
 }
 
@@ -2570,6 +2588,18 @@ img-crop canvas {
   .embedYoutubeVideo > iframe {
     height: 150px;
   }
+
+  .video-chat-android {
+    height: 240px;
+  }
+  .youtube-android > iframe,
+  .video-android {
+    height: 265px;
+  }
+  .video-embed-android,
+  .embed-youtube-android > iframe {
+    height: 215px;
+  }
 }
 
 @media all and (min-width: 530px){
@@ -2596,6 +2626,18 @@ img-crop canvas {
   }
   .embedYoutubeVideo > iframe {
     height: 200px;
+  }
+
+  .video-chat-android {
+    height: 290px;
+  }
+  .youtube-android > iframe,
+  .video-android {
+    height: 315px;
+  }
+  .video-embed-android,
+  .embed-youtube-android > iframe {
+    height: 265px;
   }
 }
 

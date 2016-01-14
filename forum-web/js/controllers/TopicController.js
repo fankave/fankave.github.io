@@ -3,7 +3,7 @@ topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$locati
 
 function initTopicController($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
-  var fisrtTime = true;
+  var firstTime = true;
   var lastComment = false;
   var android_spacer = $('<div/>', {
     'class' : 'android_spacer'
@@ -219,8 +219,22 @@ $('#mobileUserInput').on('blur', function() {
 
   $scope.loadRemainingComments = function() {
     console.log("LOADING REST OF COMMENTS...");
-    networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
-    $scope.loadedAllComments = true;
+    if (!CommentService.loadedComments()){
+      networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
+      CommentService.setLoadedComments(true);
+      $scope.loadedAllComments = true;
+    }
+  };
+
+  $scope.loadRemainingCommentsTimeout = function() {
+      $timeout(function(){
+        if (!CommentService.loadedComments()){
+          console.log("LOADING REST OF COMMENTS...");
+          networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
+          $scope.loadedAllComments = true;
+          CommentService.setLoadedComments(true);
+        }
+      }, 7000);
   };
 
   $scope.init = function() {

@@ -244,6 +244,11 @@
     <div id="socialTab" class="grid-col grid-col-50 tab" ng-click="social.initFeed('social')">
       <span class="tabName">Social</span>
     </div>
+    <div id="newCommentsAvailableIndicatorDiv" ng-show="showNewCommentsIndicator && activeTab === 'chat'">
+      <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
+        <img ng-src="img/newCommentIndicator.png" />
+      </button>
+    </div>
   </div>
   <!-- All Other Tabs -->
   <div class="tabContainer clearfix" ng-if="!isMI16User">
@@ -255,6 +260,11 @@
     </div>
     <div id="socialTab" class="grid-col grid-col-33 tab" ng-click="social.initFeed('social')">
       <span class="tabName">Social</span>
+    </div>
+    <div id="newCommentsAvailableIndicatorDiv" ng-show="showNewCommentsIndicator && activeTab === 'chat'">
+      <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
+        <img ng-src="img/newCommentIndicator.png" />
+      </button>
     </div>
   </div>
 
@@ -354,7 +364,7 @@
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js-chat vjs-default-skin">
+        <video controls="controls" preload="auto" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js-chat vjs-default-skin" ng-class="{ 'video-chat-android': mobileUserAgent === 'android' }">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
           <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to a web browser that
@@ -428,11 +438,11 @@
       <div ng-bind-html="thisPost.html | linky" class="postContent">
         <p>{{thisPost.html}}</p><br> 
       </div>
-      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent youtubeVideo">
+      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent youtubeVideo" ng-class="{ 'youtube-android': mobileUserAgent === 'android' }">
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js vjs-default-skin">
+        <video controls="controls" preload="auto" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js vjs-default-skin" ng-class="{ 'video-android': mobileUserAgent === 'android' }">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
           <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to a web browser that
@@ -510,7 +520,7 @@
       <div ng-bind-html="thisPost.html | linky" class="postContent socialContent">
         <p>{{thisPost.html}}</p><br> 
       </div>
-      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent youtubeVideo">
+      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent youtubeVideo" ng-class="{ 'youtube-android': mobileUserAgent === 'android' }">
       </div>
 
       <div class="imageContainer" ng-switch-when="image">
@@ -518,7 +528,7 @@
       </div>
 
       <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js vjs-default-skin">
+        <video controls="controls" preload="auto" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js vjs-default-skin" ng-class="{ 'video-android': mobileUserAgent === 'android' }">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
           <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to a web browser that
@@ -565,7 +575,7 @@
     </div>
   </div>
 
-  <div id="moreContentBar" ng-if="activeTab === 'chat' && !loadedAllComments" ng-click="loadRemainingComments()">
+  <div id="moreContentBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length === 10" ng-click="loadRemainingComments()">
     <span id="moreContentText">Load Remaining Comments</span>
   </div>
   <div id="moreContentBar" ng-if="activeTab === 'social'" ng-click="social.loadContent('social',social.socialArray.length)">
@@ -615,10 +625,10 @@
     </div>
   </section>
 
-<div id="newCommentsAvailableIndicatorDiv" ng-show="showNewCommentsIndicator && activeTab === 'chat'">
+<!-- <div id="newCommentsAvailableIndicatorDiv" ng-show="showNewCommentsIndicator && activeTab === 'chat'">
   <center>
     <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()"><img ng-src="img/newCommentIndicator.png"/></button>
   </center>
-</div>
+</div> -->
 
 
