@@ -1,4 +1,5 @@
-socialModule.directive('shareToChatDialog', function () {
+angular.module('SocialModule')
+.directive('shareToChatDialog', function () {
   return {
     restrict: 'E',
     scope: {

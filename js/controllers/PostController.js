@@ -1,7 +1,7 @@
-var postModule = angular.module("PostModule", ["NetworkModule", "SplashModule", "MediaModule", "angularFileUpload"]);
-postModule.controller("PostController", ["$scope", "$sce", "$timeout", "$window", "$location","$sanitize", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", "MUService", "FileUploader", "ForumStorage", "UserAgentService", initPostController]);
+angular.module("PostModule", ["NetworkModule", "SplashModule", "MediaModule", "angularFileUpload"])
+.controller("PostController", ["$scope", "$sce", "$timeout", "$window", "$location","$sanitize", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", "MUService", "FileUploader", "ForumStorage", "UserAgentService",
 
-function initPostController($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService,MUService,FileUploader,ForumStorage,UserAgentService)
+function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService,MUService,FileUploader,ForumStorage,UserAgentService)
 {
 
   // Check For Mobile Browser
@@ -428,14 +428,5 @@ function initPostController($scope, $sce, $timeout, $window, $location, $sanitiz
   $scope.xLinkActivated = false;
 
 
-};
+}]);
 
-// postModule.directive('repeatReplyFinished', function () {
-//   return function (scope, element, attrs) {
-//     if (scope.$last){
-//       // scope.scrollToBookmark();
-//       console.log("DONE LOADING REPLIES");
-//       scope.hideLoading();
-//     }
-//   };
-// });

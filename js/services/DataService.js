@@ -1,4 +1,6 @@
-networkModule.service('DataService', function (TopicService, CommentService, ReplyService, ChannelService, SocialService, VideoService) {
+angular.module('NetworkModule')
+.service('DataService', ["TopicService","CommentService","ReplyService","ChannelService","SocialService","VideoService",
+  function (TopicService, CommentService, ReplyService, ChannelService, SocialService, VideoService) {
   
   var DATA_TYPE_TOPIC = "topic";
   var DATA_TYPE_COMMENT = "comment";
@@ -143,4 +145,4 @@ networkModule.service('DataService', function (TopicService, CommentService, Rep
     }
   };
 
-});
+}]);

@@ -1,4 +1,6 @@
-networkModule.factory('URIHelper', function (ForumStorage) {
+angular.module('NetworkModule')
+.factory('URIHelper', ["ForumStorage",
+	function (ForumStorage) {
 
 	var peelUserName;
 	var peelUserId;
@@ -84,4 +86,4 @@ networkModule.factory('URIHelper', function (ForumStorage) {
 
 	};
 
-});
+}]);

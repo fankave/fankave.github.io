@@ -1,4 +1,5 @@
-networkModule.factory('ForumStorage', function () {
+angular.module('NetworkModule')
+.factory('ForumStorage', function () {
 	var localStorageAvailable = false;
 	if(typeof(Storage) != undefined) {
 		console.log("Local storage available :"+ typeof(Storage));

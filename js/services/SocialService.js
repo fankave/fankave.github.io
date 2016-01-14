@@ -1,4 +1,6 @@
-socialModule.factory('SocialService', ["Bant", function (Bant) {
+angular.module('SocialModule')
+.factory('SocialService', ["Bant", 
+  function (Bant) {
   var LIST_SOCIAL_URI = "/v1.0/channel/social/list/";
 
 

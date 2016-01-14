@@ -1,7 +1,7 @@
-var channelModule = angular.module("ChannelModule", ["NetworkModule", "AuthModule"]);
-channelModule.controller("ChannelController", ["$scope","$window","$location","$sce","$routeParams","networkService", "ChannelService","TopicService","URIHelper","AuthService","UserInfoService",initTopicController]);
+angular.module("ChannelModule", ["NetworkModule", "AuthModule"])
+.controller("ChannelController", ["$scope","$window","$location","$sce","$routeParams","networkService", "ChannelService","TopicService","URIHelper","AuthService","UserInfoService",
 
-function initTopicController($scope,$window,$location,$sce,$routeParams,networkService,ChannelService,TopicService, URIHelper, AuthService, UserInfoService)
+function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelService,TopicService, URIHelper, AuthService, UserInfoService)
 {
   ChannelService.setChannel($routeParams.channelID);
   if (window.location.href.indexOf('?') !== -1){
@@ -67,4 +67,4 @@ function initTopicController($scope,$window,$location,$sce,$routeParams,networkS
   }
   
 
-}
+}]);

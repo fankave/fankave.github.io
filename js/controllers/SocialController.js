@@ -1,5 +1,5 @@
-var socialModule = angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"]);
-socialModule.controller("SocialController", ["$scope","$sce","$window","$routeParams","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService",
+angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
+.controller("SocialController", ["$scope","$sce","$window","$routeParams","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService",
   function ($scope,$sce,$window,$routeParams,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService){
     console.log("Social Control");
 

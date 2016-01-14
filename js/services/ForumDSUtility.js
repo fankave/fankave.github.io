@@ -1,4 +1,5 @@
-networkModule.factory('FDSUtility', function () {
+angular.module('NetworkModule')
+.factory('FDSUtility', function () {
 	
 	function getStructureById(array, id){
 		if(NETWORK_DEBUG) console.log("structureLengths :"+ array.length);

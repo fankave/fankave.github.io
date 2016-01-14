@@ -1,4 +1,5 @@
-rootModule.factory("UserAgentService", ["ForumStorage","UserInfoService",
+angular.module('Forum')
+.factory("UserAgentService", ["ForumStorage","UserInfoService",
   function (ForumStorage,UserInfoService){
 
     var _userAgent;

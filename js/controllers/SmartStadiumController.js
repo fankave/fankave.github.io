@@ -1,5 +1,5 @@
-var smartSModule = angular.module("SmartStadiumModule", []);
-smartSModule.controller("SmartStadiumController", ["$scope", function ($scope){
+angular.module("SmartStadiumModule", [])
+.controller("SmartStadiumController", ["$scope", function ($scope){
   
   var _this = this;
   this.viewScreen = false;

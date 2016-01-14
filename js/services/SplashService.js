@@ -1,6 +1,5 @@
-var splashModule = angular.module("SplashModule", []);
-
-splashModule.factory("SplashService", function(){
+angular.module("SplashModule", [])
+.factory("SplashService", function(){
   var _hidePeelSplash = true;
   var _hideSSSplash = true;
  

@@ -1,5 +1,5 @@
-var mediaModule = angular.module('MediaModule', ['angularFileUpload', 'NetworkModule', 'TopicModule']);
-mediaModule.factory('MUService',  function () {
+angular.module('MediaModule', ['angularFileUpload', 'NetworkModule', 'TopicModule'])
+.factory('MUService',  function () {
 	var POST_COMMENT_URI="/v1.0/comment/create";
 	var POST_REPLY_URI="/v1.0/reply/create";
 	var isComment = true;

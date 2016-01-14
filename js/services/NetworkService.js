@@ -1,7 +1,7 @@
-var networkModule = angular.module("NetworkModule", ['ngWebSocket']);
-networkModule.factory("networkService",["$websocket","$route","DataService","UserInfoService",initNetworkService]);
+angular.module("NetworkModule", ['ngWebSocket'])
+.factory("networkService",["$websocket","$route","DataService","UserInfoService",
 
-function initNetworkService($websocket,$route,DataService,UserInfoService)
+function ($websocket,$route,DataService,UserInfoService)
 {
   var ws;
 
@@ -106,4 +106,4 @@ function initNetworkService($websocket,$route,DataService,UserInfoService)
     },
     init:initSocket
   }
-}
+}]);

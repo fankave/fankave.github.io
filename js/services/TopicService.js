@@ -1,4 +1,6 @@
-topicModule.service('TopicService', function (DateUtilityService,Bant,FDSUtility) {
+angular.module('TopicModule')
+.service('TopicService', ["DateUtilityService","Bant","FDSUtility",
+  function (DateUtilityService,Bant,FDSUtility) {
 
   var TOPIC_BASE_URI = "/v1.0/topic/show/";
   var LIKE_TOPIC_URI = "/v1.0/topic/like/";
@@ -278,4 +280,4 @@ topicModule.service('TopicService', function (DateUtilityService,Bant,FDSUtility
 
   };
 
-});
+}]);

@@ -1,4 +1,5 @@
-topicModule.directive('repeatFinishedNotify', function () {
+angular.module('TopicModule')
+.directive('repeatFinishedNotify', function () {
   return function (scope, element, attrs) {
     if (scope.$last){
       // scope.scrollToBookmark();
@@ -7,12 +8,14 @@ topicModule.directive('repeatFinishedNotify', function () {
       scope.setLinksOnComments();
       scope.setDocVars();
       scope.continueToExperience('smartS');
-      scope.loadRemainingCommentsTimeout();
+      // scope.loadRemainingCommentsTimeout();
     }
   };
 });
 
-topicModule.directive('embedSharedContent', ['UserAgentService', function (UserAgentService) {
+angular.module('TopicModule')
+.directive('embedSharedContent', ['UserAgentService',
+  function (UserAgentService) {
   return {
     restrict: 'E',
     scope: {

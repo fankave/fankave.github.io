@@ -1,4 +1,6 @@
-networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtility) {
+angular.module('NetworkModule')
+.factory('ReplyService', ["DateUtilityService","Bant","FDSUtility", 
+	function (DateUtilityService,Bant,FDSUtility) {
 	var _postID;
 	var LIST_REPLIES_URI = "/v1.0/comment/replies/list/"
 	var POST_REPLY_URI="/v1.0/reply/create";
@@ -274,4 +276,4 @@ networkModule.factory('ReplyService', function (DateUtilityService, Bant,FDSUtil
 		getCommentIdByReply:getCommentIdByReply
 	};
 
-});
+}]);

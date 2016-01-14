@@ -1,6 +1,5 @@
-networkModule.service('DateUtilityService', dateUtility);
-
-function dateUtility() {
+angular.module('NetworkModule')
+.service('DateUtilityService', function () {
 
 	function timeSince(timeStamp) {
 		// console.log("timeSatmp", timeStamp);
@@ -79,4 +78,4 @@ function dateUtility() {
 		getTimeSince:timeSince,
 		getGameScheduledTime:gameScheduleTime
 	};	
-}
+});

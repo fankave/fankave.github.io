@@ -1,4 +1,6 @@
-channelModule.factory('ChannelService', function (DateUtilityService,Bant,FDSUtility) {
+angular.module('ChannelModule')
+.factory('ChannelService', ["DateUtilityService","Bant","FDSUtility",
+  function (DateUtilityService,Bant,FDSUtility) {
 
 
   var _channelId;
@@ -62,4 +64,4 @@ channelModule.factory('ChannelService', function (DateUtilityService,Bant,FDSUti
 
   };
 
-});
+}]);

@@ -1,4 +1,6 @@
-networkModule.factory('Bant', function (DateUtilityService) {
+angular.module('NetworkModule')
+.factory('Bant', ["DateUtilityService",
+  function (DateUtilityService) {
   var EXTRACT_MEDIA_TYPE_LENGTH = 5;
   
   function extractMediaObject (_bantObject, tempMedia){
@@ -149,4 +151,4 @@ networkModule.factory('Bant', function (DateUtilityService) {
     updateBantLiked : updateBantLiked
   };
 
-});
+}]);

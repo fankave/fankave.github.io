@@ -1,5 +1,7 @@
-networkModule.factory('ForumDeviceInfo', function (ForumStorage) {
-//TODO : TEMP function to generate uuid. change this in final version
+angular.module('NetworkModule')
+.factory('ForumDeviceInfo', ["ForumStorage",
+	function (ForumStorage) {
+	//TODO : TEMP function to generate uuid. change this in final version
 	function _p8(s) {
 		var p = (Math.random().toString(16)+"000000000").substr(2,8);
 		return s ? "-" + p.substr(0,4) + "-" + p.substr(4,4) : p ;
@@ -23,4 +25,4 @@ networkModule.factory('ForumDeviceInfo', function (ForumStorage) {
 
 		}
 	}
-});
+}]);

@@ -1,4 +1,5 @@
-networkModule.service('StaticData', function () {
+angular.module('NetworkModule')
+.service('StaticData', function () {
 	//TODO: Static data used for Demo, remove this once the Development is complete
 	var postAuthors = [
 	                   {

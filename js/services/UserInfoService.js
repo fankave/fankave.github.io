@@ -1,4 +1,6 @@
-networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
+angular.module('NetworkModule')
+.service('UserInfoService', ["ForumStorage","URIHelper",
+	function (ForumStorage, URIHelper) {
 	//OLD Creds userId=1, sessionId=dac24379, accessToken=7uFF3QGh-84=
 	//NEW Creds userId=193, sessionId=53d7b518, accessToken=dsKGKXyZgGs=
 	var _userInfo;
@@ -125,4 +127,4 @@ networkModule.service('UserInfoService', function (ForumStorage, URIHelper) {
 
 	};
 
-});
+}]);

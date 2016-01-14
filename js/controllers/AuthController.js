@@ -1,6 +1,5 @@
-var authModule = angular.module("AuthModule", ["NetworkModule", "TopicModule"]);
-
-authModule.controller("AuthController", ["$scope", "$routeParams", "$http", "AuthService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService", "URIHelper",
+angular.module("AuthModule", ["NetworkModule", "TopicModule"])
+.controller("AuthController", ["$scope", "$routeParams", "$http", "AuthService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService", "URIHelper",
   function ($scope, $routeParams, $http, AuthService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
     if (window.location.href.indexOf('?') !== -1){
