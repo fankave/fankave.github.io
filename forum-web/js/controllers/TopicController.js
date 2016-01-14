@@ -5,20 +5,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
 {
   var firstTime = true;
   var lastComment = false;
-  var android_spacer = $('<div/>', {
-    'class' : 'android_spacer'
-}).css({
-    'width'  : '100%',
-    'height' :  '200px'
-}).appendTo($('#parent_view'));
-
-$('#mobileUserInput').on('focus', function() {
-    $(this).after(android_spacer);
-});
-
-$('#mobileUserInput').on('blur', function() {
-    $('.android_spacer').remove();
-});
+  
   // Check For Mobile Browser
   if (UserAgentService.isMobileUser()){
     $scope.mobileBrowser = true;
