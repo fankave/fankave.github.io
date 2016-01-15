@@ -114,8 +114,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
             tempItem.mediaUrl = feedData[i].embedMedia.mediaUrl;
             tempItem.trustedMediaUrl = trustSrc(tempItem.mediaUrl);
             tempItem.mediaThumbUrl = feedData[i].embedMedia.mediaThumbUrl;
+            tempItem.mediaAspectRatio = feedData[i].embedMedia.mediaAspectRatio;
             tempItem.mediaAspectFeed = feedData[i].embedMedia.mediaAspectFeed;
             tempItem.mediaAspectFull = feedData[i].embedMedia.mediaAspectFull;
+            tempItem.mediaOrientation = feedData[i].embedMedia.mediaOrientation;
           }
 
           if (tab === 'social'){
