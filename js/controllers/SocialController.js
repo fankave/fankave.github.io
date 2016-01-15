@@ -112,6 +112,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           if (feedData[i].embedType === "media"){
             tempItem.mediaType = feedData[i].embedMedia.mediaType;
             tempItem.mediaUrl = feedData[i].embedMedia.mediaUrl;
+            tempItem.trustedMediaUrl = trustSrc(tempItem.mediaUrl);
             tempItem.mediaThumbUrl = feedData[i].embedMedia.mediaThumbUrl;
             tempItem.mediaAspectFeed = feedData[i].embedMedia.mediaAspectFeed;
             tempItem.mediaAspectFull = feedData[i].embedMedia.mediaAspectFull;

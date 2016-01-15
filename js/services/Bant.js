@@ -16,12 +16,18 @@ angular.module('NetworkModule')
     _bantObject.mediaAspect1x1 = tempMedia.sizes["1:1"];
     _bantObject.mediaAspect2x1 = tempMedia.sizes["2:1"];
     }
-    if(_bantObject.mediaAspect16x9 != undefined)
+    if(_bantObject.mediaAspect16x9 != undefined){
+      _bantObject.mediaAspectRatio = 1.778;
       _bantObject.mediaAspectFeed = _bantObject.mediaAspect16x9;
-    else if(_bantObject.mediaAspect1x1 != undefined)
-        _bantObject.mediaAspectFeed = _bantObject.mediaAspect1x1;
-    else if(_bantObject.mediaAspect2x1 != undefined)
-          _bantObject.mediaAspectFeed = _bantObject.mediaAspect2x1;
+    }
+    else if(_bantObject.mediaAspect1x1 != undefined){
+      _bantObject.mediaAspectRatio = 1;
+      _bantObject.mediaAspectFeed = _bantObject.mediaAspect1x1;
+    }
+    else if(_bantObject.mediaAspect2x1 != undefined){
+      _bantObject.mediaAspectRatio = 2;
+      _bantObject.mediaAspectFeed = _bantObject.mediaAspect2x1;
+    }
     if(_bantObject.mediaAspectFeed != undefined){
       _bantObject.mediaAspectFeed.x == undefined ? 0 : _bantObject.mediaAspectFeed.x;
       _bantObject.mediaAspectFeed.y == undefined ? 0 : _bantObject.mediaAspectFeed.y;

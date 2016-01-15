@@ -1,0 +1,10 @@
+<div class="media-player" ng-switch-when="video">
+  <video class="media-video" ng-attr-poster="{{thisPost.mediaThumbUrl}}" ng-click="togglePlayPause($event)">
+    <source ng-src="{{thisPost.trustedMediaUrl}}" type="video/mp4">
+  </video>
+  <div class="media-controls">
+    <button class="btn btn-default play-pause-button" title="play">
+      <div class="triangle play-triangle"></div>
+    </button>
+  </div>
+</div>
