@@ -43,24 +43,25 @@ angular.module('TopicModule')
     link: function(scope,elem,attr) {
 
       scope.togglePlayPause = function(e) {
-        var thisPlayer = angular.element(e.srcElement);
-        var thisPlayBtn = angular.element(e.srcElement.nextElementSibling.nextElementSibling);
-        var thisThumbnail = angular.element(e.srcElement.nextElementSibling);
-        console.log("This Player: ", thisPlayer);
+        var thesePlayerNodes = elem[0].firstElementChild.childNodes;
+        var thisVideo = thesePlayerNodes[1];
+        var thisThumbnail = thesePlayerNodes[3];
+        var thisPlayBtn = thesePlayerNodes[5];
+        console.log("This Player: ", thisVideo, elem, thesePlayerNodes);
         console.log("This Play Button: ", thisPlayBtn);
         console.log("This Player Thumbnail: ", thisThumbnail);
 
-        if (thisPlayer[0].paused || thisPlayer[0].ended){
+        if (thisVideo.paused || thisVideo.ended){
           console.log("Play");
-          thisPlayBtn[0].className = 'pause';
-          thisThumbnail[0].className = 'pause';
-          thisPlayer[0].play();
+          thisPlayBtn.className = 'pause';
+          thisThumbnail.className = 'pause';
+          thisVideo.play();
         }
         else {
           console.log("Pause");
-          thisPlayBtn[0].className = 'media-controls';
-          thisThumbnail[0].className = 'media-thumbnail';
-          thisPlayer[0].pause();
+          thisPlayBtn.className = 'media-controls';
+          thisThumbnail.className = 'media-thumbnail';
+          thisVideo.pause();
         }
       }
 
@@ -88,7 +89,7 @@ angular.module('TopicModule')
         var _this = this;
         var height = document.documentElement.clientWidth / aspectRatio;
         height = height + 'px';
-        console.log("This: ", this, height);
+        // console.log("This: ", this, height);
         return height;
       }
 
