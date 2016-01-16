@@ -1872,6 +1872,7 @@ img-crop canvas {
   background-color: rgb(248,249,251);
 }
 
+
 .chatPostHeader {
   min-height: 22px;
 }
@@ -2509,6 +2510,18 @@ img-crop canvas {
   .embedYoutubeVideo > iframe {
     height: 125px;
   }
+
+  .video-chat-android {
+    height: 203px;
+  }
+  .youtube-android > iframe,
+  .video-android {
+    height: 228px;
+  }
+  .video-embed-android,
+  .embed-youtube-android > iframe {
+    height: 190px;
+  }
 }
 
 @media all and (min-width: 375px) and (max-width: 430px){
@@ -2535,6 +2548,18 @@ img-crop canvas {
   }
   .embedYoutubeVideo > iframe {
     height: 125px;
+  }
+
+  .video-chat-android {
+    height: 215px;
+  }
+  .youtube-android > iframe,
+  .video-android {
+    height: 240px;
+  }
+  .video-embed-android,
+  .embed-youtube-android > iframe {
+    height: 190px;
   }
 }
 
@@ -2563,6 +2588,18 @@ img-crop canvas {
   .embedYoutubeVideo > iframe {
     height: 150px;
   }
+
+  .video-chat-android {
+    height: 240px;
+  }
+  .youtube-android > iframe,
+  .video-android {
+    height: 265px;
+  }
+  .video-embed-android,
+  .embed-youtube-android > iframe {
+    height: 215px;
+  }
 }
 
 @media all and (min-width: 530px){
@@ -2589,6 +2626,18 @@ img-crop canvas {
   }
   .embedYoutubeVideo > iframe {
     height: 200px;
+  }
+
+  .video-chat-android {
+    height: 290px;
+  }
+  .youtube-android > iframe,
+  .video-android {
+    height: 315px;
+  }
+  .video-embed-android,
+  .embed-youtube-android > iframe {
+    height: 265px;
   }
 }
 

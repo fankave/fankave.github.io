@@ -22,6 +22,7 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
   var _pinnedComments = 0;
   var _offset = 0;
 
+  var _loadedComments = false;
 
   function setComments(commentsData) {
     //TODO clear comments for complete refresh Comments API
@@ -351,6 +352,12 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
       isCommentLiked:isCommentLiked,
       getNumPinComments:function(){
         return _pinnedComments;
+      },
+      loadedComments: function(){
+        return _loadedComments;
+      },
+      setLoadedComments: function(val){
+        _loadedComments = val;
       }
   };
 

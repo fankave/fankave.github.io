@@ -7,11 +7,12 @@ topicModule.directive('repeatFinishedNotify', function () {
       scope.setLinksOnComments();
       scope.setDocVars();
       scope.continueToExperience('smartS');
+      // scope.loadRemainingCommentsTimeout();
     }
   };
 });
 
-topicModule.directive('embedSharedContent', function() {
+topicModule.directive('embedSharedContent', ['UserAgentService', function (UserAgentService) {
   return {
     restrict: 'E',
     scope: {
@@ -20,7 +21,10 @@ topicModule.directive('embedSharedContent', function() {
       trustSource: '&',
       preventNav: '&'      
     },
+    link: function(scope,elem,attr){
+      scope.mobileUserAgent = UserAgentService.getMobileUserAgent();
+    },
     templateUrl: 'partials/shared.html'
   };
-});
+}]);
 
