@@ -97,6 +97,17 @@ angular.module('TopicModule')
         return height;
       }
 
+      scope.setYOffset = function (video){
+        var offset;
+        if (!!video.mediaAspectFeed.y){
+          offset = '-' + video.mediaAspectFeed.y + 'px';
+        }
+        else if (!!video.mediaAspectFull.y){
+          offset = '-' + video.mediaAspectFull.y + 'px';
+        }
+        return offset;
+      }
+
     },
     templateUrl: 'partials/mediaPlayer.html'
   };

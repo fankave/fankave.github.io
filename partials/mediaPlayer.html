@@ -2,7 +2,7 @@
   <video class="media-video" ng-style="{height: getContainerHeight(thisPost.mediaAspectRatio,thisPost.mediaOrientation) }">
     <source ng-src="{{thisPost.trustedMediaUrl}}" type="video/mp4">
   </video>
-  <div class="media-thumbnail" ng-class="{{setAspectRatio(thisPost.mediaAspectRatio,thisPost.mediaOrientation)}}" ng-style="{height: getContainerHeight(thisPost.mediaAspectRatio,thisPost.mediaOrientation), 'background': 'url({{thisPost.mediaThumbUrl}})' }">
+  <div class="media-thumbnail" ng-class="{{setAspectRatio(thisPost.mediaAspectRatio,thisPost.mediaOrientation)}}" ng-style="{height: getContainerHeight(thisPost.mediaAspectRatio,thisPost.mediaOrientation), 'background-image': 'url({{thisPost.mediaThumbUrl}})', 'background-size': 'cover', 'background-position-y': setYOffset(thisPost) }">
     <!-- <img class="video-thumb" ng-src="{{thisPost.mediaThumbUrl}}" /> -->
   </div>
   <div class="media-controls">

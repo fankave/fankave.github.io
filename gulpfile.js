@@ -14,28 +14,28 @@ gulp.task('default', function() {
 gulp.task('scripts-pre', function() {
   return gulp.src([
     './js/Forum.js',
-    './js/controllers/ChannelController.js',
-    './js/controllers/AuthController.js',
-    './js/controllers/TopicController.js',
-    './js/controllers/UserInputController.js',
-    './js/services/UserAgentService.js',
-    './js/services/NetworkService.js',
-    './js/services/ForumStorage.js',
-    './js/services/ForumDeviceInfo.js',
-    './js/services/URIHelper.js',
-    './js/services/ChannelService.js',
-    './js/directives/TopicDirectives.js',
-    './js/services/DataService.js',
-    './js/services/TopicService.js',
-    './js/services/SplashService.js',
-    './js/services/CommentService.js',
-    './js/services/DateUtilityService.js',
-    './js/services/Bant.js',
-    './js/services/UserInfoService.js',
-    './js/services/AuthService.js',
-    './js/services/StaticData.js',
-    './js/services/ForumDSUtility.js',
-    './js/services/MediaUploadService.js'
+    './js/pre/controllers/ChannelController.js',
+    './js/pre/controllers/AuthController.js',
+    './js/pre/controllers/TopicController.js',
+    './js/pre/controllers/UserInputController.js',
+    './js/pre/services/UserAgentService.js',
+    './js/pre/services/NetworkService.js',
+    './js/pre/services/ForumStorage.js',
+    './js/pre/services/ForumDeviceInfo.js',
+    './js/pre/services/URIHelper.js',
+    './js/pre/services/ChannelService.js',
+    './js/pre/directives/TopicDirectives.js',
+    './js/pre/services/DataService.js',
+    './js/pre/services/TopicService.js',
+    './js/pre/services/SplashService.js',
+    './js/pre/services/CommentService.js',
+    './js/pre/services/DateUtilityService.js',
+    './js/pre/services/Bant.js',
+    './js/pre/services/UserInfoService.js',
+    './js/pre/services/AuthService.js',
+    './js/pre/services/StaticData.js',
+    './js/pre/services/ForumDSUtility.js',
+    './js/pre/services/MediaUploadService.js'
     ])
   .pipe(sourcemaps.init())
     .pipe(concat('app.js'))
@@ -49,13 +49,13 @@ gulp.task('scripts-pre', function() {
 
 gulp.task('scripts-post', function() {
   return gulp.src([
-    './js/controllers/PostController.js',
-    './js/controllers/SocialController.js',
-    './js/controllers/SmartStadiumController.js',
-    './js/directives/SocialDirectives.js',
-    './js/services/ReplyService.js',
-    './js/services/SocialService.js',
-    './js/services/VideoService.js'
+    './js/post/controllers/PostController.js',
+    './js/post/controllers/SocialController.js',
+    './js/post/controllers/SmartStadiumController.js',
+    './js/post/directives/SocialDirectives.js',
+    './js/post/services/ReplyService.js',
+    './js/post/services/SocialService.js',
+    './js/post/services/VideoService.js'
     ])
   .pipe(sourcemaps.init())
     .pipe(concat('app-post.js'))
