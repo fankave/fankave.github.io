@@ -69,6 +69,7 @@ gulp.task('scripts-post', function() {
 
 gulp.task('lib-pre', function() {
   return gulp.src([
+    './bower_components/jquery/dist/jquery.min.js',
     './bower_components/angular/angular.min.js',
     './bower_components/angular-route/angular-route.min.js',
     './bower_components/angular-websocket/angular-websocket.min.js',
@@ -83,7 +84,6 @@ gulp.task('lib-pre', function() {
 
 gulp.task('lib-post', function() {
   return gulp.src([
-    './bower_components/jquery/dist/jquery.min.js',
     './bower_components/bootstrap/dist/js/bootstrap.min.js',
     './lib/magnific/jQuery.magnific-popup.min.js'
     ])
