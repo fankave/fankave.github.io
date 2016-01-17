@@ -56,6 +56,13 @@ angular.module('TopicModule')
           thisPlayBtn.className = 'pause';
           thisThumbnail.className = 'pause';
           thisVideo.play();
+          if (typeof(thisVideo.webkitEnterFullscreen) !== "undefined") {
+              thisVideo.webkitEnterFullscreen();
+          } else if (typeof(thisVideo.webkitRequestFullscreen)  !== "undefined") {
+              thisVideo.webkitRequestFullscreen();
+          } else if (typeof(thisVideo.mozRequestFullScreen)  !== "undefined") {
+              thisVideo.mozRequestFullScreen();
+          }
         }
         else {
           console.log("Pause");

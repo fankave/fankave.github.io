@@ -2060,7 +2060,7 @@ img-crop canvas {
 
 #moreContentText {
   font-size: 14px;
-  color: rgb(162,177,182);
+  color: #fff;
   vertical-align: -60%;
 }
 
@@ -2663,7 +2663,7 @@ img-crop canvas {
 .media-video {
   position: absolute;
   width: 100%;
-  /*height: 100%;*/
+  background-color: #000;
 }
 
 .media-controls {
