@@ -32,7 +32,7 @@ angular.module('TopicModule')
 }]);
 
 angular.module('TopicModule')
-.directive('mediaPlayer', function () {
+.directive('mediaPlayer', ['$sce', function ($sce) {
   return {
     restrict: 'E',
     scope: {
@@ -42,9 +42,10 @@ angular.module('TopicModule')
     },
     link: function(scope,elem,attr) {
 
-      $(elem).on('canplay', function(){
-          console.log("LOADING");
-        });
+      scope.trustSrc = function(src){
+        return $sce.trustAsResourceUrl(src);
+      }
+
       scope.togglePlayPause = function(e) {
         var thesePlayerNodes = elem[0].firstElementChild.childNodes;
         var thisVideo = thesePlayerNodes[1];
@@ -57,7 +58,7 @@ angular.module('TopicModule')
         scope.loadState = thisVideo.readyState;
         if (thisVideo.paused || thisVideo.ended){
           console.log("Play");
-          // thisPlayBtn.className = 'pause';
+          thisPlayBtn.className = 'pause';
           thisThumbnail.className = 'pause';
           thisVideo.play();
           if (typeof(thisVideo.webkitEnterFullscreen) !== "undefined") {
@@ -122,5 +123,5 @@ angular.module('TopicModule')
     },
     templateUrl: 'partials/mediaPlayer.html'
   };
-});
+}]);
 

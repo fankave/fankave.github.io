@@ -2727,7 +2727,7 @@ img-crop canvas {
 }
 
 .thumb1x1 {
-  padding-bottom: 100%;
+  /*padding-bottom: 100%;*/
 }
 
 .thumb2x1 {
