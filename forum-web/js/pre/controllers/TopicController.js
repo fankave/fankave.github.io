@@ -172,8 +172,12 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
 
         tempComment.postTimestamp = commentsdata[i].createdAt;
         if (tempComment.type === 'media'){
+          tempComment.mediaUrl = commentsdata[i].mediaUrl;
+          // tempComment.trustedMediaUrl = $scope.trustSrc(tempComment.mediaUrl);
           tempComment.mediaAspectFeed = commentsdata[i].mediaAspectFeed;
           tempComment.mediaAspectFull = commentsdata[i].mediaAspectFull;
+          tempComment.mediaAspectRatio = commentsdata[i].mediaAspectRatio;
+          tempComment.mediaOrientation = commentsdata[i].mediaOrientation;
           tempComment.mediaThumbUrl = commentsdata[i].mediaThumbUrl;
         }
         tempComment.isLiked = commentsdata[i].signal.like;

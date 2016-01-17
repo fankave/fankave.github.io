@@ -47,7 +47,7 @@
         </div>
       </div>
 
-      <div ng-switch-when="video" class="mp4VideoContainer">
+      <!-- <div ng-switch-when="video" class="mp4VideoContainer">
         <video controls="controls" preload="auto" ng-attr-poster="{{comment.mediaThumbUrl}}" class="video-js-chat vjs-default-skin" ng-class="{ 'video-chat-android': mobileUserAgent === 'android' }">
           <source ng-src="{{trustSrc(comment.mediaUrl)}}" type="video/mp4">
           <p class="vjs-no-js">
@@ -55,7 +55,8 @@
             <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
           </p>
         </video>
-      </div>
+      </div> -->
+      <media-player this-post="comment" vid-source="" vid-index="{{$index}}" ng-switch-when="video"></media-player>
 
       <embed-shared-content embed-post="comment.embed" ng-if="comment.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav=""></embed-shared-content>
 
@@ -150,7 +151,7 @@
           </div>
         </div>
 
-        <div ng-switch-when="video" class="mp4VideoContainer">
+        <!-- <div ng-switch-when="video" class="mp4VideoContainer">
           <video controls="controls" ng-attr-poster="{{thisReply.mediaThumbUrl}}" class="video-js-chat vjs-default-skin" ng-class="{ 'video-chat-android': mobileUserAgent === 'android' }">
             <source ng-src="{{trustSrc(thisReply.mediaUrl)}}" type="video/mp4">
             <p class="vjs-no-js">
@@ -158,7 +159,8 @@
               <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
             </p>
           </video>
-        </div>
+        </div> -->
+        <media-player this-post="thisReply" vid-source="" vid-index="{{$index}}" ng-switch-when="video"></media-player>
 
         <embed-shared-content embed-post="thisReply.embed" ng-if="thisReply.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav=""></embed-shared-content>  
 
