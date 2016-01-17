@@ -1,11 +1,9 @@
-var topicModule = angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"]);
-topicModule.controller("TopicController", ["$scope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",initTopicController]);
+angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"])
+.controller("TopicController", ["$scope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
 
-function initTopicController($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
+function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
-  var firstTime = true;
   var lastComment = false;
-  
   // Check For Mobile Browser
   if (UserAgentService.isMobileUser()){
     $scope.mobileBrowser = true;
@@ -30,7 +28,7 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
     // if (!UserInfoService.hasUserVisited()){
       console.log('SS USER HASNT VISITED');
       $scope.hideSSSplash = false;
-      // ForumStorage.setToLocalStorage("hasUserVisited", true);
+      ForumStorage.setToLocalStorage("hasUserVisited", true);
       $timeout(function() {$scope.continueToExperience('smartS'); }, 5000);
     // }
   }
@@ -174,8 +172,12 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
 
         tempComment.postTimestamp = commentsdata[i].createdAt;
         if (tempComment.type === 'media'){
+          tempComment.mediaUrl = commentsdata[i].mediaUrl;
+          // tempComment.trustedMediaUrl = $scope.trustSrc(tempComment.mediaUrl);
           tempComment.mediaAspectFeed = commentsdata[i].mediaAspectFeed;
           tempComment.mediaAspectFull = commentsdata[i].mediaAspectFull;
+          tempComment.mediaAspectRatio = commentsdata[i].mediaAspectRatio;
+          tempComment.mediaOrientation = commentsdata[i].mediaOrientation;
           tempComment.mediaThumbUrl = commentsdata[i].mediaThumbUrl;
         }
         tempComment.isLiked = commentsdata[i].signal.like;
@@ -227,7 +229,6 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   $scope.init = function() {
     networkService.send(TopicService.getTopicRequest($routeParams.topicID));
     networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
-    firstTime = false;
   };
   
 
@@ -583,5 +584,5 @@ function initTopicController($scope, $sce, $window, $location, $sanitize, $timeo
   $(document).on('scroll', watchScroll);
 
 
-};
+}]);
 

@@ -1,5 +1,5 @@
-var rootModule = angular.module("Forum", ["ngRoute","ngSanitize","AuthModule","ChannelModule","TopicModule","PostModule","NetworkModule","MediaModule","SocialModule","UserInput","SmartStadiumModule"]);
-rootModule.config(["$routeProvider", "$locationProvider",
+angular.module("Forum", ["ngRoute","ngSanitize","AuthModule","ChannelModule","TopicModule","PostModule","NetworkModule","MediaModule","SocialModule","UserInput","SmartStadiumModule"])
+.config(["$routeProvider", "$locationProvider",
 
 function ($routeProvider, $locationProvider) {
   $routeProvider
@@ -31,10 +31,10 @@ function ($routeProvider, $locationProvider) {
       enabled:true
     });
   }
-}]);
+}])
 
-rootModule.filter('hashtags',['$filter', '$sce',
-  function($filter, $sce) {
+.filter('hashtags',['$filter', '$sce',
+  function ($filter, $sce) {
     return function(text, target) {
       if (!text) return text;
 
@@ -52,6 +52,22 @@ rootModule.filter('hashtags',['$filter', '$sce',
 
       $sce.trustAsHtml(replacedText);
       return replacedText;
-    };
-  }
-]);
+  };
+}]);
+
+$.fn.animateRotate = function(angle, duration, easing, complete) {
+  return this.each(function() {
+    var $elem = $(this);
+
+    $({deg: 0}).animate({deg: angle}, {
+      duration: duration,
+      easing: easing,
+      step: function(now) {
+        $elem.css({
+           transform: 'rotate(' + now + 'deg)'
+         });
+      },
+      complete: complete || $.noop
+    });
+  });
+};

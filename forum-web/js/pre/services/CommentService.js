@@ -1,4 +1,6 @@
-networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUtility) {
+angular.module('NetworkModule')
+.factory('CommentService', ["Bant","DateUtilityService","FDSUtility",
+  function (Bant,DateUtilityService,FDSUtility) {
   var LIST_COMMENTS_URI = "/v1.0/topic/comments/list/"
   var SHOW_COMMENT_URI = "/v1.0/comment/show/";
     
@@ -361,4 +363,4 @@ networkModule.factory('CommentService', function (Bant,DateUtilityService,FDSUti
       }
   };
 
-});
+}]);
