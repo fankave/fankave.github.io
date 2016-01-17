@@ -2753,3 +2753,7 @@ video::-webkit-media-controls {
     display:none !important;
 }
 
+#loadSpinner {
+  width: 50px;
+}
+

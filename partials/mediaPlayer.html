@@ -6,8 +6,11 @@
     <!-- <img class="video-thumb" ng-src="{{thisPost.mediaThumbUrl}}" /> -->
   </div>
   <div class="media-controls">
-    <button class="btn btn-default play-pause-button" title="play">
+    <button ng-if="!loadState" class="btn btn-default play-pause-button" title="play">
       <div class="triangle play-triangle"></div>
     </button>
+    <span ng-if="loadState !== 4">
+      <img ng-src="img/load-spinner.gif" id="loadSpinner" />
+    </span>
   </div>
 </div>

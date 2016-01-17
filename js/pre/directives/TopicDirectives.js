@@ -42,6 +42,9 @@ angular.module('TopicModule')
     },
     link: function(scope,elem,attr) {
 
+      $(elem).on('canplay', function(){
+          console.log("LOADING");
+        });
       scope.togglePlayPause = function(e) {
         var thesePlayerNodes = elem[0].firstElementChild.childNodes;
         var thisVideo = thesePlayerNodes[1];
@@ -51,17 +54,7 @@ angular.module('TopicModule')
         console.log("This Play Button: ", thisPlayBtn);
         console.log("This Player Thumbnail: ", thisThumbnail);
 
-        thisVideo.addEventListener('loadstart', function(e) {
-          // function loopAnimation = 
-          console.log("Loading Video");
-          $(thisPlayBtn).animateRotate(360,2000);
-        });
-
-        thisVideo.addEventListener('canplay', function(e) {
-          // function loopAnimation = 
-          // thisPlayBtn.className = 'pause';
-        });
-
+        scope.loadState = thisVideo.readyState;
         if (thisVideo.paused || thisVideo.ended){
           console.log("Play");
           // thisPlayBtn.className = 'pause';
