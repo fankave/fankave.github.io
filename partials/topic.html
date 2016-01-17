@@ -441,7 +441,7 @@
       <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent youtubeVideo" ng-class="{ 'youtube-android': mobileUserAgent === 'android' }">
       </div>
 
-      <div ng-switch-when="video" class="mp4VideoContainer">
+      <!-- <div ng-switch-when="video" class="mp4VideoContainer">
         <video controls="controls" preload="auto" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js vjs-default-skin" ng-class="{ 'video-android': mobileUserAgent === 'android' }">
           <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
           <p class="vjs-no-js">
@@ -449,7 +449,10 @@
             <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
           </p>
         </video>
-      </div> 
+      </div> -->
+
+      <media-player this-post="thisPost" vid-source="{{trustSrc(thisPost.mediaUrl)}}" vid-index="{{$index}}" ng-switch-when="video"></media-player>
+
     </div> 
 
     <div class="socialButtonsRow socialText">
@@ -575,14 +578,14 @@
     </div>
   </div>
 
-  <div id="moreContentBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length === 10" ng-click="loadRemainingComments()">
-    <span id="moreContentText">Load Remaining Comments</span>
+  <div id="moreCommentsBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length === 10" ng-click="loadRemainingComments()">
+    <span id="moreCommentsText">Load More...</span>
   </div>
   <div id="moreContentBar" ng-if="activeTab === 'social'" ng-click="social.loadContent('social',social.socialArray.length)">
-    <span id="moreContentText">Load More Social</span>
+    <span id="moreContentText">Load More...</span>
   </div>
   <div id="moreContentBar" ng-if="activeTab === 'video'" ng-click="social.loadContent('video',social.videoArray.length)">
-    <span id="moreContentText">Load More Videos</span>
+    <span id="moreContentText">Load More...</span>
   </div>
 </div>
 

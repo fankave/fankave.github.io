@@ -51,11 +51,29 @@ angular.module('TopicModule')
         console.log("This Play Button: ", thisPlayBtn);
         console.log("This Player Thumbnail: ", thisThumbnail);
 
+        thisVideo.addEventListener('loadstart', function(e) {
+          // function loopAnimation = 
+          console.log("Loading Video");
+          $(thisPlayBtn).animateRotate(360,2000);
+        });
+
+        thisVideo.addEventListener('canplay', function(e) {
+          // function loopAnimation = 
+          // thisPlayBtn.className = 'pause';
+        });
+
         if (thisVideo.paused || thisVideo.ended){
           console.log("Play");
-          thisPlayBtn.className = 'pause';
+          // thisPlayBtn.className = 'pause';
           thisThumbnail.className = 'pause';
           thisVideo.play();
+          if (typeof(thisVideo.webkitEnterFullscreen) !== "undefined") {
+              thisVideo.webkitEnterFullscreen();
+          } else if (typeof(thisVideo.webkitRequestFullscreen)  !== "undefined") {
+              thisVideo.webkitRequestFullscreen();
+          } else if (typeof(thisVideo.mozRequestFullScreen)  !== "undefined") {
+              thisVideo.mozRequestFullScreen();
+          }
         }
         else {
           console.log("Pause");
@@ -95,6 +113,17 @@ angular.module('TopicModule')
         }
         // console.log("This: ", this, height);
         return height;
+      }
+
+      scope.setYOffset = function (video){
+        var offset;
+        if (!!video.mediaAspectFeed.y){
+          offset = '-' + video.mediaAspectFeed.y + 'px';
+        }
+        else if (!!video.mediaAspectFull.y){
+          offset = '-' + video.mediaAspectFull.y + 'px';
+        }
+        return offset;
       }
 
     },
