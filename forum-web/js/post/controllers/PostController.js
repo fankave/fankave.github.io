@@ -293,6 +293,16 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 			tempComment.topicId = selectedComment.topicId;
       tempComment.isMyComment = UserInfoService.isCurrentUser(selectedComment.author.id);
 
+      if (tempComment.type === 'media'){
+          tempComment.mediaUrl = selectedComment.mediaUrl;
+          // tempComment.trustedMediaUrl = $scope.trustSrc(tempComment.mediaUrl);
+          tempComment.mediaAspectFeed = selectedComment.mediaAspectFeed;
+          tempComment.mediaAspectFull = selectedComment.mediaAspectFull;
+          tempComment.mediaAspectRatio = selectedComment.mediaAspectRatio;
+          tempComment.mediaOrientation = selectedComment.mediaOrientation;
+          tempComment.mediaThumbUrl = selectedComment.mediaThumbUrl;
+        }
+
       if (tempComment.type === 'embed'){
         tempComment.shared = true;
         tempComment.embed = selectedComment.embed;
@@ -339,6 +349,15 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 			tempReply.mediaAspectFeed = repliesData[i].mediaAspectFeed;
 			tempReply.isLiked = repliesData[i].signal.like;
 			
+      if (tempComment.type === 'media'){
+          tempComment.mediaUrl = selectedComment.mediaUrl;
+          // tempComment.trustedMediaUrl = $scope.trustSrc(tempComment.mediaUrl);
+          tempComment.mediaAspectFeed = selectedComment.mediaAspectFeed;
+          tempComment.mediaAspectFull = selectedComment.mediaAspectFull;
+          tempComment.mediaAspectRatio = selectedComment.mediaAspectRatio;
+          tempComment.mediaOrientation = selectedComment.mediaOrientation;
+          tempComment.mediaThumbUrl = selectedComment.mediaThumbUrl;
+        }
       if (tempReply.type === 'embed'){
         tempReply.shared = true;
         tempReply.embed = repliesData[i].embed;
