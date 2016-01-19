@@ -6,6 +6,7 @@ var gulp       = require('gulp'),
     uglify     = require('gulp-uglify'),
     sourcemaps = require('gulp-sourcemaps'),
     autoprefix = require('gulp-autoprefixer');
+    gzip        = require('gulp-gzip')
 
 gulp.task('default', function() {
 
@@ -40,6 +41,7 @@ gulp.task('scripts-pre', function() {
   .pipe(sourcemaps.init())
     .pipe(concat('app.js'))
     .pipe(uglify())
+    .pipe(gzip())
     .pipe(rename({
       suffix: '.min'
     }))
@@ -60,6 +62,7 @@ gulp.task('scripts-post', function() {
   .pipe(sourcemaps.init())
     .pipe(concat('app-post.js'))
     .pipe(uglify())
+    .pipe(gzip())
     .pipe(rename({
       suffix: '.min'
     }))
@@ -109,6 +112,7 @@ gulp.task('css', function() {
       suffix: '.min'
     }))
   .pipe(sourcemaps.write('.'))
+  .pipe(gzip)
   .pipe(gulp.dest('./dist/css'));
 })
 
