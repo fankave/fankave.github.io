@@ -83,6 +83,7 @@ gulp.task('lib-pre', function() {
     ])
   .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(concat('lib-pre.min.js'))
+    .pipe(gzip())
   .pipe(sourcemaps.write('.'))
   .pipe(gulp.dest('./dist/lib'));
 });
@@ -95,6 +96,7 @@ gulp.task('lib-post', function() {
     ])
   .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(concat('lib-post.min.js'))
+    .pipe(gzip())
   .pipe(sourcemaps.write('.'))
   .pipe(gulp.dest('./dist/lib'));
 });
