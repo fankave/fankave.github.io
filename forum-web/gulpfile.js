@@ -112,7 +112,6 @@ gulp.task('css', function() {
       suffix: '.min'
     }))
   .pipe(sourcemaps.write('.'))
-  .pipe(gzip)
   .pipe(gulp.dest('./dist/css'));
 })
 
