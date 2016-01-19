@@ -349,14 +349,14 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 			tempReply.mediaAspectFeed = repliesData[i].mediaAspectFeed;
 			tempReply.isLiked = repliesData[i].signal.like;
 			
-      if (tempComment.type === 'media'){
-          tempComment.mediaUrl = selectedComment.mediaUrl;
+      if (tempReply.type === 'media'){
+          tempReply.mediaUrl = repliesData[i].mediaUrl;
           // tempComment.trustedMediaUrl = $scope.trustSrc(tempComment.mediaUrl);
-          tempComment.mediaAspectFeed = selectedComment.mediaAspectFeed;
-          tempComment.mediaAspectFull = selectedComment.mediaAspectFull;
-          tempComment.mediaAspectRatio = selectedComment.mediaAspectRatio;
-          tempComment.mediaOrientation = selectedComment.mediaOrientation;
-          tempComment.mediaThumbUrl = selectedComment.mediaThumbUrl;
+          tempReply.mediaAspectFeed = repliesData[i].mediaAspectFeed;
+          tempReply.mediaAspectFull = repliesData[i].mediaAspectFull;
+          tempReply.mediaAspectRatio = repliesData[i].mediaAspectRatio;
+          tempReply.mediaOrientation = repliesData[i].mediaOrientation;
+          tempReply.mediaThumbUrl = repliesData[i].mediaThumbUrl;
         }
       if (tempReply.type === 'embed'){
         tempReply.shared = true;
