@@ -872,6 +872,7 @@ input:focus + button {
   position:fixed;
   z-index: 10000;
   width: 100%;
+  max-width: 768px;
   margin-top: 41px;
 }
 
@@ -880,6 +881,7 @@ input:focus + button {
   bottom:5em;
   z-index: 10000;
   width: 100%;
+  max-width: 768px;
   text-align: center;
 }
 
@@ -2663,6 +2665,7 @@ img-crop canvas {
 .media-video {
   position: absolute;
   width: 100%;
+  /*max-width: 500px;*/
   background-color: #000;
 }
 
@@ -2739,13 +2742,26 @@ img-crop canvas {
 .media-player {
   border: none;
   border-radius: 3px;
+  /*max-height: 300px;*/
+}
+
+@media all and (min-width: 500px){
+  .media-thumbnail,
+  .media-video,
+  .media-player {
+    /*max-height: 350px;*/
+  }
 }
 
 .video-portrait {
-  
+   
 }
 
 .video-landscape {
+
+}
+
+.video-square {
 
 }
 

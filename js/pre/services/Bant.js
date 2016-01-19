@@ -33,7 +33,9 @@ angular.module('NetworkModule')
       _bantObject.mediaAspectFeed.y == undefined ? 0 : _bantObject.mediaAspectFeed.y;
       _bantObject.mediaAspectFeed.w == undefined ? 0 : _bantObject.mediaAspectFeed.w;
       _bantObject.mediaAspectFeed.h == undefined ? 0 : _bantObject.mediaAspectFeed.h;
-      if (_bantObject.mediaAspectFeed.w < _bantObject.mediaAspectFeed.h){
+      if (_bantObject.mediaAspectFeed.w === _bantObject.mediaAspectFeed.h){
+        _bantObject.mediaOrientation = "square";
+      } else if (_bantObject.mediaAspectFeed.w < _bantObject.mediaAspectFeed.h){
         _bantObject.mediaOrientation = "portrait";
       } else {
         _bantObject.mediaOrientation = "landscape";
@@ -44,7 +46,9 @@ angular.module('NetworkModule')
       _bantObject.mediaAspectFull.y == undefined ? 0 : _bantObject.mediaAspectFull.y;
       _bantObject.mediaAspectFull.w == undefined ? 0 : _bantObject.mediaAspectFull.w;
       _bantObject.mediaAspectFull.h == undefined ? 0 : _bantObject.mediaAspectFull.h;
-      if (_bantObject.mediaAspectFull.w < _bantObject.mediaAspectFull.h){
+      if (_bantObject.mediaAspectFull.w === _bantObject.mediaAspectFull.h){
+        _bantObject.mediaOrientation = "square";
+      } else if (_bantObject.mediaAspectFull.w < _bantObject.mediaAspectFull.h){
         _bantObject.mediaOrientation = "portrait";
       } else {
         _bantObject.mediaOrientation = "landscape";

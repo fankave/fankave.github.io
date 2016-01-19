@@ -51,7 +51,7 @@ angular.module('TopicModule')
         var thisVideo = thesePlayerNodes[1];
         var thisThumbnail = thesePlayerNodes[3];
         var thisPlayBtn = thesePlayerNodes[5];
-        console.log("This Player: ", thisVideo, elem, thesePlayerNodes);
+        console.log("This Player: ", thisVideo, $(thisVideo).width(), thesePlayerNodes);
         console.log("This Play Button: ", thisPlayBtn);
         console.log("This Player Thumbnail: ", thisThumbnail);
 
@@ -91,22 +91,31 @@ angular.module('TopicModule')
         // Set Orientation Class
         if (orientation === "portrait"){
           classStrings.push("video-portrait");
+        } else if (orientation === "square"){
+          classStrings.push("video-square");
         } else {
           classStrings.push("video-landscape");
         }
         return classStrings;
       }
 
-      scope.getContainerHeight = function (aspectRatio) {
+      scope.getContainerHeight = function (aspectRatio, orientation) {
         var _this = this;
         var height = document.documentElement.clientWidth / aspectRatio;
-        if (height > 300){
+        if (height > 300 && orientation === 'portrait'){
           height = '300px';
         } else {
           height = height + 'px';
         }
         // console.log("This: ", this, height);
         return height;
+      }
+
+      scope.setDimensions = function (aspectRatio, orientation) {
+        var styleObj = {};
+        var docWidth = document.documentElement.clientWidth;
+        var heightDiff = docWidth / aspectRatio;
+        if (orientation === 'square'){}
       }
 
       scope.setYOffset = function (video){

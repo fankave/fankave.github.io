@@ -148,6 +148,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         }
         _this.uploader.uploadAll();
         $scope.commentText = "";
+        $('input#topicCommentField').blur();
         $('#postCommentButton').css('color','rgb(211,214,215)');
         if (isComment){
           $(document).scrollTop(0);
