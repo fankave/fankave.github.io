@@ -41,11 +41,10 @@ gulp.task('scripts-pre', function() {
   .pipe(sourcemaps.init())
     .pipe(concat('app.js'))
     .pipe(uglify())
-    
+    .pipe(gzip())
     .pipe(rename({
       suffix: '.min'
     }))
-    .pipe(gzip())
   .pipe(sourcemaps.write('.'))
   .pipe(gulp.dest('dist/js'));
 });
@@ -63,12 +62,10 @@ gulp.task('scripts-post', function() {
   .pipe(sourcemaps.init())
     .pipe(concat('app-post.js'))
     .pipe(uglify())
+    .pipe(gzip())
     .pipe(rename({
       suffix: '.min'
     }))
-
-    .pipe(gzip())
-    
   .pipe(sourcemaps.write('.'))
   .pipe(gulp.dest('dist/js'));
 });
