@@ -90,16 +90,27 @@ angular.module('TopicModule')
         }
         // Set Orientation Class
         if (orientation === "portrait"){
-          classStrings.push("video-portrait");
+          if (aspectRatio === 1.778){
+            classStrings.push("video-portrait-9x16");
+          } else {
+            classStrings.push("video-portrait-1x2")
+          }
         } else if (orientation === "square"){
           classStrings.push("video-square");
         } else {
-          classStrings.push("video-landscape");
+          if (aspectRatio === 1.778){
+            classStrings.push("video-landscape-16x9");
+          } else {
+            classStrings.push("video-landscape-2x1")
+          }
         }
         return classStrings;
       }
 
       scope.getContainerHeight = function (aspectRatio, orientation) {
+        var thesePlayerNodes = elem[0].firstElementChild.childNodes;
+        var thisVideo = thesePlayerNodes[1];
+        console.log("Elem/Video in getCH: ", thisVideo, $(thisVideo).width(), thesePlayerNodes);
         var _this = this;
         var height = document.documentElement.clientWidth / aspectRatio;
         if (height > 300 && orientation === 'portrait'){
@@ -111,11 +122,22 @@ angular.module('TopicModule')
         return height;
       }
 
-      scope.setDimensions = function (aspectRatio, orientation) {
+      scope.setDimensions = function (aspectRatio, orientation, video) {
+        var thesePlayerNodes = elem[0].firstElementChild.childNodes;
+        var thisVideo = thesePlayerNodes[1];
+        var thisWidth = $(thisVideo).width();
+        console.log("Elem/Video in getCH: ", thisVideo, thisWidth);
+
         var styleObj = {};
-        var docWidth = document.documentElement.clientWidth;
-        var heightDiff = docWidth / aspectRatio;
-        if (orientation === 'square'){}
+        var height = thisWidth / aspectRatio;
+        styleObj['height'] = height;
+        if (!!video){
+          styleObj['background-image'] = 'url(' + video.mediaThumbUrl + ')';
+          styleObj['background-size'] = 'cover';
+          styleObj['background-position-y'] = scope.setYOffset(video);
+        }
+        console.log("Set Dimensions Object: ", styleObj);
+        return styleObj;
       }
 
       scope.setYOffset = function (video){

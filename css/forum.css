@@ -2753,16 +2753,24 @@ img-crop canvas {
   }
 }
 
-.video-portrait {
-   
+.video-portrait-1x2 {
+  max-width: 150px;
 }
 
-.video-landscape {
+.video-portrait-9x16 {
+  max-width: 169px;
+}
 
+.video-landscape-16x9 {
+  max-width: 533px;
+}
+
+.video-landscape-2x1 {
+  max-width: 600px;
 }
 
 .video-square {
-
+  max-width: 381px;
 }
 
 video::-webkit-media-controls {
