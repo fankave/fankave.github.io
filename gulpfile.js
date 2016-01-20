@@ -5,13 +5,24 @@ var gulp       = require('gulp'),
     rename     = require('gulp-rename'),
     uglify     = require('gulp-uglify'),
     sourcemaps = require('gulp-sourcemaps'),
-    autoprefix = require('gulp-autoprefixer');
+    autoprefix = require('gulp-autoprefixer'),
+    jshint     = require('gulp-jshint');
 
-gulp.task('default', function() {
+gulp.task('default', ['watch']);
 
+gulp.task('jshint-pre', function() {
+  return gulp.src(['./js/pre/**/*.js'])
+  .pipe(jshint())
+  .pipe(jshint.reporter('jshint-stylish'));
 });
 
-gulp.task('scripts-pre', function() {
+gulp.task('jshint-post', function() {
+  return gulp.src(['./js/post/**/*.js'])
+  .pipe(jshint())
+  .pipe(jshint.reporter('jshint-stylish'));
+});
+
+gulp.task('scripts-pre', ['jshint-pre'], function() {
   return gulp.src([
     './js/Forum.js',
     './js/pre/controllers/ChannelController.js',
@@ -36,7 +47,7 @@ gulp.task('scripts-pre', function() {
     './js/pre/services/StaticData.js',
     './js/pre/services/ForumDSUtility.js',
     './js/pre/services/MediaUploadService.js'
-    ])
+  ])
   .pipe(sourcemaps.init())
     .pipe(concat('app.js'))
     .pipe(uglify())
@@ -47,7 +58,7 @@ gulp.task('scripts-pre', function() {
   .pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('scripts-post', function() {
+gulp.task('scripts-post', ['jshint-post'], function() {
   return gulp.src([
     './js/post/controllers/PostController.js',
     './js/post/controllers/SocialController.js',
@@ -56,7 +67,7 @@ gulp.task('scripts-post', function() {
     './js/post/services/ReplyService.js',
     './js/post/services/SocialService.js',
     './js/post/services/VideoService.js'
-    ])
+  ])
   .pipe(sourcemaps.init())
     .pipe(concat('app-post.js'))
     .pipe(uglify())
@@ -75,7 +86,7 @@ gulp.task('lib-pre', function() {
     './bower_components/angular-websocket/angular-websocket.min.js',
     './lib/angular-sanitize/angular-sanitize.min.js',
     './bower_components/angular-file-upload/dist/angular-file-upload.min.js'
-    ])
+  ])
   .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(concat('lib-pre.min.js'))
   .pipe(sourcemaps.write('.'))
@@ -86,7 +97,7 @@ gulp.task('lib-post', function() {
   return gulp.src([
     './bower_components/bootstrap/dist/js/bootstrap.min.js',
     './lib/magnific/jQuery.magnific-popup.min.js'
-    ])
+  ])
   .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(concat('lib-post.min.js'))
   .pipe(sourcemaps.write('.'))
@@ -114,11 +125,20 @@ gulp.task('css', function() {
 
 gulp.task('minifyFile', function() {
   return gulp.src(['./lib/angular/angular-sanitize.js'])
-    .pipe(sourcemaps.init())
-      .pipe(uglify())
-      .pipe(rename({
-        suffix: '.min'
-      }))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./lib/angular-sanitize'));
+  .pipe(sourcemaps.init())
+    .pipe(uglify())
+    .pipe(rename({
+      suffix: '.min'
+    }))
+  .pipe(sourcemaps.write('.'))
+  .pipe(gulp.dest('./lib/angular-sanitize'));
 });
+
+gulp.task('watch', function() {
+  gulp.watch('./css/**/*.css', ['css']);
+  gulp.watch('./js/pre/**/*.js', ['scripts-pre']);
+  gulp.watch('./js/post/**/*.js', ['scripts-post']);
+});
+
+gulp.task('build', ['css','scripts-pre','scripts-post']);
+gulp.task('build-full', ['css','lib-pre','lib-post','scripts-pre','scripts-post']);
