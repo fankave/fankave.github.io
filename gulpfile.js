@@ -6,7 +6,8 @@ var gulp       = require('gulp'),
     uglify     = require('gulp-uglify'),
     sourcemaps = require('gulp-sourcemaps'),
     autoprefix = require('gulp-autoprefixer'),
-    jshint     = require('gulp-jshint');
+    jshint     = require('gulp-jshint'),
+    gzip       = require('gulp-gzip');
 
 gulp.task('default', ['watch']);
 
@@ -55,6 +56,7 @@ gulp.task('scripts-pre', function() {
       suffix: '.min'
     }))
   .pipe(sourcemaps.write('.'))
+  .pipe(gzip())
   .pipe(gulp.dest('dist/js'));
 });
 
@@ -75,6 +77,7 @@ gulp.task('scripts-post', function() {
       suffix: '.min'
     }))
   .pipe(sourcemaps.write('.'))
+  .pipe(gzip())
   .pipe(gulp.dest('dist/js'));
 });
 
@@ -90,6 +93,7 @@ gulp.task('lib-pre', function() {
   .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(concat('lib-pre.min.js'))
   .pipe(sourcemaps.write('.'))
+  .pipe(gzip())
   .pipe(gulp.dest('./dist/lib'));
 });
 
@@ -101,6 +105,7 @@ gulp.task('lib-post', function() {
   .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(concat('lib-post.min.js'))
   .pipe(sourcemaps.write('.'))
+  .pipe(gzip())
   .pipe(gulp.dest('./dist/lib'));
 });
 
@@ -120,6 +125,7 @@ gulp.task('css', function() {
       suffix: '.min'
     }))
   .pipe(sourcemaps.write('.'))
+  .pipe(gzip())
   .pipe(gulp.dest('./dist/css'));
 })
 
