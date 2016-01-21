@@ -187,6 +187,14 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
           tempComment.embed = commentsdata[i].embed;
           tempComment.embed.embedCreatedAt = commentsdata[i].embedCreatedAt;
           tempComment.embed.embedCreatedAtFull = commentsdata[i].embedCreatedAtFull;
+          if (tempComment.embedType === 'media'){
+            tempComment.mediaUrl = commentsdata[i].embedMedia.mediaUrl;
+            tempComment.mediaThumbUrl = commentsdata[i].embedMedia.mediaThumbUrl;
+            tempComment.mediaAspectFeed = commentsdata[i].embedMedia.mediaAspectFeed;
+            tempComment.mediaAspectFull = commentsdata[i].embedMedia.mediaAspectFull;
+            tempComment.mediaAspectRatio = commentsdata[i].embedMedia.mediaAspectRatio;
+            tempComment.mediaOrientation = commentsdata[i].embedMedia.mediaOrientation;
+          }
 
           if (tempComment.providerName === "Twitter"){
             tempComment.embed.embedLogo = "img/twitterLogo@2x.png";
@@ -571,11 +579,13 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         tabs.addClass('fixTabsPeel');
         tabs.css('top',headerHeight);
         tabContainer.addClass('fixTabContainer');
+        $('.commentsContainer').css('padding-top','86px');
         fixed = true;
       } else if (fixed) {
         tabs.removeClass('fixTabsPeel');
         tabs.css('top','');
         tabContainer.removeClass('fixTabContainer');
+        $('.commentsContainer').css('padding-top','');
         fixed = false;
       }
   };

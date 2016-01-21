@@ -19,36 +19,37 @@ angular.module('NetworkModule')
     if(_bantObject.mediaAspect16x9 != undefined){
       _bantObject.mediaAspectRatio = 1.778;
       _bantObject.mediaAspectFeed = _bantObject.mediaAspect16x9;
+      if (_bantObject.mediaAspect16x9.w < _bantObject.mediaAspect16x9.h){
+        _bantObject.mediaOrientation = "portrait";
+      } else {
+        _bantObject.mediaOrientation = "landscape";
+      }
     }
     else if(_bantObject.mediaAspect1x1 != undefined){
       _bantObject.mediaAspectRatio = 1;
       _bantObject.mediaAspectFeed = _bantObject.mediaAspect1x1;
+      _bantObject.mediaOrientation = "square";
     }
     else if(_bantObject.mediaAspect2x1 != undefined){
       _bantObject.mediaAspectRatio = 2;
       _bantObject.mediaAspectFeed = _bantObject.mediaAspect2x1;
+      if (_bantObject.mediaAspect2x1.w < _bantObject.mediaAspect2x1.h){
+        _bantObject.mediaOrientation = "portrait";
+      } else {
+        _bantObject.mediaOrientation = "landscape";
+      }
     }
     if(_bantObject.mediaAspectFeed != undefined){
       _bantObject.mediaAspectFeed.x == undefined ? 0 : _bantObject.mediaAspectFeed.x;
       _bantObject.mediaAspectFeed.y == undefined ? 0 : _bantObject.mediaAspectFeed.y;
       _bantObject.mediaAspectFeed.w == undefined ? 0 : _bantObject.mediaAspectFeed.w;
       _bantObject.mediaAspectFeed.h == undefined ? 0 : _bantObject.mediaAspectFeed.h;
-      if (_bantObject.mediaAspectFeed.w < _bantObject.mediaAspectFeed.h){
-        _bantObject.mediaOrientation = "portrait";
-      } else {
-        _bantObject.mediaOrientation = "landscape";
-      }
     }
     if(_bantObject.mediaAspectFull != undefined){
       _bantObject.mediaAspectFull.x == undefined ? 0 : _bantObject.mediaAspectFull.x;
       _bantObject.mediaAspectFull.y == undefined ? 0 : _bantObject.mediaAspectFull.y;
       _bantObject.mediaAspectFull.w == undefined ? 0 : _bantObject.mediaAspectFull.w;
       _bantObject.mediaAspectFull.h == undefined ? 0 : _bantObject.mediaAspectFull.h;
-      if (_bantObject.mediaAspectFull.w < _bantObject.mediaAspectFull.h){
-        _bantObject.mediaOrientation = "portrait";
-      } else {
-        _bantObject.mediaOrientation = "landscape";
-      }
     }
     return _bantObject;
   }

@@ -1,9 +1,8 @@
-<div class="media-player" ng-style="{height: getContainerHeight(thisPost.mediaAspectRatio,thisPost.mediaOrientation) }" ng-click="togglePlayPause($event)">
-  <video class="media-video" ng-style="{height: getContainerHeight(thisPost.mediaAspectRatio,thisPost.mediaOrientation) }">
+<div class="media-player" ng-class="{{setAspectRatio(thisPost.mediaAspectRatio,thisPost.mediaOrientation)}}" ng-style="setDimensions(thisPost.mediaAspectRatio, thisPost.mediaOrientation)" ng-click="togglePlayPause($event)">
+  <video class="media-video" ng-class="{{setAspectRatio(thisPost.mediaAspectRatio,thisPost.mediaOrientation)}}" ng-style="setDimensions(thisPost.mediaAspectRatio, thisPost.mediaOrientation)">
     <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
   </video>
-  <div class="media-thumbnail" ng-class="{{setAspectRatio(thisPost.mediaAspectRatio,thisPost.mediaOrientation)}}" ng-style="{height: getContainerHeight(thisPost.mediaAspectRatio,thisPost.mediaOrientation), 'background-image': 'url({{thisPost.mediaThumbUrl}})', 'background-size': 'cover', 'background-position-y': setYOffset(thisPost) }">
-    <!-- <img class="video-thumb" ng-src="{{thisPost.mediaThumbUrl}}" /> -->
+  <div class="media-thumbnail" ng-class="{{setAspectRatio(thisPost.mediaAspectRatio,thisPost.mediaOrientation)}}" ng-style="setDimensions(thisPost.mediaAspectRatio, thisPost.mediaOrientation, thisPost)">
   </div>
   <div class="media-controls">
     <button class="btn btn-default play-pause-button" title="play">
