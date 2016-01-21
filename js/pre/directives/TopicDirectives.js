@@ -64,12 +64,14 @@ angular.module('TopicModule')
           thisThumbnail.className = 'pause';
           thisVideo.play();
           if (scope.isMobileUser){
-            if (typeof(thisVideo.webkitEnterFullscreen) !== "undefined") {
-                thisVideo.webkitEnterFullscreen();
-            } else if (typeof(thisVideo.webkitRequestFullscreen)  !== "undefined") {
-                thisVideo.webkitRequestFullscreen();
-            } else if (typeof(thisVideo.mozRequestFullScreen)  !== "undefined") {
-                thisVideo.mozRequestFullScreen();
+            if (thisVideo.requestFullscreen){
+              thisVideo.requestFullscreen();
+            } else if (thisVideo.webkitRequestFullscreen){
+              thisVideo.webkitRequestFullscreen();
+            } else if (thisVideo.mozRequestFullScreen){
+              thisVideo.mozRequestFullScreen();
+            } else if (thisVideo.msRequestFullscreen){
+              thisVideo.msRequestFullscreen();
             }
           }
         }
@@ -82,7 +84,9 @@ angular.module('TopicModule')
       }
 
       scope.setAspectRatio = function (aspectRatio, orientation) {
-        console.log("setAspectRatio: ", aspectRatio, orientation);
+        if (NETWORK_DEBUG){
+          console.log("setAspectRatio: ", aspectRatio, orientation);
+        }
         var classStrings = [];
 
         if (orientation === "portrait"){
@@ -107,10 +111,12 @@ angular.module('TopicModule')
         var thesePlayerNodes = elem[0].firstElementChild.childNodes;
         var thisVideo = thesePlayerNodes[1];
         var thisWidth = $(thisVideo).width();
-        console.log("Elem in setD: ", elem);
-        console.log("PlayerNodes in setD: ", thesePlayerNodes);
-        console.log("Video in setD: ", thisVideo);
-        console.log("Width in setD: ", thisWidth);
+        if (NETWORK_DEBUG){
+          console.log("Elem in setD: ", elem);
+          console.log("PlayerNodes in setD: ", thesePlayerNodes);
+          console.log("Video in setD: ", thisVideo);
+          console.log("Width in setD: ", thisWidth);
+        }
 
         // Width Contingencies (landscape)
         if (aspectRatio === 1 && thisWidth > 300){
@@ -137,7 +143,9 @@ angular.module('TopicModule')
           styleObj['background-size'] = 'cover';
           styleObj['background-position-y'] = scope.setYOffset(video);
         }
-        console.log("Set Dimensions Object: ", styleObj);
+        if (NETWORK_DEBUG){
+          console.log("Set Dimensions Object: ", styleObj);
+        }
         return styleObj;
       }
 
