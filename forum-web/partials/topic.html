@@ -335,7 +335,7 @@
     <span class="postAuthorPhoto">
       <div>
         <a class="thumbnail">
-          <img ng-src="{{thisPost.postAuthorPhoto}}" alt="" onerror="this.src='img/default_user_v3.png'" class="userPhoto">
+          <img ng-src="{{thisPost.postAuthorPhoto}}" onerror="this.src='img/default_user_v3.png'" class="userPhoto" />
         </a>
       </div>
       <span id="pinIcon" ng-if="thisPost.pin == true">
@@ -363,20 +363,10 @@
         </div>
       </div>
 
-      <!-- <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" preload="auto" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js-chat vjs-default-skin" ng-class="{ 'video-chat-android': mobileUserAgent === 'android' }">
-          <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
-          <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a web browser that
-            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-          </p>
-        </video>
-      </div> -->
-
-      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" ng-click="moreButtonTapped()"></media-player>
+      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" ng-click="moreButtonTapped()" class="media-parent"></media-player>
 
       <!-- Begin Embed Content Shared to Chat -->
-      <embed-shared-content embed-post="thisPost.embed" ng-if="thisPost.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav="moreButtonTapped()"></embed-shared-content>
+      <embed-shared-content embed-post="thisPost" ng-if="thisPost.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav="moreButtonTapped()"></embed-shared-content>
       <!-- End Embed Content Shared to Chat -->
 
       <div>
@@ -453,7 +443,7 @@
         </video>
       </div> -->
 
-      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video"></media-player>
+      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>
 
     </div> 
 
@@ -488,7 +478,7 @@
           <span class="social-share-label">Share</span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
-          <li><a ng-click="social.shareTweetToChat(thisPost.embed)">Share to Live Chat</a></li>
+          <li><a ng-click="social.shareTweetToChat(thisPost)">Share to Live Chat</a></li>
           <li  ng-if="isPeelUser === false"><a ng-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
         </ul>
       </div>
@@ -532,17 +522,7 @@
         <img ng-src="{{thisPost.mediaUrl}}" class="cropView" ng-click="imageClick(thisPost.mediaUrl)" onerror="this.style.display='none';" />
       </div>
 
-      <!-- <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" preload="auto" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js vjs-default-skin" ng-class="{ 'video-android': mobileUserAgent === 'android' }">
-          <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
-          <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a web browser that
-            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-          </p>
-        </video>
-      </div> -->
-
-      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video"></media-player>
+      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>
     </div> 
 
     <div class="socialButtonsRow socialText">
@@ -574,7 +554,7 @@
           <span class="social-share-label">Share</span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
-          <li><a ng-click="social.shareTweetToChat(thisPost.embed)">Share to Live Chat</a></li>
+          <li><a ng-click="social.shareTweetToChat(thisPost)">Share to Live Chat</a></li>
           <li ng-if="isPeelUser === false"><a ng-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
         </ul>
       </div>
@@ -583,13 +563,13 @@
   </div>
 
   <div id="moreCommentsBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length === 10" ng-click="loadRemainingComments()">
-    <span id="moreCommentsText">Click to Load More</span>
+    <span id="moreCommentsText">Load More...</span>
   </div>
   <div id="moreContentBar" ng-if="activeTab === 'social'" ng-click="social.loadContent('social',social.socialArray.length)">
-    <span id="moreContentText">Click to Load More</span>
+    <span id="moreContentText">Load More...</span>
   </div>
   <div id="moreContentBar" ng-if="activeTab === 'video'" ng-click="social.loadContent('video',social.videoArray.length)">
-    <span id="moreContentText">Click to Load More</span>
+    <span id="moreContentText">Load More...</span>
   </div>
 </div>
 
@@ -617,7 +597,7 @@
         <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,true)">Post</button>
 
         <span><input id="topicCommentField" type="text" class="form-control"
-        placeholder="Write a comment..." ng-model="commentText" ng-focus="user.mobileHighlightPost()" ng-blur="user.mobileUnhighlightPost()"></span>
+        placeholder="Write a comment..." ng-model="commentText" ng-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
 
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
 
