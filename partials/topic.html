@@ -363,17 +363,7 @@
         </div>
       </div>
 
-      <!-- <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" preload="auto" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js-chat vjs-default-skin" ng-class="{ 'video-chat-android': mobileUserAgent === 'android' }">
-          <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
-          <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a web browser that
-            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-          </p>
-        </video>
-      </div> -->
-
-      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" ng-click="moreButtonTapped()"></media-player>
+      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" ng-click="moreButtonTapped()" class="media-parent"></media-player>
 
       <!-- Begin Embed Content Shared to Chat -->
       <embed-shared-content embed-post="thisPost" ng-if="thisPost.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav="moreButtonTapped()"></embed-shared-content>
@@ -453,7 +443,7 @@
         </video>
       </div> -->
 
-      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video"></media-player>
+      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>
 
     </div> 
 
@@ -532,17 +522,7 @@
         <img ng-src="{{thisPost.mediaUrl}}" class="cropView" ng-click="imageClick(thisPost.mediaUrl)" onerror="this.style.display='none';" />
       </div>
 
-      <!-- <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" preload="auto" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js vjs-default-skin" ng-class="{ 'video-android': mobileUserAgent === 'android' }">
-          <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
-          <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a web browser that
-            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-          </p>
-        </video>
-      </div> -->
-
-      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video"></media-player>
+      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>
     </div> 
 
     <div class="socialButtonsRow socialText">

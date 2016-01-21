@@ -47,7 +47,7 @@
         </div>
       </div>
 
-      <media-player this-post="comment" vid-source="" vid-index="{{$index}}" ng-switch-when="video"></media-player>
+      <media-player this-post="comment" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>
 
       <embed-shared-content embed-post="comment" ng-if="comment.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav=""></embed-shared-content>
 
@@ -142,7 +142,7 @@
           </div>
         </div>
 
-      <media-player this-post="thisReply" vid-source="" vid-index="{{$index}}" ng-switch-when="video"></media-player>  
+      <media-player this-post="thisReply" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>  
         
       <div class="socialButtonsRow">
         <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeReply(thisReply.id)" ng-switch="thisReply.isLiked">

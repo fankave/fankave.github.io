@@ -32,7 +32,7 @@ angular.module('TopicModule')
 }]);
 
 angular.module('TopicModule')
-.directive('mediaPlayer', ['$sce', function ($sce) {
+.directive('mediaPlayer', ['$sce', 'UserAgentService', function ($sce, UserAgentService) {
   return {
     restrict: 'E',
     scope: {
@@ -42,6 +42,8 @@ angular.module('TopicModule')
     },
     link: function(scope,elem,attr) {
 
+      scope.isMobileUser = UserAgentService.isMobileUser();
+      
       scope.trustSrc = function(src){
         return $sce.trustAsResourceUrl(src);
       }
@@ -51,26 +53,28 @@ angular.module('TopicModule')
         var thisVideo = thesePlayerNodes[1];
         var thisThumbnail = thesePlayerNodes[3];
         var thisPlayBtn = thesePlayerNodes[5];
-        console.log("This Player: ", thisVideo, $(thisVideo).width(), thesePlayerNodes);
-        console.log("This Play Button: ", thisPlayBtn);
-        console.log("This Player Thumbnail: ", thisThumbnail);
+        // console.log("This Player: ", thisVideo, $(thisVideo).width(), thesePlayerNodes);
+        // console.log("This Play Button: ", thisPlayBtn);
+        // console.log("This Player Thumbnail: ", thisThumbnail);
 
         scope.loadState = thisVideo.readyState;
         if (thisVideo.paused || thisVideo.ended){
-          console.log("Play");
+          // console.log("Play");
           thisPlayBtn.className = 'pause';
           thisThumbnail.className = 'pause';
           thisVideo.play();
-          if (typeof(thisVideo.webkitEnterFullscreen) !== "undefined") {
-              thisVideo.webkitEnterFullscreen();
-          } else if (typeof(thisVideo.webkitRequestFullscreen)  !== "undefined") {
-              thisVideo.webkitRequestFullscreen();
-          } else if (typeof(thisVideo.mozRequestFullScreen)  !== "undefined") {
-              thisVideo.mozRequestFullScreen();
+          if (scope.isMobileUser){
+            if (typeof(thisVideo.webkitEnterFullscreen) !== "undefined") {
+                thisVideo.webkitEnterFullscreen();
+            } else if (typeof(thisVideo.webkitRequestFullscreen)  !== "undefined") {
+                thisVideo.webkitRequestFullscreen();
+            } else if (typeof(thisVideo.mozRequestFullScreen)  !== "undefined") {
+                thisVideo.mozRequestFullScreen();
+            }
           }
         }
         else {
-          console.log("Pause");
+          // console.log("Pause");
           thisPlayBtn.className = 'media-controls';
           thisThumbnail.className = 'media-thumbnail';
           thisVideo.pause();
@@ -80,15 +84,7 @@ angular.module('TopicModule')
       scope.setAspectRatio = function (aspectRatio, orientation) {
         console.log("setAspectRatio: ", aspectRatio, orientation);
         var classStrings = [];
-        // Set Aspect Ratio Class
-        if (aspectRatio === 1){
-          classStrings.push("thumb1x1");
-        } else if (aspectRatio === 1.778){
-          classStrings.push("thumb16x9");
-        } else if (aspectRatio === 2){
-          classStrings.push("thumb2x1");
-        }
-        // Set Orientation Class
+
         if (orientation === "portrait"){
           if (aspectRatio === 1.778){
             classStrings.push("video-portrait-9x16");
@@ -107,29 +103,34 @@ angular.module('TopicModule')
         return classStrings;
       }
 
-      scope.getContainerHeight = function (aspectRatio, orientation) {
-        var thesePlayerNodes = elem[0].firstElementChild.childNodes;
-        var thisVideo = thesePlayerNodes[1];
-        console.log("Elem/Video in getCH: ", thisVideo, $(thisVideo).width(), thesePlayerNodes);
-        var _this = this;
-        var height = document.documentElement.clientWidth / aspectRatio;
-        if (height > 300 && orientation === 'portrait'){
-          height = '300px';
-        } else {
-          height = height + 'px';
-        }
-        // console.log("This: ", this, height);
-        return height;
-      }
-
       scope.setDimensions = function (aspectRatio, orientation, video) {
         var thesePlayerNodes = elem[0].firstElementChild.childNodes;
         var thisVideo = thesePlayerNodes[1];
         var thisWidth = $(thisVideo).width();
-        console.log("Elem/Video in getCH: ", thisVideo, thisWidth);
+        console.log("Elem in setD: ", elem);
+        console.log("PlayerNodes in setD: ", thesePlayerNodes);
+        console.log("Video in setD: ", thisVideo);
+        console.log("Width in setD: ", thisWidth);
+
+        // Width Contingencies (landscape)
+        if (aspectRatio === 1 && thisWidth > 300){
+          thisWidth = 300;
+        }
+        if (aspectRatio === 1.778 && thisWidth > 533){
+          thisWidth = 533;
+        }
+        if (aspectRatio === 2 && thisWidth > 600){
+          thisWidth = 600;
+        }
 
         var styleObj = {};
         var height = thisWidth / aspectRatio;
+
+        // Height Contingencies (portrait)
+        if ((aspectRatio === 1.778 || aspectRatio === 2) && height > 300){
+          height = 300;
+        }
+
         styleObj['height'] = height;
         if (!!video){
           styleObj['background-image'] = 'url(' + video.mediaThumbUrl + ')';

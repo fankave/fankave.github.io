@@ -22,7 +22,7 @@ gulp.task('jshint-post', function() {
   .pipe(jshint.reporter('jshint-stylish'));
 });
 
-gulp.task('scripts-pre', ['jshint-pre'], function() {
+gulp.task('scripts-pre', function() {
   return gulp.src([
     './js/Forum.js',
     './js/pre/controllers/ChannelController.js',
@@ -58,7 +58,7 @@ gulp.task('scripts-pre', ['jshint-pre'], function() {
   .pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('scripts-post', ['jshint-post'], function() {
+gulp.task('scripts-post', function() {
   return gulp.src([
     './js/post/controllers/PostController.js',
     './js/post/controllers/SocialController.js',
@@ -141,4 +141,5 @@ gulp.task('watch', function() {
 });
 
 gulp.task('build', ['css','scripts-pre','scripts-post']);
+gulp.task('build-lint', ['css','jshint-pre','scripts-pre','jshint-post','scripts-post']);
 gulp.task('build-full', ['css','lib-pre','lib-post','scripts-pre','scripts-post']);

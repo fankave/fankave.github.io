@@ -579,11 +579,13 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         tabs.addClass('fixTabsPeel');
         tabs.css('top',headerHeight);
         tabContainer.addClass('fixTabContainer');
+        $('.commentsContainer').css('padding-top','86px');
         fixed = true;
       } else if (fixed) {
         tabs.removeClass('fixTabsPeel');
         tabs.css('top','');
         tabContainer.removeClass('fixTabContainer');
+        $('.commentsContainer').css('padding-top','');
         fixed = false;
       }
   };

@@ -177,7 +177,7 @@ body
 }
 
 
-/* - - - - - - - */
+
 
 
 /* Comments header */
@@ -192,27 +192,24 @@ body
 .postRow
 {
   font-size:3em;
-  /*max-height:4.4em;*/
   background-color: white;
   margin:0px;
   border-bottom: 1px solid rgb(238,238,238);
+  padding-right: 4%;
+  padding-left: 4%;
 }
 
 .postRowAlt {
   font-size:3em;
-  /*max-height:4.4em;*/
   background-color: white;
   margin:0px;
   border-bottom: 1px solid rgb(238,238,238);
+  padding-right: 4%;
+  padding-left: 4%;
 }
 
 @media all and (min-width: 500px){
-  /*.postRow {
-    padding: 0 2%;
-  }*/
-  /*.postRowAlt {
-    padding: 0 2%;
-  }*/
+
 }
 
 .postRow:hover {
@@ -224,26 +221,17 @@ body
   font-size:3em;
   background-color: rgb(248,248,248);
   margin:0px;
-  border-bottom: 1px solid rgb(238,238,238)
+  border-bottom: 1px solid rgb(238,238,238);
+  padding: 0 4%;
 }
 
-.postAuthorPhoto /* left-side of each post row */
-{
-  /*background-color: yellow;*/
-  /*width: 15%;*/
-  /*max-width: 100px;*/
+.postAuthorPhoto {
   float:left;
-  padding: 11px 0px 0px 13px;
+  padding-top: 11px;
 }
 
-.postAuthorPhoto img/* left-side of each post row */
-{
-  /*background-color: yellow;*/
+.postAuthorPhoto img {
   width: 35px;
-  /*max-width: 32px !important;*/
-  /*max-height: 100%;*/
-  /*float:left;*/
-  /*padding:5px;*/
 }
 
 .repliesHeaderPostAuthorPhoto
@@ -385,7 +373,7 @@ body
 .chatTimestamp {
   position: absolute;
   right: 0;
-  padding-right: 12px;
+  padding-right: 4%;
   font-size: 0.31em;
   color: rgb(166, 189, 207);
   text-align: right;
@@ -395,7 +383,7 @@ body
   position: absolute;
   height: 28px;
   right: 0;
-  padding: 0 12px 12px 12px;
+  padding: 0 4% 12px 12px;
   font-size: 0.31em;
   color: rgb(166, 189, 207);
   text-align: right;
@@ -517,7 +505,7 @@ body
   width: 100%;
   max-width: 500px;
   max-height: 250px;
-  margin: 0 auto;
+  margin: 0 auto 14px auto;
 }
 
 .cropView:hover,
@@ -550,6 +538,7 @@ body
   font-size: 12px;
   color: rgb(162,177,182);
   margin-bottom:0.1em;
+  /*padding-right: 2%;*/
 }
 
 .social-btn
@@ -637,6 +626,9 @@ body
   background-color: transparent;
   box-shadow: none;
   top: -4px;
+  right: -2px;
+  padding-right: 0;
+  margin-right: 0;
 }
 
 .dropdown-menu > li:hover {
@@ -668,7 +660,8 @@ span.socialButtonLable
 .social-btn-more
 {
   float:right;
-  padding:0px;
+  padding-right: 0;
+  margin-right: 0;
   /*width:18px;*/
 }
 
@@ -1855,7 +1848,7 @@ img-crop canvas {
 
 .socialContentContainer {
   width: 100%;
-  padding: 0 4%;
+  padding: 0 0;
 }
 
 .socialName {
@@ -1863,7 +1856,7 @@ img-crop canvas {
 }
 
 .socialText {
-  padding-left: 13px;
+  /*padding-left: 4%;*/
 }
 
 #mobileUserInput {
@@ -1881,7 +1874,7 @@ img-crop canvas {
 #socialHeader {
   min-height: 30px;
   padding-top: 8px;
-  padding-right: 12px;
+  /*padding-right: 4%;*/
   margin-bottom: 1px;
 }
 
@@ -1922,7 +1915,7 @@ img-crop canvas {
 .youtubeVideo {
   position: relative;
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
   padding-right: 0px;
   margin: 0 auto;
   margin-bottom: 12px; 
@@ -2079,6 +2072,7 @@ img-crop canvas {
   border-radius: 2px;
   margin-bottom: 14px;
   margin-top: 10px;
+  padding: 0 4%;
 }
 
 .embedSocialButtonsRow {
@@ -2514,13 +2508,13 @@ img-crop canvas {
     height: 125px;
   }
   .youtubeVideo {
-    width: 325px;
+    max-width: 325px;
   }
   .youtubeVideo > iframe {
     height: 163px;
   }
   .embedYoutubeVideo {
-    width: 250px;
+    max-width: 250px;
   }
   .embedYoutubeVideo > iframe {
     height: 125px;
@@ -2553,13 +2547,13 @@ img-crop canvas {
     height: 125px;
   }
   .youtubeVideo {
-    width: 350px;
+    max-width: 350px;
   }
   .youtubeVideo > iframe {
     height: 175px;
   }
   .embedYoutubeVideo {
-    width: 250px;
+    max-width: 250px;
   }
   .embedYoutubeVideo > iframe {
     height: 125px;
@@ -2592,13 +2586,13 @@ img-crop canvas {
     height: 150px;
   }
   .youtubeVideo {
-    width: 400px;
+    max-width: 400px;
   }
   .youtubeVideo > iframe {
     height: 200px;
   }
   .embedYoutubeVideo {
-    width: 300px;
+    max-width: 300px;
   }
   .embedYoutubeVideo > iframe {
     height: 150px;
@@ -2617,7 +2611,7 @@ img-crop canvas {
   }
 }
 
-@media all and (min-width: 530px){
+@media all and (min-width: 530px) and (max-width: 749px){
   .video-js {
     width: 500px;
     height: 250px;
@@ -2631,13 +2625,13 @@ img-crop canvas {
     height: 200px;
   }
   .youtubeVideo {
-    width: 500px;
+    max-width: 500px;
   }
   .youtubeVideo > iframe {
     height: 250px;
   }
   .embedYoutubeVideo {
-    width: 400px;
+    max-width: 400px;
   }
   .embedYoutubeVideo > iframe {
     height: 200px;
@@ -2656,10 +2650,28 @@ img-crop canvas {
   }
 }
 
+@media all and (min-width: 750px){
+  .youtubeVideo {
+    width: 600px;
+  }
+  .youtubeVideo > iframe {
+    height: 300px;
+  }
+  .embedYoutubeVideo {
+    width: 500px;
+  }
+  .embedYoutubeVideo > iframe {
+    height: 250px;
+  }
+}
+
+.media-parent {
+  position: relative;
+}
 .media-player {
   position: relative;
   width: 100%;
-  margin-bottom: 14px;
+  margin: 0px auto 14px auto;
 }
 
 .media-video {
@@ -2771,6 +2783,12 @@ img-crop canvas {
 
 .video-square {
   max-width: 381px;
+}
+
+@media all and (min-width: 500px){
+  .video-square {
+    max-width: 300px;
+  }
 }
 
 video::-webkit-media-controls {

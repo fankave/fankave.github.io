@@ -309,6 +309,15 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
         tempComment.embed.embedCreatedAt = selectedComment.embedCreatedAt;
         tempComment.embed.embedCreatedAtFull = selectedComment.embedCreatedAtFull;
 
+        if (tempComment.embedType === 'media'){
+          tempComment.mediaUrl = selectedComment.embedMedia.mediaUrl;
+          tempComment.mediaThumbUrl = selectedComment.embedMedia.mediaThumbUrl;
+          tempComment.mediaAspectFeed = selectedComment.embedMedia.mediaAspectFeed;
+          tempComment.mediaAspectFull = selectedComment.embedMedia.mediaAspectFull;
+          tempComment.mediaAspectRatio = selectedComment.embedMedia.mediaAspectRatio;
+          tempComment.mediaOrientation = selectedComment.embedMedia.mediaOrientation;
+        }
+
         if (tempComment.providerName === "Twitter"){
           tempComment.embed.embedLogo = "img/twitterLogo@2x.png";
         } else {
