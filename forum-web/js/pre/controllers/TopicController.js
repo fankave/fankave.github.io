@@ -579,7 +579,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         tabs.addClass('fixTabsPeel');
         tabs.css('top',headerHeight);
         tabContainer.addClass('fixTabContainer');
-        $('.commentsContainer').css('padding-top','86px');
+        $('.commentsContainer').css('padding-top',inputHeight);
         fixed = true;
       } else if (fixed) {
         tabs.removeClass('fixTabsPeel');
