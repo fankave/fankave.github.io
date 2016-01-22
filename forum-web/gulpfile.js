@@ -6,7 +6,8 @@ var gulp       = require('gulp'),
     uglify     = require('gulp-uglify'),
     sourcemaps = require('gulp-sourcemaps'),
     autoprefix = require('gulp-autoprefixer'),
-    jshint     = require('gulp-jshint');
+    jshint     = require('gulp-jshint'),
+    gzip       = require('gulp-gzip');
 
 gulp.task('default', ['watch']);
 
@@ -36,6 +37,7 @@ gulp.task('scripts-pre', function() {
     './js/pre/services/URIHelper.js',
     './js/pre/services/ChannelService.js',
     './js/pre/directives/TopicDirectives.js',
+    './js/pre/directives/EmbedPlayer.js',
     './js/pre/services/DataService.js',
     './js/pre/services/TopicService.js',
     './js/pre/services/SplashService.js',

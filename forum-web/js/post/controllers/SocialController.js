@@ -115,7 +115,6 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           tempItem.embedType = feedData[i].embedType;
           tempItem.embedUrl = feedData[i].embedUrl;
           if (feedData[i].embedType === "link" && feedData[i].embedPlayable === true){
-            tempItem.embedYoutubeId = feedData[i].embedYoutubeId;
             tempItem.embedHtml = feedData[i].embedHtml;
             tempItem.embedPlayable = true;
           }

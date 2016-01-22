@@ -358,6 +358,7 @@ body
   color: rgb(29,29,29);
   padding-left:13px;
   font-weight: 500;
+  max-width: 70%;
 }
 
 .timestamp
@@ -402,6 +403,16 @@ body
 .postContent
 {
   padding-right: 20px;
+  font-size: 14px;
+  line-height: 18px;
+  margin-bottom:8px;
+  word-wrap:break-word;
+  color: rgb(31,35,38);
+}
+
+.embedContent
+{
+  /*padding-right: 20px;*/
   font-size: 14px;
   line-height: 18px;
   margin-bottom:8px;
@@ -2503,6 +2514,12 @@ img-crop canvas {
   margin: 0px auto 14px auto;
 }
 
+.embed-player {
+  position: relative;
+  width: 100%;
+  margin: 0px auto;
+}
+
 .media-video {
   position: absolute;
   width: 100%;
@@ -2624,6 +2641,10 @@ video::-webkit-media-controls {
     display:none !important;
 }
 
+:-webkit-full-screen {
+  z-index: 100000000 !important;
+}
+
 .media-loading-default {
   visibility: hidden;
 }
@@ -2634,6 +2655,18 @@ video::-webkit-media-controls {
   text-align: center;
   /*z-index: 3;*/
   top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.media-loading-fullscreen {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  z-index: 2147483647 !important;
+  top: 50vh;
+  left: 0;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
