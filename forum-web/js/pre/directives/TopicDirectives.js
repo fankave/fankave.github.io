@@ -55,12 +55,22 @@ angular.module('TopicModule')
       $(video).on('waiting', function() {
         if (NETWORK_DEBUG)
           console.log("Video Waiting");
-        loadingSpinner.className = 'media-loading';
+        if (scope.isMobileUser){
+          loadingSpinner.className = 'media-loading-fullscreen';
+          loadingSpinner.style.zIndex = "2147483647";
+        } else {
+          loadingSpinner.className = 'media-loading';
+        }
       });
       $(video).on('stalled', function() {
         if (NETWORK_DEBUG)
           console.log("Video Stalled");
-        loadingSpinner.className = 'media-loading';
+        if (scope.isMobileUser){
+          loadingSpinner.className = 'media-loading-fullscreen';
+          loadingSpinner.style.zIndex = "2147483647";
+        } else {
+          loadingSpinner.className = 'media-loading';
+        }
       });
       var canPlay;
       $(video).on('canplay', function() {

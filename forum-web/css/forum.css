@@ -2653,7 +2653,6 @@ video::-webkit-media-controls {
   position: absolute;
   width: 100%;
   text-align: center;
-  /*z-index: 3;*/
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -2664,7 +2663,6 @@ video::-webkit-media-controls {
   position: absolute;
   width: 100%;
   text-align: center;
-  z-index: 2147483647 !important;
   top: 50vh;
   left: 0;
   -webkit-transform: translateY(-50%);
