@@ -32,7 +32,8 @@ angular.module('TopicModule')
 }]);
 
 angular.module('TopicModule')
-.directive('mediaPlayer', ['$sce', 'UserAgentService', function ($sce, UserAgentService) {
+.directive('mediaPlayer', ['$sce', 'UserAgentService',
+  function ($sce, UserAgentService) {
   return {
     restrict: 'E',
     scope: {
@@ -43,16 +44,25 @@ angular.module('TopicModule')
     link: function(scope,elem,attr) {
 
       scope.isMobileUser = UserAgentService.isMobileUser();
-      
+      scope.loading = false;
+
       scope.trustSrc = function(src){
         return $sce.trustAsResourceUrl(src);
       }
+
+      var video = elem[0].firstElementChild.childNodes[1];
+      console.log("Top Scope Video: ", video);
+      $(video).on('canplay', function() {
+        console.log("Video Loaded");
+        scope.loading = false;
+      });
 
       scope.togglePlayPause = function(e) {
         var thesePlayerNodes = elem[0].firstElementChild.childNodes;
         var thisVideo = thesePlayerNodes[1];
         var thisThumbnail = thesePlayerNodes[3];
         var thisPlayBtn = thesePlayerNodes[5];
+        var thisLoading = thesePlayerNodes[7];
         // console.log("This Player: ", thisVideo, $(thisVideo).width(), thesePlayerNodes);
         // console.log("This Play Button: ", thisPlayBtn);
         // console.log("This Player Thumbnail: ", thisThumbnail);
@@ -62,6 +72,7 @@ angular.module('TopicModule')
           // console.log("Play");
           thisPlayBtn.className = 'pause';
           thisThumbnail.className = 'pause';
+          scope.loading = true;
           thisVideo.play();
           if (scope.isMobileUser){
             if (thisVideo.requestFullscreen){
@@ -77,6 +88,7 @@ angular.module('TopicModule')
         }
         else {
           // console.log("Pause");
+          scope.loading = false;
           thisPlayBtn.className = 'media-controls';
           thisThumbnail.className = 'media-thumbnail';
           thisVideo.pause();

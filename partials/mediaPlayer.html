@@ -1,5 +1,5 @@
 <div class="media-player" ng-class="{{setAspectRatio(thisPost.mediaAspectRatio,thisPost.mediaOrientation)}}" ng-style="setDimensions(thisPost.mediaAspectRatio, thisPost.mediaOrientation)" ng-click="togglePlayPause($event)">
-  <video class="media-video" ng-class="{{setAspectRatio(thisPost.mediaAspectRatio,thisPost.mediaOrientation)}}" ng-style="setDimensions(thisPost.mediaAspectRatio, thisPost.mediaOrientation)">
+  <video class="media-video" ng-class="{{setAspectRatio(thisPost.mediaAspectRatio,thisPost.mediaOrientation)}}" ng-style="setDimensions(thisPost.mediaAspectRatio, thisPost.mediaOrientation)" preload="none">
     <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
   </video>
   <div class="media-thumbnail" ng-class="{{setAspectRatio(thisPost.mediaAspectRatio,thisPost.mediaOrientation)}}" ng-style="setDimensions(thisPost.mediaAspectRatio, thisPost.mediaOrientation, thisPost)">
@@ -8,5 +8,8 @@
     <button class="btn btn-default play-pause-button" title="play">
       <div class="triangle play-triangle"></div>
     </button>
+  </div>
+  <div class="media-loading" ng-if="loading">
+    <img id="loadSpinner" ng-src="https://cdn2.scratch.mit.edu/get_image/user/3250741_90x90.png?v=1440977929.47" />
   </div>
 </div>
