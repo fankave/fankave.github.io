@@ -402,7 +402,7 @@
   </div>
 
   <!-- Video Tab Content -->
-  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | orderBy: '-id'" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | orderBy: '-id'" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -433,9 +433,9 @@
       <!-- <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent youtubeVideo" ng-class="{ 'youtube-android': mobileUserAgent === 'android' }">
       </div> -->
 
-      <embed-player this-post="thisPost.embedHtml" ng-if="thisPost.embedPlayable === true" class="media-parent"></embed-player>
+      <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
 
-      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>
+      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-if="thisPost.mediaType === 'video'" class="media-parent"></media-player>
 
     </div> 
 

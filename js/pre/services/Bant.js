@@ -70,9 +70,9 @@ angular.module('NetworkModule')
     _bantObject.embedTitle = embedObject.title;
     _bantObject.embedText = embedObject.text;
     _bantObject.embedMedia = {};
-    if(embedObject.type == 'media'){
+    if(embedObject.type === 'media' || embedObject.type === 'link'){
       // console.log("*****!!embedObject.media",embedObject.media,embedObject);
-    _bantObject.embedMedia = extractMediaObject(_bantObject.embedMedia, embedObject.media[0]);
+      _bantObject.embedMedia = extractMediaObject(_bantObject.embedMedia, embedObject.media[0]);
     }
     _bantObject.embedUrl = embedObject.url;
     _bantObject.embedPlayable = embedObject.playable;
@@ -83,10 +83,22 @@ angular.module('NetworkModule')
     _bantObject.embedProvider = embedObject.provider;
     _bantObject.embedCreatedAt = DateUtilityService.getTimeSince(embedObject.createdAt);
     _bantObject.embedCreatedAtFull = embedObject.createdAt;
+    if (embedObject.type === 'link'){
+      _bantObject.embedYoutubeId = extractYTVideoId(_bantObject.embedHtml.toString());
+    }
     
     
     return _bantObject;
 
+  }
+
+  function extractYTVideoId(string) {
+    var srcString = string.slice(string.indexOf('src'), string.indexOf('frameborder')-2);
+    var vidId = srcString.slice(srcString.indexOf('embed')+6);
+    if (NETWORK_DEBUG){
+      console.log(srcString, vidId);
+    }
+    return vidId;
   }
 
   function Bant(data){

@@ -2640,3 +2640,7 @@ video::-webkit-media-controls {
   height: auto;
 }
 
+iframe {
+  border: none;
+}
+

@@ -3,7 +3,7 @@ angular.module('TopicModule')
   return function (scope, element, attrs) {
     if (scope.$last){
       // scope.scrollToBookmark();
-      console.log("DONE LOADING COMMENTS");
+      // console.log("DONE LOADING COMMENTS");
       scope.hideLoading();
       scope.setLinksOnComments();
       scope.setDocVars();
@@ -50,9 +50,13 @@ angular.module('TopicModule')
       }
 
       var video = elem[0].firstElementChild.childNodes[1];
-      console.log("Top Scope Video: ", video);
+      // console.log("Top Scope Video: ", video);
       $(video).on('canplay', function() {
         console.log("Video Loaded");
+        scope.loading = false;
+      });
+      $(video).on('play', function() {
+        console.log("Video Playing");
         scope.loading = false;
       });
 
@@ -73,6 +77,7 @@ angular.module('TopicModule')
           thisThumbnail.className = 'pause';
           scope.loading = true;
           thisVideo.play();
+          scope.loading = false;
           if (scope.isMobileUser){
             if (thisVideo.requestFullscreen){
               thisVideo.requestFullscreen();
@@ -96,7 +101,7 @@ angular.module('TopicModule')
 
       scope.setAspectRatio = function (aspectRatio, orientation) {
         if (NETWORK_DEBUG){
-          console.log("setAspectRatio: ", aspectRatio, orientation);
+          // console.log("setAspectRatio: ", aspectRatio, orientation);
         }
         var classStrings = [];
 
@@ -123,14 +128,16 @@ angular.module('TopicModule')
         var thisVideo = thesePlayerNodes[1];
         var thisWidth = $(thisVideo).width();
         if (NETWORK_DEBUG){
-          console.log("Elem in setD: ", elem);
-          console.log("PlayerNodes in setD: ", thesePlayerNodes);
-          console.log("Video in setD: ", thisVideo);
-          console.log("Width in setD: ", thisWidth);
+          // console.log("Elem in setD: ", elem);
+          // console.log("PlayerNodes in setD: ", thesePlayerNodes);
+          // console.log("Video in setD: ", thisVideo);
+          // console.log("Width in setD: ", thisWidth);
         }
 
         // Width Contingencies (landscape)
-        if (aspectRatio === 1 && thisWidth > 300){
+        if (scope.isMobileUser && aspectRatio === 1 && thisWidth > 380){
+          thisWidth = 381;
+        } else if (aspectRatio === 1 && thisWidth > 300){
           thisWidth = 300;
         }
         if (aspectRatio === 1.778 && thisWidth > 533){
@@ -156,7 +163,7 @@ angular.module('TopicModule')
           styleObj['background-position-x'] = setXOffset(video);
         }
         if (NETWORK_DEBUG){
-          console.log("Set Dimensions Object: ", styleObj);
+          // console.log("Set Dimensions Object: ", styleObj);
         }
         return styleObj;
       }

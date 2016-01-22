@@ -579,7 +579,11 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         tabs.addClass('fixTabsPeel');
         tabs.css('top',headerHeight);
         tabContainer.addClass('fixTabContainer');
-        $('.commentsContainer').css('padding-top',inputHeight);
+        if ($scope.activeTab === 'chat'){
+          $('.commentsContainer').css('padding-top',inputHeight);
+        } else {
+          $('.commentsContainer').css('padding-top',inputHeight-42);
+        }
         fixed = true;
       } else if (fixed) {
         tabs.removeClass('fixTabsPeel');
