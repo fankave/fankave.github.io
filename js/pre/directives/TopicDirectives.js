@@ -43,21 +43,33 @@ angular.module('TopicModule')
     link: function(scope,elem,attr) {
 
       scope.isMobileUser = UserAgentService.isMobileUser();
-      scope.loading = false;
 
       scope.trustSrc = function(src){
         return $sce.trustAsResourceUrl(src);
       }
 
       var video = elem[0].firstElementChild.childNodes[1];
-      // console.log("Top Scope Video: ", video);
-      $(video).on('canplay', function() {
-        console.log("Video Loaded");
-        scope.loading = false;
+      var loadingSpinner = elem[0].firstElementChild.childNodes[7];
+      
+      // Video Loading Event Listeners
+      $(video).on('waiting', function() {
+        if (NETWORK_DEBUG)
+          console.log("Video Waiting");
+        loadingSpinner.className = 'media-loading';
       });
-      $(video).on('play', function() {
-        console.log("Video Playing");
-        scope.loading = false;
+      $(video).on('stalled', function() {
+        if (NETWORK_DEBUG)
+          console.log("Video Stalled");
+        loadingSpinner.className = 'media-loading';
+      });
+      var canPlay;
+      $(video).on('canplay', function() {
+        canPlay = true;
+      });
+      $(video).on('playing', function() {
+        if (NETWORK_DEBUG)
+          console.log("Video Playing");
+        loadingSpinner.className = 'media-loading-default';
       });
 
       scope.togglePlayPause = function(e) {
@@ -66,18 +78,11 @@ angular.module('TopicModule')
         var thisThumbnail = thesePlayerNodes[3];
         var thisPlayBtn = thesePlayerNodes[5];
         var thisLoading = thesePlayerNodes[7];
-        // console.log("This Player: ", thisVideo, $(thisVideo).width(), thesePlayerNodes);
-        // console.log("This Play Button: ", thisPlayBtn);
-        // console.log("This Player Thumbnail: ", thisThumbnail);
 
-        scope.loadState = thisVideo.readyState;
         if (thisVideo.paused || thisVideo.ended){
-          // console.log("Play");
           thisPlayBtn.className = 'pause';
           thisThumbnail.className = 'pause';
-          scope.loading = true;
           thisVideo.play();
-          scope.loading = false;
           if (scope.isMobileUser){
             if (thisVideo.requestFullscreen){
               thisVideo.requestFullscreen();
@@ -91,8 +96,7 @@ angular.module('TopicModule')
           }
         }
         else {
-          // console.log("Pause");
-          scope.loading = false;
+          thisLoading.className = 'media-loading-default';
           thisPlayBtn.className = 'media-controls';
           thisThumbnail.className = 'media-thumbnail';
           thisVideo.pause();

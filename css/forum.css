@@ -2624,6 +2624,10 @@ video::-webkit-media-controls {
     display:none !important;
 }
 
+.media-loading-default {
+  visibility: hidden;
+}
+
 .media-loading {
   position: absolute;
   width: 100%;

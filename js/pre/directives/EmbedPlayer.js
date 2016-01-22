@@ -10,6 +10,10 @@ angular.module('TopicModule')
 
       scope.isMobileUser = UserAgentService.isMobileUser();
 
+      scope.trustSrcHtml = function(src){
+        return $sce.trustAsHtml(src);
+      }
+
       scope.setAspectRatio = function (aspectRatio, orientation) {
         if (NETWORK_DEBUG){
           console.log("setAspectRatio: ", aspectRatio, orientation);
@@ -39,10 +43,9 @@ angular.module('TopicModule')
         var thisVideo = thesePlayerNodes[0];
         var thisWidth = $(thisVideo).width();
         if (NETWORK_DEBUG){
-          // console.log("Elem in setD: ", elem);
           // console.log("PlayerNodes in setD: ", thesePlayerNodes);
-          console.log("Video in setD: ", thisVideo);
-          console.log("Width in setD: ", thisWidth);
+          // console.log("Video in setD: ", thisVideo);
+          // console.log("Width in setD: ", thisWidth);
         }
 
         // Width Contingencies (landscape)
@@ -58,7 +61,6 @@ angular.module('TopicModule')
           thisWidth = 600;
         }
 
-        var styleObj = {};
         var height = thisWidth / aspectRatio;
 
         // Height Contingencies (portrait)
@@ -68,39 +70,9 @@ angular.module('TopicModule')
 
         var iframePlayer = thisVideo.childNodes[0];
         $(iframePlayer).css('height',height);
-        // styleObj['height'] = height;
-        // if (!!video){
-        //   styleObj['background-image'] = 'url(' + video.mediaThumbUrl + ')';
-        //   styleObj['background-size'] = 'cover';
-        //   styleObj['background-position-y'] = setYOffset(video);
-        //   styleObj['background-position-x'] = setXOffset(video);
-        // }
         if (NETWORK_DEBUG){
           console.log("Setting Height On: ", iframePlayer, height);
         }
-        return styleObj;
-      }
-
-      function setYOffset(video){
-        var offset;
-        if (!!video.mediaAspectFeed.y){
-          offset = '-' + video.mediaAspectFeed.y + 'px';
-        }
-        else if (!!video.mediaAspectFull.y){
-          offset = '-' + video.mediaAspectFull.y + 'px';
-        }
-        return offset;
-      }
-
-      function setXOffset(video){
-        var offset;
-        if (!!video.mediaAspectFeed.x){
-          offset = '-' + video.mediaAspectFeed.x + 'px';
-        }
-        else if (!!video.mediaAspectFull.x){
-          offset = '-' + video.mediaAspectFull.x + 'px';
-        }
-        return offset;
       }
 
     },

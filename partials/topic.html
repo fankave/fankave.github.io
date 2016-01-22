@@ -430,8 +430,6 @@
       <div ng-bind-html="thisPost.html | linky" class="postContent">
         <p>{{thisPost.html}}</p><br> 
       </div>
-      <!-- <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent youtubeVideo" ng-class="{ 'youtube-android': mobileUserAgent === 'android' }">
-      </div> -->
 
       <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
 
@@ -514,7 +512,9 @@
         <img ng-src="{{thisPost.mediaUrl}}" class="cropView" ng-click="imageClick(thisPost.mediaUrl)" onerror="this.style.display='none';" />
       </div>
 
-      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>
+      <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
+
+      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-if="thisPost.mediaType === 'video'" class="media-parent"></media-player>
     </div> 
 
     <div class="socialButtonsRow socialText">
