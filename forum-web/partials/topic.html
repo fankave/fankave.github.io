@@ -57,9 +57,9 @@
   </div>
 </nav>
 <section id="topicSection" ng-controller="SocialController as social">
-    <div class="scoreCardContent clearfix" ng-if="topicType === 'livegame' && !isMI16User">
+  <div class="scoreCardContent clearfix" ng-if="topicType === 'livegame' && !isMI16User">
 
-      <div id="rightColor">
+    <div id="rightColor">
         <svg 
         version="1.1"
         class="svg-content"
@@ -244,7 +244,7 @@
     <div id="socialTab" class="grid-col grid-col-50 tab" ng-click="social.initFeed('social')">
       <span class="tabName">Social</span>
     </div>
-    <div id="newCommentsAvailableIndicatorDiv" ng-show="showNewCommentsIndicator && activeTab === 'chat'">
+    <div id="newCommentsAvailableIndicatorDiv" ng-if="showNewCommentsIndicator && activeTab === 'chat'">
       <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
         <img ng-src="img/newCommentIndicator.png" />
       </button>
@@ -261,7 +261,7 @@
     <div id="socialTab" class="grid-col grid-col-33 tab" ng-click="social.initFeed('social')">
       <span class="tabName">Social</span>
     </div>
-    <div id="newCommentsAvailableIndicatorDiv" ng-show="showNewCommentsIndicator && activeTab === 'chat'">
+    <div id="newCommentsAvailableIndicatorDiv" ng-if="showNewCommentsIndicator && activeTab === 'chat'">
       <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
         <img ng-src="img/newCommentIndicator.png" />
       </button>
@@ -363,7 +363,7 @@
         </div>
       </div>
 
-      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" ng-click="moreButtonTapped()" class="media-parent"></media-player>
+      <media-player this-post="thisPost" vid-index="{{$index}}" ng-switch-when="video" ng-click="moreButtonTapped()" class="media-parent"></media-player>
 
       <!-- Begin Embed Content Shared to Chat -->
       <embed-shared-content embed-post="thisPost" ng-if="thisPost.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav="moreButtonTapped()"></embed-shared-content>
@@ -402,7 +402,7 @@
   </div>
 
   <!-- Video Tab Content -->
-  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | orderBy: '-id'" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | orderBy: '-id'" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -430,20 +430,10 @@
       <div ng-bind-html="thisPost.html | linky" class="postContent">
         <p>{{thisPost.html}}</p><br> 
       </div>
-      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent youtubeVideo" ng-class="{ 'youtube-android': mobileUserAgent === 'android' }">
-      </div>
 
-      <!-- <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" preload="auto" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js vjs-default-skin" ng-class="{ 'video-android': mobileUserAgent === 'android' }">
-          <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
-          <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a web browser that
-            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-          </p>
-        </video>
-      </div> -->
+      <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
 
-      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>
+      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-if="thisPost.mediaType === 'video'" class="media-parent"></media-player>
 
     </div> 
 
@@ -522,7 +512,9 @@
         <img ng-src="{{thisPost.mediaUrl}}" class="cropView" ng-click="imageClick(thisPost.mediaUrl)" onerror="this.style.display='none';" />
       </div>
 
-      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>
+      <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
+
+      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-if="thisPost.mediaType === 'video'" class="media-parent"></media-player>
     </div> 
 
     <div class="socialButtonsRow socialText">
@@ -563,13 +555,13 @@
   </div>
 
   <div id="moreCommentsBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length === 10" ng-click="loadRemainingComments()">
-    <span id="moreCommentsText">Load More...</span>
+    <span id="moreCommentsText">Load more...</span>
   </div>
   <div id="moreContentBar" ng-if="activeTab === 'social'" ng-click="social.loadContent('social',social.socialArray.length)">
-    <span id="moreContentText">Load More...</span>
+    <span id="moreContentText">Load more...</span>
   </div>
   <div id="moreContentBar" ng-if="activeTab === 'video'" ng-click="social.loadContent('video',social.videoArray.length)">
-    <span id="moreContentText">Load More...</span>
+    <span id="moreContentText">Load more...</span>
   </div>
 </div>
 

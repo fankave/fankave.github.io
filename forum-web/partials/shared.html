@@ -26,16 +26,16 @@
     <div ng-bind-html="thisPost.embed.text | linky" class="postContent socialContent">
       <p>{{thisPost.embed.text}}</p><br> 
     </div>
-    <div ng-if="thisPost.embed.playable === true && thisPost.embed.embedHtml !== undefined" ng-bind-html="thisPost.embed.embedHtml" class="postContent videoContent embedYoutubeVideo" ng-class="{ 'embed-youtube-android': mobileUserAgent === 'android' }">
-    </div>
 
-    <div class="imageContainer" ng-switch-when="image/jpeg" ng-if="thisPost.embed.embedHtml === undefined">
+    <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
+
+    <div class="imageContainer" ng-switch-when="image/jpeg" ng-if="thisPost.embedType !== 'link'">
       <img ng-src="{{thisPost.embed.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.embed.media[0].url})" onerror="this.style.display='none';" />
     </div>
-    <div class="imageContainer" ng-switch-when="image/png" ng-if="thisPost.embed.embedHtml === undefined">
+    <div class="imageContainer" ng-switch-when="image/png" ng-if="thisPost.embedType !== 'link'">
       <img ng-src="{{thisPost.embed.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.embed.media[0].url})" onerror="this.style.display='none';" />
     </div>
-    <div class="imageContainer" ng-switch-when="image/gif" ng-if="thisPost.embed.embedHtml === undefined">
+    <div class="imageContainer" ng-switch-when="image/gif" ng-if="thisPost.embedType !== 'link'">
       <img ng-src="{{thisPost.embed.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.embed.media[0].url})" onerror="this.style.display='none';" />
     </div>
  
