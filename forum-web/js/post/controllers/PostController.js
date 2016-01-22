@@ -325,7 +325,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
         }
 
         if (selectedComment.embed.type === 'link' && selectedComment.embed.playable === true){
-          tempComment.embed.embedHtml = $sce.trustAsHtml(selectedComment.embedHtml);
+          tempComment.embedHtml = selectedComment.embedHtml;
         }
       }
 

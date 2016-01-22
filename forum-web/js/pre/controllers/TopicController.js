@@ -187,7 +187,9 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
           tempComment.embed = commentsdata[i].embed;
           tempComment.embed.embedCreatedAt = commentsdata[i].embedCreatedAt;
           tempComment.embed.embedCreatedAtFull = commentsdata[i].embedCreatedAtFull;
-          if (tempComment.embedType === 'media'){
+          tempComment.embedType = commentsdata[i].embedType;
+          
+          if (tempComment.embedType === 'media' || tempComment.embedType === 'link'){
             tempComment.mediaUrl = commentsdata[i].embedMedia.mediaUrl;
             tempComment.mediaThumbUrl = commentsdata[i].embedMedia.mediaThumbUrl;
             tempComment.mediaAspectFeed = commentsdata[i].embedMedia.mediaAspectFeed;
@@ -203,10 +205,10 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
           }
 
           if (commentsdata[i].embed.type === 'link' && commentsdata[i].embed.playable === true){
-            tempComment.embed.embedHtml = $sce.trustAsHtml(commentsdata[i].embedHtml);
+            tempComment.embedYoutubeId = commentsdata[i].embedYoutubeId;
+            tempComment.embedHtml = commentsdata[i].embedHtml;
           }
         }
-        
         $scope.commentsArray.push(tempComment);
 
       }
@@ -579,7 +581,11 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         tabs.addClass('fixTabsPeel');
         tabs.css('top',headerHeight);
         tabContainer.addClass('fixTabContainer');
-        $('.commentsContainer').css('padding-top',inputHeight);
+        if ($scope.activeTab === 'chat'){
+          $('.commentsContainer').css('padding-top',inputHeight);
+        } else {
+          $('.commentsContainer').css('padding-top',inputHeight-42);
+        }
         fixed = true;
       } else if (fixed) {
         tabs.removeClass('fixTabsPeel');

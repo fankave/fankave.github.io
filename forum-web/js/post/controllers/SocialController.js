@@ -106,13 +106,13 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           tempItem.embedType = feedData[i].embedType;
           tempItem.embedUrl = feedData[i].embedUrl;
           if (feedData[i].embedType === "link" && feedData[i].embedPlayable === true){
-            tempItem.embedHtml = $sce.trustAsHtml(feedData[i].embedHtml);
+            tempItem.embedYoutubeId = feedData[i].embedYoutubeId;
+            tempItem.embedHtml = feedData[i].embedHtml;
             tempItem.embedPlayable = true;
           }
-          if (feedData[i].embedType === "media"){
+          if (feedData[i].embedType === "media" || feedData[i].embedType === "link"){
             tempItem.mediaType = feedData[i].embedMedia.mediaType;
             tempItem.mediaUrl = feedData[i].embedMedia.mediaUrl;
-            // tempItem.trustedMediaUrl = trustSrc(tempItem.mediaUrl);
             tempItem.mediaThumbUrl = feedData[i].embedMedia.mediaThumbUrl;
             tempItem.mediaAspectRatio = feedData[i].embedMedia.mediaAspectRatio;
             tempItem.mediaAspectFeed = feedData[i].embedMedia.mediaAspectFeed;
