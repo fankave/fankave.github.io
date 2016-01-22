@@ -41,15 +41,6 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       }
     };
 
-    function extractYTVideoId(string) {
-      var srcString = string.slice(string.indexOf('src'), string.indexOf('frameborder')-2);
-      var vidId = srcString.slice(srcString.indexOf('embed')+6);
-      if (NETWORK_DEBUG){
-        console.log(srcString, vidId);
-      }
-      return vidId;
-    }
-
     function updateFeed(tab) {
 
       // Get Appropriate Content
