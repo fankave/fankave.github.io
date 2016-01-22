@@ -57,9 +57,9 @@
   </div>
 </nav>
 <section id="topicSection" ng-controller="SocialController as social">
-    <div class="scoreCardContent clearfix" ng-if="topicType === 'livegame' && !isMI16User">
+  <div class="scoreCardContent clearfix" ng-if="topicType === 'livegame' && !isMI16User">
 
-      <div id="rightColor">
+    <div id="rightColor">
         <svg 
         version="1.1"
         class="svg-content"
@@ -363,7 +363,7 @@
         </div>
       </div>
 
-      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" ng-click="moreButtonTapped()" class="media-parent"></media-player>
+      <media-player this-post="thisPost" vid-index="{{$index}}" ng-switch-when="video" ng-click="moreButtonTapped()" class="media-parent"></media-player>
 
       <!-- Begin Embed Content Shared to Chat -->
       <embed-shared-content embed-post="thisPost" ng-if="thisPost.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav="moreButtonTapped()"></embed-shared-content>
@@ -430,18 +430,10 @@
       <div ng-bind-html="thisPost.html | linky" class="postContent">
         <p>{{thisPost.html}}</p><br> 
       </div>
-      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent youtubeVideo" ng-class="{ 'youtube-android': mobileUserAgent === 'android' }">
-      </div>
-
-      <!-- <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" preload="auto" ng-attr-poster="{{thisPost.mediaThumbUrl}}" class="video-js vjs-default-skin" ng-class="{ 'video-android': mobileUserAgent === 'android' }">
-          <source ng-src="{{trustSrc(thisPost.mediaUrl)}}" type="video/mp4">
-          <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a web browser that
-            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-          </p>
-        </video>
+      <!-- <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent youtubeVideo" ng-class="{ 'youtube-android': mobileUserAgent === 'android' }">
       </div> -->
+
+      <embed-player this-post="thisPost.embedHtml" ng-if="thisPost.embedPlayable === true" class="media-parent"></embed-player>
 
       <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>
 

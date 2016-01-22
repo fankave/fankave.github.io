@@ -37,6 +37,7 @@ gulp.task('scripts-pre', function() {
     './js/pre/services/URIHelper.js',
     './js/pre/services/ChannelService.js',
     './js/pre/directives/TopicDirectives.js',
+    './js/pre/directives/EmbedPlayer.js',
     './js/pre/services/DataService.js',
     './js/pre/services/TopicService.js',
     './js/pre/services/SplashService.js',

@@ -1,60 +1,14 @@
 angular.module('TopicModule')
-.directive('repeatFinishedNotify', function () {
-  return function (scope, element, attrs) {
-    if (scope.$last){
-      // scope.scrollToBookmark();
-      console.log("DONE LOADING COMMENTS");
-      scope.hideLoading();
-      scope.setLinksOnComments();
-      scope.setDocVars();
-      scope.continueToExperience('smartS');
-      // scope.loadRemainingCommentsTimeout();
-    }
-  };
-});
-
-angular.module('TopicModule')
-.directive('embedSharedContent', ['UserAgentService',
-  function (UserAgentService) {
-  return {
-    restrict: 'E',
-    scope: {
-      thisPost: '=embedPost',
-      imageZoom: '&',
-      trustSource: '&',
-      preventNav: '&'      
-    },
-    link: function(scope,elem,attr){
-      scope.mobileUserAgent = UserAgentService.getMobileUserAgent();
-    },
-    templateUrl: 'partials/shared.html'
-  };
-}]);
-
-angular.module('TopicModule')
-.directive('mediaPlayer', ['$sce', 'UserAgentService',
+.directive('embedPlayer', ['$sce', 'UserAgentService',
   function ($sce, UserAgentService) {
   return {
     restrict: 'E',
     scope: {
-      thisPost: '=',
-      vidIndex: '@'
+      thisPost: '='
     },
     link: function(scope,elem,attr) {
 
       scope.isMobileUser = UserAgentService.isMobileUser();
-      scope.loading = false;
-
-      scope.trustSrc = function(src){
-        return $sce.trustAsResourceUrl(src);
-      }
-
-      var video = elem[0].firstElementChild.childNodes[1];
-      console.log("Top Scope Video: ", video);
-      $(video).on('canplay', function() {
-        console.log("Video Loaded");
-        scope.loading = false;
-      });
 
       scope.togglePlayPause = function(e) {
         var thesePlayerNodes = elem[0].firstElementChild.childNodes;
@@ -100,32 +54,32 @@ angular.module('TopicModule')
         }
         var classStrings = [];
 
-        if (orientation === "portrait"){
-          if (aspectRatio === 1.778){
-            classStrings.push("video-portrait-9x16");
-          } else {
-            classStrings.push("video-portrait-1x2")
-          }
-        } else if (orientation === "square"){
-          classStrings.push("video-square");
-        } else {
-          if (aspectRatio === 1.778){
-            classStrings.push("video-landscape-16x9");
-          } else {
-            classStrings.push("video-landscape-2x1")
-          }
-        }
+        // if (orientation === "portrait"){
+        //   if (aspectRatio === 1.778){
+        //     classStrings.push("video-portrait-9x16");
+        //   } else {
+        //     classStrings.push("video-portrait-1x2")
+        //   }
+        // } else if (orientation === "square"){
+        //   classStrings.push("video-square");
+        // } else {
+        //   if (aspectRatio === 1.778){
+        //     classStrings.push("video-landscape-16x9");
+        //   } else {
+        //     classStrings.push("video-landscape-2x1")
+        //   }
+        // }
         return classStrings;
       }
 
       scope.setDimensions = function (aspectRatio, orientation, video) {
-        var thesePlayerNodes = elem[0].firstElementChild.childNodes;
-        var thisVideo = thesePlayerNodes[1];
-        var thisWidth = $(thisVideo).width();
+        // var thesePlayerNodes = elem[0].firstElementChild.childNodes;
+        // var thisVideo = thesePlayerNodes[1];
+        var thisWidth = $(elem).width();
         if (NETWORK_DEBUG){
           console.log("Elem in setD: ", elem);
-          console.log("PlayerNodes in setD: ", thesePlayerNodes);
-          console.log("Video in setD: ", thisVideo);
+          // console.log("PlayerNodes in setD: ", thesePlayerNodes);
+          // console.log("Video in setD: ", thisVideo);
           console.log("Width in setD: ", thisWidth);
         }
 
@@ -184,7 +138,6 @@ angular.module('TopicModule')
       }
 
     },
-    templateUrl: 'partials/mediaPlayer.html'
+    templateUrl: 'partials/embedPlayer.html'
   };
 }]);
-
