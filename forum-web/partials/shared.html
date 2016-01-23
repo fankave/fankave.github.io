@@ -1,4 +1,4 @@
-<div class="chatEmbedContainer" ng-switch="thisPost.embed.media[0].mediaType">
+<div class="chatEmbedContainer" ng-switch="thisPost.embedMedia.mediaType">
   <!-- Embed Header -->
   <div id="socialHeaderContainer">
     <span class="postAuthorPhoto">
@@ -29,13 +29,7 @@
 
     <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
 
-    <div class="imageContainer" ng-switch-when="image/jpeg" ng-if="thisPost.embedType !== 'link'">
-      <img ng-src="{{thisPost.embed.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.embed.media[0].url})" onerror="this.style.display='none';" />
-    </div>
-    <div class="imageContainer" ng-switch-when="image/png" ng-if="thisPost.embedType !== 'link'">
-      <img ng-src="{{thisPost.embed.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.embed.media[0].url})" onerror="this.style.display='none';" />
-    </div>
-    <div class="imageContainer" ng-switch-when="image/gif" ng-if="thisPost.embedType !== 'link'">
+    <div class="imageContainer" ng-switch-when="image" ng-if="!thisPost.embedPlayable">
       <img ng-src="{{thisPost.embed.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.embed.media[0].url})" onerror="this.style.display='none';" />
     </div>
  

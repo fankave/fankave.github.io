@@ -505,10 +505,8 @@
       <div ng-bind-html="thisPost.html | linky" class="postContent socialContent">
         <p>{{thisPost.html}}</p><br> 
       </div>
-      <div ng-if="thisPost.embedPlayable === true" ng-bind-html="thisPost.embedHtml" class="postContent videoContent youtubeVideo" ng-class="{ 'youtube-android': mobileUserAgent === 'android' }">
-      </div>
 
-      <div class="imageContainer" ng-switch-when="image">
+      <div class="imageContainer" ng-switch-when="image" ng-if="!thisPost.embedPlayable">
         <img ng-src="{{thisPost.mediaUrl}}" class="cropView" ng-click="imageClick(thisPost.mediaUrl)" onerror="this.style.display='none';" />
       </div>
 
