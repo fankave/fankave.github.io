@@ -205,7 +205,6 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
           }
 
           if (commentsdata[i].embed.type === 'link' && commentsdata[i].embed.playable === true){
-            tempComment.embedYoutubeId = commentsdata[i].embedYoutubeId;
             tempComment.embedHtml = commentsdata[i].embedHtml;
           }
         }
