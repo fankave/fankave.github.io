@@ -2584,21 +2584,17 @@ img-crop canvas {
   background-repeat: no-repeat;
 }
 
+.image-control-contain {
+  position: relative;
+  width: 100%;
+  /*z-index: 2;*/
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .video-thumb {
   position: absolute;
   width: 100%;
-}
-
-.thumb16x9 {
-  padding-bottom: 56.25%;
-}
-
-.thumb1x1 {
-  /*padding-bottom: 100%;*/
-}
-
-.thumb2x1 {
-  padding-bottom: 50%;
 }
 
 .media-thumbnail,
@@ -2609,36 +2605,34 @@ img-crop canvas {
   /*max-height: 300px;*/
 }
 
-@media all and (min-width: 500px){
-  .media-thumbnail,
-  .media-video,
-  .media-player {
-    /*max-height: 350px;*/
-  }
-}
-
-.video-portrait-1x2 {
+.video-portrait-1x2,
+.image-portrait-1x2 {
   max-width: 150px;
 }
 
-.video-portrait-9x16 {
+.video-portrait-9x16,
+.image-portrait-9x16 {
   max-width: 169px;
 }
 
-.video-landscape-16x9 {
+.video-landscape-16x9,
+.image-landscape-16x9 {
   max-width: 533px;
 }
 
-.video-landscape-2x1 {
+.video-landscape-2x1,
+.image-landscape-2x1 {
   max-width: 600px;
 }
 
-.video-square {
+.video-square,
+.image-square {
   max-width: 381px;
 }
 
 @media all and (min-width: 500px){
-  .video-square {
+  .video-square,
+  .image-square {
     max-width: 300px;
   }
 }

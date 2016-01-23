@@ -29,9 +29,11 @@
 
     <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
 
-    <div class="imageContainer" ng-switch-when="image" ng-if="!thisPost.embedPlayable">
+    <!-- <div class="imageContainer" ng-switch-when="image" ng-if="!thisPost.embedPlayable">
       <img ng-src="{{thisPost.embed.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.embed.media[0].url})" onerror="this.style.display='none';" />
-    </div>
+    </div> -->
+
+    <image-control this-post="thisPost" ng-switch-when="image" ng-if="!thisPost.embedPlayable" ng-click="imageClick(thisPost.mediaUrl)" class="media-parent"></image-control>
  
     <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video/mp4" class="media-parent" ng-click="preventNav()"></media-player>
   </div>

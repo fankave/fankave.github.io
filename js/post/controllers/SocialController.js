@@ -61,7 +61,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
       var len = feedData.length;
       if (!!feedData && len > 0){
-        console.log("Feed Data: ", feedData, " Type: ", tab);
+        // console.log("Feed Data: ", feedData, " Type: ", tab);
 
         for (var i = 0; i < len; i++){
           var tempItem = feedData[i];
@@ -124,6 +124,13 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           } else {
             _this.videoArray.push(tempItem);
           }
+          if (NETWORK_DEBUG && i === len - 1){
+            if (tab === 'social'){
+              console.log("Social Array: ", _this.socialArray);
+            } else {
+              console.log("Video Array: ", _this.videoArray);
+            }
+          }
         }
       }
     };
@@ -178,13 +185,13 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           // We are Loading More Content -->
           // Base offset on Current Length of Scope Array
           _this.loadContent('social',_this.socialArray.length);
-          scrollAfterLoad(currentScroll + 90);
+          // scrollAfterLoad(currentScroll + 90);
         }
         else if ($scope.activeTab === 'video'){
           // We are Loading More Content -->
           // Base offset on Current Length of Scope Array
           _this.loadContent('video',_this.videoArray.length);
-          scrollAfterLoad(currentScroll + 90);
+          // scrollAfterLoad(currentScroll + 90);
         }
       }
     }, 100);
