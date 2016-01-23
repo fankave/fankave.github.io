@@ -155,7 +155,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     var commentsdata = CommentService.comments();
     if(commentsdata != undefined && (commentsdata.length >0 || lastComment === true)){
       lastComment = false;
-      console.log("CommentsData : ", commentsdata);
+      // console.log("CommentsData : ", commentsdata);
       var len = commentsdata.length;
 
       $scope.commentsArray = [];
@@ -209,6 +209,9 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
           }
         }
         $scope.commentsArray.push(tempComment);
+        if (i === len - 1 && NETWORK_DEBUG){
+          console.log("Comments Array: ", $scope.commentsArray);
+        }
 
       }
     }

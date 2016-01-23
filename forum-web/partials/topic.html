@@ -358,10 +358,7 @@
         {{thisPost.html}} 
       </div>
 
-      <div class="imageContainer" ng-switch-when="image">
-        <div class="chatCropView" ng-style="{background:'url({{thisPost.mediaUrl}}) no-repeat','background-size':'cover','height':thisPost.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(thisPost.mediaUrl)">
-        </div>
-      </div>
+      <image-control this-post="thisPost" ng-switch-when="image" ng-click="imageClick(thisPost.mediaUrl)" class="media-parent"></image-control>
 
       <media-player this-post="thisPost" vid-index="{{$index}}" ng-switch-when="video" ng-click="moreButtonTapped()" class="media-parent"></media-player>
 
@@ -402,7 +399,7 @@
   </div>
 
   <!-- Video Tab Content -->
-  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | orderBy: '-id'" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | orderBy: $index" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -477,7 +474,7 @@
   </div>
 
   <!-- Social Tab Content -->
-  <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray | orderBy: '-id'" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray | orderBy: $index" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -506,9 +503,7 @@
         <p>{{thisPost.html}}</p><br> 
       </div>
 
-      <div class="imageContainer" ng-switch-when="image" ng-if="!thisPost.embedPlayable">
-        <img ng-src="{{thisPost.mediaUrl}}" class="cropView" ng-click="imageClick(thisPost.mediaUrl)" onerror="this.style.display='none';" />
-      </div>
+      <image-control this-post="thisPost" ng-switch-when="image" ng-if="!thisPost.embedPlayable" ng-click="imageClick(thisPost.mediaUrl)" class="media-parent"></image-control>
 
       <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
 

@@ -42,10 +42,7 @@
         {{comment.html}} 
       </div> 
 
-      <div class="imageContainer" ng-switch-when="image">
-        <div class="chatCropView" ng-style="{background:'url({{comment.mediaUrl}}) no-repeat','background-size':'cover','height':comment.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(comment.mediaUrl)">
-        </div>
-      </div>
+      <image-control this-post="comment" ng-switch-when="image" ng-click="imageClick(comment.mediaUrl)" class="media-parent"></image-control>
 
       <media-player this-post="comment" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>
 
@@ -137,10 +134,7 @@
           {{thisReply.html}} 
         </div>
 
-        <div class="imageContainer" ng-switch-when="image">
-          <div class="chatCropView" ng-style="{background:'url({{thisReply.mediaUrl}}) no-repeat','background-size':'cover','height':thisReply.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(thisReply.mediaUrl)">
-          </div>
-        </div>
+      <image-control this-post="thisReply" ng-switch-when="image" ng-click="imageClick(thisReply.mediaUrl)" class="media-parent"></image-control>
 
       <media-player this-post="thisReply" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>  
         
