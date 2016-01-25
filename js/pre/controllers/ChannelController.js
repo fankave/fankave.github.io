@@ -61,7 +61,7 @@ function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelServi
       if (HTML5_LOC){
         $location.path("/login");
       } else {
-        $window.location = "#/login";
+        $window.location = "/#/login";
       }
     }
   }
