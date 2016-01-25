@@ -10,7 +10,7 @@ angular.module('TopicModule')
 
       scope.setAspectRatio = function (aspectRatio, orientation) {
         if (NETWORK_DEBUG){
-          console.log("setAspectRatio: ", aspectRatio, orientation);
+          // console.log("setAspectRatio: ", aspectRatio, orientation);
         }
         var classStrings = [];
 
@@ -36,8 +36,8 @@ angular.module('TopicModule')
         var thisImage = elem[0].childNodes[0];
         var thisWidth = $(thisImage).width();
         if (NETWORK_DEBUG){
-          console.log("Image in setD: ", thisImage);
-          console.log("Width in setD: ", thisWidth);
+          // console.log("Image in setD: ", thisImage);
+          // console.log("Width in setD: ", thisWidth);
         }
 
         // Width Contingencies (landscape)
@@ -70,7 +70,7 @@ angular.module('TopicModule')
         }
 
         if (NETWORK_DEBUG){
-          console.log("Set Dimensions Object: ", styleObj);
+          // console.log("Set Dimensions Object: ", styleObj);
         }
         return styleObj;
       }
