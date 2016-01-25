@@ -1,5 +1,5 @@
 angular.module('TopicModule')
-.service('TopicService', ["DateUtilityService","Bant","FDSUtility",
+.factory('TopicService', ["DateUtilityService","Bant","FDSUtility",
   function (DateUtilityService,Bant,FDSUtility) {
 
   var TOPIC_BASE_URI = "/v1.0/topic/show/";
