@@ -106,22 +106,15 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 		window.scrollTo(0,document.body.scrollHeight);
 	}
 
+  $scope.checkDirectReply = function() {
+    if (TopicService.directComment){
+      $('#postCommentField').focus();
+      TopicService.directComment = false;
+    }
+  }
+
 	$scope.triggerRepliesKeyboard = function() {
-    console.log("TRIGGERING REPLIES KEYBOARD", $('#postCommentField'));
     $('#postCommentField').focus();
-		// var input = document.querySelector('#postCommentField');
-  //   var focusNow = function(){
-  //     var clone = input.cloneNode(true);
-  //     var parent = input.parentElement;
-  //     parent.appendChild(clone);
-  //     parent.replaceChild(clone,input);
-  //     input = clone;
-  //     window.setTimeout(function(){
-  //       input.value = input.value || "";
-  //       input.focus();
-  //     },0);
-  //   }
-  //   focusNow();
 	}
 	
 	$scope.initReplyPage = function(){
@@ -344,11 +337,11 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 
 			$scope.comment = tempComment;
 		}
-    console.log("DIRECT COMMENT? ", TopicService.directComment);
-    if(TopicService.directComment === true){
-      setTimeout(function(){$scope.triggerRepliesKeyboard();},1000);
-      TopicService.directComment = false;
-    }
+    // console.log("DIRECT COMMENT? ", TopicService.directComment);
+    // if(TopicService.directComment === true){
+    //   setTimeout(function(){$scope.triggerRepliesKeyboard();},1000);
+    //   TopicService.directComment = false;
+    // }
 	}
 
   // $scope.hideLoading = function(){
@@ -415,12 +408,12 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 			//console.log(i +" : updated replies likecount : " +$scope.replies[i].likeCount);
 
 		}
-    console.log("DIRECT COMMENT? ", TopicService.directComment);
-		if(TopicService.directComment === true)
-		{
-			$scope.triggerRepliesKeyboard();
-			TopicService.directComment = false;
-		}
+  //   console.log("DIRECT COMMENT? ", TopicService.directComment);
+		// if(TopicService.directComment === true)
+		// {
+		// 	$scope.triggerRepliesKeyboard();
+		// 	TopicService.directComment = false;
+		// }
 
 		if($scope.justReplied == true)
 		{
