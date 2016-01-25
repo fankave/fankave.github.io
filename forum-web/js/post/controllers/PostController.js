@@ -106,9 +106,15 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 		window.scrollTo(0,document.body.scrollHeight);
 	}
 
-	$scope.triggerRepliesKeyboard = function()
-	{
-		document.getElementById("postCommentField").focus();
+  $scope.checkDirectReply = function() {
+    if (TopicService.directComment){
+      $('#postCommentField').focus();
+      TopicService.directComment = false;
+    }
+  }
+
+	$scope.triggerRepliesKeyboard = function() {
+    $('#postCommentField').focus();
 	}
 	
 	$scope.initReplyPage = function(){
@@ -396,11 +402,6 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 			}
 			//console.log(i +" : updated replies likecount : " +$scope.replies[i].likeCount);
 
-		}
-		if(TopicService.directComment === true)
-		{
-			$scope.triggerRepliesKeyboard();
-			TopicService.directComment = false;
 		}
 
 		if($scope.justReplied == true)
