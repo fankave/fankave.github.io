@@ -36,6 +36,7 @@ gulp.task('scripts-pre', function() {
     './js/pre/services/ForumDeviceInfo.js',
     './js/pre/services/URIHelper.js',
     './js/pre/services/ChannelService.js',
+    './js/pre/directives/Scorecard.js',
     './js/pre/directives/TopicDirectives.js',
     './js/pre/directives/EmbedPlayer.js',
     './js/pre/directives/ImageControl.js',
