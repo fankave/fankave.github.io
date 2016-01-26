@@ -42,23 +42,11 @@
         {{comment.html}} 
       </div> 
 
-      <div class="imageContainer" ng-switch-when="image">
-        <div class="chatCropView" ng-style="{background:'url({{comment.mediaUrl}}) no-repeat','background-size':'cover','height':comment.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(comment.mediaUrl)">
-        </div>
-      </div>
+      <image-control this-post="comment" ng-switch-when="image" ng-click="imageClick(comment.mediaUrl)" class="media-parent"></image-control>
 
-      <!-- <div ng-switch-when="video" class="mp4VideoContainer">
-        <video controls="controls" preload="auto" ng-attr-poster="{{comment.mediaThumbUrl}}" class="video-js-chat vjs-default-skin" ng-class="{ 'video-chat-android': mobileUserAgent === 'android' }">
-          <source ng-src="{{trustSrc(comment.mediaUrl)}}" type="video/mp4">
-          <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a web browser that
-            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-          </p>
-        </video>
-      </div> -->
-      <media-player this-post="comment" vid-source="" vid-index="{{$index}}" ng-switch-when="video"></media-player>
+      <media-player this-post="comment" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>
 
-      <embed-shared-content embed-post="comment.embed" ng-if="comment.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav=""></embed-shared-content>
+      <embed-shared-content embed-post="comment" ng-if="comment.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav=""></embed-shared-content>
 
       <div class="socialButtonsRow">
         <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeComment(comment.id)" ng-switch="comment.isLiked">
@@ -106,7 +94,7 @@
 
         <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,false)">Post</button>
 
-        <span><input id="postCommentField" type="text" class="form-control"
+        <span data-ng-element-ready="checkDirectReply()"><input id="postCommentField" type="text" class="form-control"
         placeholder="Write a reply..." ng-model="commentText" ng-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
         
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
@@ -146,24 +134,9 @@
           {{thisReply.html}} 
         </div>
 
-        <div class="imageContainer" ng-switch-when="image">
-          <div class="chatCropView" ng-style="{background:'url({{thisReply.mediaUrl}}) no-repeat','background-size':'cover','height':thisReply.mediaAspectFeed.h, 'margin-bottom':'15px'}" ng-click="imageClick(thisReply.mediaUrl)">
-          </div>
-        </div>
+      <image-control this-post="thisReply" ng-switch-when="image" ng-click="imageClick(thisReply.mediaUrl)" class="media-parent"></image-control>
 
-        <!-- <div ng-switch-when="video" class="mp4VideoContainer">
-          <video controls="controls" ng-attr-poster="{{thisReply.mediaThumbUrl}}" class="video-js-chat vjs-default-skin" ng-class="{ 'video-chat-android': mobileUserAgent === 'android' }">
-            <source ng-src="{{trustSrc(thisReply.mediaUrl)}}" type="video/mp4">
-            <p class="vjs-no-js">
-              To view this video please enable JavaScript, and consider upgrading to a web browser that
-              <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-            </p>
-          </video>
-        </div> -->
-        <media-player this-post="thisReply" vid-source="" vid-index="{{$index}}" ng-switch-when="video"></media-player>
-
-        <embed-shared-content embed-post="thisReply.embed" ng-if="thisReply.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav=""></embed-shared-content>  
-
+      <media-player this-post="thisReply" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>  
         
       <div class="socialButtonsRow">
         <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeReply(thisReply.id)" ng-switch="thisReply.isLiked">
@@ -215,7 +188,7 @@
 
         <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,false)">Post</button>
 
-        <span><input id="postCommentField" type="text" class="form-control"
+        <span data-ng-element-ready="checkDirectReply()"><input id="postCommentField" type="text" class="form-control"
         placeholder="Write a reply..." ng-model="commentText" ng-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
         
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
@@ -234,7 +207,7 @@
 </section>
 
 
-<div id="newRepliesAvailableIndicatorDiv" ng-show="showNewRepliesIndicator">
+<div id="newRepliesAvailableIndicatorDiv" ng-if="showNewRepliesIndicator">
   <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newRepliesIndicatorTapped()">
     <img ng-src="img/newReplyIndicator.png" />
   </button>

@@ -24,3 +24,7 @@ ___
 
 6) Gulp task output will appear in the **dist/** directory
 
+7) Both of the commands **gulp** and **gulp watch** will start the 'watch' task, which monitors changes in css/, js/pre/, and js/post/ directories and runs the appropriate task to rebuild the dist/ files. While developing, run this task and let it run in the background while you are working/making changes.
+
+8) 'build-lint' task will rebuild the entire dist/ directory and output the results of jshint on the js/ files to the command line. This task depends on newly added gulp plugins, so run **npm install** again before running this task.
+

@@ -61,7 +61,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
       var len = feedData.length;
       if (!!feedData && len > 0){
-        console.log("Feed Data: ", feedData, " Type: ", tab);
+        // console.log("Feed Data: ", feedData, " Type: ", tab);
 
         for (var i = 0; i < len; i++){
           var tempItem = feedData[i];
@@ -106,13 +106,12 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           tempItem.embedType = feedData[i].embedType;
           tempItem.embedUrl = feedData[i].embedUrl;
           if (feedData[i].embedType === "link" && feedData[i].embedPlayable === true){
-            tempItem.embedHtml = $sce.trustAsHtml(feedData[i].embedHtml);
+            tempItem.embedHtml = feedData[i].embedHtml;
             tempItem.embedPlayable = true;
           }
-          if (feedData[i].embedType === "media"){
+          if (feedData[i].embedType === "media" || feedData[i].embedType === "link"){
             tempItem.mediaType = feedData[i].embedMedia.mediaType;
             tempItem.mediaUrl = feedData[i].embedMedia.mediaUrl;
-            // tempItem.trustedMediaUrl = trustSrc(tempItem.mediaUrl);
             tempItem.mediaThumbUrl = feedData[i].embedMedia.mediaThumbUrl;
             tempItem.mediaAspectRatio = feedData[i].embedMedia.mediaAspectRatio;
             tempItem.mediaAspectFeed = feedData[i].embedMedia.mediaAspectFeed;
@@ -124,6 +123,13 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
             _this.socialArray.push(tempItem);
           } else {
             _this.videoArray.push(tempItem);
+          }
+          if (NETWORK_DEBUG && i === len - 1){
+            if (tab === 'social'){
+              console.log("Social Array: ", _this.socialArray);
+            } else {
+              console.log("Video Array: ", _this.videoArray);
+            }
           }
         }
       }
@@ -179,13 +185,13 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           // We are Loading More Content -->
           // Base offset on Current Length of Scope Array
           _this.loadContent('social',_this.socialArray.length);
-          scrollAfterLoad(currentScroll + 90);
+          // scrollAfterLoad(currentScroll + 90);
         }
         else if ($scope.activeTab === 'video'){
           // We are Loading More Content -->
           // Base offset on Current Length of Scope Array
           _this.loadContent('video',_this.videoArray.length);
-          scrollAfterLoad(currentScroll + 90);
+          // scrollAfterLoad(currentScroll + 90);
         }
       }
     }, 100);

@@ -1,54 +1,41 @@
-<div class="chatEmbedContainer" ng-switch="thisPost.media[0].mediaType">
+<div class="chatEmbedContainer" ng-switch="thisPost.embedMedia.mediaType">
   <!-- Embed Header -->
   <div id="socialHeaderContainer">
     <span class="postAuthorPhoto">
       <span>
         <a class="thumbnail">
-          <img ng-src="{{thisPost.author.photo}}" alt="" onerror="this.src='img/default_user_v3.png'" class="userPhoto" />
+          <img ng-src="{{thisPost.embed.author.photo}}" alt="" onerror="this.src='img/default_user_v3.png'" class="userPhoto" />
         </a>
       </span>
     </span>
     <div id="socialHeader">
       <span class="socialPostUsername">
-        {{thisPost.author.name}}
+        {{thisPost.embed.author.name}}
       </span>
       <span class="embedTimestamp">
-        <img id="providerLogo" ng-src="{{thisPost.provider.logo}}" />{{thisPost.embedCreatedAt}}
+        <img id="providerLogo" ng-src="{{thisPost.embed.provider.logo}}" />{{thisPost.embed.embedCreatedAt}}
       </span>
     </div>
     <div class="socialAlias">
-      @{{thisPost.author.alias}}
+      @{{thisPost.embed.author.alias}}
     </div>
   </div>
 
   <!-- Embed Content -->
   <div class="socialContentContainer">
-    <div ng-bind-html="thisPost.text | linky" class="postContent socialContent">
-      <p>{{thisPost.text}}</p><br> 
-    </div>
-    <div ng-if="thisPost.playable === true && thisPost.embedHtml !== undefined" ng-bind-html="thisPost.embedHtml" class="postContent videoContent embedYoutubeVideo" ng-class="{ 'embed-youtube-android': mobileUserAgent === 'android' }">
+    <div ng-bind-html="thisPost.embed.text | linky" class="postContent socialContent">
+      <p>{{thisPost.embed.text}}</p><br> 
     </div>
 
-    <div class="imageContainer" ng-switch-when="image/jpeg" ng-if="thisPost.embedHtml === undefined">
-      <img ng-src="{{thisPost.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.media[0].url})" onerror="this.style.display='none';" />
-    </div>
-    <div class="imageContainer" ng-switch-when="image/png" ng-if="thisPost.embedHtml === undefined">
-      <img ng-src="{{thisPost.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.media[0].url})" onerror="this.style.display='none';" />
-    </div>
-    <div class="imageContainer" ng-switch-when="image/gif" ng-if="thisPost.embedHtml === undefined">
-      <img ng-src="{{thisPost.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.media[0].url})" onerror="this.style.display='none';" />
-    </div>
+    <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
 
-    <!-- <div ng-switch-when="video/mp4" class="mp4EmbedVideoContainer">
-      <video controls="controls" ng-attr-poster="{{thisPost.media[0].thumbUrl}}" class="video-js-embed vjs-default-skin" ng-class="{ 'video-embed-android': mobileUserAgent === 'android' }">
-        <source ng-src="{{trustSource({videoSrc: thisPost.media[0].url})}}" type="video/mp4">
-        <p class="vjs-no-js">
-          To view this video please enable JavaScript, and consider upgrading to a web browser that
-          <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-        </p>
-      </video>
-    </div> --> 
-    <media-player this-post="thisPost" vid-source="{{trustSrc(thisPost.mediaUrl)}}" vid-index="{{$index}}" ng-switch-when="video"></media-player>
+    <!-- <div class="imageContainer" ng-switch-when="image" ng-if="!thisPost.embedPlayable">
+      <img ng-src="{{thisPost.embed.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.embed.media[0].url})" onerror="this.style.display='none';" />
+    </div> -->
+
+    <image-control this-post="thisPost" ng-switch-when="image" ng-if="!thisPost.embedPlayable" ng-click="imageClick(thisPost.mediaUrl)" class="media-parent"></image-control>
+ 
+    <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent" ng-click="preventNav()"></media-player>
   </div>
 
   <!-- Embed Metrics -->
@@ -58,20 +45,20 @@
       <img class="social-metrics-reply" ng-src="img/reply@2x.png" />
       <!-- </a> -->
     </button>
-    <span class="social-metrics-label"> {{thisPost.metrics.replyCount}}</span>
+    <span class="social-metrics-label"> {{thisPost.embed.metrics.replyCount}}</span>
 
     <button class="btn-link social-btn socialRetweet" ng-click="preventNav()">
       <!-- <a href="https://twitter.com/intent/retweet?tweet_id={{thisPost.tweetId}}"> -->
       <img class="social-metrics-retweet" ng-src="img/retweet@2x.png" />
       <!-- </a>  -->
     </button>
-    <span class="social-metrics-label">{{thisPost.metrics.retweetCount}}</span>
+    <span class="social-metrics-label">{{thisPost.embed.metrics.retweetCount}}</span>
 
     <button class="btn-link social-btn socialFavorite" ng-click="preventNav()">
       <!-- <a href="https://twitter.com/intent/like?tweet_id={{thisPost.tweetId}}"> -->
       <img class="social-metrics-heart" ng-src="img/heart@2x.png" />
       <!-- </a> -->
     </button>
-    <span class="social-metrics-label">{{thisPost.metrics.likeCount}}</span>
+    <span class="social-metrics-label">{{thisPost.embed.metrics.likeCount}}</span>
   </div>
 </div>

@@ -106,9 +106,15 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 		window.scrollTo(0,document.body.scrollHeight);
 	}
 
-	$scope.triggerRepliesKeyboard = function()
-	{
-		document.getElementById("postCommentField").focus();
+  $scope.checkDirectReply = function() {
+    if (TopicService.directComment){
+      $('#postCommentField').focus();
+      TopicService.directComment = false;
+    }
+  }
+
+	$scope.triggerRepliesKeyboard = function() {
+    $('#postCommentField').focus();
 	}
 	
 	$scope.initReplyPage = function(){
@@ -309,6 +315,15 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
         tempComment.embed.embedCreatedAt = selectedComment.embedCreatedAt;
         tempComment.embed.embedCreatedAtFull = selectedComment.embedCreatedAtFull;
 
+        if (tempComment.embedType === 'media'){
+          tempComment.mediaUrl = selectedComment.embedMedia.mediaUrl;
+          tempComment.mediaThumbUrl = selectedComment.embedMedia.mediaThumbUrl;
+          tempComment.mediaAspectFeed = selectedComment.embedMedia.mediaAspectFeed;
+          tempComment.mediaAspectFull = selectedComment.embedMedia.mediaAspectFull;
+          tempComment.mediaAspectRatio = selectedComment.embedMedia.mediaAspectRatio;
+          tempComment.mediaOrientation = selectedComment.embedMedia.mediaOrientation;
+        }
+
         if (tempComment.providerName === "Twitter"){
           tempComment.embed.embedLogo = "img/twitterLogo@2x.png";
         } else {
@@ -316,7 +331,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
         }
 
         if (selectedComment.embed.type === 'link' && selectedComment.embed.playable === true){
-          tempComment.embed.embedHtml = $sce.trustAsHtml(selectedComment.embedHtml);
+          tempComment.embedHtml = selectedComment.embedHtml;
         }
       }
 
@@ -351,7 +366,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 			
       if (tempReply.type === 'media'){
           tempReply.mediaUrl = repliesData[i].mediaUrl;
-          // tempComment.trustedMediaUrl = $scope.trustSrc(tempComment.mediaUrl);
+          // tempReply.trustedMediaUrl = $scope.trustSrc(tempReply.mediaUrl);
           tempReply.mediaAspectFeed = repliesData[i].mediaAspectFeed;
           tempReply.mediaAspectFull = repliesData[i].mediaAspectFull;
           tempReply.mediaAspectRatio = repliesData[i].mediaAspectRatio;
@@ -387,11 +402,6 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 			}
 			//console.log(i +" : updated replies likecount : " +$scope.replies[i].likeCount);
 
-		}
-		if(TopicService.directComment === true)
-		{
-			$scope.triggerRepliesKeyboard();
-			TopicService.directComment = false;
 		}
 
 		if($scope.justReplied == true)
