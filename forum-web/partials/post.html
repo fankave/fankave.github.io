@@ -94,7 +94,7 @@
 
         <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,false)">Post</button>
 
-        <span><input id="postCommentField" type="text" class="form-control"
+        <span data-ng-element-ready="checkDirectReply()"><input id="postCommentField" type="text" class="form-control"
         placeholder="Write a reply..." ng-model="commentText" ng-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
         
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
@@ -188,7 +188,7 @@
 
         <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,false)">Post</button>
 
-        <span><input id="postCommentField" type="text" class="form-control"
+        <span data-ng-element-ready="checkDirectReply()"><input id="postCommentField" type="text" class="form-control"
         placeholder="Write a reply..." ng-model="commentText" ng-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
         
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
