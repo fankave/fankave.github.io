@@ -360,8 +360,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     $(document).scrollTop(0);
   }
 
-  $scope.imageClick = function(imageURL)
-  {
+  $scope.imageClick = function(imageURL) {
     event.cancelBubble = true;
     if(event.stopPropagation) event.stopPropagation();
 
@@ -371,19 +370,15 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         src: imageURL,
       },
       type: 'inline',
-      callbacks:
-      {
-        open: function()
-        {
+      callbacks: {
+        open: function() {
           console.log("popup opened");
           $('body').bind('touchmove', function(e){e.preventDefault()})
         },
-        close: function()
-        {
+        close: function() {
           console.log("popup closed");
           $('body').unbind('touchmove')
         }
-        // e.t.c.
       }
     });
   }
@@ -484,8 +479,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   CommentService.registerObserverCallback(notifyNewComments);
   CommentService.registerObserverCallback(updateComments, true);
 
-  $scope.trustSrc = function(src)
-  {
+  $scope.trustSrc = function(src) {
     return $sce.trustAsResourceUrl(src);
   }
 

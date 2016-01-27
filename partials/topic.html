@@ -209,32 +209,20 @@
 
 <div class="commentsContainer" ng-switch="activeTab">
 
-  <div id="loadChatFill" ng-repeat="item in [1,2,3,4,5]" ng-if="loadingChat">
-    <span class="load loadProfilePhoto"></span>
-    <span class="loadPost">
-      <div class="clearfix">
-        <span class="load loadChatUsername"></span>
-        <span class="load loadChatTimestamp"></span>
-      </div>
-      <div class="load loadChatBody"></div>
-      <div class="load loadChatFooter"></div>
-    </span>
-  </div>
-
-  <div id="loadChatFill" ng-repeat="item in [1,2,3,4,5]" ng-if="loadingSocial">
-    <span class="load loadProfilePhoto"></span>
-    <span class="loadPost">
-      <div class="clearfix">
-        <span class="load loadChatUsername"></span>
-        <span class="load loadChatTimestamp"></span>
-      </div>
-      <div class="load loadSocialAlias"></div>
-    </span>
-    <div class="load loadSocialBody"></div>
-  </div>
-
   <!-- Chat Tab Content -->
   <div ng-switch-when="chat" ng-repeat="thisPost in commentsArray | orderBy: $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
+  
+    <div id="loadChatFill" ng-if="loadingChat">
+      <span class="load loadProfilePhoto"></span>
+      <span class="loadPost">
+        <div class="clearfix">
+          <span class="load loadChatUsername"></span>
+          <span class="load loadChatTimestamp"></span>
+        </div>
+        <div class="load loadChatBody"></div>
+        <div class="load loadChatFooter"></div>
+      </span>
+    </div>
 
     <span class="postAuthorPhoto">
       <div>
@@ -266,9 +254,7 @@
 
       <media-player this-post="thisPost" vid-index="{{$index}}" ng-switch-when="video" ng-click="moreButtonTapped()" class="media-parent"></media-player>
 
-      <!-- Begin Embed Content Shared to Chat -->
       <embed-shared-content embed-post="thisPost" ng-if="thisPost.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav="moreButtonTapped()"></embed-shared-content>
-      <!-- End Embed Content Shared to Chat -->
 
       <div>
         <div class="socialButtonsRow">
@@ -304,6 +290,19 @@
 
   <!-- Video Tab Content -->
   <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | orderBy: $index" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+
+    <div id="loadChatFill" ng-if="loadingSocial">
+      <span class="load loadProfilePhoto"></span>
+      <span class="loadPost">
+        <div class="clearfix">
+          <span class="load loadChatUsername"></span>
+          <span class="load loadChatTimestamp"></span>
+        </div>
+        <div class="load loadSocialAlias"></div>
+      </span>
+      <div class="load loadSocialBody"></div>
+    </div>
+
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -379,6 +378,19 @@
 
   <!-- Social Tab Content -->
   <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray | orderBy: $index" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+
+    <div id="loadChatFill" ng-if="loadingSocial">
+      <span class="load loadProfilePhoto"></span>
+      <span class="loadPost">
+        <div class="clearfix">
+          <span class="load loadChatUsername"></span>
+          <span class="load loadChatTimestamp"></span>
+        </div>
+        <div class="load loadSocialAlias"></div>
+      </span>
+      <div class="load loadSocialBody"></div>
+    </div>
+
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
