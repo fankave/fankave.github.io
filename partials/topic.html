@@ -234,71 +234,7 @@
   </div>
 
   <!-- Chat Tab Content -->
-  <div ng-switch-when="chat" ng-repeat="thisPost in commentsArray | orderBy: $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
-
-    <span class="postAuthorPhoto">
-      <div>
-        <a class="thumbnail">
-          <img ng-src="{{thisPost.postAuthorPhoto}}" onerror="this.src='img/default_user_v3.png'" class="userPhoto" />
-        </a>
-      </div>
-      <span id="pinIcon" ng-if="thisPost.pin == true">
-        <img ng-src="img/pin@3x.png"/>
-      </span>
-    </span>
-
-    <div class="post">
-
-      <div class="chatPostHeader">
-        <span class="postUsername">
-          {{thisPost.postAuthorName}}
-        </span>
-        <span class="chatTimestamp">
-          {{thisPost.postTimestamp}}
-        </span>
-      </div>
-
-      <div ng-bind-html="thisPost.html | linky" class="postContent">
-        {{thisPost.html}} 
-      </div>
-
-      <image-control this-post="thisPost" ng-switch-when="image" ng-click="imageClick(thisPost.mediaUrl)" class="media-parent"></image-control>
-
-      <media-player this-post="thisPost" vid-index="{{$index}}" ng-switch-when="video" ng-click="moreButtonTapped()" class="media-parent"></media-player>
-
-      <embed-shared-content embed-post="thisPost" ng-if="thisPost.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav="moreButtonTapped()"></embed-shared-content>
-
-      <div>
-        <div class="socialButtonsRow">
-          <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
-            <img class="social-like" ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png" /> 
-            <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUp@2x.png" /> 
-          </button>
-          <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
-        </div>
-        <div class="socialButtonsRow">  
-          <button id="chatReply" class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
-            <img class="social-reply" ng-src="img/shareCopy@2x.png" />
-          </button>
-            <span class="socialButtonLable" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)"> Reply</span>
-        </div>
-        <div class="sharingButtonsRow">
-          <div class="chatMore" ng-click="moreButtonTapped()">
-            <button class="btn-link social-btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img class="social-more" ng-src="img/moreButton.png"/>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
-
-              <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
-              <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="moreRepliesContainer" ng-if="thisPost.replyCount === 1">1 Reply</div>
-      <div class="moreRepliesContainer" ng-if="thisPost.replyCount > 1">{{thisPost.replyCount}} Replies</div>
-    </div>
-  </div>
+  <infinite-segment ng-switch-when="chat" this-segment="commentsArray" env="chat"></infinite-segment>
 
   <!-- Video Tab Content -->
   <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | orderBy: $index" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
