@@ -1,4 +1,4 @@
-<div ng-repeat="thisPost in thisSegment | orderBy: $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
+<div ng-repeat="thisPost in commentsArray | orderBy: $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
 
   <span class="postAuthorPhoto">
     <div>
@@ -57,7 +57,7 @@
             <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
             <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
           </ul>
-          
+
         </div>
       </div>
     </div>

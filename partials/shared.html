@@ -29,7 +29,7 @@
 
     <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
 
-    <image-control this-post="thisPost" ng-switch-when="image" ng-if="!thisPost.embedPlayable" ng-click="imageClick(thisPost.mediaUrl)" class="media-parent"></image-control>
+    <image-control this-post="thisPost" ng-switch-when="image" ng-if="!thisPost.embedPlayable" ng-click="preventNav()" class="media-parent"></image-control>
  
     <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent" ng-click="preventNav()"></media-player>
   </div>
