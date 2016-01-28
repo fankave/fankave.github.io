@@ -1,11 +1,13 @@
-angular.module('Forum')
-.directive('secure', ['UserInfoService',
-  function (UserInfoService) {
+angular.module('TopicModule')
+.directive('secure', ['$location','$window','UserInfoService',
+  function ($location, $window, UserInfoService) {
     return {
       restrict: 'A',
       link: function(scope, elem, attrs){
-
-        $(elem).on("click", function(e){
+        console.log("!!!Secure Elem: ", UserInfoService.isGuestUser(), elem, attrs);
+        var element = elem[0];
+        $(element).on('click', function(e){
+          console.log("!!!Secure Element Clicked- ", UserInfoService.isGuestUser());
           e.preventDefault();
           if (UserInfoService.isGuestUser()){
             if (HTML5_LOC){
@@ -13,6 +15,8 @@ angular.module('Forum')
             } else {
               $window.location = "#/login";
             }
+          } else {
+            attrs['secure']();
           }
         });
       }

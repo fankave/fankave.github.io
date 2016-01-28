@@ -391,20 +391,20 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
 
   $scope.updateLikeTopic = function() {
     console.log("TopicController update like Topic");
-    if(UserInfoService.isGuestUser())
-    {
-      if (HTML5_LOC){
-        $location.path("/login");
-      } else {
-        $window.location = "#/login";
-      }
-    }
-    else{ 
+    // if(UserInfoService.isGuestUser())
+    // {
+    //   if (HTML5_LOC){
+    //     $location.path("/login");
+    //   } else {
+    //     $window.location = "#/login";
+    //   }
+    // }
+    // else{ 
       if(TopicService.getLiked() == true)
         networkService.send(TopicService.getUnlikeTopicRequest());
       else
         networkService.send(TopicService.getLikeTopicRequest());  
-      }
+      // }
   };
 
   $scope.commentOnTopic = function()
