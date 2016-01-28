@@ -324,11 +324,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   }
   else {
     // console.log("Not logged in to facebook, take user to login page")
-    if (HTML5_LOC){
-      $location.path("/login");
-    } else {
-      $window.location = "#/login";
-    }
+    AuthService.loginAsGuest();
   }
 
 
@@ -395,16 +391,25 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
 
   $scope.updateLikeTopic = function() {
     console.log("TopicController update like Topic");
-    if(TopicService.getLiked() == true)
-      networkService.send(TopicService.getUnlikeTopicRequest());
-    else
-      networkService.send(TopicService.getLikeTopicRequest());  
+    if(UserInfoService.isGuestUser())
+    {
+      if (HTML5_LOC){
+        $location.path("/login");
+      } else {
+        $window.location = "#/login";
+      }
+    }
+    else{
+      if(TopicService.getLiked() == true)
+        networkService.send(TopicService.getUnlikeTopicRequest());
+      else
+        networkService.send(TopicService.getLikeTopicRequest()); 
+      } 
   };
 
   $scope.commentOnTopic = function()
   {
-    // console.log("comment on topic");
-    document.getElementById("topicCommentField").focus();
+      document.getElementById("topicCommentField").focus();
   };
 
   $scope.updateLikeComment = function(id) {

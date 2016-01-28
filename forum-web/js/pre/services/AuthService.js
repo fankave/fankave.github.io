@@ -3,6 +3,17 @@ angular.module('AuthModule')
   function ($http, $window, $location, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
   var userLoggedInToFacebook = false;
+
+  var loginAsGuest = function() {
+  console.log("Logging in as Guest");
+    var userData = {};
+    userData.id = ForumDeviceInfo.getDeviceId();
+    userData.userName = "GuestUser";
+
+    var registerParams = setRegistrationParams("guest", -28800, userData);
+    registerUser(registerParams);
+  };
+
   var loginToFacebook = function() {
     FB.login(function (response) {
       if (response.status === 'connected') {
@@ -138,6 +149,7 @@ angular.module('AuthModule')
   };
 
   return {
+    loginAsGuest:loginAsGuest,
     loginToFacebook: loginToFacebook,
     loginWithPeel: loginWithPeel,
     loginWithEmail: loginWithEmail,
