@@ -3,9 +3,9 @@ angular.module('TopicModule')
   function ($location, $window, UserInfoService) {
     return {
       restrict: 'A',
-      link: function(scope, elem, attrs){
-        console.log("!!!Secure Elem: ", UserInfoService.isGuestUser(), elem, attrs);
-        var element = elem[0];
+      link: function($scope, $elem, $attrs){
+        console.log("!!!Secure Elem: ", UserInfoService.isGuestUser(), $elem, $attrs);
+        var element = $elem[0];
         $(element).on('click', function(e){
           console.log("!!!Secure Element Clicked- ", UserInfoService.isGuestUser());
           e.preventDefault();
@@ -16,7 +16,7 @@ angular.module('TopicModule')
               $window.location = "#/login";
             }
           } else {
-            attrs['secure']();
+            $scope.$eval($attrs.secure);
           }
         });
       }
