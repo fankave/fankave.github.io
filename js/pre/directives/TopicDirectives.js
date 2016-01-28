@@ -1,10 +1,10 @@
 angular.module('TopicModule')
-.directive('secure', ['$location','$window','UserInfoService',
+.directive('secureClick', ['$location','$window','UserInfoService',
   function ($location, $window, UserInfoService) {
     return {
       restrict: 'A',
       link: function($scope, $elem, $attrs){
-        console.log("!!!Secure Elem: ", UserInfoService.isGuestUser(), $elem, $attrs);
+        console.log("!!!Secure Elem: ", UserInfoService.isGuestUser());
         var element = $elem[0];
         $(element).on('click', function(e){
           console.log("!!!Secure Element Clicked- ", UserInfoService.isGuestUser());
@@ -16,7 +16,32 @@ angular.module('TopicModule')
               $window.location = "#/login";
             }
           } else {
-            $scope.$eval($attrs.secure);
+            $scope.$eval($attrs.secureClick);
+          }
+        });
+      }
+    }
+}]);
+
+angular.module('TopicModule')
+.directive('secureSubmit', ['$location','$window','UserInfoService',
+  function ($location, $window, UserInfoService) {
+    return {
+      restrict: 'A',
+      link: function($scope, $elem, $attrs){
+        console.log("!!!Secure Elem: ", $elem, $attrs);
+        var element = $elem[0];
+        $(element).on('submit', function(e){
+          console.log("!!!Secure Submit Attempted!!!");
+          e.preventDefault();
+          if (UserInfoService.isGuestUser()){
+            if (HTML5_LOC){
+              $location.path("/login");
+            } else {
+              $window.location = "#/login";
+            }
+          } else {
+            $scope.$eval($attrs.secureSubmit);
           }
         });
       }
