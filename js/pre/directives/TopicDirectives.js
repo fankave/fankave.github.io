@@ -1,3 +1,24 @@
+angular.module('Forum')
+.directive('secure', ['UserInfoService',
+  function (UserInfoService) {
+    return {
+      restrict: 'A',
+      link: function(scope, elem, attrs){
+
+        $(elem).on("click", function(e){
+          e.preventDefault();
+          if (UserInfoService.isGuestUser()){
+            if (HTML5_LOC){
+              $location.path("/login");
+            } else {
+              $window.location = "#/login";
+            }
+          }
+        });
+      }
+    }
+}]);
+
 angular.module('TopicModule')
 .directive('repeatFinishedNotify', function () {
   return function (scope, element, attrs) {
