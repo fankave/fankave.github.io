@@ -16,7 +16,7 @@ angular.module('TopicModule')
 
       scope.setAspectRatio = function (aspectRatio, orientation) {
         if (NETWORK_DEBUG){
-          console.log("setAspectRatio: ", aspectRatio, orientation);
+          // console.log("setAspectRatio: ", aspectRatio, orientation);
         }
         var classStrings = [];
 
@@ -71,7 +71,7 @@ angular.module('TopicModule')
         var iframePlayer = thisVideo.childNodes[0];
         $(iframePlayer).css('height',height);
         if (NETWORK_DEBUG){
-          console.log("Setting Height On: ", iframePlayer, height);
+          // console.log("Setting Height On: ", iframePlayer, height);
         }
       }
 
