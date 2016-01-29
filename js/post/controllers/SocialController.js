@@ -230,7 +230,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     };
 
     console.log("WAY BEFOREEEE");
-    if (!FB){
+    if (FB === undefined){
       (function(d, s, id) {
         console.log('loading FB SDK...');
         var js, fjs = d.getElementsByTagName(s)[0];
