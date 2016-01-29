@@ -229,6 +229,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       $scope.$parent.switchTabs('chat');
     };
 
+    console.log("WAY BEFOREEEE");
     if (!FB){
       (function(d, s, id) {
         console.log('loading FB SDK...');
@@ -239,13 +240,15 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     }
-    
+
     window.fbAsyncInit = function() {
+      console.log("BEFOREEEE");
       FB.init({
         appId      : '210324962465861',
         xfbml      : true,
         version    : 'v2.4'
       });
+      console.log("AFTERRRRR");
     };
 
     this.shareToFacebook = function (id,embedUrl) {
