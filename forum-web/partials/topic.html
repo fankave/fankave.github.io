@@ -272,7 +272,7 @@
           <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
         </div>
     </div>
-    <form id="postCommentForm" secure-submit="user.postComment(commentText, true)">
+    <form id="postCommentForm" ng-submit="user.postComment(commentText, true)">
       <div id="postCommentDiv" class="input-group">
         <label for="fileUpload" id="attachMediaIcon">
           <img ng-src="img/attach-media.png" />
@@ -281,7 +281,7 @@
         <button id="postCommentButton" class="btn btn-default" type="button" secure-click="user.postComment(commentText, true)">Post</button>
 
         <span><input id="topicCommentField" type="text" class="form-control"
-        placeholder="Write a comment..." ng-model="commentText" ng-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
+        placeholder="Write a comment..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
 
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
 
@@ -567,7 +567,7 @@
         <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
       </div>
     </div>
-    <form id="mobilePostCommentForm" secure-submit="user.postComment(commentText,true)">
+    <form id="mobilePostCommentForm" ng-submit="user.postComment(commentText,true)">
       <div id="mobilePostCommentDiv" class="input-group">
         <label for="fileUpload" id="attachMediaIcon">
           <img ng-src="img/attach-media.png" />
@@ -576,7 +576,7 @@
         <button id="postCommentButton" class="btn btn-default" type="button" secure-click="user.postComment(commentText,true)">Post</button>
 
         <span><input id="topicCommentField" type="text" class="form-control"
-        placeholder="Write a comment..." ng-model="commentText" ng-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
+        placeholder="Write a comment..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
 
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
 

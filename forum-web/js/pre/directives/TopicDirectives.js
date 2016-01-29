@@ -4,10 +4,8 @@ angular.module('TopicModule')
     return {
       restrict: 'A',
       link: function($scope, $elem, $attrs){
-        console.log("!!!Secure Elem: ", UserInfoService.isGuestUser());
         var element = $elem[0];
         $(element).on('click', function(e){
-          console.log("!!!Secure Element Clicked- ", UserInfoService.isGuestUser());
           e.preventDefault();
           if (UserInfoService.isGuestUser()){
             if (HTML5_LOC){
@@ -24,15 +22,13 @@ angular.module('TopicModule')
 }]);
 
 angular.module('TopicModule')
-.directive('secureSubmit', ['$location','$window','UserInfoService',
+.directive('secureFocus', ['$location','$window','UserInfoService',
   function ($location, $window, UserInfoService) {
     return {
       restrict: 'A',
       link: function($scope, $elem, $attrs){
-        console.log("!!!Secure Elem: ", $elem, $attrs);
         var element = $elem[0];
-        $(element).on('submit', function(e){
-          console.log("!!!Secure Submit Attempted!!!");
+        $(element).on('focus', function(e){
           e.preventDefault();
           if (UserInfoService.isGuestUser()){
             if (HTML5_LOC){
@@ -41,7 +37,7 @@ angular.module('TopicModule')
               $window.location = "#/login";
             }
           } else {
-            $scope.$eval($attrs.secureSubmit);
+            $scope.$eval($attrs.secureFocus);
           }
         });
       }
