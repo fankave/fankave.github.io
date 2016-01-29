@@ -266,17 +266,17 @@
 
       <div>
         <div class="socialButtonsRow">
-          <button id="chatLike" class="btn-link social-btn" secure-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
-            <img class="social-like" ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png" /> 
-            <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUp@2x.png" /> 
+          <button id="chatLike" class="btn-link social-btn" ng-click="moreButtonTapped()" secure-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
+            <img class="social-like" ng-switch-when="true" ng-click="moreButtonTapped()" ng-src="img/thumbsUp_select@2x.png" /> 
+            <img class="social-like" ng-switch-when="false" ng-click="moreButtonTapped()" ng-src="img/thumbsUp@2x.png" /> 
           </button>
           <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
         </div>
         <div class="socialButtonsRow">  
-          <button id="chatReply" class="btn-link social-btn" secure-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
-            <img class="social-reply" ng-src="img/shareCopy@2x.png" />
+          <button id="chatReply" class="btn-link social-btn" ng-click="moreButtonTapped()" secure-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
+            <img class="social-reply" ng-click="moreButtonTapped()" ng-src="img/shareCopy@2x.png" />
           </button>
-            <span class="socialButtonLable" secure-click="goToRepliesWithKeyboardTriggered(thisPost.id)"> Reply</span>
+            <span class="socialButtonLable" ng-click="moreButtonTapped()"> Reply</span>
         </div>
         <div class="sharingButtonsRow">
           <div class="chatMore" ng-click="moreButtonTapped()">
@@ -358,13 +358,13 @@
       <span class="social-metrics-label">{{thisPost.likeCount}}</span>
 
       <div class="social-share-container">
-        <button class="share-dd dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="share-dd dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" secure-click="">
           <img class="social-share" ng-src="img/share@2x.png"/>
           <span class="social-share-label">Share</span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
-          <li><a secure-click="social.shareTweetToChat(thisPost)">Share to Live Chat</a></li>
-          <li  ng-if="isPeelUser === false"><a secure-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
+          <li><a ng-click="social.shareTweetToChat(thisPost)">Share to Live Chat</a></li>
+          <li  ng-if="isPeelUser === false"><a ng-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
         </ul>
       </div>
 
@@ -432,13 +432,13 @@
       <span class="social-metrics-label">{{thisPost.likeCount}}</span>
 
       <div class="social-share-container">
-        <button class="share-dd dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="share-dd dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" secure-click="">
           <img class="social-share" ng-src="img/share@2x.png"/>
           <span class="social-share-label">Share</span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
-          <li><a secure-click="social.shareTweetToChat(thisPost)">Share to Live Chat</a></li>
-          <li ng-if="isPeelUser === false"><a secure-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
+          <li><a ng-click="social.shareTweetToChat(thisPost)">Share to Live Chat</a></li>
+          <li ng-if="isPeelUser === false"><a ng-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
         </ul>
       </div>
 
