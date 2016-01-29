@@ -116,6 +116,14 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 	$scope.triggerRepliesKeyboard = function() {
     $('#postCommentField').focus();
 	}
+
+  $scope.secureLink = function(url, id) {
+    if (UserInfoService.isGuestUser()){
+      return "";
+    } else {
+      return url + id;
+    }
+  };
 	
 	$scope.initReplyPage = function(){
 		$scope.pageClass = 'page-post';
