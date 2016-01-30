@@ -2,13 +2,11 @@
 <section ng-if="facebookUser">
   <div id="landingContainer">
     <img id="landingGraphic" src="img/facebookLoginPage_bkgd-2x.jpg" />
-    <div ng-if="showFacebookButton">
-      <span>
+    <div ng-switch="showFacebookButton">
+      <span ng-switch-when="true">
         <img ng-src="img/FacebookLoginButton-2x.png" id="facebookButton" ng-click="loginToFacebook()" />
       </span>
-    </div>
-    <div ng-if="!showFacebookButton">
-      <span>
+      <span ng-switch-when="false">
         <img ng-src="img/load-spinner.gif" id="facebookButton" />
       </span>
     </div>

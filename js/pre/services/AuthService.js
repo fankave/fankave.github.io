@@ -127,14 +127,14 @@ angular.module('AuthModule')
       console.log("found channel ID: " + initChannel);
       networkService.send(ChannelService.getLiveGameTopic(initChannel));
     }
-    else if (!!initTopic) {
-      console.log("found Topic ID: " + initTopic);
-      if (HTML5_LOC){
-        $location.path("/topic/" + initTopic);
-      } else {
-        $window.location = "#/topic/" + initTopic;
-      }
-    }
+    // else if (!!initTopic) {
+    //   console.log("found Topic ID: " + initTopic);
+    //   if (HTML5_LOC){
+    //     $location.path("/topic/" + initTopic);
+    //   } else {
+    //     $window.location = "#/topic/" + initTopic;
+    //   }
+    // }
     else {
       var initPost = ReplyService.getPostId();
       if (!!initPost){

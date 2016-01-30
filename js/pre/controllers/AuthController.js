@@ -65,8 +65,8 @@ angular.module("AuthModule", ["NetworkModule", "TopicModule"])
         // User is logged in to Facebook but hasn't authenticated our app
         else if (response.status === 'not_authorized') {
           // FB.login();
-          $scope.loginToFacebook();
           $scope.showFacebookButton = false;
+          $scope.loginToFacebook();
         }
         // User not logged in to Facebook
         else {
