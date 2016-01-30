@@ -14,13 +14,13 @@ angular.module('AuthModule')
     registerUser(registerParams);
   };
 
-  var loginToFacebook = function() {
+  var loginToFacebook = function(callback) {
     FB.login(function (response) {
       if (response.status === 'connected') {
+        callback();
         var registerParams = setRegistrationParams("facebook", -25200, response.authResponse);
         registerUser(registerParams);
       }
-      // TODO: error handling
     });
   };
 
