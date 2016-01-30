@@ -31,10 +31,13 @@ angular.module("AuthModule", ["NetworkModule", "TopicModule"])
     // FACEBOOK AUTH SECTION
     $scope.showFacebookButton = true;
 
-    $scope.loginToFacebook = function() {
-      AuthService.loginToFacebook();
-    };
+    function showSpinner() {
+      $scope.showFacebookButton = false;
+    }
 
+    $scope.loginToFacebook = function() {
+      AuthService.loginToFacebook(showSpinner);
+    };
 
     $scope.techMLogin = function(name, email, isValid) {
       if (isValid){
