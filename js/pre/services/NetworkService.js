@@ -1,7 +1,7 @@
 angular.module("NetworkModule", ['ngWebSocket'])
-.factory("networkService",["$websocket","$route","DataService","UserInfoService",
+.factory("networkService",["$websocket","$state","DataService","UserInfoService",
 
-function ($websocket,$route,DataService,UserInfoService)
+function ($websocket,$state,DataService,UserInfoService)
 {
   var ws;
 
@@ -15,7 +15,7 @@ function ($websocket,$route,DataService,UserInfoService)
 
   reconnectSocket = function(){
     console.log("Reconnect Callback triggered");
-    $route.reload();
+    $state.reload();
   }
   
   // window.document.addEventListener(visEvent, function(){
