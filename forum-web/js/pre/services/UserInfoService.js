@@ -1,16 +1,16 @@
 angular.module('NetworkModule')
-.service('UserInfoService', ["ForumStorage","URIHelper",
+.factory('UserInfoService', ["ForumStorage","URIHelper",
 	function (ForumStorage, URIHelper) {
 	//OLD Creds userId=1, sessionId=dac24379, accessToken=7uFF3QGh-84=
 	//NEW Creds userId=193, sessionId=53d7b518, accessToken=dsKGKXyZgGs=
-	var _userInfo;
+	var _userInfo = {};
 	var userInfoTemp = {
 			"userId":"193",
 			"accessToken":"dsKGKXyZgGs=",
 			"sessionId":"53d7b518"
 	};
 	var _isUserLoggedIn = false;
-	var _userType;
+	var _userType = "";
 
 //	var userInfoTemp = {
 //	"userId":"204",
@@ -37,12 +37,12 @@ angular.module('NetworkModule')
 
 	function setUserCredentials(userId, accessToken, sessionId, userType){
 		console.log("setUserCredentials: ", userId, accessToken, sessionId, userType);
-		_userInfo = {};
+		// _userInfo = {};
 		_userInfo.userId = userId;
 		_userInfo.accessToken = accessToken;
 		_userInfo.sessionId = sessionId;
 		_isUserLoggedIn = true;
-		_userType = userType;
+		_userInfo.userType = userType;
 		// ForumStorage.clearStorage();
 		ForumStorage.setToLocalStorage("forumIsLoggedIn",_isUserLoggedIn);
 		ForumStorage.setToLocalStorage("forumUserId",userId);
@@ -84,7 +84,7 @@ angular.module('NetworkModule')
 		isPeelUser:function(){
 			URIHelper.isPeelUser();
 			console.log("ForumStorage.getFromLocalStorage: "+ForumStorage.getFromLocalStorage("forumUserType"));
-			if(_userType === "peel")
+			if(_userInfo.userType === "peel")
 				return true;
 			if(ForumStorage.getFromLocalStorage("forumUserType") === "peel")
 				return true;
@@ -94,10 +94,10 @@ angular.module('NetworkModule')
 			var ssUser = URIHelper.isSmartStadiumUser();
 			console.log("ForumStorage.getFromLocalStorage: ", ForumStorage.getFromLocalStorage("forumUserType"));
 			if(ssUser){
-				_userType = 'email';
+				_userInfo.userType = 'email';
 				return true;
 			}
-			if(_userType === "email"){
+			if(_userInfo.userType === "email"){
 				return true;
 			}
 			if (ForumStorage.getFromLocalStorage("forumUserType") === "email"){
@@ -109,10 +109,10 @@ angular.module('NetworkModule')
 			var MI16User = URIHelper.isTechMUser();
 			console.log("ForumStorage.getFromLocalStorage: ", ForumStorage.getFromLocalStorage("forumUserType"));
 			if(MI16User){
-				_userType = 'MI16';
+				_userInfo.userType = 'MI16';
 				return true;
 			}
-			if(_userType === "MI16"){
+			if(_userInfo.userType === "MI16"){
 				return true;
 			}
 			if (ForumStorage.getFromLocalStorage("forumUserType") === "MI16"){
@@ -121,8 +121,14 @@ angular.module('NetworkModule')
 			return false;
 		},
 		getUserType:function(){
-			console.log("UIS _userType - - - ", _userType);
-			return _userType;
+			console.log("UIS _userType - - - ", _userInfo.userType);
+			return _userInfo.userType;
+		},
+		isGuestUser:function(){
+			console.log("UIS _userType - - - ", _userInfo.userType);
+			if(_userInfo.userType === "guest" || ForumStorage.getFromLocalStorage("forumUserType") === "guest")
+			return true;
+			return false;
 		}
 
 	};

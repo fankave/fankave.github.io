@@ -324,11 +324,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   }
   else {
     // console.log("Not logged in to facebook, take user to login page")
-    if (HTML5_LOC){
-      $location.path("/login");
-    } else {
-      $window.location = "#/login";
-    }
+    AuthService.loginAsGuest();
   }
 
 
@@ -403,7 +399,6 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
 
   $scope.commentOnTopic = function()
   {
-    // console.log("comment on topic");
     document.getElementById("topicCommentField").focus();
   };
 
@@ -455,7 +450,13 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     }
   };
 
-
+  $scope.secureLink = function(url, id) {
+    if (UserInfoService.isGuestUser()){
+      return "";
+    } else {
+      return url + id;
+    }
+  };
 
   var notifyNewComments = function(){
     if($scope.commentsArray == undefined)

@@ -49,17 +49,17 @@
       <embed-shared-content embed-post="comment" ng-if="comment.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav=""></embed-shared-content>
 
       <div class="socialButtonsRow">
-        <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeComment(comment.id)" ng-switch="comment.isLiked">
+        <button id="chatLike" class="btn-link social-btn" secure-click="updateLikeComment(comment.id)" ng-switch="comment.isLiked">
           <img class="social-like" ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png"/> 
           <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUp@2x.png"/> 
           
         </button>
         <span class="socialButtonLable">{{comment.likeCount}}  </span>
 
-        <button id="chatReply" class="btn-link social-btn" ng-click="triggerRepliesKeyboard()">
+        <button id="chatReply" class="btn-link social-btn" secure-click="triggerRepliesKeyboard()">
           <img class="social-reply" ng-src="img/shareCopy@2x.png"/> 
         </button>
-          <span class="socialButtonLable" ng-click="triggerRepliesKeyboard()"> Reply</span>
+          <span class="socialButtonLable" secure-click="triggerRepliesKeyboard()"> Reply</span>
       </div>
       <div class="sharingButtonsRow">
         <div class="chatTimestamp">
@@ -68,8 +68,8 @@
           </button>
           <ul class="dropdown-menu dropdown-menu-right" ng-switch="comment.isMyComment">
 
-            <li ng-switch-when="true"><a ng-click="deleteComment(comment.id);">Delete Comment</a></li>
-            <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(comment.id);">Report as spam</a></li>
+            <li ng-switch-when="true"><a secure-click="deleteComment(comment.id);">Delete Comment</a></li>
+            <li ng-switch-when="false"><a secure-click="reportCommentAsSpam(comment.id);">Report as spam</a></li>
           </ul>
         </div>
       </div>
@@ -92,10 +92,9 @@
           <img ng-src="img/attach-media.png" />
         </label>
 
-        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,false)">Post</button>
+        <button id="postCommentButton" class="btn btn-default" type="button" secure-click="user.postComment(commentText,false)">Post</button>
 
-        <span data-ng-element-ready="checkDirectReply()"><input id="postCommentField" type="text" class="form-control"
-        placeholder="Write a reply..." ng-model="commentText" ng-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
+        <span data-ng-element-ready="checkDirectReply()"><input id="postCommentField" type="text" class="form-control" placeholder="Write a reply..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
         
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
 
@@ -139,7 +138,7 @@
       <media-player this-post="thisReply" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>  
         
       <div class="socialButtonsRow">
-        <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeReply(thisReply.id)" ng-switch="thisReply.isLiked">
+        <button id="chatLike" class="btn-link social-btn" secure-click="updateLikeReply(thisReply.id)" ng-switch="thisReply.isLiked">
           <img class="social-like" ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png"/> 
           <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUp@2x.png"/> 
           
@@ -158,8 +157,8 @@
           </button>
           <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisReply.isMyReply">
 
-            <li ng-switch-when="true"><a ng-click="deleteReply(thisReply.id);">Delete Reply</a></li>
-            <li ng-switch-when="false"><a ng-click="reportReplyAsSpam(thisReply.id);">Report as spam</a></li>
+            <li ng-switch-when="true"><a secure-click="deleteReply(thisReply.id);">Delete Reply</a></li>
+            <li ng-switch-when="false"><a secure-click="reportReplyAsSpam(thisReply.id);">Report as spam</a></li>
           </ul>
         </div>
       </div>
@@ -186,10 +185,9 @@
           <img ng-src="img/attach-media.png" />
         </label>
 
-        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,false)">Post</button>
+        <button id="postCommentButton" class="btn btn-default" type="button" secure-click="user.postComment(commentText,false)">Post</button>
 
-        <span data-ng-element-ready="checkDirectReply()"><input id="postCommentField" type="text" class="form-control"
-        placeholder="Write a reply..." ng-model="commentText" ng-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
+        <span data-ng-element-ready="checkDirectReply()"><input id="postCommentField" type="text" class="form-control" placeholder="Write a reply..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
         
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
 

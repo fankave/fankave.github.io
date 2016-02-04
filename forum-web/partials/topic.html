@@ -181,7 +181,7 @@
   <div class="topicSharingButtonsRow clearfix">
     <div class="grid-col-alt grid-col-50">
       <div id="headLike">
-        <button class="btn-link topic-social-btn" ng-click="updateLikeTopic()" ng-switch="liked">
+        <button secure-click="updateLikeTopic()" class="btn-link topic-social-btn" ng-switch="liked">
           <img ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png"/> 
           <img ng-switch-when="false" ng-src="img/thumbsUp@2x.png"/> 
         </button>
@@ -190,17 +190,11 @@
     </div>
     <div class="grid-col-alt grid-col-50">
       <div id="headComment">
-        <button class="btn-link topic-social-btn" ng-click="commentOnTopic()"><img ng-src="img/comment-3x.png"/> 
+        <button class="btn-link topic-social-btn" secure-click="commentOnTopic()"><img ng-src="img/comment-3x.png"/> 
         </button>
         <span class="socialButtonLabel fkFont">{{commentsCount}}</span>
       </div>
     </div>
-    <!-- <div class="grid-col grid-col-33">
-      <div id="headMore">
-        <button id="moreButton" class="btn-link topic-social-btn" ng-click="moreOptions()"><img src="img/ellipsis@3x.png"/> 
-        </button>
-      </div>
-    </div> -->
   </div>
 </div>
 
@@ -284,10 +278,10 @@
           <img ng-src="img/attach-media.png" />
         </label>
 
-        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText, true)">Post</button>
+        <button id="postCommentButton" class="btn btn-default" type="button" secure-click="user.postComment(commentText, true)">Post</button>
 
         <span><input id="topicCommentField" type="text" class="form-control"
-        placeholder="Write a comment..." ng-model="commentText" ng-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
+        placeholder="Write a comment..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
 
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
 
@@ -368,17 +362,17 @@
 
       <div>
         <div class="socialButtonsRow">
-          <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
-            <img class="social-like" ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png" /> 
-            <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUp@2x.png" /> 
+          <button id="chatLike" class="btn-link social-btn" ng-click="moreButtonTapped()" secure-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
+            <img class="social-like" ng-switch-when="true" ng-click="moreButtonTapped()" ng-src="img/thumbsUp_select@2x.png" /> 
+            <img class="social-like" ng-switch-when="false" ng-click="moreButtonTapped()" ng-src="img/thumbsUp@2x.png" /> 
           </button>
           <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
         </div>
         <div class="socialButtonsRow">  
-          <button id="chatReply" class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
-            <img class="social-reply" ng-src="img/shareCopy@2x.png" />
+          <button id="chatReply" class="btn-link social-btn" ng-click="moreButtonTapped()" secure-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
+            <img class="social-reply" ng-click="moreButtonTapped()" ng-src="img/shareCopy@2x.png" />
           </button>
-            <span class="socialButtonLable" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)"> Reply</span>
+            <span class="socialButtonLable" ng-click="moreButtonTapped()"> Reply</span>
         </div>
         <div class="sharingButtonsRow">
           <div class="chatMore" ng-click="moreButtonTapped()">
@@ -387,8 +381,8 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
 
-              <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
-              <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
+              <li ng-switch-when="true"><a secure-click="deleteComment(thisPost.id);">Delete Comment</a></li>
+              <li ng-switch-when="false"><a secure-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
             </ul>
           </div>
         </div>
@@ -436,31 +430,31 @@
 
     <div class="socialButtonsRow socialText">
       
-      <button class="btn-link social-btn" ng-click="">
-        <a href="https://twitter.com/intent/tweet?via=FanKave&in_reply_to={{thisPost.tweetId}}">
+      <button class="btn-link social-btn" secure-click="">
+        <a ng-href="{{secureLink('https://twitter.com/intent/tweet?via=FanKave&in_reply_to=',thisPost.tweetId)}}">
           <img class="social-metrics-reply" ng-src="img/reply@2x.png"/>
         </a>
       </button>
       <span class="social-metrics-label"> {{thisPost.replyCount}}</span>
 
-      <button class="btn-link social-btn socialRetweet" ng-click="">
+      <button class="btn-link social-btn socialRetweet" secure-click="">
         <!-- <img class="social-metrics-retweet" ng-switch-when="true" src="img/retweet_select@2x.png"/>  -->
-        <a href="https://twitter.com/intent/retweet?tweet_id={{thisPost.tweetId}}">
+        <a href="{{secureLink('https://twitter.com/intent/retweet?tweet_id=',thisPost.tweetId)}}">
           <img class="social-metrics-retweet" ng-src="img/retweet@2x.png" />
         </a>
       </button>
       <span class="social-metrics-label">{{thisPost.retweetCount}}</span>
 
-      <button class="btn-link social-btn socialFavorite" ng-click="">
+      <button class="btn-link social-btn socialFavorite" secure-click="">
         <!-- <img class="social-metrics-heart" ng-switch-when="true" src="img/heart_select@2x.png"/> --> 
-        <a href="https://twitter.com/intent/like?tweet_id={{thisPost.tweetId}}">
+        <a href="{{secureLink('https://twitter.com/intent/like?tweet_id=',thisPost.tweetId)}}">
           <img class="social-metrics-heart" ng-src="img/heart@2x.png" />
         </a> 
       </button>
       <span class="social-metrics-label">{{thisPost.likeCount}}</span>
 
       <div class="social-share-container">
-        <button class="share-dd dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="share-dd dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" secure-click="">
           <img class="social-share" ng-src="img/share@2x.png"/>
           <span class="social-share-label">Share</span>
         </button>
@@ -512,29 +506,29 @@
 
     <div class="socialButtonsRow socialText">
       
-      <button class="btn-link social-btn" ng-click="">
-        <a href="https://twitter.com/intent/tweet?via=FanKave&in_reply_to={{thisPost.tweetId}}">
+      <button class="btn-link social-btn" secure-click="">
+        <a href="{{secureLink('https://twitter.com/intent/tweet?via=FanKave&in_reply_to=',thisPost.tweetId)}}">
           <img class="social-metrics-reply" ng-src="img/reply@2x.png"/>
         </a>
       </button>
       <span class="social-metrics-label"> {{thisPost.replyCount}}</span>
 
-      <button class="btn-link social-btn socialRetweet" ng-click="">
-        <a href="https://twitter.com/intent/retweet?tweet_id={{thisPost.tweetId}}">
+      <button class="btn-link social-btn socialRetweet" secure-click="">
+        <a href="{{secureLink('https://twitter.com/intent/retweet?tweet_id=',thisPost.tweetId)}}">
           <img class="social-metrics-retweet" ng-src="img/retweet@2x.png" />
         </a> 
       </button>
       <span class="social-metrics-label">{{thisPost.retweetCount}}</span>
 
-      <button class="btn-link social-btn socialFavorite" ng-click="">
-        <a href="https://twitter.com/intent/like?tweet_id={{thisPost.tweetId}}">
+      <button class="btn-link social-btn socialFavorite" secure-click="">
+        <a href="{{secureLink('https://twitter.com/intent/like?tweet_id=',thisPost.tweetId)}}">
           <img class="social-metrics-heart" ng-src="img/heart@2x.png" />
         </a>
       </button>
       <span class="social-metrics-label">{{thisPost.likeCount}}</span>
 
       <div class="social-share-container">
-        <button class="share-dd dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="share-dd dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" secure-click="">
           <img class="social-share" ng-src="img/share@2x.png"/>
           <span class="social-share-label">Share</span>
         </button>
@@ -579,10 +573,10 @@
           <img ng-src="img/attach-media.png" />
         </label>
 
-        <button id="postCommentButton" class="btn btn-default" type="button" ng-click="user.postComment(commentText,true)">Post</button>
+        <button id="postCommentButton" class="btn btn-default" type="button" secure-click="user.postComment(commentText,true)">Post</button>
 
         <span><input id="topicCommentField" type="text" class="form-control"
-        placeholder="Write a comment..." ng-model="commentText" ng-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
+        placeholder="Write a comment..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
 
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
 
