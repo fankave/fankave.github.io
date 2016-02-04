@@ -33,11 +33,11 @@ angular.module('TopicModule')
     },
     templateUrl: function(elem, attrs) {
       if (attrs.env === 'chat'){
-        return 'partials/chatInfiniteSegment.html';
+        return 'partials/chat.html';
       } else if (attrs.env === 'video'){
-        return 'partials/videoInfiniteSegment.html';
+        return 'partials/video.html';
       } else if (attrs.env === 'social'){
-        return 'partials/socialInfiniteSegment.html';
+        return 'partials/social.html';
       }
     }
   }

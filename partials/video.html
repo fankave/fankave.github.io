@@ -1,4 +1,4 @@
-<div ng-repeat="thisPost in social.videoArray | orderBy: $index" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+<div ng-repeat="thisPost in social.videoArray | orderBy: '-createdAtFull'" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
