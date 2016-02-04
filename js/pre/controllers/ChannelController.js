@@ -1,9 +1,9 @@
 angular.module("ChannelModule", ["NetworkModule", "AuthModule"])
-.controller("ChannelController", ["$scope","$window","$location","$sce","$routeParams","networkService", "ChannelService","TopicService","URIHelper","AuthService","UserInfoService",
+.controller("ChannelController", ["$scope","$window","$location","$sce","$stateParams","networkService", "ChannelService","TopicService","URIHelper","AuthService","UserInfoService",
 
-function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelService,TopicService, URIHelper, AuthService, UserInfoService)
+function ($scope,$window,$location,$sce,$stateParams,networkService,ChannelService,TopicService, URIHelper, AuthService, UserInfoService)
 {
-  ChannelService.setChannel($routeParams.channelID);
+  ChannelService.setChannel($stateParams.channelID);
   if (window.location.href.indexOf('?') !== -1){
     $scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
     console.log(" $scope.urlQueryStr: " + $scope.urlQueryStr);

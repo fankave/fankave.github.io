@@ -1,7 +1,7 @@
 angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"])
-.controller("TopicController", ["$scope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
+.controller("TopicController", ["$scope", "$sce", "$window", "$location","$sanitize", "$timeout", "$stateParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
 
-function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
+function ($scope, $sce, $window, $location, $sanitize, $timeout, $stateParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
   var lastComment = false;
   // Check For Mobile Browser
@@ -17,10 +17,10 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     $scope.loadingChat = true;
   }
 
-  ga('send', 'pageview', "/topic/"+$routeParams.topicID);
-  console.log('Sent Pageview from /topic/' + $routeParams.topicID);
+  ga('send', 'pageview', "/topic/"+$stateParams.topicID);
+  console.log('Sent Pageview from /topic/' + $stateParams.topicID);
   
-  TopicService.setTopicId($routeParams.topicID);
+  TopicService.setTopicId($stateParams.topicID);
   $scope.topicType = "livegame";
   $scope.innerButtonTapped = false;
   if (UserInfoService.isSmartStadiumUser()){
@@ -91,7 +91,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       $scope.topicType = TopicService.getTopicType();
       if(TopicService.isWatchingTopic() === false){
         networkService.send(TopicService.getFollowChannelRequest());
-        networkService.send(TopicService.watchTopicRequest($routeParams.topicID));
+        networkService.send(TopicService.watchTopicRequest($stateParams.topicID));
       }
       
       
@@ -221,7 +221,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   $scope.loadRemainingComments = function() {
     console.log("LOADING REST OF COMMENTS...");
     if (!CommentService.loadedComments()){
-      networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
+      networkService.send(CommentService.getCommentsRequest($stateParams.topicID));
       CommentService.setLoadedComments(true);
       $scope.loadedAllComments = true;
     }
@@ -231,7 +231,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       $timeout(function(){
         if (!CommentService.loadedComments()){
           console.log("LOADING REST OF COMMENTS...");
-          networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
+          networkService.send(CommentService.getCommentsRequest($stateParams.topicID));
           $scope.loadedAllComments = true;
           CommentService.setLoadedComments(true);
         }
@@ -239,8 +239,8 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   };
 
   $scope.init = function() {
-    networkService.send(TopicService.getTopicRequest($routeParams.topicID));
-    networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
+    networkService.send(TopicService.getTopicRequest($stateParams.topicID));
+    networkService.send(CommentService.getCommentsRequest($stateParams.topicID));
   };
   
 
@@ -264,7 +264,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     $scope.pageClass = 'page-topic';
     $scope.showNewCommentsIndicator = false;
 
-    $scope.topicID = $routeParams.topicID;
+    $scope.topicID = $stateParams.topicID;
     $scope.init();
 
     if ($scope.mobileBrowser === true){

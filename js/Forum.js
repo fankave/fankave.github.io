@@ -1,30 +1,61 @@
-angular.module("Forum", ["ngRoute","ngSanitize","AuthModule","ChannelModule","TopicModule","PostModule","NetworkModule","MediaModule","SocialModule","UserInput","SmartStadiumModule"])
-.config(["$routeProvider", "$locationProvider",
-
-function ($routeProvider, $locationProvider) {
-  $routeProvider
-  .when('/login', {
+angular.module("Forum", ["ui.router","ngSanitize","AuthModule","ChannelModule","TopicModule","PostModule","NetworkModule","MediaModule","SocialModule","UserInput","SmartStadiumModule"])
+.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
+function ($stateProvider, $urlRouterProvider, $locationProvider) {
+  
+  $stateProvider
+  .state('login', {
+    url: '/login',
     templateUrl:'partials/facebookLogin.html',
     controller:'AuthController'
   })
-  .when('/channel/:channelID', {
+  .state('channel', {
+    url: '/channel/:channelID',
     templateUrl:'partials/login.html',
     controller:'ChannelController'
   })
-  .when('/topic/:topicID', {
+  .state('topic', {
+    url: '/topic/:topicID',
     templateUrl:'partials/topic.html',
     controller:'TopicController'
   })
-  .when('/post/:postID', {
+    .state('topic.chat', {
+      url: '/chat',
+      views: {
+        'topic-tab-view': {
+          templateUrl:'partials/chat.html'
+        }
+      }
+    })
+    .state('topic.video', {
+      url: '/video',
+      views: {
+        'topic-tab-view': {
+          templateUrl:'partials/video.html'
+        }
+      },
+      controller: 'VideoController',
+      controllerAs: 'video'
+    })
+    .state('topic.social', {
+      url: '/social',
+      views: {
+        'topic-tab-view': {
+          templateUrl:'partials/social.html'
+        }
+      },
+      controller: 'SocialController',
+      controllerAs: 'social'
+    })
+  .state('post', {
+    url: '/post/:postID',
     templateUrl:'partials/post.html',
     controller:'PostController'
   })
-  .when('/invalidTopic', {
+  .state('invalid', {
+    url: 'invalidTopic',
     templateUrl:'partials/invalidTopic.html'
   })
-  .otherwise({
-    redirectTo:'/invalidTopic'
-  });
+  $urlRouterProvider.otherwise('invalid');
 
   if (window.history && window.history.pushState && HTML5_LOC){
     $locationProvider.html5Mode({

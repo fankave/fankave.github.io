@@ -1,6 +1,6 @@
 angular.module("AuthModule", ["NetworkModule", "TopicModule"])
-.controller("AuthController", ["$scope", "$routeParams", "$http", "AuthService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService", "URIHelper",
-  function ($scope, $routeParams, $http, AuthService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
+.controller("AuthController", ["$scope", "$stateParams", "$http", "AuthService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService", "URIHelper",
+  function ($scope, $stateParams, $http, AuthService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
     if (window.location.href.indexOf('?') !== -1){
       var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);

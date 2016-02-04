@@ -227,14 +227,8 @@
     <div class="load loadSocialBody"></div>
   </div>
 
-  <!-- Chat Tab Content -->
-  <div ui-view="chat"></div>
-
-  <!-- Video Tab Content -->
-  <div ui-view="video"></div>
-
-  <!-- Social Tab Content -->
-  <div ui-view="social"></div>
+  <!-- Tab Content Gets Loaded Here -->
+  <div ui-view="topic-tab-view"></div>
 
   <div id="moreCommentsBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length === 10" ng-click="loadRemainingComments()">
     <span id="moreCommentsText">Load more...</span>

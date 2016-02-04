@@ -1,7 +1,7 @@
 angular.module("PostModule", ["NetworkModule", "SplashModule", "MediaModule", "angularFileUpload"])
-.controller("PostController", ["$scope", "$sce", "$timeout", "$window", "$location","$sanitize", "$routeParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", "MUService", "FileUploader", "ForumStorage", "UserAgentService",
+.controller("PostController", ["$scope", "$sce", "$timeout", "$window", "$location","$sanitize", "$stateParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", "MUService", "FileUploader", "ForumStorage", "UserAgentService",
 
-function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService,MUService,FileUploader,ForumStorage,UserAgentService)
+function ($scope, $sce, $timeout, $window, $location, $sanitize, $stateParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService,MUService,FileUploader,ForumStorage,UserAgentService)
 {
 
   // Check For Mobile Browser
@@ -20,15 +20,15 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
   }
   var headerHeight;
 
-	//ga('send', 'pageview', "/comment/"+$routeParams.postID);
+	//ga('send', 'pageview', "/comment/"+$stateParams.postID);
 	$scope.pageClass = 'page-post';
 
-	$scope.postID = $routeParams.postID;
+	$scope.postID = $stateParams.postID;
 	$scope.topicId = TopicService.getTopicId();
 	//$scope.replies = networkService.getRepliesForPostID();
 	$scope.justReplied = false;
 	
-	ReplyService.setPostId($routeParams.postID);
+	ReplyService.setPostId($stateParams.postID);
 
 	$scope.backToTopicButtonTapped = function()
 	{
