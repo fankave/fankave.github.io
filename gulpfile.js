@@ -38,7 +38,6 @@ gulp.task('scripts-pre', function() {
     './js/pre/services/ChannelService.js',
     './js/pre/directives/Scorecard.js',
     './js/pre/directives/TopicDirectives.js',
-    './js/pre/directives/InfiniteSegment.js',
     './js/pre/directives/EmbedPlayer.js',
     './js/pre/directives/ImageControl.js',
     './js/pre/services/DataService.js',
@@ -88,7 +87,7 @@ gulp.task('lib-pre', function() {
   return gulp.src([
     './bower_components/jquery/dist/jquery.min.js',
     './bower_components/angular/angular.min.js',
-    './bower_components/angular-route/angular-route.min.js',
+    './bower_components/angular-ui-router/release/angular-ui-router.min.js',
     './bower_components/angular-websocket/angular-websocket.min.js',
     './lib/angular-sanitize/angular-sanitize.min.js',
     './bower_components/angular-file-upload/dist/angular-file-upload.min.js'

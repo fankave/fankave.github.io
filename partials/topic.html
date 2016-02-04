@@ -228,13 +228,13 @@
   </div>
 
   <!-- Chat Tab Content -->
-  <infinite-segment ng-switch-when="chat" env="chat"></infinite-segment>
+  <div ui-view="chat"></div>
 
   <!-- Video Tab Content -->
-  <infinite-segment ng-switch-when="video" env="video"></infinite-segment>
+  <div ui-view="video"></div>
 
   <!-- Social Tab Content -->
-  <infinite-segment ng-switch-when="social" env="social"></infinite-segment>
+  <div ui-view="social"></div>
 
   <div id="moreCommentsBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length === 10" ng-click="loadRemainingComments()">
     <span id="moreCommentsText">Load more...</span>
