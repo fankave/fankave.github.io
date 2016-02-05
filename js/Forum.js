@@ -1,4 +1,4 @@
-angular.module("Forum", ["ui.router","ngSanitize","AuthModule","ChannelModule","TopicModule","PostModule","NetworkModule","MediaModule","SocialModule","UserInput","SmartStadiumModule"])
+angular.module("Forum", ["ui.router","ngSanitize","AuthModule","ChannelModule","TopicModule","PostModule","NetworkModule","MediaModule","VideoModule","SocialModule","UserInput","SmartStadiumModule"])
 .config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
 function ($stateProvider, $urlRouterProvider, $locationProvider) {
   
@@ -9,17 +9,19 @@ function ($stateProvider, $urlRouterProvider, $locationProvider) {
     controller:'AuthController'
   })
   .state('channel', {
-    url: '/channel/:channelID',
+    url: '/channel/:channelID?peel&userId&userName&showId&smartStadium&MI16',
     templateUrl:'partials/login.html',
     controller:'ChannelController'
   })
   .state('topic', {
-    url: '/topic/:topicID',
+    url: '/topic/:topicID?channel&peel&userId&userName&showId&smartStadium&MI16',
+    abstract: true,
     templateUrl:'partials/topic.html',
     controller:'TopicController'
   })
     .state('topic.chat', {
       url: '/chat',
+      deepStateRedirect: true,
       views: {
         'topic-tab-view': {
           templateUrl:'partials/chat.html'
@@ -28,26 +30,28 @@ function ($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('topic.video', {
       url: '/video',
+      deepStateRedirect: true,
       views: {
         'topic-tab-view': {
-          templateUrl:'partials/video.html'
+          templateUrl:'partials/video.html',
+          controller: 'VideoController',
+          controllerAs: 'video'
         }
-      },
-      controller: 'VideoController',
-      controllerAs: 'video'
+      }
     })
     .state('topic.social', {
       url: '/social',
+      deepStateRedirect: true,
       views: {
         'topic-tab-view': {
-          templateUrl:'partials/social.html'
+          templateUrl:'partials/social.html',
+          controller: 'SocialController',
+          controllerAs: 'social'
         }
-      },
-      controller: 'SocialController',
-      controllerAs: 'social'
+      }
     })
   .state('post', {
-    url: '/post/:postID',
+    url: '/post/:postID?channel&peel&userId&userName&showId&smartStadium&MI16',
     templateUrl:'partials/post.html',
     controller:'PostController'
   })
@@ -55,6 +59,7 @@ function ($stateProvider, $urlRouterProvider, $locationProvider) {
     url: 'invalidTopic',
     templateUrl:'partials/invalidTopic.html'
   })
+  $urlRouterProvider.when('/topic/:topicID', '/topic/:topicID/chat');
   $urlRouterProvider.otherwise('invalid');
 
   if (window.history && window.history.pushState && HTML5_LOC){

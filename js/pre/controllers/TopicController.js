@@ -1,7 +1,7 @@
 angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"])
-.controller("TopicController", ["$scope", "$sce", "$window", "$location","$sanitize", "$timeout", "$stateParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
+.controller("TopicController", ["$scope", "$state", "$stateParams", "$sce", "$window", "$location","$sanitize", "$timeout", "networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
 
-function ($scope, $sce, $window, $location, $sanitize, $timeout, $stateParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
+function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $timeout, networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
   var lastComment = false;
   // Check For Mobile Browser
@@ -248,7 +248,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $stateParams,ne
     //console.log("isPeelUser :"+isPeelUser);
     $scope.isPeelUser = isPeelUser;
     
-  }
+  };
 
   
   $scope.setPeelUI($scope.isPeelUser);
@@ -256,6 +256,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $stateParams,ne
   $scope.hideLoading = function(){
     console.log("HIDING LOAD");
     $scope.loadingChat = false;
+    $scope.loadingSocial = false;
     $scope.loadingSocial = false;
   };
   $scope.initPage = function(){
@@ -270,7 +271,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $stateParams,ne
     if ($scope.mobileBrowser === true){
       document.getElementById('topicSection').style.paddingBottom = "42px";
     }
-  }
+  };
 
   $scope.setLinksOnComments = function(){
     var postDivs = document.getElementsByClassName("postRow");
@@ -290,7 +291,10 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $stateParams,ne
               $scope.$apply();
             }
           } else {
-            $window.location = "#/post/" + thisPost.id;
+            // $window.location = "#/post/" + thisPost.id;
+            var postParams = $stateParams;
+            postParams.postID = thisPost.id;
+            $state.go('post', postParams);
           }
         }
         $scope.innerButtonTapped = false;
@@ -315,7 +319,8 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $stateParams,ne
     AuthService.loginWithEmail();
   }
   else if (URIHelper.isTechMUser()){
-    $window.location = "#/login?MI16=true";
+    // $window.location = "#/login?MI16=true";
+    $state.go('login', {MI16: true});
   }
   else if (URIHelper.isPeelUser()){
     $scope.isPeelUser = true;
@@ -446,7 +451,8 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $stateParams,ne
     if (HTML5_LOC){
       $location.path("/post/" + id);
     } else {
-      $window.location = "#/post/" + id;
+      // $window.location = "#/post/" + id;
+      $state.go('post', {postID: id});
     }
   };
 
@@ -498,12 +504,12 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $stateParams,ne
   $scope.xLinkActivated = false;
 
   // CONTENT TABS
-  $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
     if (tab === 'chat'){
       $('#chatTab').addClass('selectedTab');
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
+      $state.go('topic.chat');
       $scope.activeTab = 'chat';
       $(document).scrollTop(0);
       updateTopic();
@@ -513,6 +519,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $stateParams,ne
       $('#chatTab').removeClass('selectedTab');
       $('#videoTab').addClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
+      $state.go('topic.video');
       $scope.activeTab = 'video';
       $(document).scrollTop(0);
     }
@@ -520,10 +527,27 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $stateParams,ne
       $('#chatTab').removeClass('selectedTab');
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').addClass('selectedTab');
+      $state.go('topic.social');
       $scope.activeTab = 'social';
       $(document).scrollTop(0);
     }
-    console.log("Active Tab: ", $scope.activeTab);
+    // console.log("Active Tab: ", $scope.activeTab);
+  };
+
+  $scope.initializeTab = function() {
+    console.log("Initializing Tabs");
+    if ($state.includes("topic.chat")){
+      console.log("In Chat");
+      $('#chatTab').addClass('selectedTab');
+    }
+    else if ($state.includes("topic.video")){
+      console.log("In Video");
+      $('#videoTab').addClass('selectedTab');
+    }
+    else if ($state.includes("topic.social")){
+      console.log("In Social");
+      $('#socialTab').addClass('selectedTab');
+    }
   };
 
   var _channelId = ChannelService.getChannel();

@@ -1,4 +1,16 @@
-<div ng-repeat="thisPost in social.videoArray | orderBy: '-createdAtFull'" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+<div id="loadChatFill" ng-repeat="item in [1,2,3,4,5]" ng-if="video.loadingVideo">
+  <span class="load loadProfilePhoto"></span>
+  <span class="loadPost">
+    <div class="clearfix">
+      <span class="load loadChatUsername"></span>
+      <span class="load loadChatTimestamp"></span>
+    </div>
+    <div class="load loadSocialAlias"></div>
+  </span>
+  <div class="load loadSocialBody"></div>
+</div>
+
+<div ng-repeat="thisPost in video.videoArray | orderBy: '-createdAtFull'" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -64,10 +76,14 @@
           <span class="social-share-label">Share</span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
-          <li><a ng-click="social.shareTweetToChat(thisPost)">Share to Live Chat</a></li>
-          <li  ng-if="isPeelUser === false"><a ng-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
+          <li><a ng-click="video.shareTweetToChat(thisPost)">Share to Live Chat</a></li>
+          <li  ng-if="isPeelUser === false"><a ng-click="video.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
         </ul>
       </div>
 
     </div>
+  </div>
+
+  <div id="moreContentBar" ng-click="video.loadContent(social.socialArray.length)">
+    <span id="moreContentText">Load more...</span>
   </div>

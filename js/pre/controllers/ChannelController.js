@@ -1,18 +1,20 @@
 angular.module("ChannelModule", ["NetworkModule", "AuthModule"])
-.controller("ChannelController", ["$scope","$window","$location","$sce","$stateParams","networkService", "ChannelService","TopicService","URIHelper","AuthService","UserInfoService",
+.controller("ChannelController", ["$scope", "$state", "$stateParams", "$window","$location","$sce","networkService", "ChannelService","TopicService","URIHelper","AuthService","UserInfoService",
 
-function ($scope,$window,$location,$sce,$stateParams,networkService,ChannelService,TopicService, URIHelper, AuthService, UserInfoService)
+function ($scope,$state,$stateParams,$window,$location,$sce,networkService,ChannelService,TopicService, URIHelper, AuthService, UserInfoService)
 {
   ChannelService.setChannel($stateParams.channelID);
-  if (window.location.href.indexOf('?') !== -1){
-    $scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
-    console.log(" $scope.urlQueryStr: " + $scope.urlQueryStr);
-  }
+  var channelParams = $stateParams;
+  console.log("Channel Params: ", channelParams);
+  // if (window.location.href.indexOf('?') !== -1){
+  //   $scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
+  //   console.log(" $scope.urlQueryStr: " + $scope.urlQueryStr);
+  // }
   
   $scope.init = function() {
     console.log("Init all connections");
     networkService.init();
-    networkService.send(ChannelService.getLiveGameTopic());
+    networkService.send(ChannelService.getLiveGameTopic($stateParams.channelID));
   };
 
   
@@ -26,10 +28,14 @@ function ($scope,$window,$location,$sce,$stateParams,networkService,ChannelServi
         else
           $location.path("/topic/" + id);
       } else {
-        if(!!$scope.urlQueryStr)
-          $window.location = "#/topic/" + id + "?" + $scope.urlQueryStr;
-        else
-          $window.location = "#/topic/" + id;
+        // if(!!$scope.urlQueryStr)
+        var paramsObj = channelParams;
+        paramsObj.topicID = id;
+        paramsObj.channel = channelParams.channelID;
+        console.log("GO Topic: ", paramsObj);
+        $state.go("topic.chat", paramsObj);
+        // else
+          // $window.location = "#/topic/" + id;
       }
     }
 

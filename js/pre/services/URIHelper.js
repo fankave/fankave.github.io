@@ -1,6 +1,6 @@
 angular.module('NetworkModule')
-.factory('URIHelper', ["ForumStorage",
-	function (ForumStorage) {
+.factory('URIHelper', ["ForumStorage","$stateParams",
+	function (ForumStorage,$stateParams) {
 
 	var peelUserName;
 	var peelUserId;
@@ -12,14 +12,14 @@ angular.module('NetworkModule')
 	var _MI16;
 
 	function getUrlVars() {
-		var vars = [], hash;
-		var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-		for (var i = 0; i < hashes.length; i++) {
-			hash = hashes[i].split('=');
-			vars.push(hash[0]);
-			vars[hash[0]] = hash[1];
-		}
-		return vars;
+		// var vars = [], hash;
+		// var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+		// for (var i = 0; i < hashes.length; i++) {
+		// 	hash = hashes[i].split('=');
+		// 	vars.push(hash[0]);
+		// 	vars[hash[0]] = hash[1];
+		// }
+		return $stateParams;
 	}
 	
 	

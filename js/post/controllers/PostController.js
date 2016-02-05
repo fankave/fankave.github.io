@@ -1,7 +1,7 @@
 angular.module("PostModule", ["NetworkModule", "SplashModule", "MediaModule", "angularFileUpload"])
-.controller("PostController", ["$scope", "$sce", "$timeout", "$window", "$location","$sanitize", "$stateParams", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", "MUService", "FileUploader", "ForumStorage", "UserAgentService",
+.controller("PostController", ["$scope", "$state", "$stateParams", "$sce", "$timeout", "$window", "$location","$sanitize", "networkService","ReplyService", "TopicService","CommentService", "UserInfoService","URIHelper", "SplashService", "MUService", "FileUploader", "ForumStorage", "UserAgentService",
 
-function ($scope, $sce, $timeout, $window, $location, $sanitize, $stateParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService,MUService,FileUploader,ForumStorage,UserAgentService)
+function ($scope, $state, $stateParams, $sce, $timeout, $window, $location, $sanitize, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService,MUService,FileUploader,ForumStorage,UserAgentService)
 {
 
   // Check For Mobile Browser
@@ -38,7 +38,9 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $stateParams, n
     if (HTML5_LOC){
 		  $location.path("/topic/"+topicId);
     } else {
-      $window.location = "#/topic/" + topicId;
+      paramsObj = $stateParams;
+      paramsObj.topicID = topicId;
+      $state.go("topic.social", $stateParams);
     }
 	}
 
@@ -181,7 +183,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $stateParams, n
 		if (HTML5_LOC){
       $location.path("/login");
     } else {
-      $window.location = "#/login";
+      $state.go("login", $stateParams);
     }
 	}
 
@@ -225,9 +227,9 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $stateParams, n
     if (HTML5_LOC){
       $location.path("/topic/" + $scope.topicId);
     } else {
-      $window.location = "#/topic/" + $scope.topicId;
+      $state.go("topic.chat", {topicID: $scope.topicId});
     }
-    $window.location.reload();
+    $state.reload();
   }
 
   $scope.reportCommentAsSpam = function(id)
