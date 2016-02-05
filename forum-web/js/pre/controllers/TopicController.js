@@ -3,6 +3,7 @@ angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "M
 
 function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
+  var sessionTime = window.time;
   var lastComment = false;
   // Check For Mobile Browser
   if (UserAgentService.isMobileUser()){
@@ -22,7 +23,6 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
      ga('send', 'pageview', "/topic/"+$routeParams.topicID);
      console.log('Sent Pageview from /topic/' + $routeParams.topicID);
   }
-  ga('send', 'screenview', {screenName: 'Chat'});
   
   TopicService.setTopicId($routeParams.topicID);
   $scope.topicType = "livegame";
@@ -504,6 +504,10 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   // CONTENT TABS
   $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
+    var t = (window.time - sessionTime);
+      ga('send', 'event', 'TabSessionLength', $scope.activeTab, t + ' seconds ');
+    sessionTime = window.time ;
+
     if (tab === 'chat'){
       $('#chatTab').addClass('selectedTab');
       $('#videoTab').removeClass('selectedTab');
