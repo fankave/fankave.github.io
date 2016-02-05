@@ -134,7 +134,7 @@ angular.module('TopicModule')
       });
       $(video).on('pause', function() {
         console.log("Video paused" + thisPost.id + ": TimePlayed " + video.currentTime);
-        ga('send', 'event', 'Video','Play', thisPost.id, video.currentTime);
+        ga('send', 'event', 'Video','TimePlayed', thisPost.id, video.currentTime);
       });
        $(video).on('ended', function() {
         console.log("Video ended" + thisPost.id);
