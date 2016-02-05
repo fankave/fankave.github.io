@@ -127,6 +127,21 @@ angular.module('TopicModule')
           console.log("Video Playing");
         loadingSpinner.className = 'media-loading-default';
       });
+      $(video).on('play', function() {
+        if (NETWORK_DEBUG)
+          console.log("Video play clicked" + thisPost.id);
+        ga('send', 'event', 'Video','Play', thisPost.id);
+      });
+      $(video).on('pause', function() {
+        console.log("Video paused" + thisPost.id + ": TimePlayed " + video.currentTime);
+        ga('send', 'event', 'Video','Play', thisPost.id, video.currentTime);
+      });
+       $(video).on('ended', function() {
+        console.log("Video ended" + thisPost.id);
+      });
+        $(video).on('suspended', function() {
+        console.log("Video suspended" + thisPost.id);
+      });
 
       scope.togglePlayPause = function(e) {
         var thesePlayerNodes = elem[0].firstElementChild.childNodes;

@@ -335,6 +335,9 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   $scope.peelClose = function()
   {
     ga('send', 'event', 'Peel', 'click', 'BackToPeelHome');
+     var t = (window.time - sessionTime);
+      ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
+      sessionTime = window.time ;
     console.log("peelClose()");
     window.location = "peel://home";
   }
@@ -344,6 +347,9 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     ga('send', 'event', 'Peel', 'click', 'PeelWatchOnTV');
     console.log("peelWatchOnTV()");
     var showId = URIHelper.getPeelShowId();
+    var t = (window.time - sessionTime);
+      ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
+      sessionTime = window.time ;
     console.log("Peel show on TV uri :  "+ "peel://tunein/"+showId);
     if(showId != undefined)
       window.location = "peel://tunein/"+showId;
@@ -505,7 +511,6 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
     var t = (window.time - sessionTime);
-      ga('send', 'event', 'Tabs','ActiveTab', $scope.activeTab);
       ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
     sessionTime = window.time ;
 
