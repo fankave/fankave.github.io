@@ -505,7 +505,8 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
     var t = (window.time - sessionTime);
-      ga('send', 'event', 'TabSessionLength', $scope.activeTab, t + ' seconds ');
+      ga('send', 'event', 'Tabs','ActiveTab', $scope.activeTab);
+      ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
     sessionTime = window.time ;
 
     if (tab === 'chat'){
