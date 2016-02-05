@@ -129,18 +129,16 @@ angular.module('TopicModule')
       });
       $(video).on('play', function() {
         if (NETWORK_DEBUG)
-          console.log("Video play clicked" + thisPost.id);
-        ga('send', 'event', 'Video','Play', thisPost.id);
+          console.log("Video play clicked" + scope.thisPost.id);
+        ga('send', 'event', 'Video','Play', scope.thisPost.id);
       });
       $(video).on('pause', function() {
         var videoLengthPlayed = Math.round(video.currentTime);
-        console.log("Video paused" + thisPost.id + ": TimePlayed " + videoLengthPlayed);
-        ga('send', 'event', 'Video','VideoLengthPlayed', thisPost.id, videoLengthPlayed);
+        console.log("Video paused" + scope.thisPost.id + ": TimePlayed " + videoLengthPlayed);
+        ga('send', 'event', 'Video','VideoLengthPlayed', scope.thisPost.id, videoLengthPlayed);
       });
        $(video).on('ended', function() {
         var videoLengthPlayed = Math.round(video.currentTime);
-        console.log("Video ended" + thisPost.id + ": TimePlayed " + videoLengthPlayed);
-        ga('send', 'event', 'Video','VideoLengthPlayed', thisPost.id, videoLengthPlayed);
       });
         
 
