@@ -17,8 +17,12 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     $scope.loadingChat = true;
   }
 
-  ga('send', 'pageview', "/topic/"+$routeParams.topicID);
-  console.log('Sent Pageview from /topic/' + $routeParams.topicID);
+  //Google Analytics code
+  if((ChannelService.getChannel() == undefined ) && (TopicService.getChannel() == undefined)){
+     ga('send', 'pageview', "/topic/"+$routeParams.topicID);
+     console.log('Sent Pageview from /topic/' + $routeParams.topicID);
+  }
+  ga('send', 'screenview', {screenName: 'Chat'});
   
   TopicService.setTopicId($routeParams.topicID);
   $scope.topicType = "livegame";
