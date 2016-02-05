@@ -19,6 +19,8 @@ function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelServi
   var updateTopic = function(){
     var id = ChannelService.getLiveTopicId();
     if(id !== undefined){
+    	ga('send', 'pageview', "/topic/"+id);
+    	  console.log('Sent Pageview from /channel/' + id);
       console.log("Got Topic id from Channel : " +"/topic/" + id + $scope.urlQueryStr);
       if (HTML5_LOC){
         if(!!$scope.urlQueryStr)

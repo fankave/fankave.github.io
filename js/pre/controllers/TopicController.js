@@ -3,6 +3,7 @@ angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "M
 
 function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
+  var sessionTime = window.time;
   var lastComment = false;
   // Check For Mobile Browser
   if (UserAgentService.isMobileUser()){
@@ -17,8 +18,11 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     $scope.loadingChat = true;
   }
 
-  ga('send', 'pageview', "/topic/"+$routeParams.topicID);
-  console.log('Sent Pageview from /topic/' + $routeParams.topicID);
+  //Google Analytics code
+  if((ChannelService.getChannel() == undefined ) && (TopicService.getChannel() == undefined)){
+     ga('send', 'pageview', "/topic/"+$routeParams.topicID);
+     console.log('Sent Pageview from /topic/' + $routeParams.topicID);
+  }
   
   TopicService.setTopicId($routeParams.topicID);
   $scope.topicType = "livegame";
@@ -500,6 +504,11 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   // CONTENT TABS
   $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
+    var t = (window.time - sessionTime);
+      ga('send', 'event', 'Tabs','ActiveTab', $scope.activeTab);
+      ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
+    sessionTime = window.time ;
+
     if (tab === 'chat'){
       $('#chatTab').addClass('selectedTab');
       $('#videoTab').removeClass('selectedTab');
