@@ -17,7 +17,8 @@
     "angular-sanitize": "~1.4.7",
     "angular-websocket": "~1.0.14",
     "angular-route": "~1.4.8",
-    "bootstrap": "~3.3.6"
+    "bootstrap": "~3.3.6",
+    "angular-pull-to-refresh": "~0.3.0"
   },
   "resolutions": {
     "angular": "1.4.7"
