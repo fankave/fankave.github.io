@@ -405,13 +405,13 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     if (GEN_DEBUG)
     console.log("peelWatchOnTV()");
     var showId = URIHelper.getPeelShowId();
-    var t = (window.time - sessionTime);
-      ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
-      sessionTime = window.time;
+    // var t = (window.time - sessionTime);
+    //   ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
+    //   sessionTime = window.time;
     if (GEN_DEBUG)
-    console.log("Peel show on TV uri :  "+ "peel://tunein/"+showId);
+    console.log("Peel show on TV uri :  "+ "peel://tunein/"+showId+ "?action=SendIRorReminder&post_action=None");
     if(showId != undefined)
-      window.location = "peel://tunein/"+showId;
+      window.location = "peel://tunein/"+showId+"?action=SendIRorReminder&post_action=None";
     else
       window.location = "peel://home";
   }
