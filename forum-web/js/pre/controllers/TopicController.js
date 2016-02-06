@@ -89,8 +89,41 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       }
     }
   };
+
+  // CONTENT TABS
+  $scope.switchTabs = function(tab) {
+    var t = (window.time - sessionTime);
+      ga('send', 'event', 'Tabs','ActiveTab', $scope.activeTab);
+      ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
+    sessionTime = window.time ;
+
+    if (tab === 'chat'){
+      $('#chatTab').addClass('selectedTab');
+      $('#videoTab').removeClass('selectedTab');
+      $('#socialTab').removeClass('selectedTab');
+      $scope.activeTab = 'chat';
+      $(document).scrollTop(0);
+      // updateTopic();
+      // updateComments();
+    }
+    if (tab === 'video'){
+      $('#chatTab').removeClass('selectedTab');
+      $('#videoTab').addClass('selectedTab');
+      $('#socialTab').removeClass('selectedTab');
+      $scope.activeTab = 'video';
+      $(document).scrollTop(0);
+    }
+    if (tab === 'social'){
+      $('#chatTab').removeClass('selectedTab');
+      $('#videoTab').removeClass('selectedTab');
+      $('#socialTab').addClass('selectedTab');
+      $scope.activeTab = 'social';
+      $(document).scrollTop(0);
+    }
+    console.log("Active Tab: ", $scope.activeTab);
+  };
   
-  var updateTopic = function(){
+  function updateTopic(){
     if(TopicService.getTopic() !== undefined){
       $scope.topicType = TopicService.getTopicType();
       if(TopicService.isWatchingTopic() === false){
@@ -152,10 +185,19 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         $scope.loadingChat = false;
       }
 
+      var tab = URIHelper.getActiveTab();
+      if (tab === 'video'){
+        $scope.$broadcast('videoActive');
+      }
+      if (tab === 'social'){
+        $scope.$broadcast('socialActive');
+      }
+      $scope.switchTabs(tab);
+
     }
   };
 
-  var updateComments = function(){
+  function updateComments(){
     var commentsdata = CommentService.comments();
     if(commentsdata != undefined && (commentsdata.length >0 || lastComment === true)){
       lastComment = false;
@@ -506,39 +548,6 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   });
 
   $scope.xLinkActivated = false;
-
-  // CONTENT TABS
-  $scope.activeTab = 'chat';
-  $scope.switchTabs = function(tab) {
-    var t = (window.time - sessionTime);
-      ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
-    sessionTime = window.time ;
-
-    if (tab === 'chat'){
-      $('#chatTab').addClass('selectedTab');
-      $('#videoTab').removeClass('selectedTab');
-      $('#socialTab').removeClass('selectedTab');
-      $scope.activeTab = 'chat';
-      $(document).scrollTop(0);
-      updateTopic();
-      updateComments();
-    }
-    if (tab === 'video'){
-      $('#chatTab').removeClass('selectedTab');
-      $('#videoTab').addClass('selectedTab');
-      $('#socialTab').removeClass('selectedTab');
-      $scope.activeTab = 'video';
-      $(document).scrollTop(0);
-    }
-    if (tab === 'social'){
-      $('#chatTab').removeClass('selectedTab');
-      $('#videoTab').removeClass('selectedTab');
-      $('#socialTab').addClass('selectedTab');
-      $scope.activeTab = 'social';
-      $(document).scrollTop(0);
-    }
-    console.log("Active Tab: ", $scope.activeTab);
-  };
 
   var _channelId = ChannelService.getChannel();
   TopicService.setChannel(_channelId);
