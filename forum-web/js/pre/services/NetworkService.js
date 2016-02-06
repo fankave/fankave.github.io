@@ -6,6 +6,7 @@ function ($websocket,$route,DataService,UserInfoService)
   var ws;
 
   disconnectSocket = function(){
+    if (NETWORK_DEBUG)
     console.log("Disconnect Callback triggered");
     if(ws !== undefined) {
       ws.close();
@@ -14,6 +15,7 @@ function ($websocket,$route,DataService,UserInfoService)
   }
 
   reconnectSocket = function(){
+    if (NETWORK_DEBUG)
     console.log("Reconnect Callback triggered");
     $route.reload();
   }
@@ -27,11 +29,13 @@ function ($websocket,$route,DataService,UserInfoService)
     DataService.setWatchTopic(false);
     //Websocket callbacks below
     ws.onOpen(function() {
+      if (NETWORK_DEBUG)
       console.log("Websocket Connected");
     });
 
     ws.onClose(function(evt) {
       ws = undefined;
+      if (NETWORK_DEBUG)
       console.log("Websocket Closed :"+evt.data);
     });
 
@@ -70,8 +74,8 @@ function ($websocket,$route,DataService,UserInfoService)
     });
 
     ws.onError(function(evt) {
-      
-      console.log("Websocket OnError: "+JSON.stringify(evt) );
+      if (NETWORK_DEBUG)
+      console.log("Websocket OnError: ",evt);
     });
 
     function getWebsocketUri(){
@@ -88,10 +92,14 @@ function ($websocket,$route,DataService,UserInfoService)
   return{
     isSocketConnected:function(){
       if(NETWORK_DEBUG){
-        if(ws!= null)
-        console.log("ws status : "+ ws.readyState);
-        else
+        if(ws!= null){
+          if (NETWORK_DEBUG)
+          console.log("ws status : "+ ws.readyState);
+        }
+        else {
+          if (NETWORK_DEBUG)
           console.log("ws is null");
+        }
       }
       if(ws != undefined && ws.readyState == ws.OPEN){
         return true;

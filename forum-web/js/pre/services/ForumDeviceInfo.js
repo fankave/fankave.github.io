@@ -7,8 +7,10 @@ angular.module('NetworkModule')
 		return s ? "-" + p.substr(0,4) + "-" + p.substr(4,4) : p ;
 	}
 	function generateUUID() {
+		if (GEN_DEBUG)
 		console.log("GEnerating UUID");
 		var uuid = _p8() + _p8(true) + _p8(true) + _p8();
+		if (GEN_DEBUG)
 		console.log(" UUID :"+ uuid);
 		return uuid;
 	}
@@ -20,6 +22,7 @@ angular.module('NetworkModule')
 				id = generateUUID();
 				ForumStorage.setToLocalStorage("forumUUID",id);
 			}
+			if (GEN_DEBUG)
 			console.log("generated ID : "+ id);
 			return id;
 

@@ -6,11 +6,11 @@ function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelServi
   ChannelService.setChannel($routeParams.channelID);
   if (window.location.href.indexOf('?') !== -1){
     $scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
+    if (GEN_DEBUG)
     console.log(" $scope.urlQueryStr: " + $scope.urlQueryStr);
   }
   
   $scope.init = function() {
-    console.log("Init all connections");
     networkService.init();
     networkService.send(ChannelService.getLiveGameTopic());
   };
@@ -19,7 +19,11 @@ function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelServi
   var updateTopic = function(){
     var id = ChannelService.getLiveTopicId();
     if(id !== undefined){
+    	ga('send', 'pageview', "/topic/"+id);
+      if (GEN_DEBUG){
+  	  console.log('Sent Pageview from /channel/' + id);
       console.log("Got Topic id from Channel : " +"/topic/" + id + $scope.urlQueryStr);
+      }
       if (HTML5_LOC){
         if(!!$scope.urlQueryStr)
           $location.path("/topic/" + id).search($scope.urlQueryStr);
@@ -49,6 +53,7 @@ function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelServi
     AuthService.loginWithEmail();
   }
   else if (URIHelper.isTechMUser()){
+    if (GEN_DEBUG)
     console.log("MI16 User Detected");
     $window.location = "#/login?MI16=true";
   }

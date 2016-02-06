@@ -24,6 +24,7 @@ angular.module('NetworkModule')
 			day = createdDate.getDate();
 			month = createdDate.toDateString().match(/ [a-zA-Z]*/)[0].replace(" ","");
 			year = createdDate.getFullYear() == now.getFullYear() ? "" :  " "+createdDate.getFullYear();
+			if (GEN_DEBUG)
 			console.log("DATE "+ day + " " + month + year);
 			return day + " " + month + year;
 		}
@@ -69,6 +70,7 @@ angular.module('NetworkModule')
 		date = month+ "/" +day;
 		result = {"date":date,"time":time};
 
+		if (GEN_DEBUG)
 		console.log("Scheduled date : "+ result.date + "  Scheduled time : "+result.time);
 		
 		

@@ -3,11 +3,13 @@ angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "M
 
 function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
+  var sessionTime = window.time;
   var lastComment = false;
   // Check For Mobile Browser
   if (UserAgentService.isMobileUser()){
     $scope.mobileBrowser = true;
     $scope.mobileUserAgent = UserAgentService.getMobileUserAgent();
+    if (GEN_DEBUG)
     console.log("MOBILE USER AGENT: ", $scope.mobileUserAgent);
   } else {
     $scope.mobileBrowser = false;
@@ -17,8 +19,12 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     $scope.loadingChat = true;
   }
 
-  ga('send', 'pageview', "/topic/"+$routeParams.topicID);
-  console.log('Sent Pageview from /topic/' + $routeParams.topicID);
+  //Google Analytics code
+  if((ChannelService.getChannel() == undefined ) && (TopicService.getChannel() == undefined)){
+     ga('send', 'pageview', "/topic/"+$routeParams.topicID);
+     if (GEN_DEBUG)
+     console.log('Sent Pageview from /topic/' + $routeParams.topicID);
+  }
   
   TopicService.setTopicId($routeParams.topicID);
   $scope.topicType = "livegame";
@@ -26,6 +32,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   if (UserInfoService.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
     // if (!UserInfoService.hasUserVisited()){
+      if (GEN_DEBUG)
       console.log('SS USER HASNT VISITED');
       $scope.hideSSSplash = false;
       ForumStorage.setToLocalStorage("hasUserVisited", true);
@@ -38,7 +45,11 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   else if(UserInfoService.isPeelUser()){
     $scope.isPeelUser = true;
     if (!UserInfoService.hasUserVisited()){
+      if (GEN_DEBUG)
       console.log('PEEL USER HASNT VISITED');
+      if (URIHelper.isSuperBowl()){
+        $scope.SBSplash = true;
+      }
       $scope.hidePeelSplash = false;
       ForumStorage.setToLocalStorage("hasUserVisited", true);
       $timeout(function() {$scope.continueToExperience('peel'); }, 5000);
@@ -63,6 +74,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   // $scope.hidePeelSplash = true;
 
   $scope.continueToExperience = function(env) {
+    if (GEN_DEBUG)
     console.log("CONTINUE XP CLICKED");
     if (env === 'peel'){
       SplashService.setPeelSplash(true);
@@ -85,8 +97,42 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       }
     }
   };
+
+  // CONTENT TABS
+  $scope.switchTabs = function(tab) {
+    var t = (window.time - sessionTime);
+      ga('send', 'event', 'Tabs','ActiveTab', $scope.activeTab);
+      ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
+    sessionTime = window.time ;
+
+    if (tab === 'chat'){
+      $('#chatTab').addClass('selectedTab');
+      $('#videoTab').removeClass('selectedTab');
+      $('#socialTab').removeClass('selectedTab');
+      $scope.activeTab = 'chat';
+      $(document).scrollTop(0);
+      // updateTopic();
+      // updateComments();
+    }
+    if (tab === 'video'){
+      $('#chatTab').removeClass('selectedTab');
+      $('#videoTab').addClass('selectedTab');
+      $('#socialTab').removeClass('selectedTab');
+      $scope.activeTab = 'video';
+      $(document).scrollTop(0);
+    }
+    if (tab === 'social'){
+      $('#chatTab').removeClass('selectedTab');
+      $('#videoTab').removeClass('selectedTab');
+      $('#socialTab').addClass('selectedTab');
+      $scope.activeTab = 'social';
+      $(document).scrollTop(0);
+    }
+    if (GEN_DEBUG)
+    console.log("Active Tab: ", $scope.activeTab);
+  };
   
-  var updateTopic = function(){
+  function updateTopic(){
     if(TopicService.getTopic() !== undefined){
       $scope.topicType = TopicService.getTopicType();
       if(TopicService.isWatchingTopic() === false){
@@ -97,6 +143,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       
       $scope.setScoreCardUI();
       if($scope.topicType == "livegame"){
+        if (GEN_DEBUG)
         console.log("Inside topic set :"+ TopicService.getTeamA());
         //Score API update
         $scope.leftTeam = TopicService.getTeamA();
@@ -148,10 +195,19 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         $scope.loadingChat = false;
       }
 
+      var tab = URIHelper.getActiveTab();
+      if (tab === 'video'){
+        $scope.$broadcast('videoActive');
+      }
+      if (tab === 'social'){
+        $scope.$broadcast('socialActive');
+      }
+      $scope.switchTabs(tab);
+
     }
   };
 
-  var updateComments = function(){
+  function updateComments(){
     var commentsdata = CommentService.comments();
     if(commentsdata != undefined && (commentsdata.length >0 || lastComment === true)){
       lastComment = false;
@@ -219,6 +275,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   };
 
   $scope.loadRemainingComments = function() {
+    if (GEN_DEBUG)
     console.log("LOADING REST OF COMMENTS...");
     if (!CommentService.loadedComments()){
       networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
@@ -230,6 +287,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   $scope.loadRemainingCommentsTimeout = function() {
       $timeout(function(){
         if (!CommentService.loadedComments()){
+          if (GEN_DEBUG)
           console.log("LOADING REST OF COMMENTS...");
           networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
           $scope.loadedAllComments = true;
@@ -254,6 +312,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   $scope.setPeelUI($scope.isPeelUser);
 
   $scope.hideLoading = function(){
+    if (GEN_DEBUG)
     console.log("HIDING LOAD");
     $scope.loadingChat = false;
     $scope.loadingSocial = false;
@@ -278,11 +337,11 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       var thisDiv = postDivs[div];
       thisDiv.onclick = function(e) {
         if ($(e.target).is('a')) {
-          console.log("EXTERNAL LINK: ", e, this.id);
           return;
         } 
         thisPost = $scope.commentsArray[this.id];
         if ($scope.innerButtonTapped === false) {
+          if (GEN_DEBUG)
           console.log("Post Click Active: ", thisPost.id);
           if (HTML5_LOC){
             $location.path("/post/" + thisPost.id);
@@ -311,6 +370,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   }
   else if (URIHelper.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
+    if (GEN_DEBUG)
     console.log("SS User? ", $scope.isSmartStadiumUser);
     AuthService.loginWithEmail();
   }
@@ -331,6 +391,10 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   $scope.peelClose = function()
   {
     ga('send', 'event', 'Peel', 'click', 'BackToPeelHome');
+     var t = (window.time - sessionTime);
+      ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
+      sessionTime = window.time;
+    if (GEN_DEBUG)
     console.log("peelClose()");
     window.location = "peel://home";
   }
@@ -338,11 +402,16 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   $scope.peelWatchOnTV = function()
   {
     ga('send', 'event', 'Peel', 'click', 'PeelWatchOnTV');
+    if (GEN_DEBUG)
     console.log("peelWatchOnTV()");
     var showId = URIHelper.getPeelShowId();
-    console.log("Peel show on TV uri :  "+ "peel://tunein/"+showId);
+    // var t = (window.time - sessionTime);
+    //   ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
+    //   sessionTime = window.time;
+    if (GEN_DEBUG)
+    console.log("Peel show on TV uri :  "+ "peel://tunein/"+showId+ "?action=SendIRorReminder&post_action=None");
     if(showId != undefined)
-      window.location = "peel://tunein/"+showId;
+      window.location = "peel://tunein/"+showId+"?action=SendIRorReminder&post_action=None";
     else
       window.location = "peel://home";
   }
@@ -350,6 +419,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   $scope.showNewCommentsIndicator = false;
   $scope.newCommentsIndicatorTapped = function()
   {
+    if (GEN_DEBUG)
     console.log("newCommentsIndicatorTapped");
     $scope.showNewCommentsIndicator = false;
     updateComments();
@@ -371,12 +441,10 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       {
         open: function()
         {
-          console.log("popup opened");
           $('body').bind('touchmove', function(e){e.preventDefault()})
         },
         close: function()
         {
-          console.log("popup closed");
           $('body').unbind('touchmove')
         }
         // e.t.c.
@@ -390,6 +458,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   }
 
   $scope.updateLikeTopic = function() {
+    if (GEN_DEBUG)
     console.log("TopicController update like Topic");
     if(TopicService.getLiked() == true)
       networkService.send(TopicService.getUnlikeTopicRequest());
@@ -407,7 +476,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     
     // event.cancelBubble = true;
     // if(event.stopPropagation) event.stopPropagation();
-
+    if (GEN_DEBUG)
     console.log("TopicController updateLike (" + id + ")");
     if(CommentService.isCommentLiked(id)){
       networkService.send(CommentService.getUnlikeCommentRequest(id));
@@ -420,8 +489,10 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
 
   $scope.deleteComment = function(id)
   {
+    if (GEN_DEBUG)
     console.log("deleteComment(" + id + ")");
     if ($scope.commentsArray.length === 1){
+      if (GEN_DEBUG)
       console.log("Deleting Final Comment");
       lastComment = true;
     }
@@ -431,6 +502,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
 
   $scope.reportCommentAsSpam = function(id)
   {
+    if (GEN_DEBUG)
     console.log("reportCommentAsSpam(" + id + ")");
     $scope.innerButtonTapped = true;
     networkService.send(CommentService.flagCommentRequest(id)); 
@@ -491,40 +563,12 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   }
 
   $window.addEventListener("beforeunload", function(){
+    if (GEN_DEBUG)
     console.log("Before Unload");
     ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
   });
 
   $scope.xLinkActivated = false;
-
-  // CONTENT TABS
-  $scope.activeTab = 'chat';
-  $scope.switchTabs = function(tab) {
-    if (tab === 'chat'){
-      $('#chatTab').addClass('selectedTab');
-      $('#videoTab').removeClass('selectedTab');
-      $('#socialTab').removeClass('selectedTab');
-      $scope.activeTab = 'chat';
-      $(document).scrollTop(0);
-      updateTopic();
-      updateComments();
-    }
-    if (tab === 'video'){
-      $('#chatTab').removeClass('selectedTab');
-      $('#videoTab').addClass('selectedTab');
-      $('#socialTab').removeClass('selectedTab');
-      $scope.activeTab = 'video';
-      $(document).scrollTop(0);
-    }
-    if (tab === 'social'){
-      $('#chatTab').removeClass('selectedTab');
-      $('#videoTab').removeClass('selectedTab');
-      $('#socialTab').addClass('selectedTab');
-      $scope.activeTab = 'social';
-      $(document).scrollTop(0);
-    }
-    console.log("Active Tab: ", $scope.activeTab);
-  };
 
   var _channelId = ChannelService.getChannel();
   TopicService.setChannel(_channelId);
@@ -575,7 +619,6 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
 
   var fixed = false;
   var watchScroll = function watchScroll() {
-    console.log("Tabs Top: ", tabsTop);
     if ($scope.showNewCommentsIndicator){
       $scope.showNewCommentsIndicator = false;
     }

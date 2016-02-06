@@ -41,6 +41,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       var dontAdd;
       function generateImagePreview(evt) {
         var f = evt.target.files[0];
+        if (GEN_DEBUG)
         console.log('F:', f);
 
         if (!f.type.match('image.*')) {
@@ -80,8 +81,10 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       this.fileMaxExceeded = false;
       this.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
         dontAdd = true;
+        if (GEN_DEBUG)
         console.info('onWhenAddingFileFailed', item, filter, options);
         if (!_this.isHTML5){
+          if (GEN_DEBUG)
           console.log("Browser Doesn't Support HTML5");
           _this.HTML5warning = true;
         } else if (_this.uploader.queue.length < 1) {
@@ -91,10 +94,12 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         }
       };
       this.uploader.onAfterAddingFile = function(fileItem) {
+        if (GEN_DEBUG)
         console.info('onAfterAddingFile', fileItem);
         _this.highlightPost();
       };
       this.uploader.onAfterAddingAll = function(addedFileItems) {
+        if (GEN_DEBUG)
         console.info('onAfterAddingAll', addedFileItems);
       };
       this.uploader.onBeforeUploadItem = function(item) {
@@ -104,34 +109,41 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             'X-SessionId': user.sessionId,
             'X-AccessToken': user.accessToken};
         item.formData =[{'type':item._file.type},{'size': item._file.size},{'file': item._file}];
-
+        if (GEN_DEBUG)
         console.info('onBeforeUploadItem', item);
       };
       this.uploader.onProgressItem = function(fileItem, progress) {
+        if (GEN_DEBUG)
         console.info('onProgressItem', fileItem, progress);
       };
       this.uploader.onProgressAll = function(progress) {
+        if (GEN_DEBUG)
         console.info('onProgressAll', progress);
       };
       this.uploader.onSuccessItem = function(fileItem, response, status, headers) {
+        if (GEN_DEBUG)
         console.info('onSuccessItem', fileItem, response, status, headers);
         networkService.send(MUService.postMediaRequest(response));
       };
       this.uploader.onErrorItem = function(fileItem, response, status, headers) {
+        if (GEN_DEBUG)
         console.info('onErrorItem', fileItem, response, status, headers);
       };
       this.uploader.onCancelItem = function(fileItem, response, status, headers) {
+        if (GEN_DEBUG)
         console.info('onCancelItem', fileItem, response, status, headers);
       };
       this.uploader.onCompleteItem = function(fileItem, response, status, headers) {
+        if (GEN_DEBUG)
         console.info('onCompleteItem', fileItem, response, status, headers);
       };
       this.uploader.onCompleteAll = function() {
+        if (GEN_DEBUG)
         console.info('onCompleteAll');
         _this.uploader.clearQueue();
         MUService.resetCommentParams();
       };
-
+      if (GEN_DEBUG)
       console.info('uploader', this.uploader);
 
       // POST COMMENT
@@ -158,11 +170,13 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       };
 
       this.highlightPost = function(){
+        if (GEN_DEBUG)
         console.log("Styling post");
         $('#postCommentButton').css('color','rgb(22,189,231)');
       };
 
       this.unhighlightPost = function(){
+        if (GEN_DEBUG)
         console.log("Styling post");
         $('#postCommentButton').css('color','rgb(211,214,215)');
       };

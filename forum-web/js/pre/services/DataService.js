@@ -11,6 +11,7 @@ angular.module('NetworkModule')
   function delegateSetComments(commentsData) 
   { 
     if(commentsData.error){
+      if (NETWORK_DEBUG)
       console.log("Comments Error message from network: ", commentsData.error);
     }
     else if(commentsData.push){
@@ -49,6 +50,7 @@ angular.module('NetworkModule')
   function delegateSetTopic(topicData)
   {
     if(topicData.error){
+      if (NETWORK_DEBUG)
       console.log("Topic Error message from network: ", topicData.error);
     }
     else if(topicData.push){
@@ -64,9 +66,11 @@ angular.module('NetworkModule')
   function delegateSetReplies(replyData)
   {
     if(replyData.error){
+      if (NETWORK_DEBUG)
       console.log("Topic Error message from network: ", replyData.error);
     }
     else if(replyData.push){
+      if (NETWORK_DEBUG)
       console.log("reply pushed ");
       if(replyData.method == "UPSERT")
         if(ReplyService.updateReply(replyData) === 0){
@@ -105,9 +109,11 @@ angular.module('NetworkModule')
   
   function delegateSetChannel(data) {
     if(data.error){
+      if (NETWORK_DEBUG)
       console.log("Topic Error message from network: ", data.error);
     }
     else {
+      if (NETWORK_DEBUG)
       console.log("delegateSetChannel: ", data);
       ChannelService.setTopicData(data);
     }
@@ -115,9 +121,11 @@ angular.module('NetworkModule')
   
   function delegateSetSocial(data) {
     if(data.error){
+      if (NETWORK_DEBUG)
       console.log("Social Error message from network: ", data.error);
     }
     else {
+      if (NETWORK_DEBUG)
       console.log("SOCIAL GET");
       SocialService.setSocialData(data);
     }
@@ -125,9 +133,11 @@ angular.module('NetworkModule')
 
   function delegateSetVideo(data) {
     if(data.error){
+      if (NETWORK_DEBUG)
       console.log("Video Error message from network: ", data.error);
     }
     else {
+      if (NETWORK_DEBUG)
       console.log("VIDEO GET");
       VideoService.setVideoData(data);
     }

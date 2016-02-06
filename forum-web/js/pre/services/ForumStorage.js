@@ -2,10 +2,12 @@ angular.module('NetworkModule')
 .factory('ForumStorage', function () {
 	var localStorageAvailable = false;
 	if(typeof(Storage) != undefined) {
+		if (NETWORK_DEBUG)
 		console.log("Local storage available :"+ typeof(Storage));
 		localStorageAvailable = true;
 	}  
 	else {
+		if (NETWORK_DEBUG)
 		console.log("Sorry! No Storage support on this browser..");
 	}
 	

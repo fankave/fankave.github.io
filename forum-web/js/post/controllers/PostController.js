@@ -8,14 +8,12 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
   if (UserAgentService.isMobileUser()){
     $scope.mobileBrowser = true;
     $scope.mobileUserAgent = UserAgentService.getMobileUserAgent();
-    console.log("MOBILE USER AGENT: ", $scope.mobileUserAgent);
   } else {
     $scope.mobileBrowser = false;
   }
 
   // Retain & Handle State when Returning From External Links
   if (ForumStorage.getFromLocalStorage('hasUserVisited') === true){
-    console.log("Checking For Existing Session");
     $scope.initPage();
   }
   var headerHeight;
@@ -43,7 +41,6 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 	}
 
 	$scope.setPeelUI = function(userType){
-		console.log("Post User Type: ", userType);
 		if (userType === 'peel') {
 			$('#postSection').css('padding-top','54px');
 		} else if (userType === 'email') {
@@ -76,7 +73,8 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 			updateCommentInReply(selectedComment);
 		}
 		else{
-			console.log("No data from comment service : TODO handle this with cookies");
+      if (NETWORK_DEBUG)
+			console.log("No data from comment service");
 			networkService.send(CommentService.getCommentByIdRequest($scope.postID));
 		}
 	}
@@ -89,6 +87,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 	$scope.peelWatchOnTV = function()
 	{
 		ga('send', 'event', 'Peel', 'click', 'PeelWatchOnTV');
+    if (GEN_DEBUG)
 		console.log("peelWatchOnTV()");
 		var showId = URIHelper.getPeelShowId();
 		if(showId != undefined)
@@ -100,7 +99,8 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 	$scope.showNewRepliesIndicator = false;
 	$scope.newRepliesIndicatorTapped = function()
 	{
-		console.log("newRepliesIndicatorTapped");
+		if (GEN_DEBUG)
+    console.log("newRepliesIndicatorTapped");
 		$scope.showNewRepliesIndicator = false;
 		updateReplies();
 		window.scrollTo(0,document.body.scrollHeight);
@@ -154,7 +154,6 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
                 var thisDiv = replyDivs[div];
                 thisDiv.onclick = function(e) {
                   if ($(e.target).is('a')){
-                    console.log("EXTERNAL LINK: ", e, this.id);
                     ForumStorage.setToLocalStorage('replyBookmark', this.id);
                     return;
                   }
@@ -207,18 +206,21 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 
 	$scope.deleteReply = function(id)
 	{
-		console.log("deleteReply(" + id + ")");
+		if (GEN_DEBUG)
+    console.log("deleteReply(" + id + ")");
 		networkService.send(ReplyService.deleteReplyRequest(id));
 	}
 
 	$scope.reportReplyAsSpam = function(id)
 	{
-		console.log("reportReplyAsSpam(" + id + ")");
+		if (GEN_DEBUG)
+    console.log("reportReplyAsSpam(" + id + ")");
 		networkService.send(ReplyService.flagReplyRequest(id));
 	}
 
   $scope.deleteComment = function(id)
   {
+    if (GEN_DEBUG)
     console.log("deleteComment(" + id + ")");
     // $scope.innerButtonTapped = true;
     networkService.send(CommentService.deleteCommentRequest(id));
@@ -232,6 +234,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 
   $scope.reportCommentAsSpam = function(id)
   {
+    if (GEN_DEBUG)
     console.log("reportCommentAsSpam(" + id + ")");
     // $scope.innerButtonTapped = true;
     networkService.send(CommentService.flagCommentRequest(id)); 
@@ -252,12 +255,10 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
                 {
 				    open: function()
 				    {
-				      console.log("popup opened");
 				      $('body').bind('touchmove', function(e){e.preventDefault()})
 				    },
 				    close: function()
 				    {
-				      console.log("popup closed");
 				      $('body').unbind('touchmove')
 				    }
 				    // e.t.c.
@@ -280,13 +281,14 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 			$scope.gamePeriod = TopicService.getGamePeriod();
 			$scope.gameClock = TopicService.getGameClock();
 		}
-		console.log("Scores updated in replies");
 	}
 
 	 function updateCommentInReply(selectedComment){
+    if (GEN_DEBUG)
 		console.log("Already Had PostID: ", $scope.postID);
     if (!$scope.postID){
       $scope.postID = ReplyService.getPostId();
+      if (GEN_DEBUG)
       console.log("Regenerated PostID: ", $scope.postID);
     }
     if(selectedComment == undefined){
@@ -416,7 +418,6 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 		{
 			setTimeout(function()
 				{ 
-					console.log("Scroll to last reply");
 					window.scrollTo(0,document.body.scrollHeight);
 					$scope.justReplied = false;
 				}, 1000);
@@ -458,7 +459,6 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
   	}
 
   $window.addEventListener("beforeunload", function(){
-    console.log("Before Unload");
     ForumStorage.setToLocalStorage("hasUserVisited", true);
   });
 

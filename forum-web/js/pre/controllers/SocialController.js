@@ -29,13 +29,22 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       }
     };
 
+    $scope.$on('videoActive', function (event, args){
+      _this.initFeed('video');
+    });
+
+    $scope.$on('socialActive', function (event, args){
+      _this.initFeed('social');
+    });
 
     this.loadContent = function(type, offset) {
       var channelID = ChannelService.getChannel()||TopicService.getChannelId();
       if (type === 'social'){
+        if (NETWORK_DEBUG)
         console.log("LOADING SOCIAL: ", channelID);
         networkService.send(SocialService.getSocialDataRequest(channelID,offset));
       } else {
+        if (NETWORK_DEBUG)
         console.log("LOADING VIDEO: ", channelID);
         networkService.send(VideoService.getVideoDataRequest(channelID,offset));
       }
@@ -211,9 +220,11 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     this.shareTweetToChat = function (embed) {
       _this.embedShareContent = embed;
       _this.showShareDialog = true;
+      if (GEN_DEBUG)
       console.log("Embed Object: ", embed);
       if ($scope.$parent.isPeelUser){
         var fullClient = document.documentElement.clientHeight - 54;
+        if (GEN_DEBUG)
         console.log("fullClient Height: ", fullClient);
         setTimeout(function(){
           $('#sharePreviewContainer').css({top: '54px'}).height(fullClient);
@@ -223,6 +234,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     this.submitSharedPost = function (commentData,embedData) {
       var topicID = $scope.$parent.topicID;
+      if (GEN_DEBUG)
       console.log("topicID From Parent: ", topicID);
       networkService.send(CommentService.postCommentRequestForShare(topicID,commentData,embedData));
       _this.showShareDialog = false;
@@ -231,7 +243,6 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     if (!window.FB){
       (function(d, s, id) {
-        console.log('loading FB SDK...');
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) {return;}
         js = d.createElement(s); js.id = id;
@@ -254,6 +265,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         href: embedUrl
       }, function (response){
         // Keep Track of User Shares to Facebook?
+        if (GEN_DEBUG)
         console.log("FB Response Post-Share: ", response);
       });
     };
