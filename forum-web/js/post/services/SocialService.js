@@ -50,6 +50,7 @@ angular.module('SocialModule')
       "method": "GET",
       "uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+reqOffset)
     };
+    if (NETWORK_DEBUG)
     console.log("Social Request: ", request);
     return request;
   };

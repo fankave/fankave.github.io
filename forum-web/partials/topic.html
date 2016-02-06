@@ -1,4 +1,4 @@
-<section id="peelSplash" ng-if="hidePeelSplash === false">
+<section id="peelSplash" ng-if="hidePeelSplash === false && !SBSplash">
   <div id="splashUnderlay">
     <div id="splashOverlay">
       <div class="graphicContainer">
@@ -6,7 +6,16 @@
       </div>
       <div class="graphicContainer">
         <img ng-src="img/peel_join.png" id="continue" ng-click="continueToExperience('peel')"/>
-        <!-- <img src="img/kave_logo2.png" id="kaveLogo"/> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="peelSplash" ng-if="hidePeelSplash === false && SBSplash">
+  <div id="splashUnderlay">
+    <div id="splashOverlaySB">
+      <div class="graphicContainerSB">
+        <img src="img/1-1_superbowl_splash.png" ng-click="continueToExperience('peel')" id="splashGraphicSB" />
       </div>
     </div>
   </div>

@@ -37,7 +37,6 @@ angular.module('NetworkModule')
         _commentObject = Bant.bant(tempCommentsData[i]);
         if(_commentObject.id != undefined)
           _comments.push(_commentObject);
-        // console.log("Comments in set comment Service type:"+_commentObject.type + "  " +_commentObject.html );
       }
       if (commentsData.data.prevOffset === ""){
         notifyObservers(true);
@@ -71,13 +70,11 @@ angular.module('NetworkModule')
         while(_comments[i].pin == true)
           i++; 
         _pinnedComments = i;
-        //console.log("Pinned comments "+ i);
         if(_pinnedComments>0)
           _comments.splice(i,0,_commentObject);
         else
           _comments.unshift(_commentObject);
       }
-      // console.log("appendToComments CommentService"+_commentObject.html );
     }
     notifyObservers();
   }
@@ -98,6 +95,7 @@ angular.module('NetworkModule')
     }
     appendToComments(commentData);
     //notifyObservers();
+    if (NETWORK_DEBUG)
     console.log("In Comment Service update comment");
     return 0;
   }
@@ -132,7 +130,6 @@ angular.module('NetworkModule')
       if(_comments[i].id == commentObj.id){
         //remove element
         _comments.splice(i,1);
-        console.log("found Comment")
         return 0;
       }
     }
@@ -156,12 +153,10 @@ angular.module('NetworkModule')
   //call this when you know 'comments' has been changed
   var notifyObservers = function(temp){
     if (temp){
-      console.log("IN TEMP");
       angular.forEach(tempObserverCallbacks, function(callback){
         callback();
       });
     } else {
-      console.log("IN REG");
       angular.forEach(observerCallbacks, function(callback){
         callback();
       });
@@ -227,6 +222,7 @@ angular.module('NetworkModule')
           "topicId": topicId,
         };
     createCommentParams.data.content.sections[1].media = m.media;
+    if (NETWORK_DEBUG)
     console.log("Media comment Request :"+ JSON.stringify(createCommentParams, null, 10));
     return createCommentParams;
   }
@@ -241,6 +237,7 @@ angular.module('NetworkModule')
           "topicId": topicId,
         };
     createCommentParams.data.content.sections[1].embed = embedData;
+    if (NETWORK_DEBUG)
     console.log("Media comment Request :"+ JSON.stringify(createCommentParams, null, 10));
     return createCommentParams;
   }
@@ -303,7 +300,6 @@ angular.module('NetworkModule')
 
   function updateCommentLocalData(uri,id){
     if(uri == LIKE_COMMENT_URI+id){
-      console.log("calling update like ");
       updateLikeCommentWithId(id, true)
     }
     else if(uri == UNLIKE_COMMENT_URI+id){

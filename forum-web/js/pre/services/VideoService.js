@@ -52,6 +52,7 @@ angular.module('SocialModule')
 			"method": "GET",
 			"uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+reqOffset+"&filter=video")
 		};
+		if (NETWORK_DEBUG)
 		console.log("Video Request: ", request);
 		return request;
 	}

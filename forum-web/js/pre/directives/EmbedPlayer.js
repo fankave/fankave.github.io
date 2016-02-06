@@ -42,10 +42,10 @@ angular.module('TopicModule')
         var thesePlayerNodes = elem[0].childNodes;
         var thisVideo = thesePlayerNodes[0];
         var thisWidth = $(thisVideo).width();
-        if (NETWORK_DEBUG){
-          // console.log("PlayerNodes in setD: ", thesePlayerNodes);
-          // console.log("Video in setD: ", thisVideo);
-          // console.log("Width in setD: ", thisWidth);
+        if (GEN_DEBUG){
+          console.log("PlayerNodes in setD: ", thesePlayerNodes);
+          console.log("Video in setD: ", thisVideo);
+          console.log("Width in setD: ", thisWidth);
         }
 
         // Width Contingencies (landscape)
@@ -70,8 +70,8 @@ angular.module('TopicModule')
 
         var iframePlayer = thisVideo.childNodes[0];
         $(iframePlayer).css('height',height);
-        if (NETWORK_DEBUG){
-          // console.log("Setting Height On: ", iframePlayer, height);
+        if (GEN_DEBUG){
+          console.log("Setting Height On: ", iframePlayer, height);
         }
       }
 
