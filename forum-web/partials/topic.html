@@ -232,7 +232,7 @@
 <div id="inputControls">
   <!-- Tech MI16 Tabs -->
   <div class="tabContainer clearfix" ng-if="isMI16User">
-    <div id="chatTab" class="grid-col grid-col-50 tab selectedTab" ng-click="switchTabs('chat')">
+    <div id="chatTab" class="grid-col grid-col-50 tab" ng-click="switchTabs('chat')">
       <span class="tabName">Chat</span>
     </div>
     <div id="socialTab" class="grid-col grid-col-50 tab" ng-click="social.initFeed('social')">
@@ -246,7 +246,7 @@
   </div>
   <!-- All Other Tabs -->
   <div class="tabContainer clearfix" ng-if="!isMI16User">
-    <div id="chatTab" class="grid-col grid-col-33 tab selectedTab" ng-click="switchTabs('chat')">
+    <div id="chatTab" class="grid-col grid-col-33 tab" ng-click="switchTabs('chat')">
       <span class="tabName">Chat</span>
     </div>
     <div id="videoTab" class="grid-col grid-col-34 tab" ng-click="social.initFeed('video')">

@@ -29,6 +29,13 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       }
     };
 
+    $scope.$on('videoActive', function (event, args){
+      _this.initFeed('video');
+    });
+
+    $scope.$on('socialActive', function (event, args){
+      _this.initFeed('social');
+    });
 
     this.loadContent = function(type, offset) {
       var channelID = ChannelService.getChannel()||TopicService.getChannelId();
