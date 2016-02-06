@@ -53,6 +53,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     };
 
     this.refreshContent = function(tab) {
+      console.log("Refreshing: ", tab);
       if (tab === 'chat'){
         return;
       }
