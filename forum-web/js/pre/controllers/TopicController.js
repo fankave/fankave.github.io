@@ -47,6 +47,9 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     if (!UserInfoService.hasUserVisited()){
       if (GEN_DEBUG)
       console.log('PEEL USER HASNT VISITED');
+      if (URIHelper.isSuperBowl()){
+        $scope.SBSplash = true;
+      }
       $scope.hidePeelSplash = false;
       ForumStorage.setToLocalStorage("hasUserVisited", true);
       $timeout(function() {$scope.continueToExperience('peel'); }, 5000);

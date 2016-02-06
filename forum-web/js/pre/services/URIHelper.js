@@ -96,6 +96,13 @@ angular.module('NetworkModule')
 				}
 			}
 			return 'chat';
+		},
+		isSuperBowl:function(){
+			var vars = getUrlVars();
+			if (vars["superbowl"]){
+				return true;
+			}
+			return false;
 		}
 
 
