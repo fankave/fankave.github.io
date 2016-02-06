@@ -8,14 +8,12 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
   if (UserAgentService.isMobileUser()){
     $scope.mobileBrowser = true;
     $scope.mobileUserAgent = UserAgentService.getMobileUserAgent();
-    console.log("MOBILE USER AGENT: ", $scope.mobileUserAgent);
   } else {
     $scope.mobileBrowser = false;
   }
 
   // Retain & Handle State when Returning From External Links
   if (ForumStorage.getFromLocalStorage('hasUserVisited') === true){
-    console.log("Checking For Existing Session");
     $scope.initPage();
   }
   var headerHeight;
@@ -43,7 +41,6 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 	}
 
 	$scope.setPeelUI = function(userType){
-		console.log("Post User Type: ", userType);
 		if (userType === 'peel') {
 			$('#postSection').css('padding-top','54px');
 		} else if (userType === 'email') {
@@ -76,7 +73,8 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 			updateCommentInReply(selectedComment);
 		}
 		else{
-			console.log("No data from comment service : TODO handle this with cookies");
+      if (NETWORK_DEBUG)
+			console.log("No data from comment service");
 			networkService.send(CommentService.getCommentByIdRequest($scope.postID));
 		}
 	}
@@ -89,6 +87,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 	$scope.peelWatchOnTV = function()
 	{
 		ga('send', 'event', 'Peel', 'click', 'PeelWatchOnTV');
+    if (GEN_DEBUG)
 		console.log("peelWatchOnTV()");
 		var showId = URIHelper.getPeelShowId();
 		if(showId != undefined)
@@ -100,7 +99,8 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 	$scope.showNewRepliesIndicator = false;
 	$scope.newRepliesIndicatorTapped = function()
 	{
-		console.log("newRepliesIndicatorTapped");
+		if (GEN_DEBUG)
+    console.log("newRepliesIndicatorTapped");
 		$scope.showNewRepliesIndicator = false;
 		updateReplies();
 		window.scrollTo(0,document.body.scrollHeight);
