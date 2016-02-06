@@ -143,6 +143,7 @@ gulp.task('minifyFile', function() {
 gulp.task('watch', function() {
   gulp.watch('./css/**/*.css', ['css']);
   gulp.watch('./js/pre/**/*.js', ['scripts-pre']);
+  gulp.watch('./js/Forum.js', ['scripts-pre']);
   gulp.watch('./js/post/**/*.js', ['scripts-post']);
 });
 

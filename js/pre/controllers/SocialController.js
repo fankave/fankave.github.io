@@ -1,6 +1,6 @@
 angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
-.controller("SocialController", ["$scope","$sce","$window","$routeParams","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService",
-  function ($scope,$sce,$window,$routeParams,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService){
+.controller("SocialController", ["$scope","$sce","$window","$routeParams","$q","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService",
+  function ($scope,$sce,$window,$routeParams,$q,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService){
     console.log("Social Control");
 
     var _this = this;
@@ -44,11 +44,30 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       if (type === 'social'){
         console.log("LOADING SOCIAL: ", channelID);
         networkService.send(SocialService.getSocialDataRequest(channelID,offset));
+        return true;
       } else {
         console.log("LOADING VIDEO: ", channelID);
         networkService.send(VideoService.getVideoDataRequest(channelID,offset));
+        return true;
       }
     };
+
+    this.refreshContent = function(tab) {
+      if (tab === 'chat'){
+        return;
+      }
+      var deferred = $q.defer();
+      if (tab === 'video'){
+        _this.videoArray = [];
+        VideoService.resetVideoOffset();
+        deferred.resolve(_this.loadContent('video',0));
+      }
+      else if (tab === 'social'){
+        _this.socialArray = [];
+        SocialService.resetSocialOffset();
+        deferred.resolve(_this.loadContent('social',0));
+      }
+    }
 
     var videoStaging = [];
     var socialStaging = [];
