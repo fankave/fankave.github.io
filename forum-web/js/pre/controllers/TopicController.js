@@ -36,7 +36,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       console.log('SS USER HASNT VISITED');
       $scope.hideSSSplash = false;
       ForumStorage.setToLocalStorage("hasUserVisited", true);
-      $timeout(function() {$scope.continueToExperience('smartS'); }, 5000);
+      $timeout(function() {$scope.continueToExperience('smartS'); }, 7000);
     // }
   }
   else if (UserInfoService.isMI16User()){
