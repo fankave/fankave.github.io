@@ -81,6 +81,28 @@ angular.module('NetworkModule')
 		},
 		getSSUserName:function(){
 			return ssUserName;
+		},
+		getActiveTab:function(){
+			var vars = getUrlVars();
+			if (vars["tab"]){
+				if (vars["tab"] === 'chat'){
+					return 'chat';
+				}
+				if (vars["tab"] === 'video'){
+					return 'video';
+				}
+				if (vars["tab"] === 'social'){
+					return 'social';
+				}
+			}
+			return 'chat';
+		},
+		isSuperBowl:function(){
+			var vars = getUrlVars();
+			if (vars["superbowl"]){
+				return true;
+			}
+			return false;
 		}
 
 

@@ -4,6 +4,8 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     console.log("Social Control");
 
     var _this = this;
+    // this.newVideosAvailable = true;
+    // this.newSocialAvailable = true;
     this.initFeed = function(tab) {
       // Show Loading UI Once On Each Tab
       if (tab === 'social'){
@@ -29,9 +31,16 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       }
     };
 
+    $scope.$on('videoActive', function (event, args){
+      _this.initFeed('video');
+    });
+
+    $scope.$on('socialActive', function (event, args){
+      _this.initFeed('social');
+    });
 
     this.loadContent = function(type, offset) {
-      var channelID = ChannelService.getChannel()||TopicService.getChannelId();
+      var channelID = ChannelService.getChannel()||TopicService.getChannel();
       if (type === 'social'){
         console.log("LOADING SOCIAL: ", channelID);
         networkService.send(SocialService.getSocialDataRequest(channelID,offset));
@@ -41,7 +50,55 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       }
     };
 
-    function updateFeed(tab) {
+    var videoStaging = [];
+    var socialStaging = [];
+
+    function flattenProperties(tempItem, feedData) {
+      
+      tempItem.postAuthorName = feedData.embedAuthor.name;
+      tempItem.postAuthorAlias = feedData.embedAuthor.alias;
+      tempItem.postAuthorPhoto = feedData.embedAuthor.photo;
+      tempItem.tweetId = feedData.tweet.id;
+      
+      tempItem.postTimestamp = feedData.createdAt;
+      tempItem.providerName = feedData.embedProvider.name;
+      tempItem.html = feedData.embedText;
+      tempItem.retweetCount = feedData.tweet.metrics.retweetCount;
+      tempItem.likeCount = feedData.tweet.metrics.likeCount;
+      tempItem.replyCount = feedData.tweet.metrics.replyCount;
+
+      // Embed Object for Sharing
+      tempItem.embed = feedData.embed;
+      tempItem.embed.embedCreatedAt = feedData.embedCreatedAt;
+      // tempItem.embed.embedCreatedAtFull = feedData.embedCreatedAtFull;
+
+      if (tempItem.providerName === "Twitter"){
+        tempItem.providerLogo = "img/twitterLogo@2x.png";
+        tempItem.embed.provider.logo = "img/twitterLogo@2x.png";
+      } else {
+        tempItem.providerLogo = feedData.embedProvider.logo;
+        tempItem.embed.provider.logo = feedData.embedProvider.logo;
+      }
+
+      tempItem.embedType = feedData.embedType;
+      tempItem.embedUrl = feedData.embedUrl;
+      if (feedData.embedType === "link" && feedData.embedPlayable === true){
+        tempItem.embedHtml = feedData.embedHtml;
+        tempItem.embedPlayable = true;
+      }
+      if (feedData.embedType === "media" || feedData.embedType === "link"){
+        tempItem.mediaType = feedData.embedMedia.mediaType;
+        tempItem.mediaUrl = feedData.embedMedia.mediaUrl;
+        tempItem.mediaThumbUrl = feedData.embedMedia.mediaThumbUrl;
+        tempItem.mediaAspectRatio = feedData.embedMedia.mediaAspectRatio;
+        tempItem.mediaAspectFeed = feedData.embedMedia.mediaAspectFeed;
+        tempItem.mediaAspectFull = feedData.embedMedia.mediaAspectFull;
+        tempItem.mediaOrientation = feedData.embedMedia.mediaOrientation;
+      }
+      return tempItem;
+    }
+
+    function updateFeed(tab, polling) {
 
       // Get Appropriate Content
       var feedData,
@@ -77,59 +134,28 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           if (itemExists){
             continue;
           }
-          
-          tempItem.postAuthorName = feedData[i].embedAuthor.name;
-          tempItem.postAuthorAlias = feedData[i].embedAuthor.alias;
-          tempItem.postAuthorPhoto = feedData[i].embedAuthor.photo;
-          tempItem.tweetId = feedData[i].tweet.id;
-          
-          tempItem.postTimestamp = feedData[i].createdAt;
-          tempItem.providerName = feedData[i].embedProvider.name;
-          tempItem.html = feedData[i].embedText;
-          tempItem.retweetCount = feedData[i].tweet.metrics.retweetCount;
-          tempItem.likeCount = feedData[i].tweet.metrics.likeCount;
-          tempItem.replyCount = feedData[i].tweet.metrics.replyCount;
 
-          // Embed Object for Sharing
-          tempItem.embed = feedData[i].embed;
-          tempItem.embed.embedCreatedAt = feedData[i].embedCreatedAt;
-          // tempItem.embed.embedCreatedAtFull = feedData[i].embedCreatedAtFull;
+          var formattedItem = flattenProperties(tempItem, feedData[i]);
 
-          if (tempItem.providerName === "Twitter"){
-            tempItem.providerLogo = "img/twitterLogo@2x.png";
-            tempItem.embed.provider.logo = "img/twitterLogo@2x.png";
-          } else {
-            tempItem.providerLogo = feedData[i].embedProvider.logo;
-            tempItem.embed.provider.logo = feedData[i].embedProvider.logo;
-          }
-
-          tempItem.embedType = feedData[i].embedType;
-          tempItem.embedUrl = feedData[i].embedUrl;
-          if (feedData[i].embedType === "link" && feedData[i].embedPlayable === true){
-            tempItem.embedHtml = feedData[i].embedHtml;
-            tempItem.embedPlayable = true;
-          }
-          if (feedData[i].embedType === "media" || feedData[i].embedType === "link"){
-            tempItem.mediaType = feedData[i].embedMedia.mediaType;
-            tempItem.mediaUrl = feedData[i].embedMedia.mediaUrl;
-            tempItem.mediaThumbUrl = feedData[i].embedMedia.mediaThumbUrl;
-            tempItem.mediaAspectRatio = feedData[i].embedMedia.mediaAspectRatio;
-            tempItem.mediaAspectFeed = feedData[i].embedMedia.mediaAspectFeed;
-            tempItem.mediaAspectFull = feedData[i].embedMedia.mediaAspectFull;
-            tempItem.mediaOrientation = feedData[i].embedMedia.mediaOrientation;
-          }
-
-          if (tab === 'social'){
-            _this.socialArray.push(tempItem);
-          } else {
-            _this.videoArray.push(tempItem);
-          }
-          if (NETWORK_DEBUG && i === len - 1){
+          if (polling){
             if (tab === 'social'){
-              console.log("Social Array: ", _this.socialArray);
+              socialStaging.push(formattedItem);
             } else {
-              console.log("Video Array: ", _this.videoArray);
+              videoStaging.push(formattedItem);
             }
+          } else {
+            if (tab === 'social'){
+              _this.socialArray.push(formattedItem);
+            } else {
+              _this.videoArray.push(formattedItem);
+            }
+          }
+        }
+        if (NETWORK_DEBUG){
+          if (tab === 'social'){
+            console.log("Social Array: ", _this.socialArray);
+          } else {
+            console.log("Video Array: ", _this.videoArray);
           }
         }
       }
