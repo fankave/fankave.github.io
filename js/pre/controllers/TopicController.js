@@ -619,10 +619,6 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   $(document).off('scroll');
   $(document).on('scroll', watchScroll);
 
-  $scope.refreshContent = function(tab){
-    console.log("REFRESHING: ", tab);
-  }
-
 
 }]);
 

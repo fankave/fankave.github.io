@@ -100,8 +100,7 @@ gulp.task('lib-pre', function() {
 gulp.task('lib-post', function() {
   return gulp.src([
     './bower_components/bootstrap/dist/js/bootstrap.min.js',
-    './lib/magnific/jQuery.magnific-popup.min.js',
-    './bower_components/angular-pull-to-refresh/dist/angular-pull-to-refresh.min.js'
+    './lib/magnific/jQuery.magnific-popup.min.js'
   ])
   .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(concat('lib-post.min.js'))
@@ -115,8 +114,7 @@ gulp.task('css', function() {
     './bower_components/videoJS/dist/video-js.css',
     './css/forum.css',
     './css/forumAnimations.css',
-    './css/magnificCSS/magnific.css',
-    './bower_components/angular-pull-to-refresh/dist/angular-pull-to-refresh.css'
+    './css/magnificCSS/magnific.css'
   ])
   .pipe(sourcemaps.init())
     .pipe(autoprefix())
