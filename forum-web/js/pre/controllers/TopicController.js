@@ -9,6 +9,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   if (UserAgentService.isMobileUser()){
     $scope.mobileBrowser = true;
     $scope.mobileUserAgent = UserAgentService.getMobileUserAgent();
+    if (GEN_DEBUG)
     console.log("MOBILE USER AGENT: ", $scope.mobileUserAgent);
   } else {
     $scope.mobileBrowser = false;
@@ -21,6 +22,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   //Google Analytics code
   if((ChannelService.getChannel() == undefined ) && (TopicService.getChannel() == undefined)){
      ga('send', 'pageview', "/topic/"+$routeParams.topicID);
+     if (GEN_DEBUG)
      console.log('Sent Pageview from /topic/' + $routeParams.topicID);
   }
   
@@ -30,6 +32,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   if (UserInfoService.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
     // if (!UserInfoService.hasUserVisited()){
+      if (GEN_DEBUG)
       console.log('SS USER HASNT VISITED');
       $scope.hideSSSplash = false;
       ForumStorage.setToLocalStorage("hasUserVisited", true);
@@ -42,6 +45,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   else if(UserInfoService.isPeelUser()){
     $scope.isPeelUser = true;
     if (!UserInfoService.hasUserVisited()){
+      if (GEN_DEBUG)
       console.log('PEEL USER HASNT VISITED');
       $scope.hidePeelSplash = false;
       ForumStorage.setToLocalStorage("hasUserVisited", true);
@@ -67,6 +71,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   // $scope.hidePeelSplash = true;
 
   $scope.continueToExperience = function(env) {
+    if (GEN_DEBUG)
     console.log("CONTINUE XP CLICKED");
     if (env === 'peel'){
       SplashService.setPeelSplash(true);
@@ -120,6 +125,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       $scope.activeTab = 'social';
       $(document).scrollTop(0);
     }
+    if (GEN_DEBUG)
     console.log("Active Tab: ", $scope.activeTab);
   };
   
@@ -134,6 +140,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       
       $scope.setScoreCardUI();
       if($scope.topicType == "livegame"){
+        if (GEN_DEBUG)
         console.log("Inside topic set :"+ TopicService.getTeamA());
         //Score API update
         $scope.leftTeam = TopicService.getTeamA();
@@ -265,6 +272,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   };
 
   $scope.loadRemainingComments = function() {
+    if (GEN_DEBUG)
     console.log("LOADING REST OF COMMENTS...");
     if (!CommentService.loadedComments()){
       networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
@@ -276,6 +284,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   $scope.loadRemainingCommentsTimeout = function() {
       $timeout(function(){
         if (!CommentService.loadedComments()){
+          if (GEN_DEBUG)
           console.log("LOADING REST OF COMMENTS...");
           networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
           $scope.loadedAllComments = true;
@@ -300,6 +309,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   $scope.setPeelUI($scope.isPeelUser);
 
   $scope.hideLoading = function(){
+    if (GEN_DEBUG)
     console.log("HIDING LOAD");
     $scope.loadingChat = false;
     $scope.loadingSocial = false;
@@ -324,11 +334,11 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       var thisDiv = postDivs[div];
       thisDiv.onclick = function(e) {
         if ($(e.target).is('a')) {
-          console.log("EXTERNAL LINK: ", e, this.id);
           return;
         } 
         thisPost = $scope.commentsArray[this.id];
         if ($scope.innerButtonTapped === false) {
+          if (GEN_DEBUG)
           console.log("Post Click Active: ", thisPost.id);
           if (HTML5_LOC){
             $location.path("/post/" + thisPost.id);
@@ -357,6 +367,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   }
   else if (URIHelper.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
+    if (GEN_DEBUG)
     console.log("SS User? ", $scope.isSmartStadiumUser);
     AuthService.loginWithEmail();
   }
@@ -379,7 +390,8 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     ga('send', 'event', 'Peel', 'click', 'BackToPeelHome');
      var t = (window.time - sessionTime);
       ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
-      sessionTime = window.time ;
+      sessionTime = window.time;
+    if (GEN_DEBUG)
     console.log("peelClose()");
     window.location = "peel://home";
   }
@@ -387,11 +399,13 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   $scope.peelWatchOnTV = function()
   {
     ga('send', 'event', 'Peel', 'click', 'PeelWatchOnTV');
+    if (GEN_DEBUG)
     console.log("peelWatchOnTV()");
     var showId = URIHelper.getPeelShowId();
     var t = (window.time - sessionTime);
       ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
-      sessionTime = window.time ;
+      sessionTime = window.time;
+    if (GEN_DEBUG)
     console.log("Peel show on TV uri :  "+ "peel://tunein/"+showId);
     if(showId != undefined)
       window.location = "peel://tunein/"+showId;
@@ -402,6 +416,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   $scope.showNewCommentsIndicator = false;
   $scope.newCommentsIndicatorTapped = function()
   {
+    if (GEN_DEBUG)
     console.log("newCommentsIndicatorTapped");
     $scope.showNewCommentsIndicator = false;
     updateComments();
@@ -423,12 +438,10 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       {
         open: function()
         {
-          console.log("popup opened");
           $('body').bind('touchmove', function(e){e.preventDefault()})
         },
         close: function()
         {
-          console.log("popup closed");
           $('body').unbind('touchmove')
         }
         // e.t.c.
@@ -442,6 +455,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   }
 
   $scope.updateLikeTopic = function() {
+    if (GEN_DEBUG)
     console.log("TopicController update like Topic");
     if(TopicService.getLiked() == true)
       networkService.send(TopicService.getUnlikeTopicRequest());
@@ -459,7 +473,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     
     // event.cancelBubble = true;
     // if(event.stopPropagation) event.stopPropagation();
-
+    if (GEN_DEBUG)
     console.log("TopicController updateLike (" + id + ")");
     if(CommentService.isCommentLiked(id)){
       networkService.send(CommentService.getUnlikeCommentRequest(id));
@@ -472,8 +486,10 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
 
   $scope.deleteComment = function(id)
   {
+    if (GEN_DEBUG)
     console.log("deleteComment(" + id + ")");
     if ($scope.commentsArray.length === 1){
+      if (GEN_DEBUG)
       console.log("Deleting Final Comment");
       lastComment = true;
     }
@@ -483,6 +499,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
 
   $scope.reportCommentAsSpam = function(id)
   {
+    if (GEN_DEBUG)
     console.log("reportCommentAsSpam(" + id + ")");
     $scope.innerButtonTapped = true;
     networkService.send(CommentService.flagCommentRequest(id)); 
@@ -543,6 +560,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   }
 
   $window.addEventListener("beforeunload", function(){
+    if (GEN_DEBUG)
     console.log("Before Unload");
     ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
   });
@@ -598,7 +616,6 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
 
   var fixed = false;
   var watchScroll = function watchScroll() {
-    console.log("Tabs Top: ", tabsTop);
     if ($scope.showNewCommentsIndicator){
       $scope.showNewCommentsIndicator = false;
     }

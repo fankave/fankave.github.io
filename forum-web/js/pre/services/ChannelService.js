@@ -12,6 +12,7 @@ angular.module('ChannelModule')
   {
     if(topicData.data != undefined){
       _liveTopicId = topicData.data.id;
+      if (NETWORK_DEBUG)
       console.log("_liveTopicId : "+ _liveTopicId);
       notifyObservers();
     }
@@ -27,6 +28,7 @@ angular.module('ChannelModule')
       "timestamp": new Date().getTime(),
       "method": "GET",
       "uri":uri };
+    if (NETWORK_DEBUG)
     console.log("Ch.getLiveGameTopic: ", topicParams);
     return topicParams;
   }
@@ -40,7 +42,6 @@ angular.module('ChannelModule')
   
   function registerObserverCallback(callback){
     //register an observer
-    // console.log("topic callback registered");
     var callbackLength  = observerCallbacks.length;
     while(callbackLength > 0){
       callbackLength = observerCallbacks.length;

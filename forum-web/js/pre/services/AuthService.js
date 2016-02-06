@@ -5,6 +5,7 @@ angular.module('AuthModule')
   var userLoggedInToFacebook = false;
 
   var loginAsGuest = function() {
+  if (NETWORK_DEBUG)
   console.log("Logging in as Guest");
     var userData = {};
     userData.id = ForumDeviceInfo.getDeviceId();
@@ -48,7 +49,7 @@ angular.module('AuthModule')
       "id": email,
       "userName": name
     };
-
+    if (NETWORK_DEBUG)
     console.log("techMLogin: ", userData);
     var registerParams = setRegistrationParams("email", -28800, userData);
     registerUser(registerParams, true);
@@ -95,6 +96,7 @@ angular.module('AuthModule')
     $http.post(REGISTER_SERVER_URI, JSON.stringify(registerParams))
       .then(function (response) {
         if (response.status === 200) {
+          if (NETWORK_DEBUG)
           console.log("Successfully Registered User of Type: " + userType);
           if (registerParams.type === 'facebook'){
             userLoggedInToFacebook = true;
@@ -109,6 +111,7 @@ angular.module('AuthModule')
         }
       },
       function (response) {
+        if (NETWORK_DEBUG)
         console.log('Registration Error: ', response);
       }).then(function (response) {
         initializeContent();
@@ -116,6 +119,7 @@ angular.module('AuthModule')
   };
 
   var initializeContent = function() {
+    if (NETWORK_DEBUG)
     console.log("Initializing Content");
     // Initialize Network Service and determine what type of resource is being accessed
     networkService.init();
@@ -124,10 +128,12 @@ angular.module('AuthModule')
     var initTopic = TopicService.getTopicId();
 
     if (!!initChannel) {
+      if (NETWORK_DEBUG)
       console.log("found channel ID: " + initChannel);
       networkService.send(ChannelService.getLiveGameTopic(initChannel));
     }
     else if (!!initTopic) {
+      if (NETWORK_DEBUG)
       console.log("found Topic ID: " + initTopic);
       if (HTML5_LOC){
         $location.path("/topic/" + initTopic);
@@ -138,6 +144,7 @@ angular.module('AuthModule')
     else {
       var initPost = ReplyService.getPostId();
       if (!!initPost){
+        if (NETWORK_DEBUG)
         console.log("found post ID: " + initPost);
         if (HTML5_LOC){
           $location.path("/post/" + initPost);

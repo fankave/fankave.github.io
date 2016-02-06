@@ -43,9 +43,11 @@ angular.module('NetworkModule')
 	function appendToReplies(postReplyData) {
 		var tempPostedReply = postReplyData.data;
 		if(tempPostedReply!= undefined){
+			if (GEN_DEBUG){
 			console.log("appendToReplies :"+tempPostedReply);
 			console.log("Reply comment ID :"+ tempPostedReply.commentId);
 			console.log("Current comment ID :"+ _currentCommentId);
+			}
 			if(tempPostedReply.commentId == _currentCommentId){
 			var _replyObject = Bant.bant(tempPostedReply);
 			if(_replyObject.id != undefined )
@@ -63,6 +65,7 @@ angular.module('NetworkModule')
 			if(_replies[i].id == replyObj.id){
 				//update
 				_replies[i] = Bant.bant(replyObj)
+				if (GEN_DEBUG)
 				console.log("Reply updated");
 				return 1;
 			}
@@ -159,6 +162,7 @@ angular.module('NetworkModule')
 			targetType = "reply";
 			targetId = replyId;
 		}
+		if (NETWORK_DEBUG)
 		console.log("Topicid : "+topicId,"commentid : "+commentId,"replydata : "+replyData);
 		var createReplyParams = replyPostRequest(POST_REPLY_URI);
 		createReplyParams.data = 	
@@ -228,7 +232,6 @@ angular.module('NetworkModule')
 	
 	function updateReplyLocalData(uri,id){
 		if(uri == LIKE_REPLY_URI+id){
-			console.log("calling update like ");
 			updateLikeReplyWithId(id, true)
 		}
 		else if(uri == UNLIKE_REPLY_URI+id){

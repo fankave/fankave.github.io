@@ -48,8 +48,6 @@ angular.module('TopicModule')
 .directive('repeatFinishedNotify', function () {
   return function (scope, element, attrs) {
     if (scope.$last){
-      // scope.scrollToBookmark();
-      // console.log("DONE LOADING COMMENTS");
       scope.hideLoading();
       scope.setLinksOnComments();
       scope.setDocVars();
@@ -99,7 +97,7 @@ angular.module('TopicModule')
       
       // Video Loading Event Listeners
       $(video).on('waiting', function() {
-        if (NETWORK_DEBUG)
+        if (GEN_DEBUG)
           console.log("Video Waiting");
         if (scope.isMobileUser){
           loadingSpinner.className = 'media-loading-fullscreen';
@@ -109,7 +107,7 @@ angular.module('TopicModule')
         }
       });
       $(video).on('stalled', function() {
-        if (NETWORK_DEBUG)
+        if (GEN_DEBUG)
           console.log("Video Stalled");
         if (scope.isMobileUser){
           loadingSpinner.className = 'media-loading-fullscreen';
@@ -123,17 +121,18 @@ angular.module('TopicModule')
         canPlay = true;
       });
       $(video).on('playing', function() {
-        if (NETWORK_DEBUG)
+        if (GEN_DEBUG)
           console.log("Video Playing");
         loadingSpinner.className = 'media-loading-default';
       });
       $(video).on('play', function() {
-        if (NETWORK_DEBUG)
+        if (GEN_DEBUG)
           console.log("Video play clicked" + scope.thisPost.id);
         ga('send', 'event', 'Video','Play', scope.thisPost.id);
       });
       $(video).on('pause', function() {
         var videoLengthPlayed = Math.round(video.currentTime);
+        if (GEN_DEBUG)
         console.log("Video paused" + scope.thisPost.id + ": TimePlayed " + videoLengthPlayed);
         ga('send', 'event', 'Video','VideoLengthPlayed', scope.thisPost.id, videoLengthPlayed);
       });
@@ -174,8 +173,8 @@ angular.module('TopicModule')
       }
 
       scope.setAspectRatio = function (aspectRatio, orientation) {
-        if (NETWORK_DEBUG){
-          // console.log("setAspectRatio: ", aspectRatio, orientation);
+        if (GEN_DEBUG){
+          console.log("setAspectRatio: ", aspectRatio, orientation);
         }
         var classStrings = [];
 
@@ -201,11 +200,11 @@ angular.module('TopicModule')
         var thesePlayerNodes = elem[0].firstElementChild.childNodes;
         var thisVideo = thesePlayerNodes[1];
         var thisWidth = $(thisVideo).width();
-        if (NETWORK_DEBUG){
-          // console.log("Elem in setD: ", elem);
-          // console.log("PlayerNodes in setD: ", thesePlayerNodes);
-          // console.log("Video in setD: ", thisVideo);
-          // console.log("Width in setD: ", thisWidth);
+        if (GEN_DEBUG){
+          console.log("Elem in setD: ", elem);
+          console.log("PlayerNodes in setD: ", thesePlayerNodes);
+          console.log("Video in setD: ", thisVideo);
+          console.log("Width in setD: ", thisWidth);
         }
 
         // Width Contingencies (landscape)
@@ -236,8 +235,8 @@ angular.module('TopicModule')
           styleObj['background-position-y'] = setYOffset(video);
           styleObj['background-position-x'] = setXOffset(video);
         }
-        if (NETWORK_DEBUG){
-          // console.log("Set Dimensions Object: ", styleObj);
+        if (GEN_DEBUG){
+          console.log("Set Dimensions Object: ", styleObj);
         }
         return styleObj;
       }

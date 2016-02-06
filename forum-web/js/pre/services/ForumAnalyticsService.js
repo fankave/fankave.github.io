@@ -36,9 +36,11 @@ if (visProp) {
   // window.document.addEventListener(event, visChange(vis, hid))
 function visChange(visCallback, hidCallback) {
   if (isHidden()) {
+    if (GEN_DEBUG)
     console.log('hidden callback fired');
     hidCallback();
   } else {
+    if (GEN_DEBUG)
     console.log('visible callback fired');
     visCallback();
   }
@@ -50,16 +52,19 @@ var count = 1;
 var timer = window.setInterval(timeAndReport, 1000);
 
 // Initial 1 second send
+if (GEN_DEBUG)
 console.log('TimeOnPage: 1 second');
 ga('send', 'event', 'TimeOnPage', '0', '1 second', { 'nonInteraction': 1 });
 
 function startTimer() {
+  if (GEN_DEBUG)
   console.log('Starting Timer at: ' + time + 'seconds');
   if (time <= 1800){
     timer = window.setInterval(timeAndReport, 1000);
   }
 };
 function stopTimer() {
+  if (GEN_DEBUG)
   console.log('Stopping Timer at: ' + time + 'seconds');
   window.clearInterval(timer);
 };
@@ -74,6 +79,7 @@ function timeAndReport() {
     return;
   }
   if (time === 10 || time === 30 || time === 60){
+    if (GEN_DEBUG)
     console.log('TimeOnPage: ' + time + ' seconds | Count: ' + count);
     ga('send', 'event', 'TimeOnPage', count.toString(), (time + ' seconds'), { 'nonInteraction': 1 });
     count++;
@@ -81,6 +87,7 @@ function timeAndReport() {
   if (time > 60 && time % 60 === 0){
     minutes++;
     if (minutes <= 5 || minutes === 10 || minutes === 20 || minutes === 30){
+      if (GEN_DEBUG)
       console.log('TimeOnPage: ' + minutes + ' mins | Count: ' + count);
       ga('send', 'event', 'TimeOnPage', count.toString(), (minutes + ' mins'), { 'nonInteraction': 1 });
       count++;

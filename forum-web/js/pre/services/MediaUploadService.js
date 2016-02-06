@@ -42,6 +42,7 @@ angular.module('MediaModule', ['angularFileUpload', 'NetworkModule', 'TopicModul
 		if (text === undefined){
 			text = "";
 		}
+		if (NETWORK_DEBUG)
 		console.log("Setting Comment Params: ", tId, text, isCom, comId, repId);
 		topicId = tId;
 		commentText = text;
@@ -63,6 +64,7 @@ angular.module('MediaModule', ['angularFileUpload', 'NetworkModule', 'TopicModul
 		
 		var content =  {"sections": sections};
 		createCommentParams.data.content = content;
+		if (NETWORK_DEBUG)
 		console.log("Media comment Request :"+ JSON.stringify(createCommentParams, null, 10));
 		return createCommentParams;
 	}

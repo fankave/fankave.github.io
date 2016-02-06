@@ -33,6 +33,7 @@ angular.module('TopicModule')
 
 
       _topicType = topicData.data.topicType;
+      if (NETWORK_DEBUG)
       console.log("TOPIC TYPE :"+_topicType );
       _id = topicData.data.id;
       if(_topicType == "livegame"){
@@ -52,6 +53,7 @@ angular.module('TopicModule')
           // console.log("GAME Status  :"+ _status );
   
           if(_status == "live"){
+            if (NETWORK_DEBUG)
             console.log("_gameStats" + _score.status);
             _gameStats = _score.status;
           }
@@ -86,6 +88,7 @@ angular.module('TopicModule')
   }
 
   function updateTopicData(scoreData){
+    if (NETWORK_DEBUG)
     console.log("Topic Service scoreData :" + scoreData)
     setScoreData(scoreData);
   }
@@ -99,14 +102,17 @@ angular.module('TopicModule')
         _status = "live";
       }
       _gameStats = _score.status;
-      console.log("Game Points :" + _score.points[0] + " : : "+_score.points[1] );
-      console.log("Game Period :" + _gameStats[0]);
-      console.log("Game Period :" + _gameStats[1]);
+      if (NETWORK_DEBUG) {
+        console.log("Game Points :" + _score.points[0] + " : : "+_score.points[1] );
+        console.log("Game Period :" + _gameStats[0]);
+        console.log("Game Period :" + _gameStats[1]);
+      }
       notifyObservers();
     }
   }
   
   function updateCommentCount(value){
+    if (NETWORK_DEBUG)
     console.log("Update comment count: " + _topic.metrics.comments + "     Value : "+ value);
     if(_topic!= undefined && _topic.metrics != undefined){
       if(value == 1)
@@ -149,6 +155,7 @@ angular.module('TopicModule')
   }
 
   function likeTopicRequest(){
+    if (NETWORK_DEBUG)
     console.log("Like topic request invoked"+_id);
     return  varLikeParams = {"rid": "topic",
         "timestamp": new Date().getTime(),
