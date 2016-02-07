@@ -52,34 +52,39 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       }
     };
 
-    function refreshContent() {
+    var refreshContent = function() {
       var tab = $scope.$parent.activeTab;
       console.log("Refreshing: ", tab);
-      if (tab === 'chat'){
-        return;
-      }
       var deferred = $q.defer();
+      if (tab === 'chat'){
+        deferred.reject();
+      }
       if (tab === 'video'){
         _this.videoArray = [];
+        $scope.$apply();
         VideoService.resetVideoOffset();
         _this.loadContent('video',0)
-        deferred.resolve(true);
+        deferred.resolve();
       }
       else if (tab === 'social'){
         _this.socialArray = [];
+        $scope.$apply();
         SocialService.resetSocialOffset();
         _this.loadContent('social',0)
-        deferred.resolve(true);
+        deferred.resolve();
       }
+      return deferred.promise;
     }
 
-    window.onload = function(){
+    $window.onload = function(){
+      console.log("WebPTR Loading");
       WebPullToRefresh.init({
         loadingFunction: refreshContent,
-        contentEl: 'ptrZone',
-        ptrEl: 'commentsContainer',
+        contentEl: 'commentsContainer',
+        ptrEl: 'ptrZone',
         distanceToRefresh: 30
       });
+      console.log("WebPTR Loaded");
     };
 
     var videoStaging = [];

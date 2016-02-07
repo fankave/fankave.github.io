@@ -321,7 +321,9 @@
   </div>
 </div>
 
-<div id="ptrZone"></div>
+<div id="ptrZone">
+  <span>Pull down to refresh...</span>
+</div>
 <div id="commentsContainer" ng-switch="activeTab">
   <div id="loadChatFill" ng-repeat="item in [1,2,3,4,5]" ng-if="loadingChat">
     <span class="load loadProfilePhoto"></span>
@@ -568,10 +570,10 @@
   <div id="moreCommentsBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length === 10" ng-click="loadRemainingComments()">
     <span id="moreCommentsText">Load more...</span>
   </div>
-  <div id="moreContentBar" ng-if="activeTab === 'social'" ng-click="social.loadContent('social',social.socialArray.length)">
+  <div id="moreContentBar" ng-if="activeTab === 'social' && !social.refreshing" ng-click="social.loadContent('social',social.socialArray.length)">
     <span id="moreContentText">Load more...</span>
   </div>
-  <div id="moreContentBar" ng-if="activeTab === 'video'" ng-click="social.loadContent('video',social.videoArray.length)">
+  <div id="moreContentBar" ng-if="activeTab === 'video' && !social.refreshing" ng-click="social.loadContent('video',social.videoArray.length)">
     <span id="moreContentText">Load more...</span>
   </div>
 </div>

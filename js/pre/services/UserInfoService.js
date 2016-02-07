@@ -121,11 +121,11 @@ angular.module('NetworkModule')
 			return false;
 		},
 		getUserType:function(){
-			console.log("UIS _userType - - - ", _userInfo.userType);
+			// console.log("UIS _userType - - - ", _userInfo.userType);
 			return _userInfo.userType;
 		},
 		isGuestUser:function(){
-			console.log("UIS _userType - - - ", _userInfo.userType);
+			// console.log("UIS _userType - - - ", _userInfo.userType);
 			if(_userInfo.userType === "guest" || ForumStorage.getFromLocalStorage("forumUserType") === "guest")
 			return true;
 			return false;
