@@ -303,6 +303,10 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   
   $scope.setPeelUI($scope.isPeelUser);
 
+  $scope.showLoadMore = function(){
+    $('#moreContentBar').css('display','block');
+  }
+
   $scope.hideLoading = function(){
     console.log("HIDING LOAD");
     $scope.loadingChat = false;

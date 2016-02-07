@@ -54,6 +54,7 @@ angular.module('TopicModule')
       scope.setLinksOnComments();
       scope.setDocVars();
       scope.continueToExperience('smartS');
+      scope.showLoadMore();
       // scope.loadRemainingCommentsTimeout();
     }
   };

@@ -60,6 +60,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         deferred.reject();
       }
       if (tab === 'video'){
+        $('#moreContentBar').css('display','none');
         _this.videoArray = [];
         $scope.$apply();
         VideoService.resetVideoOffset();
@@ -67,6 +68,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         deferred.resolve();
       }
       else if (tab === 'social'){
+        $('#moreContentBar').css('display','none');
         _this.socialArray = [];
         $scope.$apply();
         SocialService.resetSocialOffset();

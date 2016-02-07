@@ -58,7 +58,7 @@ a {
 .page-topic
 {
   /*padding-top: 8em; */
-  background-color: #16bde7;
+  background-color: #eee;
 }
 
 .page-post
@@ -186,7 +186,7 @@ body
 #commentsContainer
 {
   background-color: #EEEEEE;
-  margin-top: -42px;
+  margin-top: -20px;
   /*position: relative;*/
   /*top: -42px;*/
 }
@@ -2741,16 +2741,29 @@ iframe {
 
 #ptrZone {
   position: relative;
-  top: -22px;
   width: 100%;
   max-width: 768px;
   text-align: center;
-  color: #fff;
-  height: 42px;
   background-color: transparent;
 }
 #ptrZone > span {
   display: inline-block;
   vertical-align: -50%;
+}
+#ptrText {
+  display: inline-block;
+  background-color: #eee;
+  height: 20px;
+  text-align: center;
+  width: 100%;
+  max-width: 768px;
+}
+#ptrNoText {
+  display: inline-block;
+  background-color: #eee;
+  height: 16px;
+  text-align: center;
+  width: 100%;
+  max-width: 768px;
 }
 

@@ -100,7 +100,9 @@ gulp.task('lib-pre', function() {
 gulp.task('lib-post', function() {
   return gulp.src([
     './bower_components/bootstrap/dist/js/bootstrap.min.js',
-    './lib/magnific/jQuery.magnific-popup.min.js'
+    './lib/magnific/jQuery.magnific-popup.min.js',
+    './lib/pullToRefresh/hammer.2.0.4.js',
+    './lib/pullToRefresh/wptr.1.1.js'
   ])
   .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(concat('lib-post.min.js'))
