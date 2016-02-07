@@ -668,6 +668,14 @@ span.socialButtonLable
     display: inline-block;
 }
 
+.replyLabel {
+  padding-left: 5px;
+  font-size: 12px;
+  color: rgb(179,184,186);
+  display: inline-block;
+  vertical-align: middle; 
+}
+
 .social-btn-more
 {
   float:right;
@@ -2083,6 +2091,7 @@ img-crop canvas {
   height: 42px;
   background-color: #16bde7;
   text-align: center;
+  -webkit-user-select: none;
 }
 
 #moreCommentsBar {
@@ -2090,6 +2099,7 @@ img-crop canvas {
   height: 42px;
   background-color: #16bde7;
   text-align: center;
+  -webkit-user-select: none;
 }
 
 #moreContentBar:hover,
@@ -2101,12 +2111,14 @@ img-crop canvas {
   font-size: 14px;
   color: #fff;
   vertical-align: -60%;
+  -webkit-user-select: none;
 }
 
 #moreCommentsText {
   font-size: 14px;
   color: #fff;
   vertical-align: -60%;
+  -webkit-user-select: none;
 }
 
 
