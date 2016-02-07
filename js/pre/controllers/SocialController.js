@@ -52,7 +52,8 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       }
     };
 
-    this.refreshContent = function(tab) {
+    function refreshContent() {
+      var tab = $scope.$parent.activeTab;
       console.log("Refreshing: ", tab);
       if (tab === 'chat'){
         return;
@@ -61,14 +62,25 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       if (tab === 'video'){
         _this.videoArray = [];
         VideoService.resetVideoOffset();
-        deferred.resolve(_this.loadContent('video',0));
+        _this.loadContent('video',0)
+        deferred.resolve(true);
       }
       else if (tab === 'social'){
         _this.socialArray = [];
         SocialService.resetSocialOffset();
-        deferred.resolve(_this.loadContent('social',0));
+        _this.loadContent('social',0)
+        deferred.resolve(true);
       }
     }
+
+    window.onload = function(){
+      WebPullToRefresh.init({
+        loadingFunction: refreshContent,
+        contentEl: 'ptrZone',
+        ptrEl: 'commentsContainer',
+        distanceToRefresh: 30
+      });
+    };
 
     var videoStaging = [];
     var socialStaging = [];

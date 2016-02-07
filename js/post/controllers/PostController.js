@@ -162,7 +162,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
               }
             }
           }
-    			$('.commentsContainer').each(function()
+    			$('#commentsContainer').each(function()
     			{
       				$('.image-link').magnificPopup({
         				type:'image'
