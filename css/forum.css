@@ -1085,6 +1085,15 @@ button:hover {
   -moz-transform: translateX(-50%);
 }
 
+#facebookSpinner {
+  position: absolute;
+  top: 30vh;
+  width: 100px;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+}
+
 #facebookButton:hover {
   cursor: pointer;
 }
