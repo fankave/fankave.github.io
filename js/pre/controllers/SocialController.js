@@ -82,7 +82,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       console.log("WebPTR Loading");
       WebPullToRefresh.init({
         loadingFunction: refreshContent,
-        contentEl: 'commentsContainer',
+        contentEl: 'pullZone',
         ptrEl: 'ptrZone',
         distanceToRefresh: 30
       });

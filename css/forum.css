@@ -144,6 +144,8 @@ body
 /* Topic Details */
 
 #topicDetails {
+  position: relative;
+  z-index: 2;
   background-color: #fff;
   font-size:18px;
   padding-top:12px;
@@ -186,7 +188,7 @@ body
 #commentsContainer
 {
   background-color: #EEEEEE;
-  margin-top: -20px;
+  /*margin-top: -20px;*/
   /*position: relative;*/
   /*top: -42px;*/
 }
@@ -2750,13 +2752,18 @@ iframe {
   display: inline-block;
   vertical-align: -50%;
 }
-#ptrText {
+#ptrTextC {
   display: inline-block;
   background-color: #eee;
-  height: 20px;
+  height: 82px;
   text-align: center;
   width: 100%;
   max-width: 768px;
+}
+
+#ptrText {
+  display: inline-block;
+  vertical-align: -60px;
 }
 #ptrNoText {
   display: inline-block;
@@ -2765,5 +2772,13 @@ iframe {
   text-align: center;
   width: 100%;
   max-width: 768px;
+}
+
+#pullZone {
+  width: 100%;
+  max-width: 768px;
+  height: 102px;
+  background-color: #fff;
+  margin-top: -82px;
 }
 
