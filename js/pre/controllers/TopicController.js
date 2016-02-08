@@ -28,6 +28,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
         // Switch to Abs Positioning
         fixedEl.style.position = 'absolute';
+        console.log("Setting Input Bottom (H,Y,I,B): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom);
         fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
         // Switch Back After Focus is Lost
         function blurred() {
@@ -39,6 +40,18 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       });
     }
   };
+
+  // Before Focus:
+  // bottom = 0
+  // document.body.clientHeight = 4268
+  // window.scrollY = 703
+  // window.innerHeight = 628
+  // Applied Style Bottom = 2937px
+  // 
+  // After Focus:
+  // document.body.clientHeight = 4268
+  // window.scrollY = 1169
+  // window.innerHeight = 559
 
   //Google Analytics code
   if((ChannelService.getChannel() == undefined ) && (TopicService.getChannel() == undefined)){
