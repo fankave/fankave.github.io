@@ -2770,10 +2770,16 @@ iframe {
   max-width: 768px;
 }
 
-#ptrText {
+#ptrTextStart {
   display: inline-block;
   vertical-align: -60px;
 }
+
+#ptrTextEnd {
+  display: none;
+  vertical-align: -60px;
+}
+
 #ptrNoText {
   display: inline-block;
   background-color: #eee;
