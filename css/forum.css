@@ -187,7 +187,7 @@ body
 
 #commentsContainer
 {
-  background-color: #EEEEEE;
+  background-color: #fff;
   /*margin-top: -20px;*/
   /*position: relative;*/
   /*top: -42px;*/
@@ -1134,6 +1134,7 @@ button:hover {
 /* - - - Scorecard Text Rework - - - */
 
 .scoreCardContent {
+  position: relative;
   width:100%;
   max-width: 768px;
   height:114px;
@@ -2764,7 +2765,7 @@ iframe {
 #ptrTextC {
   display: inline-block;
   background-color: #eee;
-  height: 82px;
+  height: 182px;
   text-align: center;
   width: 100%;
   max-width: 768px;
@@ -2772,12 +2773,12 @@ iframe {
 
 #ptrTextStart {
   display: inline-block;
-  vertical-align: -60px;
+  vertical-align: -160px;
 }
 
 #ptrTextEnd {
   display: none;
-  vertical-align: -60px;
+  vertical-align: -160px;
 }
 
 #ptrNoText {
@@ -2792,8 +2793,8 @@ iframe {
 #pullZone {
   width: 100%;
   max-width: 768px;
-  height: 102px;
+  height: 202px;
   background-color: transparent;
-  margin-top: -82px;
+  margin-top: -182px;
 }
 
