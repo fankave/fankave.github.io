@@ -84,7 +84,8 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         loadingFunction: refreshContent,
         contentEl: 'pullZone',
         ptrEl: 'ptrZone',
-        distanceToRefresh: 30
+        distanceToRefresh: 30,
+        resistance: 2.0
       });
       console.log("WebPTR Loaded");
     };
