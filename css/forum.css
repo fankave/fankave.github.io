@@ -188,9 +188,6 @@ body
 #commentsContainer
 {
   background-color: #fff;
-  /*margin-top: -20px;*/
-  /*position: relative;*/
-  /*top: -42px;*/
 }
 /* Post */
 
@@ -1503,9 +1500,19 @@ img-crop canvas {
   background-color: rgb(248,248,248);
 }
 
+textarea#topicCommentField {
+  height: 30px;
+  font-size: 14px;
+}
+
 #postCommentField {
   color: rgb(29,29,29);
   background-color: rgb(248,248,248);
+}
+
+textarea#postCommentField {
+  height: 30px;
+  font-size: 14px;
 }
 
 #attachMediaIcon {
@@ -2758,10 +2765,12 @@ iframe {
   text-align: center;
   background-color: transparent;
 }
+
 #ptrZone > span {
   display: inline-block;
   vertical-align: -50%;
 }
+
 #ptrTextC {
   display: inline-block;
   background-color: #eee;
@@ -2779,15 +2788,6 @@ iframe {
 #ptrTextEnd {
   display: none;
   vertical-align: -160px;
-}
-
-#ptrNoText {
-  display: inline-block;
-  background-color: #eee;
-  height: 16px;
-  text-align: center;
-  width: 100%;
-  max-width: 768px;
 }
 
 #pullZone {

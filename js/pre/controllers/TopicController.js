@@ -5,6 +5,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
 {
   var sessionTime = window.time;
   var lastComment = false;
+
   // Check For Mobile Browser
   if (UserAgentService.isMobileUser()){
     $scope.mobileBrowser = true;
@@ -17,6 +18,27 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   if (!$scope.commentsArray){
     $scope.loadingChat = true;
   }
+
+  $scope.fixIOSFocus = function() {
+    if (UserAgentService.getMobileUserAgent() === 'iOS'){
+      var fixedEl = document.getElementById('mobileUserInput');
+      var inputEl = document.getElementById('topicCommentField');
+
+      inputEl.addEventListener('touchstart', function() {
+        var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
+        // Switch to Abs Positioning
+        fixedEl.style.position = 'absolute';
+        fixedEl.style.bottom = ($(document).height() - (window.scrollY + window.innerHeight) + bottom) + 'px';
+        // Switch Back After Focus is Lost
+        function blurred() {
+          fixedEl.style.position = '';
+          fixedEl.style.bottom = '';
+          inputEl.removeEventListener('blur', blurred);
+        }
+        inputEl.addEventListener('blur', blurred);
+      });
+    }
+  };
 
   //Google Analytics code
   if((ChannelService.getChannel() == undefined ) && (TopicService.getChannel() == undefined)){
@@ -56,18 +78,6 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     $scope.hidePeelSplash = true;
     $scope.hideSSSplash = true;
   }
-//  var tempJasonNFL = {};
-//  
-//  
-//  console.log("Team Names");
-//  for(i=0;i<tempJasonNFL.results.length;i++){
-//    console.log( "http://was.fankave.com/forum/#/channel/"+tempJasonNFL.results[i].channelId);
-//  }
-  //Samyukta test
-//  $(window).scroll(function(){
-//      $("#textInputFieldTopic").css("top", Math.max(160, 250 - $(this).scrollTop()));
-//  });
-  // $scope.hidePeelSplash = true;
 
   $scope.continueToExperience = function(env) {
     console.log("CONTINUE XP CLICKED");

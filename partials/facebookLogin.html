@@ -3,10 +3,10 @@
   <div id="landingContainer">
     <img id="landingGraphic" src="img/facebookLoginPage_bkgd-2x.jpg" />
     <div ng-switch="showFacebookButton">
-      <span ng-switch-when="false">
+      <span ng-switch-when="true">
         <img ng-src="img/FacebookLoginButton-2x.png" id="facebookButton" ng-click="loginToFacebook()" />
       </span>
-      <span ng-switch-when="true">
+      <span ng-switch-when="false">
         <img ng-src="img/load-spinner.gif" id="facebookSpinner" />
       </span>
     </div>

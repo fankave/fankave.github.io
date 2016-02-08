@@ -86,7 +86,7 @@
           <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
         </div>
     </div>
-    <form id="postCommentForm" ng-submit="user.postComment(commentText,false)">
+    <form id="postCommentForm">
       <div id="postCommentDivAlt" class="input-group">
         <label for="fileUpload" id="attachMediaIcon">
           <img ng-src="img/attach-media.png" />
@@ -94,8 +94,8 @@
 
         <button id="postCommentButton" class="btn btn-default" type="button" secure-click="user.postComment(commentText,false)">Post</button>
 
-        <span data-ng-element-ready="checkDirectReply()"><input id="postCommentField" type="text" class="form-control"
-        placeholder="Write a reply..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
+        <span data-ng-element-ready="checkDirectReply()"><textarea id="postCommentField" class="form-control"
+        placeholder="Write a reply..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></textarea></span>
         
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
 
