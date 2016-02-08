@@ -19,7 +19,12 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     $scope.loadingChat = true;
   }
 
-  var fullInnerHeight = window.innerHeight;
+  var fullInnerHeight;
+  function storeInitialHeight() {
+    fullInnerHeight = window.innerHeight.toString().slice();
+    console.log("FIH: ", fullInnerHeight);
+  }
+  storeInitialHeight();
   $scope.fixIOSFocus = function() {
     if (UserAgentService.getMobileUserAgent() === 'iOS'){
       var fixedEl = document.getElementById('mobileUserInput');
