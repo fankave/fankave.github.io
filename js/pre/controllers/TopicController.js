@@ -28,7 +28,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
         // Switch to Abs Positioning
         fixedEl.style.position = 'absolute';
-        fixedEl.style.bottom = ($(document).height() - (window.scrollY + window.innerHeight) + bottom) + 'px';
+        fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
         // Switch Back After Focus is Lost
         function blurred() {
           fixedEl.style.position = '';
