@@ -58,7 +58,7 @@ a {
 .page-topic
 {
   /*padding-top: 8em; */
-  background-color: #eee;
+  background-color: #fff;
 }
 
 .page-post
@@ -2787,7 +2787,7 @@ iframe {
   width: 100%;
   max-width: 768px;
   height: 102px;
-  background-color: #fff;
+  background-color: transparent;
   margin-top: -82px;
 }
 
