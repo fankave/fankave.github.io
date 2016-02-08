@@ -69,7 +69,7 @@ a {
 body
 { 
     background-color: white;
-    /*padding-bottom:4em;*/
+    touch-action: none;
 }
 
 .container
