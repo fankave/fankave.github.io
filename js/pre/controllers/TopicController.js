@@ -28,14 +28,14 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         console.log("IHAT: ", innerHeightAtTouch);
         var adjust;
         if (innerHeightAtTouch > window.innerHeight){
-          console.log("IN 397");
+          console.log("IN 397: ", innerHeightAtTouch);
           adjust = 397;
         } else if (innerHeightAtTouch <= window.innerHeight){
-          console.log("IN 466");
+          console.log("IN 466: ", innerHeightAtTouch);
           adjust = 466;
         }
-        $(document).scrollTop(window.scrollY);
-        fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + adjust) + 'px';
+        // $(document).scrollTop(window.scrollY);
+        // fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + adjust) + 'px';
       }
       inputEl.addEventListener('touchstart', function() {
         innerHeightAtTouch = window.innerHeight;
