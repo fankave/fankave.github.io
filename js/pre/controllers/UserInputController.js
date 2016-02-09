@@ -199,6 +199,15 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset - 42) + 'px';
             fixedEl.style.height = '94px';
           }
+          var mediaFocused;
+          mediaEl.addEventListener('touchstart', function(){
+            console.log("File touchstart");
+            mediaFocused = true;
+          });
+          mediaEl.addEventListener('click', function(){
+            console.log("File click");
+            mediaFocused = true;
+          });
           inputEl.addEventListener('touchstart', function() {
             var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
             // Switch to Abs Positioning
@@ -207,15 +216,6 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
             // Switch Back After Focus is Lost
             function blurred() {
-              var mediaFocused;
-              mediaEl.addEventListener('touchstart', function(){
-                console.log("File touchstart");
-                mediaFocused = true;
-              });
-              mediaEl.addEventListener('click', function(){
-                console.log("File click");
-                mediaFocused = true;
-              });
               if (mediaFocused){
                 return;
               }
