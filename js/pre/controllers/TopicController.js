@@ -24,7 +24,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       var fixedEl = document.getElementById('mobileUserInput');
       var inputEl = document.getElementById('topicCommentField');
       var innerHeightAtTouch;
-      inputEl.addEventListener('focus', function() {
+      function focused() {
         console.log("IHAT: ", innerHeightAtTouch);
         var adjust;
         if (innerHeightAtTouch > window.innerHeight){
@@ -37,7 +37,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
           window.scrollY = window.scrollY - adjust;
         }
         fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34)) + 'px';
-      });
+      }
       inputEl.addEventListener('touchstart', function() {
         innerHeightAtTouch = window.innerHeight;
         var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
@@ -49,8 +49,10 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         function blurred() {
           fixedEl.style.position = '';
           fixedEl.style.bottom = '';
+          inputEl.removeEventListener('focus', focused);
           inputEl.removeEventListener('blur', blurred);
         }
+        inputEl.addEventListener('focus', focused);
         inputEl.addEventListener('blur', blurred);
       });
     }
