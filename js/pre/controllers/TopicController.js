@@ -34,7 +34,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
           console.log("IN 466");
           adjust = 466;
         }
-        $(document).scrollTop(window.scrollY - adjust);
+        $(document).scrollTop(window.scrollY);
         fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + adjust) + 'px';
       }
       inputEl.addEventListener('touchstart', function() {
