@@ -30,7 +30,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         if (window.scrollY === 0){
           console.log("IN 397: ", innerHeightAtTouch, window.scrollY);
           adjust = 397;
-          $(window).scrollTop(0);
+          setTimeout(function(){$(document).scrollTop(0);},0);
           fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + adjust) + 'px';
         } else {
           console.log("IN 466: ", innerHeightAtTouch, window.scrollY);
