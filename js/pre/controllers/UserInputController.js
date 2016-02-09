@@ -208,6 +208,9 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             // Switch Back After Focus is Lost
             function blurred() {
               var mediaFocused;
+              mediaEl.addEventListener('touchstart', function(){
+                mediaFocused = true;
+              });
               mediaEl.addEventListener('click', function(){
                 mediaFocused = true;
               });
