@@ -28,13 +28,12 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         var adjust;
         if (innerHeightAtTouch > window.innerHeight){
           adjust = 397;
-          fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + adjust) + 'px';
           window.scrollY = window.scrollY - adjust;
         } else if (innerHeightAtTouch <= window.innerHeight){
           adjust = 466;
-          fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + adjust) + 'px';
           window.scrollY = window.scrollY - adjust;
         }
+        fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34)) + 'px';
       });
       inputEl.addEventListener('touchstart', function() {
         innerHeightAtTouch = window.innerHeight;
