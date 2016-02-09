@@ -188,7 +188,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       this.fixIOSFocus = function(view) {
         if (UserAgentService.getMobileUserAgent() === 'iOS'){
           var fixedEl = document.getElementById('mobileUserInput');
-          var mediaEl = document.getElementById('fileUpload');
+          var mediaEl = document.getElementById('attachMediaIcon');
           var postEl = document.getElementById('postCommentButton');
           var inputEl;
           if (view === 'topic'){
@@ -200,9 +200,10 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
           // postEl.addEventListener('click', function(){
           //   console.log("Post click");
           // });
-          // postEl.addEventListener('touchstart', function(){
-          //   console.log("Post touchstart");
-          // });
+          mediaEl.addEventListener('touchstart', function(){
+            $('#fileUpload').trigger('click');
+            console.log("Media touchstart");
+          });
 
           function focused() {
             var offset = 255;
