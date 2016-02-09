@@ -135,8 +135,9 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       console.info('uploader', this.uploader);
 
       // POST COMMENT
+      var posting;
       this.postComment = function(commentText, isComment) {
-        // console.log("In New Controller: ", isComment);
+        posting = true;
         if (_this.uploader.queue.length > 0 && isComment){
           MUService.setCommentParams($scope.topicID, commentText, true);
         } else if (_this.uploader.queue.length > 0 && !isComment){
@@ -155,6 +156,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         } else {
           window.scrollTo(0, document.body.scrollHeight);
         }
+        posting = false;
       };
 
       this.highlightPost = function(){
@@ -186,15 +188,13 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
           } else {
             inputEl = document.getElementById('postCommentField');
           }
+
           var mediaFocused;
-          mediaEl.addEventListener('touchstart', function(){
-            console.log("File touchstart");
-            mediaFocused = true;
-          });
           mediaEl.addEventListener('click', function(){
             console.log("File click");
             mediaFocused = true;
           });
+
           function focused() {
             var offset = 255;
             // var offset = 222; Keyboard: Predictive Text Minimized
@@ -216,7 +216,8 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
             // Switch Back After Focus is Lost
             function blurred() {
-              if (!mediaFocused){
+              // Don't reset if user is attaching media or hitting post button
+              if (!mediaFocused && !posting){
               fixedEl.style.position = '';
               fixedEl.style.bottom = '';
               fixedEl.style.height = '';
