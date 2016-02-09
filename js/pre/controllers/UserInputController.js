@@ -238,11 +238,11 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
               fixedEl.style.position = '';
               fixedEl.style.bottom = '';
               fixedEl.style.height = '';
-              inputEl.removeEventListener('blur', blurred);
               }
               if (mediaFocused){
                 mediaFocused = false;
               }
+              // inputEl.removeEventListener('blur', blurred);
             }
             inputEl.addEventListener('focus', focused);
             inputEl.addEventListener('blur', blurred);
