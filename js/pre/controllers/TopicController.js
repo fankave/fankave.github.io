@@ -53,21 +53,6 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     }
   };
 
-  // Before Focus:
-  // bottom = 0
-  // document.body.clientHeight = 4268
-  // window.scrollY = 703
-  // window.innerHeight = 628
-  // Applied Style Bottom = 2937px
-  // 
-  // After Focus:
-  // document.body.clientHeight = 4268
-  // window.scrollY = 1169
-  // window.innerHeight = 559
-  // 
-  // Constants: Shifting 397px down if focus without Lower Nav Bar
-  //            Shifting 466px down if focus with Lower Nav Bar
-
   //Google Analytics code
   if((ChannelService.getChannel() == undefined ) && (TopicService.getChannel() == undefined)){
      ga('send', 'pageview', "/topic/"+$routeParams.topicID);

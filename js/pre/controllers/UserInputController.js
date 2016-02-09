@@ -175,12 +175,45 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         $('#postCommentButton').css('color','rgb(22,189,231)');
       }
 
-      $('input#topicCommentField').bind('focusin focus', function(e){
-        e.preventDefault();
-      });
+      // $('input#topicCommentField').bind('focusin focus', function(e){
+      //   e.preventDefault();
+      // });
 
-      $('input').bind('focusin focus', function(e){
-        e.preventDefault();
-      });
+      // $('input').bind('focusin focus', function(e){
+      //   e.preventDefault();
+      // });
+      this.fixIOSFocus = function() {
+        if (UserAgentService.getMobileUserAgent() === 'iOS'){
+          var fixedEl = document.getElementById('mobileUserInput');
+          var inputEl = document.getElementById('topicCommentField');
+          function focused() {
+            var offset = 397;
+            if (window.scrollY === 0){
+              if (GEN_DEBUG) console.log("User At Top: ", window.scrollY);
+              $(document).scrollTop(1);
+              fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + offset) + 'px';
+            } else {
+              if (GEN_DEBUG) console.log("User at: ", window.scrollY);
+              $(document).scrollTop(window.scrollY);
+              fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + offset) + 'px';
+            }
+          }
+          inputEl.addEventListener('touchstart', function() {
+            var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
+            // Switch to Abs Positioning
+            fixedEl.style.position = 'absolute';
+            if (GEN_DEBUG) console.log("Setting Input Bottom (H,Y,I,B): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom);
+            fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
+            // Switch Back After Focus is Lost
+            function blurred() {
+              fixedEl.style.position = '';
+              fixedEl.style.bottom = '';
+              inputEl.removeEventListener('blur', blurred);
+            }
+            inputEl.addEventListener('focus', focused);
+            inputEl.addEventListener('blur', blurred);
+          });
+        }
+      };
 
     }]);
