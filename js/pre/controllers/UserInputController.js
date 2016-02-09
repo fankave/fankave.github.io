@@ -234,11 +234,14 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             // Switch Back After Focus is Lost
             function blurred() {
               // Don't reset if user is attaching media or hitting post button
-              if (!posting){
+              if (!mediaFocused && !posting){
               fixedEl.style.position = '';
               fixedEl.style.bottom = '';
               fixedEl.style.height = '';
               inputEl.removeEventListener('blur', blurred);
+              }
+              if (mediaFocused){
+                mediaFocused = false;
               }
             }
             inputEl.addEventListener('focus', focused);
