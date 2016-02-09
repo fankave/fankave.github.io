@@ -34,8 +34,8 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
           console.log("IN 466");
           adjust = 466;
         }
-          $(document).scrollTop(window.scrollY - adjust);
-          fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + adjust) + 'px';
+        $(document).scrollTop(window.scrollY - adjust);
+        fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + adjust) + 'px';
       }
       inputEl.addEventListener('touchstart', function() {
         innerHeightAtTouch = window.innerHeight;
@@ -48,7 +48,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         function blurred() {
           fixedEl.style.position = '';
           fixedEl.style.bottom = '';
-          inputEl.removeEventListener('focus', focused);
+          // inputEl.removeEventListener('focus', focused);
           inputEl.removeEventListener('blur', blurred);
         }
         inputEl.addEventListener('focus', focused);
