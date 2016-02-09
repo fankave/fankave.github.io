@@ -20,13 +20,16 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   }
 
   var fullInnerHeight;
+  $scope.fullInnerHt;
   function storeInitialHeight() {
     fullInnerHeight = window.innerHeight.toString().slice();
-    console.log("FIH: ", fullInnerHeight);
+    $scope.fullInnerHt = Math.max(window.innerHeight, document.documentElement.clientHeight);
+    console.log("FIH: ", fullInnerHeight, $scope.fullInnerHt);
   }
   storeInitialHeight();
   $scope.fixIOSFocus = function() {
     if (UserAgentService.getMobileUserAgent() === 'iOS'){
+      storeInitialHeight();
       var fixedEl = document.getElementById('mobileUserInput');
       var inputEl = document.getElementById('topicCommentField');
 
