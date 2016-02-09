@@ -190,6 +190,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
               $(document).scrollTop(window.scrollY);
             }
             fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset) + 'px';
+            fixedEl.style.paddingBottom = '52px';
           }
           inputEl.addEventListener('touchstart', function() {
             var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
@@ -201,6 +202,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             function blurred() {
               fixedEl.style.position = '';
               fixedEl.style.bottom = '';
+              fixedEl.style.paddingBottom = '';
               inputEl.removeEventListener('blur', blurred);
             }
             inputEl.addEventListener('focus', focused);
