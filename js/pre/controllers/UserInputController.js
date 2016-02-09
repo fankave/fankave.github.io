@@ -209,9 +209,11 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             function blurred() {
               var mediaFocused;
               mediaEl.addEventListener('touchstart', function(){
+                console.log("File touchstart");
                 mediaFocused = true;
               });
               mediaEl.addEventListener('click', function(){
+                console.log("File click");
                 mediaFocused = true;
               });
               if (mediaFocused){
