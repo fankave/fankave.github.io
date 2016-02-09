@@ -197,12 +197,14 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             inputEl = document.getElementById('postCommentField');
           }
 
-          // postEl.addEventListener('click', function(){
-          //   console.log("Post click");
-          // });
+          // Explicitly adding event listeners for touchstart
+          // seems to improve responsiveness for Post & Attach Media
+          postEl.addEventListener('touchstart', function(){
+            if (GEN_DEBUG) console.log("Post touchstart");
+          });
           mediaEl.addEventListener('touchstart', function(){
             $('#fileUpload').trigger('click');
-            console.log("Media touchstart");
+            if (GEN_DEBUG) console.log("Media touchstart");
           });
 
           function focused() {
