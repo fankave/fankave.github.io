@@ -175,10 +175,15 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         $('#postCommentButton').css('color','rgb(22,189,231)');
       }
 
-      this.fixIOSFocus = function() {
+      this.fixIOSFocus = function(view) {
         if (UserAgentService.getMobileUserAgent() === 'iOS'){
           var fixedEl = document.getElementById('mobileUserInput');
-          var inputEl = document.getElementById('topicCommentField');
+          var inputEl;
+          if (view === 'topic'){
+            inputEl = document.getElementById('topicCommentField');
+          } else {
+            inputEl = document.getElementById('postCommentField');
+          }
           function focused() {
             var offset = 255; // Keyboard: Predictive Text Maximized/Emoji
             // var offset = 222; Keyboard: Predictive Text Minimized
@@ -189,7 +194,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             } else {
               $(document).scrollTop(window.scrollY);
             }
-            fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset - 52) + 'px';
+            fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset) + 'px';
           }
           inputEl.addEventListener('touchstart', function() {
             var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
