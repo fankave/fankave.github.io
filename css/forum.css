@@ -1959,7 +1959,7 @@ textarea#postCommentField {
   width: 100%;
   bottom: 0%;
   z-index: 2;
-  background-color: rgb(248,249,251);
+  background-color: #fff;
 }
 
 .chatPostHeader {
