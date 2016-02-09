@@ -24,15 +24,17 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       var fixedEl = document.getElementById('mobileUserInput');
       var inputEl = document.getElementById('topicCommentField');
       function focused() {
-        var offset = 397;
+        var offset = 258;
         if (window.scrollY === 0){
           if (GEN_DEBUG) console.log("User At Top: ", window.scrollY);
           $(document).scrollTop(1);
-          fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + offset) + 'px';
+          fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset) + 'px';
+          // fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + offset) + 'px';
         } else {
           if (GEN_DEBUG) console.log("User at: ", window.scrollY);
           $(document).scrollTop(window.scrollY);
-          fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + offset) + 'px';
+          fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset) + 'px';
+          // fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + offset) + 'px';
         }
       }
       inputEl.addEventListener('touchstart', function() {
