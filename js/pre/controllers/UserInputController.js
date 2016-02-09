@@ -180,6 +180,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       function resetInput(){
         var fixedEl = document.getElementById('mobileUserInput');
         if (fixedEl.style.bottom !== ''){
+          console.log("reset input");
           fixedEl.style.position = '';
           fixedEl.style.bottom = '';
           fixedEl.style.height = '';
@@ -234,11 +235,14 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             // Switch Back After Focus is Lost
             function blurred() {
               // Don't reset if user is attaching media or hitting post button
-              if (!mediaFocused){
-              fixedEl.style.position = '';
-              fixedEl.style.bottom = '';
-              fixedEl.style.height = '';
-              }
+              setTimeout(function(){
+                console.log("Blur");
+                if (!mediaFocused){
+                  fixedEl.style.position = '';
+                  fixedEl.style.bottom = '';
+                  fixedEl.style.height = '';
+                }
+              }, 100);
               // if (mediaFocused){
                 // mediaFocused = false;
               // }
