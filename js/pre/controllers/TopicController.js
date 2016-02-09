@@ -646,6 +646,11 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   $(document).off('scroll');
   $(document).on('scroll', watchScroll);
 
+  $scope.mobileFocus = function(){
+    $scope.moreButtonTapped();
+    $('#postCommentButton').css('color','rgb(22,189,231)');
+  };
+
 
 }]);
 
