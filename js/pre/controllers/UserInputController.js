@@ -114,10 +114,12 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       };
       this.uploader.onProgressAll = function(progress) {
         console.info('onProgressAll', progress);
+        resetInput();
       };
       this.uploader.onSuccessItem = function(fileItem, response, status, headers) {
         console.info('onSuccessItem', fileItem, response, status, headers);
         networkService.send(MUService.postMediaRequest(response));
+        resetInput();
       };
       this.uploader.onErrorItem = function(fileItem, response, status, headers) {
         console.info('onErrorItem', fileItem, response, status, headers);
@@ -132,6 +134,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         console.info('onCompleteAll');
         _this.uploader.clearQueue();
         MUService.resetCommentParams();
+        resetInput();
       };
 
       console.info('uploader', this.uploader);
@@ -231,7 +234,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             // Switch Back After Focus is Lost
             function blurred() {
               // Don't reset if user is attaching media or hitting post button
-              if (!mediaFocused && !posting){
+              if (!posting){
               fixedEl.style.position = '';
               fixedEl.style.bottom = '';
               fixedEl.style.height = '';
