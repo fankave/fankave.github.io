@@ -23,11 +23,22 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     if (UserAgentService.getMobileUserAgent() === 'iOS'){
       var fixedEl = document.getElementById('mobileUserInput');
       var inputEl = document.getElementById('topicCommentField');
+      var innerHeightAtTouch;
       inputEl.addEventListener('focus', function() {
-        fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34)) + 'px';
+        var adjust;
+        if (innerHeightAtTouch > window.innerHeight){
+          adjust = 397;
+          fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + adjust) + 'px';
+          window.scrollY = window.scrollY - adjust;
+        } else if (innerHeightAtTouch <= window.innerHeight){
+          adjust = 466;
+          fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + adjust) + 'px';
+          window.scrollY = window.scrollY - adjust;
+        }
       });
       inputEl.addEventListener('touchstart', function() {
-        var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom) + 397;
+        innerHeightAtTouch = window.innerHeight;
+        var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
         // Switch to Abs Positioning
         fixedEl.style.position = 'absolute';
         console.log("Setting Input Bottom (H,Y,I,B): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom);
