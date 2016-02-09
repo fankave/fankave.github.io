@@ -24,7 +24,10 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       var fixedEl = document.getElementById('mobileUserInput');
       var inputEl = document.getElementById('topicCommentField');
       function focused() {
-        var offset = 255;
+        var offset = 255; // Keyboard: Predictive Text Maximized/Emoji
+        // var offset = 222; Keyboard: Predictive Text Minimized
+        // var offset = 213; Keyboard: Predictive Text Disabled
+        // Add 10 px for iphone 6 plus
         if (window.scrollY === 0){
           $(document).scrollTop(1);
         } else {
