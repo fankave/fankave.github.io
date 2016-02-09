@@ -23,35 +23,28 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     if (UserAgentService.getMobileUserAgent() === 'iOS'){
       var fixedEl = document.getElementById('mobileUserInput');
       var inputEl = document.getElementById('topicCommentField');
-      var innerHeightAtTouch;
       function focused() {
         var offset = 397;
         if (window.scrollY === 0){
-          console.log("User At Top: ", window.scrollY);
-          // offset = 397;
+          if (GEN_DEBUG) console.log("User At Top: ", window.scrollY);
           $(document).scrollTop(1);
           fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + offset) + 'px';
         } else {
-          console.log("User at: ", window.scrollY);
-          // offset = 466;
+          if (GEN_DEBUG) console.log("User at: ", window.scrollY);
           $(document).scrollTop(window.scrollY);
-          // var base = parseFloat(fixedEl.style.bottom);
-          // var adjust = screen.height - window.innerHeight + 34;
           fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + offset) + 'px';
         }
       }
       inputEl.addEventListener('touchstart', function() {
-        innerHeightAtTouch = window.innerHeight;
         var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
         // Switch to Abs Positioning
         fixedEl.style.position = 'absolute';
-        console.log("Setting Input Bottom (H,Y,I,B): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom);
+        if (GEN_DEBUG) console.log("Setting Input Bottom (H,Y,I,B): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom);
         fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
         // Switch Back After Focus is Lost
         function blurred() {
           fixedEl.style.position = '';
           fixedEl.style.bottom = '';
-          // inputEl.removeEventListener('focus', focused);
           inputEl.removeEventListener('blur', blurred);
         }
         inputEl.addEventListener('focus', focused);
