@@ -30,12 +30,13 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         if (window.scrollY === 0){
           console.log("IN 397: ", innerHeightAtTouch, window.scrollY);
           adjust = 397;
+          $(document).scrollTop(0);
         } else {
           console.log("IN 466: ", innerHeightAtTouch, window.scrollY);
           adjust = 466;
+          $(document).scrollTop(window.scrollY);
         }
         fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + adjust) + 'px';
-        $(document).scrollTop(window.scrollY);
       }
       inputEl.addEventListener('touchstart', function() {
         innerHeightAtTouch = window.innerHeight;
