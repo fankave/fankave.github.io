@@ -203,6 +203,11 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             console.log("Post click");
             // setTimeout(resetInput, 1000);
           });
+          postEl.addEventListener('touchstart', function(){
+            // mediaFocused = true;
+            console.log("Post touchstart");
+            // setTimeout(resetInput, 1000);
+          });
 
           function focused() {
             var offset = 255;
