@@ -24,7 +24,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       var fixedEl = document.getElementById('mobileUserInput');
       var inputEl = document.getElementById('topicCommentField');
       function focused() {
-        var offset = 258;
+        var offset = 255;
         if (window.scrollY === 0){
           if (GEN_DEBUG) console.log("User At Top: ", window.scrollY);
           $(document).scrollTop(1);
