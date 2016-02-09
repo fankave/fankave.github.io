@@ -197,7 +197,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             fixedEl.style.position = 'absolute';
             fixedEl.style.height = '94px';
             // if (GEN_DEBUG) console.log("Setting Input Bottom (H,Y,I,B): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom);
-            fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom - 52) + 'px';
+            fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
             // Switch Back After Focus is Lost
             function blurred() {
               fixedEl.style.position = '';
