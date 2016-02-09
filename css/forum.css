@@ -1533,9 +1533,9 @@ textarea#postCommentField {
   vertical-align: -44%;
 }
 
-#attachMediaIcon:hover {
+/*#attachMediaIcon:hover {
   cursor: pointer;
-}
+}*/
 
 #postCommentButton{
   width: 35px;
