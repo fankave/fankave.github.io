@@ -175,12 +175,38 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         $('#postCommentButton').css('color','rgb(22,189,231)');
       }
 
-      // $('input#topicCommentField').bind('focusin focus', function(e){
-      //   e.preventDefault();
-      // });
-
-      // $('input').bind('focusin focus', function(e){
-      //   e.preventDefault();
-      // });
+      this.fixIOSFocus = function() {
+        if (UserAgentService.getMobileUserAgent() === 'iOS'){
+          var fixedEl = document.getElementById('mobileUserInput');
+          var inputEl = document.getElementById('topicCommentField');
+          function focused() {
+            var offset = 255; // Keyboard: Predictive Text Maximized/Emoji
+            // var offset = 222; Keyboard: Predictive Text Minimized
+            // var offset = 213; Keyboard: Predictive Text Disabled
+            // Add 10 px for iphone 6 plus
+            if (window.scrollY === 0){
+              $(document).scrollTop(1);
+            } else {
+              $(document).scrollTop(window.scrollY);
+            }
+            fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset) + 'px';
+          }
+          inputEl.addEventListener('touchstart', function() {
+            var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
+            // Switch to Abs Positioning
+            fixedEl.style.position = 'absolute';
+            // if (GEN_DEBUG) console.log("Setting Input Bottom (H,Y,I,B): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom);
+            fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
+            // Switch Back After Focus is Lost
+            function blurred() {
+              fixedEl.style.position = '';
+              fixedEl.style.bottom = '';
+              inputEl.removeEventListener('blur', blurred);
+            }
+            inputEl.addEventListener('focus', focused);
+            inputEl.addEventListener('blur', blurred);
+          });
+        }
+      };
 
     }]);
