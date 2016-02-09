@@ -176,6 +176,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       }
 
       this.fixIOSFocus = function(view) {
+        console.log("WURFL: ", WURFL);
         if (UserAgentService.getMobileUserAgent() === 'iOS'){
           var fixedEl = document.getElementById('mobileUserInput');
           var inputEl;
@@ -194,7 +195,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             } else {
               $(document).scrollTop(window.scrollY);
             }
-            fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset) + 'px';
+            fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset - 52) + 'px';
             fixedEl.style.height = '94px';
           }
           inputEl.addEventListener('touchstart', function() {
