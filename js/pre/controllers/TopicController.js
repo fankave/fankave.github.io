@@ -25,7 +25,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       var inputEl = document.getElementById('topicCommentField');
       var innerHeightAtTouch;
       function focused() {
-        console.log("IHAT: ", innerHeightAtTouch);
+        console.log("NEW: ", innerHeightAtTouch);
         var adjust;
         if (window.scrollY === 0){
           console.log("IN 397: ", innerHeightAtTouch, window.scrollY);
