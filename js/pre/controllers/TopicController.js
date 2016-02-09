@@ -24,7 +24,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       var fixedEl = document.getElementById('mobileUserInput');
       var inputEl = document.getElementById('topicCommentField');
       inputEl.addEventListener('focus', function() {
-        fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 37)) + 'px';
+        fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34)) + 'px';
       });
       inputEl.addEventListener('touchstart', function() {
         var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
