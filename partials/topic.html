@@ -587,7 +587,7 @@
 
 
 </section>
-<section id="mobileUserInput" class="clearfix" ng-if="activeTab === 'chat' && mobileBrowser === true" ng-controller="UserInputController as user" ng-element-ready="user.fixIOSFocus()">
+<section id="mobileUserInput" class="clearfix" ng-if="activeTab === 'chat' && mobileBrowser === true" ng-controller="UserInputController as user" ng-element-ready="fixIOSFocus()">
 
     <div id="mobilePreview" ng-if="user.uploader.queue.length > 0">
       <button type="button" id="removeMedia" class="fkFont" ng-click="user.removeMedia()">X
