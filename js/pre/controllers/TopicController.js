@@ -26,22 +26,17 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       function focused() {
         var offset = 255;
         if (window.scrollY === 0){
-          if (GEN_DEBUG) console.log("User At Top: ", window.scrollY);
           $(document).scrollTop(1);
-          fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset) + 'px';
-          // fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + offset) + 'px';
         } else {
-          if (GEN_DEBUG) console.log("User at: ", window.scrollY);
           $(document).scrollTop(window.scrollY);
-          fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset) + 'px';
-          // fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + offset) + 'px';
         }
+        fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset) + 'px';
       }
       inputEl.addEventListener('touchstart', function() {
         var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
         // Switch to Abs Positioning
         fixedEl.style.position = 'absolute';
-        if (GEN_DEBUG) console.log("Setting Input Bottom (H,Y,I,B): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom);
+        // if (GEN_DEBUG) console.log("Setting Input Bottom (H,Y,I,B): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom);
         fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
         // Switch Back After Focus is Lost
         function blurred() {
