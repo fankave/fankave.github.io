@@ -198,11 +198,11 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
           }
 
           // var mediaFocused;
-          // mediaEl.addEventListener('click', function(){
-          //   // mediaFocused = true;
-          //   console.log("File click");
-          //   setTimeout(resetInput, 1000);
-          // });
+          postEl.addEventListener('click', function(){
+            // mediaFocused = true;
+            console.log("Post click");
+            // setTimeout(resetInput, 1000);
+          });
 
           function focused() {
             var offset = 255;
