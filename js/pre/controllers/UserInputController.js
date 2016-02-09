@@ -197,12 +197,12 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             inputEl = document.getElementById('postCommentField');
           }
 
-          postEl.addEventListener('click', function(){
-            console.log("Post click");
-          });
-          postEl.addEventListener('touchstart', function(){
-            console.log("Post touchstart");
-          });
+          // postEl.addEventListener('click', function(){
+          //   console.log("Post click");
+          // });
+          // postEl.addEventListener('touchstart', function(){
+          //   console.log("Post touchstart");
+          // });
 
           function focused() {
             var offset = 255;
