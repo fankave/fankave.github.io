@@ -29,7 +29,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         // Switch to Abs Positioning
         fixedEl.style.position = 'absolute';
         console.log("Setting Input Bottom (H,Y,I,B): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom);
-        fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom - 145) + 'px';
+        fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
         // Switch Back After Focus is Lost
         function blurred() {
           fixedEl.style.position = '';
@@ -645,11 +645,6 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
 
   $(document).off('scroll');
   $(document).on('scroll', watchScroll);
-
-  $scope.mobileFocus = function(){
-    $scope.moreButtonTapped();
-    $('#postCommentButton').css('color','rgb(22,189,231)');
-  };
 
 
 }]);
