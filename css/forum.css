@@ -1053,9 +1053,9 @@ button:focus,
     outline: none;
 }
 
-button:hover {
+/*button:hover {
   cursor: pointer;
-}
+}*/
 
 /* - - - Facebook Landing Page - - - */
 
@@ -1096,9 +1096,9 @@ button:hover {
   -moz-transform: translateX(-50%);
 }
 
-#facebookButton:hover {
+/*#facebookButton:hover {
   cursor: pointer;
-}
+}*/
 
 @media all and (orientation: landscape) and (max-device-width: 736px) {
   #facebookButton {
@@ -2503,9 +2503,9 @@ textarea#postCommentField {
   border-radius: 35px;
   border: none;
 }
-#techLoginButton:hover {
+/*#techLoginButton:hover {
   cursor: pointer;
-}
+}*/
 
 #techLoginDescription {
   color: #fff;
