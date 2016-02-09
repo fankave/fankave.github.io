@@ -1,6 +1,6 @@
 angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angularFileUpload"])
-  .controller("UserInputController", ["$scope","$window","$timeout","$routeParams","networkService","TopicService","CommentService","ReplyService","UserInfoService","FileUploader","MUService",
-    function ($scope,$window,$timeout,$routeParams,networkService,TopicService,CommentService,ReplyService,UserInfoService,FileUploader,MUService){
+  .controller("UserInputController", ["$scope","$window","$timeout","$routeParams","networkService","TopicService","CommentService","ReplyService","UserInfoService","FileUploader","MUService","UserAgentService",
+    function ($scope,$window,$timeout,$routeParams,networkService,TopicService,CommentService,ReplyService,UserInfoService,FileUploader,MUService,UserAgentService){
 
       // ATTACH MEDIA
       var MUS_SERVER_URI;
