@@ -40,6 +40,11 @@ position: relative; /* Fix for absolute positioning */
 font-family: "Proxima-Nova","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
 }
 
+html, body {
+  overflow-x: '';
+  overflow-y: '';
+}
+
 a {
   color: black;
 }
