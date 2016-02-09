@@ -172,16 +172,10 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
 
       this.unhighlightPost = function(){
         console.log("Styling post");
-        $('#postCommentButton').css('color','rgb(211,214,215)');
+        if (_this.uploader.queue.length < 1){
+          $('#postCommentButton').css('color','rgb(211,214,215)');
+        }
       };
-
-      this.mobileHighlightPost = function(){
-        $('#postCommentButton').css('color','rgb(22,189,231)');
-      }
-
-      this.mobileUnhighlightPost = function(){
-        $('#postCommentButton').css('color','rgb(22,189,231)');
-      }
 
       function resetInput(){
         var fixedEl = document.getElementById('mobileUserInput');
@@ -206,9 +200,15 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
           }
 
           var mediaFocused;
-          mediaEl.addEventListener('click', function(){
-            console.log("File click");
+          mediaEl.addEventListener('touchstart', function(){
             mediaFocused = true;
+            console.log("File touchstart");
+            // setTimeout(resetInput, 1000);
+          });
+          mediaEl.addEventListener('click', function(){
+            // mediaFocused = true;
+            console.log("File click");
+            setTimeout(resetInput, 1000);
           });
 
           function focused() {
@@ -234,14 +234,14 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             // Switch Back After Focus is Lost
             function blurred() {
               // Don't reset if user is attaching media or hitting post button
-              if (!mediaFocused && !posting){
+              if (!mediaFocused){
               fixedEl.style.position = '';
               fixedEl.style.bottom = '';
               fixedEl.style.height = '';
               }
-              if (mediaFocused){
-                mediaFocused = false;
-              }
+              // if (mediaFocused){
+                // mediaFocused = false;
+              // }
               // inputEl.removeEventListener('blur', blurred);
             }
             inputEl.addEventListener('focus', focused);
