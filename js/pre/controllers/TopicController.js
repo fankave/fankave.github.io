@@ -30,7 +30,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         if (window.scrollY === 0){
           console.log("IN 397: ", innerHeightAtTouch, window.scrollY);
           adjust = 397;
-          $(document).scrollTop(0);
+          $(document).scrollTop(1);
         } else {
           console.log("IN 466: ", innerHeightAtTouch, window.scrollY);
           adjust = 466;
