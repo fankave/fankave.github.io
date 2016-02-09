@@ -23,13 +23,15 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     if (UserAgentService.getMobileUserAgent() === 'iOS'){
       var fixedEl = document.getElementById('mobileUserInput');
       var inputEl = document.getElementById('topicCommentField');
-
+      inputEl.addEventListener('focus', function() {
+        fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 37)) + 'px';
+      });
       inputEl.addEventListener('touchstart', function() {
         var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
         // Switch to Abs Positioning
         fixedEl.style.position = 'absolute';
         console.log("Setting Input Bottom (H,Y,I,B): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom);
-        fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight + 145) + bottom) + 'px';
+        fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
         // Switch Back After Focus is Lost
         function blurred() {
           fixedEl.style.position = '';
