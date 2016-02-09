@@ -178,6 +178,8 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       this.fixIOSFocus = function(view) {
         if (UserAgentService.getMobileUserAgent() === 'iOS'){
           var fixedEl = document.getElementById('mobileUserInput');
+          var mediaEl = document.getElementById('fileUpload');
+          var postEl = document.getElementById('postCommentButton');
           var inputEl;
           if (view === 'topic'){
             inputEl = document.getElementById('topicCommentField');
@@ -205,6 +207,13 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
             // Switch Back After Focus is Lost
             function blurred() {
+              var mediaFocused;
+              mediaEl.addEventListener('click', function(){
+                mediaFocused = true;
+              });
+              if (mediaFocused){
+                return;
+              }
               fixedEl.style.position = '';
               fixedEl.style.bottom = '';
               fixedEl.style.height = '';
@@ -214,6 +223,10 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             inputEl.addEventListener('blur', blurred);
           });
         }
+      };
+
+      this.report = function(message){
+        console.log(message);
       };
 
     }]);
