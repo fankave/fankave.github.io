@@ -140,9 +140,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       console.info('uploader', this.uploader);
 
       // POST COMMENT
-      var posting;
       this.postComment = function(commentText, isComment) {
-        posting = true;
         if (_this.uploader.queue.length > 0 && isComment){
           MUService.setCommentParams($scope.topicID, commentText, true);
         } else if (_this.uploader.queue.length > 0 && !isComment){
@@ -161,7 +159,6 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         } else {
           window.scrollTo(0, document.body.scrollHeight);
         }
-        posting = false;
         resetInput();
       };
 
@@ -200,52 +197,37 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             inputEl = document.getElementById('postCommentField');
           }
 
-          var mediaFocused;
-          mediaEl.addEventListener('touchstart', function(){
-            mediaFocused = true;
-            console.log("File touchstart");
-            // setTimeout(resetInput, 1000);
-          });
-          mediaEl.addEventListener('click', function(){
-            // mediaFocused = true;
-            console.log("File click");
-            setTimeout(resetInput, 1000);
-          });
+          // var mediaFocused;
+          // mediaEl.addEventListener('click', function(){
+          //   // mediaFocused = true;
+          //   console.log("File click");
+          //   setTimeout(resetInput, 1000);
+          // });
 
           function focused() {
             var offset = 255;
-            // var offset = 222; Keyboard: Predictive Text Minimized
-            // var offset = 213; Keyboard: Predictive Text Disabled
-            // Add 10 px for iphone 6 plus
             if (window.scrollY === 0){
               $(document).scrollTop(1);
             } else {
               $(document).scrollTop(window.scrollY);
             }
             fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset - 42) + 'px';
-            // fixedEl.style.height = '94px';
             fixedEl.style.height = (fixedEl.clientHeight + 52) + 'px';
           }
           inputEl.addEventListener('touchstart', function() {
             var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
             // Switch to Abs Positioning
             fixedEl.style.position = 'absolute';
-            // if (GEN_DEBUG) console.log("Setting Input Bottom (H,Y,I,B): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom);
             fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
             // Switch Back After Focus is Lost
             function blurred() {
               // Don't reset if user is attaching media or hitting post button
               setTimeout(function(){
                 console.log("Blur");
-                if (!mediaFocused){
-                  fixedEl.style.position = '';
-                  fixedEl.style.bottom = '';
-                  fixedEl.style.height = '';
-                }
+                fixedEl.style.position = '';
+                fixedEl.style.bottom = '';
+                fixedEl.style.height = '';
               }, 10);
-              // if (mediaFocused){
-                // mediaFocused = false;
-              // }
               // inputEl.removeEventListener('blur', blurred);
             }
             inputEl.addEventListener('focus', focused);
