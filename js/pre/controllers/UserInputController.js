@@ -176,7 +176,6 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       }
 
       this.fixIOSFocus = function(view) {
-        console.log("WURFL: ", WURFL);
         if (UserAgentService.getMobileUserAgent() === 'iOS'){
           var fixedEl = document.getElementById('mobileUserInput');
           var inputEl;
@@ -186,7 +185,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             inputEl = document.getElementById('postCommentField');
           }
           function focused() {
-            var offset = 255; // Keyboard: Predictive Text Maximized/Emoji
+            var offset = 255;
             // var offset = 222; Keyboard: Predictive Text Minimized
             // var offset = 213; Keyboard: Predictive Text Disabled
             // Add 10 px for iphone 6 plus
@@ -195,7 +194,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             } else {
               $(document).scrollTop(window.scrollY);
             }
-            fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset - 52) + 'px';
+            fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset - 42) + 'px';
             fixedEl.style.height = '94px';
           }
           inputEl.addEventListener('touchstart', function() {
