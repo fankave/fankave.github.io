@@ -30,7 +30,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         // Switch to Abs Positioning
         fixedEl.style.position = 'absolute';
         console.log("Setting Input Bottom (H,Y,I,B,A): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom, screen.height - window.innerHeight + 37);
-        fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight + (screen.height - window.innerHeight + 37)) + bottom) + 'px';
+        fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) - (screen.height - window.innerHeight + 37) + bottom) + 'px';
         // Switch Back After Focus is Lost
         function blurred() {
           fixedEl.style.position = '';
