@@ -93,9 +93,11 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       this.uploader.onAfterAddingFile = function(fileItem) {
         console.info('onAfterAddingFile', fileItem);
         _this.highlightPost();
+        resetInput();
       };
       this.uploader.onAfterAddingAll = function(addedFileItems) {
         console.info('onAfterAddingAll', addedFileItems);
+        resetInput();
       };
       this.uploader.onBeforeUploadItem = function(item) {
         var user = UserInfoService.getUserCredentials();
@@ -157,6 +159,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
           window.scrollTo(0, document.body.scrollHeight);
         }
         posting = false;
+        resetInput();
       };
 
       this.highlightPost = function(){
@@ -175,6 +178,16 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
 
       this.mobileUnhighlightPost = function(){
         $('#postCommentButton').css('color','rgb(22,189,231)');
+      }
+
+      function resetInput(){
+        var fixedEl = document.getElementById('mobileUserInput');
+        if (fixedEl.style.bottom !== ''){
+          fixedEl.style.position = '';
+          fixedEl.style.bottom = '';
+          fixedEl.style.height = '';
+          // inputEl.removeEventListener('blur', blurred);
+        }
       }
 
       this.fixIOSFocus = function(view) {
@@ -218,7 +231,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             // Switch Back After Focus is Lost
             function blurred() {
               // Don't reset if user is attaching media or hitting post button
-              if (!posting){
+              if (!mediaFocused && !posting){
               fixedEl.style.position = '';
               fixedEl.style.bottom = '';
               fixedEl.style.height = '';
