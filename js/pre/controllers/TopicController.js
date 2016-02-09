@@ -30,11 +30,11 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         if (innerHeightAtTouch > window.innerHeight){
           console.log("IN 397");
           adjust = 397;
-          window.scrollY = window.scrollY - adjust;
+          $(document).scrollTop(window.scrollY - adjust);
         } else if (innerHeightAtTouch <= window.innerHeight){
           console.log("IN 466");
           adjust = 466;
-          window.scrollY = window.scrollY - adjust;
+          $(document).scrollTop(window.scrollY - adjust);
         }
         fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34)) + 'px';
       }
