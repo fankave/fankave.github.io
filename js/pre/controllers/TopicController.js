@@ -19,14 +19,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     $scope.loadingChat = true;
   }
 
-  var fullInnerHeight;
-  $scope.fullInnerHt;
-  function storeInitialHeight() {
-    fullInnerHeight = window.innerHeight.toString().slice();
-    $scope.fullInnerHt = Math.max(window.innerHeight, document.documentElement.clientHeight);
-    console.log("FIH: ", fullInnerHeight, $scope.fullInnerHt);
-  }
-  storeInitialHeight();
+  var originalInnerHeight = window.innerHeight;
   $scope.fixIOSFocus = function() {
     if (UserAgentService.getMobileUserAgent() === 'iOS'){
       storeInitialHeight();
@@ -37,8 +30,8 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
         // Switch to Abs Positioning
         fixedEl.style.position = 'absolute';
-        console.log("Setting Input Bottom (H,Y,I,B,F): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom, fullInnerHeight);
-        fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
+        console.log("Setting Input Bottom (H,Y,I,B,A): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom, screen.height - window.innerHeight + 37);
+        fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight + (screen.height - window.innerHeight + 37)) + bottom) + 'px';
         // Switch Back After Focus is Lost
         function blurred() {
           fixedEl.style.position = '';
