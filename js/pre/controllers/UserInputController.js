@@ -93,11 +93,11 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       this.uploader.onAfterAddingFile = function(fileItem) {
         console.info('onAfterAddingFile', fileItem);
         _this.highlightPost();
-        resetInput();
+        // resetInput();
       };
       this.uploader.onAfterAddingAll = function(addedFileItems) {
         console.info('onAfterAddingAll', addedFileItems);
-        resetInput();
+        // resetInput();
       };
       this.uploader.onBeforeUploadItem = function(item) {
         var user = UserInfoService.getUserCredentials();
@@ -114,12 +114,12 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       };
       this.uploader.onProgressAll = function(progress) {
         console.info('onProgressAll', progress);
-        resetInput();
+        // resetInput();
       };
       this.uploader.onSuccessItem = function(fileItem, response, status, headers) {
         console.info('onSuccessItem', fileItem, response, status, headers);
         networkService.send(MUService.postMediaRequest(response));
-        resetInput();
+        // resetInput();
       };
       this.uploader.onErrorItem = function(fileItem, response, status, headers) {
         console.info('onErrorItem', fileItem, response, status, headers);
@@ -134,7 +134,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         console.info('onCompleteAll');
         _this.uploader.clearQueue();
         MUService.resetCommentParams();
-        resetInput();
+        // resetInput();
       };
 
       console.info('uploader', this.uploader);
@@ -159,7 +159,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         } else {
           window.scrollTo(0, document.body.scrollHeight);
         }
-        resetInput();
+        // resetInput();
       };
 
       this.highlightPost = function(){
@@ -197,16 +197,11 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             inputEl = document.getElementById('postCommentField');
           }
 
-          // var mediaFocused;
           postEl.addEventListener('click', function(){
-            // mediaFocused = true;
             console.log("Post click");
-            // setTimeout(resetInput, 1000);
           });
           postEl.addEventListener('touchstart', function(){
-            // mediaFocused = true;
             console.log("Post touchstart");
-            // setTimeout(resetInput, 1000);
           });
 
           function focused() {
@@ -232,7 +227,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
                 fixedEl.style.position = '';
                 fixedEl.style.bottom = '';
                 fixedEl.style.height = '';
-              }, 10);
+              }, 20);
               // inputEl.removeEventListener('blur', blurred);
             }
             inputEl.addEventListener('focus', focused);
