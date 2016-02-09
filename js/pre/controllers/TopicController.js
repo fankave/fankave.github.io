@@ -22,7 +22,6 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   var originalInnerHeight = window.innerHeight;
   $scope.fixIOSFocus = function() {
     if (UserAgentService.getMobileUserAgent() === 'iOS'){
-      storeInitialHeight();
       var fixedEl = document.getElementById('mobileUserInput');
       var inputEl = document.getElementById('topicCommentField');
 
