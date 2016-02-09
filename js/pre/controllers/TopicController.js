@@ -27,7 +27,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34)) + 'px';
       });
       inputEl.addEventListener('touchstart', function() {
-        var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
+        var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom) + 397;
         // Switch to Abs Positioning
         fixedEl.style.position = 'absolute';
         console.log("Setting Input Bottom (H,Y,I,B): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom);
@@ -54,6 +54,9 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   // document.body.clientHeight = 4268
   // window.scrollY = 1169
   // window.innerHeight = 559
+  // 
+  // Constants: Shifting 397px down if focus without Lower Nav Bar
+  //            Shifting 466px down if focus with Lower Nav Bar
 
   //Google Analytics code
   if((ChannelService.getChannel() == undefined ) && (TopicService.getChannel() == undefined)){
