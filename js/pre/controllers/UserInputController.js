@@ -206,7 +206,8 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
               $(document).scrollTop(window.scrollY);
             }
             fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset - 42) + 'px';
-            fixedEl.style.height = '94px';
+            // fixedEl.style.height = '94px';
+            fixedEl.style.height = (fixedEl.clientHeight + 52) + 'px';
           }
           inputEl.addEventListener('touchstart', function() {
             var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
