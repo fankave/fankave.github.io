@@ -27,10 +27,10 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       function focused() {
         console.log("IHAT: ", innerHeightAtTouch);
         var adjust;
-        if (innerHeightAtTouch > window.innerHeight){
+        if (window.scrollY === 0){
           console.log("IN 397: ", innerHeightAtTouch, window.scrollY);
           adjust = 397;
-        } else if (innerHeightAtTouch <= window.innerHeight){
+        } else {
           console.log("IN 466: ", innerHeightAtTouch, window.scrollY);
           adjust = 466;
         }
