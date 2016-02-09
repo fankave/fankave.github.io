@@ -25,17 +25,19 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       var inputEl = document.getElementById('topicCommentField');
       var innerHeightAtTouch;
       function focused() {
-        var adjust;
+        var offset = 397;
         if (window.scrollY === 0){
-          console.log("IN 397 1-1: ", innerHeightAtTouch, window.scrollY);
-          adjust = 397;
-          $(document).scrollTop(1-1);
-          fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + adjust) + 'px';
+          console.log("User At Top: ", window.scrollY);
+          // offset = 397;
+          $(document).scrollTop(1);
+          fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + offset) + 'px';
         } else {
-          console.log("IN 466: ", innerHeightAtTouch, window.scrollY);
-          adjust = 466;
+          console.log("User at: ", window.scrollY);
+          // offset = 466;
           $(document).scrollTop(window.scrollY);
-          fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + adjust) + 'px';
+          // var base = parseFloat(fixedEl.style.bottom);
+          // var adjust = screen.height - window.innerHeight + 34;
+          fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) - (screen.height - window.innerHeight + 34) + offset) + 'px';
         }
       }
       inputEl.addEventListener('touchstart', function() {
