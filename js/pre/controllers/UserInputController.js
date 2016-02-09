@@ -242,7 +242,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
                   fixedEl.style.bottom = '';
                   fixedEl.style.height = '';
                 }
-              }, 50);
+              }, 10);
               // if (mediaFocused){
                 // mediaFocused = false;
               // }
