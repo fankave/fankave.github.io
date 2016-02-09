@@ -189,20 +189,20 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             } else {
               $(document).scrollTop(window.scrollY);
             }
-            fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset) + 'px';
-            fixedEl.style.paddingBottom = '52px';
+            fixedEl.style.top = (parseFloat(fixedEl.style.bottom) + offset + 42) + 'px';
+            fixedEl.style.height = '94px';
           }
           inputEl.addEventListener('touchstart', function() {
             var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
             // Switch to Abs Positioning
             fixedEl.style.position = 'absolute';
             // if (GEN_DEBUG) console.log("Setting Input Bottom (H,Y,I,B): ", document.body.clientHeight, window.scrollY, window.innerHeight, bottom);
-            fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
+            fixedEl.style.top = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom + 42) + 'px';
             // Switch Back After Focus is Lost
             function blurred() {
               fixedEl.style.position = '';
-              fixedEl.style.bottom = '';
-              fixedEl.style.paddingBottom = '';
+              fixedEl.style.top = '';
+              fixedEl.style.height = '';
               inputEl.removeEventListener('blur', blurred);
             }
             inputEl.addEventListener('focus', focused);
