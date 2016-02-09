@@ -28,10 +28,10 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         console.log("IHAT: ", innerHeightAtTouch);
         var adjust;
         if (innerHeightAtTouch > window.innerHeight){
-          console.log("IN 397: ", innerHeightAtTouch);
+          console.log("IN 397: ", innerHeightAtTouch, window.scrollY);
           adjust = 397;
         } else if (innerHeightAtTouch <= window.innerHeight){
-          console.log("IN 466: ", innerHeightAtTouch);
+          console.log("IN 466: ", innerHeightAtTouch, window.scrollY);
           adjust = 466;
         }
         // $(document).scrollTop(window.scrollY);
