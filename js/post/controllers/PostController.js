@@ -112,7 +112,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
       setTimeout(function(){
         $('#postCommentField').focus();
         TopicService.directComment = false;
-      }, 100);
+      }, 500);
     }
   }
 
