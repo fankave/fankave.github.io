@@ -114,7 +114,9 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
   // }
 
   function checkDirectReply() {
+    console.log("Direct Reply? ", TopicService.directComment);
     if (TopicService.directComment){
+      console.log("Triggering Keyboard", $('#postCommentField'));
       $('#postCommentField').focus();
       TopicService.directComment = false;
     }
