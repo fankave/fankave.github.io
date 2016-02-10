@@ -121,7 +121,8 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
       TopicService.directComment = false;
     }
   }
-  $(window).load(function(){
+  $(document).ready(function(){
+    console.log("DOM Ready");
     checkDirectReply();
   });
 
