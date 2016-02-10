@@ -1957,12 +1957,9 @@ textarea#postCommentField {
 #mobileUserInput {
   position: fixed;
   width: 100%;
+  bottom: 0%;
   z-index: 2;
   background-color: #fff;
-}
-
-.mobile-0 {
-  bottom: 0%;
 }
 
 .chatPostHeader {
