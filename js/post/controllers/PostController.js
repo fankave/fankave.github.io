@@ -108,10 +108,9 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 
   $scope.checkDirectReply = function() {
     // if (UserAgentService.getMobileUserAgent() !== 'iOS'){
-    var fixedEl = document.getElementById('mobileUserInput');
       if (TopicService.directComment){
-        fixedEl.style.bottom = '';
         $('#postCommentField').focus();
+        $('#mobileUserInput').removeClass('mobile-0');
         TopicService.directComment = false;
       }
     // }
