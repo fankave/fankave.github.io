@@ -110,6 +110,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
     if (TopicService.directComment){
       console.log("Direct Reply");
       setTimeout(function(){
+        console.log("Trigger Keyboard");
         $('#postCommentField').focus();
         TopicService.directComment = false;
       }, 500);
