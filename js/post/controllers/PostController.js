@@ -107,13 +107,11 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 	}
 
   $scope.checkDirectReply = function() {
-    if (TopicService.directComment){
-      console.log("Direct Reply");
-      setTimeout(function(){
-        console.log("Trigger Keyboard");
+    if (UserAgentService.getMobileUserAgent() !== 'iOS'){
+      if (TopicService.directComment){
         $('#postCommentField').focus();
         TopicService.directComment = false;
-      }, 5000);
+      }
     }
   }
 
