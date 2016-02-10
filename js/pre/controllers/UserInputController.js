@@ -237,6 +237,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             inputEl.addEventListener('blur', blurred);
           });
           if (view === 'post' && TopicService.directComment){
+            console.log("Attempting to Trigger Keyboard");
             $('#postCommentField').trigger('touchstart');
             TopicService.directComment = false;
           }
