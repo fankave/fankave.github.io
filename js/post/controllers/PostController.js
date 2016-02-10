@@ -121,10 +121,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
       TopicService.directComment = false;
     }
   }
-  $(document).ready(function(){
-    console.log("DOM Ready");
-    checkDirectReply();
-  });
+  setTimeout(function(){checkDirectReply();},0);
 
 	$scope.triggerRepliesKeyboard = function() {
     $('#postCommentField').focus();
