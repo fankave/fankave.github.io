@@ -121,6 +121,9 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
       TopicService.directComment = false;
     }
   }
+  $(window).load(function(){
+    checkDirectReply();
+  });
 
 	$scope.triggerRepliesKeyboard = function() {
     $('#postCommentField').focus();
@@ -359,9 +362,6 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
     //   setTimeout(function(){$scope.triggerRepliesKeyboard();},1000);
     //   TopicService.directComment = false;
     // }
-    $(window).load(function(){
-      checkDirectReply();
-    });
 	}
 
 	function updateReplies(){
