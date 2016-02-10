@@ -359,7 +359,9 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
     //   setTimeout(function(){$scope.triggerRepliesKeyboard();},1000);
     //   TopicService.directComment = false;
     // }
-    $(window).load(checkDirectReply);
+    $(window).load(function(){
+      checkDirectReply();
+    });
 	}
 
 	function updateReplies(){
