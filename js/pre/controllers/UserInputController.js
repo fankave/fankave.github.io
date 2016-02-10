@@ -214,14 +214,15 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             } else {
               $(document).scrollTop(window.scrollY);
             }
-            fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset - 42) + 'px';
-            fixedEl.style.height = (fixedEl.clientHeight + 52) + 'px';
+            // fixedEl.style.bottom = (parseFloat(fixedEl.style.bottom) + offset - 42) + 'px';
+            // fixedEl.style.height = (fixedEl.clientHeight + 52) + 'px';
           }
           inputEl.addEventListener('touchstart', function() {
             var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
             // Switch to Abs Positioning
             fixedEl.style.position = 'absolute';
-            fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
+            fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + (offset - 42) + 'px';
+            fixedEl.style.height = (fixedEl.clientHeight + 52) + 'px';
             // Switch Back After Focus is Lost
             function blurred() {
               // Don't reset if user is attaching media or hitting post button
@@ -236,14 +237,6 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             inputEl.addEventListener('focus', focused);
             inputEl.addEventListener('blur', blurred);
           });
-          if (view === 'post' && TopicService.directComment){
-            setTimeout(function(){
-            console.log("Attempting to Trigger Keyboard");
-            $('#postCommentField').trigger('touchstart');
-            $('#postCommentField').focus();
-            TopicService.directComment = false;
-            },2000);
-          }
         }
       };
 
