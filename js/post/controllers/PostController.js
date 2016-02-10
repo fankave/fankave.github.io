@@ -113,7 +113,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
         console.log("Trigger Keyboard");
         $('#postCommentField').focus();
         TopicService.directComment = false;
-      }, 500);
+      }, 2000);
     }
   }
 
