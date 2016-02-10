@@ -106,7 +106,14 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 		window.scrollTo(0,document.body.scrollHeight);
 	}
 
-  $scope.checkDirectReply = function() {
+  // $scope.checkDirectReply = function() {
+  //   if (TopicService.directComment){
+  //     $('#postCommentField').focus();
+  //     TopicService.directComment = false;
+  //   }
+  // }
+
+  function checkDirectReply() {
     if (TopicService.directComment){
       $('#postCommentField').focus();
       TopicService.directComment = false;
@@ -350,12 +357,8 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
     //   setTimeout(function(){$scope.triggerRepliesKeyboard();},1000);
     //   TopicService.directComment = false;
     // }
+    checkDirectReply();
 	}
-
-  // $scope.hideLoading = function(){
-  //   console.log("HIDING LOAD");
-  //   $scope.loadingReply = false;
-  // };
 
 	function updateReplies(){
 		//TODO: check with ahmed, these values could be individual scope var.
