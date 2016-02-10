@@ -112,6 +112,11 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
         $('#postCommentField').focus();
         TopicService.directComment = false;
       }
+    } else {
+      if (TopicService.directComment){
+        $('#postCommentField').trigger('touchstart');
+        TopicService.directComment = false;
+      }
     }
   }
 
