@@ -108,8 +108,11 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 
   $scope.checkDirectReply = function() {
     if (TopicService.directComment){
-      $('#postCommentField').focus();
-      TopicService.directComment = false;
+      console.log("Direct Reply");
+      setTimeout(function(){
+        $('#postCommentField').focus();
+        TopicService.directComment = false;
+      }, 100);
     }
   }
 
