@@ -236,6 +236,10 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             inputEl.addEventListener('focus', focused);
             inputEl.addEventListener('blur', blurred);
           });
+          if (view === 'post' && TopicService.directComment){
+            $('#postCommentField').trigger('touchstart');
+            TopicService.directComment = false;
+          }
         }
       };
 
