@@ -237,10 +237,12 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             inputEl.addEventListener('blur', blurred);
           });
           if (view === 'post' && TopicService.directComment){
+            setTimeout(function(){
             console.log("Attempting to Trigger Keyboard");
             $('#postCommentField').trigger('touchstart');
             $('#postCommentField').focus();
             TopicService.directComment = false;
+            },2000);
           }
         }
       };
