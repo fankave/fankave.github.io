@@ -108,7 +108,9 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 
   $scope.checkDirectReply = function() {
     // if (UserAgentService.getMobileUserAgent() !== 'iOS'){
+    var inputEl = document.getElementById('postCommentField');
       if (TopicService.directComment){
+        inputEl.style.bottom = '';
         $('#postCommentField').focus();
         TopicService.directComment = false;
       }
