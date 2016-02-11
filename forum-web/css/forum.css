@@ -212,7 +212,9 @@ body
 
 }
 
-.postRow:hover {
+.postAuthorPhoto:hover,
+.chatPostHeader:hover,
+.postContent:hover {
   cursor: pointer;
 }
 
