@@ -51,7 +51,7 @@ angular.module('TopicModule')
       // scope.scrollToBookmark();
       // console.log("DONE LOADING COMMENTS");
       scope.hideLoading();
-      scope.setLinksOnComments();
+      // scope.setLinksOnComments();
       scope.setDocVars();
       scope.continueToExperience('smartS');
       scope.showLoadMore();

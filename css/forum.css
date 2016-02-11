@@ -219,7 +219,9 @@ body
 
 }
 
-.postRow:hover {
+.postAuthorPhoto:hover,
+.chatPostHeader:hover,
+.postContent:hover {
   cursor: pointer;
 }
 
@@ -649,9 +651,9 @@ body
   margin-right: 0;
 }
 
-.dropdown-menu > li:hover {
+/*.dropdown-menu > li:hover {
   cursor: pointer;
-}
+}*/
 
 #chatLike {
   margin-left: 10px;
@@ -1017,9 +1019,9 @@ input:focus + button {
   z-index: 10003;
 }
 
-#continue:hover {
+/*#continue:hover {
   cursor: pointer;
-}
+}*/
 
 #kaveLogo {
   position: fixed;
@@ -1921,9 +1923,9 @@ textarea#postCommentField {
   z-index: 1;
 }
 
-#removeMedia:hover {
+/*#removeMedia:hover {
   cursor: pointer;
-}
+}*/
 
 .socialAlias {
   /*display: block;*/
@@ -2143,10 +2145,10 @@ textarea#postCommentField {
   text-align: center;
 }
 
-#moreContentBar:hover,
+/*#moreContentBar:hover,
 #moreContentBar:hover {
   cursor: pointer;
-}
+}*/
 
 #moreContentText {
   font-size: 14px;
