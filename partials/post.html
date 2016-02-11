@@ -54,7 +54,7 @@
           <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUp@2x.png"/> 
           
         </button>
-        <span class="socialButtonLable">{{comment.likeCount}}  </span>
+        <span class="socialButtonLable" ng-hide="comment.likeCount < 1">{{comment.likeCount}}  </span>
 
         <button id="chatReply" class="btn-link social-btn" secure-click="triggerRepliesKeyboard()">
           <img class="social-reply" ng-src="img/shareCopy@2x.png"/> 
@@ -94,7 +94,7 @@
 
         <button id="postCommentButton" class="btn btn-default" type="button" secure-click="user.postComment(commentText,false)">Post</button>
 
-        <span data-ng-element-ready="checkDirectReply()"><textarea id="postCommentField" class="form-control"
+        <span data-ng-element-ready="checkDirectReply()"><textarea id="postCommentField" rows="1" class="form-control"
         placeholder="Write a reply..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></textarea></span>
         
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
@@ -144,7 +144,7 @@
           <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUp@2x.png"/> 
           
         </button>
-        <span class="socialButtonLable">{{thisReply.likeCount}}  </span>
+        <span class="socialButtonLable" ng-hide="thisReply.likeCount < 1">{{thisReply.likeCount}}  </span>
 
         <!-- <button id="chatReply" class="btn-link social-btn" ng-click="triggerRepliesKeyboard()">
           <img class="social-reply" src="img/shareCopy@2x.png"/> </button>
