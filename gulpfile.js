@@ -29,6 +29,7 @@ gulp.task('scripts-pre', function() {
     './js/pre/controllers/ChannelController.js',
     './js/pre/controllers/AuthController.js',
     './js/pre/controllers/TopicController.js',
+    './js/pre/controllers/ChatController.js',
     './js/pre/controllers/VideoController.js',
     './js/pre/controllers/SocialController.js',
     './js/pre/controllers/UserInputController.js',

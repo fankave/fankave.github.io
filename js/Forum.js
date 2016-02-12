@@ -24,7 +24,9 @@ function ($stateProvider, $urlRouterProvider, $locationProvider) {
       deepStateRedirect: true,
       views: {
         'topic-tab-view': {
-          templateUrl:'partials/chat.html'
+          templateUrl:'partials/chat.html',
+          controller: 'ChatController',
+          controllerAs: 'chat'
         }
       }
     })
