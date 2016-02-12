@@ -238,9 +238,9 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
   // };
   $scope.initPage = function(){
     updateTopic();
-    updateComments();
+    // updateComments();
     $scope.pageClass = 'page-topic';
-    $scope.showNewCommentsIndicator = false;
+    // $scope.showNewCommentsIndicator = false;
 
     $scope.topicID = $stateParams.topicID;
     $scope.init();
@@ -250,34 +250,34 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
     }
   };
 
-  $scope.setLinksOnComments = function(){
-    var postDivs = document.getElementsByClassName("postRow");
-    for (div in postDivs) {
-      var thisDiv = postDivs[div];
-      thisDiv.onclick = function(e) {
-        if ($(e.target).is('a')) {
-          console.log("EXTERNAL LINK: ", e, this.id);
-          return;
-        } 
-        thisPost = $scope.commentsArray[this.id];
-        if ($scope.innerButtonTapped === false) {
-          console.log("Post Click Active: ", thisPost.id);
-          if (HTML5_LOC){
-            $location.path("/post/" + thisPost.id);
-            if (!$scope.$$phase){
-              $scope.$apply();
-            }
-          } else {
-            // $window.location = "#/post/" + thisPost.id;
-            var postParams = $stateParams;
-            postParams.postID = thisPost.id;
-            $state.go('post', postParams);
-          }
-        }
-        $scope.innerButtonTapped = false;
-      }
-    }
-  }
+  // $scope.setLinksOnComments = function(){
+  //   var postDivs = document.getElementsByClassName("postRow");
+  //   for (div in postDivs) {
+  //     var thisDiv = postDivs[div];
+  //     thisDiv.onclick = function(e) {
+  //       if ($(e.target).is('a')) {
+  //         console.log("EXTERNAL LINK: ", e, this.id);
+  //         return;
+  //       } 
+  //       thisPost = $scope.commentsArray[this.id];
+  //       if ($scope.innerButtonTapped === false) {
+  //         console.log("Post Click Active: ", thisPost.id);
+  //         if (HTML5_LOC){
+  //           $location.path("/post/" + thisPost.id);
+  //           if (!$scope.$$phase){
+  //             $scope.$apply();
+  //           }
+  //         } else {
+  //           // $window.location = "#/post/" + thisPost.id;
+  //           var postParams = $stateParams;
+  //           postParams.postID = thisPost.id;
+  //           $state.go('post', postParams);
+  //         }
+  //       }
+  //       $scope.innerButtonTapped = false;
+  //     }
+  //   }
+  // }
 
 //  if(URIHelper.isPeelUser())
 //    ga('send', 'event', 'UserType', '0', 'Peel User', { 'nonInteraction': 2 });
@@ -330,13 +330,13 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
   }
 
   $scope.showNewCommentsIndicator = false;
-  $scope.newCommentsIndicatorTapped = function()
-  {
-    console.log("newCommentsIndicatorTapped");
-    $scope.showNewCommentsIndicator = false;
-    updateComments();
-    $(document).scrollTop(0);
-  }
+  // $scope.newCommentsIndicatorTapped = function()
+  // {
+  //   console.log("newCommentsIndicatorTapped");
+  //   $scope.showNewCommentsIndicator = false;
+  //   updateComments();
+  //   $(document).scrollTop(0);
+  // }
 
   $scope.imageClick = function(imageURL)
   {

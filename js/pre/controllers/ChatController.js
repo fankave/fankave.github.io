@@ -4,6 +4,7 @@ angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
 
     var _this = this;
     var lastComment = false;
+    _this.newCommentsAvailable = false;
 
     if (!this.commentsArray){
       this.loading = true;
@@ -86,6 +87,21 @@ angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
 
     this.doneLoading = function() {
       _this.loading = false;
-    }
+    };
+
+    this.viewPost = function(e, id) {
+      if ($(e.target).is('a')){
+        return;
+      }
+      var postParams = $stateParams;
+      postParams.postID = id;
+      $state.go('post', postParams);
+    };
+
+    this.newCommentsIndicatorTapped = function() {
+      _this.newCommentsAvailable = false;
+      updateComments();
+      $(document).scrollTop(0);
+    };
 
 }]);
