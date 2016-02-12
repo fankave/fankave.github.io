@@ -292,6 +292,7 @@ angular.module('NetworkModule')
         tempStructure.metrics.replies == undefined ? tempStructure.metrics.replies = 1: tempStructure.metrics.replies = tempStructure.metrics.replies + 1;
       }
       updateLocalData(tempStructure); 
+       if(NETWORK_DEBUG) console.log("found element updated to :"+ tempStructure  + " tempStructure.metrics.replies :"+ tempStructure.metrics.replies);
     notifyObservers();
     }
     }
