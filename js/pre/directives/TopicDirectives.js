@@ -46,15 +46,9 @@ angular.module('TopicModule')
 
 angular.module('TopicModule')
 .directive('repeatFinishedNotify', function () {
-  return function (scope, element, attrs) {
-    if (scope.$last){
-      // scope.scrollToBookmark();
-      // console.log("DONE LOADING COMMENTS");
-      scope.hideLoading();
-      scope.setLinksOnComments();
-      scope.setDocVars();
-      scope.continueToExperience('smartS');
-      // scope.loadRemainingCommentsTimeout();
+  return function ($scope, $element, $attrs) {
+    if ($scope.$last){
+      $scope.$eval($attrs.repeatFinishedNotify);
     }
   };
 });

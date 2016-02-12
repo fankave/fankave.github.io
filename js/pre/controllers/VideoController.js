@@ -4,7 +4,7 @@ angular.module("VideoModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     var _this = this;
     if (!this.videoArray){
-      this.loadingVideo = true;
+      this.loading = true;
     }
     if (!!this.videoArray){
       updateTimestamps();
@@ -213,7 +213,10 @@ angular.module("VideoModule", ["NetworkModule","ChannelModule","TopicModule"])
     this.unhighlightPost = function(){
       $('#postShareContent').css('color','rgb(211,214,215)');
     };
-
+    
+    this.doneLoading = function() {
+      _this.loading = false;
+    }
 
 }]);
 

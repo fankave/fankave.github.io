@@ -3,7 +3,7 @@ angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "M
 
 function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $timeout, networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
-  var lastComment = false;
+  // var lastComment = false;
   // Check For Mobile Browser
   if (UserAgentService.isMobileUser()){
     $scope.mobileBrowser = true;
@@ -13,9 +13,9 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
     $scope.mobileBrowser = false;
   }
 
-  if (!$scope.commentsArray){
-    $scope.loadingChat = true;
-  }
+  // if (!$scope.commentsArray){
+  //   $scope.loadingChat = true;
+  // }
 
   ga('send', 'pageview', "/topic/"+$stateParams.topicID);
   console.log('Sent Pageview from /topic/' + $stateParams.topicID);
@@ -139,96 +139,85 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
     }
   };
 
-  var updateComments = function(){
-    var commentsdata = CommentService.comments();
-    if(commentsdata != undefined && (commentsdata.length >0 || lastComment === true)){
-      lastComment = false;
-      // console.log("CommentsData : ", commentsdata);
-      var len = commentsdata.length;
+  // var updateComments = function(){
+  //   var commentsdata = CommentService.comments();
+  //   if(commentsdata != undefined && (commentsdata.length >0 || lastComment === true)){
+  //     lastComment = false;
+  //     // console.log("CommentsData : ", commentsdata);
+  //     var len = commentsdata.length;
 
-      $scope.commentsArray = [];
+  //     $scope.commentsArray = [];
 
-      for(i=0;i<len;i++){
-        var tempComment = {};
-        tempComment = commentsdata[i];
-        tempComment.postAuthorName = commentsdata[i].author.name;
-        tempComment.postAuthorPhoto = commentsdata[i].author.photo;
-        tempComment.isMyComment = UserInfoService.isCurrentUser(commentsdata[i].author.id);
+  //     for(i=0;i<len;i++){
+  //       var tempComment = {};
+  //       tempComment = commentsdata[i];
+  //       tempComment.postAuthorName = commentsdata[i].author.name;
+  //       tempComment.postAuthorPhoto = commentsdata[i].author.photo;
+  //       tempComment.isMyComment = UserInfoService.isCurrentUser(commentsdata[i].author.id);
 
-        tempComment.likeCount = commentsdata[i].metrics.likes;
-        tempComment.replyCount = commentsdata[i].metrics.replies;
+  //       tempComment.likeCount = commentsdata[i].metrics.likes;
+  //       tempComment.replyCount = commentsdata[i].metrics.replies;
 
-        tempComment.postTimestamp = commentsdata[i].createdAt;
-        if (tempComment.type === 'media'){
-          tempComment.mediaUrl = commentsdata[i].mediaUrl;
-          // tempComment.trustedMediaUrl = $scope.trustSrc(tempComment.mediaUrl);
-          tempComment.mediaAspectFeed = commentsdata[i].mediaAspectFeed;
-          tempComment.mediaAspectFull = commentsdata[i].mediaAspectFull;
-          tempComment.mediaAspectRatio = commentsdata[i].mediaAspectRatio;
-          tempComment.mediaOrientation = commentsdata[i].mediaOrientation;
-          tempComment.mediaThumbUrl = commentsdata[i].mediaThumbUrl;
-        }
-        tempComment.isLiked = commentsdata[i].signal.like;
+  //       tempComment.postTimestamp = commentsdata[i].createdAt;
+  //       if (tempComment.type === 'media'){
+  //         tempComment.mediaUrl = commentsdata[i].mediaUrl;
+  //         // tempComment.trustedMediaUrl = $scope.trustSrc(tempComment.mediaUrl);
+  //         tempComment.mediaAspectFeed = commentsdata[i].mediaAspectFeed;
+  //         tempComment.mediaAspectFull = commentsdata[i].mediaAspectFull;
+  //         tempComment.mediaAspectRatio = commentsdata[i].mediaAspectRatio;
+  //         tempComment.mediaOrientation = commentsdata[i].mediaOrientation;
+  //         tempComment.mediaThumbUrl = commentsdata[i].mediaThumbUrl;
+  //       }
+  //       tempComment.isLiked = commentsdata[i].signal.like;
 
-        if (tempComment.type === 'embed'){
-          tempComment.shared = true;
-          tempComment.embed = commentsdata[i].embed;
-          tempComment.embed.embedCreatedAt = commentsdata[i].embedCreatedAt;
-          tempComment.embed.embedCreatedAtFull = commentsdata[i].embedCreatedAtFull;
-          tempComment.embedType = commentsdata[i].embedType;
+  //       if (tempComment.type === 'embed'){
+  //         tempComment.shared = true;
+  //         tempComment.embed = commentsdata[i].embed;
+  //         tempComment.embed.embedCreatedAt = commentsdata[i].embedCreatedAt;
+  //         tempComment.embed.embedCreatedAtFull = commentsdata[i].embedCreatedAtFull;
+  //         tempComment.embedType = commentsdata[i].embedType;
           
-          if (tempComment.embedType === 'media' || tempComment.embedType === 'link'){
-            tempComment.mediaUrl = commentsdata[i].embedMedia.mediaUrl;
-            tempComment.mediaThumbUrl = commentsdata[i].embedMedia.mediaThumbUrl;
-            tempComment.mediaAspectFeed = commentsdata[i].embedMedia.mediaAspectFeed;
-            tempComment.mediaAspectFull = commentsdata[i].embedMedia.mediaAspectFull;
-            tempComment.mediaAspectRatio = commentsdata[i].embedMedia.mediaAspectRatio;
-            tempComment.mediaOrientation = commentsdata[i].embedMedia.mediaOrientation;
-          }
+  //         if (tempComment.embedType === 'media' || tempComment.embedType === 'link'){
+  //           tempComment.mediaUrl = commentsdata[i].embedMedia.mediaUrl;
+  //           tempComment.mediaThumbUrl = commentsdata[i].embedMedia.mediaThumbUrl;
+  //           tempComment.mediaAspectFeed = commentsdata[i].embedMedia.mediaAspectFeed;
+  //           tempComment.mediaAspectFull = commentsdata[i].embedMedia.mediaAspectFull;
+  //           tempComment.mediaAspectRatio = commentsdata[i].embedMedia.mediaAspectRatio;
+  //           tempComment.mediaOrientation = commentsdata[i].embedMedia.mediaOrientation;
+  //         }
 
-          if (tempComment.providerName === "Twitter"){
-            tempComment.embed.embedLogo = "img/twitterLogo@2x.png";
-          } else {
-            tempComment.embed.embedLogo = commentsdata[i].embed.provider.logo;
-          }
+  //         if (tempComment.providerName === "Twitter"){
+  //           tempComment.embed.embedLogo = "img/twitterLogo@2x.png";
+  //         } else {
+  //           tempComment.embed.embedLogo = commentsdata[i].embed.provider.logo;
+  //         }
 
-          if (commentsdata[i].embed.type === 'link' && commentsdata[i].embed.playable === true){
-            tempComment.embedHtml = commentsdata[i].embedHtml;
-          }
-        }
-        $scope.commentsArray.push(tempComment);
-        if (i === len - 1 && NETWORK_DEBUG){
-          console.log("Comments Array: ", $scope.commentsArray);
-        }
+  //         if (commentsdata[i].embed.type === 'link' && commentsdata[i].embed.playable === true){
+  //           tempComment.embedHtml = commentsdata[i].embedHtml;
+  //         }
+  //       }
+  //       $scope.commentsArray.push(tempComment);
+  //       if (i === len - 1 && NETWORK_DEBUG){
+  //         console.log("Comments Array: ", $scope.commentsArray);
+  //       }
 
-      }
-    }
+  //     }
+  //   }
 
-  };
+  // };
 
-  $scope.loadRemainingComments = function() {
-    console.log("LOADING REST OF COMMENTS...");
-    if (!CommentService.loadedComments()){
-      networkService.send(CommentService.getCommentsRequest($stateParams.topicID));
-      CommentService.setLoadedComments(true);
-      $scope.loadedAllComments = true;
-    }
-  };
-
-  $scope.loadRemainingCommentsTimeout = function() {
-      $timeout(function(){
-        if (!CommentService.loadedComments()){
-          console.log("LOADING REST OF COMMENTS...");
-          networkService.send(CommentService.getCommentsRequest($stateParams.topicID));
-          $scope.loadedAllComments = true;
-          CommentService.setLoadedComments(true);
-        }
-      }, 7000);
-  };
+  // $scope.loadRemainingComments = function() {
+  //   console.log("LOADING REST OF COMMENTS...");
+  //   if (!CommentService.loadedComments()){
+  //     networkService.send(CommentService.getCommentsRequest($stateParams.topicID));
+  //     CommentService.setLoadedComments(true);
+  //     $scope.loadedAllComments = true;
+  //   }
+  // };
 
   $scope.init = function() {
     networkService.send(TopicService.getTopicRequest($stateParams.topicID));
-    networkService.send(CommentService.getCommentsRequest($stateParams.topicID));
+    // networkService.send(CommentService.getCommentsRequest($stateParams.topicID));
   };
   
 
@@ -241,12 +230,12 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
   
   $scope.setPeelUI($scope.isPeelUser);
 
-  $scope.hideLoading = function(){
-    console.log("HIDING LOAD");
-    $scope.loadingChat = false;
-    $scope.loadingSocial = false;
-    $scope.loadingSocial = false;
-  };
+  // $scope.hideLoading = function(){
+  //   console.log("HIDING LOAD");
+  //   $scope.loadingChat = false;
+  //   $scope.loadingSocial = false;
+  //   $scope.loadingSocial = false;
+  // };
   $scope.initPage = function(){
     updateTopic();
     updateComments();

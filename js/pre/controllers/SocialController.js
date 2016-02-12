@@ -4,7 +4,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     var _this = this;
     if (!this.socialArray){
-      this.loadingSocial = true;
+      this.loading = true;
     }
     if (!!this.socialArray){
       updateTimestamps();
@@ -213,7 +213,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     this.unhighlightPost = function(){
       $('#postShareContent').css('color','rgb(211,214,215)');
     };
-
+    
+    this.doneLoading = function() {
+      _this.loading = false;
+    }
 
 }]);
 
