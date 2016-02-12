@@ -13,10 +13,15 @@
   </div>
 </section>
 <!-- Tech MI16 Login -->
-<section ng-if="techMIUser" id="techPage">
-  <div id="techLoginContainer">
+<section ng-if="mUserType === 'MI16' || mUserType === 'MWC'" id="techPage">
+  <div id="techLoginContainer" ng-switch="mUserType">
 
-    <div id="techLoginHeader">
+    <div id="techLoginHeader" ng-switch-when="MI16">
+      <h1>MI16</h1>
+      <h3>Mission Innovation</h3>
+      <h4>Tech Mahindra</h4>
+    </div>
+    <div id="techLoginHeader" ng-switch-when="MWC">
       <h1>MI16</h1>
       <h3>Mission Innovation</h3>
       <h4>Tech Mahindra</h4>
@@ -41,7 +46,10 @@
 
     </div>
 
-    <div id="techLoginDescription">
+    <div id="techLoginDescription" ng-switch-when="MI16">
+      Welcome to Mission Innovation 2016, by Tech Mahindra. We'll be providing all the video highlights from the presentations in a feed.
+    </div>
+    <div id="techLoginDescription" ng-switch-when="MWC">
       Welcome to Mission Innovation 2016, by Tech Mahindra. We'll be providing all the video highlights from the presentations in a feed.
     </div>
 

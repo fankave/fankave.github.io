@@ -64,6 +64,9 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
   else if (UserInfoService.isMI16User()){
     $scope.isMI16User = true;
   }
+  else if (UserInfoService.isMWCUser()){
+    $scope.isMWCUser = true;
+  }
 
 	$scope.requestReplies = function(){
 		// console.log("PostController requestReplies Invoked");
