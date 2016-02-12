@@ -86,3 +86,5 @@
 <div id="moreContentBar" ng-click="social.loadContent(social.socialArray.length)">
   <span id="moreContentText">Load more...</span>
 </div>
+
+<share-to-chat-dialog ng-if="social.showShareDialog" this-post="social.embedShareContent" trust-source="social.trustSrc(videoSrc)" share-submit="social.submitSharedPost(commentData,embedData)" exit-share="social.exitShare()" highlight="social.highlightPost()" unhighlight="social.unhighlightPost()"></share-to-chat-dialog>

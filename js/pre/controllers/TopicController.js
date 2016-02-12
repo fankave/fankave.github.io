@@ -49,18 +49,6 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
     $scope.hidePeelSplash = true;
     $scope.hideSSSplash = true;
   }
-//  var tempJasonNFL = {};
-//  
-//  
-//  console.log("Team Names");
-//  for(i=0;i<tempJasonNFL.results.length;i++){
-//    console.log( "http://was.fankave.com/forum/#/channel/"+tempJasonNFL.results[i].channelId);
-//  }
-  //Samyukta test
-//  $(window).scroll(function(){
-//      $("#textInputFieldTopic").css("top", Math.max(160, 250 - $(this).scrollTop()));
-//  });
-  // $scope.hidePeelSplash = true;
 
   $scope.continueToExperience = function(env) {
     console.log("CONTINUE XP CLICKED");

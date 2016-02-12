@@ -40,7 +40,7 @@ function ($scope, $state, $stateParams, $sce, $timeout, $window, $location, $san
     } else {
       paramsObj = $stateParams;
       paramsObj.topicID = topicId;
-      $state.go("topic.social", $stateParams);
+      $state.go("topic.chat", $stateParams);
     }
 	}
 

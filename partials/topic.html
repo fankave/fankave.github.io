@@ -56,217 +56,188 @@
     <span id="ssTeamsSpan">Arsenal @ Sunderland</span>
   </div>
 </nav>
+
 <section id="topicSection">
-  
 
   <scorecard></scorecard>
 
-
-<div ng-if="isMI16User">
-  <img id="MI16Banner" ng-src="img/MI16/MI16banner@3x.png" />
-</div>
-<div id="topicDetails" class="row" ng-if="isMI16User">
-  <div id="MI16Title">
-    Welcome to this year's MI16! Here we'll post highlights from the event
+  <div ng-if="isMI16User">
+    <img id="MI16Banner" ng-src="img/MI16/MI16banner@3x.png" />
   </div>
-</div>
-
-<div id="topicDetails" class="row" ng-if="!isSmartStadiumUser && !isMI16User"> 
-  <div id="topicTitle">
-    {{topicTitle}}
-  </div>
-  <div id="topicDescriptionBody">
-    {{topicDescHtml}}
-  </div>
-  <div id="topicImage" ng-if="topicMediaUrl">
-    <img ng-src="{{topicMediaUrl}}" class="topicPhoto" ng-click="imageClick(topicMediaUrl);" />
-  </div>    
-
-  <div class="topicSharingButtonsRow clearfix">
-    <div class="grid-col-alt grid-col-50">
-      <div id="headLike">
-        <button secure-click="updateLikeTopic()" class="btn-link topic-social-btn" ng-switch="liked">
-          <img ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png"/> 
-          <img ng-switch-when="false" ng-src="img/thumbsUp@2x.png"/> 
-        </button>
-        <span class="socialButtonLabel fkFont">{{likesCount}} </span>
-      </div>
-    </div>
-    <div class="grid-col-alt grid-col-50">
-      <div id="headComment">
-        <button class="btn-link topic-social-btn" secure-click="commentOnTopic()"><img ng-src="img/comment-3x.png"/> 
-        </button>
-        <span class="socialButtonLabel fkFont">{{commentsCount}}</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Smart Stadium -->
-<div ng-if="isSmartStadiumUser === true" ng-controller="SmartStadiumController as smart">
-  <div id="ssTopicControls">
-    <div id="ssHighlights" class="grid-col-alt grid-col-33">
-      <button class="btn-link" ng-click="smart.viewHighlights()">
-        <img id="ssHighImg" class="ss-btn" ng-src="img/SS/highlights@3x.png" />
-      </button>
-    </div>
-    <div id="ssRoster" class="grid-col-alt grid-col-34">
-      <button class="btn-link" ng-click="smart.viewRoster()">
-        <img id="ssRostImg" class="ss-btn" ng-src="img/SS/roster@3x.png" />
-      </button>
-    </div>
-    <div id="ssStats" class="grid-col-alt grid-col-33">
-      <button class="btn-link" ng-click="smart.viewStats()">
-        <img id="ssStatImg" class="ss-btn" ng-src="img/SS/stats@3x.png" />
-      </button>
+  <div id="topicDetails" class="row" ng-if="isMI16User">
+    <div id="MI16Title">
+      Welcome to this year's MI16! Here we'll post highlights from the event
     </div>
   </div>
 
-  <div id="ssStaticContainer" ng-if="smart.viewScreen === true" ng-switch="smart.ssActiveScreen">
-    <div id="ssHighlightsView" ng-switch-when="highlights"></div>
-    <div id="ssRosterView" ng-switch-when="roster"></div>
-    <div id="ssStatsView" ng-switch-when="stats"></div>
-    <div id="ssProfileStatsView" ng-switch-when="profileStats"></div>
-    <div id="ssExitView" ng-click="smart.exitView()"></div>
-    <div id="PSVHidden" ng-if="smart.ssActiveScreen === 'roster'" ng-click="smart.viewProfileStats()"></div>
-  </div>
-</div>
+  <div id="topicDetails" class="row" ng-if="!isSmartStadiumUser && !isMI16User"> 
+    <div id="topicTitle">
+      {{topicTitle}}
+    </div>
+    <div id="topicDescriptionBody">
+      {{topicDescHtml}}
+    </div>
+    <div id="topicImage" ng-if="topicMediaUrl">
+      <img ng-src="{{topicMediaUrl}}" class="topicPhoto" ng-click="imageClick(topicMediaUrl);" />
+    </div>    
 
-
-<div id="inputControls">
-  <!-- Tech MI16 Tabs -->
-  <div class="tabContainer clearfix" ng-if="isMI16User" ng-element-ready="initializeTab()">
-    <div id="chatTab" class="grid-col grid-col-50 tab" ng-click="switchTabs('chat')">
-      <span class="tabName">Chat</span>
-    </div>
-    <div id="socialTab" class="grid-col grid-col-50 tab" ng-click="switchTabs('social')">
-      <span class="tabName">Social</span>
-    </div>
-    <div id="newCommentsAvailableIndicatorDiv" ng-if="showNewCommentsIndicator && activeTab === 'chat'">
-      <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
-        <img ng-src="img/newCommentIndicator.png" />
-      </button>
-    </div>
-  </div>
-  <!-- All Other Tabs -->
-  <div class="tabContainer clearfix" ng-if="!isMI16User" ng-element-ready="initializeTab()">
-    <div id="chatTab" class="grid-col grid-col-33 tab" ng-click="switchTabs('chat')">
-      <span class="tabName">Chat</span>
-    </div>
-    <div id="videoTab" class="grid-col grid-col-34 tab" ng-click="switchTabs('video')">
-      <span class="tabName">Video</span>
-    </div>
-    <div id="socialTab" class="grid-col grid-col-33 tab" ng-click="switchTabs('social')">
-      <span class="tabName">Social</span>
-    </div>
-    <div id="newCommentsAvailableIndicatorDiv" ng-if="showNewCommentsIndicator && activeTab === 'chat'">
-      <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
-        <img ng-src="img/newCommentIndicator.png" />
-      </button>
-    </div>
-  </div>
-
-  <div id="textInputFieldTopic" class="clearfix" ng-if="activeTab === 'chat' && mobileBrowser === false" ng-controller="UserInputController as user">
-    <div id="preview" ng-if="user.uploader.queue.length > 0">
-      <button type="button" id="removeMedia" class="fkFont" ng-click="user.removeMedia()">X
-      </button>
-    </div>
-    <div id="uploadControls" ng-if="user.uploader.isUploading && user.uploader.queue.length > 0">
-        <div class="progress" style="margin-bottom: 0;">
-          <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
+    <div class="topicSharingButtonsRow clearfix">
+      <div class="grid-col-alt grid-col-50">
+        <div id="headLike">
+          <button secure-click="updateLikeTopic()" class="btn-link topic-social-btn" ng-switch="liked">
+            <img ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png"/> 
+            <img ng-switch-when="false" ng-src="img/thumbsUp@2x.png"/> 
+          </button>
+          <span class="socialButtonLabel fkFont">{{likesCount}} </span>
         </div>
-    </div>
-    <form id="postCommentForm" ng-submit="user.postComment(commentText, true)">
-      <div id="postCommentDiv" class="input-group">
-        <label for="fileUpload" id="attachMediaIcon">
-          <img ng-src="img/attach-media.png" />
-        </label>
-
-        <button id="postCommentButton" class="btn btn-default" type="button" secure-click="user.postComment(commentText, true)">Post</button>
-
-        <span><input id="topicCommentField" type="text" class="form-control"
-        placeholder="Write a comment..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
-
-        <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
-
       </div>
-    </form>
-    <div class="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
-      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 5MB</span>
-      <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 256MB</span>
-    </div>
-    <div class="fileWarning" ng-if="user.HTML5warning === true">
-      <span class="text-danger">Please Use a Browser That Supports HTML5</span>
-    </div>
-  </div>
-</div>
-
-<div class="commentsContainer">
-
-  <div id="loadChatFill" ng-repeat="item in [1,2,3,4,5]" ng-if="loadingChat">
-    <span class="load loadProfilePhoto"></span>
-    <span class="loadPost">
-      <div class="clearfix">
-        <span class="load loadChatUsername"></span>
-        <span class="load loadChatTimestamp"></span>
+      <div class="grid-col-alt grid-col-50">
+        <div id="headComment">
+          <button class="btn-link topic-social-btn" secure-click="commentOnTopic()"><img ng-src="img/comment-3x.png"/> 
+          </button>
+          <span class="socialButtonLabel fkFont">{{commentsCount}}</span>
+        </div>
       </div>
-      <div class="load loadChatBody"></div>
-      <div class="load loadChatFooter"></div>
-    </span>
+    </div>
   </div>
 
-  <!-- Tab Content Gets Loaded Here -->
-  <div ui-view="topic-tab-view"></div>
+  <!-- Smart Stadium -->
+  <div ng-if="isSmartStadiumUser === true" ng-controller="SmartStadiumController as smart">
+    <div id="ssTopicControls">
+      <div id="ssHighlights" class="grid-col-alt grid-col-33">
+        <button class="btn-link" ng-click="smart.viewHighlights()">
+          <img id="ssHighImg" class="ss-btn" ng-src="img/SS/highlights@3x.png" />
+        </button>
+      </div>
+      <div id="ssRoster" class="grid-col-alt grid-col-34">
+        <button class="btn-link" ng-click="smart.viewRoster()">
+          <img id="ssRostImg" class="ss-btn" ng-src="img/SS/roster@3x.png" />
+        </button>
+      </div>
+      <div id="ssStats" class="grid-col-alt grid-col-33">
+        <button class="btn-link" ng-click="smart.viewStats()">
+          <img id="ssStatImg" class="ss-btn" ng-src="img/SS/stats@3x.png" />
+        </button>
+      </div>
+    </div>
 
-  <div id="moreCommentsBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length === 10" ng-click="loadRemainingComments()">
-    <span id="moreCommentsText">Load more...</span>
+    <div id="ssStaticContainer" ng-if="smart.viewScreen === true" ng-switch="smart.ssActiveScreen">
+      <div id="ssHighlightsView" ng-switch-when="highlights"></div>
+      <div id="ssRosterView" ng-switch-when="roster"></div>
+      <div id="ssStatsView" ng-switch-when="stats"></div>
+      <div id="ssProfileStatsView" ng-switch-when="profileStats"></div>
+      <div id="ssExitView" ng-click="smart.exitView()"></div>
+      <div id="PSVHidden" ng-if="smart.ssActiveScreen === 'roster'" ng-click="smart.viewProfileStats()"></div>
+    </div>
   </div>
 
-</div>
+  <div id="inputControls">
+    <!-- Tech MI16 Tabs -->
+    <div class="tabContainer clearfix" ng-if="isMI16User" ng-element-ready="initializeTab()">
+      <div id="chatTab" class="grid-col grid-col-50 tab" ng-click="switchTabs('chat')">
+        <span class="tabName">Chat</span>
+      </div>
+      <div id="socialTab" class="grid-col grid-col-50 tab" ng-click="switchTabs('social')">
+        <span class="tabName">Social</span>
+      </div>
+      <div id="newCommentsAvailableIndicatorDiv" ng-if="showNewCommentsIndicator && activeTab === 'chat'">
+        <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
+          <img ng-src="img/newCommentIndicator.png" />
+        </button>
+      </div>
+    </div>
+    <!-- All Other Tabs -->
+    <div class="tabContainer clearfix" ng-if="!isMI16User" ng-element-ready="initializeTab()">
+      <div id="chatTab" class="grid-col grid-col-33 tab" ng-click="switchTabs('chat')">
+        <span class="tabName">Chat</span>
+      </div>
+      <div id="videoTab" class="grid-col grid-col-34 tab" ng-click="switchTabs('video')">
+        <span class="tabName">Video</span>
+      </div>
+      <div id="socialTab" class="grid-col grid-col-33 tab" ng-click="switchTabs('social')">
+        <span class="tabName">Social</span>
+      </div>
+      <div id="newCommentsAvailableIndicatorDiv" ng-if="showNewCommentsIndicator && activeTab === 'chat'">
+        <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
+          <img ng-src="img/newCommentIndicator.png" />
+        </button>
+      </div>
+    </div>
 
-<!-- <share-to-chat-dialog ng-if="social.showShareDialog" this-post="social.embedShareContent" trust-source="trustSrc(videoSrc)" share-submit="social.submitSharedPost(commentData,embedData)" exit-share="social.exitShare()" highlight="social.highlightPost()" unhighlight="social.unhighlightPost()"></share-to-chat-dialog> -->
+    <div id="textInputFieldTopic" class="clearfix" ng-if="$state.includes('topic.chat') && mobileBrowser === false" ng-controller="UserInputController as user">
+      <div id="preview" ng-if="user.uploader.queue.length > 0">
+        <button type="button" id="removeMedia" class="fkFont" ng-click="user.removeMedia()">X
+        </button>
+      </div>
+      <div id="uploadControls" ng-if="user.uploader.isUploading && user.uploader.queue.length > 0">
+          <div class="progress" style="margin-bottom: 0;">
+            <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
+          </div>
+      </div>
+      <form id="postCommentForm" ng-submit="user.postComment(commentText, true)">
+        <div id="postCommentDiv" class="input-group">
+          <label for="fileUpload" id="attachMediaIcon">
+            <img ng-src="img/attach-media.png" />
+          </label>
 
+          <button id="postCommentButton" class="btn btn-default" type="button" secure-click="user.postComment(commentText, true)">Post</button>
+
+          <span><input id="topicCommentField" type="text" class="form-control"
+          placeholder="Write a comment..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
+
+          <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
+
+        </div>
+      </form>
+      <div class="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
+        <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 5MB</span>
+        <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 256MB</span>
+      </div>
+      <div class="fileWarning" ng-if="user.HTML5warning === true">
+        <span class="text-danger">Please Use a Browser That Supports HTML5</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="commentsContainer">
+    <!-- Tab Content Gets Loaded Here -->
+    <div ui-view="topic-tab-view"></div>
+  </div>
 
 </section>
-<section id="mobileUserInput" class="clearfix" ng-if="activeTab === 'chat' && mobileBrowser === true" ng-controller="UserInputController as user">
 
-    <div id="mobilePreview" ng-if="user.uploader.queue.length > 0">
-      <button type="button" id="removeMedia" class="fkFont" ng-click="user.removeMedia()">X
-      </button>
+<section id="mobileUserInput" class="clearfix" ng-if="$state.includes('topic.chat') && mobileBrowser === true" ng-controller="UserInputController as user">
+
+  <div id="mobilePreview" ng-if="user.uploader.queue.length > 0">
+    <button type="button" id="removeMedia" class="fkFont" ng-click="user.removeMedia()">X
+    </button>
+  </div>
+  <div id="mobileUploadControls" ng-if="user.uploader.isUploading && user.uploader.queue.length > 0">
+    <div class="progress mobileProgress">
+      <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
     </div>
-    <div id="mobileUploadControls" ng-if="user.uploader.isUploading && user.uploader.queue.length > 0">
-      <div class="progress mobileProgress">
-        <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
-      </div>
+  </div>
+  <form id="mobilePostCommentForm" ng-submit="user.postComment(commentText,true)">
+    <div id="mobilePostCommentDiv" class="input-group">
+      <label for="fileUpload" id="attachMediaIcon">
+        <img ng-src="img/attach-media.png" />
+      </label>
+
+      <button id="postCommentButton" class="btn btn-default" type="button" secure-click="user.postComment(commentText,true)">Post</button>
+
+      <span><input id="topicCommentField" type="text" class="form-control"
+      placeholder="Write a comment..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
+
+      <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
+
     </div>
-    <form id="mobilePostCommentForm" ng-submit="user.postComment(commentText,true)">
-      <div id="mobilePostCommentDiv" class="input-group">
-        <label for="fileUpload" id="attachMediaIcon">
-          <img ng-src="img/attach-media.png" />
-        </label>
+  </form>
+  <div class="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
+    <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 5MB</span>
+    <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 256MB</span>
+  </div>
+  <div class="fileWarning" ng-if="user.HTML5warning === true">
+    <span class="text-danger">Please Use a Browser That Supports HTML5</span>
+  </div>
 
-        <button id="postCommentButton" class="btn btn-default" type="button" secure-click="user.postComment(commentText,true)">Post</button>
-
-        <span><input id="topicCommentField" type="text" class="form-control"
-        placeholder="Write a comment..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
-
-        <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
-
-      </div>
-    </form>
-    <div class="fileWarning" ng-if="user.fileMaxExceeded" ng-switch="user.mediaType">
-      <span class="text-danger" ng-switch-when="image">Image Max Size Exceeded: Please ensure file is less than 5MB</span>
-      <span class="text-danger" ng-switch-when="video">Video Max Size Exceeded: Please ensure file is less than 256MB</span>
-    </div>
-    <div class="fileWarning" ng-if="user.HTML5warning === true">
-      <span class="text-danger">Please Use a Browser That Supports HTML5</span>
-    </div>
-  </section>
-
-<!-- <div id="newCommentsAvailableIndicatorDiv" ng-show="showNewCommentsIndicator && activeTab === 'chat'">
-  <center>
-    <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()"><img ng-src="img/newCommentIndicator.png"/></button>
-  </center>
-</div> -->
-
-
+</section>

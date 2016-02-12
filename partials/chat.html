@@ -1,3 +1,15 @@
+<div id="loadChatFill" ng-repeat="item in [1,2,3,4,5]" ng-if="loadingChat">
+  <span class="load loadProfilePhoto"></span>
+  <span class="loadPost">
+    <div class="clearfix">
+      <span class="load loadChatUsername"></span>
+      <span class="load loadChatTimestamp"></span>
+    </div>
+    <div class="load loadChatBody"></div>
+    <div class="load loadChatFooter"></div>
+  </span>
+</div>
+
 <div ng-repeat="thisPost in commentsArray | orderBy: $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
 
   <span class="postAuthorPhoto">
@@ -67,4 +79,8 @@
     <div class="moreRepliesContainer" ng-if="thisPost.replyCount > 1">{{thisPost.replyCount}} Replies</div>
 
   </div>
+</div>
+
+<div id="moreCommentsBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length === 10" ng-click="loadRemainingComments()">
+  <span id="moreCommentsText">Load more...</span>
 </div>
