@@ -216,7 +216,15 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     
     this.doneLoading = function() {
       _this.loading = false;
-    }
+    };
+
+    this.secureLink = function(url, id) {
+      if (UserInfoService.isGuestUser()){
+        return "";
+      } else {
+        return url + id;
+      }
+    };
 
 }]);
 

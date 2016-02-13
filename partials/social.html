@@ -48,22 +48,22 @@
 
   <div class="socialButtonsRow socialText">
     
-    <button class="btn-link social-btn" ng-click="">
-      <a href="https://twitter.com/intent/tweet?via=FanKave&in_reply_to={{thisPost.tweetId}}">
+    <button class="btn-link social-btn" secure-click="">
+      <a href="{{social.secureLink('https://twitter.com/intent/tweet?via=FanKave&in_reply_to=',thisPost.tweetId)}}">
         <img class="social-metrics-reply" ng-src="img/reply@2x.png"/>
       </a>
     </button>
     <span class="social-metrics-label"> {{thisPost.replyCount}}</span>
 
-    <button class="btn-link social-btn socialRetweet" ng-click="">
-      <a href="https://twitter.com/intent/retweet?tweet_id={{thisPost.tweetId}}">
+    <button class="btn-link social-btn socialRetweet" secure-click="">
+      <a href="{{social.secureLink('https://twitter.com/intent/retweet?tweet_id=',thisPost.tweetId)}}">
         <img class="social-metrics-retweet" ng-src="img/retweet@2x.png" />
       </a> 
     </button>
     <span class="social-metrics-label">{{thisPost.retweetCount}}</span>
 
-    <button class="btn-link social-btn socialFavorite" ng-click="">
-      <a href="https://twitter.com/intent/like?tweet_id={{thisPost.tweetId}}">
+    <button class="btn-link social-btn socialFavorite" secure-click="">
+      <a href="{{social.secureLink('https://twitter.com/intent/like?tweet_id=',thisPost.tweetId)}}">
         <img class="social-metrics-heart" ng-src="img/heart@2x.png" />
       </a>
     </button>
