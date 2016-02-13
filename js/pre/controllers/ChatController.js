@@ -16,7 +16,7 @@ angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
       networkService.send(CommentService.getCommentsRequest($stateParams.topicID));
     }
 
-    // Chat Loading
+    // Comment Loading
     function updateComments(){
       var commentsdata = CommentService.comments();
       if (commentsdata != undefined && (commentsdata.length > 0 || lastComment === true)){
@@ -91,11 +91,30 @@ angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
       _this.loading = false;
     };
 
-    this.newCommentsIndicatorTapped = function() {
+    this.showNewComments = function() {
       _this.newCommentsAvailable = false;
       updateComments();
       $(document).scrollTop(0);
     };
+
+    function notifyNewComments() {
+      if(!_this.commentsArray){
+        updateComments();
+      } else {
+        var commentsData = CommentService.comments();
+        var len = commentsData.length;
+        var pinIndex = CommentService.getNumPinComments();
+        if (_this.commentsArray.length < len){
+          if (!UserInfoService.isCurrentUser(commentsData[pinIndex].author.id)){
+            _this.newCommentsAvailable = true;
+          } else {
+            updateComments();
+          }
+        } else {
+          updateComments();
+        }
+      }
+    }
 
     // Chat Navigation
     this.viewPost = function(e, id) {
