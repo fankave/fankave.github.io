@@ -363,17 +363,17 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
   //   $scope.innerButtonTapped = true;
   // };
 
-  // $scope.updateLikeTopic = function() {
-  //   console.log("TopicController update like Topic");
-  //   if(TopicService.getLiked() == true)
-  //     networkService.send(TopicService.getUnlikeTopicRequest());
-  //   else
-  //     networkService.send(TopicService.getLikeTopicRequest());  
-  // };
+  $scope.updateLikeTopic = function() {
+    console.log("TopicController update like Topic");
+    if(TopicService.getLiked() == true)
+      networkService.send(TopicService.getUnlikeTopicRequest());
+    else
+      networkService.send(TopicService.getLikeTopicRequest());  
+  };
 
-  // $scope.commentOnTopic = function() {
-  //   document.getElementById("topicCommentField").focus();
-  // };
+  $scope.commentOnTopic = function() {
+    document.getElementById("topicCommentField").focus();
+  };
 
   // $scope.updateLikeComment = function(id) {
   //   $scope.innerButtonTapped = true;
@@ -417,52 +417,44 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
   //   }
   // };
 
-  $scope.secureLink = function(url, id) {
-    if (UserInfoService.isGuestUser()){
-      return "";
-    } else {
-      return url + id;
-    }
-  };
+  // $scope.secureLink = function(url, id) {
+  //   if (UserInfoService.isGuestUser()){
+  //     return "";
+  //   } else {
+  //     return url + id;
+  //   }
+  // };
 
-  var notifyNewComments = function() {
-    if($scope.commentsArray == undefined)
-    {
-      updateComments();
-    }
-    else {
-      var commentsdata = CommentService.comments();
-      var len = commentsdata.length;
-      var pinIndex = CommentService.getNumPinComments();
-      if($scope.commentsArray.length < len){
-        if(!UserInfoService.isCurrentUser(commentsdata[pinIndex].author.id)){
-          $scope.showNewCommentsIndicator = true;
-        }
-        else {
-          updateComments();
-        }
-      }
-      else{
-        updateComments();
-      }
-    }
-  };
+  // var notifyNewComments = function() {
+  //   if($scope.commentsArray == undefined)
+  //   {
+  //     updateComments();
+  //   }
+  //   else {
+  //     var commentsdata = CommentService.comments();
+  //     var len = commentsdata.length;
+  //     var pinIndex = CommentService.getNumPinComments();
+  //     if($scope.commentsArray.length < len){
+  //       if(!UserInfoService.isCurrentUser(commentsdata[pinIndex].author.id)){
+  //         $scope.showNewCommentsIndicator = true;
+  //       }
+  //       else {
+  //         updateComments();
+  //       }
+  //     }
+  //     else{
+  //       updateComments();
+  //     }
+  //   }
+  // };
 
   TopicService.registerObserverCallback(updateTopic);
-  CommentService.registerObserverCallback(notifyNewComments);
-  CommentService.registerObserverCallback(updateComments, true);
+  // CommentService.registerObserverCallback(notifyNewComments);
+  // CommentService.registerObserverCallback(updateComments, true);
 
-  $scope.trustSrc = function(src)
-  {
-    return $sce.trustAsResourceUrl(src);
-  }
-
-  $window.addEventListener("beforeunload", function(){
-    console.log("Before Unload");
-    ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
-  });
-
-  $scope.xLinkActivated = false;
+  // $scope.trustSrc = function(src) {
+  //   return $sce.trustAsResourceUrl(src);
+  // }
 
   // CONTENT TABS
   $scope.switchTabs = function(tab) {
@@ -471,17 +463,17 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
       $state.go('topic.chat');
-      $scope.activeTab = 'chat';
+      // $scope.activeTab = 'chat';
       $(document).scrollTop(0);
       updateTopic();
-      updateComments();
+      // updateComments();
     }
     if (tab === 'video'){
       $('#chatTab').removeClass('selectedTab');
       $('#videoTab').addClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
       $state.go('topic.video');
-      $scope.activeTab = 'video';
+      // $scope.activeTab = 'video';
       $(document).scrollTop(0);
     }
     if (tab === 'social'){
@@ -489,7 +481,7 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').addClass('selectedTab');
       $state.go('topic.social');
-      $scope.activeTab = 'social';
+      // $scope.activeTab = 'social';
       $(document).scrollTop(0);
     }
     // console.log("Active Tab: ", $scope.activeTab);

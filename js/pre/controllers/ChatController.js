@@ -116,6 +116,13 @@ angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
       }
     }
 
+    CommentService.registerObserverCallback(notifyNewComments);
+    CommentService.registerObserverCallback(updateComments, true);
+
+    this.trustSrc = function(src) {
+      return $sce.trustAsResourceUrl(src);
+    }
+
     // Chat Navigation
     this.viewPost = function(e, id) {
       if ($(e.target).is('a')){

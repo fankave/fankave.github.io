@@ -140,11 +140,11 @@
       <div id="socialTab" class="grid-col grid-col-50 tab" ng-click="switchTabs('social')">
         <span class="tabName">Social</span>
       </div>
-      <div id="newCommentsAvailableIndicatorDiv" ng-if="showNewCommentsIndicator && activeTab === 'chat'">
+      <!-- <div id="newCommentsAvailableIndicatorDiv" ng-if="chat.newCommentsAvailable && $state.includes('topic.chat')">
         <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
           <img ng-src="img/newCommentIndicator.png" />
         </button>
-      </div>
+      </div> -->
     </div>
     <!-- All Other Tabs -->
     <div class="tabContainer clearfix" ng-if="!isMI16User" ng-element-ready="initializeTab()">
@@ -157,11 +157,11 @@
       <div id="socialTab" class="grid-col grid-col-33 tab" ng-click="switchTabs('social')">
         <span class="tabName">Social</span>
       </div>
-      <div id="newCommentsAvailableIndicatorDiv" ng-if="showNewCommentsIndicator && activeTab === 'chat'">
+      <!-- <div id="newCommentsAvailableIndicatorDiv" ng-if="showNewCommentsIndicator && activeTab === 'chat'">
         <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
           <img ng-src="img/newCommentIndicator.png" />
         </button>
-      </div>
+      </div> -->
     </div>
 
     <div id="textInputFieldTopic" class="clearfix" ng-if="$state.includes('topic.chat') && mobileBrowser === false" ng-controller="UserInputController as user">
