@@ -338,8 +338,7 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
   //   $(document).scrollTop(0);
   // }
 
-  $scope.imageClick = function(imageURL)
-  {
+  $scope.imageClick = function(imageURL) {
     event.cancelBubble = true;
     if(event.stopPropagation) event.stopPropagation();
 
@@ -349,89 +348,74 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
         src: imageURL,
       },
       type: 'inline',
-      callbacks:
-      {
-        open: function()
-        {
-          console.log("popup opened");
+      callbacks: {
+        open: function(){
           $('body').bind('touchmove', function(e){e.preventDefault()})
         },
-        close: function()
-        {
-          console.log("popup closed");
+        close: function(){
           $('body').unbind('touchmove')
         }
-        // e.t.c.
       }
     });
-  }
-
-  $scope.moreButtonTapped = function()
-  {
-    $scope.innerButtonTapped = true;
-  }
-
-  $scope.updateLikeTopic = function() {
-    console.log("TopicController update like Topic");
-    if(TopicService.getLiked() == true)
-      networkService.send(TopicService.getUnlikeTopicRequest());
-    else
-      networkService.send(TopicService.getLikeTopicRequest());  
   };
 
-  $scope.commentOnTopic = function()
-  {
-    document.getElementById("topicCommentField").focus();
-  };
+  // $scope.moreButtonTapped = function() {
+  //   $scope.innerButtonTapped = true;
+  // };
 
-  $scope.updateLikeComment = function(id) {
-    $scope.innerButtonTapped = true;
+  // $scope.updateLikeTopic = function() {
+  //   console.log("TopicController update like Topic");
+  //   if(TopicService.getLiked() == true)
+  //     networkService.send(TopicService.getUnlikeTopicRequest());
+  //   else
+  //     networkService.send(TopicService.getLikeTopicRequest());  
+  // };
+
+  // $scope.commentOnTopic = function() {
+  //   document.getElementById("topicCommentField").focus();
+  // };
+
+  // $scope.updateLikeComment = function(id) {
+  //   $scope.innerButtonTapped = true;
     
-    // event.cancelBubble = true;
-    // if(event.stopPropagation) event.stopPropagation();
+  //   console.log("TopicController updateLike (" + id + ")");
+  //   if(CommentService.isCommentLiked(id)){
+  //     networkService.send(CommentService.getUnlikeCommentRequest(id));
+  //   }
+  //   else{
+  //     networkService.send(CommentService.getLikeCommentRequest(id));  
+  //   }
+  // };
 
-    console.log("TopicController updateLike (" + id + ")");
-    if(CommentService.isCommentLiked(id)){
-      networkService.send(CommentService.getUnlikeCommentRequest(id));
-    }
-    else{
-      networkService.send(CommentService.getLikeCommentRequest(id));  
-    }
-  };
+  // $scope.deleteComment = function(id) {
+  //   console.log("deleteComment(" + id + ")");
+  //   if ($scope.commentsArray.length === 1){
+  //     console.log("Deleting Final Comment");
+  //     lastComment = true;
+  //   }
+  //   $scope.innerButtonTapped = true;
+  //   networkService.send(CommentService.deleteCommentRequest(id));
+  // };
 
+  // $scope.reportCommentAsSpam = function(id) {
+  //   console.log("reportCommentAsSpam(" + id + ")");
+  //   $scope.innerButtonTapped = true;
+  //   networkService.send(CommentService.flagCommentRequest(id)); 
+  // };
 
-  $scope.deleteComment = function(id)
-  {
-    console.log("deleteComment(" + id + ")");
-    if ($scope.commentsArray.length === 1){
-      console.log("Deleting Final Comment");
-      lastComment = true;
-    }
-    $scope.innerButtonTapped = true;
-    networkService.send(CommentService.deleteCommentRequest(id));
-  }
+  // $scope.goToRepliesWithKeyboardTriggered = function(id) {
+  //   // event.cancelBubble = true;
+  //   // if(event.stopPropagation) event.stopPropagation();
 
-  $scope.reportCommentAsSpam = function(id)
-  {
-    console.log("reportCommentAsSpam(" + id + ")");
-    $scope.innerButtonTapped = true;
-    networkService.send(CommentService.flagCommentRequest(id)); 
-  }
-
-  $scope.goToRepliesWithKeyboardTriggered = function(id)
-  {
-    // event.cancelBubble = true;
-    // if(event.stopPropagation) event.stopPropagation();
-
-    // console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
-    TopicService.directComment = true;
-    if (HTML5_LOC){
-      $location.path("/post/" + id);
-    } else {
-      // $window.location = "#/post/" + id;
-      $state.go('post', {postID: id});
-    }
-  };
+  //   // console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
+  //   TopicService.directComment = true;
+  //   if (HTML5_LOC){
+  //     $location.path("/post/" + id);
+  //   } else {
+  //     // $window.location = "#/post/" + id;
+  //     $state.go('post', {postID: id});
+  //   }
+  // };
 
   $scope.secureLink = function(url, id) {
     if (UserInfoService.isGuestUser()){
@@ -441,7 +425,7 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
     }
   };
 
-  var notifyNewComments = function(){
+  var notifyNewComments = function() {
     if($scope.commentsArray == undefined)
     {
       updateComments();

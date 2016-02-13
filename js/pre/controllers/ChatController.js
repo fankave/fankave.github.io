@@ -2,6 +2,7 @@ angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
 .controller('ChatController', ['$state','$stateParams','$sce','$window','$timeout','CommentService','ChannelService','TopicService','networkService','URIHelper','UserInfoService','UserAgentService',
   function ($state,$stateParams,$sce,$window,$timeout,CommentService,ChannelService,TopicService,networkService,URIHelper,UserInfoService,UserAgentService) {
 
+    // Chat Initialization
     var _this = this;
     var lastComment = false;
     _this.newCommentsAvailable = false;
@@ -15,9 +16,10 @@ angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
       networkService.send(CommentService.getCommentsRequest($stateParams.topicID));
     }
 
+    // Chat Loading
     function updateComments(){
       var commentsdata = CommentService.comments();
-      if (commentsdata != undefined && (commentsdata.length >0 || lastComment === true)){
+      if (commentsdata != undefined && (commentsdata.length > 0 || lastComment === true)){
         lastComment = false;
         var len = commentsdata.length;
 
@@ -89,6 +91,13 @@ angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
       _this.loading = false;
     };
 
+    this.newCommentsIndicatorTapped = function() {
+      _this.newCommentsAvailable = false;
+      updateComments();
+      $(document).scrollTop(0);
+    };
+
+    // Chat Navigation
     this.viewPost = function(e, id) {
       if ($(e.target).is('a')){
         return;
@@ -98,10 +107,35 @@ angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
       $state.go('post', postParams);
     };
 
-    this.newCommentsIndicatorTapped = function() {
-      _this.newCommentsAvailable = false;
-      updateComments();
-      $(document).scrollTop(0);
+    this.replyDirectToPost = function(id) {
+      TopicService.directComment = true;
+      var postParams = $stateParams;
+      postParams.postID = id;
+      $state.go('post', postParams);
+    };
+
+    // Comment Operations
+    this.updateLikeComment = function(id) {
+      if (NETWORK_DEBUG) console.log("Like Comment: ", id);
+      if (CommentService.isCommentLiked(id)){
+        networkService.send(CommentService.getUnlikeCommentRequest(id));
+      } else {
+        networkService.send(CommentService.getLikeCommentRequest(id));  
+      }
+    };
+
+    this.deleteComment = function(id) {
+      if (NETWORK_DEBUG) console.log("Delete Comment: ", id);
+      if (_this.commentsArray.length === 1){
+        if (NETWORK_DEBUG) console.log("Deleting Final Comment");
+        lastComment = true;
+      }
+      networkService.send(CommentService.deleteCommentRequest(id));
+    };
+
+    this.reportCommentAsSpam = function(id) {
+      if (NETWORK_DEBUG) console.log("Report Comment As Spam: ", id);
+      networkService.send(CommentService.flagCommentRequest(id)); 
     };
 
 }]);
