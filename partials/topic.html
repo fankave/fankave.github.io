@@ -88,14 +88,14 @@
             <img ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png"/> 
             <img ng-switch-when="false" ng-src="img/thumbsUp@2x.png"/> 
           </button>
-          <span class="socialButtonLabel fkFont">{{likesCount}} </span>
+          <span class="socialButtonLabel fkFont" ng-hide="likesCount < 1">{{likesCount}} </span>
         </div>
       </div>
       <div class="grid-col-alt grid-col-50">
         <div id="headComment">
           <button class="btn-link topic-social-btn" secure-click="commentOnTopic()"><img ng-src="img/comment-3x.png"/> 
           </button>
-          <span class="socialButtonLabel fkFont">{{commentsCount}}</span>
+          <span class="socialButtonLabel fkFont" n-hide="commentsCount < 1">{{commentsCount}}</span>
         </div>
       </div>
     </div>
@@ -164,7 +164,7 @@
             <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
           </div>
       </div>
-      <form id="postCommentForm" ng-submit="user.postComment(commentText, true)">
+      <form id="postCommentForm">
         <div id="postCommentDiv" class="input-group">
           <label for="fileUpload" id="attachMediaIcon">
             <img ng-src="img/attach-media.png" />
@@ -208,7 +208,7 @@
       <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
     </div>
   </div>
-  <form id="mobilePostCommentForm" ng-submit="user.postComment(commentText,true)">
+  <form id="mobilePostCommentForm">
     <div id="mobilePostCommentDiv" class="input-group">
       <label for="fileUpload" id="attachMediaIcon">
         <img ng-src="img/attach-media.png" />
