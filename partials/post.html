@@ -42,11 +42,11 @@
         {{comment.html}} 
       </div> 
 
-      <image-control this-post="comment" ng-switch-when="image" ng-click="imageClick(comment.mediaUrl)" class="media-parent"></image-control>
+      <image-control this-post="comment" ng-switch-when="image" class="media-parent"></image-control>
 
       <media-player this-post="comment" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>
 
-      <embed-shared-content embed-post="comment" ng-if="comment.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav=""></embed-shared-content>
+      <embed-shared-content embed-post="comment" ng-if="comment.shared" trust-source="trustSrc(videoSrc)"></embed-shared-content>
 
       <div class="socialButtonsRow">
         <button id="chatLike" class="btn-link social-btn" secure-click="updateLikeComment(comment.id)" ng-switch="comment.isLiked">
@@ -54,7 +54,7 @@
           <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUp@2x.png"/> 
           
         </button>
-        <span class="socialButtonLable">{{comment.likeCount}}  </span>
+        <span class="socialButtonLable" ng-hide="comment.likeCount < 1">{{comment.likeCount}}  </span>
 
         <button id="chatReply" class="btn-link social-btn" secure-click="triggerRepliesKeyboard()">
           <img class="social-reply" ng-src="img/shareCopy@2x.png"/> 
@@ -63,7 +63,7 @@
       </div>
       <div class="sharingButtonsRow">
         <div class="chatTimestamp">
-          <button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
+          <button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" secure-click="">
             <img class="social-more" ng-src="img/moreButton.png"/>
           </button>
           <ul class="dropdown-menu dropdown-menu-right" ng-switch="comment.isMyComment">
@@ -86,7 +86,7 @@
           <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
         </div>
     </div>
-    <form id="postCommentForm" ng-submit="user.postComment(commentText,false)">
+    <form id="postCommentForm">
       <div id="postCommentDivAlt" class="input-group">
         <label for="fileUpload" id="attachMediaIcon">
           <img ng-src="img/attach-media.png" />
@@ -134,7 +134,7 @@
           {{thisReply.html}} 
         </div>
 
-      <image-control this-post="thisReply" ng-switch-when="image" ng-click="imageClick(thisReply.mediaUrl)" class="media-parent"></image-control>
+      <image-control this-post="thisReply" ng-switch-when="image" class="media-parent"></image-control>
 
       <media-player this-post="thisReply" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>  
         
@@ -144,15 +144,11 @@
           <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUp@2x.png"/> 
           
         </button>
-        <span class="socialButtonLable">{{thisReply.likeCount}}  </span>
+        <span class="socialButtonLable" ng-hide="thisReply.likeCount < 1">{{thisReply.likeCount}}  </span>
 
-        <!-- <button id="chatReply" class="btn-link social-btn" ng-click="triggerRepliesKeyboard()">
-          <img class="social-reply" src="img/shareCopy@2x.png"/> </button>
-          <span class="socialButtonLable" ng-click="triggerRepliesKeyboard()"> Reply</span>
-        <span class="socialButtonLable">{{thisReply.commentCount}}</span> -->
       </div>
       <div class="sharingButtonsRow">
-        <div class="chatTimestamp">
+        <div class="chatTimestamp" secure-click="">
           <button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img class="social-more" ng-src="img/moreButton.png"/>
           </button>
@@ -180,7 +176,7 @@
           <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
         </div>
     </div>
-    <form id="mobilePostCommentForm" ng-submit="user.postComment(commentText,false)">
+    <form id="mobilePostCommentForm">
       <div id="mobilePostCommentDiv" class="input-group">
         <label for="fileUpload" id="attachMediaIcon">
           <img ng-src="img/attach-media.png" />
