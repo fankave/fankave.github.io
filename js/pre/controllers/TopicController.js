@@ -463,17 +463,14 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
       $state.go('topic.chat');
-      // $scope.activeTab = 'chat';
       $(document).scrollTop(0);
       updateTopic();
-      // updateComments();
     }
     if (tab === 'video'){
       $('#chatTab').removeClass('selectedTab');
       $('#videoTab').addClass('selectedTab');
       $('#socialTab').removeClass('selectedTab');
       $state.go('topic.video');
-      // $scope.activeTab = 'video';
       $(document).scrollTop(0);
     }
     if (tab === 'social'){
@@ -481,10 +478,8 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
       $('#videoTab').removeClass('selectedTab');
       $('#socialTab').addClass('selectedTab');
       $state.go('topic.social');
-      // $scope.activeTab = 'social';
       $(document).scrollTop(0);
     }
-    // console.log("Active Tab: ", $scope.activeTab);
   };
 
   $scope.initializeTab = function() {
@@ -556,7 +551,6 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
     if ($scope.showNewCommentsIndicator){
       $scope.showNewCommentsIndicator = false;
     }
-    // if ($scope.isPeelUser){
       if ($(document).scrollTop() > (tabsTop - headerHeight) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
         tabs.addClass('fixTabsPeel');
         tabs.css('top',headerHeight);

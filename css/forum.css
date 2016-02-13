@@ -668,6 +668,14 @@ span.socialButtonLable
     display: inline-block;
 }
 
+.replyLabel {
+  padding-left: 5px;
+  font-size: 12px;
+  color: rgb(179,184,186);
+  display: inline-block;
+  vertical-align: middle; 
+}
+
 .social-btn-more
 {
   float:right;

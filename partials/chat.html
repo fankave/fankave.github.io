@@ -16,9 +16,9 @@
   </span>
 </div>
 
-<div ng-repeat="thisPost in commentsArray | orderBy: $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify="chat.doneLoading()">
+<div ng-repeat="thisPost in chat.commentsArray | orderBy: $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify="chat.doneLoading()">
 
-  <span class="postAuthorPhoto">
+  <span class="postAuthorPhoto" ng-click="chat.viewPost($event,thisPost.id)">
     <div>
       <a class="thumbnail">
         <img ng-src="{{thisPost.postAuthorPhoto}}" onerror="this.src='img/default_user_v3.png'" class="userPhoto" />
@@ -31,7 +31,7 @@
 
   <div class="post">
 
-    <div class="chatPostHeader">
+    <div class="chatPostHeader" ng-click="chat.viewPost($event,thisPost.id)">
       <span class="postUsername">
         {{thisPost.postAuthorName}}
       </span>
@@ -40,40 +40,41 @@
       </span>
     </div>
 
-    <div ng-bind-html="thisPost.html | linky" class="postContent">
+    <div ng-bind-html="thisPost.html | linky" class="postContent" ng-click="chat.viewPost($event,thisPost.id)">
       {{thisPost.html}} 
     </div>
 
-    <image-control this-post="thisPost" ng-switch-when="image" ng-click="imageClick(thisPost.mediaUrl)" class="media-parent"></image-control>
+    <image-control this-post="thisPost" ng-switch-when="image" class="media-parent"></image-control>
 
-    <media-player this-post="thisPost" vid-index="{{$index}}" ng-switch-when="video" ng-click="moreButtonTapped()" class="media-parent"></media-player>
+    <media-player this-post="thisPost" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>
 
-    <embed-shared-content embed-post="thisPost" ng-if="thisPost.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav="moreButtonTapped()"></embed-shared-content>
+    <embed-shared-content embed-post="thisPost" ng-if="thisPost.shared" trust-source="chat.trustSrc(videoSrc)"></embed-shared-content>
 
     <div>
       <div class="socialButtonsRow">
-        <button id="chatLike" class="btn-link social-btn" ng-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
+        <button id="chatLike" class="btn-link social-btn" secure-click="chat.updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
           <img class="social-like" ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png" /> 
           <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUp@2x.png" /> 
         </button>
-        <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
+        <span class="socialButtonLable" ng-hide="thisPost.likeCount < 1">{{thisPost.likeCount}}  </span>
       </div>
-      <div class="socialButtonsRow">  
-        <button id="chatReply" class="btn-link social-btn" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
-          <img class="social-reply" ng-src="img/shareCopy@2x.png" />
-        </button>
-          <span class="socialButtonLable" ng-click="goToRepliesWithKeyboardTriggered(thisPost.id)"> Reply</span>
-      </div>
-      <div class="sharingButtonsRow">
-        <div class="chatMore" ng-click="moreButtonTapped()">
 
+      <div class="socialButtonsRow">  
+        <button id="chatReply" class="btn-link social-btn" secure-click="chat.replyDirectToPost(thisPost.id)">
+          <img class="social-reply" ng-src="img/shareCopy@2x.png" />
+          <span class="replyLabel"> Reply</span>
+        </button>
+      </div>
+
+      <div class="sharingButtonsRow">
+        <div class="chatMore" secure-click="">
           <button class="btn-link social-btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img class="social-more" ng-src="img/moreButton.png"/>
           </button>
 
           <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
-            <li ng-switch-when="true"><a ng-click="deleteComment(thisPost.id);">Delete Comment</a></li>
-            <li ng-switch-when="false"><a ng-click="reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
+            <li ng-switch-when="true"><a secure-click="chat.deleteComment(thisPost.id);">Delete Comment</a></li>
+            <li ng-switch-when="false"><a secure-click="chat.reportCommentAsSpam(thisPost.id);">Report as spam</a></li>
           </ul>
 
         </div>
@@ -87,6 +88,6 @@
   </div>
 </div>
 
-<div id="moreCommentsBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length === 10" ng-click="loadRemainingComments()">
+<div id="moreCommentsBar" ng-if="!chat.loadedAllComments && chat.commentsArray.length === 10" ng-click="chat.loadRemainingComments()">
   <span id="moreCommentsText">Load more...</span>
 </div>

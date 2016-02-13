@@ -1,6 +1,6 @@
 angular.module('TopicModule')
-.directive('secureClick', ['$location','$window','UserInfoService',
-  function ($location, $window, UserInfoService) {
+.directive('secureClick', ['$state','$stateParams','UserInfoService',
+  function ($state, $stateParams, UserInfoService) {
     return {
       restrict: 'A',
       link: function($scope, $elem, $attrs){
@@ -8,11 +8,7 @@ angular.module('TopicModule')
         $(element).on('click', function(e){
           e.preventDefault();
           if (UserInfoService.isGuestUser()){
-            if (HTML5_LOC){
-              $location.path("/login");
-            } else {
-              $window.location = "#/login";
-            }
+            $state.go('login', $stateParams);
           } else {
             $scope.$eval($attrs.secureClick);
           }
@@ -22,8 +18,8 @@ angular.module('TopicModule')
 }]);
 
 angular.module('TopicModule')
-.directive('secureFocus', ['$location','$window','UserInfoService',
-  function ($location, $window, UserInfoService) {
+.directive('secureFocus', ['$state','$stateParams','UserInfoService',
+  function ($state, $stateParams, UserInfoService) {
     return {
       restrict: 'A',
       link: function($scope, $elem, $attrs){
@@ -31,11 +27,7 @@ angular.module('TopicModule')
         $(element).on('focus', function(e){
           e.preventDefault();
           if (UserInfoService.isGuestUser()){
-            if (HTML5_LOC){
-              $location.path("/login");
-            } else {
-              $window.location = "#/login";
-            }
+            $state.go('login', $stateParams);
           } else {
             $scope.$eval($attrs.secureFocus);
           }
@@ -60,9 +52,7 @@ angular.module('TopicModule')
     restrict: 'E',
     scope: {
       thisPost: '=embedPost',
-      imageZoom: '&',
-      trustSource: '&',
-      preventNav: '&'      
+      trustSource: '&'      
     },
     link: function(scope,elem,attr){
       scope.mobileUserAgent = UserAgentService.getMobileUserAgent();
