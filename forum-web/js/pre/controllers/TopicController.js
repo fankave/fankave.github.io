@@ -39,11 +39,8 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       $timeout(function() {$scope.continueToExperience('smartS'); }, 7000);
     // }
   }
-  else if (UserInfoService.isMI16User() || URIHelper.isTechMUser()){
+  else if (UserInfoService.isMI16User()){
     $scope.isMI16User = true;
-  }
-  else if (UserInfoService.isMWCUser() || URIHelper.isMWCUser()){
-    $scope.isMWCUser = true;
   }
   else if(UserInfoService.isPeelUser()){
     $scope.isPeelUser = true;
@@ -334,11 +331,30 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     }
   }
 
-  $scope.viewPost = function(e,id){
-    if ($(e.target).is('a')){
-      return;
+  $scope.setLinksOnComments = function(){
+    var postDivs = document.getElementsByClassName("postRow");
+    for (div in postDivs) {
+      var thisDiv = postDivs[div];
+      thisDiv.onclick = function(e) {
+        if ($(e.target).is('a')) {
+          return;
+        } 
+        thisPost = $scope.commentsArray[this.id];
+        if ($scope.innerButtonTapped === false) {
+          if (GEN_DEBUG)
+          console.log("Post Click Active: ", thisPost.id);
+          if (HTML5_LOC){
+            $location.path("/post/" + thisPost.id);
+            if (!$scope.$$phase){
+              $scope.$apply();
+            }
+          } else {
+            $window.location = "#/post/" + thisPost.id;
+          }
+        }
+        $scope.innerButtonTapped = false;
+      }
     }
-    $window.location = "#/post/" + id;
   }
 
 //  if(URIHelper.isPeelUser())
@@ -360,9 +376,6 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   }
   else if (URIHelper.isTechMUser()){
     $window.location = "#/login?MI16=true";
-  }
-  else if (URIHelper.isMWCUser()){
-    $window.location = "#/login?MWC=true";
   }
   else if (URIHelper.isPeelUser()){
     $scope.isPeelUser = true;

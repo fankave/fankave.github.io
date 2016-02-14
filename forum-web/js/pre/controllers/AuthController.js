@@ -6,15 +6,12 @@ angular.module("AuthModule", ["NetworkModule", "TopicModule"])
       var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
       if (GEN_DEBUG)
       console.log("urlQueryStr: ", urlQueryStr);
-      // if (urlQueryStr === 'MI16=true'){
-      if (URIHelper.isTechMUser()){
-        $scope.mUserType = 'MI16';
-      }
-      // if (urlQueryStr === 'MWC=true'){
-      if (URIHelper.isMWCUser()){
-        $scope.mUserType = 'MWC';
+      if (urlQueryStr === 'MI16=true'){
+        $scope.techMIUser = true;
+        $scope.facebookUser = false;
       }
     } else {
+      $scope.techMIUser = false;
       $scope.facebookUser = true;
     }
 
@@ -44,7 +41,7 @@ angular.module("AuthModule", ["NetworkModule", "TopicModule"])
 
     $scope.techMLogin = function(name, email, isValid) {
       if (isValid){
-        AuthService.techMLogin(name, email, $scope.mUserType);
+        AuthService.techMLogin(name, email);
       }
       $scope.submitted = true;
     };

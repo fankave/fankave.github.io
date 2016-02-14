@@ -212,9 +212,7 @@ body
 
 }
 
-.postAuthorPhoto:hover,
-.chatPostHeader:hover,
-.postContent:hover {
+.postRow:hover {
   cursor: pointer;
 }
 
@@ -644,9 +642,9 @@ body
   margin-right: 0;
 }
 
-/*.dropdown-menu > li:hover {
+.dropdown-menu > li:hover {
   cursor: pointer;
-}*/
+}
 
 #chatLike {
   margin-left: 10px;
@@ -1033,9 +1031,9 @@ button:focus,
     outline: none;
 }
 
-/*button:hover {
+button:hover {
   cursor: pointer;
-}*/
+}
 
 /* - - - Facebook Landing Page - - - */
 
@@ -1076,9 +1074,9 @@ button:focus,
   -moz-transform: translateX(-50%);
 }
 
-/*#facebookButton:hover {
+#facebookButton:hover {
   cursor: pointer;
-}*/
+}
 
 @media all and (orientation: landscape) and (max-device-width: 736px) {
   #facebookButton {
@@ -1502,9 +1500,9 @@ img-crop canvas {
   vertical-align: -44%;
 }
 
-/*#attachMediaIcon:hover {
+#attachMediaIcon:hover {
   cursor: pointer;
-}*/
+}
 
 #postCommentButton{
   width: 35px;
@@ -1889,9 +1887,9 @@ img-crop canvas {
   z-index: 1;
 }
 
-/*#removeMedia:hover {
+#removeMedia:hover {
   cursor: pointer;
-}*/
+}
 
 .socialAlias {
   /*display: block;*/
@@ -2113,10 +2111,10 @@ img-crop canvas {
   -webkit-user-select: none;
 }
 
-/*#moreContentBar:hover,
+#moreContentBar:hover,
 #moreContentBar:hover {
   cursor: pointer;
-}*/
+}
 
 #moreContentText {
   font-size: 14px;
@@ -2417,18 +2415,11 @@ img-crop canvas {
   left: 0;
   width: 100%;
   height: 100vh;
-}
-
-.techBG {
   background: #90beef;
   background: -webkit-linear-gradient(rgb(244,252,255), rgb(131,178,234), rgb(18,65,195));
   background: -o-linear-gradient(rgb(244,252,255), rgb(131,178,234), rgb(18,65,195));
   background: -moz-linear-gradient(rgb(244,252,255), rgb(131,178,234), rgb(18,65,195));
   background: linear-gradient(rgb(244,252,255), rgb(131,178,234), rgb(18,65,195));
-}
-
-.mwcBG {
-  background-color: #fff;
 }
 
 #techLoginContainer {
@@ -2440,17 +2431,11 @@ img-crop canvas {
   padding: 40px 35px;
 }
 
-#techLoginHeader h1,
-#MWCLoginHeader h1 {
+#techLoginHeader h1 {
   font-size: 60px;
   font-weight: 600;
   margin-top: 0;
   margin-bottom: 4px;
-}
-
-#MWCLoginHeader h1 {
-  text-align: center;
-  margin-bottom: 40px;
 }
 
 #techLoginHeader h3 {
@@ -2477,12 +2462,6 @@ img-crop canvas {
 .emailHelp {
   top: 338px;
 }
-.nameHelpMWC {
-  top: 235px;
-}
-.emailHelpMWC {
-  top: 312px;
-}
 
 #techLoginButton {
   width: 100%;
@@ -2494,28 +2473,12 @@ img-crop canvas {
   border-radius: 35px;
   border: none;
 }
-
-#MWCLoginButton {
-  width: 100%;
-  height: 70px;
-  margin: 30px 0;
-  font-size: 28px;
-  color: #fff;
-  background-color: #E52235;
-  border-radius: 35px;
-  border: none;
-}
-
 #techLoginButton:hover {
   cursor: pointer;
 }
 
 #techLoginDescription {
   color: #fff;
-}
-
-#MWCLoginDescription {
-  color: #000;
 }
 
 #formInstruct {
@@ -2535,58 +2498,39 @@ img-crop canvas {
   color: #000;
 }
 
-.MWCInput {
-  width: 100%;
-  height: 56px;
-  border-radius: 5px;
-  border: none;
-  margin-bottom: 20px;
-  padding-left: 15px;
-  font-size: 20px;
-  font-weight: 200;
-  color: #000;
-  background-color: #F0F0F0;
-}
-
-.techMInput::-moz-placeholder,
-.MWCInput::-moz-placeholder {
+.techMInput::-moz-placeholder {
   font-size: 20px;
   font-weight: 200;
   color: rgb(167,167,167);
   opacity: 1;
 }
-.techMInput:-ms-input-placeholder,
-.MWCInput:-ms-input-placeholder {
+.techMInput:-ms-input-placeholder {
   font-size: 20px;
   font-weight: 200;
   color: rgb(167,167,167);
   opacity: 1;
 }
-.techMInput::-webkit-input-placeholder,
-.MWCInput::-webkit-input-placeholder {
+.techMInput::-webkit-input-placeholder {
   font-size: 20px;
   font-weight: 200;
   color: rgb(167,167,167);
   opacity: 1;
 }
-.techMInput:focus,
-.MWCInput:focus {
+.techMInput:focus {
   border-color: rgb(22,189,231);
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
           box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
 }
 
-#MI16Title,
-#MWCTitle {
+#MI16Title {
   font-weight: 500;
   margin-bottom: 5px;
   text-align: left;
   padding: 0 20px;
 }
 
-#MI16Banner,
-#MWCBanner {
+#MI16Banner {
   width: 100%;
   max-width: 768px;
   height: auto;

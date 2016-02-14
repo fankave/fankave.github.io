@@ -125,22 +125,6 @@ angular.module('NetworkModule')
 			}
 			return false;
 		},
-		isMWCUser:function(){
-			var MWCUser = URIHelper.isMWCUser();
-			if (NETWORK_DEBUG)
-			console.log("ForumStorage.getFromLocalStorage: ", ForumStorage.getFromLocalStorage("forumUserType"));
-			if(MWCUser){
-				_userInfo.userType = 'MWC';
-				return true;
-			}
-			if(_userInfo.userType === "MWC"){
-				return true;
-			}
-			if (ForumStorage.getFromLocalStorage("forumUserType") === "MWC"){
-				return true;
-			}
-			return false;
-		},
 		getUserType:function(){
 			if (NETWORK_DEBUG)
 			console.log("UIS _userType - - - ", _userInfo.userType);
