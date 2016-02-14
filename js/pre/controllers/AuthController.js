@@ -83,6 +83,12 @@ angular.module("AuthModule", ["NetworkModule", "TopicModule"])
 
     };
 
+    $scope.focusMWC = function() {
+      $('#techLoginContainer').css('top','-40px');
+    };
 
+    $scope.blurMWC = function() {
+      $('#techLoginContainer').css('top','');
+    };
     
 }]);

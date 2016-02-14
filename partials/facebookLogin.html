@@ -32,13 +32,13 @@
 
         <div>
           <input ng-switch-when="MI16" type="text" name="name" ng-class="{ 'has-error' : techMForm.name.$invalid && !techMForm.name.$pristine && submitted }" class="techMInput" ng-model="name" placeholder="Enter name" ng-focus="" ng-blur="" required>
-          <input ng-switch-when="MWC" type="text" name="name" ng-class="{ 'has-error' : techMForm.name.$invalid && !techMForm.name.$pristine && submitted }" class="MWCInput" ng-model="name" placeholder="Enter name" ng-focus="" ng-blur="" required>
+          <input ng-switch-when="MWC" type="text" name="name" ng-class="{ 'has-error' : techMForm.name.$invalid && !techMForm.name.$pristine && submitted }" class="MWCInput" ng-model="name" placeholder="Enter name" ng-focus="focusMWC()" ng-blur="blurMWC()" required>
           <p ng-switch-when="MI16" ng-show="techMForm.name.$invalid && !techMForm.name.$pristine" class="techHelp nameHelp">Your name is required.</p>
           <p ng-switch-when="MWC" ng-show="techMForm.name.$invalid && !techMForm.name.$pristine" class="techHelp nameHelpMWC">Your name is required.</p>
         </div>
         <div>
           <input ng-switch-when="MI16" type="email" name="email" ng-class="{ 'has-error' : techMForm.email.$invalid && !techMForm.email.$pristine && submitted }" class="techMInput" ng-model="email" placeholder="Enter email" ng-focus="" ng-blur="" required>
-          <input ng-switch-when="MWC" type="email" name="email" ng-class="{ 'has-error' : techMForm.email.$invalid && !techMForm.email.$pristine && submitted }" class="MWCInput" ng-model="email" placeholder="Enter email" ng-focus="" ng-blur="" required>
+          <input ng-switch-when="MWC" type="email" name="email" ng-class="{ 'has-error' : techMForm.email.$invalid && !techMForm.email.$pristine && submitted }" class="MWCInput" ng-model="email" placeholder="Enter email" ng-focus="focusMWC()" ng-blur="blurMWC()" required>
           <p ng-switch-when="MI16" ng-show="techMForm.email.$invalid && !techMForm.email.$pristine" class="techHelp emailHelp">Enter a valid email.</p>
           <p ng-switch-when="MWC" ng-show="techMForm.email.$invalid && !techMForm.email.$pristine" class="techHelp emailHelpMWC">Enter a valid email.</p>
         </div>
