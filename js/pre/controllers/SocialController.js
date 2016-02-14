@@ -78,17 +78,17 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       return deferred.promise;
     }
 
-    $window.onload = function(){
-      console.log("WebPTR Loading");
-      WebPullToRefresh.init({
-        loadingFunction: refreshContent,
-        contentEl: 'pullZone',
-        ptrEl: 'ptrZone',
-        distanceToRefresh: 30,
-        resistance: 2.0
-      });
-      console.log("WebPTR Loaded");
-    };
+    // $window.onload = function(){
+    //   console.log("WebPTR Loading");
+    //   WebPullToRefresh.init({
+    //     loadingFunction: refreshContent,
+    //     contentEl: 'pullZone',
+    //     ptrEl: 'ptrZone',
+    //     distanceToRefresh: 30,
+    //     resistance: 2.0
+    //   });
+    //   console.log("WebPTR Loaded");
+    // };
 
     var videoStaging = [];
     var socialStaging = [];
