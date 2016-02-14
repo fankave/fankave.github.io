@@ -212,9 +212,7 @@ body
 
 }
 
-.postAuthorPhoto:hover,
-.chatPostHeader:hover,
-.postContent:hover {
+.postRow:hover {
   cursor: pointer;
 }
 
@@ -644,9 +642,9 @@ body
   margin-right: 0;
 }
 
-/*.dropdown-menu > li:hover {
+.dropdown-menu > li:hover {
   cursor: pointer;
-}*/
+}
 
 #chatLike {
   margin-left: 10px;
@@ -1033,9 +1031,9 @@ button:focus,
     outline: none;
 }
 
-/*button:hover {
+button:hover {
   cursor: pointer;
-}*/
+}
 
 /* - - - Facebook Landing Page - - - */
 
@@ -1076,9 +1074,9 @@ button:focus,
   -moz-transform: translateX(-50%);
 }
 
-/*#facebookButton:hover {
+#facebookButton:hover {
   cursor: pointer;
-}*/
+}
 
 @media all and (orientation: landscape) and (max-device-width: 736px) {
   #facebookButton {
@@ -1502,9 +1500,9 @@ img-crop canvas {
   vertical-align: -44%;
 }
 
-/*#attachMediaIcon:hover {
+#attachMediaIcon:hover {
   cursor: pointer;
-}*/
+}
 
 #postCommentButton{
   width: 35px;
@@ -1889,9 +1887,9 @@ img-crop canvas {
   z-index: 1;
 }
 
-/*#removeMedia:hover {
+#removeMedia:hover {
   cursor: pointer;
-}*/
+}
 
 .socialAlias {
   /*display: block;*/
@@ -2113,10 +2111,10 @@ img-crop canvas {
   -webkit-user-select: none;
 }
 
-/*#moreContentBar:hover,
+#moreContentBar:hover,
 #moreContentBar:hover {
   cursor: pointer;
-}*/
+}
 
 #moreContentText {
   font-size: 14px;

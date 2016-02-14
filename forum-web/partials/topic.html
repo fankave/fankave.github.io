@@ -167,7 +167,6 @@
     </div>
 
   </div>
-  
 <!-- MI16 Header -->
 <div ng-if="isMI16User">
   <img id="MI16Banner" ng-src="img/MI16/MI16banner@3x.png" />
@@ -251,7 +250,7 @@
 
 
 <div id="inputControls">
-  <!-- Tech MI16/MWC Tabs -->
+  <!-- Tech MI16 Tabs -->
   <div class="tabContainer clearfix" ng-if="isMI16User || isMWCUser">
     <div id="chatTab" class="grid-col grid-col-50 tab" ng-click="switchTabs('chat')">
       <span class="tabName">Chat</span>
@@ -347,7 +346,7 @@
   <!-- Chat Tab Content -->
   <div ng-switch-when="chat" ng-repeat="thisPost in commentsArray | orderBy: $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
 
-    <span class="postAuthorPhoto" ng-click="viewPost($event,thisPost.id)">
+    <span class="postAuthorPhoto">
       <div>
         <a class="thumbnail">
           <img ng-src="{{thisPost.postAuthorPhoto}}" onerror="this.src='img/default_user_v3.png'" class="userPhoto" />
@@ -360,7 +359,7 @@
 
     <div class="post">
 
-      <div class="chatPostHeader" ng-click="viewPost($event,thisPost.id)">
+      <div class="chatPostHeader">
         <span class="postUsername">
           {{thisPost.postAuthorName}}
         </span>
@@ -369,7 +368,7 @@
         </span>
       </div>
 
-      <div ng-bind-html="thisPost.html | linky" class="postContent" ng-click="viewPost($event,thisPost.id)">
+      <div ng-bind-html="thisPost.html | linky" class="postContent">
         {{thisPost.html}} 
       </div>
 
