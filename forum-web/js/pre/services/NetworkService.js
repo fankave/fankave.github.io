@@ -25,6 +25,8 @@ function ($websocket,$route,DataService,UserInfoService)
   //   });
 
   function initSocket() { 
+    if(ws != undefined)
+      ws.close();
     ws = $websocket(getWebsocketUri());
     DataService.setWatchTopic(false);
     //Websocket callbacks below
