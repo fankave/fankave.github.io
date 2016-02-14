@@ -5,6 +5,7 @@ angular.module('AuthModule')
   var userLoggedInToFacebook = false;
 
   var loginAsGuest = function() {
+  if (NETWORK_DEBUG)
   console.log("Logging in as Guest");
     var userData = {};
     userData.id = ForumDeviceInfo.getDeviceId();
@@ -43,15 +44,15 @@ angular.module('AuthModule')
     registerUser(registerParams);
   };
 
-  var techMLogin = function (name, email) {
+  var techMLogin = function (name, email, mUserType) {
     var userData = {
       "id": email,
       "userName": name
     };
-
+    if (NETWORK_DEBUG)
     console.log("techMLogin: ", userData);
     var registerParams = setRegistrationParams("email", -28800, userData);
-    registerUser(registerParams, true);
+    registerUser(registerParams, mUserType);
   };
 
   var setRegistrationParams = function (type, utcOffset, userData) {
@@ -86,15 +87,16 @@ angular.module('AuthModule')
     return registerParams;
   };
 
-  var registerUser = function(registerParams, isMI16) {
+  var registerUser = function(registerParams, mUserType) {
     // Post request to our api to register/retrieve user
     var userType = registerParams.type;
-    if (isMI16){
-      userType = 'MI16';
+    if (mUserType){
+      userType = mUserType;
     }
     $http.post(REGISTER_SERVER_URI, JSON.stringify(registerParams))
       .then(function (response) {
         if (response.status === 200) {
+          if (NETWORK_DEBUG)
           console.log("Successfully Registered User of Type: " + userType);
           if (registerParams.type === 'facebook'){
             userLoggedInToFacebook = true;
@@ -109,6 +111,7 @@ angular.module('AuthModule')
         }
       },
       function (response) {
+        if (NETWORK_DEBUG)
         console.log('Registration Error: ', response);
       }).then(function (response) {
         initializeContent();
@@ -116,6 +119,7 @@ angular.module('AuthModule')
   };
 
   var initializeContent = function() {
+    if (NETWORK_DEBUG)
     console.log("Initializing Content");
     // Initialize Network Service and determine what type of resource is being accessed
     networkService.init();
@@ -124,10 +128,12 @@ angular.module('AuthModule')
     var initTopic = TopicService.getTopicId();
 
     if (!!initChannel) {
+      if (NETWORK_DEBUG)
       console.log("found channel ID: " + initChannel);
       networkService.send(ChannelService.getLiveGameTopic(initChannel));
     }
     else if (!!initTopic) {
+      if (NETWORK_DEBUG)
       console.log("found Topic ID: " + initTopic);
       if (HTML5_LOC){
         $location.path("/topic/" + initTopic);
@@ -138,6 +144,7 @@ angular.module('AuthModule')
     else {
       var initPost = ReplyService.getPostId();
       if (!!initPost){
+        if (NETWORK_DEBUG)
         console.log("found post ID: " + initPost);
         if (HTML5_LOC){
           $location.path("/post/" + initPost);

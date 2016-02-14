@@ -20,6 +20,7 @@ angular.module('NetworkModule')
 
 	function getUserCredentials(){
 		if(_userInfo == undefined){
+			if (NETWORK_DEBUG)
 			console.log("UserInfoService : UserId is not defined , using static user, TODO : Remove this for release build");
 			_userInfo = userInfoTemp;
 			return userInfoTemp;
@@ -36,6 +37,7 @@ angular.module('NetworkModule')
 	}
 
 	function setUserCredentials(userId, accessToken, sessionId, userType){
+		if (NETWORK_DEBUG)
 		console.log("setUserCredentials: ", userId, accessToken, sessionId, userType);
 		// _userInfo = {};
 		_userInfo.userId = userId;
@@ -83,6 +85,7 @@ angular.module('NetworkModule')
 		},
 		isPeelUser:function(){
 			URIHelper.isPeelUser();
+			if (NETWORK_DEBUG)
 			console.log("ForumStorage.getFromLocalStorage: "+ForumStorage.getFromLocalStorage("forumUserType"));
 			if(_userInfo.userType === "peel")
 				return true;
@@ -92,6 +95,7 @@ angular.module('NetworkModule')
 		},
 		isSmartStadiumUser:function(){
 			var ssUser = URIHelper.isSmartStadiumUser();
+			if (NETWORK_DEBUG)
 			console.log("ForumStorage.getFromLocalStorage: ", ForumStorage.getFromLocalStorage("forumUserType"));
 			if(ssUser){
 				_userInfo.userType = 'email';
@@ -107,6 +111,7 @@ angular.module('NetworkModule')
 		},
 		isMI16User:function(){
 			var MI16User = URIHelper.isTechMUser();
+			if (NETWORK_DEBUG)
 			console.log("ForumStorage.getFromLocalStorage: ", ForumStorage.getFromLocalStorage("forumUserType"));
 			if(MI16User){
 				_userInfo.userType = 'MI16';
@@ -120,12 +125,30 @@ angular.module('NetworkModule')
 			}
 			return false;
 		},
+		isMWCUser:function(){
+			var MWCUser = URIHelper.isMWCUser();
+			if (NETWORK_DEBUG)
+			console.log("ForumStorage.getFromLocalStorage: ", ForumStorage.getFromLocalStorage("forumUserType"));
+			if(MWCUser){
+				_userInfo.userType = 'MWC';
+				return true;
+			}
+			if(_userInfo.userType === "MWC"){
+				return true;
+			}
+			if (ForumStorage.getFromLocalStorage("forumUserType") === "MWC"){
+				return true;
+			}
+			return false;
+		},
 		getUserType:function(){
-			// console.log("UIS _userType - - - ", _userInfo.userType);
+			if (NETWORK_DEBUG)
+			console.log("UIS _userType - - - ", _userInfo.userType);
 			return _userInfo.userType;
 		},
 		isGuestUser:function(){
-			// console.log("UIS _userType - - - ", _userInfo.userType);
+			if (NETWORK_DEBUG)
+			console.log("UIS _userType - - - ", _userInfo.userType);
 			if(_userInfo.userType === "guest" || ForumStorage.getFromLocalStorage("forumUserType") === "guest")
 			return true;
 			return false;
