@@ -2615,6 +2615,10 @@ textarea#postCommentField {
   padding: 0 20px;
 }
 
+#MWCTitle {
+  font-size: 16px;
+}
+
 #MI16Banner,
 #MWCBanner {
   width: 100%;

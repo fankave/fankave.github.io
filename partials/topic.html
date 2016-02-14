@@ -66,7 +66,7 @@
   </div>
 </nav>
 <section id="topicSection" ng-controller="SocialController as social">
-  <div class="scoreCardContent clearfix" ng-if="topicType === 'livegame' && !isMI16User">
+  <div class="scoreCardContent clearfix" ng-if="topicType === 'livegame' && !isMI16User && !isMWCUser">
 
     <div id="rightColor">
         <svg 
@@ -183,9 +183,7 @@
 </div>
 <div id="topicDetails" class="row" ng-if="isMWCUser">
   <div id="MWCTitle">
-    Welcome to Tech Mahindra MWC Live Updates!<br />
-    You can view the latest videos and photo uploads from Barcelona here!<br />
-    Do post your valuable feedback as replies!
+    Welcome to Tech Mahindra MWC Live Updates! You can view the latest videos and photo uploads from Barcelona here! Do post your valuable feedback as replies!
   </div>
 </div>
 
