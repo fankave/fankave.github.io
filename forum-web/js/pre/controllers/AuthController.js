@@ -6,12 +6,15 @@ angular.module("AuthModule", ["NetworkModule", "TopicModule"])
       var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
       if (GEN_DEBUG)
       console.log("urlQueryStr: ", urlQueryStr);
-      if (urlQueryStr === 'MI16=true'){
-        $scope.techMIUser = true;
-        $scope.facebookUser = false;
+      // if (urlQueryStr === 'MI16=true'){
+      if (URIHelper.isTechMUser()){
+        $scope.mUserType = 'MI16';
+      }
+      // if (urlQueryStr === 'MWC=true'){
+      if (URIHelper.isMWCUser()){
+        $scope.mUserType = 'MWC';
       }
     } else {
-      $scope.techMIUser = false;
       $scope.facebookUser = true;
     }
 
@@ -41,7 +44,7 @@ angular.module("AuthModule", ["NetworkModule", "TopicModule"])
 
     $scope.techMLogin = function(name, email, isValid) {
       if (isValid){
-        AuthService.techMLogin(name, email);
+        AuthService.techMLogin(name, email, $scope.mUserType);
       }
       $scope.submitted = true;
     };
@@ -80,6 +83,12 @@ angular.module("AuthModule", ["NetworkModule", "TopicModule"])
 
     };
 
+    $scope.focusMWC = function() {
+      $('#techLoginContainer').css('top','-40px');
+    };
 
+    $scope.blurMWC = function() {
+      $('#techLoginContainer').css('top','');
+    };
     
 }]);

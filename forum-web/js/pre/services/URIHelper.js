@@ -10,6 +10,7 @@ angular.module('NetworkModule')
 	var ssUserId;
 
 	var _MI16;
+	var _MWC;
 
 	function getUrlVars() {
 		var vars = [], hash;
@@ -60,6 +61,18 @@ angular.module('NetworkModule')
 				return true;
 			}
 			if (_MI16){
+				return true;
+			}
+			return false;
+		},
+		isMWCUser:function(){
+			var vars = getUrlVars();
+			if (vars["MWC"]){
+				_MWC = true;
+				ForumStorage.setToLocalStorage("MWCUser",true);
+				return true;
+			}
+			if (_MWC){
 				return true;
 			}
 			return false;

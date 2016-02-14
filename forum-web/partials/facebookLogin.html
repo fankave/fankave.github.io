@@ -13,13 +13,16 @@
   </div>
 </section>
 <!-- Tech MI16 Login -->
-<section ng-if="techMIUser" id="techPage">
-  <div id="techLoginContainer">
+<section ng-if="mUserType === 'MI16' || mUserType === 'MWC'" id="techPage" ng-class="{techBG: mUserType === 'MI16', mwcBG: mUserType === 'MWC'}">
+  <div id="techLoginContainer" ng-switch="mUserType">
 
-    <div id="techLoginHeader">
+    <div id="techLoginHeader" ng-switch-when="MI16">
       <h1>MI16</h1>
       <h3>Mission Innovation</h3>
       <h4>Tech Mahindra</h4>
+    </div>
+    <div id="MWCLoginHeader" ng-switch-when="MWC">
+      <h1>MWC</h1>
     </div>
 
     <div id="techLogin">
@@ -28,21 +31,29 @@
       <form id="techLoginForm" name="techMForm" ng-submit="techMLogin(name,email,techMForm.$valid)" novalidate autocomplete="off">
 
         <div>
-          <input type="text" name="name" ng-class="{ 'has-error' : techMForm.name.$invalid && !techMForm.name.$pristine && submitted }" class="techMInput" ng-model="name" placeholder="Enter name" ng-focus="" ng-blur="" required>
-          <p ng-show="techMForm.name.$invalid && !techMForm.name.$pristine" class="techHelp nameHelp">Your name is required.</p>
+          <input ng-switch-when="MI16" type="text" name="name" ng-class="{ 'has-error' : techMForm.name.$invalid && !techMForm.name.$pristine && submitted }" class="techMInput" ng-model="name" placeholder="Enter name" ng-focus="" ng-blur="" required>
+          <input ng-switch-when="MWC" type="text" name="name" ng-class="{ 'has-error' : techMForm.name.$invalid && !techMForm.name.$pristine && submitted }" class="MWCInput" ng-model="name" placeholder="Enter name" ng-focus="focusMWC()" ng-blur="blurMWC()" required>
+          <p ng-switch-when="MI16" ng-show="techMForm.name.$invalid && !techMForm.name.$pristine" class="techHelp nameHelp">Your name is required.</p>
+          <p ng-switch-when="MWC" ng-show="techMForm.name.$invalid && !techMForm.name.$pristine" class="techHelp nameHelpMWC">Your name is required.</p>
         </div>
         <div>
-          <input type="email" name="email" ng-class="{ 'has-error' : techMForm.email.$invalid && !techMForm.email.$pristine && submitted }" class="techMInput" ng-model="email" placeholder="Enter email" ng-focus="" ng-blur="" required>
-          <p ng-show="techMForm.email.$invalid && !techMForm.email.$pristine" class="techHelp emailHelp">Enter a valid email.</p>
+          <input ng-switch-when="MI16" type="email" name="email" ng-class="{ 'has-error' : techMForm.email.$invalid && !techMForm.email.$pristine && submitted }" class="techMInput" ng-model="email" placeholder="Enter email" ng-focus="" ng-blur="" required>
+          <input ng-switch-when="MWC" type="email" name="email" ng-class="{ 'has-error' : techMForm.email.$invalid && !techMForm.email.$pristine && submitted }" class="MWCInput" ng-model="email" placeholder="Enter email" ng-focus="focusMWC()" ng-blur="blurMWC()" required>
+          <p ng-switch-when="MI16" ng-show="techMForm.email.$invalid && !techMForm.email.$pristine" class="techHelp emailHelp">Enter a valid email.</p>
+          <p ng-switch-when="MWC" ng-show="techMForm.email.$invalid && !techMForm.email.$pristine" class="techHelp emailHelpMWC">Enter a valid email.</p>
         </div>
-        <button type="submit" id="techLoginButton" class="btn btn-default" ng-disabled="techMForm.name === '' || techMForm.email === ''">Log In</button>
+        <button ng-switch-when="MI16" type="submit" id="techLoginButton" class="btn btn-default" ng-disabled="techMForm.name === '' || techMForm.email === ''">Log In</button>
+        <button ng-switch-when="MWC" type="submit" id="MWCLoginButton" class="btn btn-default" ng-disabled="techMForm.name === '' || techMForm.email === ''">Log In</button>
 
       </form>
 
     </div>
 
-    <div id="techLoginDescription">
+    <div id="techLoginDescription" ng-switch-when="MI16">
       Welcome to Mission Innovation 2016, by Tech Mahindra. We'll be providing all the video highlights from the presentations in a feed.
+    </div>
+    <div id="MWCLoginDescription" ng-switch-when="MWC">
+      Welcome to MWC 2016, by Tech Mahindra. In this app, you can view video highlights of interesting sessions.
     </div>
 
   </div>
