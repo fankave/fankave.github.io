@@ -184,13 +184,11 @@
 </div>
 <div id="topicDetails" class="row" ng-if="isMWCUser">
   <div id="MWCTitle">
-    Welcome to Tech Mahindra MWC Live Updates!<br />
-    You can view the latest videos and photo uploads from Barcelona here!<br />
-    Do post your valuable feedback as replies!
+    Welcome to Tech Mahindra MWC Live Updates! You can view the latest videos and photo uploads from Barcelona here! Do post your valuable feedback as replies!
   </div>
 </div>
 
-<div id="topicDetails" class="row" ng-if="!isSmartStadiumUser && !isMI16User"> 
+<div id="topicDetails" class="row" ng-if="!isSmartStadiumUser && !isMI16User && !isMWCUser"> 
   <div id="topicTitle">
     {{topicTitle}}
   </div>
@@ -268,7 +266,7 @@
     </div>
   </div>
   <!-- All Other Tabs -->
-  <div class="tabContainer clearfix" ng-if="!isMI16User">
+  <div class="tabContainer clearfix" ng-if="!isMI16User && !isMWCUser">
     <div id="chatTab" class="grid-col grid-col-33 tab" ng-click="switchTabs('chat')">
       <span class="tabName">Chat</span>
     </div>
