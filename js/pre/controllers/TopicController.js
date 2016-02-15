@@ -529,8 +529,8 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
   $scope.setDocVars = function() {
     console.log("Setting Doc Vars");
     if (!docVarsSet){
-      tabs = $('#inputControls');
-      tabContainer = $('.tabContainer');
+      tabs = $('#inputControls').first();
+      tabContainer = $('.tabContainer').first();
       tabsTop = tabs.offset().top;
       tabsHeight = tabContainer.height();
       inputHeight = tabs.height();
@@ -578,8 +578,10 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
       }
   };
 
+  $scope.setDocVars();
   $(document).off('scroll');
   $(document).on('scroll', watchScroll);
+
 
 
 }]);
