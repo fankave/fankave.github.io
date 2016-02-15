@@ -23,12 +23,14 @@
     </div>
     <div id="MWCLoginHeader" ng-switch-when="MWC">
       <h1>MWC</h1>
+      <h4>Tech Mahindra</h4>
     </div>
 
     <div id="techLogin">
 
-      <span id="formInstruct">Log in by providing your name and email</span>
-      <form id="techLoginForm" name="techMForm" ng-submit="techMLogin(name,email,techMForm.$valid)" novalidate autocomplete="off">
+      <span id="formInstruct" ng-switch-when="MI16">Log in by providing your name and email</span>
+      <span id="formInstructMWC" ng-switch-when="MWC">Log in with your name and TechM email</span>
+      <form id="techLoginForm" ng-class="{centerMWC:mUserType === 'MWC'}" name="techMForm" ng-submit="techMLogin(name,email,techMForm.$valid)" novalidate autocomplete="off">
 
         <div>
           <input ng-switch-when="MI16" type="text" name="name" ng-class="{ 'has-error' : techMForm.name.$invalid && !techMForm.name.$pristine && submitted }" class="techMInput" ng-model="name" placeholder="Enter name" ng-focus="" ng-blur="" required>
@@ -53,7 +55,7 @@
       Welcome to Mission Innovation 2016, by Tech Mahindra. We'll be providing all the video highlights from the presentations in a feed.
     </div>
     <div id="MWCLoginDescription" ng-switch-when="MWC">
-      Welcome to MWC 2016, by Tech Mahindra. In this app, you can view video highlights of interesting sessions.
+      Welcome to Mobile World Congress, 2016. Here, you can view highlights and discussion around interesting sessions.
     </div>
 
   </div>
