@@ -30,24 +30,32 @@
 
       <span id="formInstruct" ng-switch-when="MI16">Log in by providing your name and email</span>
       <span id="formInstructMWC" ng-switch-when="MWC">Log in with your name and TechM email</span>
-      <form id="techLoginForm" ng-class="{centerMWC:mUserType === 'MWC'}" name="techMForm" ng-submit="techMLogin(name,email,techMForm.$valid)" novalidate autocomplete="off">
-
+      
+      <form id="techLoginForm" ng-class="{centerMWC:mUserType === 'MWC'}" name="techMForm" ng-submit="techMLogin(name,email,techMForm.$valid)" novalidate autocomplete="off" ng-switch-when="MI16">
         <div>
-          <input ng-switch-when="MI16" type="text" name="name" ng-class="{ 'has-error' : techMForm.name.$invalid && !techMForm.name.$pristine && submitted }" class="techMInput" ng-model="name" placeholder="Enter name" ng-focus="" ng-blur="" required>
-          <input ng-switch-when="MWC" type="text" name="name" ng-class="{ 'has-error' : techMForm.name.$invalid && !techMForm.name.$pristine && submitted }" class="MWCInput" ng-model="name" placeholder="Enter name" ng-focus="focusMWC()" ng-blur="blurMWC()" required>
-          <p ng-switch-when="MI16" ng-show="techMForm.name.$invalid && !techMForm.name.$pristine" class="techHelp nameHelp">Your name is required.</p>
-          <p ng-switch-when="MWC" ng-show="techMForm.name.$invalid && !techMForm.name.$pristine" class="techHelp nameHelpMWC">Your name is required.</p>
+          <input type="text" name="name" ng-class="{ 'has-error' : techMForm.name.$invalid && !techMForm.name.$pristine && submitted }" class="techMInput" ng-model="name" placeholder="Enter name" ng-focus="" ng-blur="" required>
+          <p ng-show="techMForm.name.$invalid && !techMForm.name.$pristine" class="techHelp nameHelp">Your name is required.</p>
         </div>
         <div>
-          <input ng-switch-when="MI16" type="email" name="email" ng-class="{ 'has-error' : techMForm.email.$invalid && !techMForm.email.$pristine && submitted }" class="techMInput" ng-model="email" placeholder="Enter email" ng-focus="" ng-blur="" required>
-          <input ng-switch-when="MWC" type="email" name="email" ng-class="{ 'has-error' : techMForm.email.$invalid && !techMForm.email.$pristine && submitted }" class="MWCInput" ng-model="email" placeholder="Enter email" ng-focus="focusMWC()" ng-blur="blurMWC()" required>
-          <p ng-switch-when="MI16" ng-show="techMForm.email.$invalid && !techMForm.email.$pristine" class="techHelp emailHelp">Enter a valid email.</p>
-          <p ng-switch-when="MWC" ng-show="techMForm.email.$invalid && !techMForm.email.$pristine" class="techHelp emailHelpMWC">Enter a valid email.</p>
+          <input type="email" name="email" ng-class="{ 'has-error' : techMForm.email.$invalid && !techMForm.email.$pristine && submitted }" class="techMInput" ng-model="email" placeholder="Enter email" ng-focus="" ng-blur="" required>
+          <p ng-show="techMForm.email.$invalid && !techMForm.email.$pristine" class="techHelp emailHelp">Enter a valid email.</p>
         </div>
-        <button ng-switch-when="MI16" type="submit" id="techLoginButton" class="btn btn-default" ng-disabled="techMForm.name === '' || techMForm.email === ''">Log In</button>
-        <button ng-switch-when="MWC" type="submit" id="MWCLoginButton" class="btn btn-default" ng-disabled="techMForm.name === '' || techMForm.email === ''">Log In</button>
-
+        <button type="submit" id="techLoginButton" class="btn btn-default" ng-disabled="techMForm.name === '' || techMForm.email === ''">Log In</button>
       </form>
+
+      <form id="techLoginForm" class="centerMWC" name="techMForm" ng-submit="techMLogin(name,email,techMForm.$valid)" novalidate autocomplete="off" ng-switch-when="MWC">
+        <div>
+          <input type="text" name="name" ng-class="{ 'has-error' : techMForm.name.$invalid && !techMForm.name.$pristine && submitted }" class="MWCInput" ng-model="name" placeholder="Enter name" ng-focus="focusMWC()" ng-blur="blurMWC()" required>
+          <p ng-show="techMForm.name.$invalid && !techMForm.name.$pristine" class="techHelp nameHelpMWC">Your name is required.</p>
+        </div>
+        <div>
+          <input type="email" name="email" ng-class="{ 'has-error' : techMForm.email.$invalid && !techMForm.email.$pristine && submitted }" class="MWCInput" ng-model="email" placeholder="Enter email" ng-focus="focusMWC()" ng-blur="blurMWC()" required>
+          <p ng-show="techMForm.email.$invalid && !techMForm.email.$pristine" class="techHelp emailHelpMWC">Enter a valid email.</p>
+        </div>
+
+        <button type="submit" id="MWCLoginButton" class="btn btn-default" ng-disabled="techMForm.name === '' || techMForm.email === ''">Log In</button>
+      </form>
+
 
     </div>
 
