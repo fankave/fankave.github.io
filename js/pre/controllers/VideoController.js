@@ -133,11 +133,13 @@ angular.module("VideoModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     var clientHeight = document.documentElement.clientHeight || window.innerHeight;
     var watchContentScroll = debounce(function() {
-      var currentScroll = $(document).height() - clientHeight - 50;
-      if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
-        // We are Loading More Content -->
-        // Base offset on Current Length of Scope Array
-        _this.loadContent(_this.videoArray.length);
+      if ($state.includes('topic.video')){
+        var currentScroll = $(document).height() - clientHeight - 50;
+        if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
+          // We are Loading More Content -->
+          // Base offset on Current Length of Scope Array
+          _this.loadContent(_this.videoArray.length);
+        }
       }
     }, 100);
 

@@ -133,11 +133,13 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     var clientHeight = document.documentElement.clientHeight || window.innerHeight;
     var watchContentScroll = debounce(function() {
-      var currentScroll = $(document).height() - clientHeight - 50;
-      if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
-        // We are Loading More Content -->
-        // Base offset on Current Length of Scope Array
-        _this.loadContent(_this.socialArray.length);
+      if ($state.includes('topic.social')){
+        var currentScroll = $(document).height() - clientHeight - 50;
+        if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
+          // We are Loading More Content -->
+          // Base offset on Current Length of Scope Array
+          _this.loadContent(_this.socialArray.length);
+        }
       }
     }, 100);
 
