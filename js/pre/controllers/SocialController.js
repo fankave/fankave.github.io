@@ -15,7 +15,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     this.loadContent = function(offset) {
       var channelID = $stateParams.channel || ChannelService.getChannel()||TopicService.getChannelId();
-      console.log("LOADING SOCIAL: ", channelID);
+      console.log("LOADING SOCIAL: ", channelID, TopicService.getChannelId());
       networkService.send(SocialService.getSocialDataRequest(channelID,offset));
     };
     this.loadContent();
