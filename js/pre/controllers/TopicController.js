@@ -525,7 +525,9 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
       clientHeight,
       docHeight,
       headerHeight;
+  var debugObj;
   $scope.setDocVars = function() {
+    console.log("Setting Doc Vars");
     if (!docVarsSet){
       tabs = $('#inputControls');
       tabContainer = $('.tabContainer');
@@ -542,12 +544,22 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
       } else {
         headerHeight = 0;
       }
+      debugObj = {
+        tabs: tabs,
+        tabsTop: tabsTop,
+        inputHeight: inputHeight,
+        tabContainer: tabContainer,
+        tabsHeight: tabsHeight,
+        clientHeight: clientHeight,
+        docHeight: docHeight,
+        headerHeight: headerHeight
+      }
     }
   };
 
   var fixed = false;
   var watchScroll = function watchScroll() {
-    console.log("Tabs Top: ", tabsTop);
+    console.log("Tabs Top: ", tabsTop, debugObj);
     if ($scope.showNewCommentsIndicator){
       $scope.showNewCommentsIndicator = false;
     }
