@@ -164,4 +164,6 @@ angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
       networkService.send(CommentService.flagCommentRequest(id)); 
     };
 
+    init();
+
 }]);
