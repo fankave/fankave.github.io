@@ -18,10 +18,20 @@ angular.module('SocialModule')
     if (!!tempData && len > 0){
       for (i = 0; i < len; i++){
         var _socialObject = Bant.bant(tempData[i]);
-        if (!!_socialObject.id)
-          _socialArray.push(_socialObject);
+        if (!!_socialObject.id){
+          var isNewObject = true;
+          for(i=0;i<_socialArray.length;i++){
+            if(_socialArray[i].id == _socialObject.id){
+              isNewObject = false;
+              break;
+              }
+            }
+          if(isNewObject)
+            _socialArray.push(_socialObject);
+        }
       }
       _offset = socialData.data.nextOffset;
+      console.log("Social Array offset : "+ _socialArray.length);
       notifyObservers();
     }
   };
@@ -43,7 +53,7 @@ angular.module('SocialModule')
   };
 
   function getSocialDataRequest(id, offset){
-    var reqOffset = offset || _offset;
+    var reqOffset = _offset;
     var request = {
       "rid": "social",
       "timestamp": new Date().getTime(),

@@ -66,7 +66,7 @@
   </div>
 </nav>
 <section id="topicSection" ng-controller="SocialController as social">
-  <div class="scoreCardContent clearfix" ng-if="topicType === 'livegame' && !isMI16User">
+  <div class="scoreCardContent clearfix" ng-if="topicType === 'livegame' && !isMI16User && !isMWCUser">
 
     <div id="rightColor">
         <svg 
@@ -167,6 +167,7 @@
     </div>
 
   </div>
+<!-- MI16 Header -->
 <div ng-if="isMI16User">
   <img id="MI16Banner" ng-src="img/MI16/MI16banner@3x.png" />
 </div>
@@ -176,7 +177,17 @@
   </div>
 </div>
 
-<div id="topicDetails" class="row" ng-if="!isSmartStadiumUser && !isMI16User"> 
+<!-- MWC Header -->
+<div ng-if="isMWCUser">
+  <img id="MWCBanner" ng-src="img/MI16/MWCbanner@3x.png" />
+</div>
+<div id="topicDetails" class="row" ng-if="isMWCUser">
+  <div id="MWCTitle">
+    Welcome to Tech Mahindra MWC Live Updates! You can view the latest videos and photo uploads from Barcelona here! Do post your valuable feedback as replies!
+  </div>
+</div>
+
+<div id="topicDetails" class="row" ng-if="!isSmartStadiumUser && !isMI16User && !isMWCUser"> 
   <div id="topicTitle">
     {{topicTitle}}
   </div>
@@ -240,7 +251,7 @@
 
 <div id="inputControls">
   <!-- Tech MI16 Tabs -->
-  <div class="tabContainer clearfix" ng-if="isMI16User">
+  <div class="tabContainer clearfix" ng-if="isMI16User || isMWCUser">
     <div id="chatTab" class="grid-col grid-col-50 tab" ng-click="switchTabs('chat')">
       <span class="tabName">Chat</span>
     </div>
@@ -254,7 +265,7 @@
     </div>
   </div>
   <!-- All Other Tabs -->
-  <div class="tabContainer clearfix" ng-if="!isMI16User">
+  <div class="tabContainer clearfix" ng-if="!isMI16User && !isMWCUser">
     <div id="chatTab" class="grid-col grid-col-33 tab" ng-click="switchTabs('chat')">
       <span class="tabName">Chat</span>
     </div>

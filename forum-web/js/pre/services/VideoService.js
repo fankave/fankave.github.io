@@ -18,8 +18,17 @@ angular.module('SocialModule')
 		if (!!tempData && len > 0){
 			for (i = 0; i < len; i++){
 				var _videoObject = Bant.bant(tempData[i]);
-				if (!!_videoObject.id)
+				if (!!_videoObject.id){
+          			var isNewObject = true;
+          			for(i=0;i<_videoArray.length;i++){
+			            if(_videoArray[i].id == _videoObject.id){
+			              isNewObject = false;
+			              break;
+			              }
+            			}
+         			 if(isNewObject)
 					_videoArray.push(_videoObject);
+				}
 			}
 			_offset = videoData.data.nextOffset;
 			notifyObservers();
@@ -45,7 +54,7 @@ angular.module('SocialModule')
 	}
 
 	function getVideoDataRequest(id, offset){
-		var reqOffset = offset || _offset;
+		var reqOffset = _offset;
 		var request = {
 			"rid": "video",
 			"timestamp": new Date().getTime(),
