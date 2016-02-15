@@ -1,6 +1,6 @@
 angular.module("VideoModule", ["NetworkModule","ChannelModule","TopicModule"])
-.controller("VideoController", ["$state","$stateParams","$sce","$window","$http","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper",
-  function ($state,$stateParams,$sce,$window,$http,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper){
+.controller("VideoController", ["$state","$stateParams","$sce","$window","$http","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper","UserInfoService",
+  function ($state,$stateParams,$sce,$window,$http,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper, UserInfoService){
 
     var _this = this;
     if (!this.videoArray){
