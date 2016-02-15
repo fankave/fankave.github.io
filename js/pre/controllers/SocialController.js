@@ -18,7 +18,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       console.log("LOADING SOCIAL: ", channelID, TopicService.getChannelId());
       networkService.send(SocialService.getSocialDataRequest(channelID,offset));
     };
-    this.loadContent();
+    setTimeout(function(){this.loadContent();},1000);
 
     function updateFeed() {
 
