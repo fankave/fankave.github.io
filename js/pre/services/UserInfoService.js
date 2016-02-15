@@ -83,7 +83,7 @@ angular.module('NetworkModule')
 		},
 		isPeelUser:function(){
 			URIHelper.isPeelUser();
-			console.log("ForumStorage.getFromLocalStorage: "+ForumStorage.getFromLocalStorage("forumUserType"));
+			if (GEN_DEBUG) console.log("ForumStorage.getFromLocalStorage: "+ForumStorage.getFromLocalStorage("forumUserType"));
 			if(_userInfo.userType === "peel")
 				return true;
 			if(ForumStorage.getFromLocalStorage("forumUserType") === "peel")
@@ -92,7 +92,7 @@ angular.module('NetworkModule')
 		},
 		isSmartStadiumUser:function(){
 			var ssUser = URIHelper.isSmartStadiumUser();
-			console.log("ForumStorage.getFromLocalStorage: ", ForumStorage.getFromLocalStorage("forumUserType"));
+			if (GEN_DEBUG) console.log("ForumStorage.getFromLocalStorage: ", ForumStorage.getFromLocalStorage("forumUserType"));
 			if(ssUser){
 				_userInfo.userType = 'email';
 				return true;
@@ -107,7 +107,7 @@ angular.module('NetworkModule')
 		},
 		isMI16User:function(){
 			var MI16User = URIHelper.isTechMUser();
-			console.log("ForumStorage.getFromLocalStorage: ", ForumStorage.getFromLocalStorage("forumUserType"));
+			if (GEN_DEBUG) console.log("ForumStorage.getFromLocalStorage: ", ForumStorage.getFromLocalStorage("forumUserType"));
 			if(MI16User){
 				_userInfo.userType = 'MI16';
 				return true;
@@ -121,11 +121,11 @@ angular.module('NetworkModule')
 			return false;
 		},
 		getUserType:function(){
-			console.log("UIS _userType - - - ", _userInfo.userType);
+			if (GEN_DEBUG) console.log("UIS _userType - - - ", _userInfo.userType);
 			return _userInfo.userType;
 		},
 		isGuestUser:function(){
-			console.log("UIS _userType - - - ", _userInfo.userType);
+			if (GEN_DEBUG) console.log("UIS _userType - - - ", _userInfo.userType);
 			if(_userInfo.userType === "guest" || ForumStorage.getFromLocalStorage("forumUserType") === "guest")
 			return true;
 			return false;
