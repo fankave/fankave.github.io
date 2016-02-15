@@ -19,7 +19,11 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       networkService.send(SocialService.getSocialDataRequest(channelID,offset));
     };
     // setTimeout(function(){_this.loadContent();},1000);
-    TopicService.registerObserverCallback(_this.loadContent);
+    if (!TopicService.getChannelId()){
+      TopicService.registerObserverCallback(_this.loadContent);
+    } else {
+      _this.loadContent();
+    }
 
     function updateFeed() {
 
