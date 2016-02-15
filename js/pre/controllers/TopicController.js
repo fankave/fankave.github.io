@@ -560,7 +560,7 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
   var fixed = false;
   function watchScroll() {
     $scope.setDocVars();
-    console.log("Tabs Top: ", tabsTop, debugObj);
+    if (GEN_DEBUG) console.log("Tabs Top: ", tabsTop, debugObj);
     if ($scope.showNewCommentsIndicator){
       $scope.showNewCommentsIndicator = false;
     }
