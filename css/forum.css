@@ -2458,8 +2458,9 @@ textarea#postCommentField {
 }
 
 .mwcBG {
-  background-color: #fff;
+  background-color: #E52235;
 }
+
 
 #techLoginContainer {
   position: relative;
@@ -2467,20 +2468,31 @@ textarea#postCommentField {
   width: 100%;
   max-width: 500px;
   height: 100vh;
-  padding: 40px 35px;
+  padding: 30px 35px;
 }
 
 #techLoginHeader h1,
 #MWCLoginHeader h1 {
   font-size: 60px;
-  font-weight: 600;
+  font-weight: 400;
   margin-top: 0;
   margin-bottom: 4px;
 }
 
 #MWCLoginHeader h1 {
-  text-align: center;
-  margin-bottom: 20px;
+  /*text-align: center;*/
+  /*margin-bottom: 20px;*/
+}
+
+#MWCLoginHeader h4 {
+  margin-top: 0px;
+  margin-bottom: 30px;
+  font-weight: 300;
+}
+
+#MWCLoginHeader {
+  color: #fff;
+  font-weight: 400;
 }
 
 #techLoginHeader h3 {
@@ -2508,7 +2520,7 @@ textarea#postCommentField {
   top: 338px;
 }
 .nameHelpMWC {
-  top: 215px;
+  top: 228px;
 }
 .emailHelpMWC {
   top: 292px;
@@ -2526,12 +2538,13 @@ textarea#postCommentField {
 }
 
 #MWCLoginButton {
-  width: 100%;
-  height: 70px;
-  margin: 30px 0;
-  font-size: 28px;
+  width: 200px;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 60px;
+  font-size: 20px;
   color: #fff;
-  background-color: #E52235;
+  background-color: rgb(18,65,195);
   border-radius: 35px;
   border: none;
 }
@@ -2545,12 +2558,25 @@ textarea#postCommentField {
 }
 
 #MWCLoginDescription {
-  color: #000;
+  color: #fff;
+  text-align: center;
+  font-weight: 300;
 }
 
 #formInstruct {
   display: block;
   margin-bottom: 14px;
+}
+
+#formInstructMWC {
+  display: block;
+  margin-bottom: 14px;
+  color: #fff;
+  font-weight: 300;
+}
+
+.centerMWC {
+  text-align: center;
 }
 
 .techMInput {
@@ -2567,7 +2593,7 @@ textarea#postCommentField {
 
 .MWCInput {
   width: 100%;
-  height: 56px;
+  height: 46px;
   border-radius: 5px;
   border: none;
   margin-bottom: 20px;
@@ -2575,7 +2601,7 @@ textarea#postCommentField {
   font-size: 20px;
   font-weight: 200;
   color: #000;
-  background-color: #F0F0F0;
+  background-color: #fff;
 }
 
 .techMInput::-moz-placeholder,
