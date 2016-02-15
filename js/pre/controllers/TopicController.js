@@ -536,7 +536,6 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
       inputHeight = tabs.height();
       clientHeight = document.documentElement.clientHeight;
       docHeight = $(document).height();
-      docVarsSet = true;
       if ($scope.isSmartStadiumUser){
         headerHeight = 54;
       } else if ($scope.isPeelUser){
@@ -554,11 +553,13 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
         docHeight: docHeight,
         headerHeight: headerHeight
       }
+      docVarsSet = true;
     }
   };
 
   var fixed = false;
-  var watchScroll = function watchScroll() {
+  function watchScroll() {
+    $scope.setDocVars();
     console.log("Tabs Top: ", tabsTop, debugObj);
     if ($scope.showNewCommentsIndicator){
       $scope.showNewCommentsIndicator = false;
@@ -578,7 +579,6 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
       }
   };
 
-  $scope.setDocVars();
   $(document).off('scroll');
   $(document).on('scroll', watchScroll);
 
