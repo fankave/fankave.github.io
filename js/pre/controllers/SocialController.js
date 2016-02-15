@@ -14,11 +14,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
 
     this.loadContent = function(offset) {
-      var channelID = $stateParams.channel || ChannelService.getChannel()||TopicService.getChannelId();
-      console.log("LOADING SOCIAL: ", channelID, TopicService.getChannelId());
+      var channelID = TopicService.getChannelId();
+      if (NETWORK_DEBUG) console.log("LOADING SOCIAL: ", channelID);
       networkService.send(SocialService.getSocialDataRequest(channelID,offset));
     };
-    // setTimeout(function(){_this.loadContent();},1000);
     if (!TopicService.getChannelId()){
       TopicService.registerObserverCallback(_this.loadContent);
     } else {

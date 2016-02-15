@@ -14,11 +14,15 @@ angular.module("VideoModule", ["NetworkModule","ChannelModule","TopicModule"])
 
 
     this.loadContent = function(offset) {
-      var channelID = $stateParams.channel || ChannelService.getChannel()||TopicService.getChannelId();
-      console.log("LOADING VIDEO: ", channelID);
+      var channelID = TopicService.getChannelId();
+      if (NETWORK_DEBUG) console.log("LOADING VIDEO: ", channelID);
       networkService.send(VideoService.getVideoDataRequest(channelID,offset));
     };
-    this.loadContent();
+    if (!TopicService.getChannelId()){
+      TopicService.registerObserverCallback(_this.loadContent);
+    } else {
+      _this.loadContent();
+    }
 
     function updateFeed() {
       console.log("Updating Video Feed");
