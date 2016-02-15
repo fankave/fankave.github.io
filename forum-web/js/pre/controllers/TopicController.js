@@ -114,8 +114,8 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'chat';
       $(document).scrollTop(0);
-      updateTopic();
-      updateComments();
+      // updateTopic();
+      // updateComments();
     }
     if (tab === 'video'){
       $('#chatTab').removeClass('selectedTab');
