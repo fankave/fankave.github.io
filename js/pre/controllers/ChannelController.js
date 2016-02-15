@@ -31,7 +31,7 @@ function ($scope,$state,$stateParams,$window,$location,$sce,networkService,Chann
         // if(!!$scope.urlQueryStr)
         var paramsObj = channelParams;
         paramsObj.topicID = id;
-        paramsObj.channel = channelParams.channelID;
+        // paramsObj.channel = channelParams.channelID;
         console.log("GO Topic: ", paramsObj);
         $state.go("topic.chat", paramsObj);
         // else
