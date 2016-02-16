@@ -20,7 +20,16 @@ function ($scope,$state,$stateParams,$window,$location,$sce,networkService,Chann
       var paramsObj = $stateParams;
       paramsObj.topicID = id;
       if (NETWORK_DEBUG) console.log("Go to Topic w/ Params: ", paramsObj);
-      $state.go("topic.chat", paramsObj);
+      if ($stateParams.tab === 'video'){
+        delete $stateParams.tab;
+        $state.go("topic.video", paramsObj);
+      } else if ($stateParams.tab === 'social'){
+        delete $stateParams.tab;
+        $state.go("topic.social", paramsObj);
+      } else {
+        delete $stateParams.tab;
+        $state.go("topic.chat", paramsObj);
+      }
     }
 
   };

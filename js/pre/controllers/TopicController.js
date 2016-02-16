@@ -3,7 +3,6 @@ angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "M
 
 function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $timeout, networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
-  // var lastComment = false;
   // Check For Mobile Browser
   if (UserAgentService.isMobileUser()){
     $scope.mobileBrowser = true;
@@ -12,10 +11,6 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
   } else {
     $scope.mobileBrowser = false;
   }
-
-  // if (!$scope.commentsArray){
-  //   $scope.loadingChat = true;
-  // }
 
   ga('send', 'pageview', "/topic/"+$stateParams.topicID);
   console.log('Sent Pageview from /topic/' + $stateParams.topicID);
@@ -60,14 +55,13 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
       $scope.hideSSSplash = true;
     }
   };
+
   $scope.setScoreCardUI = function() {
     if ($scope.topicType === 'livegame'){
       if ($scope.isPeelUser){
         $('#topicSection').css('padding-top','54px');
       } else if ($scope.isSmartStadiumUser){
         $('#topicSection').css('padding-top','54px');
-      } else if ($scope.isMI16User){
-        // $('#topicSection').css('padding-top','54px');
       } else {
         $('#topicSection').css('padding-top','0px');
       }
@@ -82,11 +76,9 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
         networkService.send(TopicService.watchTopicRequest($stateParams.topicID));
       }
       
-      
       $scope.setScoreCardUI();
       if($scope.topicType == "livegame"){
-        console.log("Inside topic set :"+ TopicService.getTeamA());
-        //Score API update
+        console.log("Inside topic set :", TopicService.getTeamA());
         $scope.leftTeam = TopicService.getTeamA();
         $scope.rightTeam = TopicService.getTeamB();
         var score = TopicService.getScore();
@@ -95,7 +87,6 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
           $scope.rightTeamScore = score.points[1];
         }
         $scope.gameStatus = TopicService.getGameStatus();
-        // console.log($scope.gameStatus)
 
         if($scope.gameStatus == "live") {
           $scope.gamePeriod = TopicService.getGamePeriod();
@@ -103,13 +94,9 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
         }
 
         $scope.gameScheduledTime = TopicService.getGameTime();
-
-
-
         $scope.allScoresTitle = TopicService.getScoresTitle();
         $scope.allScoresURL = TopicService.getScoresLink();
 
-        // renderScoreCard($scope.leftTeam.pColor, $scope.rightTeam.pColor);
         var left = $('.scoreCardContent');
         var right = $('.svg-content');
         left.css('background-color', $scope.leftTeam.pColor);
@@ -118,14 +105,10 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
       $scope.topicTitle = TopicService.getTitle();
       var thisTopic = TopicService.getTopic();
       $scope.topicDescHtml = thisTopic.html;
-      //console.log("has MEDIA  :"+ thisTopic.type +"thisTopic.mediaUrl"+ thisTopic.mediaUrl);
       if(thisTopic.type == "media"){
       $scope.topicMediaUrl = thisTopic.mediaUrl;
       $scope.topicMediaAspectFeed = thisTopic.mediaAspectFull;
       }
-//      var width = window.innerWidth;
-//      console.log("Image width :"+$scope.topicMediaAspectFeed.w +"  X  " + $scope.topicMediaAspectFeed.h + "xxxx "+width)
-//      $scope.topicMediaAspectFull = thisTopic.mediaAspectFull;
 
       $scope.createdAt = TopicService.getTimeCreatedAt();
       $scope.liked = TopicService.getLiked();
@@ -138,109 +121,21 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
 
     }
   };
-
-  // var updateComments = function(){
-  //   var commentsdata = CommentService.comments();
-  //   if(commentsdata != undefined && (commentsdata.length >0 || lastComment === true)){
-  //     lastComment = false;
-  //     // console.log("CommentsData : ", commentsdata);
-  //     var len = commentsdata.length;
-
-  //     $scope.commentsArray = [];
-
-  //     for(i=0;i<len;i++){
-  //       var tempComment = {};
-  //       tempComment = commentsdata[i];
-  //       tempComment.postAuthorName = commentsdata[i].author.name;
-  //       tempComment.postAuthorPhoto = commentsdata[i].author.photo;
-  //       tempComment.isMyComment = UserInfoService.isCurrentUser(commentsdata[i].author.id);
-
-  //       tempComment.likeCount = commentsdata[i].metrics.likes;
-  //       tempComment.replyCount = commentsdata[i].metrics.replies;
-
-  //       tempComment.postTimestamp = commentsdata[i].createdAt;
-  //       if (tempComment.type === 'media'){
-  //         tempComment.mediaUrl = commentsdata[i].mediaUrl;
-  //         // tempComment.trustedMediaUrl = $scope.trustSrc(tempComment.mediaUrl);
-  //         tempComment.mediaAspectFeed = commentsdata[i].mediaAspectFeed;
-  //         tempComment.mediaAspectFull = commentsdata[i].mediaAspectFull;
-  //         tempComment.mediaAspectRatio = commentsdata[i].mediaAspectRatio;
-  //         tempComment.mediaOrientation = commentsdata[i].mediaOrientation;
-  //         tempComment.mediaThumbUrl = commentsdata[i].mediaThumbUrl;
-  //       }
-  //       tempComment.isLiked = commentsdata[i].signal.like;
-
-  //       if (tempComment.type === 'embed'){
-  //         tempComment.shared = true;
-  //         tempComment.embed = commentsdata[i].embed;
-  //         tempComment.embed.embedCreatedAt = commentsdata[i].embedCreatedAt;
-  //         tempComment.embed.embedCreatedAtFull = commentsdata[i].embedCreatedAtFull;
-  //         tempComment.embedType = commentsdata[i].embedType;
           
-  //         if (tempComment.embedType === 'media' || tempComment.embedType === 'link'){
-  //           tempComment.mediaUrl = commentsdata[i].embedMedia.mediaUrl;
-  //           tempComment.mediaThumbUrl = commentsdata[i].embedMedia.mediaThumbUrl;
-  //           tempComment.mediaAspectFeed = commentsdata[i].embedMedia.mediaAspectFeed;
-  //           tempComment.mediaAspectFull = commentsdata[i].embedMedia.mediaAspectFull;
-  //           tempComment.mediaAspectRatio = commentsdata[i].embedMedia.mediaAspectRatio;
-  //           tempComment.mediaOrientation = commentsdata[i].embedMedia.mediaOrientation;
-  //         }
-
-  //         if (tempComment.providerName === "Twitter"){
-  //           tempComment.embed.embedLogo = "img/twitterLogo@2x.png";
-  //         } else {
-  //           tempComment.embed.embedLogo = commentsdata[i].embed.provider.logo;
-  //         }
-
-  //         if (commentsdata[i].embed.type === 'link' && commentsdata[i].embed.playable === true){
-  //           tempComment.embedHtml = commentsdata[i].embedHtml;
-  //         }
-  //       }
-  //       $scope.commentsArray.push(tempComment);
-  //       if (i === len - 1 && NETWORK_DEBUG){
-  //         console.log("Comments Array: ", $scope.commentsArray);
-  //       }
-
-  //     }
-  //   }
-
-  // };
-
-  // $scope.loadRemainingComments = function() {
-  //   console.log("LOADING REST OF COMMENTS...");
-  //   if (!CommentService.loadedComments()){
-  //     networkService.send(CommentService.getCommentsRequest($stateParams.topicID));
-  //     CommentService.setLoadedComments(true);
-  //     $scope.loadedAllComments = true;
-  //   }
-  // };
-
   $scope.init = function() {
     networkService.send(TopicService.getTopicRequest($stateParams.topicID));
-    // networkService.send(CommentService.getCommentsRequest($stateParams.topicID));
   };
-  
 
   $scope.setPeelUI = function(isPeelUser){
-    //console.log("isPeelUser :"+isPeelUser);
     $scope.isPeelUser = isPeelUser;
     
   };
-
   
   $scope.setPeelUI($scope.isPeelUser);
 
-  // $scope.hideLoading = function(){
-  //   console.log("HIDING LOAD");
-  //   $scope.loadingChat = false;
-  //   $scope.loadingSocial = false;
-  //   $scope.loadingSocial = false;
-  // };
   $scope.initPage = function(){
     updateTopic();
-    // updateComments();
     $scope.pageClass = 'page-topic';
-    // $scope.showNewCommentsIndicator = false;
 
     $scope.topicID = $stateParams.topicID;
     $scope.init();
@@ -250,39 +145,6 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
     }
   };
 
-  // $scope.setLinksOnComments = function(){
-  //   var postDivs = document.getElementsByClassName("postRow");
-  //   for (div in postDivs) {
-  //     var thisDiv = postDivs[div];
-  //     thisDiv.onclick = function(e) {
-  //       if ($(e.target).is('a')) {
-  //         console.log("EXTERNAL LINK: ", e, this.id);
-  //         return;
-  //       } 
-  //       thisPost = $scope.commentsArray[this.id];
-  //       if ($scope.innerButtonTapped === false) {
-  //         console.log("Post Click Active: ", thisPost.id);
-  //         if (HTML5_LOC){
-  //           $location.path("/post/" + thisPost.id);
-  //           if (!$scope.$$phase){
-  //             $scope.$apply();
-  //           }
-  //         } else {
-  //           // $window.location = "#/post/" + thisPost.id;
-  //           var postParams = $stateParams;
-  //           postParams.postID = thisPost.id;
-  //           $state.go('post', postParams);
-  //         }
-  //       }
-  //       $scope.innerButtonTapped = false;
-  //     }
-  //   }
-  // }
-
-//  if(URIHelper.isPeelUser())
-//    ga('send', 'event', 'UserType', '0', 'Peel User', { 'nonInteraction': 2 });
-//  else
-//    ga('send', 'event', 'UserType', '0', 'Non Peel User', { 'nonInteraction': 2 });
   if(UserInfoService.isUserLoggedIn()){
     if(NETWORK_DEBUG)
       console.log("User is logged in, checking for connection");
@@ -439,9 +301,8 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
       clientHeight,
       docHeight,
       headerHeight;
-  var debugObj;
   $scope.setDocVars = function() {
-    console.log("Setting Doc Vars");
+    // console.log("Setting Doc Vars");
     if (!docVarsSet){
       tabs = $('#inputControls').first();
       tabContainer = $('.tabContainer').first();
@@ -457,16 +318,6 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
       } else {
         headerHeight = 0;
       }
-      debugObj = {
-        tabs: tabs,
-        tabsTop: tabsTop,
-        inputHeight: inputHeight,
-        tabContainer: tabContainer,
-        tabsHeight: tabsHeight,
-        clientHeight: clientHeight,
-        docHeight: docHeight,
-        headerHeight: headerHeight
-      }
       docVarsSet = true;
     }
   };
@@ -474,7 +325,7 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
   var fixed = false;
   var watchScroll = debounce(function() {
     $scope.setDocVars();
-    if (GEN_DEBUG) console.log("Tabs Top: ", tabsTop, debugObj);
+    if (GEN_DEBUG) console.log("Tabs Top: ", tabsTop);
     if ($scope.showNewCommentsIndicator){
       $scope.showNewCommentsIndicator = false;
       $scope.$apply();

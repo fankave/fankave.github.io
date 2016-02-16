@@ -1,6 +1,6 @@
 angular.module('AuthModule')
-.factory("AuthService", ["$http","$window","$location","UserInfoService", "TopicService", "ReplyService", "networkService", "ForumDeviceInfo", "ChannelService", "URIHelper", 
-  function ($http, $window, $location, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
+.factory("AuthService", ["$state","$http","$window","$location","UserInfoService", "TopicService", "ReplyService", "networkService", "ForumDeviceInfo", "ChannelService", "URIHelper", 
+  function ($state, $http, $window, $location, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
   var userLoggedInToFacebook = false;
 

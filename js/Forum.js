@@ -4,23 +4,23 @@ function ($stateProvider, $urlRouterProvider, $locationProvider) {
   
   $stateProvider
   .state('login', {
-    url: '/login',
+    url: '/login?tab',
     templateUrl:'partials/facebookLogin.html',
     controller:'AuthController'
   })
   .state('channel', {
-    url: '/channel/:channelID?peel&userId&userName&showId&smartStadium&MI16',
+    url: '/channel/:channelID?tab&peel&userId&userName&showId&smartStadium&MI16&MWC',
     templateUrl:'partials/login.html',
     controller:'ChannelController'
   })
   .state('topic', {
-    url: '/topic/:topicID?channel&peel&userId&userName&showId&smartStadium&MI16',
+    url: '/topic/:topicID?peel&userId&userName&showId&smartStadium&MI16&MWC',
     abstract: true,
     templateUrl:'partials/topic.html',
     controller:'TopicController'
   })
     .state('topic.chat', {
-      url: '/chat',
+      url: '',
       deepStateRedirect: true,
       views: {
         'topic-tab-view': {
@@ -53,7 +53,7 @@ function ($stateProvider, $urlRouterProvider, $locationProvider) {
       }
     })
   .state('post', {
-    url: '/post/:postID?channel&peel&userId&userName&showId&smartStadium&MI16',
+    url: '/post/:postID?channel&peel&userId&userName&showId&smartStadium&MI16&MWC',
     templateUrl:'partials/post.html',
     controller:'PostController'
   })
@@ -61,7 +61,7 @@ function ($stateProvider, $urlRouterProvider, $locationProvider) {
     url: 'invalidTopic',
     templateUrl:'partials/invalidTopic.html'
   })
-  $urlRouterProvider.when('/topic/:topicID', '/topic/:topicID/chat');
+
   $urlRouterProvider.otherwise('invalid');
 
   if (window.history && window.history.pushState && HTML5_LOC){
