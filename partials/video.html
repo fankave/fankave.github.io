@@ -74,8 +74,8 @@
         <span class="social-share-label">Share</span>
       </button>
       <ul class="dropdown-menu dropdown-menu-right">
-        <li><a secure-click="video.shareTweetToChat(thisPost)">Share to Live Chat</a></li>
-        <li  ng-if="isPeelUser === false"><a secure-click="video.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
+        <li><a ng-click="video.shareTweetToChat(thisPost)">Share to Live Chat</a></li>
+        <li  ng-if="isPeelUser === false"><a ng-click="video.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
       </ul>
     </div>
 

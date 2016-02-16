@@ -144,11 +144,11 @@
 
   <div id="inputControls">
     <!-- Tech MI16 Tabs -->
-    <div class="tabContainer clearfix" ng-if="isMI16User || isMWCUser" ng-element-ready="initializeTab()">
-      <div id="chatTab" class="grid-col grid-col-50 tab" ng-click="switchTabs('chat')">
+    <div class="tabContainer clearfix" ng-if="isMI16User || isMWCUser">
+      <div id="chatTab" class="grid-col grid-col-50 tab" ng-class="{ selectedTab: $state.includes('topic.chat') }" ng-click="switchTabs('chat')">
         <span class="tabName">Chat</span>
       </div>
-      <div id="socialTab" class="grid-col grid-col-50 tab" ng-click="switchTabs('social')">
+      <div id="socialTab" class="grid-col grid-col-50 tab" ng-class="{ selectedTab: $state.includes('topic.social') }" ng-click="switchTabs('social')">
         <span class="tabName">Social</span>
       </div>
       <div id="newCommentsAvailableIndicatorDiv" ng-if="newCommentsAvailable && $state.includes('topic.chat')" ng-class="{ newCommentsDesktop: mobileBrowser === false }">
@@ -158,14 +158,14 @@
       </div>
     </div>
     <!-- All Other Tabs -->
-    <div class="tabContainer clearfix" ng-if="!isMI16User && !isMWCUser" ng-element-ready="initializeTab()">
-      <div id="chatTab" class="grid-col grid-col-33 tab" ng-click="switchTabs('chat')">
+    <div class="tabContainer clearfix" ng-if="!isMI16User && !isMWCUser">
+      <div id="chatTab" class="grid-col grid-col-33 tab" ng-class="{ selectedTab: $state.includes('topic.chat') }" ng-click="switchTabs('chat')">
         <span class="tabName">Chat</span>
       </div>
-      <div id="videoTab" class="grid-col grid-col-34 tab" ng-click="switchTabs('video')">
+      <div id="videoTab" class="grid-col grid-col-34 tab" ng-class="{ selectedTab: $state.includes('topic.video') }" ng-click="switchTabs('video')">
         <span class="tabName">Video</span>
       </div>
-      <div id="socialTab" class="grid-col grid-col-33 tab" ng-click="switchTabs('social')">
+      <div id="socialTab" class="grid-col grid-col-33 tab" ng-class="{ selectedTab: $state.includes('topic.social') }" ng-click="switchTabs('social')">
         <span class="tabName">Social</span>
       </div>
       <div id="newCommentsAvailableIndicatorDiv" ng-if="newCommentsAvailable && $state.includes('topic.chat')" ng-class="{ newCommentsDesktop: mobileBrowser === false }">

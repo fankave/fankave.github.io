@@ -14,9 +14,11 @@ angular.module('NetworkModule')
       console.log("Comments Error message from network: ", commentsData.error);
     }
     else if(commentsData.push){
-      if(commentsData.method == "UPSERT")
+      if(commentsData.method == "UPSERT"){
+        if (NETWORK_DEBUG) console.log("Comment Upsert");
         if(CommentService.updateComment(commentsData) == 0)
           TopicService.updateCommentCount(1);
+      }
       else if(commentsData.method == "REMOVE"){
         //TODO: Design requirement for how to show a deleted comment
 //        if(CommentService.removeComment(commentsData) == 0)
@@ -25,18 +27,22 @@ angular.module('NetworkModule')
     }
     else {
       if(commentsData.method == "POST"){
+        if (NETWORK_DEBUG) console.log("Comment Post");
         var uri = commentsData.uri;
         if(uri != undefined){
           var commentId = uri.slice(-DATA_BANT_ID_LENGTH);
 //          console.log("Comment ID: "+ commentId);
 //          console.log("uri: "+ uri);
           if(uri == "/v1.0/comment/create"){
+            if (NETWORK_DEBUG) console.log("Comment Post Create");
             CommentService.appendToComments(commentsData);
             TopicService.updateCommentCount(1);
           }
           else{
-            if(CommentService.updateCommentLocalData(uri, commentId) == 0)
+            if(CommentService.updateCommentLocalData(uri, commentId) == 0){
+              if (NETWORK_DEBUG) console.log("Comment Post Delete");
               TopicService.updateCommentCount(-1);
+            }
           }
         }
       }

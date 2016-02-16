@@ -39,12 +39,12 @@ angular.module('NetworkModule')
           _comments.push(_commentObject);
         // console.log("Comments in set comment Service type:"+_commentObject.type + "  " +_commentObject.html );
       }
-      if (commentsData.data.prevOffset === ""){
-        notifyObservers(true);
-      } else {
+      // if (commentsData.data.prevOffset === ""){
+      //   notifyObservers(true);
+      // } else {
         notifyObservers();
-      }
-      _offset = commentsData.data.nextOffset;
+      // }
+      // _offset = commentsData.data.nextOffset;
     }
     else{
       //PArticular case when user is on reply page and requires comment by comment ID
@@ -188,16 +188,16 @@ angular.module('NetworkModule')
   }
   
   function commentGetRequest(uri){
-    var queryStr;
-    if (_offset === 0){
-      queryStr = "?limit=10&offset=" + _offset;
-    } else {
-      queryStr = "?offset=" + _offset;
-    }
+    // var queryStr;
+    // if (_offset === 0){
+    //   queryStr = "?limit=10&offset=" + _offset;
+    // } else {
+    //   queryStr = "?offset=" + _offset;
+    // }
     return  {"rid": "comment",
       "timestamp": new Date().getTime(),
       "method": "GET",
-      "uri": encodeURI(uri + queryStr)}
+      "uri": encodeURI(uri)}
   }
   function commentPostRequest(uri){
     return  {"rid": "comment",

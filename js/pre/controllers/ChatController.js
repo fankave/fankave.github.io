@@ -7,9 +7,6 @@ angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
     var lastComment = false;
     _this.newCommentsAvailable = false;
 
-    if (!this.commentsArray){
-      this.loading = true;
-    }
 
     function init() {
       if (NETWORK_DEBUG) console.log("Init Chat for Topic: ", $stateParams.topicID)
@@ -20,6 +17,9 @@ angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
     function updateComments(){
       var commentsdata = CommentService.comments();
       if (commentsdata != undefined && (commentsdata.length > 0 || lastComment === true)){
+        if (!_this.commentsArray){
+          _this.loading = true;
+        }
         lastComment = false;
         var len = commentsdata.length;
 
@@ -88,6 +88,7 @@ angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
     };
 
     this.doneLoading = function() {
+      console.log("Done Loading");
       _this.loading = false;
     };
 
@@ -122,7 +123,7 @@ angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
     }
 
     CommentService.registerObserverCallback(notifyNewComments);
-    CommentService.registerObserverCallback(updateComments, true);
+    CommentService.registerObserverCallback(updateComments);
 
     this.trustSrc = function(src) {
       return $sce.trustAsResourceUrl(src);

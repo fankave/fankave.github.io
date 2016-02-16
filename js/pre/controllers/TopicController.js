@@ -123,9 +123,6 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
       var metrics = TopicService.getMetrics();
       $scope.likesCount = metrics.likes;
       $scope.commentsCount = metrics.comments;
-      if (!$scope.commentsCount || $scope.commentsCount === 0){
-        $scope.loadingChat = false;
-      }
 
     }
   };
@@ -244,44 +241,44 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
   // CONTENT TABS
   $scope.switchTabs = function(tab) {
     if (tab === 'chat'){
-      $('#chatTab').addClass('selectedTab');
-      $('#videoTab').removeClass('selectedTab');
-      $('#socialTab').removeClass('selectedTab');
+      // $('#chatTab').addClass('selectedTab');
+      // $('#videoTab').removeClass('selectedTab');
+      // $('#socialTab').removeClass('selectedTab');
       $state.go('topic.chat');
       $(document).scrollTop(0);
       updateTopic();
     }
     if (tab === 'video'){
-      $('#chatTab').removeClass('selectedTab');
-      $('#videoTab').addClass('selectedTab');
-      $('#socialTab').removeClass('selectedTab');
+      // $('#chatTab').removeClass('selectedTab');
+      // $('#videoTab').addClass('selectedTab');
+      // $('#socialTab').removeClass('selectedTab');
       $state.go('topic.video');
       $(document).scrollTop(0);
     }
     if (tab === 'social'){
-      $('#chatTab').removeClass('selectedTab');
-      $('#videoTab').removeClass('selectedTab');
-      $('#socialTab').addClass('selectedTab');
+      // $('#chatTab').removeClass('selectedTab');
+      // $('#videoTab').removeClass('selectedTab');
+      // $('#socialTab').addClass('selectedTab');
       $state.go('topic.social');
       $(document).scrollTop(0);
     }
   };
 
-  $scope.initializeTab = function() {
-    console.log("Initializing Tabs");
-    if ($state.includes("topic.chat")){
-      console.log("In Chat");
-      $('#chatTab').addClass('selectedTab');
-    }
-    else if ($state.includes("topic.video")){
-      console.log("In Video");
-      $('#videoTab').addClass('selectedTab');
-    }
-    else if ($state.includes("topic.social")){
-      console.log("In Social");
-      $('#socialTab').addClass('selectedTab');
-    }
-  };
+  // $scope.initializeTab = function() {
+  //   console.log("Initializing Tabs");
+  //   if ($state.includes("topic.chat")){
+  //     console.log("In Chat");
+  //     $('#chatTab').addClass('selectedTab');
+  //   }
+  //   else if ($state.includes("topic.video")){
+  //     console.log("In Video");
+  //     $('#videoTab').addClass('selectedTab');
+  //   }
+  //   else if ($state.includes("topic.social")){
+  //     console.log("In Social");
+  //     $('#socialTab').addClass('selectedTab');
+  //   }
+  // };
 
   var _channelId = ChannelService.getChannel();
   TopicService.setChannel(_channelId);
