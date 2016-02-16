@@ -46,10 +46,11 @@ angular.module('SocialModule')
 	function registerObserverCallback(callback){
 		//register an observer
 		var callbackLength  = observerCallbacks.length;
-		while(callbackLength > 0){
-			callbackLength = observerCallbacks.length;
-			observerCallbacks.pop();
-		}
+		for (var i = 0; i < callbackLength; i++){
+      if (observerCallbacks[i] === callback){
+        return;
+      }
+    }
 		observerCallbacks.push(callback);
 	}
 
