@@ -4,7 +4,7 @@ function ($stateProvider, $urlRouterProvider, $locationProvider) {
   
   $stateProvider
   .state('login', {
-    url: '/login?tab',
+    url: '/login?tab&MI16&MWC',
     templateUrl:'partials/facebookLogin.html',
     controller:'AuthController'
   })

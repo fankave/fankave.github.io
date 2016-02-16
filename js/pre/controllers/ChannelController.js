@@ -4,14 +4,13 @@ angular.module("ChannelModule", ["NetworkModule", "AuthModule"])
 function ($scope,$state,$stateParams,$window,$location,$sce,networkService,ChannelService,TopicService, URIHelper, AuthService, UserInfoService)
 {
   ChannelService.setChannel($stateParams.channelID);
-  console.log("State Params in Channel: ", $stateParams);
+  if (NETWORK_DEBUG) console.log("State Params in Channel: ", $stateParams);
   
   $scope.init = function() {
     console.log("Init all connections");
     networkService.init();
     networkService.send(ChannelService.getLiveGameTopic($stateParams.channelID));
   };
-
   
   var updateTopic = function(){
     var id = ChannelService.getLiveTopicId();
@@ -33,8 +32,6 @@ function ($scope,$state,$stateParams,$window,$location,$sce,networkService,Chann
     }
 
   };
-  
-  
 
   ChannelService.registerObserverCallback(updateTopic);
   
@@ -43,13 +40,17 @@ function ($scope,$state,$stateParams,$window,$location,$sce,networkService,Chann
       console.log("User is logged in, checking for connection");
     $scope.init();
   }
-  else if (URIHelper.isSmartStadiumUser()){
+  else if ($stateParams.smartStadium){
     $scope.isSmartStadiumUser = true;
     AuthService.loginWithEmail();
   }
-  else if (URIHelper.isTechMUser()){
+  else if ($stateParams.MI16){
     console.log("MI16 User Detected");
-    $window.location = "#/login?MI16=true";
+    $state.go('login', $stateParams);
+  }
+  else if ($stateParams.MWC){
+    console.log("MWC User Detected");
+    $state.go('login', $stateParams);
   }
   else {
     if(URIHelper.isPeelUser()){
@@ -60,6 +61,5 @@ function ($scope,$state,$stateParams,$window,$location,$sce,networkService,Chann
       AuthService.loginAsGuest();
     }
   }
-  
 
 }]);

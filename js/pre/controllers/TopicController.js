@@ -3,17 +3,22 @@ angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "M
 
 function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $timeout, networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
+  var sessionTime = window.time;
   // Check For Mobile Browser
   if (UserAgentService.isMobileUser()){
     $scope.mobileBrowser = true;
     $scope.mobileUserAgent = UserAgentService.getMobileUserAgent();
-    console.log("MOBILE USER AGENT: ", $scope.mobileUserAgent);
+    if (GEN_DEBUG) console.log("MOBILE USER AGENT: ", $scope.mobileUserAgent);
   } else {
     $scope.mobileBrowser = false;
   }
 
-  ga('send', 'pageview', "/topic/"+$stateParams.topicID);
-  console.log('Sent Pageview from /topic/' + $stateParams.topicID);
+  //Google Analytics code
+  if((ChannelService.getChannel() == undefined ) && (TopicService.getChannel() == undefined)){
+    ga('send', 'pageview', "/topic/"+$routeParams.topicID);
+    if (GEN_DEBUG)
+    console.log('Sent Pageview from /topic/' + $routeParams.topicID);
+  }
   
   TopicService.setTopicId($stateParams.topicID);
   $scope.topicType = "livegame";
@@ -27,8 +32,11 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
       $timeout(function() {$scope.continueToExperience('smartS'); }, 5000);
     // }
   }
-  else if (UserInfoService.isMI16User()){
+  else if ($stateParams.MI16 || UserInfoService.isMI16User()){
     $scope.isMI16User = true;
+  }
+  else if ($stateParams.MWC || UserInfoService.isMWCUser()){
+    $scope.isMWCUser = true;
   }
   else if(UserInfoService.isPeelUser()){
     $scope.isPeelUser = true;
@@ -158,8 +166,10 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
     AuthService.loginWithEmail();
   }
   else if (URIHelper.isTechMUser()){
-    // $window.location = "#/login?MI16=true";
-    $state.go('login', {MI16: true});
+    $state.go('login', $stateParams);
+  }
+  else if (URIHelper.isMWCUser()){
+    $state.go('login', $stateParams);
   }
   else if (URIHelper.isPeelUser()){
     $scope.isPeelUser = true;
@@ -167,7 +177,6 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
     AuthService.loginWithPeel();
   }
   else {
-    // console.log("Not logged in to facebook, take user to login page")
     AuthService.loginAsGuest();
   }
 

@@ -2372,6 +2372,9 @@ img-crop canvas {
   left: 0;
   width: 100%;
   height: 100vh;
+}
+
+.techBG {
   background: #90beef;
   background: -webkit-linear-gradient(rgb(244,252,255), rgb(131,178,234), rgb(18,65,195));
   background: -o-linear-gradient(rgb(244,252,255), rgb(131,178,234), rgb(18,65,195));
@@ -2379,20 +2382,42 @@ img-crop canvas {
   background: linear-gradient(rgb(244,252,255), rgb(131,178,234), rgb(18,65,195));
 }
 
+.mwcBG {
+  background-color: #E52235;
+}
+
+
 #techLoginContainer {
   position: relative;
   margin: 0 auto;
   width: 100%;
   max-width: 500px;
   height: 100vh;
-  padding: 40px 35px;
+  padding: 30px 35px;
 }
 
-#techLoginHeader h1 {
+#techLoginHeader h1,
+#MWCLoginHeader h1 {
   font-size: 60px;
-  font-weight: 600;
+  font-weight: 400;
   margin-top: 0;
   margin-bottom: 4px;
+}
+
+#MWCLoginHeader h1 {
+  /*text-align: center;*/
+  /*margin-bottom: 20px;*/
+}
+
+#MWCLoginHeader h4 {
+  margin-top: 0px;
+  margin-bottom: 30px;
+  font-weight: 300;
+}
+
+#MWCLoginHeader {
+  color: #fff;
+  font-weight: 400;
 }
 
 #techLoginHeader h3 {
@@ -2419,6 +2444,12 @@ img-crop canvas {
 .emailHelp {
   top: 338px;
 }
+.nameHelpMWC {
+  top: 228px;
+}
+.emailHelpMWC {
+  top: 292px;
+}
 
 #techLoginButton {
   width: 100%;
@@ -2430,6 +2461,19 @@ img-crop canvas {
   border-radius: 35px;
   border: none;
 }
+
+#MWCLoginButton {
+  width: 200px;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 60px;
+  font-size: 20px;
+  color: #fff;
+  background-color: rgb(18,65,195);
+  border-radius: 35px;
+  border: none;
+}
+
 #techLoginButton:hover {
   cursor: pointer;
 }
@@ -2438,9 +2482,26 @@ img-crop canvas {
   color: #fff;
 }
 
+#MWCLoginDescription {
+  color: #fff;
+  text-align: center;
+  font-weight: 300;
+}
+
 #formInstruct {
   display: block;
   margin-bottom: 14px;
+}
+
+#formInstructMWC {
+  display: block;
+  margin-bottom: 14px;
+  color: #fff;
+  font-weight: 300;
+}
+
+.centerMWC {
+  text-align: center;
 }
 
 .techMInput {
@@ -2455,39 +2516,62 @@ img-crop canvas {
   color: #000;
 }
 
-.techMInput::-moz-placeholder {
+.MWCInput {
+  width: 100%;
+  height: 46px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 20px;
+  padding-left: 15px;
+  font-size: 20px;
+  font-weight: 200;
+  color: #000;
+  background-color: #fff;
+}
+
+.techMInput::-moz-placeholder,
+.MWCInput::-moz-placeholder {
   font-size: 20px;
   font-weight: 200;
   color: rgb(167,167,167);
   opacity: 1;
 }
-.techMInput:-ms-input-placeholder {
+.techMInput:-ms-input-placeholder,
+.MWCInput:-ms-input-placeholder {
   font-size: 20px;
   font-weight: 200;
   color: rgb(167,167,167);
   opacity: 1;
 }
-.techMInput::-webkit-input-placeholder {
+.techMInput::-webkit-input-placeholder,
+.MWCInput::-webkit-input-placeholder {
   font-size: 20px;
   font-weight: 200;
   color: rgb(167,167,167);
   opacity: 1;
 }
-.techMInput:focus {
+.techMInput:focus,
+.MWCInput:focus {
   border-color: rgb(22,189,231);
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
           box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
 }
 
-#MI16Title {
+#MI16Title,
+#MWCTitle {
   font-weight: 500;
   margin-bottom: 5px;
   text-align: left;
   padding: 0 20px;
 }
 
-#MI16Banner {
+#MWCTitle {
+  font-size: 16px;
+}
+
+#MI16Banner,
+#MWCBanner {
   width: 100%;
   max-width: 768px;
   height: auto;

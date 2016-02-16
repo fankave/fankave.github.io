@@ -10,27 +10,14 @@ angular.module('NetworkModule')
 	var ssUserId;
 
 	var _MI16;
-
-	function getUrlVars() {
-		// var vars = [], hash;
-		// var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-		// for (var i = 0; i < hashes.length; i++) {
-		// 	hash = hashes[i].split('=');
-		// 	vars.push(hash[0]);
-		// 	vars[hash[0]] = hash[1];
-		// }
-		return $stateParams;
-	}
-	
-	
+	var _MWC;
 
 	return {
 		isPeelUser:function(){
-			var vars = getUrlVars();
-			if(vars["peel"]){
-				peelUserId = vars["userId"];
-				peelUserName = vars["userName"];
-				peelShowId = vars["showId"];
+			if($stateParams.peel){
+				peelUserId = $stateParams.userId;
+				peelUserName = $stateParams.userName;
+				peelShowId = $stateParams.showId;
 				//If diff previous peel user, clear storage
 				var prevPeelUser = ForumStorage.getFromLocalStorage("forumUserType");
 				// if(prevPeelUser != undefined && prevPeelUser == "peel" && ForumStorage.setToLocalStorage("forumPeelUserId") != peelUserId)
@@ -43,23 +30,33 @@ angular.module('NetworkModule')
 			return false;
 		},
 		isSmartStadiumUser:function(){
-			var vars = getUrlVars();
-			if(vars["smartStadium"]){
-				ssUserId = vars["userId"];
-				ssUserName = vars["userName"];
+			if($stateParams.smartStadium){
+				ssUserId = $stateParams.userId;
+				ssUserName = $stateParams.userName;
 				ForumStorage.setToLocalStorage("forumSmartStadiumUserId",ssUserId);
 				return true;
 			}
 			return false;
 		},
 		isTechMUser:function(){
-			var vars = getUrlVars();
-			if (vars["MI16"]){
+			console.log("isTechM: ", $stateParams);
+			if ($stateParams.MI16){
 				_MI16 = true;
 				ForumStorage.setToLocalStorage("techMIUser",true);
 				return true;
 			}
 			if (_MI16){
+				return true;
+			}
+			return false;
+		},
+		isMWCUser:function(){
+			if ($stateParams.MWC){
+				_MWC = true;
+				ForumStorage.setToLocalStorage("MWCUser",true);
+				return true;
+			}
+			if (_MWC){
 				return true;
 			}
 			return false;

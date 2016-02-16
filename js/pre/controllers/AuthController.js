@@ -2,15 +2,12 @@ angular.module("AuthModule", ["NetworkModule", "TopicModule"])
 .controller("AuthController", ["$scope", "$stateParams", "$http", "AuthService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService", "URIHelper",
   function ($scope, $stateParams, $http, AuthService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
-    if (window.location.href.indexOf('?') !== -1){
-      var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
-      console.log("urlQueryStr: ", urlQueryStr);
-      if (urlQueryStr === 'MI16=true'){
-        $scope.techMIUser = true;
-        $scope.facebookUser = false;
-      }
+    if ($stateParams.MI16){
+      $scope.mUserType = 'MI16';
+    }
+    else if ($stateParams.MWC){
+      $scope.mUserType = 'MWC';
     } else {
-      $scope.techMIUser = false;
       $scope.facebookUser = true;
     }
 
@@ -41,7 +38,7 @@ angular.module("AuthModule", ["NetworkModule", "TopicModule"])
 
     $scope.techMLogin = function(name, email, isValid) {
       if (isValid){
-        AuthService.techMLogin(name, email);
+        AuthService.techMLogin(name, email, $scope.mUserType);
       }
       $scope.submitted = true;
     };
@@ -80,6 +77,12 @@ angular.module("AuthModule", ["NetworkModule", "TopicModule"])
 
     };
 
+    $scope.focusMWC = function() {
+      $('#techLoginContainer').animate({'top':'-40px'},100);
+    };
 
+    $scope.blurMWC = function() {
+      $('#techLoginContainer').animate({'top':''},100);
+    };
     
 }]);
