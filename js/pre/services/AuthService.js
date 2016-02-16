@@ -1,6 +1,6 @@
 angular.module('AuthModule')
-.factory("AuthService", ["$state","$http","$window","$location","UserInfoService", "TopicService", "ReplyService", "networkService", "ForumDeviceInfo", "ChannelService", "URIHelper", 
-  function ($state, $http, $window, $location, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
+.factory("AuthService", ["$state","$stateParams","$http","$window","$location","UserInfoService", "TopicService", "ReplyService", "networkService", "ForumDeviceInfo", "ChannelService", "URIHelper", 
+  function ($state, $stateParams, $http, $window, $location, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
   var userLoggedInToFacebook = false;
 
@@ -129,21 +129,17 @@ angular.module('AuthModule')
     }
     else if (!!initTopic) {
       console.log("found Topic ID: " + initTopic);
-      if (HTML5_LOC){
-        $location.path("/topic/" + initTopic);
-      } else {
-        $window.location = "#/topic/" + initTopic;
-      }
+      var initParams = $stateParams;
+      initParams.topicID = initTopic;
+      $state.go('topic.chat', initParams);
     }
     else {
       var initPost = ReplyService.getPostId();
       if (!!initPost){
         console.log("found post ID: " + initPost);
-        if (HTML5_LOC){
-          $location.path("/post/" + initPost);
-        } else {
-          $window.location = "#/post/" + initPost;
-        }
+        var initParams = $stateParams;
+        initParams.postID = initPost;
+        $state.go('post', initParams);
       }
     }
   };
