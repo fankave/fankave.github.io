@@ -31,17 +31,17 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       }
     };
 
-    $scope.$on('videoActive', function (event, args){
-      _this.initFeed('video');
-    });
+    // $scope.$on('videoActive', function (event, args){
+    //   _this.initFeed('video');
+    // });
 
-    $scope.$on('socialActive', function (event, args){
-      _this.initFeed('social');
-    });
+    // $scope.$on('socialActive', function (event, args){
+    //   _this.initFeed('social');
+    // });
 
     this.loadContent = function(type, offset) {
-      var channelID = ChannelService.getChannel()||TopicService.getChannel();
-      if (type === 'social'){
+      var channelID = ChannelService.getChannel()||TopicService.getChannelId();
+      if ($scope.$parent.activeTab === 'social' || type === 'social'){
         console.log("LOADING SOCIAL: ", channelID);
         networkService.send(SocialService.getSocialDataRequest(channelID,offset));
         return true;
@@ -51,6 +51,11 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         return true;
       }
     };
+    if (!TopicService.getChannelId()){
+      TopicService.registerObserverCallback(_this.loadContent);
+    } else {
+      _this.loadContent();
+    }
 
     var refreshContent = function() {
       var tab = $scope.$parent.activeTab;

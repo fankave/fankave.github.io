@@ -171,8 +171,20 @@ angular.module('NetworkModule')
   function registerObserverCallback(callback, temp){
     //register an observer
     if (temp){
+      var callbackLength = tempObserverCallbacks.length;
+      for (var i = 0; i < callbackLength; i++){
+        if (tempObserverCallbacks[i] === callback){
+          return;
+        }
+      }
       tempObserverCallbacks.push(callback);
     } else {
+      var callbackLength = observerCallbacks.length;
+      for (var i = 0; i < callbackLength; i++){
+        if (observerCallbacks[i] === callback){
+          return;
+        }
+      }
       observerCallbacks.push(callback);
     }
   }

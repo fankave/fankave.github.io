@@ -86,7 +86,6 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   };
 
   // CONTENT TABS
-  // $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
     var t = (window.time - sessionTime);
       ga('send', 'event', 'Tabs','ActiveTab', $scope.activeTab);
@@ -94,30 +93,22 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     sessionTime = window.time ;
 
     if (tab === 'chat'){
-      $('#chatTab').addClass('selectedTab');
-      $('#videoTab').removeClass('selectedTab');
-      $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'chat';
       $(document).scrollTop(0);
-      // updateTopic();
-      // updateComments();
+      updateTopic();
+      updateComments();
     }
     if (tab === 'video'){
-      $('#chatTab').removeClass('selectedTab');
-      $('#videoTab').addClass('selectedTab');
-      $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'video';
       $(document).scrollTop(0);
     }
     if (tab === 'social'){
-      $('#chatTab').removeClass('selectedTab');
-      $('#videoTab').removeClass('selectedTab');
-      $('#socialTab').addClass('selectedTab');
       $scope.activeTab = 'social';
       $(document).scrollTop(0);
     }
     console.log("Active Tab: ", $scope.activeTab);
   };
+  $scope.switchTabs(URIHelper.getActiveTab());
   
   function updateTopic(){
     if(TopicService.getTopic() !== undefined){
@@ -181,17 +172,8 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         $scope.loadingChat = false;
       }
 
-      var tab = URIHelper.getActiveTab();
-      if (tab === 'video'){
-        $scope.$broadcast('videoActive');
-      }
-      if (tab === 'social'){
-        $scope.$broadcast('socialActive');
-      }
-      $scope.switchTabs(tab);
-
     }
-  };
+  }
 
   function updateComments(){
     var commentsdata = CommentService.comments();
@@ -258,7 +240,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       }
     }
 
-  };
+  }
 
   $scope.loadRemainingComments = function() {
     console.log("LOADING REST OF COMMENTS...");

@@ -6,7 +6,7 @@
 
   <div class="shareFormContainer">
     <form class="shareEmbedForm" ng-submit="shareSubmit({commentData:commentData,embedData:thisPost.embed})">
-      <textarea id="shareEmbedComment" cols="40" rows="3" placeholder="Say something about this post..." ng-model="commentData" ng-focus="highlight()" ng-blur="unhighlight()"></textarea>
+      <textarea id="shareEmbedComment" cols="40" rows="3" placeholder="Say something about this post..." ng-model="commentData" ng-focus="highlight()" ng-blur=""></textarea>
       <button id="postShareContent" class="btn btn-default" type="button" ng-click="shareSubmit({commentData:commentData,embedData:thisPost.embed})">Share</button>
     </form>
   </div>

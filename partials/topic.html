@@ -252,10 +252,10 @@
 <div id="inputControls">
   <!-- Tech MI16 Tabs -->
   <div class="tabContainer clearfix" ng-if="isMI16User || isMWCUser">
-    <div id="chatTab" class="grid-col grid-col-50 tab" ng-click="switchTabs('chat')">
+    <div id="chatTab" class="grid-col grid-col-50 tab" ng-class="{ selectedTab: activeTab === 'chat' }" ng-click="switchTabs('chat')">
       <span class="tabName">Chat</span>
     </div>
-    <div id="socialTab" class="grid-col grid-col-50 tab" ng-click="social.initFeed('social')">
+    <div id="socialTab" class="grid-col grid-col-50 tab" ng-class="{ selectedTab: activeTab === 'social' }" ng-click="social.initFeed('social')">
       <span class="tabName">Social</span>
     </div>
     <div id="newCommentsAvailableIndicatorDiv" ng-if="showNewCommentsIndicator && activeTab === 'chat'">
@@ -266,13 +266,13 @@
   </div>
   <!-- All Other Tabs -->
   <div class="tabContainer clearfix" ng-if="!isMI16User && !isMWCUser">
-    <div id="chatTab" class="grid-col grid-col-33 tab" ng-click="switchTabs('chat')">
+    <div id="chatTab" class="grid-col grid-col-33 tab" ng-class="{ selectedTab: activeTab === 'chat' }" ng-click="switchTabs('chat')">
       <span class="tabName">Chat</span>
     </div>
-    <div id="videoTab" class="grid-col grid-col-34 tab" ng-click="social.initFeed('video')">
+    <div id="videoTab" class="grid-col grid-col-34 tab" ng-class="{ selectedTab: activeTab === 'video' }" ng-click="social.initFeed('video')">
       <span class="tabName">Video</span>
     </div>
-    <div id="socialTab" class="grid-col grid-col-33 tab" ng-click="social.initFeed('social')">
+    <div id="socialTab" class="grid-col grid-col-33 tab" ng-class="{ selectedTab: activeTab === 'social' }" ng-click="social.initFeed('social')">
       <span class="tabName">Social</span>
     </div>
 
