@@ -15,9 +15,9 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
 
   //Google Analytics code
   if((ChannelService.getChannel() == undefined ) && (TopicService.getChannel() == undefined)){
-    ga('send', 'pageview', "/topic/"+$routeParams.topicID);
+    ga('send', 'pageview', "/topic/", $stateParams.topicID);
     if (GEN_DEBUG)
-    console.log('Sent Pageview from /topic/' + $routeParams.topicID);
+    console.log('Sent Pageview from /topic/', $stateParams.topicID);
   }
   
   TopicService.setTopicId($stateParams.topicID);
