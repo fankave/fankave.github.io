@@ -881,11 +881,14 @@ input:focus + button {
 /* - - - 'New Content Available' indicator - - - */
 
 #newCommentsAvailableIndicatorDiv {
-  position:fixed;
+  position:relative;
   z-index: 10000;
   width: 100%;
   max-width: 768px;
-  margin-top: 41px;
+}
+
+.newCommentsDesktop {
+  margin-top: 84px;
 }
 
 #newRepliesAvailableIndicatorDiv {

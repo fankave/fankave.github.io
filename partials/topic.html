@@ -140,6 +140,11 @@
       <div id="socialTab" class="grid-col grid-col-50 tab" ng-click="switchTabs('social')">
         <span class="tabName">Social</span>
       </div>
+      <div id="newCommentsAvailableIndicatorDiv" ng-if="newCommentsAvailable && $state.includes('topic.chat')" ng-class="{ newCommentsDesktop: mobileBrowser === false }">
+        <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="showNewComments()">
+          <img ng-src="img/newCommentIndicator.png" />
+        </button>
+      </div>
     </div>
     <!-- All Other Tabs -->
     <div class="tabContainer clearfix" ng-if="!isMI16User" ng-element-ready="initializeTab()">
@@ -151,6 +156,11 @@
       </div>
       <div id="socialTab" class="grid-col grid-col-33 tab" ng-click="switchTabs('social')">
         <span class="tabName">Social</span>
+      </div>
+      <div id="newCommentsAvailableIndicatorDiv" ng-if="newCommentsAvailable && $state.includes('topic.chat')" ng-class="{ newCommentsDesktop: mobileBrowser === false }">
+        <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="showNewComments()">
+          <img ng-src="img/newCommentIndicator.png" />
+        </button>
       </div>
     </div>
     <!-- Desktop User Input -->

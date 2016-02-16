@@ -1,6 +1,6 @@
 angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
-.controller('ChatController', ['$state','$stateParams','$sce','$window','$timeout','CommentService','ChannelService','TopicService','networkService','URIHelper','UserInfoService','UserAgentService',
-  function ($state,$stateParams,$sce,$window,$timeout,CommentService,ChannelService,TopicService,networkService,URIHelper,UserInfoService,UserAgentService) {
+.controller('ChatController', ['$scope','$state','$stateParams','$sce','$window','$timeout','CommentService','ChannelService','TopicService','networkService','URIHelper','UserInfoService','UserAgentService',
+  function ($scope,$state,$stateParams,$sce,$window,$timeout,CommentService,ChannelService,TopicService,networkService,URIHelper,UserInfoService,UserAgentService) {
 
     // Chat Initialization
     var _this = this;
@@ -92,10 +92,14 @@ angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
     };
 
     this.showNewComments = function() {
-      _this.newCommentsAvailable = false;
+      $scope.$parent.newCommentsAvailable = false;
       updateComments();
       $(document).scrollTop(0);
     };
+    // Listen for Broadcast from Parent (Topic Ctrl)
+    $scope.$on('viewNewComments', function (event, args) {
+      _this.showNewComments();
+    });
 
     function notifyNewComments() {
       if(!_this.commentsArray){
@@ -106,7 +110,8 @@ angular.module('ChatModule', ['NetworkModule','AuthModule','SocialModule'])
         var pinIndex = CommentService.getNumPinComments();
         if (_this.commentsArray.length < len){
           if (!UserInfoService.isCurrentUser(commentsData[pinIndex].author.id)){
-            _this.newCommentsAvailable = true;
+            $scope.$parent.newCommentsAvailable = true;
+            $scope.$apply();
           } else {
             updateComments();
           }

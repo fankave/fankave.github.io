@@ -70,13 +70,13 @@
     <span class="social-metrics-label">{{thisPost.likeCount}}</span>
 
     <div class="social-share-container">
-      <button class="share-dd dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button class="share-dd dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" secure-click="">
         <img class="social-share" ng-src="img/share@2x.png"/>
         <span class="social-share-label">Share</span>
       </button>
       <ul class="dropdown-menu dropdown-menu-right">
-        <li><a ng-click="social.shareTweetToChat(thisPost)">Share to Live Chat</a></li>
-        <li ng-if="isPeelUser === false"><a ng-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
+        <li><a secure-click="social.shareTweetToChat(thisPost)">Share to Live Chat</a></li>
+        <li ng-if="isPeelUser === false"><a secure-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
       </ul>
     </div>
 

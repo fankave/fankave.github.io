@@ -4,12 +4,7 @@ angular.module("ChannelModule", ["NetworkModule", "AuthModule"])
 function ($scope,$state,$stateParams,$window,$location,$sce,networkService,ChannelService,TopicService, URIHelper, AuthService, UserInfoService)
 {
   ChannelService.setChannel($stateParams.channelID);
-  var channelParams = $stateParams;
-  console.log("Channel Params: ", channelParams);
-  // if (window.location.href.indexOf('?') !== -1){
-  //   $scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
-  //   console.log(" $scope.urlQueryStr: " + $scope.urlQueryStr);
-  // }
+  console.log("State Params in Channel: ", $stateParams);
   
   $scope.init = function() {
     console.log("Init all connections");
@@ -21,22 +16,11 @@ function ($scope,$state,$stateParams,$window,$location,$sce,networkService,Chann
   var updateTopic = function(){
     var id = ChannelService.getLiveTopicId();
     if(id !== undefined){
-      console.log("Got Topic id from Channel : " +"/topic/" + id + $scope.urlQueryStr);
-      if (HTML5_LOC){
-        if(!!$scope.urlQueryStr)
-          $location.path("/topic/" + id).search($scope.urlQueryStr);
-        else
-          $location.path("/topic/" + id);
-      } else {
-        // if(!!$scope.urlQueryStr)
-        var paramsObj = channelParams;
-        paramsObj.topicID = id;
-        // paramsObj.channel = channelParams.channelID;
-        console.log("GO Topic: ", paramsObj);
-        $state.go("topic.chat", paramsObj);
-        // else
-          // $window.location = "#/topic/" + id;
-      }
+      if (NETWORK_DEBUG) console.log("Got Topic ID from Channel: ", id);
+      var paramsObj = $stateParams;
+      paramsObj.topicID = id;
+      if (NETWORK_DEBUG) console.log("Go to Topic w/ Params: ", paramsObj);
+      $state.go("topic.chat", paramsObj);
     }
 
   };

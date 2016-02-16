@@ -329,14 +329,11 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
       window.location = "peel://home";
   }
 
-  $scope.showNewCommentsIndicator = false;
-  // $scope.newCommentsIndicatorTapped = function()
-  // {
-  //   console.log("newCommentsIndicatorTapped");
-  //   $scope.showNewCommentsIndicator = false;
-  //   updateComments();
-  //   $(document).scrollTop(0);
-  // }
+  $scope.newCommentsAvailable = false;
+  $scope.showNewComments = function() {
+    // Broadcast to Chat Controller
+    $scope.$broadcast('viewNewComments');
+  };
 
   $scope.imageClick = function(imageURL) {
     event.cancelBubble = true;
@@ -359,10 +356,6 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
     });
   };
 
-  // $scope.moreButtonTapped = function() {
-  //   $scope.innerButtonTapped = true;
-  // };
-
   $scope.updateLikeTopic = function() {
     console.log("TopicController update like Topic");
     if(TopicService.getLiked() == true)
@@ -375,86 +368,7 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
     document.getElementById("topicCommentField").focus();
   };
 
-  // $scope.updateLikeComment = function(id) {
-  //   $scope.innerButtonTapped = true;
-    
-  //   console.log("TopicController updateLike (" + id + ")");
-  //   if(CommentService.isCommentLiked(id)){
-  //     networkService.send(CommentService.getUnlikeCommentRequest(id));
-  //   }
-  //   else{
-  //     networkService.send(CommentService.getLikeCommentRequest(id));  
-  //   }
-  // };
-
-  // $scope.deleteComment = function(id) {
-  //   console.log("deleteComment(" + id + ")");
-  //   if ($scope.commentsArray.length === 1){
-  //     console.log("Deleting Final Comment");
-  //     lastComment = true;
-  //   }
-  //   $scope.innerButtonTapped = true;
-  //   networkService.send(CommentService.deleteCommentRequest(id));
-  // };
-
-  // $scope.reportCommentAsSpam = function(id) {
-  //   console.log("reportCommentAsSpam(" + id + ")");
-  //   $scope.innerButtonTapped = true;
-  //   networkService.send(CommentService.flagCommentRequest(id)); 
-  // };
-
-  // $scope.goToRepliesWithKeyboardTriggered = function(id) {
-  //   // event.cancelBubble = true;
-  //   // if(event.stopPropagation) event.stopPropagation();
-
-  //   // console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
-  //   TopicService.directComment = true;
-  //   if (HTML5_LOC){
-  //     $location.path("/post/" + id);
-  //   } else {
-  //     // $window.location = "#/post/" + id;
-  //     $state.go('post', {postID: id});
-  //   }
-  // };
-
-  // $scope.secureLink = function(url, id) {
-  //   if (UserInfoService.isGuestUser()){
-  //     return "";
-  //   } else {
-  //     return url + id;
-  //   }
-  // };
-
-  // var notifyNewComments = function() {
-  //   if($scope.commentsArray == undefined)
-  //   {
-  //     updateComments();
-  //   }
-  //   else {
-  //     var commentsdata = CommentService.comments();
-  //     var len = commentsdata.length;
-  //     var pinIndex = CommentService.getNumPinComments();
-  //     if($scope.commentsArray.length < len){
-  //       if(!UserInfoService.isCurrentUser(commentsdata[pinIndex].author.id)){
-  //         $scope.showNewCommentsIndicator = true;
-  //       }
-  //       else {
-  //         updateComments();
-  //       }
-  //     }
-  //     else{
-  //       updateComments();
-  //     }
-  //   }
-  // };
-
   TopicService.registerObserverCallback(updateTopic);
-  // CommentService.registerObserverCallback(notifyNewComments);
-  // CommentService.registerObserverCallback(updateComments, true);
-
-  // $scope.trustSrc = function(src) {
-  //   return $sce.trustAsResourceUrl(src);
-  // }
 
   // CONTENT TABS
   $scope.switchTabs = function(tab) {
@@ -558,11 +472,12 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
   };
 
   var fixed = false;
-  function watchScroll() {
+  var watchScroll = debounce(function() {
     $scope.setDocVars();
     if (GEN_DEBUG) console.log("Tabs Top: ", tabsTop, debugObj);
     if ($scope.showNewCommentsIndicator){
       $scope.showNewCommentsIndicator = false;
+      $scope.$apply();
     }
       if ($(document).scrollTop() > (tabsTop - headerHeight) && (docHeight - clientHeight) > (tabsTop + inputHeight - tabsHeight)) {
         tabs.addClass('fixTabsPeel');
@@ -577,7 +492,7 @@ function ($scope, $state, $stateParams, $sce, $window, $location, $sanitize, $ti
         $('.commentsContainer').css('padding-top','');
         fixed = false;
       }
-  };
+  }, 50);
 
   $(document).off('scroll');
   $(document).on('scroll', watchScroll);
