@@ -64,7 +64,6 @@ angular.module('TopicModule')
     restrict: 'E',
     scope: {
       thisPost: '=embedPost',
-      imageZoom: '&',
       trustSource: '&',
       preventNav: '&'      
     },
