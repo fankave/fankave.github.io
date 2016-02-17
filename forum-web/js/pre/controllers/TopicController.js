@@ -290,7 +290,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       }, 7000);
   };
 
-  $scope.init = function() {
+  function init() {
     networkService.send(TopicService.getTopicRequest($routeParams.topicID));
     networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
   };
@@ -318,7 +318,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     $scope.showNewCommentsIndicator = false;
 
     $scope.topicID = $routeParams.topicID;
-    $scope.init();
+    init();
 
     if ($scope.mobileBrowser === true){
       document.getElementById('topicSection').style.paddingBottom = "42px";
