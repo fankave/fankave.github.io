@@ -38,11 +38,11 @@ angular.module('NetworkModule')
         if(_commentObject.id != undefined)
           _comments.push(_commentObject);
       }
-      if (commentsData.data.prevOffset === ""){
-        notifyObservers(true);
-      } else {
-        notifyObservers();
-      }
+      // if (commentsData.data.prevOffset === ""){
+      //   notifyObservers(true);
+      // } else {
+      notifyObservers();
+      // }
       _offset = commentsData.data.nextOffset;
     }
     else{

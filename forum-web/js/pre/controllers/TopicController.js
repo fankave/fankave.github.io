@@ -552,7 +552,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
 
   TopicService.registerObserverCallback(updateTopic);
   CommentService.registerObserverCallback(notifyNewComments);
-  CommentService.registerObserverCallback(updateComments, true);
+  // CommentService.registerObserverCallback(updateComments, true);
 
   $scope.trustSrc = function(src)
   {
