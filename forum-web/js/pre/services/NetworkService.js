@@ -103,7 +103,7 @@ function ($websocket,$route,DataService,UserInfoService)
           console.log("ws is null");
         }
       }
-      if(ws != undefined && ws.readyState == ws.OPEN){
+      if(ws != undefined && ws.readyState == 1){
         return true;
       }
       return false;
