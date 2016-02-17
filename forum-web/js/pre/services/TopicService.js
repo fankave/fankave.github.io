@@ -185,10 +185,9 @@ angular.module('TopicModule')
     //register an observer
     // console.log("topic callback registered");
     var callbackLength  = observerCallbacks.length;
-    for (var i = 0; i < callbackLength; i++){
-      if (observerCallbacks[i] === callback){
-        return;
-      }
+    while (callbackLength > 0){
+      callbackLength = observerCallbacks.length;
+      observerCallbacks.pop();
     }
     observerCallbacks.push(callback);
   }
