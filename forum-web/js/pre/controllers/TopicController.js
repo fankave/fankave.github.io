@@ -1,7 +1,7 @@
 angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"])
-.controller("TopicController", ["$scope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
+.controller("TopicController", ["$scope", "$rootScope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
 
-function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
+function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
   var sessionTime = window.time;
   var lastComment = false;
@@ -102,6 +102,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   };
 
   // CONTENT TABS
+  $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
     var t = (window.time - sessionTime);
       ga('send', 'event', 'Tabs','ActiveTab', $scope.activeTab);
@@ -125,7 +126,6 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     if (GEN_DEBUG)
     console.log("Active Tab: ", $scope.activeTab);
   };
-  $scope.switchTabs(URIHelper.getActiveTab());
   
   function updateTopic(){
     if(TopicService.getTopic() !== undefined){
@@ -189,7 +189,14 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       if (!$scope.commentsCount || $scope.commentsCount === 0){
         $scope.loadingChat = false;
       }
-
+      if (!URIHelper.tabEntry()){
+        if (URIHelper.getActiveTab() === 'video'){
+          $rootScope.$broadcast('videoActive');
+        }
+        if (URIHelper.getActiveTab() === 'social'){
+          $rootScope.$broadcast('socialActive');
+        }
+      }
     }
   }
 

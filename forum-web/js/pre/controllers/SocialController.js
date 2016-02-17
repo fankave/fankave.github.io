@@ -29,6 +29,16 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       }
     };
 
+    $scope.$on('videoActive', function (event, args){
+      URIHelper.tabEntered();
+      _this.initFeed('video');
+    });
+
+    $scope.$on('socialActive', function (event, args){
+      URIHelper.tabEntered();
+      _this.initFeed('social');
+    });
+
     this.loadContent = function(type, offset) {
       var channelID = ChannelService.getChannel()||TopicService.getChannelId();
       if ($scope.$parent.activeTab === 'social' || type === 'social'){
@@ -41,11 +51,6 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         networkService.send(VideoService.getVideoDataRequest(channelID,offset));
       }
     };
-    if (!TopicService.getChannelId()){
-      TopicService.registerObserverCallback(_this.loadContent);
-    } else {
-      _this.loadContent();
-    }
 
     function updateFeed(tab) {
 
