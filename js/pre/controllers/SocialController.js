@@ -50,7 +50,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         networkService.send(VideoService.getVideoDataRequest(channelID,offset));
         return true;
       }
-    };
+    }
     if (!TopicService.getChannelId()){
       TopicService.registerObserverCallback(_this.loadContent);
     } else {

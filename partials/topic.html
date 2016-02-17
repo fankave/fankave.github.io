@@ -394,12 +394,12 @@
         {{thisPost.html}} 
       </div>
 
-      <image-control this-post="thisPost" ng-switch-when="image" ng-click="imageClick(thisPost.mediaUrl)" class="media-parent"></image-control>
+      <image-control this-post="thisPost" ng-switch-when="image" class="media-parent"></image-control>
 
       <media-player this-post="thisPost" vid-index="{{$index}}" ng-switch-when="video" ng-click="moreButtonTapped()" class="media-parent"></media-player>
 
       <!-- Begin Embed Content Shared to Chat -->
-      <embed-shared-content embed-post="thisPost" ng-if="thisPost.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav="moreButtonTapped()"></embed-shared-content>
+      <embed-shared-content embed-post="thisPost" ng-if="thisPost.shared" trust-source="trustSrc(videoSrc)" prevent-nav="moreButtonTapped()"></embed-shared-content>
       <!-- End Embed Content Shared to Chat -->
 
       <div>
@@ -539,7 +539,7 @@
         <p>{{thisPost.html}}</p><br> 
       </div>
 
-      <image-control this-post="thisPost" ng-switch-when="image" ng-if="!thisPost.embedPlayable" ng-click="imageClick(thisPost.mediaUrl)" class="media-parent"></image-control>
+      <image-control this-post="thisPost" ng-switch-when="image" ng-if="!thisPost.embedPlayable" class="media-parent"></image-control>
 
       <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
 

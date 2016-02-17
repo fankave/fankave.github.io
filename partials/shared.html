@@ -33,7 +33,7 @@
       <img ng-src="{{thisPost.embed.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.embed.media[0].url})" onerror="this.style.display='none';" />
     </div> -->
 
-    <image-control this-post="thisPost" ng-switch-when="image" ng-if="!thisPost.embedPlayable" ng-click="imageClick(thisPost.mediaUrl)" class="media-parent"></image-control>
+    <image-control this-post="thisPost" ng-switch-when="image" ng-if="!thisPost.embedPlayable" class="media-parent"></image-control>
  
     <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent" ng-click="preventNav()"></media-player>
   </div>

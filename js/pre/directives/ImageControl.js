@@ -8,6 +8,27 @@ angular.module('TopicModule')
     },
     link: function(scope,elem,attr) {
 
+      scope.imageClick = function(imageURL) {
+        event.cancelBubble = true;
+        if(event.stopPropagation) event.stopPropagation();
+
+        $.magnificPopup.open({
+          items: {
+            type:'image',
+            src: imageURL,
+          },
+          type: 'inline',
+          callbacks: {
+            open: function(){
+              $('body').bind('touchmove', function(e){e.preventDefault()});
+            },
+            close: function(){
+              $('body').unbind('touchmove');
+            }
+          }
+        });
+      }
+
       scope.setAspectRatio = function (aspectRatio, orientation) {
         if (NETWORK_DEBUG){
           // console.log("setAspectRatio: ", aspectRatio, orientation);

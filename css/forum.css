@@ -1775,7 +1775,7 @@ textarea#postCommentField {
   /*top: 54px;*/
   width: 100%;
   max-width: 768px;
-  z-index: 10010 !important;
+  z-index: 10010;
 }
 
 .fixTabs {
@@ -1783,7 +1783,7 @@ textarea#postCommentField {
   /*top: 0px;*/
   width: 100%;
   max-width: 768px;
-  z-index: 10010 !important;
+  z-index: 10010;
 }
 
 .fixTabContainer {

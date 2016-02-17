@@ -8,11 +8,15 @@
     <div id="postSmartStadiumHeader" ng-if="isSmartStadiumUser === true">
       <span id="ssTeamsSpan">Arsenal @ Sunderland</span>
     </div>
-    <div id="backToChatContainer">
+    <div id="backToChatContainer" ng-switch="techMUser">
       <span id="post_backToTopicButtonSpan">
-        <button id="backToTopicButton" class="btn-link" ng-click="backToTopicButtonTapped()">
+        <button id="backToTopicButton" class="btn-link" ng-click="backToTopicButtonTapped()" ng-switch-when="false">
           <img ng-src="img/smallBackChat@2x.png"/>
           <span id="greySpan">Back to </span><span id="blueSpan">Game Chat</span>
+        </button>
+        <button id="backToTopicButton" class="btn-link" ng-click="backToTopicButtonTapped()" ng-switch-when="true">
+          <img ng-src="img/smallBackChat@2x.png"/>
+          <span id="greySpan">Back</span>
         </button>
       </span>
     </div>
@@ -42,11 +46,11 @@
         {{comment.html}} 
       </div> 
 
-      <image-control this-post="comment" ng-switch-when="image" ng-click="imageClick(comment.mediaUrl)" class="media-parent"></image-control>
+      <image-control this-post="comment" ng-switch-when="image" class="media-parent"></image-control>
 
       <media-player this-post="comment" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>
 
-      <embed-shared-content embed-post="comment" ng-if="comment.shared" image-zoom="imageClick(imgSrc)" trust-source="trustSrc(videoSrc)" prevent-nav=""></embed-shared-content>
+      <embed-shared-content embed-post="comment" ng-if="comment.shared" trust-source="trustSrc(videoSrc)" prevent-nav=""></embed-shared-content>
 
       <div class="socialButtonsRow">
         <button id="chatLike" class="btn-link social-btn" secure-click="updateLikeComment(comment.id)" ng-switch="comment.isLiked">
@@ -134,7 +138,7 @@
           {{thisReply.html}} 
         </div>
 
-      <image-control this-post="thisReply" ng-switch-when="image" ng-click="imageClick(thisReply.mediaUrl)" class="media-parent"></image-control>
+      <image-control this-post="thisReply" ng-switch-when="image" class="media-parent"></image-control>
 
       <media-player this-post="thisReply" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent"></media-player>  
         
