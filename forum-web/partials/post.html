@@ -8,11 +8,15 @@
     <div id="postSmartStadiumHeader" ng-if="isSmartStadiumUser === true">
       <span id="ssTeamsSpan">Arsenal @ Sunderland</span>
     </div>
-    <div id="backToChatContainer">
+    <div id="backToChatContainer" ng-switch="techMUser">
       <span id="post_backToTopicButtonSpan">
-        <button id="backToTopicButton" class="btn-link" ng-click="backToTopicButtonTapped()">
+        <button id="backToTopicButton" class="btn-link" ng-click="backToTopicButtonTapped()" ng-switch-when="false">
           <img ng-src="img/smallBackChat@2x.png"/>
           <span id="greySpan">Back to </span><span id="blueSpan">Game Chat</span>
+        </button>
+        <button id="backToTopicButton" class="btn-link" ng-click="backToTopicButtonTapped()" ng-switch-when="true">
+          <img ng-src="img/smallBackChat@2x.png"/>
+          <span id="greySpan">Back</span>
         </button>
       </span>
     </div>
