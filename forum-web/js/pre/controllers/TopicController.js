@@ -112,8 +112,9 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     if (tab === 'chat'){
       $scope.activeTab = 'chat';
       $(document).scrollTop(0);
-      updateTopic();
-      updateComments();
+      init();
+      // updateTopic();
+      // updateComments();
     }
     if (tab === 'video'){
       $scope.activeTab = 'video';
