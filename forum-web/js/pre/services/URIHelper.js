@@ -11,6 +11,7 @@ angular.module('NetworkModule')
 
 	var _MI16;
 	var _MWC;
+	var tabEntryComplete;
 
 	function getUrlVars() {
 		var vars = [], hash;
@@ -22,8 +23,6 @@ angular.module('NetworkModule')
 		}
 		return vars;
 	}
-	
-	
 
 	return {
 		isPeelUser:function(){
@@ -98,9 +97,6 @@ angular.module('NetworkModule')
 		getActiveTab:function(){
 			var vars = getUrlVars();
 			if (vars["tab"]){
-				if (vars["tab"] === 'chat'){
-					return 'chat';
-				}
 				if (vars["tab"] === 'video'){
 					return 'video';
 				}
@@ -108,7 +104,6 @@ angular.module('NetworkModule')
 					return 'social';
 				}
 			}
-			return 'chat';
 		},
 		isSuperBowl:function(){
 			var vars = getUrlVars();
@@ -116,8 +111,13 @@ angular.module('NetworkModule')
 				return true;
 			}
 			return false;
+		},
+		tabEntered: function(){
+			tabEntryComplete = true;
+		},
+		tabEntry: function(){
+			return tabEntryComplete;
 		}
-
 
 	};
 

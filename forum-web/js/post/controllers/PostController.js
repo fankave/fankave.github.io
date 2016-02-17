@@ -61,8 +61,11 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
     $scope.isSmartStadiumUser = true;
     $scope.setPeelUI('email');
   }
-  else if (UserInfoService.isMI16User()){
-    $scope.isMI16User = true;
+  else if (UserInfoService.isMI16User() || UserInfoService.isMWCUser()){
+    $scope.techMUser = true;
+  }
+  else {
+    $scope.techMUser = false;
   }
 
 	$scope.requestReplies = function(){
