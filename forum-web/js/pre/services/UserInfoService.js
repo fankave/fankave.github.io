@@ -45,7 +45,7 @@ angular.module('NetworkModule')
 		_userInfo.sessionId = sessionId;
 		_isUserLoggedIn = true;
 		_userInfo.userType = userType;
-		// ForumStorage.clearStorage();
+		ForumStorage.clearStorage();
 		ForumStorage.setToLocalStorage("forumIsLoggedIn",_isUserLoggedIn);
 		ForumStorage.setToLocalStorage("forumUserId",userId);
 		ForumStorage.setToLocalStorage("forumAccessToken",accessToken);
