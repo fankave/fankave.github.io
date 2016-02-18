@@ -91,11 +91,11 @@ function ($websocket,$route,DataService,UserInfoService)
     isSocketConnected:function(){
       if(NETWORK_DEBUG){
         if(ws!= null)
-        console.log("ws status : "+ ws.readyState);
+        console.log("ws status : ", ws.readyState, "ws.OPEN :", ws.OPEN);
         else
           console.log("ws is null");
       }
-      if(ws != undefined && ws.readyState == ws.OPEN){
+      if(ws != undefined && ws.readyState == 1){
         return true;
       }
       return false;
@@ -105,6 +105,10 @@ function ($websocket,$route,DataService,UserInfoService)
         initSocket();
       }
       ws.send(JSON.stringify(message));
+    },
+    closeSocket:function(){
+      if(ws != undefined)
+        ws.close();
     },
     init:initSocket
   }

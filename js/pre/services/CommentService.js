@@ -1,6 +1,6 @@
 angular.module('NetworkModule')
-.factory('CommentService', ["Bant","DateUtilityService","FDSUtility",
-  function (Bant,DateUtilityService,FDSUtility) {
+.factory('CommentService', ["Bant","DateUtilityService","FDSUtility","URIHelper",
+  function (Bant,DateUtilityService,FDSUtility,URIHelper) {
   var LIST_COMMENTS_URI = "/v1.0/topic/comments/list/"
   var SHOW_COMMENT_URI = "/v1.0/comment/show/";
     
@@ -39,9 +39,11 @@ angular.module('NetworkModule')
           _comments.push(_commentObject);
         // console.log("Comments in set comment Service type:"+_commentObject.type + "  " +_commentObject.html );
       }
-      if (commentsData.data.prevOffset === ""){
+      if (URIHelper.extractOffset(commentsData.uri) === '10'){
+        if (NETWORK_DEBUG) console.log("Set Rest of Comments");
         notifyObservers(true);
       } else {
+        if (NETWORK_DEBUG) console.log("Set Comments");
         notifyObservers();
       }
       _offset = commentsData.data.nextOffset;
@@ -156,12 +158,14 @@ angular.module('NetworkModule')
   //call this when you know 'comments' has been changed
   var notifyObservers = function(temp){
     if (temp){
-      console.log("IN TEMP");
+      console.log("Notifying TEMP", tempObserverCallbacks);
       angular.forEach(tempObserverCallbacks, function(callback){
         callback();
       });
+      // tempObserverCallbacks.pop();
+      console.log("Removing TEMP", tempObserverCallbacks);
     } else {
-      console.log("IN REG");
+      console.log("Notifying REG");
       angular.forEach(observerCallbacks, function(callback){
         callback();
       });
@@ -171,6 +175,7 @@ angular.module('NetworkModule')
   function registerObserverCallback(callback, temp){
     //register an observer
     if (temp){
+      console.log("Registering Temp CB");
       var callbackLength = tempObserverCallbacks.length;
       while (callbackLength > 0){
         callbackLength = tempObserverCallbacks.length;
@@ -178,6 +183,7 @@ angular.module('NetworkModule')
       }
       tempObserverCallbacks.push(callback);
     } else {
+      console.log("Registering Reg CB");
       var callbackLength = observerCallbacks.length;
       while (callbackLength > 0){
         callbackLength = observerCallbacks.length;

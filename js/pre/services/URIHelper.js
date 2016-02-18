@@ -11,6 +11,8 @@ angular.module('NetworkModule')
 
 	var _MI16;
 	var _MWC;
+	var tabEntryComplete;
+
 
 	function getUrlVars() {
 		var vars = [], hash;
@@ -66,13 +68,16 @@ angular.module('NetworkModule')
 			return false;
 		},
 		isMWCUser:function(){
+			console.log("Checking For MWC");
 			var vars = getUrlVars();
 			if (vars["MWC"]){
+				console.log("MWC FOUND 1");
 				_MWC = true;
 				ForumStorage.setToLocalStorage("MWCUser",true);
 				return true;
 			}
 			if (_MWC){
+				console.log("MWC FOUND 2");
 				return true;
 			}
 			return false;
@@ -98,17 +103,14 @@ angular.module('NetworkModule')
 		getActiveTab:function(){
 			var vars = getUrlVars();
 			if (vars["tab"]){
-				if (vars["tab"] === 'chat'){
-					return 'chat';
-				}
 				if (vars["tab"] === 'video'){
 					return 'video';
 				}
 				if (vars["tab"] === 'social'){
+
 					return 'social';
 				}
 			}
-			return 'chat';
 		},
 		isSuperBowl:function(){
 			var vars = getUrlVars();
@@ -116,6 +118,17 @@ angular.module('NetworkModule')
 				return true;
 			}
 			return false;
+		},
+		tabEntered: function(){
+			tabEntryComplete = true;
+		},
+		tabEntry: function(){
+			return tabEntryComplete;
+		},
+		extractOffset: function(uri){
+			var offset = uri.slice(uri.indexOf('offset'));
+    	var hash = offset.split("=");
+    	return hash[1];
 		}
 
 

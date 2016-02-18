@@ -1,6 +1,6 @@
 angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
-.controller("SocialController", ["$scope","$sce","$window","$routeParams","$q","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService",
-  function ($scope,$sce,$window,$routeParams,$q,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService){
+.controller("SocialController", ["$scope","$sce","$window","$location","$routeParams","$q","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper",
+  function ($scope,$sce,$window,$location,$routeParams,$q,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper){
     console.log("Social Control");
 
     var _this = this;
@@ -31,13 +31,17 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       }
     };
 
-    // $scope.$on('videoActive', function (event, args){
-    //   _this.initFeed('video');
-    // });
+    $scope.$on('videoActive', function (event, args){
+      console.log("Video Broadcast Received");
+      URIHelper.tabEntered();
+      _this.initFeed('video');
+    });
 
-    // $scope.$on('socialActive', function (event, args){
-    //   _this.initFeed('social');
-    // });
+    $scope.$on('socialActive', function (event, args){
+      console.log("Social Broadcast Received");
+      URIHelper.tabEntered();
+      _this.initFeed('social');
+    });
 
     this.loadContent = function(type, offset) {
       var channelID = ChannelService.getChannel()||TopicService.getChannelId();
@@ -50,11 +54,6 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         networkService.send(VideoService.getVideoDataRequest(channelID,offset));
         return true;
       }
-    }
-    if (!TopicService.getChannelId()){
-      TopicService.registerObserverCallback(_this.loadContent);
-    } else {
-      _this.loadContent();
     }
 
     var refreshContent = function() {

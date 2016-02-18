@@ -45,7 +45,7 @@ angular.module('NetworkModule')
 		_userInfo.sessionId = sessionId;
 		_isUserLoggedIn = true;
 		_userInfo.userType = userType;
-		// ForumStorage.clearStorage();
+		ForumStorage.clearStorage();
 		ForumStorage.setToLocalStorage("forumIsLoggedIn",_isUserLoggedIn);
 		ForumStorage.setToLocalStorage("forumUserId",userId);
 		ForumStorage.setToLocalStorage("forumAccessToken",accessToken);
@@ -142,13 +142,13 @@ angular.module('NetworkModule')
 			return false;
 		},
 		getUserType:function(){
-			if (NETWORK_DEBUG)
-			console.log("UIS _userType - - - ", _userInfo.userType);
+			// if (NETWORK_DEBUG)
+			// console.log("UIS _userType - - - ", _userInfo.userType);
 			return _userInfo.userType;
 		},
 		isGuestUser:function(){
-			if (NETWORK_DEBUG)
-			console.log("UIS _userType - - - ", _userInfo.userType);
+			// if (NETWORK_DEBUG)
+			// console.log("UIS _userType - - - ", _userInfo.userType);
 			if(_userInfo.userType === "guest" || ForumStorage.getFromLocalStorage("forumUserType") === "guest")
 			return true;
 			return false;

@@ -1,7 +1,7 @@
 angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"])
-.controller("TopicController", ["$scope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
+.controller("TopicController", ["$scope", "$rootScope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
 
-function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
+function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
   var sessionTime = window.time;
   var lastComment = false;
@@ -37,10 +37,10 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       $timeout(function() {$scope.continueToExperience('smartS'); }, 5000);
     // }
   }
-  else if (UserInfoService.isMI16User() || URIHelper.isTechMUser()){
+  else if (UserInfoService.isMI16User()){
     $scope.isMI16User = true;
   }
-  else if (UserInfoService.isMWCUser() || URIHelper.isMWCUser()){
+  else if (UserInfoService.isMWCUser()){
     $scope.isMWCUser = true;
   }
   else if(UserInfoService.isPeelUser()){
@@ -86,6 +86,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   };
 
   // CONTENT TABS
+  $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
     var t = (window.time - sessionTime);
       ga('send', 'event', 'Tabs','ActiveTab', $scope.activeTab);
@@ -95,8 +96,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     if (tab === 'chat'){
       $scope.activeTab = 'chat';
       $(document).scrollTop(0);
-      updateTopic();
-      updateComments();
+      init();
     }
     if (tab === 'video'){
       $scope.activeTab = 'video';
@@ -108,7 +108,6 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     }
     console.log("Active Tab: ", $scope.activeTab);
   };
-  $scope.switchTabs(URIHelper.getActiveTab());
   
   function updateTopic(){
     if(TopicService.getTopic() !== undefined){
@@ -171,12 +170,22 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       if (!$scope.commentsCount || $scope.commentsCount === 0){
         $scope.loadingChat = false;
       }
-
+      if (!URIHelper.tabEntry()){
+        if (URIHelper.getActiveTab() === 'video'){
+          $rootScope.$broadcast('videoActive');
+        }
+        if (URIHelper.getActiveTab() === 'social'){
+          $rootScope.$broadcast('socialActive');
+        }
+      }
     }
   }
 
-  function updateComments(){
+  function updateComments(load){
     var commentsdata = CommentService.comments();
+    if (load){
+      $scope.showNewCommentsIndicator = false;
+    }
     if(commentsdata != undefined && (commentsdata.length >0 || lastComment === true)){
       lastComment = false;
       // console.log("CommentsData : ", commentsdata);
@@ -262,10 +271,10 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       }, 7000);
   };
 
-  $scope.init = function() {
+  function init() {
     networkService.send(TopicService.getTopicRequest($routeParams.topicID));
     networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
-  };
+  }
   
 
   $scope.setPeelUI = function(isPeelUser){
@@ -286,14 +295,14 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     $scope.loadingChat = false;
     $scope.loadingSocial = false;
   };
-  $scope.initPage = function(){
+  function initPage(){
     updateTopic();
     updateComments();
     $scope.pageClass = 'page-topic';
     $scope.showNewCommentsIndicator = false;
 
     $scope.topicID = $routeParams.topicID;
-    $scope.init();
+    init();
 
     if ($scope.mobileBrowser === true){
       document.getElementById('topicSection').style.paddingBottom = "42px";
@@ -316,27 +325,29 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       console.log("User is logged in, checking for connection");
     if(!networkService.isSocketConnected())
       networkService.init();
-    $scope.initPage();
+    initPage();
   }
   else if (URIHelper.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
     console.log("SS User? ", $scope.isSmartStadiumUser);
-    AuthService.loginWithEmail();
+    AuthService.loginWithEmail(initPage);
   }
   else if (URIHelper.isTechMUser()){
+    console.log("Topic Found MI16");
     $window.location = "#/login?MI16=true";
   }
   else if (URIHelper.isMWCUser()){
+    console.log("Topic Found MWC");
     $window.location = "#/login?MWC=true";
   }
   else if (URIHelper.isPeelUser()){
     $scope.isPeelUser = true;
     $scope.setPeelUI(true);
-    AuthService.loginWithPeel();
+    AuthService.loginWithPeel(initPage);
   }
   else {
     // console.log("Not logged in to facebook, take user to login page")
-    AuthService.loginAsGuest();
+    AuthService.loginAsGuest(initPage);
   }
 
 
@@ -473,6 +484,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   var notifyNewComments = function(){
     if($scope.commentsArray == undefined)
     {
+      console.log("Notify: Undefined Array, Update");
       updateComments();
     }
     else {
@@ -481,13 +493,16 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       var pinIndex = CommentService.getNumPinComments();
       if($scope.commentsArray.length < len){
         if(!UserInfoService.isCurrentUser(commentsdata[pinIndex].author.id)){
+          console.log("Notify: New Comments");
           $scope.showNewCommentsIndicator = true;
         }
         else {
+          console.log("Notify: Author, Update");
           updateComments();
         }
       }
       else{
+        console.log("Notify: Update");
         updateComments();
       }
     }
@@ -495,7 +510,8 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
 
   TopicService.registerObserverCallback(updateTopic);
   CommentService.registerObserverCallback(notifyNewComments);
-  CommentService.registerObserverCallback(updateComments, true);
+  CommentService.registerObserverCallback(
+    function(){updateComments(true);}, true);
 
   $scope.trustSrc = function(src)
   {
@@ -503,8 +519,8 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   }
 
   $window.addEventListener("beforeunload", function(){
-    console.log("Before Unload");
-    ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
+    networkService.closeSocket();
+    console.log("Before Unload: Close Socket");
   });
 
   $scope.xLinkActivated = false;
@@ -550,6 +566,8 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
         headerHeight = 54;
       } else if ($scope.isPeelUser){
         headerHeight = 54;
+      } else if ($scope.isMWCUser){
+        headerHeight = $('#MWCBanner').height();  
       } else {
         headerHeight = 0;
       }
