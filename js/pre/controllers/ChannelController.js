@@ -57,7 +57,7 @@ function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelServi
   else if (URIHelper.isMWCUser()){
     if (GEN_DEBUG)
     console.log("MWC User Detected");
-    $window.$location = "#/login?MWC=true";
+    $location.url("/login?MWC=true");
   }
   else {
     if(URIHelper.isPeelUser()){
