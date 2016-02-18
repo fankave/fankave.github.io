@@ -122,7 +122,7 @@ angular.module('AuthModule')
     if (NETWORK_DEBUG)
     console.log("Initializing Content");
     // Initialize Network Service and determine what type of resource is being accessed
-    // networkService.init();
+    networkService.init();
 
     var initChannel = ChannelService.getChannel();
     var initTopic = TopicService.getTopicId();
