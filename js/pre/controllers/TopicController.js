@@ -15,6 +15,33 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     $scope.mobileBrowser = false;
   }
 
+  // Check User Credentials
+  if(UserInfoService.isUserLoggedIn()){
+    if(NETWORK_DEBUG)
+      console.log("User is logged in, checking for connection");
+    if(!networkService.isSocketConnected())
+      networkService.init();
+    initPage();
+  }
+  else if (URIHelper.isSmartStadiumUser()){
+    console.log("SS User? ", $scope.isSmartStadiumUser);
+    AuthService.loginWithEmail(initPage);
+  }
+  else if (URIHelper.isTechMUser()){
+    console.log("Topic Found MI16");
+    $location.url("/login?MI16=true");
+  }
+  else if (URIHelper.isMWCUser()){
+    console.log("Topic Found MWC");
+    $location.url("/login?MWC=true");
+  }
+  else if (URIHelper.isPeelUser()){
+    AuthService.loginWithPeel(initPage);
+  }
+  else {
+    AuthService.loginAsGuest(initPage);
+  }
+
   if (!$scope.commentsArray){
     $scope.loadingChat = true;
   }
@@ -28,6 +55,8 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   TopicService.setTopicId($routeParams.topicID);
   $scope.topicType = "livegame";
   $scope.innerButtonTapped = false;
+
+  // Set UI Variables based on User Type
   if (UserInfoService.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
     // if (!UserInfoService.hasUserVisited()){
@@ -275,16 +304,6 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     networkService.send(TopicService.getTopicRequest($routeParams.topicID));
     networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
   }
-  
-
-  $scope.setPeelUI = function(isPeelUser){
-    //console.log("isPeelUser :"+isPeelUser);
-    $scope.isPeelUser = isPeelUser;
-    
-  }
-
-  
-  $scope.setPeelUI($scope.isPeelUser);
 
   $scope.showLoadMore = function(){
     $('#moreContentBar').css('display','block');
@@ -320,35 +339,35 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
 //    ga('send', 'event', 'UserType', '0', 'Peel User', { 'nonInteraction': 2 });
 //  else
 //    ga('send', 'event', 'UserType', '0', 'Non Peel User', { 'nonInteraction': 2 });
-  if(UserInfoService.isUserLoggedIn()){
-    if(NETWORK_DEBUG)
-      console.log("User is logged in, checking for connection");
-    if(!networkService.isSocketConnected())
-      networkService.init();
-    initPage();
-  }
-  else if (URIHelper.isSmartStadiumUser()){
-    $scope.isSmartStadiumUser = true;
-    console.log("SS User? ", $scope.isSmartStadiumUser);
-    AuthService.loginWithEmail(initPage);
-  }
-  else if (URIHelper.isTechMUser()){
-    console.log("Topic Found MI16");
-    $location.url("/login?MI16=true");
-  }
-  else if (URIHelper.isMWCUser()){
-    console.log("Topic Found MWC");
-    $location.url("/login?MWC=true");
-  }
-  else if (URIHelper.isPeelUser()){
-    $scope.isPeelUser = true;
-    $scope.setPeelUI(true);
-    AuthService.loginWithPeel(initPage);
-  }
-  else {
-    // console.log("Not logged in to facebook, take user to login page")
-    AuthService.loginAsGuest(initPage);
-  }
+  // if(UserInfoService.isUserLoggedIn()){
+  //   if(NETWORK_DEBUG)
+  //     console.log("User is logged in, checking for connection");
+  //   if(!networkService.isSocketConnected())
+  //     networkService.init();
+  //   initPage();
+  // }
+  // else if (URIHelper.isSmartStadiumUser()){
+  //   // $scope.isSmartStadiumUser = true;
+  //   console.log("SS User? ", $scope.isSmartStadiumUser);
+  //   AuthService.loginWithEmail(initPage);
+  // }
+  // else if (URIHelper.isTechMUser()){
+  //   console.log("Topic Found MI16");
+  //   $location.url("/login?MI16=true");
+  // }
+  // else if (URIHelper.isMWCUser()){
+  //   console.log("Topic Found MWC");
+  //   $location.url("/login?MWC=true");
+  // }
+  // else if (URIHelper.isPeelUser()){
+  //   // $scope.isPeelUser = true;
+  //   // $scope.setPeelUI(true);
+  //   AuthService.loginWithPeel(initPage);
+  // }
+  // else {
+  //   // console.log("Not logged in to facebook, take user to login page")
+  //   AuthService.loginAsGuest(initPage);
+  // }
 
 
   $scope.peelClose = function()
