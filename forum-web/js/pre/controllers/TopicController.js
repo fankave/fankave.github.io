@@ -326,30 +326,11 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     }
   }
 
-  $scope.setLinksOnComments = function(){
-    var postDivs = document.getElementsByClassName("postRow");
-    for (div in postDivs) {
-      var thisDiv = postDivs[div];
-      thisDiv.onclick = function(e) {
-        if ($(e.target).is('a')) {
-          return;
-        } 
-        thisPost = $scope.commentsArray[this.id];
-        if ($scope.innerButtonTapped === false) {
-          if (GEN_DEBUG)
-          console.log("Post Click Active: ", thisPost.id);
-          if (HTML5_LOC){
-            $location.path("/post/" + thisPost.id);
-            if (!$scope.$$phase){
-              $scope.$apply();
-            }
-          } else {
-            $window.location = "#/post/" + thisPost.id;
-          }
-        }
-        $scope.innerButtonTapped = false;
-      }
+  $scope.viewPost = function(e,id){
+    if ($(e.target).is('a')){
+      return;
     }
+    $location.url("/post/" + id);
   }
 
 //  if(URIHelper.isPeelUser())

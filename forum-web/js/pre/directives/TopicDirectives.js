@@ -49,10 +49,8 @@ angular.module('TopicModule')
   return function (scope, element, attrs) {
     if (scope.$last){
       scope.hideLoading();
-      scope.setLinksOnComments();
       scope.setDocVars();
       scope.continueToExperience('smartS');
-      // scope.loadRemainingCommentsTimeout();
     }
   };
 });
