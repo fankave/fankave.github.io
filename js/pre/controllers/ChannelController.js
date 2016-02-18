@@ -22,17 +22,10 @@ function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelServi
     	ga('send', 'pageview', "/topic/"+id);
     	  console.log('Sent Pageview from /channel/' + id);
       console.log("Got Topic id from Channel : " +"/topic/" + id + urlQueryStr);
-      if (HTML5_LOC){
-        if(!!urlQueryStr)
-          $location.path("/topic/" + id).search(urlQueryStr);
-        else
-          $location.path("/topic/" + id);
-      } else {
-        if(!!urlQueryStr)
-          $window.location = "#/topic/" + id + "?" + urlQueryStr;
-        else
-          $window.location = "#/topic/" + id;
-      }
+      if(!!urlQueryStr)
+        $location.url("/topic/" + id + "?" + urlQueryStr);
+      else
+        $location.url("/topic/" + id);
     }
 
   };
@@ -52,7 +45,7 @@ function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelServi
   }
   else if (URIHelper.isTechMUser()){
     console.log("MI16 User Detected");
-    $window.location = "#/login?MI16=true";
+    $location.url("/login?MI16=true");
   }
   else if (URIHelper.isMWCUser()){
     if (GEN_DEBUG)
