@@ -5,11 +5,11 @@ function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelServi
 {
   ChannelService.setChannel($routeParams.channelID);
   if (window.location.href.indexOf('?') !== -1){
-    $scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
-    console.log(" $scope.urlQueryStr: " + $scope.urlQueryStr);
+    var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
+    console.log("urlQueryStr: ", urlQueryStr);
   }
   
-  $scope.init = function() {
+  function init() {
     console.log("Init all connections");
     networkService.init();
     networkService.send(ChannelService.getLiveGameTopic());
@@ -21,15 +21,15 @@ function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelServi
     if(id !== undefined){
     	ga('send', 'pageview', "/topic/"+id);
     	  console.log('Sent Pageview from /channel/' + id);
-      console.log("Got Topic id from Channel : " +"/topic/" + id + $scope.urlQueryStr);
+      console.log("Got Topic id from Channel : " +"/topic/" + id + urlQueryStr);
       if (HTML5_LOC){
-        if(!!$scope.urlQueryStr)
-          $location.path("/topic/" + id).search($scope.urlQueryStr);
+        if(!!urlQueryStr)
+          $location.path("/topic/" + id).search(urlQueryStr);
         else
           $location.path("/topic/" + id);
       } else {
-        if(!!$scope.urlQueryStr)
-          $window.location = "#/topic/" + id + "?" + $scope.urlQueryStr;
+        if(!!urlQueryStr)
+          $window.location = "#/topic/" + id + "?" + urlQueryStr;
         else
           $window.location = "#/topic/" + id;
       }
@@ -44,10 +44,10 @@ function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelServi
   if(UserInfoService.isUserLoggedIn()){
     if(NETWORK_DEBUG)
       console.log("User is logged in, checking for connection");
-    $scope.init();
+    init();
   }
   else if (URIHelper.isSmartStadiumUser()){
-    $scope.isSmartStadiumUser = true;
+    // $scope.isSmartStadiumUser = true;
     AuthService.loginWithEmail();
   }
   else if (URIHelper.isTechMUser()){
@@ -61,7 +61,7 @@ function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelServi
   }
   else {
     if(URIHelper.isPeelUser()){
-      $scope.isPeelUser = true;
+      // $scope.isPeelUser = true;
       AuthService.loginWithPeel();
     }
     else{
