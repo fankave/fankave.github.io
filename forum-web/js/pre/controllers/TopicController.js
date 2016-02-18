@@ -113,8 +113,6 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       $scope.activeTab = 'chat';
       $(document).scrollTop(0);
       init();
-      // updateTopic();
-      // updateComments();
     }
     if (tab === 'video'){
       $scope.activeTab = 'video';
@@ -201,8 +199,11 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     }
   }
 
-  function updateComments(){
+  function updateComments(load){
     var commentsdata = CommentService.comments();
+    if (load){
+      $scope.showNewCommentsIndicator = false;
+    }
     if(commentsdata != undefined && (commentsdata.length >0 || lastComment === true)){
       lastComment = false;
       // console.log("CommentsData : ", commentsdata);
@@ -552,7 +553,8 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
 
   TopicService.registerObserverCallback(updateTopic);
   CommentService.registerObserverCallback(notifyNewComments);
-  CommentService.registerObserverCallback(updateComments, true);
+  CommentService.registerObserverCallback(
+    function(){updateComments(true);}, true);
 
   $scope.trustSrc = function(src)
   {

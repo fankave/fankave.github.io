@@ -1,6 +1,6 @@
 angular.module('NetworkModule')
-.factory('CommentService', ["Bant","DateUtilityService","FDSUtility",
-  function (Bant,DateUtilityService,FDSUtility) {
+.factory('CommentService', ["Bant","DateUtilityService","FDSUtility","URIHelper",
+  function (Bant,DateUtilityService,FDSUtility,URIHelper) {
   var LIST_COMMENTS_URI = "/v1.0/topic/comments/list/"
   var SHOW_COMMENT_URI = "/v1.0/comment/show/";
     
@@ -38,10 +38,12 @@ angular.module('NetworkModule')
         if(_commentObject.id != undefined)
           _comments.push(_commentObject);
       }
-      if (commentsData.data.prevOffset === ""){
+      if (URIHelper.extractOffset(commentsData.uri) === '10'){
+        if (NETWORK_DEBUG) console.log("Set Rest of Comments");
         notifyObservers(true);
       } else {
-      notifyObservers();
+        if (NETWORK_DEBUG) console.log("Set Comments");
+        notifyObservers();
       }
       _offset = commentsData.data.nextOffset;
     }

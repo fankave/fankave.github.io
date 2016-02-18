@@ -117,6 +117,11 @@ angular.module('NetworkModule')
 		},
 		tabEntry: function(){
 			return tabEntryComplete;
+		},
+		extractOffset: function(uri){
+			var offset = uri.slice(uri.indexOf('offset'));
+    	var hash = offset.split("=");
+    	return hash[1];
 		}
 
 	};
