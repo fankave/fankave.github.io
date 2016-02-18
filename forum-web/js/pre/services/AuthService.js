@@ -4,7 +4,7 @@ angular.module('AuthModule')
 
   var userLoggedInToFacebook = false;
 
-  var loginAsGuest = function() {
+  var loginAsGuest = function(callback) {
   if (NETWORK_DEBUG)
   console.log("Logging in as Guest");
     var userData = {};
@@ -12,7 +12,7 @@ angular.module('AuthModule')
     userData.userName = "GuestUser";
 
     var registerParams = setRegistrationParams("guest", -28800, userData);
-    registerUser(registerParams);
+    registerUser(registerParams, null, callback);
   };
 
   var loginToFacebook = function(callback) {
@@ -25,23 +25,23 @@ angular.module('AuthModule')
     });
   };
 
-  var loginWithPeel = function() {
+  var loginWithPeel = function(callback) {
     var userData = {};
     userData.id = URIHelper.getPeelUserId();
     userData.userName = URIHelper.getPeelUserName();
 
     var registerParams = setRegistrationParams("peel", -28800, userData);
-    registerUser(registerParams);
+    registerUser(registerParams, null, callback);
   };
 
-  var loginWithEmail = function() {
+  var loginWithEmail = function(callback) {
     var userData = {
       "id": URIHelper.getSSUserId(),
       "userName": URIHelper.getSSUserName()
     };
 
     var registerParams = setRegistrationParams("email", -28800, userData);
-    registerUser(registerParams);
+    registerUser(registerParams, null, callback);
   };
 
   var techMLogin = function (name, email, mUserType) {
@@ -87,7 +87,7 @@ angular.module('AuthModule')
     return registerParams;
   };
 
-  var registerUser = function(registerParams, mUserType) {
+  var registerUser = function(registerParams, mUserType, callback) {
     // Post request to our api to register/retrieve user
     var userType = registerParams.type;
     if (mUserType){
@@ -114,14 +114,14 @@ angular.module('AuthModule')
         if (NETWORK_DEBUG)
         console.log('Registration Error: ', response);
       }).then(function (response) {
-        initializeContent();
+        initializeContent(callback);
       });
   };
 
-  var initializeContent = function() {
+  var initializeContent = function(callback) {
     if (NETWORK_DEBUG)
     console.log("Initializing Content");
-    // Initialize Network Service and determine what type of resource is being accessed
+
     networkService.init();
 
     var initChannel = ChannelService.getChannel();
@@ -133,10 +133,17 @@ angular.module('AuthModule')
       networkService.send(ChannelService.getLiveGameTopic(initChannel));
     }
     else if (!!initTopic) {
+      if (window.location.href.indexOf('?') !== -1){
+        var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
+        console.log("Auth UrlQueryStr: ", urlQueryStr);
+      }
       if (NETWORK_DEBUG)
       console.log("found Topic ID: " + initTopic);
-      if (HTML5_LOC){
-        $location.path("/topic/" + initTopic);
+      if (callback){
+        callback();
+      }
+      else if (!!urlQueryStr){
+        $window.location = "#/topic/" + initTopic + "?" + urlQueryStr;
       } else {
         $window.location = "#/topic/" + initTopic;
       }

@@ -113,8 +113,6 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       $scope.activeTab = 'chat';
       $(document).scrollTop(0);
       init();
-      // updateTopic();
-      // updateComments();
     }
     if (tab === 'video'){
       $scope.activeTab = 'video';
@@ -201,8 +199,11 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     }
   }
 
-  function updateComments(){
+  function updateComments(load){
     var commentsdata = CommentService.comments();
+    if (load){
+      $scope.showNewCommentsIndicator = false;
+    }
     if(commentsdata != undefined && (commentsdata.length >0 || lastComment === true)){
       lastComment = false;
       // console.log("CommentsData : ", commentsdata);
@@ -311,7 +312,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     $scope.loadingChat = false;
     $scope.loadingSocial = false;
   };
-  $scope.initPage = function(){
+  function initPage(){
     updateTopic();
     updateComments();
     $scope.pageClass = 'page-topic';
@@ -360,13 +361,13 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       console.log("User is logged in, checking for connection");
     if(!networkService.isSocketConnected())
       networkService.init();
-    $scope.initPage();
+    initPage();
   }
   else if (URIHelper.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
     if (GEN_DEBUG)
     console.log("SS User? ", $scope.isSmartStadiumUser);
-    AuthService.loginWithEmail();
+    AuthService.loginWithEmail(initPage);
   }
   else if (URIHelper.isTechMUser()){
     $window.location = "#/login?MI16=true";
@@ -377,11 +378,11 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   else if (URIHelper.isPeelUser()){
     $scope.isPeelUser = true;
     $scope.setPeelUI(true);
-    AuthService.loginWithPeel();
+    AuthService.loginWithPeel(initPage);
   }
   else {
     // console.log("Not logged in to facebook, take user to login page")
-    AuthService.loginAsGuest();
+    AuthService.loginAsGuest(initPage);
   }
 
 
@@ -552,7 +553,8 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
 
   TopicService.registerObserverCallback(updateTopic);
   CommentService.registerObserverCallback(notifyNewComments);
-  CommentService.registerObserverCallback(updateComments, true);
+  CommentService.registerObserverCallback(
+    function(){updateComments(true);}, true);
 
   $scope.trustSrc = function(src)
   {
@@ -562,7 +564,8 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   $window.addEventListener("beforeunload", function(){
     if (GEN_DEBUG)
     console.log("Before Unload");
-    ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
+    networkService.closeSocket();
+    // ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
   });
 
   $scope.xLinkActivated = false;
