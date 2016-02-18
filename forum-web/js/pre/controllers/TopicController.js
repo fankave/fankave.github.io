@@ -383,6 +383,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   else {
     // console.log("Not logged in to facebook, take user to login page")
     AuthService.loginAsGuest();
+    $scope.initPage();
   }
 
 
