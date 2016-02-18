@@ -114,6 +114,10 @@ function ($websocket,$route,DataService,UserInfoService)
       }
       ws.send(JSON.stringify(message));
     },
+    closeSocket:function(){
+      if(ws != undefined)
+        ws.close();
+    },
     init:initSocket
   }
 }]);
