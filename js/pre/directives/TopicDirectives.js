@@ -9,6 +9,7 @@ angular.module('TopicModule')
           e.preventDefault();
           if (UserInfoService.isGuestUser()){
             $location.url("/login");
+            $scope.$apply();
           } else {
             $scope.$eval($attrs.secureClick);
           }
