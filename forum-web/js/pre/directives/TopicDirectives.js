@@ -8,11 +8,8 @@ angular.module('TopicModule')
         $(element).on('click', function(e){
           e.preventDefault();
           if (UserInfoService.isGuestUser()){
-            if (HTML5_LOC){
-              $location.path("/login");
-            } else {
-              $window.location = "#/login";
-            }
+            $location.url("/login");
+            $scope.$apply();
           } else {
             $scope.$eval($attrs.secureClick);
           }
@@ -31,11 +28,8 @@ angular.module('TopicModule')
         $(element).on('focus', function(e){
           e.preventDefault();
           if (UserInfoService.isGuestUser()){
-            if (HTML5_LOC){
-              $location.path("/login");
-            } else {
-              $window.location = "#/login";
-            }
+            $location.url("/login");
+            $scope.$apply();
           } else {
             $scope.$eval($attrs.secureFocus);
           }
