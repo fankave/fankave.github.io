@@ -131,6 +131,10 @@ angular.module('AuthModule')
       networkService.send(ChannelService.getLiveGameTopic(initChannel));
     }
     else if (!!initTopic) {
+      if (window.location.href.indexOf('?') !== -1){
+        var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
+        console.log("Auth UrlQueryStr: ", urlQueryStr);
+      }
       if (NETWORK_DEBUG)
       console.log("found Topic ID: " + initTopic);
       if (callback){
