@@ -565,7 +565,8 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   $window.addEventListener("beforeunload", function(){
     if (GEN_DEBUG)
     console.log("Before Unload");
-    ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
+    networkService.closeSocket();
+    // ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
   });
 
   $scope.xLinkActivated = false;
