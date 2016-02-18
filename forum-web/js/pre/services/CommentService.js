@@ -41,7 +41,7 @@ angular.module('NetworkModule')
       if (commentsData.data.prevOffset === ""){
         notifyObservers(true);
       } else {
-        notifyObservers();
+      notifyObservers();
       }
       _offset = commentsData.data.nextOffset;
     }
@@ -166,8 +166,18 @@ angular.module('NetworkModule')
   function registerObserverCallback(callback, temp){
     //register an observer
     if (temp){
+      var callbackLength = tempObserverCallbacks.length;
+      while (callbackLength > 0){
+        callbackLength = tempObserverCallbacks.length;
+        tempObserverCallbacks.pop();
+      }
       tempObserverCallbacks.push(callback);
     } else {
+      var callbackLength = observerCallbacks.length;
+      while (callbackLength > 0){
+        callbackLength = observerCallbacks.length;
+        observerCallbacks.pop();
+      }
       observerCallbacks.push(callback);
     }
   }

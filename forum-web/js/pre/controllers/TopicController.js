@@ -1,7 +1,7 @@
 angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"])
-.controller("TopicController", ["$scope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
+.controller("TopicController", ["$scope", "$rootScope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
 
-function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
+function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
   var sessionTime = window.time;
   var lastComment = false;
@@ -102,6 +102,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
   };
 
   // CONTENT TABS
+  $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
     var t = (window.time - sessionTime);
       ga('send', 'event', 'Tabs','ActiveTab', $scope.activeTab);
@@ -109,25 +110,17 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     sessionTime = window.time ;
 
     if (tab === 'chat'){
-      $('#chatTab').addClass('selectedTab');
-      $('#videoTab').removeClass('selectedTab');
-      $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'chat';
       $(document).scrollTop(0);
+      init();
       // updateTopic();
       // updateComments();
     }
     if (tab === 'video'){
-      $('#chatTab').removeClass('selectedTab');
-      $('#videoTab').addClass('selectedTab');
-      $('#socialTab').removeClass('selectedTab');
       $scope.activeTab = 'video';
       $(document).scrollTop(0);
     }
     if (tab === 'social'){
-      $('#chatTab').removeClass('selectedTab');
-      $('#videoTab').removeClass('selectedTab');
-      $('#socialTab').addClass('selectedTab');
       $scope.activeTab = 'social';
       $(document).scrollTop(0);
     }
@@ -197,18 +190,16 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       if (!$scope.commentsCount || $scope.commentsCount === 0){
         $scope.loadingChat = false;
       }
-
-      var tab = URIHelper.getActiveTab();
-      if (tab === 'video'){
-        $scope.$broadcast('videoActive');
+      if (!URIHelper.tabEntry()){
+        if (URIHelper.getActiveTab() === 'video'){
+          $rootScope.$broadcast('videoActive');
+        }
+        if (URIHelper.getActiveTab() === 'social'){
+          $rootScope.$broadcast('socialActive');
+        }
       }
-      if (tab === 'social'){
-        $scope.$broadcast('socialActive');
-      }
-      $scope.switchTabs(tab);
-
     }
-  };
+  }
 
   function updateComments(){
     var commentsdata = CommentService.comments();
@@ -275,7 +266,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       }
     }
 
-  };
+  }
 
   $scope.loadRemainingComments = function() {
     if (GEN_DEBUG)
@@ -299,7 +290,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
       }, 7000);
   };
 
-  $scope.init = function() {
+  function init() {
     networkService.send(TopicService.getTopicRequest($routeParams.topicID));
     networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
   };
@@ -327,7 +318,7 @@ function ($scope, $sce, $window, $location, $sanitize, $timeout, $routeParams,ne
     $scope.showNewCommentsIndicator = false;
 
     $scope.topicID = $routeParams.topicID;
-    $scope.init();
+    init();
 
     if ($scope.mobileBrowser === true){
       document.getElementById('topicSection').style.paddingBottom = "42px";

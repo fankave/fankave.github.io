@@ -30,16 +30,18 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     };
 
     $scope.$on('videoActive', function (event, args){
+      URIHelper.tabEntered();
       _this.initFeed('video');
     });
 
     $scope.$on('socialActive', function (event, args){
+      URIHelper.tabEntered();
       _this.initFeed('social');
     });
 
     this.loadContent = function(type, offset) {
       var channelID = ChannelService.getChannel()||TopicService.getChannelId();
-      if (type === 'social'){
+      if ($scope.$parent.activeTab === 'social' || type === 'social'){
         if (NETWORK_DEBUG)
         console.log("LOADING SOCIAL: ", channelID);
         networkService.send(SocialService.getSocialDataRequest(channelID,offset));

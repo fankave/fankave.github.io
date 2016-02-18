@@ -96,14 +96,14 @@ function ($websocket,$route,DataService,UserInfoService)
       if(NETWORK_DEBUG){
         if(ws!= null){
           if (NETWORK_DEBUG)
-          console.log("ws status : "+ ws.readyState);
+          console.log("ws status : "+ ws.readyState +"ws.OPEN :"+ ws.OPEN);
         }
         else {
           if (NETWORK_DEBUG)
           console.log("ws is null");
         }
       }
-      if(ws != undefined && ws.readyState == ws.OPEN){
+      if(ws != undefined && ws.readyState == 1){
         return true;
       }
       return false;
