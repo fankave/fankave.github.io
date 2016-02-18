@@ -143,12 +143,10 @@ angular.module('NetworkModule')
 		},
 		getUserType:function(){
 			if (NETWORK_DEBUG)
-			console.log("UIS _userType - - - ", _userInfo.userType);
 			return _userInfo.userType;
 		},
 		isGuestUser:function(){
 			if (NETWORK_DEBUG)
-			console.log("UIS _userType - - - ", _userInfo.userType);
 			if(_userInfo.userType === "guest" || ForumStorage.getFromLocalStorage("forumUserType") === "guest")
 			return true;
 			return false;
