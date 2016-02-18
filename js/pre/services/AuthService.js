@@ -145,22 +145,17 @@ angular.module('AuthModule')
       }
       else if (!!urlQueryStr){
         console.log("Auth Topic Redirect w/ Query");
-        $window.location = "#/topic/" + initTopic + "?" + urlQueryStr;
+        $location.url("/topic/" + initTopic + "?" + urlQueryStr);
       } else {
         console.log("Auth Topic Redirect w/Out Query");
-        $window.location = "#/topic/" + initTopic;
+        $location.url("/topic/" + initTopic);
       }
     }
     else {
       var initPost = ReplyService.getPostId();
       if (!!initPost){
-        if (NETWORK_DEBUG)
-        console.log("found post ID: " + initPost);
-        if (HTML5_LOC){
-          $location.path("/post/" + initPost);
-        } else {
-          $window.location = "#/post/" + initPost;
-        }
+        if (NETWORK_DEBUG) console.log("found post ID: " + initPost);
+        $location.url("/post/" + initPost);
       }
     }
   };

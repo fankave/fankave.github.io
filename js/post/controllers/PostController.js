@@ -35,11 +35,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 		var topicId = TopicService.getTopicId();
 		if(topicId == undefined)
 			topicId = $scope.comment.topicId;
-    if (HTML5_LOC){
-		  $location.path("/topic/"+topicId);
-    } else {
-      $window.location = "#/topic/" + topicId;
-    }
+    $location.url("/topic/" + topicId);
 	}
 
 	$scope.setPeelUI = function(userType){
@@ -191,11 +187,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 		$scope.initReplyPage();
 	}
 	else {
-		if (HTML5_LOC){
-      $location.path("/login");
-    } else {
-      $window.location = "#/login";
-    }
+    $location.url("/login");
 	}
 
 	$scope.updateLikeComment = function(id) {
@@ -235,11 +227,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
     console.log("deleteComment(" + id + ")");
     // $scope.innerButtonTapped = true;
     networkService.send(CommentService.deleteCommentRequest(id));
-    if (HTML5_LOC){
-      $location.path("/topic/" + $scope.topicId);
-    } else {
-      $window.location = "#/topic/" + $scope.topicId;
-    }
+    $location.url("/topic/" + $scope.topicId);
     $window.location.reload();
   }
 
@@ -477,8 +465,8 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
   	}
 
   $window.addEventListener("beforeunload", function(){
-    console.log("Before Unload");
-    ForumStorage.setToLocalStorage("hasUserVisited", true);
+    networkService.closeSocket();
+    console.log("Before Unload: Close Socket");
   });
 
   $scope.xLinkActivated = false;

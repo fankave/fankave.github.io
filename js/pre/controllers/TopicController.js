@@ -313,7 +313,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     if ($(e.target).is('a')){
       return;
     }
-    $window.location = "#/post/" + id;
+    $location.url("/post/" + id);
   }
 
 //  if(URIHelper.isPeelUser())
@@ -334,11 +334,11 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   }
   else if (URIHelper.isTechMUser()){
     console.log("Topic Found MI16");
-    $window.location = "#/login?MI16=true";
+    $location.url("/login?MI16=true");
   }
   else if (URIHelper.isMWCUser()){
     console.log("Topic Found MWC");
-    $window.location = "#/login?MWC=true";
+    $location.url("/login?MWC=true");
   }
   else if (URIHelper.isPeelUser()){
     $scope.isPeelUser = true;
@@ -466,11 +466,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
 
     // console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
     TopicService.directComment = true;
-    if (HTML5_LOC){
-      $location.path("/post/" + id);
-    } else {
-      $window.location = "#/post/" + id;
-    }
+    $location.url("/post/" + id);
   };
 
   $scope.secureLink = function(url, id) {
