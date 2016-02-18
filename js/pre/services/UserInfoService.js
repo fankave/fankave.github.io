@@ -84,9 +84,12 @@ angular.module('NetworkModule')
 			}
 		},
 		isPeelUser:function(){
-			URIHelper.isPeelUser();
+			var peelTrue = URIHelper.isPeelUser();
 			if (NETWORK_DEBUG)
 			console.log("ForumStorage.getFromLocalStorage: "+ForumStorage.getFromLocalStorage("forumUserType"));
+			if (peelTrue){
+				return true;
+			}
 			if(_userInfo.userType === "peel")
 				return true;
 			if(ForumStorage.getFromLocalStorage("forumUserType") === "peel")
