@@ -100,7 +100,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       $scope.hideSSSplash = true;
     }
   };
-  $scope.setScoreCardUI = function() {
+  function setScoreCardUI() {
     if ($scope.topicType === 'livegame'){
       if ($scope.isPeelUser){
         $('#topicSection').css('padding-top','54px');
@@ -112,7 +112,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
         $('#topicSection').css('padding-top','0px');
       }
     }
-  };
+  }
 
   // CONTENT TABS
   $scope.activeTab = 'chat';
@@ -147,7 +147,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       }
       
       
-      $scope.setScoreCardUI();
+      setScoreCardUI();
       if($scope.topicType == "livegame"){
         console.log("Inside topic set :"+ TopicService.getTeamA());
         //Score API update
