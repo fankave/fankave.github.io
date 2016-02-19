@@ -335,41 +335,6 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     $location.url("/post/" + id);
   }
 
-//  if(URIHelper.isPeelUser())
-//    ga('send', 'event', 'UserType', '0', 'Peel User', { 'nonInteraction': 2 });
-//  else
-//    ga('send', 'event', 'UserType', '0', 'Non Peel User', { 'nonInteraction': 2 });
-  // if(UserInfoService.isUserLoggedIn()){
-  //   if(NETWORK_DEBUG)
-  //     console.log("User is logged in, checking for connection");
-  //   if(!networkService.isSocketConnected())
-  //     networkService.init();
-  //   initPage();
-  // }
-  // else if (URIHelper.isSmartStadiumUser()){
-  //   // $scope.isSmartStadiumUser = true;
-  //   console.log("SS User? ", $scope.isSmartStadiumUser);
-  //   AuthService.loginWithEmail(initPage);
-  // }
-  // else if (URIHelper.isTechMUser()){
-  //   console.log("Topic Found MI16");
-  //   $location.url("/login?MI16=true");
-  // }
-  // else if (URIHelper.isMWCUser()){
-  //   console.log("Topic Found MWC");
-  //   $location.url("/login?MWC=true");
-  // }
-  // else if (URIHelper.isPeelUser()){
-  //   // $scope.isPeelUser = true;
-  //   // $scope.setPeelUI(true);
-  //   AuthService.loginWithPeel(initPage);
-  // }
-  // else {
-  //   // console.log("Not logged in to facebook, take user to login page")
-  //   AuthService.loginAsGuest(initPage);
-  // }
-
-
   $scope.peelClose = function()
   {
     ga('send', 'event', 'Peel', 'click', 'BackToPeelHome');
