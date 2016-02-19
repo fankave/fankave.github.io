@@ -116,7 +116,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       $scope.hideSSSplash = true;
     }
   };
-  $scope.setScoreCardUI = function() {
+  function setScoreCardUI() {
     if ($scope.topicType === 'livegame'){
       if ($scope.isPeelUser){
         $('#topicSection').css('padding-top','54px');
@@ -164,7 +164,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       }
       
       
-      $scope.setScoreCardUI();
+      setScoreCardUI();
       if($scope.topicType == "livegame"){
         if (GEN_DEBUG)
         console.log("Inside topic set :"+ TopicService.getTeamA());
