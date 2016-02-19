@@ -54,21 +54,21 @@
 
       <div class="socialButtonsRow">
         <button id="chatLike" class="btn-link social-btn" secure-click="updateLikeComment(comment.id)" ng-switch="comment.isLiked">
-          <img class="social-like" ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png"/> 
-          <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUp@2x.png"/> 
+          <img class="social-like" ng-switch-when="true" ng-src="img/thumbsUp_selectL@2x.png"/> 
+          <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUpDarkL@2x.png"/> 
           
         </button>
         <span class="socialButtonLable">{{comment.likeCount}}  </span>
 
         <button id="chatReply" class="btn-link social-btn" secure-click="triggerRepliesKeyboard()">
-          <img class="social-reply" ng-src="img/shareCopy@2x.png"/> 
+          <img class="social-reply" ng-src="img/shareDarkL@2x.png"/> 
         </button>
           <span class="socialButtonLable" secure-click="triggerRepliesKeyboard()"> Reply</span>
       </div>
       <div class="sharingButtonsRow">
         <div class="chatTimestamp">
           <button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="moreButtonTapped();">
-            <img class="social-more" ng-src="img/moreButton.png"/>
+            <img class="social-more" ng-src="img/moreButtonDarkL.png"/>
           </button>
           <ul class="dropdown-menu dropdown-menu-right" ng-switch="comment.isMyComment">
 
@@ -143,8 +143,8 @@
         
       <div class="socialButtonsRow">
         <button id="chatLike" class="btn-link social-btn" secure-click="updateLikeReply(thisReply.id)" ng-switch="thisReply.isLiked">
-          <img class="social-like" ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png"/> 
-          <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUp@2x.png"/> 
+          <img class="social-like" ng-switch-when="true" ng-src="img/thumbsUp_selectL@2x.png"/> 
+          <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUpDarkL@2x.png"/> 
           
         </button>
         <span class="socialButtonLable">{{thisReply.likeCount}}  </span>
@@ -157,7 +157,7 @@
       <div class="sharingButtonsRow">
         <div class="chatTimestamp">
           <button class="btn-link social-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img class="social-more" ng-src="img/moreButton.png"/>
+            <img class="social-more" ng-src="img/moreButtonDarkL.png"/>
           </button>
           <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisReply.isMyReply">
 
