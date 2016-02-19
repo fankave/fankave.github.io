@@ -315,7 +315,7 @@
 
         <button id="postCommentButton" class="btn btn-default" type="button" secure-click="user.postComment(commentText, true)">Post</button>
 
-        <span><textarea id="topicCommentField" rows="1" class="form-control"
+        <span><textarea id="commentField" rows="1" class="form-control"
         placeholder="Write a comment..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></textarea></span>
 
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
@@ -617,7 +617,7 @@
 
         <button id="postCommentButton" class="btn btn-default" type="button" secure-click="user.postComment(commentText,true)">Post</button>
 
-        <span><input id="topicCommentField" type="text" class="form-control"
+        <span><input id="commentField" type="text" class="form-control"
         placeholder="Write a comment..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()" ng-element-ready="user.fixIOSFocus('topic')"></span>
 
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />

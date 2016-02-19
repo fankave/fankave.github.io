@@ -107,7 +107,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 
   $scope.checkDirectReply = function() {
     if (TopicService.directComment){
-      $('#topicCommentField').focus();
+      $('#commentField').focus();
       TopicService.directComment = false;
     }
   }
@@ -115,15 +115,15 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
   // function checkDirectReply() {
   //   console.log("Direct Reply? ", TopicService.directComment);
   //   if (TopicService.directComment){
-  //     console.log("Triggering Keyboard", $('#topicCommentField'));
-  //     $('#topicCommentField').focus();
+  //     console.log("Triggering Keyboard", $('#commentField'));
+  //     $('#commentField').focus();
   //     TopicService.directComment = false;
   //   }
   // }
   // setTimeout(function(){checkDirectReply();},0);
 
 	$scope.triggerRepliesKeyboard = function() {
-    $('#topicCommentField').focus();
+    $('#commentField').focus();
 	}
 
   $scope.secureLink = function(url, id) {

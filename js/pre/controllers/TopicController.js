@@ -406,7 +406,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
 
   $scope.commentOnTopic = function()
   {
-    document.getElementById("topicCommentField").focus();
+    document.getElementById("commentField").focus();
   };
 
   $scope.updateLikeComment = function(id) {

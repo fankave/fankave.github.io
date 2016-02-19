@@ -93,7 +93,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
       this.uploader.onAfterAddingFile = function(fileItem) {
         console.info('onAfterAddingFile', fileItem);
         _this.highlightPost();
-        $('#topicCommentField').focus();
+        $('#commentField').focus();
         // resetInput();
       };
       this.uploader.onAfterAddingAll = function(addedFileItems) {
@@ -153,7 +153,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
         }
         _this.uploader.uploadAll();
         $scope.commentText = "";
-        $('#topicCommentField').blur();
+        $('#commentField').blur();
         $('#postCommentButton').css('color','rgb(211,214,215)');
         if (isComment){
           $(document).scrollTop(0);
@@ -191,7 +191,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
           var fixedEl = document.getElementById('mobileUserInput');
           var mediaEl = document.getElementById('attachMediaIcon');
           var postEl = document.getElementById('postCommentButton');
-          var inputEl = document.getElementById('topicCommentField');
+          var inputEl = document.getElementById('commentField');
 
           // Explicitly adding event listeners for touchstart
           // seems to improve responsiveness for Post & Attach Media
