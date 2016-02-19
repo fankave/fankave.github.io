@@ -560,7 +560,7 @@ body
 }
 
 .social-reply {
-  height: 12px;
+  height: 14px;
   width: auto;
 }
 
@@ -570,7 +570,7 @@ body
 }
 
 .social-more {
-  width: 18px;
+  width: 22px;
   height: auto;
 }
 
@@ -621,7 +621,7 @@ body
 
 .social-share-label {
   font-size: 12px;
-  color: rgb(179,184,186);
+  color: #7e8b8f;
   padding-left: 2px;
 }
 
@@ -662,6 +662,7 @@ body
   height:16px;
   padding:3px 2px 7px 5px;
   font-size: 12px;
+  color: #7e8b8f;
 } 
 span.socialButtonLable
 {
@@ -671,7 +672,7 @@ span.socialButtonLable
 .replyLabel {
   padding-left: 5px;
   font-size: 12px;
-  color: rgb(179,184,186);
+  color: #7e8b8f;
   display: inline-block;
   vertical-align: middle; 
 }
@@ -687,7 +688,7 @@ span.socialButtonLable
 .social-btn-more img
 {
   float:right;
-  width:18px;
+  width:22px;
   height:auto;
 }
 
