@@ -406,20 +406,20 @@
         <div class="socialButtonsRow">
           <button id="chatLike" class="btn-link social-btn" ng-click="moreButtonTapped()" secure-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
             <img class="social-like" ng-switch-when="true" ng-click="moreButtonTapped()" ng-src="img/thumbsUp_select@2x.png" /> 
-            <img class="social-like" ng-switch-when="false" ng-click="moreButtonTapped()" ng-src="img/thumbsUp@2x.png" /> 
+            <img class="social-like" ng-switch-when="false" ng-click="moreButtonTapped()" ng-src="img/thumbsUpDark@2x.png" /> 
           </button>
           <span class="socialButtonLable" ng-hide="thisPost.likeCount < 1">{{thisPost.likeCount}}  </span>
         </div>
         <div class="socialButtonsRow">  
           <button id="chatReply" class="btn-link social-btn" ng-click="moreButtonTapped()" secure-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
-            <img class="social-reply" ng-click="moreButtonTapped()" ng-src="img/shareCopy@2x.png" />
+            <img class="social-reply" ng-click="moreButtonTapped()" ng-src="img/shareDark@2x.png" />
             <span class="replyLabel" ng-click="moreButtonTapped()"> Reply</span>
           </button>
         </div>
         <div class="sharingButtonsRow">
           <div class="chatMore" ng-click="moreButtonTapped()">
             <button class="btn-link social-btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img class="social-more" ng-src="img/moreButton.png"/>
+              <img class="social-more" ng-src="img/moreButtonDark.png"/>
             </button>
             <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
 
