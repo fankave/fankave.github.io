@@ -15,6 +15,33 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     $scope.mobileBrowser = false;
   }
 
+  // Check User Credentials
+  if(UserInfoService.isUserLoggedIn()){
+    if(NETWORK_DEBUG)
+      console.log("User is logged in, checking for connection");
+    if(!networkService.isSocketConnected())
+      networkService.init();
+    initPage();
+  }
+  else if (URIHelper.isSmartStadiumUser()){
+    console.log("SS User? ", $scope.isSmartStadiumUser);
+    AuthService.loginWithEmail(initPage);
+  }
+  else if (URIHelper.isTechMUser()){
+    console.log("Topic Found MI16");
+    $location.url("/login?MI16=true");
+  }
+  else if (URIHelper.isMWCUser()){
+    console.log("Topic Found MWC");
+    $location.url("/login?MWC=true");
+  }
+  else if (URIHelper.isPeelUser()){
+    AuthService.loginWithPeel(initPage);
+  }
+  else {
+    AuthService.loginAsGuest(initPage);
+  }
+
   if (!$scope.commentsArray){
     $scope.loadingChat = true;
   }
@@ -29,6 +56,8 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   TopicService.setTopicId($routeParams.topicID);
   $scope.topicType = "livegame";
   $scope.innerButtonTapped = false;
+
+  // Set User-Specific UI Variables
   if (UserInfoService.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
     // if (!UserInfoService.hasUserVisited()){
@@ -87,7 +116,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       $scope.hideSSSplash = true;
     }
   };
-  $scope.setScoreCardUI = function() {
+  function setScoreCardUI() {
     if ($scope.topicType === 'livegame'){
       if ($scope.isPeelUser){
         $('#topicSection').css('padding-top','54px');
@@ -135,7 +164,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       }
       
       
-      $scope.setScoreCardUI();
+      setScoreCardUI();
       if($scope.topicType == "livegame"){
         if (GEN_DEBUG)
         console.log("Inside topic set :"+ TopicService.getTeamA());
@@ -295,16 +324,6 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     networkService.send(TopicService.getTopicRequest($routeParams.topicID));
     networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
   };
-  
-
-  $scope.setPeelUI = function(isPeelUser){
-    //console.log("isPeelUser :"+isPeelUser);
-    $scope.isPeelUser = isPeelUser;
-    
-  }
-
-  
-  $scope.setPeelUI($scope.isPeelUser);
 
   $scope.hideLoading = function(){
     if (GEN_DEBUG)
@@ -326,65 +345,12 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     }
   }
 
-  $scope.setLinksOnComments = function(){
-    var postDivs = document.getElementsByClassName("postRow");
-    for (div in postDivs) {
-      var thisDiv = postDivs[div];
-      thisDiv.onclick = function(e) {
-        if ($(e.target).is('a')) {
-          return;
-        } 
-        thisPost = $scope.commentsArray[this.id];
-        if ($scope.innerButtonTapped === false) {
-          if (GEN_DEBUG)
-          console.log("Post Click Active: ", thisPost.id);
-          if (HTML5_LOC){
-            $location.path("/post/" + thisPost.id);
-            if (!$scope.$$phase){
-              $scope.$apply();
-            }
-          } else {
-            $window.location = "#/post/" + thisPost.id;
-          }
-        }
-        $scope.innerButtonTapped = false;
-      }
+  $scope.viewPost = function(e,id){
+    if ($(e.target).is('a')){
+      return;
     }
+    $location.url("/post/" + id);
   }
-
-//  if(URIHelper.isPeelUser())
-//    ga('send', 'event', 'UserType', '0', 'Peel User', { 'nonInteraction': 2 });
-//  else
-//    ga('send', 'event', 'UserType', '0', 'Non Peel User', { 'nonInteraction': 2 });
-  if(UserInfoService.isUserLoggedIn()){
-    if(NETWORK_DEBUG)
-      console.log("User is logged in, checking for connection");
-    if(!networkService.isSocketConnected())
-      networkService.init();
-    initPage();
-  }
-  else if (URIHelper.isSmartStadiumUser()){
-    $scope.isSmartStadiumUser = true;
-    if (GEN_DEBUG)
-    console.log("SS User? ", $scope.isSmartStadiumUser);
-    AuthService.loginWithEmail(initPage);
-  }
-  else if (URIHelper.isTechMUser()){
-    $window.location = "#/login?MI16=true";
-  }
-  else if (URIHelper.isMWCUser()){
-    $window.location = "#/login?MWC=true";
-  }
-  else if (URIHelper.isPeelUser()){
-    $scope.isPeelUser = true;
-    $scope.setPeelUI(true);
-    AuthService.loginWithPeel(initPage);
-  }
-  else {
-    // console.log("Not logged in to facebook, take user to login page")
-    AuthService.loginAsGuest(initPage);
-  }
-
 
   $scope.peelClose = function()
   {
@@ -513,11 +479,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
 
     // console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
     TopicService.directComment = true;
-    if (HTML5_LOC){
-      $location.path("/post/" + id);
-    } else {
-      $window.location = "#/post/" + id;
-    }
+    $location.url("/post/" + id);
   };
 
   $scope.secureLink = function(url, id) {

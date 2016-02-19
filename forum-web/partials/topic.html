@@ -346,7 +346,7 @@
   <!-- Chat Tab Content -->
   <div ng-switch-when="chat" ng-repeat="thisPost in commentsArray | orderBy: $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
 
-    <span class="postAuthorPhoto">
+    <span class="postAuthorPhoto" ng-click="viewPost($event,thisPost.id)">
       <div>
         <a class="thumbnail">
           <img ng-src="{{thisPost.postAuthorPhoto}}" onerror="this.src='img/default_user_v3.png'" class="userPhoto" />
@@ -359,7 +359,7 @@
 
     <div class="post">
 
-      <div class="chatPostHeader">
+      <div class="chatPostHeader" ng-click="viewPost($event,thisPost.id)">
         <span class="postUsername">
           {{thisPost.postAuthorName}}
         </span>
@@ -368,7 +368,7 @@
         </span>
       </div>
 
-      <div ng-bind-html="thisPost.html | linky" class="postContent">
+      <div ng-bind-html="thisPost.html | linky" class="postContent" ng-click="viewPost($event,thisPost.id)">
         {{thisPost.html}} 
       </div>
 
@@ -383,21 +383,21 @@
       <div>
         <div class="socialButtonsRow">
           <button id="chatLike" class="btn-link social-btn" ng-click="moreButtonTapped()" secure-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
-            <img class="social-like" ng-switch-when="true" ng-click="moreButtonTapped()" ng-src="img/thumbsUp_select@2x.png" /> 
-            <img class="social-like" ng-switch-when="false" ng-click="moreButtonTapped()" ng-src="img/thumbsUp@2x.png" /> 
+            <img class="social-like" ng-switch-when="true" ng-click="moreButtonTapped()" ng-src="img/thumbsUp_selectL@2x.png" /> 
+            <img class="social-like" ng-switch-when="false" ng-click="moreButtonTapped()" ng-src="img/thumbsUpDarkL@2x.png" /> 
           </button>
           <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
         </div>
         <div class="socialButtonsRow">  
           <button id="chatReply" class="btn-link social-btn" ng-click="moreButtonTapped()" secure-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
-            <img class="social-reply" ng-click="moreButtonTapped()" ng-src="img/shareCopy@2x.png" />
+            <img class="social-reply" ng-click="moreButtonTapped()" ng-src="img/shareDarkL@2x.png" />
             <span class="replyLabel" ng-click="moreButtonTapped()"> Reply</span>
           </button>
         </div>
         <div class="sharingButtonsRow">
           <div class="chatMore" ng-click="moreButtonTapped()">
             <button class="btn-link social-btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img class="social-more" ng-src="img/moreButton.png"/>
+              <img class="social-more" ng-src="img/moreButtonDarkL.png"/>
             </button>
             <ul class="dropdown-menu dropdown-menu-right" ng-switch="thisPost.isMyComment">
 
@@ -452,7 +452,7 @@
       
       <button class="btn-link social-btn" secure-click="">
         <a ng-href="{{secureLink('https://twitter.com/intent/tweet?via=FanKave&in_reply_to=',thisPost.tweetId)}}">
-          <img class="social-metrics-reply" ng-src="img/reply@2x.png"/>
+          <img class="social-metrics-reply" ng-src="img/socialreplyDark@2x.png"/>
         </a>
       </button>
       <span class="social-metrics-label"> {{thisPost.replyCount}}</span>
@@ -460,7 +460,7 @@
       <button class="btn-link social-btn socialRetweet" secure-click="">
         <!-- <img class="social-metrics-retweet" ng-switch-when="true" src="img/retweet_select@2x.png"/>  -->
         <a href="{{secureLink('https://twitter.com/intent/retweet?tweet_id=',thisPost.tweetId)}}">
-          <img class="social-metrics-retweet" ng-src="img/retweet@2x.png" />
+          <img class="social-metrics-retweet" ng-src="img/retweetDark@2x.png" />
         </a>
       </button>
       <span class="social-metrics-label">{{thisPost.retweetCount}}</span>
@@ -468,14 +468,14 @@
       <button class="btn-link social-btn socialFavorite" secure-click="">
         <!-- <img class="social-metrics-heart" ng-switch-when="true" src="img/heart_select@2x.png"/> --> 
         <a href="{{secureLink('https://twitter.com/intent/like?tweet_id=',thisPost.tweetId)}}">
-          <img class="social-metrics-heart" ng-src="img/heart@2x.png" />
+          <img class="social-metrics-heart" ng-src="img/heartDark@2x.png" />
         </a> 
       </button>
       <span class="social-metrics-label">{{thisPost.likeCount}}</span>
 
       <div class="social-share-container">
         <button class="share-dd dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" secure-click="">
-          <img class="social-share" ng-src="img/share@2x.png"/>
+          <img class="social-share" ng-src="img/socialshareDark@2x.png"/>
           <span class="social-share-label">Share</span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
@@ -528,28 +528,28 @@
       
       <button class="btn-link social-btn" secure-click="">
         <a href="{{secureLink('https://twitter.com/intent/tweet?via=FanKave&in_reply_to=',thisPost.tweetId)}}">
-          <img class="social-metrics-reply" ng-src="img/reply@2x.png"/>
+          <img class="social-metrics-reply" ng-src="img/socialreplyDark@2x.png"/>
         </a>
       </button>
       <span class="social-metrics-label"> {{thisPost.replyCount}}</span>
 
       <button class="btn-link social-btn socialRetweet" secure-click="">
         <a href="{{secureLink('https://twitter.com/intent/retweet?tweet_id=',thisPost.tweetId)}}">
-          <img class="social-metrics-retweet" ng-src="img/retweet@2x.png" />
+          <img class="social-metrics-retweet" ng-src="img/retweetDark@2x.png" />
         </a> 
       </button>
       <span class="social-metrics-label">{{thisPost.retweetCount}}</span>
 
       <button class="btn-link social-btn socialFavorite" secure-click="">
         <a href="{{secureLink('https://twitter.com/intent/like?tweet_id=',thisPost.tweetId)}}">
-          <img class="social-metrics-heart" ng-src="img/heart@2x.png" />
+          <img class="social-metrics-heart" ng-src="img/heartDark@2x.png" />
         </a>
       </button>
       <span class="social-metrics-label">{{thisPost.likeCount}}</span>
 
       <div class="social-share-container">
         <button class="share-dd dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" secure-click="">
-          <img class="social-share" ng-src="img/share@2x.png"/>
+          <img class="social-share" ng-src="img/socialshareDark@2x.png"/>
           <span class="social-share-label">Share</span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right">

@@ -5,12 +5,12 @@ function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelServi
 {
   ChannelService.setChannel($routeParams.channelID);
   if (window.location.href.indexOf('?') !== -1){
-    $scope.urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
+    var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
     if (GEN_DEBUG)
-    console.log(" $scope.urlQueryStr: " + $scope.urlQueryStr);
+    console.log("urlQueryStr: " + urlQueryStr);
   }
   
-  $scope.init = function() {
+  function init() {
     networkService.init();
     networkService.send(ChannelService.getLiveGameTopic());
   };
@@ -22,19 +22,12 @@ function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelServi
     	ga('send', 'pageview', "/topic/"+id);
       if (GEN_DEBUG){
   	  console.log('Sent Pageview from /channel/' + id);
-      console.log("Got Topic id from Channel : " +"/topic/" + id + $scope.urlQueryStr);
+      console.log("Got Topic id from Channel : " + "/topic/" + id + urlQueryStr);
       }
-      if (HTML5_LOC){
-        if(!!$scope.urlQueryStr)
-          $location.path("/topic/" + id).search($scope.urlQueryStr);
-        else
-          $location.path("/topic/" + id);
-      } else {
-        if(!!$scope.urlQueryStr)
-          $window.location = "#/topic/" + id + "?" + $scope.urlQueryStr;
-        else
-          $window.location = "#/topic/" + id;
-      }
+      if(!!urlQueryStr)
+        $location.url("/topic/" + id + "?" + urlQueryStr);
+      else
+        $location.url("/topic/" + id);
     }
 
   };
@@ -46,25 +39,23 @@ function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelServi
   if(UserInfoService.isUserLoggedIn()){
     if(NETWORK_DEBUG)
       console.log("User is logged in, checking for connection");
-    $scope.init();
+    init();
   }
   else if (URIHelper.isSmartStadiumUser()){
-    $scope.isSmartStadiumUser = true;
     AuthService.loginWithEmail();
   }
   else if (URIHelper.isTechMUser()){
     if (GEN_DEBUG)
     console.log("MI16 User Detected");
-    $window.location = "#/login?MI16=true";
+    $location.url("/login?MI16=true");
   }
   else if (URIHelper.isMWCUser()){
     if (GEN_DEBUG)
     console.log("MWC User Detected");
-    $window.location = "#/login?MWC=true";
+    $location.url("/login?MWC=true");
   }
   else {
     if(URIHelper.isPeelUser()){
-      $scope.isPeelUser = true;
       AuthService.loginWithPeel();
     }
     else{
