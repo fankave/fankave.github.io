@@ -9,8 +9,8 @@ angular.module('TopicModule')
     link: function(scope,elem,attr) {
 
       scope.imageClick = function(imageURL) {
-        event.cancelBubble = true;
-        if(event.stopPropagation) event.stopPropagation();
+        // event.cancelBubble = true;
+        // if(event.stopPropagation) event.stopPropagation();
 
         $.magnificPopup.open({
           items: {
