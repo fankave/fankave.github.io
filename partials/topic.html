@@ -302,7 +302,7 @@
       <button type="button" id="removeMedia" class="fkFont" ng-click="user.removeMedia()">X
       </button>
     </div>
-    <div id="uploadControls" ng-if="user.uploader.isUploading && user.uploader.queue.length > 0">
+    <div id="uploadControls" ng-if="user.uploader.queue.length > 0">
         <div class="progress" style="margin-bottom: 0;">
           <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
         </div>
@@ -404,9 +404,9 @@
 
       <div>
         <div class="socialButtonsRow">
-          <button id="chatLike" class="btn-link social-btn" ng-click="moreButtonTapped()" secure-click="updateLikeComment(thisPost.id)" ng-switch="thisPost.isLiked">
-            <img class="social-like" ng-switch-when="true" ng-click="moreButtonTapped()" ng-src="img/thumbsUp_selectL@2x.png" /> 
-            <img class="social-like" ng-switch-when="false" ng-click="moreButtonTapped()" ng-src="img/thumbsUpDarkL@2x.png" /> 
+          <button id="chatLike" class="btn-link social-btn" secure-click="updateLikeComment(thisPost, thisPost.id)">
+            <img class="social-like" ng-if="thisPost.justLiked || thisPost.isLiked" ng-src="img/thumbsUp_selectL@2x.png" /> 
+            <img class="social-like" ng-if="!thisPost.justLiked || !thisPost.isLiked" ng-src="img/thumbsUpDarkL@2x.png" /> 
           </button>
           <span class="socialButtonLable" ng-hide="thisPost.likeCount < 1">{{thisPost.likeCount}}  </span>
         </div>
@@ -604,7 +604,7 @@
       <button type="button" id="removeMedia" class="fkFont" ng-click="user.removeMedia()">X
       </button>
     </div>
-    <div id="mobileUploadControls" ng-if="user.uploader.isUploading && user.uploader.queue.length > 0">
+    <div id="mobileUploadControls" ng-if="user.uploader.queue.length > 0">
       <div class="progress mobileProgress">
         <div id="progress-bar" role="progressbar" ng-style="{ 'width': user.uploader.progress + '%' }"></div>
       </div>

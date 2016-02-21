@@ -249,7 +249,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     var clientHeight = document.documentElement.clientHeight || window.innerHeight;
     var watchContentScroll = debounce(function() {
-      var currentScroll = $(document).height() - clientHeight - 50;
+      var currentScroll = $(document).height() - clientHeight - 150;
       if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
         if ($scope.activeTab === 'social'){
           // We are Loading More Content -->

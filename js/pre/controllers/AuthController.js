@@ -84,7 +84,7 @@ angular.module("AuthModule", ["NetworkModule", "TopicModule"])
     };
 
     $scope.focusMWC = function() {
-      $('#techLoginContainer').animate({'top':'-40px'},100);
+      $('#techLoginContainer').animate({'top':'-150px'},100);
     };
 
     $scope.blurMWC = function() {

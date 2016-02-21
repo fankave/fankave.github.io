@@ -84,7 +84,6 @@ angular.module('TopicModule')
 
       scope.isMobileUser = UserAgentService.isMobileUser();
       var isIOS = (UserAgentService.getMobileUserAgent() === 'iOS');
-      console.log("IsiOS:", isIOS);
 
       scope.trustSrc = function(src){
         return $sce.trustAsResourceUrl(src);

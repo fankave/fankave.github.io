@@ -409,13 +409,15 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     document.getElementById("commentField").focus();
   };
 
-  $scope.updateLikeComment = function(id) {
-    $scope.innerButtonTapped = true;
-    
-    // event.cancelBubble = true;
-    // if(event.stopPropagation) event.stopPropagation();
+  $scope.updateLikeComment = function(post, id) {
+    if (!post.justLiked){
+      post.justLiked = true;
+      if (GEN_DEBUG) console.log("JUST LIKED!");
+    } else {
+      post.justLiked = false;
+    }
 
-    console.log("TopicController updateLike (" + id + ")");
+    if (GEN_DEBUG) console.log("TopicController updateLike (" + id + ")");
     if(CommentService.isCommentLiked(id)){
       networkService.send(CommentService.getUnlikeCommentRequest(id));
     }
@@ -423,7 +425,6 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       networkService.send(CommentService.getLikeCommentRequest(id));  
     }
   };
-
 
   $scope.deleteComment = function(id)
   {
