@@ -83,6 +83,8 @@ angular.module('TopicModule')
     link: function(scope,elem,attr) {
 
       scope.isMobileUser = UserAgentService.isMobileUser();
+      var isIOS = (UserAgentService.getMobileUserAgent() === 'iOS');
+      console.log("IsiOS:", isIOS);
 
       scope.trustSrc = function(src){
         return $sce.trustAsResourceUrl(src);
@@ -95,7 +97,7 @@ angular.module('TopicModule')
       $(video).on('waiting', function() {
         if (NETWORK_DEBUG)
           console.log("Video Waiting");
-        if (scope.isMobileUser){
+        if (scope.isMobileUser && !isIOS){
           loadingSpinner.className = 'media-loading-fullscreen';
           loadingSpinner.style.zIndex = "2147483647";
         } else {
@@ -105,7 +107,7 @@ angular.module('TopicModule')
       $(video).on('stalled', function() {
         if (NETWORK_DEBUG)
           console.log("Video Stalled");
-        if (scope.isMobileUser){
+        if (scope.isMobileUser && !isIOS){
           loadingSpinner.className = 'media-loading-fullscreen';
           loadingSpinner.style.zIndex = "2147483647";
         } else {
