@@ -1,6 +1,6 @@
 angular.module('NetworkModule')
-.factory('URIHelper', ["ForumStorage",
-	function (ForumStorage) {
+.factory('URIHelper', ["ForumStorage","$rootScope",
+	function (ForumStorage, $rootScope) {
 
 	var peelUserName;
 	var peelUserId;
@@ -129,6 +129,17 @@ angular.module('NetworkModule')
 			var offset = uri.slice(uri.indexOf('offset'));
     	var hash = offset.split("=");
     	return hash[1];
+		},
+		embedded: function(){
+			var vars = getUrlVars();
+			if (vars['embed']){
+				$rootScope.embed = true;
+				return true;
+			}
+			if ($rootScope.embed){
+				return true;
+			}
+			return false;
 		}
 
 
