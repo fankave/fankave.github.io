@@ -33,6 +33,10 @@ function ($scope,$window,$location,$sce,$routeParams,networkService,ChannelServi
   
 
   ChannelService.registerObserverCallback(updateTopic);
+
+  if (URIHelper.embedded()){
+    // $rootScope now has variable embed=true
+  }
   
   if(UserInfoService.isUserLoggedIn()){
     if(NETWORK_DEBUG)

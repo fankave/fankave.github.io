@@ -317,6 +317,11 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   function initPage(){
     updateTopic();
     updateComments();
+
+    // Detect Embed Environment
+    if (URIHelper.embedded()){
+      $scope.embed = true;
+    }
     $scope.pageClass = 'page-topic';
     $scope.showNewCommentsIndicator = false;
 
