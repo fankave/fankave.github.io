@@ -317,6 +317,12 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   function initPage(){
     updateTopic();
     updateComments();
+
+    // Detect Embed Environment
+    if (URIHelper.embedded()){
+      $scope.embed = true;
+      establishFrameMessaging();
+    }
     $scope.pageClass = 'page-topic';
     $scope.showNewCommentsIndicator = false;
 
@@ -326,6 +332,17 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     if ($scope.mobileBrowser === true){
       document.getElementById('topicSection').style.paddingBottom = "42px";
     }
+  }
+
+  function establishFrameMessaging() {
+    window.addEventListener('message', receiveMessage, false);
+  }
+
+  function receiveMessage(event) {
+    var trusted = 'http://www.fankave.net';
+    if (event.origin !== trusted) return;
+    console.log('Message received: ' + event.data, event);
+    event.source.postMessage('Response from FanKave', event.origin);
   }
 
   $scope.viewPost = function(e,id){
