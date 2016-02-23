@@ -133,10 +133,12 @@ angular.module('NetworkModule')
 		embedded: function(){
 			var vars = getUrlVars();
 			if (vars['embed']){
+				console.log("Embed found in URL");
 				$rootScope.embed = true;
 				return true;
 			}
 			if ($rootScope.embed){
+				console.log("Embed found on rootScope");
 				return true;
 			}
 			return false;
