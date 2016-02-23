@@ -342,7 +342,11 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     var trusted = 'http://www.fankave.net';
     if (event.origin !== trusted) return;
     console.log('Message received: ' + event.data, event);
-    var response = 'RESPONSE from FanKave: ' + document.getElementById('topicSection').clientHeight;
+    var response = {
+      text: 'Update from FanKave',
+      height: document.getElementById('topicSection').clientHeight,
+      tab: $scope.activeTab
+    }
     event.source.postMessage(response, event.origin);
   }
 
