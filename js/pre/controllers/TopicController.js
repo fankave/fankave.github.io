@@ -276,6 +276,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
         }
 
       }
+      dispatchHeight();
     }
 
   }
@@ -343,11 +344,21 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     if (event.origin !== trusted) return;
     console.log('Message received: ' + event.data, event);
     var response = {
-      text: 'Update from FanKave',
+      text: 'Response from FanKave',
       height: document.getElementById('topicSection').clientHeight,
       tab: $scope.activeTab
-    }
+    };
     event.source.postMessage(response, event.origin);
+  }
+
+  function dispatchHeight() {
+    var height = document.getElementById('topicSection').clientHeight;
+    var message = {
+      type: 'resize',
+      height: height,
+      tab: $scope.activeTab
+    };
+    window.postMessage(message, 'http://www.fankave.net');
   }
 
   $scope.viewPost = function(e,id){
