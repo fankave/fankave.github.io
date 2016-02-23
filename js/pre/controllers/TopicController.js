@@ -346,7 +346,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       height: height,
       tab: $scope.activeTab
     };
-    event.source.postMessage(message, 'http://www.fankave.net');
+    event.view.postMessage(message, 'http://www.fankave.net');
   }
 
   function establishFrameMessaging() {
