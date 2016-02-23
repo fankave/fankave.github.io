@@ -339,6 +339,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     // var trusted = 'http://www.fankave.net';
     // if (event.origin !== trusted) return;
     // console.log('Message received: ', event.data, event);
+    console.log('Dispatch Event: ', event);
     var height = document.getElementById('topicSection').clientHeight;
     var message = {
       type: 'resize',
