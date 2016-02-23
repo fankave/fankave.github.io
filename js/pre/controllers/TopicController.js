@@ -276,7 +276,6 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
         }
 
       }
-      // dispatchHeight();
     }
 
   }
@@ -335,22 +334,28 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     }
   }
 
-  $scope.dispatchHeight = function(event) {
-    // var trusted = 'http://www.fankave.net';
-    // if (event.origin !== trusted) return;
-    // console.log('Message received: ', event.data, event);
-    console.log('Dispatch Event: ', event);
-    var height = document.getElementById('topicSection').clientHeight;
-    var message = {
-      type: 'resize',
-      height: height,
-      tab: $scope.activeTab
-    };
-    event.view.postMessage(message, 'http://fankave.github.io');
+  function establishFrameMessaging() {
+    window.addEventListener('message', dispatchHeight, false);
   }
 
-  function establishFrameMessaging() {
-    window.addEventListener('message', $scope.dispatchHeight, false);
+  function dispatchHeight(event) {
+    var trusted = 'http://www.fankave.net';
+
+    // If origin is not trusted, immediately return
+    if (event.origin !== trusted) return;
+
+    var contentHeight = document.getElementById('topicSection').clientHeight;
+    if (GEN_DEBUG) console.log('Message received: ', event.data, contentHeight);
+
+    // If current height of iframe matches current height of content, do nothing
+    if (event.data.frameHeight === (contentHeight + 'px')) return;
+
+    // Content height has changed, dispatch message to iframe to update its height
+    var message = {
+      type: 'resize',
+      contentHeight: contentHeight
+    };
+    event.source.postMessage(message, event.origin);
   }
 
   $scope.viewPost = function(e,id){
