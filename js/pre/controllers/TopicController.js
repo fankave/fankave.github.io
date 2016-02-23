@@ -358,6 +358,22 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     event.source.postMessage(message, event.origin);
   }
 
+  function pushHeight() {
+    var contentHeight = document.getElementById('topicSection').clientHeight;
+    if (GEN_DEBUG) console.log('Set height: ', contentHeight);
+
+    // If current height of iframe matches current height of content, do nothing
+    // if (event.data.frameHeight === (contentHeight + 'px')) return;
+
+    // Content height has changed, dispatch message to iframe to update its height
+    var message = {
+      type: 'resize',
+      contentHeight: contentHeight
+    };
+    $window.postMessage(message, 'http://www.fankave.net');
+  }
+  setInterval(pushHeight, 5000);
+
   $scope.viewPost = function(e,id){
     if ($(e.target).is('a')){
       return;
