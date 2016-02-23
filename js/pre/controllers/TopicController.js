@@ -342,7 +342,8 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     var trusted = 'http://www.fankave.net';
     if (event.origin !== trusted) return;
     console.log('Message received: ' + event.data, event);
-    event.source.postMessage('Response from FanKave', event.origin);
+    var response = 'Response from FanKave: ' + document.getElementById('topicSection').clientHeight;
+    event.source.postMessage(response, event.origin);
   }
 
   $scope.viewPost = function(e,id){
