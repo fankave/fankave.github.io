@@ -361,14 +361,14 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
 
   $scope.sendHeight = function() {
     var contentHeight = document.getElementById('fankave-page').clientHeight;
-    if (GEN_DEBUG) console.log('Message received: ', contentHeight, parent);
+    if (GEN_DEBUG) console.log('Sending Height: ', contentHeight, parent);
     var message = {
       type: 'resize',
       contentHeight: contentHeight
     };
     parent.postMessage(message, 'http://www.fankave.net');
   }
-  // setInterval(sendHeight,5000);
+  setInterval(sendHeight,10000);
 
   $scope.viewPost = function(e,id){
     if ($(e.target).is('a')){
