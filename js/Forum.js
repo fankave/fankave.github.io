@@ -67,21 +67,21 @@ angular.module('Forum')
 }]);
 
 angular.module('Forum')
-.directive('reportPageHeight', ['URIHelper','$rootScope',
-  function (URIHelper, $rootScope) {
+.directive('reportPageHeight', ['URIHelper',
+  function (URIHelper) {
     return {
       link: function(scope, elem, attrs) {
 
         if (URIHelper.embedded()){
-          $rootScope.$watch(function() {
-            $rootScope.__height = elem.height();
-            console.log("Setting Height: ", $rootScope.__height);
+          scope.$watch(function() {
+            scope.__height = elem.height();
+            console.log("Setting Height: ", scope.__height);
             // if (scope.__height < 400){
             //   sendHeight(scope.__height);
             // }
           });
 
-          $rootScope.$watch('__height', function (newHeight, oldHeight) {
+          scope.$watch('__height', function (newHeight, oldHeight) {
             console.log("Watching Height: ", newHeight, oldHeight);
             sendHeight(newHeight);
           });
