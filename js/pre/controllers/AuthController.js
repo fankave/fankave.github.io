@@ -3,7 +3,8 @@ angular.module("AuthModule", ["NetworkModule", "TopicModule"])
   function ($scope, $routeParams, $http, AuthService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
     if (URIHelper.embedded()){
-      document.getElementById('fankave-page').clientHeight = 700;
+      $('#fankave-page').height(700);
+      $scope.$apply();
     }
     if (window.location.href.indexOf('?') !== -1){
       var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
