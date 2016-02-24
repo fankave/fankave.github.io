@@ -65,3 +65,38 @@ angular.module('Forum')
     }
   };
 }]);
+
+angular.module('Forum')
+.directive('reportPageHeight', ['URIHelper',
+  function (URIHelper) {
+    return {
+      link: function(scope, elem, attrs) {
+
+        if (URIHelper.embedded()){
+          scope.$watch(function() {
+            scope.__height = elem.height();
+          });
+
+          scope.$watch('__height', function (newHeight, oldHeight) {
+            if (newHeight !== oldHeight){
+              sendHeight(newHeight);
+            }
+          });
+        }
+
+        function sendHeight(contentHeight) {
+          // if (!URIHelper.embedded()) return;
+          setTimeout(function(){
+            // var contentHeight = document.getElementById('fankave-page').clientHeight;
+            if (GEN_DEBUG) console.log('Sending Height: ', contentHeight, parent);
+            var message = {
+              type: 'resize',
+              contentHeight: contentHeight
+            };
+            parent.postMessage(message, 'http://www.fankave.net');
+          }, 0);
+        }
+
+      }
+    }
+}]);
