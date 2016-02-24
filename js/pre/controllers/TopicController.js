@@ -275,7 +275,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
           console.log("Comments Array: ", $scope.commentsArray);
         }
 
-        sendHeight();
+        // sendHeight();
       }
     }
 
@@ -359,12 +359,13 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     event.source.postMessage(message, event.origin);
   }
 
-  function sendHeight() {
+  $scope.sendHeight = function(loc) {
     var contentHeight = document.getElementById('fankave-page').clientHeight;
-    if (GEN_DEBUG) console.log('Sending Height: ', contentHeight, parent);
+    if (GEN_DEBUG) console.log('Sending Height: ', contentHeight, loc);
     var message = {
       type: 'resize',
-      contentHeight: contentHeight
+      contentHeight: contentHeight,
+      loc: loc
     };
     parent.postMessage(message, 'http://www.fankave.net');
   }
