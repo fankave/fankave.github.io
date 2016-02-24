@@ -276,7 +276,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
         }
 
       }
-      // sendHeight();
+      sendHeight();
     }
 
   }
@@ -336,7 +336,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   }
 
   function establishFrameMessaging() {
-    // window.addEventListener('message', dispatchHeight, false);
+    window.addEventListener('message', dispatchHeight, false);
   }
 
   function dispatchHeight(event) {
@@ -359,7 +359,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     event.source.postMessage(message, event.origin);
   }
 
-  $scope.sendHeight = function() {
+  function sendHeight() {
     var contentHeight = document.getElementById('fankave-page').clientHeight;
     if (GEN_DEBUG) console.log('Sending Height: ', contentHeight, parent);
     var message = {
@@ -368,7 +368,6 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     };
     parent.postMessage(message, 'http://www.fankave.net');
   }
-  setInterval($scope.sendHeight,10000);
 
   $scope.viewPost = function(e,id){
     if ($(e.target).is('a')){

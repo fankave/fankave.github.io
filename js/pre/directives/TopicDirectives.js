@@ -49,11 +49,6 @@ angular.module('TopicModule')
       scope.setDocVars();
       scope.continueToExperience('smartS');
       scope.showLoadMore();
-      var send = function(){
-        console.log("RFN Send Height");
-        scope.sendHeight();
-      };
-      send();
     }
   };
 });
