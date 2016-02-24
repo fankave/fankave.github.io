@@ -75,9 +75,11 @@ angular.module('Forum')
         if (URIHelper.embedded()){
           scope.$watch(function() {
             scope.__height = elem.height();
+            console.log("Setting Height: ", scope.__height);
           });
 
           scope.$watch('__height', function (newHeight, oldHeight) {
+            console.log("Watching Height: ", newHeight, oldHeight);
             if (newHeight !== oldHeight){
               sendHeight(newHeight);
             }
