@@ -344,7 +344,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     // If origin is not trusted, immediately return
     if (event.origin !== trusted) return;
 
-    var contentHeight = document.getElementById('topicSection').clientHeight;
+    var contentHeight = document.getElementById('fankave-page').clientHeight;
     if (GEN_DEBUG) console.log('Message received: ', event.data, contentHeight);
 
     // If current height of iframe matches current height of content, do nothing
