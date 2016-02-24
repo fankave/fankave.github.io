@@ -3,11 +3,6 @@ angular.module("PostModule", ["NetworkModule", "SplashModule", "MediaModule", "a
 
 function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService,MUService,FileUploader,ForumStorage,UserAgentService)
 {
-  if (URIHelper.embedded()){
-    var tempHeight = $('#fankave-page').height(); 
-    $('#fankave-page').height(tempHeight + 1);
-  }
-
   // Check For Mobile Browser
   if (UserAgentService.isMobileUser()){
     $scope.mobileBrowser = true;
@@ -312,6 +307,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 			tempComment.topicId = selectedComment.topicId;
       tempComment.isMyComment = UserInfoService.isCurrentUser(selectedComment.author.id);
 
+
       if (tempComment.type === 'media'){
           tempComment.mediaUrl = selectedComment.mediaUrl;
           // tempComment.trustedMediaUrl = $scope.trustSrc(tempComment.mediaUrl);
@@ -348,7 +344,13 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
         }
       }
 
-			$scope.comment = tempComment;
+      $scope.comment = tempComment;
+      if (URIHelper.embedded()){
+        if (tempComment.type !== 'media' && tempComment.type !== 'embed'){
+          var tempHeight = $('#fankave-page').height(); 
+          $('#fankave-page').height(tempHeight + 1);
+        }
+      }
 		}
     // console.log("DIRECT COMMENT? ", TopicService.directComment);
     // if(TopicService.directComment === true){
