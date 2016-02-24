@@ -4,7 +4,6 @@ angular.module("AuthModule", ["NetworkModule", "TopicModule"])
 
     if (URIHelper.embedded()){
       $('#fankave-page').height(700);
-      $scope.$apply();
     }
     if (window.location.href.indexOf('?') !== -1){
       var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
