@@ -80,9 +80,9 @@ angular.module('Forum')
 
           scope.$watch('__height', function (newHeight, oldHeight) {
             console.log("Watching Height: ", newHeight, oldHeight);
-            if (newHeight !== oldHeight){
+            // if (newHeight !== oldHeight || newHeight < ){
               sendHeight(newHeight);
-            }
+            // }
           });
         }
 
