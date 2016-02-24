@@ -76,9 +76,6 @@ angular.module('Forum')
           scope.$watch(function() {
             scope.__height = elem.height();
             console.log("Setting Height: ", scope.__height);
-            // if (scope.__height < 400){
-            //   sendHeight(scope.__height);
-            // }
           });
 
           scope.$watch('__height', function (newHeight, oldHeight) {
@@ -88,14 +85,12 @@ angular.module('Forum')
         }
 
         function sendHeight(contentHeight) {
-          // setTimeout(function(){
-            if (GEN_DEBUG) console.log('Sending Height: ', contentHeight, parent);
-            var message = {
-              type: 'resize',
-              contentHeight: contentHeight
-            };
-            parent.postMessage(message, 'http://www.fankave.net');
-          // }, 0);
+          if (GEN_DEBUG) console.log('Sending Height: ', contentHeight, parent);
+          var message = {
+            type: 'resize',
+            contentHeight: contentHeight
+          };
+          parent.postMessage(message, 'http://www.fankave.net');
         }
 
       }
