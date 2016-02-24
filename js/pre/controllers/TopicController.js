@@ -276,6 +276,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
         }
 
       }
+      sendHeight();
     }
 
   }
@@ -367,7 +368,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     };
     parent.postMessage(message, 'http://www.fankave.net');
   }
-  setInterval(sendHeight,5000);
+  // setInterval(sendHeight,5000);
 
   $scope.viewPost = function(e,id){
     if ($(e.target).is('a')){
