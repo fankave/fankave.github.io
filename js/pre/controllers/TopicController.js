@@ -369,7 +369,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
         loc: loc
       };
       parent.postMessage(message, 'http://www.fankave.net');
-    },1000);
+    },0);
   }
 
   $scope.viewPost = function(e,id){
