@@ -275,8 +275,8 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
           console.log("Comments Array: ", $scope.commentsArray);
         }
 
+        sendHeight();
       }
-      sendHeight();
     }
 
   }
