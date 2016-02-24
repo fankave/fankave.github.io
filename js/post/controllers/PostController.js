@@ -345,12 +345,12 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
       }
 
       $scope.comment = tempComment;
-      if (URIHelper.embedded()){
-        if (tempComment.type !== 'media' && tempComment.type !== 'embed'){
-          var tempHeight = $('#fankave-page').height(); 
-          $('#fankave-page').height(tempHeight + 1);
-        }
-      }
+      // if (URIHelper.embedded()){
+      //   if (tempComment.type !== 'media' && tempComment.type !== 'embed'){
+      //     var tempHeight = $('#fankave-page').height(); 
+      //     $('#fankave-page').height(tempHeight + 1);
+      //   }
+      // }
 		}
     // console.log("DIRECT COMMENT? ", TopicService.directComment);
     // if(TopicService.directComment === true){
