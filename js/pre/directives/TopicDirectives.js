@@ -49,7 +49,7 @@ angular.module('TopicModule')
       scope.setDocVars();
       scope.continueToExperience('smartS');
       scope.showLoadMore();
-      // scope.loadRemainingCommentsTimeout();
+      scope.sendHeight();
     }
   };
 });
