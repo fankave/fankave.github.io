@@ -328,19 +328,6 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     }
   }
 
-  $scope.sendHeight = function() {
-    if (!URIHelper.embedded()) return;
-    setTimeout(function(){
-      var contentHeight = document.getElementById('fankave-page').clientHeight;
-      if (GEN_DEBUG) console.log('Sending Height: ', contentHeight, loc);
-      var message = {
-        type: 'resize',
-        contentHeight: contentHeight
-      };
-      parent.postMessage(message, 'http://www.fankave.net');
-    }, 0);
-  }
-
   $scope.viewPost = function(e,id){
     if ($(e.target).is('a')){
       return;
