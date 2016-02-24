@@ -335,7 +335,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   }
 
   function establishFrameMessaging() {
-    window.addEventListener('message', dispatchHeight, false);
+    // window.addEventListener('message', dispatchHeight, false);
   }
 
   function dispatchHeight(event) {
