@@ -367,7 +367,9 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       contentHeight: contentHeight,
       loc: loc
     };
-    parent.postMessage(message, 'http://www.fankave.net');
+    setTimeout(function(){
+      parent.postMessage(message, 'http://www.fankave.net');
+    },1000);
   }
 
   $scope.viewPost = function(e,id){

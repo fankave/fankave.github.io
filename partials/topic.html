@@ -65,7 +65,7 @@
     <span id="ssTeamsSpan">Arsenal @ Sunderland</span>
   </div>
 </nav>
-<section id="topicSection" ng-controller="SocialController as social" ng-element-ready="sendHeight(5)">
+<section id="topicSection" ng-controller="SocialController as social">
   <div class="scoreCardContent clearfix" ng-if="topicType === 'livegame' && !isMI16User && !isMWCUser">
 
     <div id="rightColor">
@@ -435,7 +435,7 @@
   </div>
 
   <!-- Video Tab Content -->
-  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | orderBy: '-createdAtFull'" class="row postRowAlt" id="{{$index}}" repeat-finished-notify ng-element-ready="sendHeight(2)">
+  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | orderBy: '-createdAtFull'" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -510,7 +510,7 @@
   </div>
 
   <!-- Social Tab Content -->
-  <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray | orderBy: '-createdAtFull'" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify ng-element-ready="sendHeight(3)">
+  <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray | orderBy: '-createdAtFull'" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -583,7 +583,7 @@
     </div>
   </div>
 
-  <div id="moreCommentsBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length >= 10" ng-click="loadRemainingComments()" ng-element-ready="sendHeight(4)">
+  <div id="moreCommentsBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length >= 10" ng-click="loadRemainingComments()">
     <span id="moreCommentsText">Load more...</span>
   </div>
   <div id="moreContentBar" ng-if="activeTab === 'social'" ng-click="social.loadContent('social',social.socialArray.length)">
