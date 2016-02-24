@@ -85,16 +85,14 @@ angular.module('Forum')
         }
 
         function sendHeight(contentHeight) {
-          // if (!URIHelper.embedded()) return;
-          setTimeout(function(){
-            // var contentHeight = document.getElementById('fankave-page').clientHeight;
+          // setTimeout(function(){
             if (GEN_DEBUG) console.log('Sending Height: ', contentHeight, parent);
             var message = {
               type: 'resize',
               contentHeight: contentHeight
             };
             parent.postMessage(message, 'http://www.fankave.net');
-          }, 0);
+          // }, 0);
         }
 
       }
