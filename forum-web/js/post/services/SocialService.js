@@ -5,6 +5,7 @@ angular.module('SocialModule')
 
 
   var observerCallbacks = [];
+  var autoObserverCallbacks = [];
   var _socialArray = [];
   var _offset = 0;
   var LIMIT = 20;
@@ -31,25 +32,42 @@ angular.module('SocialModule')
         }
       }
       _offset = socialData.data.nextOffset;
-      console.log("Social Array offset : "+ _socialArray.length);
-      notifyObservers();
+      console.log("Social Array offset : "+ _offset);
+      if(socialData.rid === "social")
+        notifyObservers();
+      else
+        notifyObservers(true);
     }
   };
 
-  var notifyObservers = function(){
-    angular.forEach(observerCallbacks, function(callback){
-      callback();
-    });
+  var notifyObservers = function(autoRequest){
+   if (autoRequest){
+        angular.forEach(autoObserverCallbacks, function(callback){
+          console.log("Notify observer in autoRequest");
+          callback();
+        });
+      } else {
+      angular.forEach(observerCallbacks, function(callback){
+        callback();
+      });
+    }
   };
 
   function registerObserverCallback(callback){
-    // register an observer for provided feed
-    var callbackLength  = observerCallbacks.length;
-    while (callbackLength > 0){
-      callbackLength = observerCallbacks.length;
-      observerCallbacks.pop();
-    }
-    observerCallbacks.push(callback);
+   //register an observer
+        var callbackLength = autoObserverCallbacks.length;
+          while (callbackLength > 0){
+            callbackLength = autoObserverCallbacks.length;
+            autoObserverCallbacks.pop();
+          }
+          autoObserverCallbacks.push(callback);
+      
+      var callbackLength  = observerCallbacks.length;
+      while (callbackLength > 0){
+          callbackLength = observerCallbacks.length;
+          observerCallbacks.pop();
+      }
+      observerCallbacks.push(callback);
   };
 
   function getSocialDataRequest(id, offset){
@@ -65,6 +83,18 @@ angular.module('SocialModule')
     return request;
   };
 
+
+function getSocialDataRequestAuto(id){
+    var request = {
+      "rid": "social_auto",
+      "timestamp": new Date().getTime(),
+      "method": "GET",
+      "uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+0)
+    };
+    if (NETWORK_DEBUG)
+    console.log("Social Request Auto: ", request);
+    return request;
+  };
   return {
     socialArray: function(){
       return _socialArray;
@@ -74,6 +104,7 @@ angular.module('SocialModule')
     },
     setSocialData: setSocialData,
     getSocialDataRequest: getSocialDataRequest,
+    getSocialDataRequestAuto:getSocialDataRequestAuto,
     registerObserverCallback: registerObserverCallback
   };
 

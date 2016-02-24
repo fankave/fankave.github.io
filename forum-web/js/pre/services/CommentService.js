@@ -38,13 +38,9 @@ angular.module('NetworkModule')
         if(_commentObject.id != undefined)
           _comments.push(_commentObject);
       }
-      if (URIHelper.extractOffset(commentsData.uri) === '10'){
-        if (NETWORK_DEBUG) console.log("Set Rest of Comments");
-        notifyObservers(true);
-      } else {
+      
         if (NETWORK_DEBUG) console.log("Set Comments");
-        notifyObservers();
-      }
+        notifyObservers(true);
       _offset = commentsData.data.nextOffset;
     }
     else{
@@ -56,7 +52,7 @@ angular.module('NetworkModule')
         _commentObject = Bant.bant(data);
         if(_commentObject.id != undefined)
           _comments.push(_commentObject); 
-        notifyObservers();
+        notifyObservers(true);
       }
     }
   }
@@ -121,7 +117,7 @@ angular.module('NetworkModule')
       tempObject = Bant.updateBantLiked(tempObject, liked);
       updateLocalData(tempObject);
 
-      notifyObservers();
+      notifyObservers(true);
     }
     
   }
@@ -165,9 +161,9 @@ angular.module('NetworkModule')
     }
   };
   
-  function registerObserverCallback(callback, temp){
+  function registerObserverCallback(callback, direct){
     //register an observer
-    if (temp){
+    if (direct){
       var callbackLength = tempObserverCallbacks.length;
       while (callbackLength > 0){
         callbackLength = tempObserverCallbacks.length;

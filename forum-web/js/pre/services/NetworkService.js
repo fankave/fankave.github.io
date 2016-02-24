@@ -62,12 +62,12 @@ function ($websocket,$route,DataService,UserInfoService)
           if(NETWORK_DEBUG) console.log("Processing Reply");
           DataService.setReplies(responseJson);
         }
-        else if(type === "social"){
+        else if(type === "social" || type ==="social_auto"){
           //TODO handle Replies
           if(NETWORK_DEBUG) console.log("Processing Social");
           DataService.setSocial(responseJson);
         }
-        else if(type === "video"){
+        else if(type === "video" || type ==="video_auto"){
           //TODO handle Replies
           if(NETWORK_DEBUG) console.log("Processing Video");
           DataService.setVideo(responseJson);

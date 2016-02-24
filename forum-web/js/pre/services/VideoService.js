@@ -5,6 +5,7 @@ angular.module('SocialModule')
 
 
 	var observerCallbacks = [];
+	var autoObserverCallbacks = [];
 	var _videoArray = [];
 	var _offset = 0;
 	var LIMIT = 10;
@@ -31,26 +32,43 @@ angular.module('SocialModule')
 				}
 			}
 			_offset = videoData.data.nextOffset;
+			if(videoData.rid === "video")
 			notifyObservers();
+			else
+			notifyObservers(true)
 		}
 	}
 
 
 	//call this when you know 'comments' has been changed
-	var notifyObservers = function(){
-		angular.forEach(observerCallbacks, function(callback){
-			callback();
-		});
+  var notifyObservers = function(autoRequest){
+	    if (autoRequest){
+	      angular.forEach(autoObserverCallbacks, function(callback){
+	      	console.log("Notify observer in autoRequest");
+	        callback();
+	      });
+	    } else {
+			angular.forEach(observerCallbacks, function(callback){
+				callback();
+			});
+		}
 	};
 
 	function registerObserverCallback(callback){
 		//register an observer
-		var callbackLength  = observerCallbacks.length;
-		while (callbackLength > 0){
-		  callbackLength = observerCallbacks.length;
-		  observerCallbacks.pop();
-		}
-		observerCallbacks.push(callback);
+      	var callbackLength = autoObserverCallbacks.length;
+      		while (callbackLength > 0){
+        		callbackLength = autoObserverCallbacks.length;
+        		autoObserverCallbacks.pop();
+      		}
+      		autoObserverCallbacks.push(callback);
+    	
+    	var callbackLength  = observerCallbacks.length;
+			while (callbackLength > 0){
+		  		callbackLength = observerCallbacks.length;
+		  		observerCallbacks.pop();
+			}
+			observerCallbacks.push(callback);
 	}
 
 	function getVideoDataRequest(id, offset){
@@ -66,6 +84,18 @@ angular.module('SocialModule')
 		return request;
 	}
 
+	function getVideoDataRequestAuto(id){
+		var request = {
+			"rid": "video_auto",
+			"timestamp": new Date().getTime(),
+			"method": "GET",
+			"uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+0+"&filter=video")
+		};
+		if (NETWORK_DEBUG)
+		console.log("Video Request Auto: ", request);
+		return request;
+	}
+
 	return {
 		videoArray: function(){
 			return _videoArray;
@@ -75,6 +105,7 @@ angular.module('SocialModule')
     },
 		setVideoData:setVideoData,
 		getVideoDataRequest:getVideoDataRequest,
+		getVideoDataRequestAuto:getVideoDataRequestAuto,
 		registerObserverCallback:registerObserverCallback
 	};
 
