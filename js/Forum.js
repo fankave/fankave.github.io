@@ -76,9 +76,9 @@ angular.module('Forum')
           scope.$watch(function() {
             scope.__height = elem.height();
             console.log("Setting Height: ", scope.__height);
-            if (scope.__height < 400){
-              sendHeight(scope.__height);
-            }
+            // if (scope.__height < 400){
+            //   sendHeight(scope.__height);
+            // }
           });
 
           scope.$watch('__height', function (newHeight, oldHeight) {

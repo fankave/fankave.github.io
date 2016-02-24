@@ -3,6 +3,10 @@ angular.module("PostModule", ["NetworkModule", "SplashModule", "MediaModule", "a
 
 function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, networkService, ReplyService, TopicService, CommentService, UserInfoService,URIHelper,SplashService,MUService,FileUploader,ForumStorage,UserAgentService)
 {
+  if (URIHelper.embedded()){
+    var tempHeight = $('#fankave-page').height(); 
+    $('#fankave-page').height(tempHeight + 1);
+  }
 
   // Check For Mobile Browser
   if (UserAgentService.isMobileUser()){
