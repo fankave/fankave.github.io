@@ -21,13 +21,13 @@ angular.module('TopicModule')
           callbacks: {
             open: function(){
               $('body').bind('touchmove', function(e){e.preventDefault()});
-              // if (URIHelper.embedded()){
+              if (URIHelper.embedded()){
                 console.log("MFP: ", $('.mfp-content').offset(), " DOC: ", $el.getBoundingClientRect().top);
                 if ($('.mfp-content').offset() !== $el.getBoundingClientRect().top){
                   console.log("Shifting MFP");
                   $('.mfp-content').offset({ top: $el.getBoundingClientRect().top - 100 });
                 }
-              // }
+              }
             },
             close: function(){
               $('body').unbind('touchmove');
