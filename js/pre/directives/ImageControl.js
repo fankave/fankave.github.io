@@ -1,6 +1,6 @@
 angular.module('TopicModule')
-.directive('imageControl', ['$sce',
-  function ($sce) {
+.directive('imageControl', ['$sce','URIHelper',
+  function ($sce, URIHelper) {
   return {
     restrict: 'E',
     scope: {
@@ -9,18 +9,23 @@ angular.module('TopicModule')
     link: function(scope,elem,attr) {
 
       scope.imageClick = function(imageURL) {
-        // event.cancelBubble = true;
-        // if(event.stopPropagation) event.stopPropagation();
 
         $.magnificPopup.open({
           items: {
             type:'image',
-            src: imageURL,
+            src: imageURL
           },
           type: 'inline',
           callbacks: {
             open: function(){
               $('body').bind('touchmove', function(e){e.preventDefault()});
+              if (URIHelper.embedded()){
+                console.log("MFP: ", $('.mfp-content').offset(), " DOC: ", $(document).scrollTop());
+                if ($('.mfp-content').offset() !== $(document).scrollTop()){
+                  console.log("Shifting MFP");
+                  $('.mfp-content').offset({ top: $(document).scrollTop() });
+                }
+              }
             },
             close: function(){
               $('body').unbind('touchmove');
