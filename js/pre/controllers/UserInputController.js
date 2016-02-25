@@ -236,10 +236,10 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             inputEl.addEventListener('blur', blurred);
           });
         }
-        if (view === 'post'){
-          console.log("Broadcasting to Post");
-          $rootScope.$broadcast('readyForDirectReply');
-        }
+        // if (view === 'post'){
+        //   console.log("Broadcasting to Post");
+        //   $rootScope.$broadcast('readyForDirectReply');
+        // }
       };
 
       this.report = function(message){
