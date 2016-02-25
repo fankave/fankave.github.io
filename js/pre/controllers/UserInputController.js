@@ -220,7 +220,6 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             fixedEl.style.bottom = (document.body.clientHeight - (window.scrollY + window.innerHeight) + bottom) + 'px';
             // Switch Back After Focus is Lost
             function blurred() {
-              // Don't reset if user is attaching media or hitting post button
               setTimeout(function(){
                 console.log("Blur");
                 fixedEl.style.position = '';
