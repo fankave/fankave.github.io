@@ -2157,9 +2157,12 @@ img-crop canvas {
   padding: 15px;
   width: 100%;
   max-width: 768px;
-  height: 100vh;
-  border: 1px solid rgb(211,214,215);
+  border: 1px solid #16bde7;
   box-shadow: 0px 5px 5px rgb(179,184,186);
+}
+
+.sharePreview {
+  height: 100vh;
 }
 
 .shareFormContainer {

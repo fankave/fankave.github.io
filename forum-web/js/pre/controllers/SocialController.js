@@ -219,11 +219,21 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       });
     };
 
-    this.shareTweetToChat = function (embed) {
+    this.shareTweetToChat = function (embed, id) {
       _this.embedShareContent = embed;
       _this.showShareDialog = true;
-      if (GEN_DEBUG)
-      console.log("Embed Object: ", embed);
+
+      var selectedHeight = $('#'+id).offset().top + 'px';
+      if (GEN_DEBUG) console.log("Embed Object: ", embed, selectedHeight);
+      
+      // If embedded, position dialog over post being shared
+      if (URIHelper.embedded()){
+        setTimeout(function(){
+          $('#sharePreviewContainer').css({ top: selectedHeight });
+        }, 0);
+      }
+
+      // If peel, position dialog below header
       if ($scope.$parent.isPeelUser){
         var fullClient = document.documentElement.clientHeight - 54;
         if (GEN_DEBUG)
