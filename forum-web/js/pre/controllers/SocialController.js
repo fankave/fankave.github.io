@@ -1,6 +1,6 @@
 angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
-.controller("SocialController", ["$scope","$sce","$window","$routeParams","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService",
-  function ($scope,$sce,$window,$routeParams,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService){
+.controller("SocialController", ["$scope","$sce","$window","$routeParams","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper",
+  function ($scope,$sce,$window,$routeParams,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper){
     console.log("Social Control");
 
     var _this = this;
@@ -251,7 +251,18 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       networkService.send(CommentService.postCommentRequestForShare(topicID,commentData,embedData));
       _this.showShareDialog = false;
       $scope.$parent.switchTabs('chat');
+      if (URIHelper.embedded()){
+        sendScroll();
+      }
     };
+
+    function sendScroll() {
+      if (GEN_DEBUG) console.log('Scroll Up to Top of Frame');
+      var message = {
+        type: 'scroll'
+      };
+      parent.postMessage(message, 'http://www.fankave.net');
+    }
 
     if (!window.FB){
       (function(d, s, id) {
