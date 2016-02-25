@@ -204,6 +204,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
           });
 
           function focused() {
+            if (GEN_DEBUG) console.log("Focused triggered");
             var offset = 255;
             if (window.scrollY === 0){
               $(document).scrollTop(1);
