@@ -108,7 +108,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
     console.log("Checking for Direct Reply ", TopicService.directComment);
     if (TopicService.directComment){
       console.log("Focusing comment field");
-      setInterval(function(){$('#commentField').focus();},3000);
+      $('#commentField').focus();
       TopicService.directComment = false;
     }
   }
@@ -116,7 +116,13 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
   $scope.$on('readyForDirectReply', function (event, args){
     console.log("Post Broadcast Received");
     $scope.checkDirectReply();
-  })
+  });
+
+  $scope.timeoutFocus = function() {
+    setTimeout(function(){
+      $('#commentField').focus();
+    }, 5000);
+  }
 
   // function checkDirectReply() {
   //   console.log("Direct Reply? ", TopicService.directComment);
