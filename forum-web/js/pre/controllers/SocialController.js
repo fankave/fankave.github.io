@@ -1,6 +1,6 @@
 angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
-.controller("SocialController", ["$scope","$sce","$window","$routeParams","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService",
-  function ($scope,$sce,$window,$routeParams,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService){
+.controller("SocialController", ["$scope","$sce","$window","$routeParams","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper",
+  function ($scope,$sce,$window,$routeParams,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper){
     console.log("Social Control");
 
     var _this = this;
