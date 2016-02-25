@@ -1,6 +1,6 @@
 angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angularFileUpload"])
-  .controller("UserInputController", ["$scope","$rootScope","$window","$timeout","$routeParams","networkService","TopicService","CommentService","ReplyService","UserInfoService","FileUploader","MUService","UserAgentService",
-    function ($scope,$rootScope,$window,$timeout,$routeParams,networkService,TopicService,CommentService,ReplyService,UserInfoService,FileUploader,MUService,UserAgentService){
+  .controller("UserInputController", ["$scope","$window","$timeout","$routeParams","networkService","TopicService","CommentService","ReplyService","UserInfoService","FileUploader","MUService","UserAgentService",
+    function ($scope,$window,$timeout,$routeParams,networkService,TopicService,CommentService,ReplyService,UserInfoService,FileUploader,MUService,UserAgentService){
 
       // ATTACH MEDIA
       var MUS_SERVER_URI;
@@ -188,7 +188,6 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
 
       this.fixIOSFocus = function(view) {
         if (UserAgentService.getMobileUserAgent() === 'iOS'){
-          console.log("Setting Focus Listeners");
           var fixedEl = document.getElementById('mobileUserInput');
           var mediaEl = document.getElementById('attachMediaIcon');
           var postEl = document.getElementById('postCommentButton');
@@ -205,11 +204,6 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
           });
 
           function focused() {
-            if (TopicService.directComment){
-              $('#commentField').focus();
-              return;
-            }
-            if (GEN_DEBUG) console.log("Focused triggered");
             var offset = 255;
             if (window.scrollY === 0){
               $(document).scrollTop(1);
@@ -220,7 +214,6 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             fixedEl.style.height = (fixedEl.clientHeight + 52) + 'px';
           }
           inputEl.addEventListener('touchstart', function() {
-            if (TopicService.directComment) return;
             var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
             // Switch to Abs Positioning
             fixedEl.style.position = 'absolute';
@@ -239,10 +232,6 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             inputEl.addEventListener('blur', blurred);
           });
         }
-        // if (view === 'post'){
-        //   console.log("Broadcasting to Post");
-        //   $rootScope.$broadcast('readyForDirectReply');
-        // }
       };
 
       this.report = function(message){

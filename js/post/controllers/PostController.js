@@ -107,21 +107,9 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
   $scope.checkDirectReply = function() {
     console.log("Checking for Direct Reply ", TopicService.directComment);
     if (TopicService.directComment){
-      console.log("Focusing comment field");
       $('#commentField').focus();
       TopicService.directComment = false;
     }
-  }
-
-  $scope.$on('readyForDirectReply', function (event, args){
-    console.log("Post Broadcast Received");
-    $scope.checkDirectReply();
-  });
-
-  $scope.timeoutFocus = function() {
-    setTimeout(function(){
-      $('#commentField').focus();
-    }, 5000);
   }
 
   // function checkDirectReply() {
