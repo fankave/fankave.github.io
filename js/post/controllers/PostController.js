@@ -112,7 +112,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
     }
   }
   $scope.timeoutReply = function() {
-    setTimeout(checkDirectReply, 5000);
+    setTimeout($scope.checkDirectReply, 5000);
   }
 
 	$scope.triggerRepliesKeyboard = function() {
