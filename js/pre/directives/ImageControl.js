@@ -25,7 +25,7 @@ angular.module('TopicModule')
                 console.log("MFP: ", $('.mfp-content').offset(), " DOC: ", $el.getBoundingClientRect().top);
                 if ($('.mfp-content').offset() !== $el.getBoundingClientRect().top){
                   console.log("Shifting MFP");
-                  $('.mfp-content').offset({ top: $el.getBoundingClientRect().top });
+                  $('.mfp-content').offset({ top: $el.getBoundingClientRect().top - 50 });
                 }
               // }
             },
