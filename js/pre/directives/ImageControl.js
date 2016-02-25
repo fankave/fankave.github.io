@@ -23,9 +23,9 @@ angular.module('TopicModule')
               $('body').bind('touchmove', function(e){e.preventDefault()});
               // if (URIHelper.embedded()){
                 console.log("MFP: ", $('.mfp-content').offset(), " DOC: ", $el.getBoundingClientRect().top);
-                if ($('.mfp-content').offset() !== $(document).scrollTop()){
+                if ($('.mfp-content').offset() !== $el.getBoundingClientRect().top){
                   console.log("Shifting MFP");
-                  $('.mfp-content').offset({ top: $(document).scrollTop() });
+                  $('.mfp-content').offset({ top: $el.getBoundingClientRect().top });
                 }
               // }
             },
