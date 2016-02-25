@@ -233,6 +233,9 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             inputEl.addEventListener('blur', blurred);
           });
         }
+        if (view === 'post'){
+          $scope.$parent.checkDirectReply();
+        }
       };
 
       this.report = function(message){
