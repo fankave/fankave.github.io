@@ -8,6 +8,8 @@ angular.module('TopicModule')
     },
     link: function(scope,elem,attr) {
 
+      var $el = elem[0];
+
       scope.imageClick = function(imageURL) {
 
         $.magnificPopup.open({
@@ -19,13 +21,13 @@ angular.module('TopicModule')
           callbacks: {
             open: function(){
               $('body').bind('touchmove', function(e){e.preventDefault()});
-              if (URIHelper.embedded()){
-                console.log("MFP: ", $('.mfp-content').offset(), " DOC: ", $(document).scrollTop());
+              // if (URIHelper.embedded()){
+                console.log("MFP: ", $('.mfp-content').offset(), " DOC: ", $el.getBoundingClientRect().top);
                 if ($('.mfp-content').offset() !== $(document).scrollTop()){
                   console.log("Shifting MFP");
                   $('.mfp-content').offset({ top: $(document).scrollTop() });
                 }
-              }
+              // }
             },
             close: function(){
               $('body').unbind('touchmove');
