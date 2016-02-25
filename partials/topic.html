@@ -575,7 +575,7 @@
           <span class="social-share-label">Share</span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
-          <li><a ng-click="social.shareTweetToChat(thisPost, $elem)">Share to Live Chat</a></li>
+          <li><a ng-click="social.shareTweetToChat(thisPost, $index)">Share to Live Chat</a></li>
           <li ng-if="isPeelUser === false"><a ng-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
         </ul>
       </div>
