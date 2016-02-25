@@ -281,9 +281,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     this.shareTweetToChat = function (embed, id) {
       _this.embedShareContent = embed;
       _this.showShareDialog = true;
-      console.log("Embed Object: ", embed, $('#'+id).offset().top);
+      var selectedHeight = $('#'+id).offset().top + 'px';
+      console.log("Embed Object: ", embed, selectedHeight);
       // if (URIHelper.embedded()){
-        $('#sharePreviewContainer').css({ top: $('#'+id).offset().top });
+        $('#sharePreviewContainer').css({ top: selectedHeight });
       // }
       if ($scope.$parent.isPeelUser){
         var fullClient = document.documentElement.clientHeight - 54;
