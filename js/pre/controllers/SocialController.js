@@ -278,10 +278,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       });
     };
 
-    this.shareTweetToChat = function (embed, elem) {
+    this.shareTweetToChat = function (embed, id) {
       _this.embedShareContent = embed;
       _this.showShareDialog = true;
-      console.log("Embed Object: ", embed, elem);
+      console.log("Embed Object: ", embed, document.getElementById(id));
       if ($scope.$parent.isPeelUser){
         var fullClient = document.documentElement.clientHeight - 54;
         console.log("fullClient Height: ", fullClient);
