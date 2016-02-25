@@ -1,6 +1,6 @@
 angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angularFileUpload"])
-  .controller("UserInputController", ["$scope","$window","$timeout","$routeParams","networkService","TopicService","CommentService","ReplyService","UserInfoService","FileUploader","MUService","UserAgentService",
-    function ($scope,$window,$timeout,$routeParams,networkService,TopicService,CommentService,ReplyService,UserInfoService,FileUploader,MUService,UserAgentService){
+  .controller("UserInputController", ["$scope","$rootScope","$window","$timeout","$routeParams","networkService","TopicService","CommentService","ReplyService","UserInfoService","FileUploader","MUService","UserAgentService",
+    function ($scope,$rootScope,$window,$timeout,$routeParams,networkService,TopicService,CommentService,ReplyService,UserInfoService,FileUploader,MUService,UserAgentService){
 
       // ATTACH MEDIA
       var MUS_SERVER_URI;
@@ -188,6 +188,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
 
       this.fixIOSFocus = function(view) {
         if (UserAgentService.getMobileUserAgent() === 'iOS'){
+          console.log("Setting Focus Listeners");
           var fixedEl = document.getElementById('mobileUserInput');
           var mediaEl = document.getElementById('attachMediaIcon');
           var postEl = document.getElementById('postCommentButton');
@@ -234,7 +235,8 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
           });
         }
         if (view === 'post'){
-          $scope.$parent.checkDirectReply();
+          console.log("Broadcasting to Post");
+          $rootScope.$broadcast('readyForDirectReply');
         }
       };
 

@@ -112,6 +112,11 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
     }
   }
 
+  $scope.$on('readyForDirectReply', function (event, args){
+    console.log("Post Broadcast Received");
+    $scope.checkDirectReply();
+  })
+
   // function checkDirectReply() {
   //   console.log("Direct Reply? ", TopicService.directComment);
   //   if (TopicService.directComment){
