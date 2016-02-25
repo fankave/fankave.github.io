@@ -2204,7 +2204,7 @@ textarea#postCommentField {
   padding: 15px;
   width: 100%;
   max-width: 768px;
-  border: 1px solid rgb(211,214,215);
+  border: 1px solid #16bde7;
   box-shadow: 0px 5px 5px rgb(179,184,186);
 }
 

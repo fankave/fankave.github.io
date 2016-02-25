@@ -575,10 +575,12 @@
           <span class="social-share-label">Share</span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
-          <li><a ng-click="social.shareTweetToChat(thisPost)">Share to Live Chat</a></li>
+          <li><a ng-click="social.shareTweetToChat(thisPost, $elem)">Share to Live Chat</a></li>
           <li ng-if="isPeelUser === false"><a ng-click="social.shareToFacebook(thisPost.id,thisPost.embedUrl)">Share to Facebook</a></li>
         </ul>
       </div>
+
+      <!-- <share-to-chat-dialog ng-if="social.showShareDialog" this-post="thisPost" trust-source="trustSrc(videoSrc)" share-submit="social.submitSharedPost(commentData,embedData)" exit-share="social.exitShare()" highlight="social.highlightPost()" unhighlight="social.unhighlightPost()"></share-to-chat-dialog> -->
 
     </div>
   </div>

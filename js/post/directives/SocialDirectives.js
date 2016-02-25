@@ -10,6 +10,9 @@ angular.module('SocialModule')
       highlight: '&',
       unhighlight: '&'
     },
+    link: function (scope, elem, attr) {
+      var $el = elem[0];
+    },
     templateUrl: 'partials/sharePreview.html'
   };
 });
