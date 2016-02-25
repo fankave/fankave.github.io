@@ -105,8 +105,9 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 	}
 
   $scope.checkDirectReply = function() {
-    console.log("Checking for Direct Reply");
+    console.log("Checking for Direct Reply ", TopicService.directComment);
     if (TopicService.directComment){
+      console.log("Focusing comment field");
       $('#commentField').focus();
       TopicService.directComment = false;
     }
