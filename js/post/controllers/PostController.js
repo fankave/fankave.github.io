@@ -108,7 +108,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
     console.log("Checking for Direct Reply ", TopicService.directComment);
     if (TopicService.directComment){
       console.log("Focusing comment field");
-      $('#commentField').focus();
+      setInterval(function(){$('#commentField').focus();},3000);
       TopicService.directComment = false;
     }
   }
