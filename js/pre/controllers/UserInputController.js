@@ -205,7 +205,10 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
           });
 
           function focused() {
-            if (TopicService.directComment) return;
+            if (TopicService.directComment){
+              $('#commentField').focus();
+              return;
+            }
             if (GEN_DEBUG) console.log("Focused triggered");
             var offset = 255;
             if (window.scrollY === 0){
