@@ -284,7 +284,9 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       var selectedHeight = $('#'+id).offset().top + 'px';
       console.log("Embed Object: ", embed, selectedHeight);
       // if (URIHelper.embedded()){
+      setTimeout(function(){
         $('#sharePreviewContainer').css({ top: selectedHeight });
+      }, 0);
       // }
       if ($scope.$parent.isPeelUser){
         var fullClient = document.documentElement.clientHeight - 54;
