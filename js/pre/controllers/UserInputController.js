@@ -205,6 +205,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
           });
 
           function focused() {
+            if (TopicService.directComment) return;
             if (GEN_DEBUG) console.log("Focused triggered");
             var offset = 255;
             if (window.scrollY === 0){
@@ -216,6 +217,7 @@ angular.module("UserInput", ["NetworkModule","TopicModule","MediaModule","angula
             fixedEl.style.height = (fixedEl.clientHeight + 52) + 'px';
           }
           inputEl.addEventListener('touchstart', function() {
+            if (TopicService.directComment) return;
             var bottom = parseFloat(window.getComputedStyle(fixedEl).bottom);
             // Switch to Abs Positioning
             fixedEl.style.position = 'absolute';
