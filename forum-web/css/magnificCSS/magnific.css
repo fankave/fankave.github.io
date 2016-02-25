@@ -1,8 +1,9 @@
 /* Magnific Popup CSS */
 .mfp-bg {
   top: 0;
-  left: 0;
+  /*left: 0;*/
   width: 100%;
+  max-width: 768px;
   height: 100%;
   z-index: 31;
   overflow: hidden;
@@ -13,8 +14,9 @@
 
 .mfp-wrap {
   top: 0;
-  left: 0;
+  /*left: 0;*/
   width: 100%;
+  max-width: 768px;
   height: 100%;
   z-index: 33;
   position: fixed;
