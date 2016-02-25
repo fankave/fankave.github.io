@@ -111,9 +111,6 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
       TopicService.directComment = false;
     }
   }
-  $scope.timeoutReply = function() {
-    setTimeout($scope.checkDirectReply, 5000);
-  }
 
 	$scope.triggerRepliesKeyboard = function() {
     $('#commentField').focus();

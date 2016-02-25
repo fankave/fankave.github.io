@@ -192,7 +192,7 @@
 
         <button id="postCommentButton" class="btn btn-default" type="button" secure-click="user.postComment(commentText,false)">Post</button>
 
-        <span ng-element-ready="timeoutReply()"><input id="commentField" type="text" class="form-control" placeholder="Write a reply..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()" ng-element-ready="user.fixIOSFocus('post')"></span>
+        <span ng-element-ready="checkDirectReply()"><input id="commentField" type="text" class="form-control" placeholder="Write a reply..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()" ng-element-ready="user.fixIOSFocus('post')"></span>
         
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
 
