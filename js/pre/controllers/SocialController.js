@@ -303,7 +303,18 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       networkService.send(CommentService.postCommentRequestForShare(topicID,commentData,embedData));
       _this.showShareDialog = false;
       $scope.$parent.switchTabs('chat');
+      if (URIHelper.embedded()){
+        sendScroll();
+      }
     };
+
+    function sendScroll() {
+      if (GEN_DEBUG) console.log('Scroll Up to Top of Frame');
+      var message = {
+        type: 'scroll'
+      };
+      parent.postMessage(message, 'http://www.fankave.net');
+    }
 
     console.log("WAY BEFOREEEE");
     if (!window.FB){
