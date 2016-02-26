@@ -16,6 +16,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           updateTimestamps('social');
         }
         $scope.$parent.switchTabs('social');
+        initPTR();
         SocialService.resetSocialOffset();
         _this.loadContent('social');
       } else {
@@ -26,6 +27,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           updateTimestamps('video');
         }
         $scope.$parent.switchTabs('video');
+        initPTR();
         VideoService.resetVideoOffset();
         _this.loadContent('video');
       }
@@ -82,7 +84,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       return deferred.promise;
     }
 
-    $window.onload = function(){
+    function initPTR(){
       console.log("WebPTR Loading");
       WebPullToRefresh.init({
         loadingFunction: refreshContent,

@@ -5,6 +5,7 @@ angular.module('SocialModule')
 
 
   var observerCallbacks = [];
+  var autoObserverCallbacks = [];
   var _socialArray = [];
   var _offset = 0;
   var LIMIT = 20;
@@ -18,42 +19,82 @@ angular.module('SocialModule')
     if (!!tempData && len > 0){
       for (i = 0; i < len; i++){
         var _socialObject = Bant.bant(tempData[i]);
-        if (!!_socialObject.id)
-          _socialArray.push(_socialObject);
+        if (!!_socialObject.id){
+          var isNewObject = true;
+          for(i=0;i<_socialArray.length;i++){
+            if(_socialArray[i].id == _socialObject.id){
+              isNewObject = false;
+              break;
+              }
+            }
+          if(isNewObject)
+            _socialArray.push(_socialObject);
+        }
       }
       _offset = socialData.data.nextOffset;
-      notifyObservers();
+      console.log("Social Array offset : "+ _offset);
+      if(socialData.rid === "social")
+        notifyObservers();
+      else
+        notifyObservers(true);
     }
   };
 
-  var notifyObservers = function(){
-    angular.forEach(observerCallbacks, function(callback){
-      callback();
-    });
+  var notifyObservers = function(autoRequest){
+   if (autoRequest){
+        angular.forEach(autoObserverCallbacks, function(callback){
+          console.log("Notify observer in autoRequest");
+          callback();
+        });
+      } else {
+      angular.forEach(observerCallbacks, function(callback){
+        callback();
+      });
+    }
   };
 
   function registerObserverCallback(callback){
-    // register an observer for provided feed
-    var callbackLength  = observerCallbacks.length;
-    while (callbackLength > 0){
-      callbackLength = observerCallbacks.length;
-      observerCallbacks.pop();
-    }
-    observerCallbacks.push(callback);
+   //register an observer
+        var callbackLength = autoObserverCallbacks.length;
+          while (callbackLength > 0){
+            callbackLength = autoObserverCallbacks.length;
+            autoObserverCallbacks.pop();
+          }
+          autoObserverCallbacks.push(callback);
+      
+      var callbackLength  = observerCallbacks.length;
+      while (callbackLength > 0){
+          callbackLength = observerCallbacks.length;
+          observerCallbacks.pop();
+      }
+      observerCallbacks.push(callback);
   };
 
   function getSocialDataRequest(id, offset){
-    var reqOffset = offset || _offset;
+    var reqOffset = _offset;
     var request = {
       "rid": "social",
       "timestamp": new Date().getTime(),
       "method": "GET",
       "uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+reqOffset)
     };
+    if (NETWORK_DEBUG)
     console.log("Social Request: ", request);
     return request;
   };
 
+
+function getSocialDataRequestAuto(id){
+    var request = {
+      "rid": "social_auto",
+      "timestamp": new Date().getTime(),
+      "method": "GET",
+      "uri": encodeURI(LIST_SOCIAL_URI+id+"?limit="+LIMIT+"&offset="+0)
+    };
+    if (NETWORK_DEBUG)
+    console.log("Social Request Auto: ", request);
+    return request;
+  };
   return {
     socialArray: function(){
       return _socialArray;
@@ -63,6 +104,7 @@ angular.module('SocialModule')
     },
     setSocialData: setSocialData,
     getSocialDataRequest: getSocialDataRequest,
+    getSocialDataRequestAuto:getSocialDataRequestAuto,
     registerObserverCallback: registerObserverCallback
   };
 

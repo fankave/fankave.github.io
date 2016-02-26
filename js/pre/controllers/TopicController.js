@@ -210,11 +210,11 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     }
   }
 
-  function updateComments(load){
+  function updateComments(){
     var commentsdata = CommentService.comments();
-    if (load){
-      $scope.showNewCommentsIndicator = false;
-    }
+    // if (load){
+    //   $scope.showNewCommentsIndicator = false;
+    // }
     if(commentsdata != undefined && (commentsdata.length >0 || lastComment === true)){
       lastComment = false;
       // console.log("CommentsData : ", commentsdata);

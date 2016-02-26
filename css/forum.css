@@ -2874,6 +2874,7 @@ iframe {
   max-width: 768px;
   text-align: center;
   background-color: transparent;
+  z-index: -1;
 }
 
 #ptrZone > span {

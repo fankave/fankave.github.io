@@ -37,15 +37,10 @@ angular.module('NetworkModule')
         _commentObject = Bant.bant(tempCommentsData[i]);
         if(_commentObject.id != undefined)
           _comments.push(_commentObject);
-        // console.log("Comments in set comment Service type:"+_commentObject.type + "  " +_commentObject.html );
       }
-      if (URIHelper.extractOffset(commentsData.uri) === '10'){
-        if (NETWORK_DEBUG) console.log("Set Rest of Comments");
-        notifyObservers(true);
-      } else {
+      
         if (NETWORK_DEBUG) console.log("Set Comments");
-        notifyObservers();
-      }
+        notifyObservers(true);
       _offset = commentsData.data.nextOffset;
     }
     else{
@@ -57,7 +52,7 @@ angular.module('NetworkModule')
         _commentObject = Bant.bant(data);
         if(_commentObject.id != undefined)
           _comments.push(_commentObject); 
-        notifyObservers();
+        notifyObservers(true);
       }
     }
   }
@@ -67,19 +62,17 @@ angular.module('NetworkModule')
     if(tempComment!= undefined){
       var _commentObject = {};
       _commentObject = Bant.bant(tempComment);
-      if(_commentObject.id != undefined && (_commentObject.html != undefined || _commentObject.media != undefined)){
+      if(_commentObject.id != undefined){
         var i = 0;
         if(_comments.length >0)
         while(_comments[i].pin == true)
           i++; 
         _pinnedComments = i;
-        //console.log("Pinned comments "+ i);
         if(_pinnedComments>0)
           _comments.splice(i,0,_commentObject);
         else
           _comments.unshift(_commentObject);
       }
-      // console.log("appendToComments CommentService"+_commentObject.html );
     }
     notifyObservers();
   }
@@ -100,6 +93,7 @@ angular.module('NetworkModule')
     }
     appendToComments(commentData);
     //notifyObservers();
+    if (NETWORK_DEBUG)
     console.log("In Comment Service update comment");
     return 0;
   }
@@ -123,7 +117,7 @@ angular.module('NetworkModule')
       tempObject = Bant.updateBantLiked(tempObject, liked);
       updateLocalData(tempObject);
 
-      notifyObservers();
+      notifyObservers(true);
     }
     
   }
@@ -134,7 +128,6 @@ angular.module('NetworkModule')
       if(_comments[i].id == commentObj.id){
         //remove element
         _comments.splice(i,1);
-        console.log("found Comment")
         return 0;
       }
     }
@@ -158,24 +151,19 @@ angular.module('NetworkModule')
   //call this when you know 'comments' has been changed
   var notifyObservers = function(temp){
     if (temp){
-      console.log("Notifying TEMP", tempObserverCallbacks);
       angular.forEach(tempObserverCallbacks, function(callback){
         callback();
       });
-      // tempObserverCallbacks.pop();
-      console.log("Removing TEMP", tempObserverCallbacks);
     } else {
-      console.log("Notifying REG");
       angular.forEach(observerCallbacks, function(callback){
         callback();
       });
     }
   };
   
-  function registerObserverCallback(callback, temp){
+  function registerObserverCallback(callback, direct){
     //register an observer
-    if (temp){
-      console.log("Registering Temp CB");
+    if (direct){
       var callbackLength = tempObserverCallbacks.length;
       while (callbackLength > 0){
         callbackLength = tempObserverCallbacks.length;
@@ -183,7 +171,6 @@ angular.module('NetworkModule')
       }
       tempObserverCallbacks.push(callback);
     } else {
-      console.log("Registering Reg CB");
       var callbackLength = observerCallbacks.length;
       while (callbackLength > 0){
         callbackLength = observerCallbacks.length;
@@ -243,6 +230,7 @@ angular.module('NetworkModule')
           "topicId": topicId,
         };
     createCommentParams.data.content.sections[1].media = m.media;
+    if (NETWORK_DEBUG)
     console.log("Media comment Request :"+ JSON.stringify(createCommentParams, null, 10));
     return createCommentParams;
   }
@@ -257,6 +245,7 @@ angular.module('NetworkModule')
           "topicId": topicId,
         };
     createCommentParams.data.content.sections[1].embed = embedData;
+    if (NETWORK_DEBUG)
     console.log("Media comment Request :"+ JSON.stringify(createCommentParams, null, 10));
     return createCommentParams;
   }
@@ -311,6 +300,7 @@ angular.module('NetworkModule')
         tempStructure.metrics.replies == undefined ? tempStructure.metrics.replies = 1: tempStructure.metrics.replies = tempStructure.metrics.replies + 1;
       }
       updateLocalData(tempStructure); 
+       if(NETWORK_DEBUG) console.log("found element updated to :"+ tempStructure  + " tempStructure.metrics.replies :"+ tempStructure.metrics.replies);
     notifyObservers();
     }
     }
@@ -319,7 +309,6 @@ angular.module('NetworkModule')
 
   function updateCommentLocalData(uri,id){
     if(uri == LIKE_COMMENT_URI+id){
-      console.log("calling update like ");
       updateLikeCommentWithId(id, true)
     }
     else if(uri == UNLIKE_COMMENT_URI+id){
