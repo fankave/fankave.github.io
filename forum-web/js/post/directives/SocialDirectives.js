@@ -1,5 +1,6 @@
 angular.module('SocialModule')
-.directive('shareToChatDialog', function () {
+.directive('shareToChatDialog', ['URIHelper',
+  function (URIHelper) {
   return {
     restrict: 'E',
     scope: {
@@ -10,6 +11,11 @@ angular.module('SocialModule')
       highlight: '&',
       unhighlight: '&'
     },
+    link: function (scope, elem, attr) {
+      if (URIHelper.embedded()){
+        scope.embed = true;
+      }
+    },
     templateUrl: 'partials/sharePreview.html'
   };
-});
+}]);
