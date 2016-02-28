@@ -70,7 +70,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         _this.videoArray = [];
         $scope.$apply();
         VideoService.resetVideoOffset();
-        _this.loadContent('video',0)
+        _this.loadContent('video', 0);
         deferred.resolve();
       }
       else if (tab === 'social'){
@@ -78,7 +78,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         _this.socialArray = [];
         $scope.$apply();
         SocialService.resetSocialOffset();
-        _this.loadContent('social',0)
+        _this.loadContent('social', 0);
         deferred.resolve();
       }
       return deferred.promise;
