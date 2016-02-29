@@ -343,7 +343,7 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     console.log("WebPTR Loading");
     WebPullToRefresh.init({
       loadingFunction: refreshContent,
-      contentEl: 'fankave-page',
+      contentEl: 'scoreCardContent',
       ptrEl: 'ptrZone',
       distanceToRefresh: 70,
       resistance: 2.0

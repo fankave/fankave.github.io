@@ -2922,6 +2922,18 @@ iframe {
   padding-right: 2%;
 }
 
+.grid-colC {
+  position: absolute;
+  height: 100%;
+  float: left;
+  text-align: center;
+  z-index: 2;
+}
+
+.grid-col-20C {
+  width: 100%;
+}
+
 .cricket-row-45R {
   height: 40%;
   text-align: center;
