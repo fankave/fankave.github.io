@@ -88,7 +88,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       console.log("WebPTR Loading");
       WebPullToRefresh.init({
         loadingFunction: refreshContent,
-        contentEl: 'scorecard',
+        contentEl: 'fankave-page',
         ptrEl: 'ptrZone',
         distanceToRefresh: 70,
         resistance: 2.0
