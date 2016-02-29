@@ -74,7 +74,7 @@ a {
 body
 { 
     background-color: white;
-    touch-action: none;
+    /*touch-action: none;*/
 }
 
 .container
