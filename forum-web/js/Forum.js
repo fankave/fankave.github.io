@@ -65,3 +65,32 @@ angular.module('Forum')
     }
   };
 }]);
+
+angular.module('Forum')
+.directive('reportPageHeight', ['URIHelper',
+  function (URIHelper) {
+    return {
+      link: function(scope, elem, attrs) {
+
+        if (URIHelper.embedded()){
+          scope.$watch(function() {
+            scope.__height = elem.height();
+          });
+
+          scope.$watch('__height', function (newHeight, oldHeight) {
+            sendHeight(newHeight);
+          });
+        }
+
+        function sendHeight(contentHeight) {
+          if (GEN_DEBUG) console.log('Sending Height: ', contentHeight, parent);
+          var message = {
+            type: 'resize',
+            contentHeight: contentHeight
+          };
+          parent.postMessage(message, 'http://www.fankave.net');
+        }
+
+      }
+    }
+}]);

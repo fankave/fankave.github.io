@@ -2,6 +2,9 @@ angular.module("AuthModule", ["NetworkModule", "TopicModule"])
 .controller("AuthController", ["$scope", "$routeParams", "$http", "AuthService", "UserInfoService", "TopicService", "ReplyService", "networkService","ForumDeviceInfo", "ChannelService", "URIHelper",
   function ($scope, $routeParams, $http, AuthService, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
+    if (URIHelper.embedded()){
+      $('#fankave-page').height(700);
+    }
     if (window.location.href.indexOf('?') !== -1){
       var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?')+1);
       if (GEN_DEBUG)

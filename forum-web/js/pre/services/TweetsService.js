@@ -27,6 +27,13 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 				"uri": encodeURI(TOPIC_BASE_URI + id)};
 	}
 
+	function getAutoTweetsRequest(id){
+		return  varLikeParams = {"rid": "tweets_auto",
+				"timestamp": new Date().getTime(),
+				"method": "GET",
+				"uri": encodeURI(TOPIC_BASE_URI + id)};
+	}
+
 	//call this when you know 'data' has been changed
 	var notifyObservers = function(){
 		angular.forEach(observerCallbacks, function(callback){
