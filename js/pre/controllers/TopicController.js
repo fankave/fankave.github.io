@@ -323,7 +323,7 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     $scope.topicID = $routeParams.topicID;
     init();
     initPTR();
-    $scope.cricket = true;
+    $scope.cricket = false;
 
     if ($scope.mobileBrowser === true){
       document.getElementById('topicSection').style.paddingBottom = "42px";
@@ -343,7 +343,7 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     console.log("WebPTR Loading");
     WebPullToRefresh.init({
       loadingFunction: refreshContent,
-      contentEl: 'scoreCardContent',
+      contentEl: 'scorecard',
       ptrEl: 'ptrZone',
       distanceToRefresh: 70,
       resistance: 2.0
