@@ -1,7 +1,7 @@
 angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"])
-.controller("TopicController", ["$scope", "$rootScope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
+.controller("TopicController", ["$scope", "$rootScope", "$q", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
 
-function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
+function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
   var sessionTime = window.time;
   var lastComment = false;
@@ -322,11 +322,34 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
 
     $scope.topicID = $routeParams.topicID;
     init();
+    initPTR();
+    $scope.cricket = true;
 
     if ($scope.mobileBrowser === true){
       document.getElementById('topicSection').style.paddingBottom = "42px";
     }
   }
+
+  var refreshContent = function() {
+    var deferred = $q.defer();
+    if ($scope.activeTab === 'chat'){
+      deferred.resolve();
+    } else {
+      deferred.reject();
+    }
+  }
+
+  function initPTR(){
+    console.log("WebPTR Loading");
+    WebPullToRefresh.init({
+      loadingFunction: refreshContent,
+      contentEl: 'fankave-page',
+      ptrEl: 'ptrZone',
+      distanceToRefresh: 70,
+      resistance: 2.0
+    });
+    console.log("WebPTR Loaded");
+  };
 
   $scope.viewPost = function(e,id){
     if ($(e.target).is('a')){

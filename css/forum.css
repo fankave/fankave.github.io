@@ -2909,3 +2909,115 @@ iframe {
   margin-top: -182px;
 }
 
+/* Cricket Scorecard Differences */
+.scoreCricket {
+  /*color: #000;*/
+}
+
+#L-40cricket {
+  padding-left: 2%;
+}
+
+#R-40cricket {
+  padding-right: 2%;
+}
+
+.cricket-row-45R {
+  height: 40%;
+  text-align: center;
+  padding-top: 4px;
+  padding-left: 15%;
+}
+
+.cricket-row-45L {
+  height: 40%;
+  text-align: center;
+  padding-top: 4px;
+  padding-right: 15%;
+}
+
+.teamLogoCricket > img {
+  height: 39px;
+  width: 57px;
+}
+
+.scoreC {
+  font-size:2.1em;
+  font-weight: 300;
+  vertical-align: middle;
+}
+
+.scoreC-right {
+  padding-right: 4%;
+}
+
+.scoreC-left {
+  padding-left: 4%;
+}
+
+#winner {
+  position: absolute;
+  width: 100%;
+  max-width: 768px;
+  color: rgb(22,189,231);
+  font-size: 1.2em;
+  font-weight: 500;
+  text-align: center;
+  bottom: 5px;
+  z-index: 5;
+}
+
+#versus {
+  position: absolute;
+  width: 100%;
+  max-width: 768px;
+  color: rgb(179,184,186);
+  /*color: #fff;*/
+  font-size: 1.4em;
+  font-weight: 400;
+  text-align: center;
+  z-index: 5;
+  top: 36%;
+}
+
+#subscore {
+  position: relative;
+  font-size: 1.3em;
+  font-weight: 300;
+}
+
+.subscoreL {
+  /*right: 5px;*/
+}
+
+.subscoreR {
+  /*left: 5px;*/
+}
+
+.grid-row-33C {
+  height: 33%;
+}
+
+@media all and (max-width: 369px) {
+  .scoreC {
+    font-size: 1.8em;
+  }
+  .teamLogoCricket > img {
+    height: 32px;
+    width: 48px;
+  }
+  #versus {
+    font-size: 1.1em;
+  }
+  .cricket-row-45R {
+    padding-top: 10px;
+    padding-left: 15%;
+  }
+  .cricket-row-45L {
+    padding-top: 10px;
+    padding-right: 15%;
+  }
+  #subscore {
+    font-size: 1.2em;
+  }
+}
