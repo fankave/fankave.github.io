@@ -2,7 +2,7 @@
   <nav class="navbar navbar-fixed-top" id="postHeader">
     <div id="peelNavBar" ng-if="isPeelUser === true">
       <button class="btn-link peelButton" id="closePeelButton" ng-click="backToTopicButtonTapped()"><img ng-src="img/backButton-2x.png"/></button>
-      <span id="peelText">Peel Bar</span>
+      <span id="peelText">Peel</span>
       <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()">Watch On TV</button>
     </div>
     <div id="postSmartStadiumHeader" ng-if="isSmartStadiumUser === true">
@@ -192,7 +192,7 @@
 
         <button id="postCommentButton" class="btn btn-default" type="button" secure-click="user.postComment(commentText,false)">Post</button>
 
-        <span ng-element-ready="checkDirectReply()"><input id="commentField" type="text" class="form-control" placeholder="Write a reply..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()" ng-element-ready="user.fixIOSFocus('post')"></span>
+        <span ng-element-ready="checkDirectReply()"><input id="commentField" type="text" class="form-control" placeholder="Write a reply..." ng-model="commentText" secure-focus="user.highlightPost()" ng-blur="user.unhighlightPost()"></span>
         
         <input id="fileUpload" filestyle="" type="file" data-button-text="Single" data-class-button="btn btn-default" data-class-input="form-control inline" nv-file-select="" uploader="user.uploader" class="form-control" />
 

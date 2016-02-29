@@ -2971,8 +2971,8 @@ iframe {
   position: absolute;
   width: 100%;
   max-width: 768px;
-  color: rgb(179,184,186);
-  /*color: #fff;*/
+  /*color: rgb(179,184,186);*/
+  color: #fff;
   font-size: 1.4em;
   font-weight: 400;
   text-align: center;

@@ -171,7 +171,7 @@
   </div>
 
   <!-- Cricket Scorecard -->
-  <div class="scoreCardContent scoreCricket clearfix" ng-if="topicType === 'livegame' && cricket">
+  <div class="scoreCardContent scoreCricket clearfix" ng-if="topicType === 'livegame' && cricket && !isMI16User && !isMWCUser">
     <div id="winner">IND won by 5 wkts</div>
     <div id="versus">VS</div>
     <div id="rightColor">
@@ -210,6 +210,42 @@
       </div>
 
     </div>
+
+    <!-- Center Column -->
+    <!-- <div class="grid-col grid-col-20"> -->
+      
+      <!-- Top Row (Live OR VS) -->
+      <!-- <div id="liveGameIndicator" class="grid-row-22">
+        <span ng-if="gameStatus === 'live'"><img ng-src="img/live-2x.png"/></span>
+        <span id="vs" ng-if="gameStatus === 'future'">VS</span>
+      </div> -->
+      
+      <!-- Middle Row (Current/Future Game Info) -->
+      <!-- <div class="grid-row-45 time">
+        <div class="center" ng-if="gameStatus === 'live'">
+          <span>{{gamePeriod}}</span>
+          <span>{{gameClock}}</span>
+        </div>
+        <div class="center" ng-if="gameStatus === 'future'">
+          <span>{{gameScheduledTime.date}}</span>
+          <span id="futureTime">{{gameScheduledTime.time}}</span>
+        </div>
+        <div class="center" ng-if="gameStatus === 'past'">
+          <span id="finalDate">{{gameScheduledTime.date}}</span>
+          <span id="final">
+            <span>FINAL</span>
+          </span>
+        </div>
+      </div> -->
+      
+      <!-- Bottom Row (All Scores Button) -->
+      <!-- <div class="grid-row-33">
+        <span ng-if="allScoresURL"><a id="allScoresLink" href="{{allScoresURL}}" target="_blank">
+          <span id="allScoresSpan">{{allScoresTitle}}</span>
+        </a></span>
+      </div>
+
+    </div> -->
 
     <!-- Right Column -->
     <div id="R-40cricket" class="grid-col grid-col-50">
