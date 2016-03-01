@@ -141,6 +141,7 @@ body
 }
 
  #postSection{
+  position: relative;
   width: 100%;
   max-width: 768px;
   /*background-color: #fff;*/
@@ -3038,5 +3039,5 @@ iframe {
   position: absolute;
   background-color: transparent;
   width: 100%;
-  height: 100vh;
+  height: 40vh;
 }
