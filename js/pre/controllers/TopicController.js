@@ -340,10 +340,16 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
   }
 
   function initPTR(){
+    var pullEl;
+    if (UserAgentService.getMobileUserAgent() === 'iOS'){
+      pullEl = 'iosPTR';
+    } else {
+      pullEl = 'fankave-page';
+    }
     console.log("WebPTR Loading");
     WebPullToRefresh.init({
       loadingFunction: refreshContent,
-      contentEl: 'scorecard',
+      contentEl: pullEl,
       ptrEl: 'ptrZone',
       distanceToRefresh: 70,
       resistance: 2.0

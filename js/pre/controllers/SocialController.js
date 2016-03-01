@@ -1,6 +1,6 @@
 angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
-.controller("SocialController", ["$scope","$sce","$window","$location","$routeParams","$q","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper",
-  function ($scope,$sce,$window,$location,$routeParams,$q,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper){
+.controller("SocialController", ["$scope","$sce","$window","$location","$routeParams","$q","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper","UserAgentService",
+  function ($scope,$sce,$window,$location,$routeParams,$q,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper,UserAgentService){
     console.log("Social Control");
 
     var _this = this;
@@ -85,10 +85,16 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     }
 
     function initPTR(){
+      var pullEl;
+      if (UserAgentService.getMobileUserAgent() === 'iOS'){
+        pullEl = 'iosPTR';
+      } else {
+        pullEl = 'fankave-page';
+      }
       console.log("WebPTR Loading");
       WebPullToRefresh.init({
         loadingFunction: refreshContent,
-        contentEl: 'testContainer',
+        contentEl: pullEl,
         ptrEl: 'ptrZone',
         distanceToRefresh: 70,
         resistance: 2.0
