@@ -38,13 +38,14 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 
 	$scope.setPeelUI = function(userType){
 		if (userType === 'peel') {
-			$('#postSection').css('padding-top','54px');
+      $('#postSection').css('padding-top','104px');
+      $('#backToChatContainer').css('margin-top','54px');
 		} else if (userType === 'email') {
-      $('#postSection').css('padding-top','54px');
+      $('#postSection').css('padding-top','104px');
     } else if (userType === 'MI16') {
       // $('#postSection').css('padding-top','54px');
 		} else {
-      $('#postSection').css('padding-top','0px');
+      $('#postSection').css('padding-top','50px');
     }
 	}
 
@@ -59,9 +60,11 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
   }
   else if (UserInfoService.isMI16User() || UserInfoService.isMWCUser()){
     $scope.techMUser = true;
+    $scope.setPeelUI();
   }
   else {
     $scope.techMUser = false;
+    $scope.setPeelUI();
   }
 
 	$scope.requestReplies = function(){
