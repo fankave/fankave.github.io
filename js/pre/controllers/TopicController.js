@@ -325,7 +325,7 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     initPTR();
     $scope.cricket = false;
 
-    if ($scope.mobileBrowser === true){
+    if ($scope.mobileBrowser === true && !URIHelper.embedded()){
       document.getElementById('topicSection').style.paddingBottom = "42px";
     }
   }
