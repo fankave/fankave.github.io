@@ -340,7 +340,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     $scope.topicID = $routeParams.topicID;
     init();
 
-    if ($scope.mobileBrowser === true){
+    if ($scope.mobileBrowser === true && !URIHelper.embedded()){
       document.getElementById('topicSection').style.paddingBottom = "42px";
     }
   }
