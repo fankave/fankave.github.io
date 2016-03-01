@@ -62,9 +62,11 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
   }
   else if (UserInfoService.isMI16User() || UserInfoService.isMWCUser()){
     $scope.techMUser = true;
+    $scope.setPeelUI();
   }
   else {
     $scope.techMUser = false;
+    $scope.setPeelUI();
   }
 
 	$scope.requestReplies = function(){
