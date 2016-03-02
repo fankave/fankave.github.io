@@ -282,7 +282,7 @@
     </div>
   </div>
 
-  <div id="textInputFieldTopic" class="clearfix" ng-if="activeTab === 'chat' && mobileBrowser === false" ng-controller="UserInputController as user">
+  <div id="textInputFieldTopic" class="clearfix" ng-if="activeTab === 'chat' && (mobileBrowser === false || embed)" ng-controller="UserInputController as user">
     <div id="preview" ng-if="user.uploader.queue.length > 0">
       <button type="button" id="removeMedia" class="fkFont" ng-click="user.removeMedia()">X
       </button>
@@ -576,7 +576,7 @@
 
 
 </section>
-<section id="mobileUserInput" class="clearfix" ng-if="activeTab === 'chat' && mobileBrowser === true" ng-controller="UserInputController as user">
+<section id="mobileUserInput" class="clearfix" ng-if="activeTab === 'chat' && mobileBrowser === true && !embed" ng-controller="UserInputController as user">
 
     <div id="mobilePreview" ng-if="user.uploader.queue.length > 0">
       <button type="button" id="removeMedia" class="fkFont" ng-click="user.removeMedia()">X
