@@ -76,16 +76,16 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   }
   else if(UserInfoService.isPeelUser()){
     $scope.isPeelUser = true;
-    if (!UserInfoService.hasUserVisited()){
-      if (GEN_DEBUG)
-      console.log('PEEL USER HASNT VISITED');
-      if (URIHelper.isSuperBowl()){
-        $scope.SBSplash = true;
-      }
-      $scope.hidePeelSplash = false;
-      ForumStorage.setToLocalStorage("hasUserVisited", true);
-      $timeout(function() {$scope.continueToExperience('peel'); }, 5000);
-    }
+    // if (!UserInfoService.hasUserVisited()){
+    //   if (GEN_DEBUG)
+    //   console.log('PEEL USER HASNT VISITED');
+    //   if (URIHelper.isSuperBowl()){
+    //     $scope.SBSplash = true;
+    //   }
+    //   $scope.hidePeelSplash = false;
+    //   ForumStorage.setToLocalStorage("hasUserVisited", true);
+    //   $timeout(function() {$scope.continueToExperience('peel'); }, 5000);
+    // }
   }
   else {
     $scope.isPeelUser = false;  
