@@ -1760,8 +1760,11 @@ textarea#postCommentField {
   border-top: 2px solid rgb(192,210,214);
 }
 
-#socialTab,
-#videoTab {
+.leftTab {
+  border-right: 1px solid rgb(192,210,214);
+}
+
+.rightTab {
   border-left: 1px solid rgb(192,210,214);
 }
 
@@ -3034,4 +3037,13 @@ iframe {
   background-color: transparent;
   width: 100%;
   height: 40vh;
+}
+
+
+/* Jewels */
+.tabJewel {
+  vertical-align: -6px;
+  color: #a2b1b6;
+  font-size: 12px;
+  font-weight: 300;
 }

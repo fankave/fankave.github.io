@@ -58,7 +58,7 @@
 <nav class="navbar navbar-fixed-top" id="header" ng-if="isPeelUser === true || isSmartStadiumUser === true">
   <div id="peelNavBar" ng-if="isPeelUser === true">
     <button class="btn-link peelButton" id="closePeelButton" ng-click="peelClose()"><img ng-src="img/backButton-2x.png"/></button>
-    <span id="peelText">Peel Bar</span>
+    <span id="peelText">Peel</span>
     <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()">Watch On TV</button>
   </div>
   <div id="smartStadiumHeader" ng-if="isSmartStadiumUser === true">
@@ -172,8 +172,8 @@
 
   <!-- Cricket Scorecard -->
   <div class="scoreCardContent scoreCricket clearfix" ng-if="topicType === 'livegame' && cricket && !isMI16User && !isMWCUser">
-    <div id="winner">IND won by 5 wkts</div>
-    <div id="versus">VS</div>
+    <div id="winner" ng-if="gameStatus === 'past'">{{winningTeam}} won by {{winDiff}} wkts</div>
+    <div id="versus" ng-if="gameStatus === 'past'">VS</div>
     <div id="rightColor">
         <svg 
         version="1.1"
@@ -205,7 +205,7 @@
       </div>
 
       <!-- Bottom Row -->
-      <div class="grid-row-33C">
+      <div class="grid-row-33C" ng-if="gameStatus === 'live'">
         <span id="subscore" class="subscoreL">46.1</span>
       </div>
 
@@ -217,7 +217,7 @@
       <!-- Top Row (Live OR VS) -->
       <div id="liveGameIndicator" class="grid-row-22">
         <span ng-if="gameStatus === 'live'"><img ng-src="img/live-2x.png"/></span>
-        <span id="vs" ng-if="gameStatus === 'future'">VS</span>
+        <!-- <span id="vs" ng-if="gameStatus === 'future'">VS</span> -->
       </div>
       
       <!-- Middle Row (Current/Future Game Info) -->
@@ -231,10 +231,10 @@
           <span id="futureTime">{{gameScheduledTime.time}}</span>
         </div>
         <div class="center" ng-if="gameStatus === 'past'">
-          <span id="finalDate">{{gameScheduledTime.date}}</span>
-          <span id="final">
-            <span>FINAL</span>
-          </span>
+          <!-- <span id="finalDate">{{gameScheduledTime.date}}</span> -->
+          <!-- <span id="final"> -->
+            <!-- <span>VS</span> -->
+          <!-- </span> -->
         </div>
       </div>
       
@@ -265,7 +265,7 @@
       </div>
       
       <!-- Bottom Row -->
-      <div class="grid-row-33C">
+      <div class="grid-row-33C" ng-if="gameStatus === 'live'">
         <span id="subscore" class="subscoreR">46.1</span>
       </div>
     </div>
@@ -370,15 +370,45 @@
   </div>
   <!-- All Other Tabs -->
   <div class="tabContainer clearfix" ng-if="!isMI16User && !isMWCUser">
-    <div id="chatTab" class="grid-col grid-col-33 tab" ng-class="{ selectedTab: activeTab === 'chat' }" ng-click="switchTabs('chat')">
-      <span class="tabName">Chat</span>
-    </div>
-    <div id="videoTab" class="grid-col grid-col-34 tab" ng-class="{ selectedTab: activeTab === 'video' }" ng-click="social.initFeed('video')">
-      <span class="tabName">Video</span>
-    </div>
-    <div id="socialTab" class="grid-col grid-col-33 tab" ng-class="{ selectedTab: activeTab === 'social' }" ng-click="social.initFeed('social')">
-      <span class="tabName">Social</span>
-    </div>
+    <span ng-if="leftTab === 'chat'">
+      <div id="chatTab" class="grid-col grid-col-33 tab leftTab" ng-class="{ selectedTab: activeTab === 'chat' }" ng-click="switchTabs('chat')">
+        <span class="tabName">Chat</span>
+      </div>
+      <div id="videoTab" class="grid-col grid-col-34 tab" ng-class="{ selectedTab: activeTab === 'video' }" ng-click="social.initFeed('video')">
+        <span class="tabName">Video</span>
+        <span class="tabJewel">({{newVideoCount}})</span>
+      </div>
+      <div id="socialTab" class="grid-col grid-col-33 tab rightTab" ng-class="{ selectedTab: activeTab === 'social' }" ng-click="social.initFeed('social')">
+        <span class="tabName">Social</span>
+        <span class="tabJewel">({{newSocialCount}})</span>
+      </div>
+    </span>
+    <span ng-if="leftTab === 'video'">
+      <div id="videoTab" class="grid-col grid-col-34 tab leftTab" ng-class="{ selectedTab: activeTab === 'video' }" ng-click="social.initFeed('video')">
+        <span class="tabName">Video</span>
+        <span class="tabJewel">({{newVideoCount}})</span>
+      </div>
+      <div id="socialTab" class="grid-col grid-col-33 tab" ng-class="{ selectedTab: activeTab === 'social' }" ng-click="social.initFeed('social')">
+        <span class="tabName">Social</span>
+        <span class="tabJewel">({{newSocialCount}})</span>
+      </div>
+      <div id="chatTab" class="grid-col grid-col-33 tab rightTab" ng-class="{ selectedTab: activeTab === 'chat' }" ng-click="switchTabs('chat')">
+        <span class="tabName">Chat</span>
+      </div>
+    </span>
+    <span ng-if="leftTab === 'social'">
+      <div id="socialTab" class="grid-col grid-col-33 tab leftTab" ng-class="{ selectedTab: activeTab === 'social' }" ng-click="social.initFeed('social')">
+        <span class="tabName">Social</span>
+        <span class="tabJewel">({{newSocialCount}})</span>
+      </div>
+      <div id="videoTab" class="grid-col grid-col-34 tab" ng-class="{ selectedTab: activeTab === 'video' }" ng-click="social.initFeed('video')">
+        <span class="tabName">Video</span>
+        <span class="tabJewel">({{newVideoCount}})</span>
+      </div>
+      <div id="chatTab" class="grid-col grid-col-33 tab rightTab" ng-class="{ selectedTab: activeTab === 'chat' }" ng-click="switchTabs('chat')">
+        <span class="tabName">Chat</span>
+      </div>
+    </span>
 
     <div id="newCommentsAvailableIndicatorDiv" ng-if="showNewCommentsIndicator && activeTab === 'chat'">
       <button id="newCommentsIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">

@@ -314,6 +314,15 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     $scope.loadingSocial = false;
   };
   function initPage(){
+    if (URIHelper.getActiveTab() === 'video'){
+      $rootScope.leftTab = 'video';
+    }
+    else if (URIHelper.getActiveTab() === 'social'){
+      $rootScope.leftTab = 'social';
+    }
+    else {
+      $rootScope.leftTab = 'chat';
+    }
     updateTopic();
     updateComments();
 
@@ -323,7 +332,10 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     $scope.topicID = $routeParams.topicID;
     init();
     initPTR();
-    $scope.cricket = false;
+    $scope.cricket = true;
+    $scope.newVideoCount = 9;
+    $scope.newSocialCount = 15;
+
 
     if ($scope.mobileBrowser === true && !URIHelper.embedded()){
       document.getElementById('topicSection').style.paddingBottom = "42px";
@@ -358,10 +370,15 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
   };
 
   $scope.viewPost = function(e,id){
+    var tab = URIHelper.getActiveTab();
     if ($(e.target).is('a')){
       return;
     }
-    $location.url("/post/" + id);
+    if (tab !== undefined){
+      $location.url("/post/" + id + "?tab=" + tab);
+    } else {
+      $location.url("/post/" + id);
+    }
   }
 
   $scope.peelClose = function()

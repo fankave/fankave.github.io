@@ -32,9 +32,14 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 	$scope.backToTopicButtonTapped = function()
 	{
 		var topicId = TopicService.getTopicId();
+    var tab = URIHelper.getActiveTab();
 		if(topicId == undefined)
 			topicId = $scope.comment.topicId;
-    $location.url("/topic/" + topicId);
+    if (tab !== undefined){
+      $location.url("/topic/" + topicId + "?tab=" + tab);
+    } else {
+      $location.url("/topic/" + topicId);
+    }
 	}
 
 	$scope.setPeelUI = function(userType){
