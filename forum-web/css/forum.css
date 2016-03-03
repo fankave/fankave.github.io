@@ -1707,8 +1707,11 @@ img-crop canvas {
   border-top: 2px solid rgb(192,210,214);
 }
 
-#socialTab,
-#videoTab {
+.leftTab {
+  border-right: 1px solid rgb(192,210,214);
+}
+
+.rightTab {
   border-left: 1px solid rgb(192,210,214);
 }
 
