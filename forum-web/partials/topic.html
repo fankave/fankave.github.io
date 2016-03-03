@@ -58,7 +58,7 @@
 <nav class="navbar navbar-fixed-top" id="header" ng-if="isPeelUser === true || isSmartStadiumUser === true">
   <div id="peelNavBar" ng-if="isPeelUser === true">
     <button class="btn-link peelButton" id="closePeelButton" ng-click="peelClose()"><img ng-src="img/backButton-2x.png"/></button>
-    <span id="peelText">Peel Bar</span>
+    <span id="peelText">Peel</span>
     <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()">Watch On TV</button>
   </div>
   <div id="smartStadiumHeader" ng-if="isSmartStadiumUser === true">
@@ -268,7 +268,7 @@
         <span class="tabName">Chat</span>
       </div>
     </span>
-    
+
     <div id="newCommentsAvailableIndicatorDiv" ng-if="showNewCommentsIndicator && activeTab === 'chat'">
       <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
         <img ng-src="img/newCommentIndicator.png" />
