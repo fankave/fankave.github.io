@@ -332,6 +332,15 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     $scope.loadingSocial = false;
   };
   function initPage(){
+    if (URIHelper.getActiveTab() === 'video'){
+      $rootScope.leftTab = 'video';
+    }
+    else if (URIHelper.getActiveTab() === 'social'){
+      $rootScope.leftTab = 'social';
+    }
+    else {
+      $rootScope.leftTab = 'chat';
+    }
     updateTopic();
     updateComments();
     $scope.pageClass = 'page-topic';
@@ -346,10 +355,15 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   }
 
   $scope.viewPost = function(e,id){
+    var tab = URIHelper.getActiveTab();
     if ($(e.target).is('a')){
       return;
     }
-    $location.url("/post/" + id);
+    if (tab !== undefined){
+      $location.url("/post/" + id + "?tab=" + tab);
+    } else {
+      $location.url("/post/" + id);
+    }
   }
 
   $scope.peelClose = function()
