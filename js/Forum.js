@@ -11,6 +11,10 @@ function ($routeProvider, $locationProvider) {
     templateUrl:'partials/login.html',
     controller:'ChannelController'
   })
+  .when('/channel/:channelID/banner', {
+    templateUrl:'partials/banner.html',
+    controller:'BannerController'
+  })
   .when('/topic/:topicID', {
     templateUrl:'partials/topic.html',
     controller:'TopicController'

@@ -27,6 +27,7 @@ gulp.task('scripts-pre', function() {
   return gulp.src([
     './js/Forum.js',
     './js/pre/controllers/ChannelController.js',
+    './js/pre/controllers/BannerController.js',
     './js/pre/controllers/AuthController.js',
     './js/pre/controllers/TopicController.js',
     './js/pre/controllers/SocialController.js',
