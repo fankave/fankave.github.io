@@ -1,4 +1,4 @@
-angular.module("Forum", ["ngRoute","ngSanitize","AuthModule","ChannelModule","TopicModule","PostModule","NetworkModule","MediaModule","SocialModule","UserInput","SmartStadiumModule","BannerModule"])
+angular.module("Forum", ["ngRoute","ngSanitize","AuthModule","ChannelModule","TopicModule","PostModule","NetworkModule","MediaModule","SocialModule","UserInput","SmartStadiumModule"])
 .config(["$routeProvider", "$locationProvider",
 
 function ($routeProvider, $locationProvider) {
@@ -10,10 +10,6 @@ function ($routeProvider, $locationProvider) {
   .when('/channel/:channelID', {
     templateUrl:'partials/login.html',
     controller:'ChannelController'
-  })
-  .when('/channel/:channelID/banner', {
-    templateUrl:'partials/banner.html',
-    controller:'BannerController'
   })
   .when('/topic/:topicID', {
     templateUrl:'partials/topic.html',

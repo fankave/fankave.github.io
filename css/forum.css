@@ -3077,16 +3077,3 @@ iframe {
   font-size: 12px;
   font-weight: 300;
 }
-
-/* Peel Banner Page */
-#peelBannerContainer {
-  position: relative;
-  width: 100%;
-  max-width: 768px;
-}
-
-#peelBanner {
-  width: 100%;
-  max-width: 768px;
-  height: auto;
-}
