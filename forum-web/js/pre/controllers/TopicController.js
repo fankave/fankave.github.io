@@ -171,7 +171,9 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
         
         // Determine if game type is cricket
         $scope.isCricket = TopicService.isGameCricket();
-        $scope.$apply();
+        if ($scope.isCricket && !$scope.$$phase){
+          $scope.$apply();
+        }
 
         //Score API update
         $scope.leftTeam = TopicService.getTeamA();
@@ -192,7 +194,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
             $scope.offensePosition = TopicService.getOffense().position;
           }
         }
-        if ($scope.gameStatus === "past"){
+        if ($scope.gameStatus === "past" && TopicService.isGameCricket()){
           $scope.gameSummary = TopicService.getGameSummary();
         }
 
