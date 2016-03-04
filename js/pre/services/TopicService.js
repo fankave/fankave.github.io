@@ -21,6 +21,8 @@ angular.module('TopicModule')
   var _gameStats;
   var _links;
   var _scheduledAt;
+  var _summary;
+  var _isCricket;
   var observerCallbacks = []; 
   var directComment; //bool flag to indicate whether user tapped on a comment's "comment" icon
 
@@ -38,6 +40,7 @@ angular.module('TopicModule')
       if(_topicType == "livegame"){
         _game = topicData.data.game;
         if(_game != undefined){
+          _isCricket = (_game.id.indexOf("cricket") !== -1) ? true : false;
           _scheduledAt = DateUtilityService.getGameScheduledTime(_game.scheduledAt);
           _score = _game.score;
   //        Future game: live == false AND final == false.
@@ -49,6 +52,7 @@ angular.module('TopicModule')
             _status = "live";
           else if(_score.final == true)
             _status = "past";
+            _summary = _game.score.summary;
           // console.log("GAME Status  :"+ _status );
   
           if(_status == "live"){
@@ -220,6 +224,26 @@ angular.module('TopicModule')
       return _gameStats[0];},
     getGameClock: function() {  
       return _gameStats[1];},
+    getGameSummary: function() {
+      return _summary;
+    },
+    getOffense: function() {
+      var offense = {};
+      if (!!_score.detail){
+        if (_score.detail[0].offense){
+          offense.team = "leftTeam";
+          offense.position = _score.detail[0].position;
+        }
+        else if (_score.detail[1].offense){
+          offense.team = "rightTeam";
+          offense.position = _score.detail[1].position;
+        }
+      }
+      return offense;
+    },
+    isGameCricket: function() {
+      return _isCricket;
+    },
 //    getSectionType: function(sectionNumber){ 
 //    //TODO check for section length
 //    if(sectionNumber == undefined )

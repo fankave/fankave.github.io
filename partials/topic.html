@@ -68,7 +68,7 @@
 <section id="topicSection" ng-controller="SocialController as social">
   <div id="iosPTR">
   <!-- Regular Scorecard -->
-  <div id="scorecard" class="scoreCardContent clearfix" ng-if="topicType === 'livegame' && !isMI16User && !isMWCUser && !cricket">
+  <div id="scorecard" class="scoreCardContent clearfix" ng-if="topicType === 'livegame' && !isMI16User && !isMWCUser && !isCricket">
 
     <div id="rightColor">
         <svg 
@@ -171,8 +171,8 @@
   </div>
 
   <!-- Cricket Scorecard -->
-  <div class="scoreCardContent scoreCricket clearfix" ng-if="topicType === 'livegame' && cricket && !isMI16User && !isMWCUser">
-    <div id="winner" ng-if="gameStatus === 'past'">{{winningTeam}} won by {{winDiff}} wkts</div>
+  <div class="scoreCardContent scoreCricket clearfix" ng-if="topicType === 'livegame' && isCricket">
+    <div id="summary" ng-if="gameStatus === 'past'">{{gameSummary}}</div>
     <div id="versus" ng-if="gameStatus === 'past'">VS</div>
     <div id="rightColor">
         <svg 
@@ -201,12 +201,12 @@
       <div class="cricket-row-45L">
         <span class="teamLogoCricket" ng-class="{largeLogoCricket: gameStatus === 'future'}"><img ng-src="{{leftTeam.logo}}" /></span>
 
-        <span class="scoreC scoreC-left" ng-hide="gameStatus === 'future'">256/6</span>
+        <span class="scoreC scoreC-left" ng-hide="gameStatus === 'future'">{{leftTeamScore}}</span>
       </div>
 
       <!-- Bottom Row -->
-      <div class="grid-row-33C" ng-if="gameStatus === 'live'">
-        <span id="subscore" class="subscoreL">46.1</span>
+      <div class="grid-row-33C" ng-if="gameStatus === 'live' && offenseTeam === 'leftTeam'">
+        <span id="subscore" class="subscoreL"><img id="bat" ng-src="https://storage.googleapis.com/forumus/static/icons/white/cricket.png" />{{offensePosition}}</span>
       </div>
 
     </div>
@@ -215,26 +215,19 @@
     <div class="grid-colC grid-col-20C">
       
       <!-- Top Row (Live OR VS) -->
-      <div id="liveGameIndicator" class="grid-row-22">
+      <div id="liveGameCricket" class="grid-row-22">
         <span ng-if="gameStatus === 'live'"><img ng-src="img/live-2x.png"/></span>
-        <!-- <span id="vs" ng-if="gameStatus === 'future'">VS</span> -->
       </div>
       
       <!-- Middle Row (Current/Future Game Info) -->
       <div class="grid-row-45 time">
-        <div class="center" ng-if="gameStatus === 'live'">
+        <div class="centerC" ng-if="gameStatus === 'live'">
           <span>{{gamePeriod}}</span>
           <span>{{gameClock}}</span>
         </div>
-        <div class="center" ng-if="gameStatus === 'future'">
-          <span>{{gameScheduledTime.date}}</span>
+        <div class="centerCTime" ng-if="gameStatus === 'future'">
+          <span>{{gameScheduledTime.dateExt}}</span>
           <span id="futureTime">{{gameScheduledTime.time}}</span>
-        </div>
-        <div class="center" ng-if="gameStatus === 'past'">
-          <!-- <span id="finalDate">{{gameScheduledTime.date}}</span> -->
-          <!-- <span id="final"> -->
-            <!-- <span>VS</span> -->
-          <!-- </span> -->
         </div>
       </div>
       
@@ -259,14 +252,14 @@
       <!-- Middle Row (Logo & Score) -->
       <div class="cricket-row-45R">
 
-        <span class="scoreC scoreC-right" ng-hide="gameStatus === 'future'">220/9</span>
+        <span class="scoreC scoreC-right" ng-hide="gameStatus === 'future'">{{rightTeamScore}}</span>
         
         <span class="teamLogoCricket" ng-class="{largeLogoCricket: gameStatus === 'future'}"><img ng-src="{{rightTeam.logo}}" /></span>
       </div>
       
       <!-- Bottom Row -->
-      <div class="grid-row-33C" ng-if="gameStatus === 'live'">
-        <span id="subscore" class="subscoreR">46.1</span>
+      <div class="grid-row-33C" ng-if="gameStatus === 'live' && offenseTeam === 'rightTeam'">
+        <span id="subscore" class="subscoreR"><img id="bat" ng-src="https://storage.googleapis.com/forumus/static/icons/white/cricket.png" />{{offensePosition}}</span>
       </div>
     </div>
 

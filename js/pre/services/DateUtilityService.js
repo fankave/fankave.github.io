@@ -31,10 +31,16 @@ angular.module('NetworkModule')
 	
 	function gameScheduleTime(timeStamp){
 		var date_format = '12';
+		var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+		var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+		
 		var createdDate = new Date(timeStamp);
-		day = createdDate.getDate();
-		month = createdDate.getMonth() + 1;
-		hour = createdDate.getHours();
+		
+		var day = createdDate.getDate();
+		var dayOfWeek = days[createdDate.getDay()];
+		var month = createdDate.getMonth() + 1;
+		var monthName = months[createdDate.getMonth()];
+
 		var hour    = createdDate.getHours();  /* Returns the hour (from 0-23) */
 		var minutes     = createdDate.getMinutes();  /* Returns the minutes (from 0-59) */
 		var time  = hour;
@@ -66,10 +72,12 @@ angular.module('NetworkModule')
 		}
 
 		time = time + ":" + minutes + ' ' + ext + ' '+timeZone; 
-		date = month+ "/" +day;
-		result = {"date":date,"time":time};
+		var date = month + "/" + day;
+		var dateExt = dayOfWeek + ", " + monthName + " " + day;
+		result = { "date": date, "time": time, "dateExt": dateExt };
 
 		console.log("Scheduled date : "+ result.date + "  Scheduled time : "+result.time);
+		console.log("Scheduled Date, Extended Format: ", result.dateExt);
 		
 		
 		return result;

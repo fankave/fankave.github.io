@@ -74,15 +74,15 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
   }
   else if(UserInfoService.isPeelUser()){
     $scope.isPeelUser = true;
-    if (!UserInfoService.hasUserVisited()){
-      console.log('PEEL USER HASNT VISITED');
-      if (URIHelper.isSuperBowl()){
-        $scope.SBSplash = true;
-      }
-      $scope.hidePeelSplash = false;
-      ForumStorage.setToLocalStorage("hasUserVisited", true);
-      $timeout(function() {$scope.continueToExperience('peel'); }, 5000);
-    }
+    // if (!UserInfoService.hasUserVisited()){
+    //   console.log('PEEL USER HASNT VISITED');
+    //   if (URIHelper.isSuperBowl()){
+    //     $scope.SBSplash = true;
+    //   }
+    //   $scope.hidePeelSplash = false;
+    //   ForumStorage.setToLocalStorage("hasUserVisited", true);
+    //   $timeout(function() {$scope.continueToExperience('peel'); }, 5000);
+    // }
   }
   else {
     $scope.isPeelUser = false;  
@@ -150,6 +150,11 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
       setScoreCardUI();
       if($scope.topicType == "livegame"){
         console.log("Inside topic set :"+ TopicService.getTeamA());
+        
+        // Determine if game type is cricket
+        $scope.isCricket = TopicService.isGameCricket();
+        $scope.$apply();
+        
         //Score API update
         $scope.leftTeam = TopicService.getTeamA();
         $scope.rightTeam = TopicService.getTeamB();
@@ -161,9 +166,16 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
         $scope.gameStatus = TopicService.getGameStatus();
         // console.log($scope.gameStatus)
 
-        if($scope.gameStatus == "live") {
+        if ($scope.gameStatus == "live") {
           $scope.gamePeriod = TopicService.getGamePeriod();
           $scope.gameClock = TopicService.getGameClock();
+          if (TopicService.isGameCricket()){
+            $scope.offenseTeam = TopicService.getOffense().team;
+            $scope.offensePosition = TopicService.getOffense().position;
+          }
+        }
+        if ($scope.gameStatus === "past"){
+          $scope.gameSummary = TopicService.getGameSummary();
         }
 
         $scope.gameScheduledTime = TopicService.getGameTime();
@@ -178,6 +190,7 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
         var right = $('.svg-content');
         left.css('background-color', $scope.leftTeam.pColor);
         right.css('fill', $scope.rightTeam.pColor);
+
       }
       $scope.topicTitle = TopicService.getTitle();
       var thisTopic = TopicService.getTopic();
@@ -332,7 +345,6 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     $scope.topicID = $routeParams.topicID;
     init();
     initPTR();
-    $scope.cricket = true;
     $scope.newVideoCount = 9;
     $scope.newSocialCount = 15;
 
