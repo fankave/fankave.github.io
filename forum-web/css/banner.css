@@ -32,3 +32,7 @@ html, body {
   height: auto;
   visibility: hidden;
 }
+
+#peelBanner:hover {
+  cursor: pointer;
+}
