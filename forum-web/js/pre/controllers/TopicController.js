@@ -355,12 +355,12 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   }
 
   $scope.viewPost = function(e,id){
-    var tab = URIHelper.getActiveTab();
+    var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
     if ($(e.target).is('a')){
       return;
     }
-    if (tab !== undefined){
-      $location.url("/post/" + id + "?tab=" + tab);
+    if (urlQueryStr !== undefined){
+      $location.url("/post/" + id + urlQueryStr);
     } else {
       $location.url("/post/" + id);
     }

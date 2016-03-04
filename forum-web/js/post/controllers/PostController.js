@@ -31,11 +31,11 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 	$scope.backToTopicButtonTapped = function()
 	{
 		var topicId = TopicService.getTopicId();
-    var tab = URIHelper.getActiveTab();
+    var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
     if(topicId == undefined)
       topicId = $scope.comment.topicId;
-    if (tab !== undefined){
-      $location.url("/topic/" + topicId + "?tab=" + tab);
+    if (urlQueryStr !== undefined){
+      $location.url("/topic/" + topicId + urlQueryStr);
     } else {
       $location.url("/topic/" + topicId);
     }
