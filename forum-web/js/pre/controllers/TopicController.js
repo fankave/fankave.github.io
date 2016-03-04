@@ -76,16 +76,16 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   }
   else if(UserInfoService.isPeelUser()){
     $scope.isPeelUser = true;
-    if (!UserInfoService.hasUserVisited()){
-      if (GEN_DEBUG)
-      console.log('PEEL USER HASNT VISITED');
-      if (URIHelper.isSuperBowl()){
-        $scope.SBSplash = true;
-      }
-      $scope.hidePeelSplash = false;
-      ForumStorage.setToLocalStorage("hasUserVisited", true);
-      $timeout(function() {$scope.continueToExperience('peel'); }, 5000);
-    }
+    // if (!UserInfoService.hasUserVisited()){
+    //   if (GEN_DEBUG)
+    //   console.log('PEEL USER HASNT VISITED');
+    //   if (URIHelper.isSuperBowl()){
+    //     $scope.SBSplash = true;
+    //   }
+    //   $scope.hidePeelSplash = false;
+    //   ForumStorage.setToLocalStorage("hasUserVisited", true);
+    //   $timeout(function() {$scope.continueToExperience('peel'); }, 5000);
+    // }
   }
   else {
     $scope.isPeelUser = false;  
@@ -332,6 +332,15 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     $scope.loadingSocial = false;
   };
   function initPage(){
+    if (URIHelper.getActiveTab() === 'video'){
+      $rootScope.leftTab = 'video';
+    }
+    else if (URIHelper.getActiveTab() === 'social'){
+      $rootScope.leftTab = 'social';
+    }
+    else {
+      $rootScope.leftTab = 'chat';
+    }
     updateTopic();
     updateComments();
     $scope.pageClass = 'page-topic';
@@ -346,10 +355,15 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   }
 
   $scope.viewPost = function(e,id){
+    var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
     if ($(e.target).is('a')){
       return;
     }
-    $location.url("/post/" + id);
+    if (urlQueryStr !== undefined){
+      $location.url("/post/" + id + urlQueryStr);
+    } else {
+      $location.url("/post/" + id);
+    }
   }
 
   $scope.peelClose = function()

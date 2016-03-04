@@ -31,9 +31,14 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 	$scope.backToTopicButtonTapped = function()
 	{
 		var topicId = TopicService.getTopicId();
-		if(topicId == undefined)
-			topicId = $scope.comment.topicId;
-    $location.url("/topic/" + topicId);
+    var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
+    if(topicId == undefined)
+      topicId = $scope.comment.topicId;
+    if (urlQueryStr !== undefined){
+      $location.url("/topic/" + topicId + urlQueryStr);
+    } else {
+      $location.url("/topic/" + topicId);
+    }
 	}
 
 	$scope.setPeelUI = function(userType){
