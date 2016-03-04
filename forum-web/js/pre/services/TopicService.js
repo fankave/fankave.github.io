@@ -41,7 +41,7 @@ angular.module('TopicModule')
       if(_topicType == "livegame"){
         _game = topicData.data.game;
         if(_game != undefined){
-          _isCricket = (_game.id.slice(0,7) === "cricket") ? true : false;
+          _isCricket = (_game.id.indexOf("cricket") !== -1) ? true : false;
           _scheduledAt = DateUtilityService.getGameScheduledTime(_game.scheduledAt);
           _score = _game.score;
   //        Future game: live == false AND final == false.
@@ -231,6 +231,26 @@ angular.module('TopicModule')
       return _gameStats[0];},
     getGameClock: function() {  
       return _gameStats[1];},
+    getGameSummary: function() {
+      return _summary;
+    },
+    getOffense: function() {
+      var offense = {};
+      if (!!_score.detail){
+        if (_score.detail[0].offense){
+          offense.team = "leftTeam";
+          offense.position = _score.detail[0].position;
+        }
+        else if (_score.detail[1].offense){
+          offense.team = "rightTeam";
+          offense.position = _score.detail[1].position;
+        }
+      }
+      return offense;
+    },
+    isGameCricket: function() {
+      return _isCricket;
+    },
 //    getSectionType: function(sectionNumber){ 
 //    //TODO check for section length
 //    if(sectionNumber == undefined )
