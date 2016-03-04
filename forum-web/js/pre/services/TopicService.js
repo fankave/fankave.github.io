@@ -21,6 +21,8 @@ angular.module('TopicModule')
   var _gameStats;
   var _links;
   var _scheduledAt;
+  var _summary;
+  var _isCricket;
   var observerCallbacks = []; 
   var directComment; //bool flag to indicate whether user tapped on a comment's "comment" icon
 
@@ -39,6 +41,7 @@ angular.module('TopicModule')
       if(_topicType == "livegame"){
         _game = topicData.data.game;
         if(_game != undefined){
+          _isCricket = (_game.id.slice(0,7) === "cricket") ? true : false;
           _scheduledAt = DateUtilityService.getGameScheduledTime(_game.scheduledAt);
           _score = _game.score;
   //        Future game: live == false AND final == false.
@@ -50,6 +53,7 @@ angular.module('TopicModule')
             _status = "live";
           else if(_score.final == true)
             _status = "past";
+            _summary = _game.score.summary;
           // console.log("GAME Status  :"+ _status );
   
           if(_status == "live"){
