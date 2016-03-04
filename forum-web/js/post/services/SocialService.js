@@ -14,7 +14,8 @@ angular.module('SocialModule')
   function setSocialData(socialData) {
     _socialArray = [];
     var tempData = socialData.data.results;
-    var len = tempData !== null ? tempData.length : 0;
+    var len;
+    tempData !== null ? len = tempData.length : len = 0;
 
     if (!!tempData && len > 0){
       for (i = 0; i < len; i++){
