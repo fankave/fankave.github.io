@@ -168,6 +168,11 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       if($scope.topicType == "livegame"){
         if (GEN_DEBUG)
         console.log("Inside topic set :"+ TopicService.getTeamA());
+        
+        // Determine if game type is cricket
+        $scope.isCricket = TopicService.isGameCricket();
+        $scope.$apply();
+
         //Score API update
         $scope.leftTeam = TopicService.getTeamA();
         $scope.rightTeam = TopicService.getTeamB();
@@ -182,6 +187,13 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
         if($scope.gameStatus == "live") {
           $scope.gamePeriod = TopicService.getGamePeriod();
           $scope.gameClock = TopicService.getGameClock();
+          if (TopicService.isGameCricket()){
+            $scope.offenseTeam = TopicService.getOffense().team;
+            $scope.offensePosition = TopicService.getOffense().position;
+          }
+        }
+        if ($scope.gameStatus === "past"){
+          $scope.gameSummary = TopicService.getGameSummary();
         }
 
         $scope.gameScheduledTime = TopicService.getGameTime();

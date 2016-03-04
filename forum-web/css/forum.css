@@ -1287,11 +1287,27 @@ button:hover {
   vertical-align: -200%;
 }
 
-.center > span {
+.centerC {
+  display: inline-block;
+}
+
+.centerCTime {
+  display: inline-block;
+  vertical-align: -28px;
+}
+
+.center > span,
+.centerC > span,
+.centerCTime > span {
   display: block;
   font-weight: 200;
   font-size: 16px;
   line-height: 1.2em;
+}
+
+#bat {
+  width: 20px;
+  vertical-align: -2px;
 }
 
 #rightColor {
@@ -1325,6 +1341,11 @@ button:hover {
   left: -2%;
 }
 
+#liveGameCricket img {
+  position: relative;
+  height: 19px;
+  top: -4px;
+}
 
 #allScores
 {
@@ -2822,5 +2843,132 @@ video::-webkit-media-controls {
 
 iframe {
   border: none;
+}
+
+/* Cricket Scorecard */
+.scoreCricket {
+  /*color: #000;*/
+}
+
+#L-40cricket {
+  padding-left: 2%;
+}
+
+#R-40cricket {
+  padding-right: 2%;
+}
+
+.grid-colC {
+  position: absolute;
+  height: 100%;
+  float: left;
+  text-align: center;
+  z-index: 2;
+}
+
+.grid-col-20C {
+  width: 100%;
+}
+
+.cricket-row-45R {
+  height: 40%;
+  text-align: center;
+  padding-top: 4px;
+  padding-left: 15%;
+}
+
+.cricket-row-45L {
+  height: 40%;
+  text-align: center;
+  padding-top: 4px;
+  padding-right: 15%;
+}
+
+.teamLogoCricket > img {
+  height: 39px;
+  width: 57px;
+}
+
+.scoreC {
+  font-size:2.1em;
+  font-weight: 300;
+  vertical-align: middle;
+}
+
+.scoreC-right {
+  padding-right: 4%;
+}
+
+.scoreC-left {
+  padding-left: 4%;
+}
+
+#summary {
+  position: absolute;
+  width: 100%;
+  max-width: 768px;
+  color: rgb(22,189,231);
+  font-size: 1.2em;
+  font-weight: 500;
+  text-align: center;
+  bottom: 5px;
+  z-index: 5;
+}
+
+#versus {
+  position: absolute;
+  width: 100%;
+  max-width: 768px;
+  /*color: rgb(179,184,186);*/
+  color: #fff;
+  font-size: 1.4em;
+  font-weight: 400;
+  text-align: center;
+  z-index: 5;
+  top: 36%;
+}
+
+#subscore {
+  position: relative;
+  font-size: 1.3em;
+  font-weight: 300;
+}
+
+.subscoreL {
+  padding-left: 25px;
+}
+
+.subscoreR {
+  padding-right: 50px;
+}
+
+.grid-row-33C {
+  height: 33%;
+  position: relative;
+  top: -5px;
+}
+
+@media all and (max-width: 369px) {
+  .scoreC {
+    font-size: 1.8em;
+  }
+  .teamLogoCricket > img {
+    height: 32px;
+    width: 48px;
+  }
+  #versus {
+    font-size: 1.1em;
+  }
+  .cricket-row-45R {
+    padding-top: 10px;
+    padding-left: 15%;
+  }
+  .cricket-row-45L {
+    padding-top: 10px;
+    padding-right: 15%;
+  }
+  #subscore {
+    font-size: 1.2em;
+  }
 }
 
