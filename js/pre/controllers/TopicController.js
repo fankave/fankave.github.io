@@ -344,7 +344,7 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
 
     $scope.topicID = $routeParams.topicID;
     init();
-    initPTR();
+    // initPTR();
     $scope.newVideoCount = 9;
     $scope.newSocialCount = 15;
 

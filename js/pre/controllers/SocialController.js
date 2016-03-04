@@ -16,7 +16,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           updateTimestamps('social');
         }
         $scope.$parent.switchTabs('social');
-        initPTR();
+        // initPTR();
         SocialService.resetSocialOffset();
         _this.loadContent('social');
       } else {
@@ -27,7 +27,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           updateTimestamps('video');
         }
         $scope.$parent.switchTabs('video');
-        initPTR();
+        // initPTR();
         VideoService.resetVideoOffset();
         _this.loadContent('video');
       }
