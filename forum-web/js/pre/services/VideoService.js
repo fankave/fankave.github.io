@@ -15,7 +15,7 @@ angular.module('SocialModule')
 		_videoArray = [];
 		var tempData = videoData.data.results;
 		var len;
-    	tempData === undefined ? len = 0 : len = tempData.length ;
+    	tempData == undefined ? len = 0 : len = tempData.length ;
 
 		if (!!tempData && len > 0){
 			for (i = 0; i < len; i++){
