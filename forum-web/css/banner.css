@@ -1,0 +1,38 @@
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+body {
+  max-width: 960px;
+  margin: 0 auto;
+  position: relative;
+}
+
+html, body {
+  overflow-x: '';
+  overflow-y: '';
+}
+
+#peelBannerContainer {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+}
+
+#peelBanner {
+  width: 100%;
+  max-width: 960px;
+  height: auto;
+  visibility: hidden;
+}
+
+#peelBanner:hover {
+  cursor: pointer;
+}
