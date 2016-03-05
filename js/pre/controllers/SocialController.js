@@ -92,6 +92,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         pullEl = 'fankave-page';
       }
       console.log("WebPTR Loading");
+      document.getElementById('ptrZone').style.visibility = 'visible';
       WebPullToRefresh.init({
         loadingFunction: refreshContent,
         contentEl: pullEl,

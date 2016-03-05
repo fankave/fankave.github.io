@@ -153,7 +153,9 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
         
         // Determine if game type is cricket
         $scope.isCricket = TopicService.isGameCricket();
-        $scope.$apply();
+        if ($scope.isCricket && !$scope.$$phase){
+          $scope.$apply();
+        }
         
         //Score API update
         $scope.leftTeam = TopicService.getTeamA();
@@ -169,12 +171,12 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
         if ($scope.gameStatus == "live") {
           $scope.gamePeriod = TopicService.getGamePeriod();
           $scope.gameClock = TopicService.getGameClock();
-          if (TopicService.isGameCricket()){
+          if ($scope.isCricket){
             $scope.offenseTeam = TopicService.getOffense().team;
             $scope.offensePosition = TopicService.getOffense().position;
           }
         }
-        if ($scope.gameStatus === "past"){
+        if ($scope.gameStatus === "past" && $scope.isCricket){
           $scope.gameSummary = TopicService.getGameSummary();
         }
 
@@ -344,7 +346,7 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
 
     $scope.topicID = $routeParams.topicID;
     init();
-    // initPTR();
+    initPTR();
     $scope.newVideoCount = 9;
     $scope.newSocialCount = 15;
 
@@ -371,6 +373,7 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
       pullEl = 'fankave-page';
     }
     console.log("WebPTR Loading");
+    document.getElementById('ptrZone').style.visibility = 'visible';
     WebPullToRefresh.init({
       loadingFunction: refreshContent,
       contentEl: pullEl,
@@ -382,12 +385,15 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
   };
 
   $scope.viewPost = function(e,id){
-    var tab = URIHelper.getActiveTab();
+    if (window.location.href.indexOf('?') !== -1){
+      var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
+    }
     if ($(e.target).is('a')){
       return;
     }
-    if (tab !== undefined){
-      $location.url("/post/" + id + "?tab=" + tab);
+    if (urlQueryStr !== undefined){
+      console.log("View Qry: ", urlQueryStr);
+      $location.url("/post/" + id + urlQueryStr);
     } else {
       $location.url("/post/" + id);
     }

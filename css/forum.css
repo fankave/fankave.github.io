@@ -2900,6 +2900,7 @@ iframe {
   max-width: 768px;
   text-align: center;
   background-color: transparent;
+  visibility: hidden;
   /*z-index: -1;*/
 }
 

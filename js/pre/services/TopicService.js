@@ -50,9 +50,12 @@ angular.module('TopicModule')
             _status = "future";
           else if(_score.live == true)
             _status = "live";
-          else if(_score.final == true)
+          else if(_score.final == true){
             _status = "past";
-            _summary = _game.score.summary;
+            if (_game.score.summary){
+              _summary = _game.score.summary;
+            }
+          }
           // console.log("GAME Status  :"+ _status );
   
           if(_status == "live"){
