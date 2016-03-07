@@ -10,6 +10,7 @@ angular.module('SocialModule')
   var _offset = 0;
   var LIMIT = 20;
 
+  var _socialBacklog = {};
 
   function setSocialData(socialData) {
     _socialArray = [];
@@ -152,7 +153,20 @@ angular.module('SocialModule')
     getSocialDataRequest: getSocialDataRequest,
     getSocialDataRequestAuto: getSocialDataRequestAuto,
     registerObserverCallback: registerObserverCallback,
-    formatSocial: formatSocial
+    formatSocial: formatSocial,
+    socialBacklog: function(id) {
+      if (_socialBacklog[id]){
+        return true;
+      }
+      if (!id){
+        return false;
+      }
+      _socialBacklog[id] = true;
+      return id;
+    },
+    socialBacklogLength: function(id) {
+      return Object.keys(_socialBacklog).length;
+    }
   };
 
 }]);

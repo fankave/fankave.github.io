@@ -125,7 +125,9 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     if (tab === 'chat'){
       $scope.activeTab = 'chat';
       $(document).scrollTop(0);
-      init();
+      if (!networkService.isSocketConnected()){
+        init();
+      }
     }
     if (tab === 'video'){
       $scope.activeTab = 'video';
@@ -378,7 +380,11 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     if (tab === 'social'){
       var feedData = SocialService.socialArray();
       var len = feedData.length;
-      $scope.socialItems = {};;
+      for (var i = 0; i < len; i++){
+        if (SocialService.socialBacklog(feedData[i].id) === true){
+          continue;
+        }
+      }
     }
     if (tab === 'video'){
       var feedData = VideoService.videoArray();

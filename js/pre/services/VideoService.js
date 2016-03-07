@@ -10,6 +10,7 @@ angular.module('SocialModule')
 	var _offset = 0;
 	var LIMIT = 10;
 
+	var _videoBacklog = {};
 
 	function setVideoData(videoData) {
 		_videoArray = [];
