@@ -38,7 +38,7 @@ angular.module('SocialModule')
       else
         notifyObservers(true);
     }
-  };
+  }
 
   var notifyObservers = function(autoRequest){
    if (autoRequest){
@@ -68,7 +68,7 @@ angular.module('SocialModule')
           observerCallbacks.pop();
       }
       observerCallbacks.push(callback);
-  };
+  }
 
   function getSocialDataRequest(id, offset){
     var reqOffset = _offset;
@@ -81,10 +81,10 @@ angular.module('SocialModule')
     if (NETWORK_DEBUG)
     console.log("Social Request: ", request);
     return request;
-  };
+  }
 
 
-function getSocialDataRequestAuto(id){
+  function getSocialDataRequestAuto(id){
     var request = {
       "rid": "social_auto",
       "timestamp": new Date().getTime(),
@@ -94,7 +94,53 @@ function getSocialDataRequestAuto(id){
     if (NETWORK_DEBUG)
     console.log("Social Request Auto: ", request);
     return request;
-  };
+  }
+
+  function formatSocial (tempItem, feedData) {
+    
+    tempItem.postAuthorName = feedData.embedAuthor.name;
+    tempItem.postAuthorAlias = feedData.embedAuthor.alias;
+    tempItem.postAuthorPhoto = feedData.embedAuthor.photo;
+    tempItem.tweetId = feedData.tweet.id;
+    
+    tempItem.postTimestamp = feedData.createdAt;
+    tempItem.providerName = feedData.embedProvider.name;
+    tempItem.html = feedData.embedText;
+    tempItem.retweetCount = feedData.tweet.metrics.retweetCount;
+    tempItem.likeCount = feedData.tweet.metrics.likeCount;
+    tempItem.replyCount = feedData.tweet.metrics.replyCount;
+
+    // Embed Object for Sharing
+    tempItem.embed = feedData.embed;
+    tempItem.embed.embedCreatedAt = feedData.embedCreatedAt;
+    // tempItem.embed.embedCreatedAtFull = feedData.embedCreatedAtFull;
+
+    if (tempItem.providerName === "Twitter"){
+      tempItem.providerLogo = "img/twitterLogo@2x.png";
+      tempItem.embed.provider.logo = "img/twitterLogo@2x.png";
+    } else {
+      tempItem.providerLogo = feedData.embedProvider.logo;
+      tempItem.embed.provider.logo = feedData.embedProvider.logo;
+    }
+
+    tempItem.embedType = feedData.embedType;
+    tempItem.embedUrl = feedData.embedUrl;
+    if (feedData.embedType === "link" && feedData.embedPlayable === true){
+      tempItem.embedHtml = feedData.embedHtml;
+      tempItem.embedPlayable = true;
+    }
+    if (feedData.embedType === "media" || feedData.embedType === "link"){
+      tempItem.mediaType = feedData.embedMedia.mediaType;
+      tempItem.mediaUrl = feedData.embedMedia.mediaUrl;
+      tempItem.mediaThumbUrl = feedData.embedMedia.mediaThumbUrl;
+      tempItem.mediaAspectRatio = feedData.embedMedia.mediaAspectRatio;
+      tempItem.mediaAspectFeed = feedData.embedMedia.mediaAspectFeed;
+      tempItem.mediaAspectFull = feedData.embedMedia.mediaAspectFull;
+      tempItem.mediaOrientation = feedData.embedMedia.mediaOrientation;
+    }
+    return tempItem;
+  }
+
   return {
     socialArray: function(){
       return _socialArray;
@@ -104,8 +150,9 @@ function getSocialDataRequestAuto(id){
     },
     setSocialData: setSocialData,
     getSocialDataRequest: getSocialDataRequest,
-    getSocialDataRequestAuto:getSocialDataRequestAuto,
-    registerObserverCallback: registerObserverCallback
+    getSocialDataRequestAuto: getSocialDataRequestAuto,
+    registerObserverCallback: registerObserverCallback,
+    formatSocial: formatSocial
   };
 
 }]);

@@ -63,7 +63,7 @@ a {
 .page-topic
 {
   /*padding-top: 8em; */
-  background-color: #fff;
+  /*background-color: #fff;*/
 }
 
 .page-post
@@ -3073,8 +3073,18 @@ iframe {
 
 /* Jewels */
 .tabJewel {
-  vertical-align: -6px;
-  color: #a2b1b6;
-  font-size: 12px;
-  font-weight: 300;
+  position: relative;
+  display: inline-block;
+  vertical-align: -7px;
+  background-color: #16bde7;
+  height: 7px;
+  width: 7px;
+  border-radius: 50%;
+  left: 5px;
+}
+
+.tabJewelPulse {
+  -webkit-animation: pulse 2s ease-in-out 2;
+  -moz-animation: pulse 2s ease-in-out 2;
+  animation: pulse 2s ease-in-out 2;
 }

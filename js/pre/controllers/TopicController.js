@@ -1,7 +1,7 @@
 angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"])
-.controller("TopicController", ["$scope", "$rootScope", "$q", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
+.controller("TopicController", ["$scope", "$rootScope", "$q", "$sce", "$window", "$location","$sanitize", "$timeout", "$interval", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
 
-function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
+function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout, $interval, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
   var sessionTime = window.time;
   var lastComment = false;
@@ -356,6 +356,48 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     }
   }
 
+  // Auto Refresh
+  function initAutoRefresh () {
+    registerAutoCallbacks();
+    if (TopicService.currentTimer()){
+      $interval.cancel(TopicService.currentTimer(false));
+    }
+    var timer = $interval(function(){
+      networkService.send(SocialService.getSocialDataRequestAuto(TopicService.getChannelId()));
+      networkService.send(VideoService.getVideoDataRequestAuto(TopicService.getChannelId()));
+    }, 15000);
+    TopicService.currentTimer(timer);
+  }
+
+  function registerAutoCallbacks () {
+    SocialService.registerObserverCallback(function(){updateJewels('social');});
+    VideoService.registerObserverCallback(function(){updateJewels('video');});
+  }
+
+  function updateJewels (tab) {
+    if (tab === 'social'){
+      var feedData = SocialService.socialArray();
+      var len = feedData.length;
+      $scope.socialItems = {};;
+    }
+    if (tab === 'video'){
+      var feedData = VideoService.videoArray();
+    }
+  }
+
+  function pulseJewel (tab) {
+    var el;
+    if (tab === 'social'){
+      el = document.getElementById('socialJewel');
+    }
+    if (tab === 'video'){
+      el = document.getElementById('videoJewel');
+    }
+    var clone = el.cloneNode(true);
+    el.parentNode.replaceChild(clone, el);
+  }
+
+  // Pull To Refresh
   var refreshContent = function() {
     var deferred = $q.defer();
     if ($scope.activeTab === 'chat'){
@@ -385,12 +427,19 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
   };
 
   $scope.viewPost = function(e,id){
+    // Check for url query string
     if (window.location.href.indexOf('?') !== -1){
       var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
     }
+    // If target is an external link, do nothing
     if ($(e.target).is('a')){
       return;
     }
+    // If auto-refresh timer is running, clear it before navigating to post
+    if (TopicService.currentTimer()){
+      $interval.cancel(TopicService.currentTimer(false));
+    }
+    // Pass along query string if present when navigating to post
     if (urlQueryStr !== undefined){
       console.log("View Qry: ", urlQueryStr);
       $location.url("/post/" + id + urlQueryStr);
