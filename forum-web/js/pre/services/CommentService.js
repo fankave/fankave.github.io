@@ -19,7 +19,7 @@ angular.module('NetworkModule')
   var UNFLAG_COMMENT_URI = "/v1.0/comment/unflag/";
   
   var observerCallbacks = [];
-  var tempObserverCallbacks = [];
+  var directObserverCallbacks = [];
   var _comments = [];
   var _pinnedComments = 0;
   var _offset = 0;
@@ -151,7 +151,7 @@ angular.module('NetworkModule')
   //call this when you know 'comments' has been changed
   var notifyObservers = function(temp){
     if (temp){
-      angular.forEach(tempObserverCallbacks, function(callback){
+      angular.forEach(directObserverCallbacks, function(callback){
         callback();
       });
     } else {
@@ -164,12 +164,12 @@ angular.module('NetworkModule')
   function registerObserverCallback(callback, direct){
     //register an observer
     if (direct){
-      var callbackLength = tempObserverCallbacks.length;
+      var callbackLength = directObserverCallbacks.length;
       while (callbackLength > 0){
-        callbackLength = tempObserverCallbacks.length;
-        tempObserverCallbacks.pop();
+        callbackLength = directObserverCallbacks.length;
+        directObserverCallbacks.pop();
       }
-      tempObserverCallbacks.push(callback);
+      directObserverCallbacks.push(callback);
     } else {
       var callbackLength = observerCallbacks.length;
       while (callbackLength > 0){

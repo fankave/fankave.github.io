@@ -189,12 +189,12 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
         if($scope.gameStatus == "live") {
           $scope.gamePeriod = TopicService.getGamePeriod();
           $scope.gameClock = TopicService.getGameClock();
-          if (TopicService.isGameCricket()){
+          if ($scope.isCricket){
             $scope.offenseTeam = TopicService.getOffense().team;
             $scope.offensePosition = TopicService.getOffense().position;
           }
         }
-        if ($scope.gameStatus === "past" && TopicService.isGameCricket()){
+        if ($scope.gameStatus === "past" && $scope.isCricket){
           $scope.gameSummary = TopicService.getGameSummary();
         }
 
@@ -369,7 +369,9 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   }
 
   $scope.viewPost = function(e,id){
-    var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
+    if (window.location.href.indexOf('?') !== -1){
+      var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
+    }
     if ($(e.target).is('a')){
       return;
     }
