@@ -44,7 +44,7 @@ angular.module('SocialModule')
   var notifyObservers = function(autoRequest){
    if (autoRequest){
         angular.forEach(autoObserverCallbacks, function(callback){
-          console.log("Notify observer in autoRequest");
+          console.log("Notify observer in autoRequest ", callback);
           callback();
         });
       } else {
@@ -156,11 +156,13 @@ angular.module('SocialModule')
     formatSocial: formatSocial,
     socialBacklog: function(id) {
       if (_socialBacklog[id]){
+        console.log("$$$ID ALREADY IN SOCIAL BACKLOG");
         return true;
       }
       if (!id){
         return false;
       }
+      console.log("$$$ADD ID TO SOCIAL BACKLOG");
       _socialBacklog[id] = true;
       return id;
     },

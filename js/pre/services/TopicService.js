@@ -309,11 +309,13 @@ angular.module('TopicModule')
 
     currentTimer: function(promise){
       if (promise === false){
+        console.log("$$$PREV TIMER FOUND");
         var prevTimer = _currentTimer;
         _currentTimer = undefined;
         return prevTimer;
       }
       if (promise){
+        console.log("$$$STORE TIMER PROMISE");
         _currentTimer = promise;
       }
       return _currentTimer;

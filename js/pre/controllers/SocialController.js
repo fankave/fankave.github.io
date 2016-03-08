@@ -230,7 +230,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       }
     };
 
-    SocialService.registerObserverCallback(function(){updateFeed('social');});
+    // SocialService.registerObserverCallback(function(){updateFeed('social');});
     VideoService.registerObserverCallback(function(){updateFeed('video');});
     
     // Limit Rate that Function Can be Called
