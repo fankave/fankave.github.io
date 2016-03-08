@@ -2984,7 +2984,7 @@ iframe {
   left: 5px;
 }
 
-.tabJewelPulse {
+.pulse {
   -webkit-animation: pulse 2s ease-in-out 2;
   -moz-animation: pulse 2s ease-in-out 2;
   animation: pulse 2s ease-in-out 2;
