@@ -2972,3 +2972,20 @@ iframe {
   }
 }
 
+/* Jewels */
+.tabJewel {
+  position: relative;
+  display: inline-block;
+  vertical-align: -7px;
+  background-color: #16bde7;
+  height: 7px;
+  width: 7px;
+  border-radius: 50%;
+  left: 5px;
+}
+
+.tabJewelPulse {
+  -webkit-animation: pulse 2s ease-in-out 2;
+  -moz-animation: pulse 2s ease-in-out 2;
+  animation: pulse 2s ease-in-out 2;
+}

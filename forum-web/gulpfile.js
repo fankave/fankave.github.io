@@ -113,8 +113,8 @@ gulp.task('css', function() {
   return gulp.src([
     './css/bootstrapCSS/bootstrap.css',
     './bower_components/videoJS/dist/video-js.css',
-    './css/forum.css',
     './css/forumAnimations.css',
+    './css/forum.css',
     './css/magnificCSS/magnific.css'
   ])
   .pipe(sourcemaps.init())
