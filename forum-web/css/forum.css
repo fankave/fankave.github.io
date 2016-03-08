@@ -881,7 +881,9 @@ input:focus + button {
 
 /* - - - 'New Content Available' indicator - - - */
 
-#newCommentsAvailableIndicatorDiv {
+#newCommentsAvailableIndicatorDiv,
+#newVideosAvailable,
+#newSocialAvailable {
   position:fixed;
   z-index: 10000;
   width: 100%;
@@ -896,6 +898,19 @@ input:focus + button {
   width: 100%;
   max-width: 768px;
   text-align: center;
+}
+
+#newCommentsButton,
+#newVideosButton,
+#newSocialButton {
+  width: 125px;
+  height: 30px;
+  background-color: #16bde7;
+  border: none;
+  border-radius: 15px;
+  color: #fff;
+  padding-top: 3px;
+  margin-top: 3px;
 }
 
 /* - - - disable scrolling (for use with magnific popup) - - - */

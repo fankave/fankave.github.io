@@ -368,10 +368,17 @@
     </span>
 
     <div id="newCommentsAvailableIndicatorDiv" ng-if="showNewCommentsIndicator && activeTab === 'chat'">
-      <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
-        <img ng-src="img/newCommentIndicator.png" />
+      <button id="newCommentsButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
+        &uarr; New Comments
       </button>
     </div>
+
+    <div id="newSocialAvailable" ng-if="newSocialAvailable && activeTab === 'social'">
+      <button id="newSocialButton" class="btn-link" ng-click="social.showNewSocial()">
+        &uarr; New Social
+      </button>
+    </div>
+    
   </div>
   <!-- All Other Tabs -->
   <div class="tabContainer clearfix" ng-if="!isMI16User && !isMWCUser">
@@ -416,10 +423,23 @@
     </span>
 
     <div id="newCommentsAvailableIndicatorDiv" ng-if="showNewCommentsIndicator && activeTab === 'chat'">
-      <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
-        <img ng-src="img/newCommentIndicator.png" />
+      <button id="newCommentsButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
+        &uarr; New Comments
       </button>
     </div>
+
+    <div id="newVideosAvailable" ng-if="newVideoAvailable && activeTab === 'video'">
+      <button id="newVideosButton" class="btn-link" ng-click="social.showNewVideo()">
+        &uarr; New Videos
+      </button>
+    </div>
+
+    <div id="newSocialAvailable" ng-if="newSocialAvailable && activeTab === 'social'">
+      <button id="newSocialButton" class="btn-link" ng-click="social.showNewSocial()">
+        &uarr; New Social
+      </button>
+    </div>
+
   </div>
 
   <div id="textInputFieldTopic" class="clearfix" ng-if="activeTab === 'chat' && (mobileBrowser === false || embed)" ng-controller="UserInputController as user">
