@@ -9,10 +9,10 @@ angular.module('SocialModule')
   var _socialArray = [];
   var _offset = 0;
   var LIMIT = 20;
-
+  var prevLength = 0;
 
   function setSocialData(socialData) {
-    _socialArray = [];
+    // _socialArray = [];
     var tempData = socialData.data.results;
     var len;
     tempData == undefined ? len = 0 : len = tempData.length ;
@@ -54,22 +54,25 @@ angular.module('SocialModule')
     }
   };
 
-  function registerObserverCallback(callback){
-   //register an observer
-        var callbackLength = autoObserverCallbacks.length;
-          while (callbackLength > 0){
-            callbackLength = autoObserverCallbacks.length;
-            autoObserverCallbacks.pop();
-          }
-          autoObserverCallbacks.push(callback);
-      
-      var callbackLength  = observerCallbacks.length;
+  function registerObserverCallback(callback, auto){
+    //register an observer
+    if (auto){
+      var callbackLength = autoObserverCallbacks.length;
       while (callbackLength > 0){
-          callbackLength = observerCallbacks.length;
-          observerCallbacks.pop();
+        callbackLength = autoObserverCallbacks.length;
+        autoObserverCallbacks.pop();
+      }
+      autoObserverCallbacks.push(callback);
+    }
+    else {
+      var callbackLength = observerCallbacks.length;
+      while (callbackLength > 0){
+        callbackLength = observerCallbacks.length;
+        observerCallbacks.pop();
       }
       observerCallbacks.push(callback);
-  };
+    }
+  }
 
   function getSocialDataRequest(id, offset){
     var reqOffset = _offset;
@@ -106,7 +109,16 @@ function getSocialDataRequestAuto(id){
     setSocialData: setSocialData,
     getSocialDataRequest: getSocialDataRequest,
     getSocialDataRequestAuto:getSocialDataRequestAuto,
-    registerObserverCallback: registerObserverCallback
+    registerObserverCallback: registerObserverCallback,
+    socialArrayLength: function(){
+      return _socialArray.length;
+    },
+    getPrevLength: function(){
+      return prevLength;
+    },
+    setPrevLength: function(length){
+      prevLength = length;
+    }
   };
 
 }]);

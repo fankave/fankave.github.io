@@ -9,10 +9,10 @@ angular.module('SocialModule')
 	var _videoArray = [];
 	var _offset = 0;
 	var LIMIT = 10;
-
+	var prevLength = 0;
 
 	function setVideoData(videoData) {
-		_videoArray = [];
+		// _videoArray = [];
 		var tempData = videoData.data.results;
 		var len;
     	tempData == undefined ? len = 0 : len = tempData.length ;
@@ -55,22 +55,25 @@ angular.module('SocialModule')
 		}
 	};
 
-	function registerObserverCallback(callback){
-		//register an observer
-      	var callbackLength = autoObserverCallbacks.length;
-      		while (callbackLength > 0){
-        		callbackLength = autoObserverCallbacks.length;
-        		autoObserverCallbacks.pop();
-      		}
-      		autoObserverCallbacks.push(callback);
-    	
-    	var callbackLength  = observerCallbacks.length;
-			while (callbackLength > 0){
-		  		callbackLength = observerCallbacks.length;
-		  		observerCallbacks.pop();
-			}
-			observerCallbacks.push(callback);
-	}
+  function registerObserverCallback(callback, auto){
+    //register an observer
+    if (auto){
+      var callbackLength = autoObserverCallbacks.length;
+      while (callbackLength > 0){
+        callbackLength = autoObserverCallbacks.length;
+        autoObserverCallbacks.pop();
+      }
+      autoObserverCallbacks.push(callback);
+    }
+    else {
+      var callbackLength = observerCallbacks.length;
+      while (callbackLength > 0){
+        callbackLength = observerCallbacks.length;
+        observerCallbacks.pop();
+      }
+      observerCallbacks.push(callback);
+    }
+  }
 
 	function getVideoDataRequest(id, offset){
 		var reqOffset = _offset;
@@ -107,7 +110,16 @@ angular.module('SocialModule')
 		setVideoData:setVideoData,
 		getVideoDataRequest:getVideoDataRequest,
 		getVideoDataRequestAuto:getVideoDataRequestAuto,
-		registerObserverCallback:registerObserverCallback
+		registerObserverCallback:registerObserverCallback,
+		videoArrayLength: function(){
+      return _videoArray.length;
+    },
+    getPrevLength: function(){
+      return prevLength;
+    },
+    setPrevLength: function(length){
+      prevLength = length;
+    }
 	};
 
 }]);
