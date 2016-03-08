@@ -51,7 +51,8 @@ gulp.task('scripts-pre', function() {
     './js/pre/services/AuthService.js',
     './js/pre/services/StaticData.js',
     './js/pre/services/ForumDSUtility.js',
-    './js/pre/services/MediaUploadService.js'
+    './js/pre/services/MediaUploadService.js',
+    './js/pre/services/AnalyticsService.js'
   ])
   .pipe(sourcemaps.init())
     .pipe(concat('app.js'))
