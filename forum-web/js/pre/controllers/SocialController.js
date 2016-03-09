@@ -9,39 +9,39 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       if (tab === 'social'){
         if (!_this.socialArray){
           $scope.$parent.loadingSocial = true;
+          _this.loadContent('social');
+        } else {
+          updateFeed('social');
         }
-        if (!!_this.socialArray){
-          updateTimestamps('social');
-        }
+        updateTimestamps('social');
         $scope.$parent.switchTabs('social');
-        SocialService.resetSocialOffset();
-        _this.loadContent('social');
       } else {
         if (!_this.videoArray){
           $scope.$parent.loadingSocial = true;
+          _this.loadContent('video');
+        } else {
+          updateFeed('video');
         }
-        if (!!_this.videoArray){
-          updateTimestamps('video');
-        }
+        updateTimestamps('video');
         $scope.$parent.switchTabs('video');
-        VideoService.resetVideoOffset();
-        _this.loadContent('video');
       }
     };
 
     $scope.$on('videoActive', function (event, args){
+      $scope.$parent.activeTab = 'video';
       URIHelper.tabEntered();
       _this.initFeed('video');
     });
 
     $scope.$on('socialActive', function (event, args){
+      $scope.$parent.activeTab = 'social';
       URIHelper.tabEntered();
       _this.initFeed('social');
     });
 
     this.loadContent = function(type, offset) {
       var channelID = ChannelService.getChannel()||TopicService.getChannelId();
-      if ($scope.$parent.activeTab === 'social' || type === 'social'){
+      if (type === 'social'){
         if (NETWORK_DEBUG)
         console.log("LOADING SOCIAL: ", channelID);
         networkService.send(SocialService.getSocialDataRequest(channelID,offset));
@@ -152,10 +152,12 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     function updateTimestamps(tab){
       if (tab === 'social'){
+        if (!_this.socialArray) return;
         for (var i = 0; i < _this.socialArray.length; i++){
           _this.socialArray[i].postTimestamp = DateUtilityService.getTimeSince(_this.socialArray[i].createdAtFull);
         }
       } else {
+        if (!_this.videoArray) return;
         for (var i = 0; i < _this.videoArray.length; i++){
           _this.videoArray[i].postTimestamp = DateUtilityService.getTimeSince(_this.videoArray[i].createdAtFull);
         }
@@ -181,28 +183,15 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       };
     };
 
-    function scrollAfterLoad(pos) {
-      setTimeout(function(){
-        $(document).scrollTop(pos);
-      }, 250);
-    };
-
-
     var clientHeight = document.documentElement.clientHeight || window.innerHeight;
     var watchContentScroll = debounce(function() {
       var currentScroll = $(document).height() - clientHeight - 50;
       if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
         if ($scope.activeTab === 'social'){
-          // We are Loading More Content -->
-          // Base offset on Current Length of Scope Array
-          _this.loadContent('social',_this.socialArray.length);
-          // scrollAfterLoad(currentScroll + 90);
+          _this.loadContent('social');
         }
         else if ($scope.activeTab === 'video'){
-          // We are Loading More Content -->
-          // Base offset on Current Length of Scope Array
-          _this.loadContent('video',_this.videoArray.length);
-          // scrollAfterLoad(currentScroll + 90);
+          _this.loadContent('video');
         }
       }
     }, 100);
@@ -304,6 +293,18 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     this.unhighlightPost = function(){
       $('#postShareContent').css('color','rgb(211,214,215)');
     };
+
+    this.showNewSocial = function(){
+      $scope.$parent.newSocialAvailable = false;
+      updateFeed('social');
+      $(document).scrollTop(0);
+    }
+
+    this.showNewVideo = function(){
+      $scope.$parent.newVideoAvailable = false;
+      updateFeed('video');
+      $(document).scrollTop(0);
+    }
 
 
 }]);
