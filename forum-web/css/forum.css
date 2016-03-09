@@ -1115,6 +1115,7 @@ button:hover {
 /* - - - Scorecard Text Rework - - - */
 
 .scoreCardContent {
+  position: relative;
   width:100%;
   max-width: 768px;
   height:114px;
