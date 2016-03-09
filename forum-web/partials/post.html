@@ -58,7 +58,7 @@
           <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUpDarkL@2x.png"/> 
           
         </button>
-        <span class="socialButtonLable">{{comment.likeCount}}  </span>
+        <span class="socialButtonLable" ng-if="comment.likeCount > 0">{{comment.likeCount}}  </span>
 
         <button id="chatReply" class="btn-link social-btn" secure-click="triggerRepliesKeyboard()">
           <img class="social-reply" ng-src="img/shareDarkL@2x.png"/> 
@@ -147,7 +147,7 @@
           <img class="social-like" ng-switch-when="false" ng-src="img/thumbsUpDarkL@2x.png"/> 
           
         </button>
-        <span class="socialButtonLable">{{thisReply.likeCount}}  </span>
+        <span class="socialButtonLable" ng-if="thisReply.likeCount > 0">{{thisReply.likeCount}}  </span>
 
         <!-- <button id="chatReply" class="btn-link social-btn" ng-click="triggerRepliesKeyboard()">
           <img class="social-reply" src="img/shareCopy@2x.png"/> </button>

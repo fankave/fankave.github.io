@@ -301,14 +301,14 @@
           <img ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png"/> 
           <img ng-switch-when="false" ng-src="img/thumbsUp@2x.png"/> 
         </button>
-        <span class="socialButtonLabel fkFont">{{likesCount}} </span>
+        <span class="socialButtonLabel fkFont" ng-if="likesCount > 0">{{likesCount}} </span>
       </div>
     </div>
     <div class="grid-col-alt grid-col-50">
       <div id="headComment">
         <button class="btn-link topic-social-btn" secure-click="commentOnTopic()"><img ng-src="img/comment-3x.png"/> 
         </button>
-        <span class="socialButtonLabel fkFont">{{commentsCount}}</span>
+        <span class="socialButtonLabel fkFont" ng-if="commentsCount > 0">{{commentsCount}}</span>
       </div>
     </div>
   </div>
@@ -524,7 +524,7 @@
             <img class="social-like" ng-switch-when="true" ng-click="moreButtonTapped()" ng-src="img/thumbsUp_selectL@2x.png" /> 
             <img class="social-like" ng-switch-when="false" ng-click="moreButtonTapped()" ng-src="img/thumbsUpDarkL@2x.png" /> 
           </button>
-          <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
+          <span class="socialButtonLable" ng-if="thisPost.likeCount > 0">{{thisPost.likeCount}}  </span>
         </div>
         <div class="socialButtonsRow">  
           <button id="chatReply" class="btn-link social-btn" ng-click="moreButtonTapped()" secure-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
