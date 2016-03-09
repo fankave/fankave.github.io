@@ -7,39 +7,42 @@ angular.module('SocialModule')
   var observerCallbacks = [];
   var autoObserverCallbacks = [];
   var _socialArray = [];
+  var _socialArrayAuto = [];
   var _offset = 0;
   var LIMIT = 20;
   var prevLength = 0;
 
   function setSocialData(socialData) {
-    // _socialArray = [];
+    _socialArray = [];
     var tempData = socialData.data.results;
-    var len;
-    tempData == undefined ? len = 0 : len = tempData.length ;
+    var len = !!tempData ? tempData.length : 0;
 
     if (!!tempData && len > 0){
-      for (i = 0; i < len; i++){
+      for (var i = 0; i < len; i++){
         var _socialObject = Bant.bant(tempData[i]);
         if (!!_socialObject.id){
           var isNewObject = true;
-          for(i=0;i<_socialArray.length;i++){
-            if(_socialArray[i].id == _socialObject.id){
+          for (var j = 0; j < _socialArrayAuto.length; j++){
+            if (_socialArrayAuto[j].id === _socialObject.id){
               isNewObject = false;
               break;
-              }
             }
-          if(isNewObject)
-            _socialArray.push(_socialObject);
+          }
+          _socialArray.push(_socialObject);
+          if (isNewObject && socialData.rid === "social_auto"){
+            _socialArrayAuto.push(_socialObject);
+          }
         }
       }
-      _offset = socialData.data.nextOffset;
-      console.log("Social Array offset : "+ _offset);
-      if(socialData.rid === "social")
+      if (socialData.rid === "social"){
+        _offset = socialData.data.nextOffset;
         notifyObservers();
-      else
+      }
+      else {
         notifyObservers(true);
+      }
     }
-  };
+  }
 
   var notifyObservers = function(autoRequest){
    if (autoRequest){
@@ -55,7 +58,7 @@ angular.module('SocialModule')
   };
 
   function registerObserverCallback(callback, auto){
-    //register an observer
+   //register an observer
     if (auto){
       var callbackLength = autoObserverCallbacks.length;
       while (callbackLength > 0){
@@ -85,10 +88,10 @@ angular.module('SocialModule')
     if (NETWORK_DEBUG)
     console.log("Social Request: ", request);
     return request;
-  };
+  }
 
 
-function getSocialDataRequestAuto(id){
+  function getSocialDataRequestAuto(id){
     var request = {
       "rid": "social_auto",
       "timestamp": new Date().getTime(),
@@ -98,7 +101,8 @@ function getSocialDataRequestAuto(id){
     if (NETWORK_DEBUG)
     console.log("Social Request Auto: ", request);
     return request;
-  };
+  }
+
   return {
     socialArray: function(){
       return _socialArray;
@@ -108,10 +112,10 @@ function getSocialDataRequestAuto(id){
     },
     setSocialData: setSocialData,
     getSocialDataRequest: getSocialDataRequest,
-    getSocialDataRequestAuto:getSocialDataRequestAuto,
+    getSocialDataRequestAuto: getSocialDataRequestAuto,
     registerObserverCallback: registerObserverCallback,
-    socialArrayLength: function(){
-      return _socialArray.length;
+    socialArrayAutoLength: function(){
+      return _socialArrayAuto.length;
     },
     getPrevLength: function(){
       return prevLength;
@@ -121,4 +125,4 @@ function getSocialDataRequestAuto(id){
     }
   };
 
-}]);
+}]); 

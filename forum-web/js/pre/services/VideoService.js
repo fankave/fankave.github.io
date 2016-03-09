@@ -7,36 +7,40 @@ angular.module('SocialModule')
 	var observerCallbacks = [];
 	var autoObserverCallbacks = [];
 	var _videoArray = [];
+	var _videoArrayAuto = [];
 	var _offset = 0;
 	var LIMIT = 10;
 	var prevLength = 0;
 
 	function setVideoData(videoData) {
-		// _videoArray = [];
+		_videoArray = [];
 		var tempData = videoData.data.results;
-		var len;
-    	tempData == undefined ? len = 0 : len = tempData.length ;
+		var len = !!tempData ? tempData.length : 0;
 
 		if (!!tempData && len > 0){
-			for (i = 0; i < len; i++){
+			for (var i = 0; i < len; i++){
 				var _videoObject = Bant.bant(tempData[i]);
 				if (!!_videoObject.id){
-          			var isNewObject = true;
-          			for(i=0;i<_videoArray.length;i++){
-			            if(_videoArray[i].id == _videoObject.id){
-			              isNewObject = false;
-			              break;
-			              }
-            			}
-         			 if(isNewObject)
-					_videoArray.push(_videoObject);
+    			var isNewObject = true;
+    			for (var j = 0; j < _videoArrayAuto.length; j++){
+            if (_videoArrayAuto[j].id === _videoObject.id){
+              isNewObject = false;
+              break;
+            }
+    			}
+    			_videoArray.push(_videoObject);
+   			  if (isNewObject && videoData.rid === "video_auto"){
+						_videoArrayAuto.push(_videoObject);
+					}
 				}
 			}
-			_offset = videoData.data.nextOffset;
-			if(videoData.rid === "video")
-			notifyObservers();
-			else
-			notifyObservers(true)
+			if(videoData.rid === "video"){
+				_offset = videoData.data.nextOffset;
+				notifyObservers();
+			}
+			else {
+				notifyObservers(true);
+			}
 		}
 	}
 
@@ -111,8 +115,8 @@ angular.module('SocialModule')
 		getVideoDataRequest:getVideoDataRequest,
 		getVideoDataRequestAuto:getVideoDataRequestAuto,
 		registerObserverCallback:registerObserverCallback,
-		videoArrayLength: function(){
-      return _videoArray.length;
+		videoArrayAutoLength: function(){
+      return _videoArrayAuto.length;
     },
     getPrevLength: function(){
       return prevLength;
