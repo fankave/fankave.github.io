@@ -128,14 +128,18 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
       if (!networkService.isSocketConnected()){
         init();
       }
+      $scope.newVideoAvailable = false;
+      $scope.newSocialAvailable = false;
     }
     if (tab === 'video'){
       $scope.activeTab = 'video';
       $(document).scrollTop(0);
+      $scope.newSocialAvailable = false;
     }
     if (tab === 'social'){
       $scope.activeTab = 'social';
       $(document).scrollTop(0);
+      $scope.newVideoAvailable = false;
     }
     console.log("Active Tab: ", $scope.activeTab);
   };
@@ -349,10 +353,12 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     $scope.topicID = $routeParams.topicID;
     init();
     initPTR();
-    initAutoRefresh();
-    $scope.newVideoCount = 9;
-    $scope.newSocialCount = 15;
 
+    // Comment/Uncomment to Disable/Enable Auto Refresh
+    initAutoRefresh();
+
+    $scope.newVideoAvailable = false;
+    $scope.newSocialAvailable = false;
 
     if ($scope.mobileBrowser === true && !URIHelper.embedded()){
       document.getElementById('topicSection').style.paddingBottom = "42px";
@@ -363,44 +369,59 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
   function initAutoRefresh () {
     registerAutoCallbacks();
     if (TopicService.currentTimer()){
-      console.log("$$$CLEAR PREV TIMER");
       $interval.cancel(TopicService.currentTimer(false));
     }
     var timer = $interval(function(){
-      console.log("$$$CHECK NEW SOCIAL/VIDEO");
+      if (GEN_DEBUG) console.log("$AUTO$ CHECK NEW SOCIAL/VIDEO");
       networkService.send(SocialService.getSocialDataRequestAuto(TopicService.getChannelId()));
-      // networkService.send(VideoService.getVideoDataRequestAuto(TopicService.getChannelId()));
+      if (!URIHelper.isTechMUser() && !URIHelper.isMWCUser()){
+        networkService.send(VideoService.getVideoDataRequestAuto(TopicService.getChannelId()));
+      }
     }, 15000);
     TopicService.currentTimer(timer);
   }
 
   function registerAutoCallbacks () {
-    console.log("$$$REGISTERING AUTO CALLBACKS");
-    SocialService.registerObserverCallback(function(){updateJewels('social')});
-    // VideoService.registerObserverCallback(function(){updateJewels('video')});
+    SocialService.registerObserverCallback(function(){updateJewels('social')}, true);
+    if (!URIHelper.isTechMUser() && !URIHelper.isMWCUser()){
+      VideoService.registerObserverCallback(function(){updateJewels('video')}, true);
+    }
   }
 
   function updateJewels (tab) {
     if (tab === 'social'){
-      console.log("$$$UPDATE JEWEL SOCIAL");
-      var feedData = SocialService.socialArray();
-      var len = feedData.length;
-      var newCount = 0;
-      for (var i = 0; i < len; i++){
-        if (SocialService.socialBacklog(feedData[i].id) === true){
-          continue;
+      var length = SocialService.socialArrayAutoLength();
+      var prevLength = SocialService.getPrevLength();
+      if (GEN_DEBUG) console.log("$AUTO$ UPDATE JEWEL[S] - ", {prevLength:prevLength,newLength:length});
+      if (length > prevLength){
+        if (GEN_DEBUG) console.log("$AUTO$ PULSE SOCIAL JEWEL");
+        if ($scope.activeTab === 'social'){
+          // If user is on tab during first interval, don't show indicator
+          if (prevLength !== 0){
+            $scope.newSocialAvailable = true;
+          }
+        } else {
+          pulseJewel('social');
         }
-        if (SocialService.socialBacklog(feedData[i].id) === feedData[i].id){
-          newCount++;
-        }
-      }
-      if (newCount > 0){
-        console.log("$$$PULSE JEWEL SOCIAL");
-        pulseJewel('social');
+        SocialService.setPrevLength(length);
       }
     }
     if (tab === 'video'){
-      var feedData = VideoService.videoArray();
+      var length = VideoService.videoArrayAutoLength();
+      var prevLength = VideoService.getPrevLength();
+      if (GEN_DEBUG) console.log("$AUTO$ UPDATE JEWEL[V] - ", {prevLength:prevLength,newLength:length});
+      if (length > prevLength){
+        if (GEN_DEBUG) console.log("$AUTO$ PULSE VIDEO JEWEL");
+        if ($scope.activeTab === 'video'){
+          // If user is on tab during first interval, don't show indicator
+          if (prevLength !== 0){
+            $scope.newVideoAvailable = true;
+          }
+        } else {
+          pulseJewel('video');
+        }
+        VideoService.setPrevLength(length);
+      }
     }
   }
 
@@ -412,8 +433,11 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     if (tab === 'video'){
       el = document.getElementById('videoJewel');
     }
-    var clone = el.cloneNode(true);
-    el.parentNode.replaceChild(clone, el);
+
+    // Trick to retrigger animation
+    el.classList.remove('pulse');
+    el.offsetWidth = el.offsetWidth;
+    el.classList.add('pulse');
   }
 
   // Pull To Refresh

@@ -7,36 +7,40 @@ angular.module('SocialModule')
 	var observerCallbacks = [];
 	var autoObserverCallbacks = [];
 	var _videoArray = [];
+	var _videoArrayAuto = [];
 	var _offset = 0;
 	var LIMIT = 10;
-
-	var _videoBacklog = {};
+	var prevLength = 0;
 
 	function setVideoData(videoData) {
 		_videoArray = [];
 		var tempData = videoData.data.results;
-		var len = tempData.length;
+		var len = !!tempData ? tempData.length : 0;
 
 		if (!!tempData && len > 0){
-			for (i = 0; i < len; i++){
+			for (var i = 0; i < len; i++){
 				var _videoObject = Bant.bant(tempData[i]);
 				if (!!_videoObject.id){
-          			var isNewObject = true;
-          			for(i=0;i<_videoArray.length;i++){
-			            if(_videoArray[i].id == _videoObject.id){
-			              isNewObject = false;
-			              break;
-			              }
-            			}
-         			 if(isNewObject)
-					_videoArray.push(_videoObject);
+    			var isNewObject = true;
+    			for (var j = 0; j < _videoArrayAuto.length; j++){
+            if (_videoArrayAuto[j].id === _videoObject.id){
+              isNewObject = false;
+              break;
+            }
+    			}
+    			_videoArray.push(_videoObject);
+   			  if (isNewObject && videoData.rid === "video_auto"){
+						_videoArrayAuto.push(_videoObject);
+					}
 				}
 			}
-			_offset = videoData.data.nextOffset;
-			if(videoData.rid === "video")
-			notifyObservers();
-			else
-			notifyObservers(true)
+			if(videoData.rid === "video"){
+				_offset = videoData.data.nextOffset;
+				notifyObservers();
+			}
+			else {
+				notifyObservers(true);
+			}
 		}
 	}
 
@@ -55,21 +59,24 @@ angular.module('SocialModule')
 		}
 	};
 
-	function registerObserverCallback(callback){
+	function registerObserverCallback(callback, auto){
 		//register an observer
-      	var callbackLength = autoObserverCallbacks.length;
-      		while (callbackLength > 0){
-        		callbackLength = autoObserverCallbacks.length;
-        		autoObserverCallbacks.pop();
-      		}
-      		autoObserverCallbacks.push(callback);
-    	
-    	var callbackLength  = observerCallbacks.length;
+		if (auto){
+    	var callbackLength = autoObserverCallbacks.length;
+  		while (callbackLength > 0){
+    		callbackLength = autoObserverCallbacks.length;
+    		autoObserverCallbacks.pop();
+  		}
+  		autoObserverCallbacks.push(callback);
+  	}
+  	else {
+    	var callbackLength = observerCallbacks.length;
 			while (callbackLength > 0){
-		  		callbackLength = observerCallbacks.length;
-		  		observerCallbacks.pop();
+	  		callbackLength = observerCallbacks.length;
+	  		observerCallbacks.pop();
 			}
 			observerCallbacks.push(callback);
+		}
 	}
 
 	function getVideoDataRequest(id, offset){
@@ -107,7 +114,16 @@ angular.module('SocialModule')
 		setVideoData:setVideoData,
 		getVideoDataRequest:getVideoDataRequest,
 		getVideoDataRequestAuto:getVideoDataRequestAuto,
-		registerObserverCallback:registerObserverCallback
+		registerObserverCallback:registerObserverCallback,
+		videoArrayAutoLength: function(){
+      return _videoArrayAuto.length;
+    },
+    getPrevLength: function(){
+      return prevLength;
+    },
+    setPrevLength: function(length){
+      prevLength = length;
+    }
 	};
 
 }]);

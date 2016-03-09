@@ -7,37 +7,40 @@ angular.module('SocialModule')
   var observerCallbacks = [];
   var autoObserverCallbacks = [];
   var _socialArray = [];
+  var _socialArrayAuto = [];
   var _offset = 0;
   var LIMIT = 20;
-
-  var _socialBacklog = {};
+  var prevLength = 0;
 
   function setSocialData(socialData) {
     _socialArray = [];
     var tempData = socialData.data.results;
-    var len = tempData.length;
+    var len = !!tempData ? tempData.length : 0;
 
     if (!!tempData && len > 0){
-      for (i = 0; i < len; i++){
+      for (var i = 0; i < len; i++){
         var _socialObject = Bant.bant(tempData[i]);
         if (!!_socialObject.id){
           var isNewObject = true;
-          for(i=0;i<_socialArray.length;i++){
-            if(_socialArray[i].id == _socialObject.id){
+          for (var j = 0; j < _socialArrayAuto.length; j++){
+            if (_socialArrayAuto[j].id === _socialObject.id){
               isNewObject = false;
               break;
-              }
             }
-          if(isNewObject)
-            _socialArray.push(_socialObject);
+          }
+          _socialArray.push(_socialObject);
+          if (isNewObject && socialData.rid === "social_auto"){
+            _socialArrayAuto.push(_socialObject);
+          }
         }
       }
-      _offset = socialData.data.nextOffset;
-      console.log("Social Array offset : "+ _offset);
-      if(socialData.rid === "social")
+      if (socialData.rid === "social"){
+        _offset = socialData.data.nextOffset;
         notifyObservers();
-      else
+      }
+      else {
         notifyObservers(true);
+      }
     }
   }
 
@@ -54,21 +57,24 @@ angular.module('SocialModule')
     }
   };
 
-  function registerObserverCallback(callback){
+  function registerObserverCallback(callback, auto){
    //register an observer
-        var callbackLength = autoObserverCallbacks.length;
-          while (callbackLength > 0){
-            callbackLength = autoObserverCallbacks.length;
-            autoObserverCallbacks.pop();
-          }
-          autoObserverCallbacks.push(callback);
-      
-      var callbackLength  = observerCallbacks.length;
+    if (auto){
+      var callbackLength = autoObserverCallbacks.length;
       while (callbackLength > 0){
-          callbackLength = observerCallbacks.length;
-          observerCallbacks.pop();
+        callbackLength = autoObserverCallbacks.length;
+        autoObserverCallbacks.pop();
+      }
+      autoObserverCallbacks.push(callback);
+    }
+    else {
+      var callbackLength = observerCallbacks.length;
+      while (callbackLength > 0){
+        callbackLength = observerCallbacks.length;
+        observerCallbacks.pop();
       }
       observerCallbacks.push(callback);
+    }
   }
 
   function getSocialDataRequest(id, offset){
@@ -97,51 +103,6 @@ angular.module('SocialModule')
     return request;
   }
 
-  function formatSocial (tempItem, feedData) {
-    
-    tempItem.postAuthorName = feedData.embedAuthor.name;
-    tempItem.postAuthorAlias = feedData.embedAuthor.alias;
-    tempItem.postAuthorPhoto = feedData.embedAuthor.photo;
-    tempItem.tweetId = feedData.tweet.id;
-    
-    tempItem.postTimestamp = feedData.createdAt;
-    tempItem.providerName = feedData.embedProvider.name;
-    tempItem.html = feedData.embedText;
-    tempItem.retweetCount = feedData.tweet.metrics.retweetCount;
-    tempItem.likeCount = feedData.tweet.metrics.likeCount;
-    tempItem.replyCount = feedData.tweet.metrics.replyCount;
-
-    // Embed Object for Sharing
-    tempItem.embed = feedData.embed;
-    tempItem.embed.embedCreatedAt = feedData.embedCreatedAt;
-    // tempItem.embed.embedCreatedAtFull = feedData.embedCreatedAtFull;
-
-    if (tempItem.providerName === "Twitter"){
-      tempItem.providerLogo = "img/twitterLogo@2x.png";
-      tempItem.embed.provider.logo = "img/twitterLogo@2x.png";
-    } else {
-      tempItem.providerLogo = feedData.embedProvider.logo;
-      tempItem.embed.provider.logo = feedData.embedProvider.logo;
-    }
-
-    tempItem.embedType = feedData.embedType;
-    tempItem.embedUrl = feedData.embedUrl;
-    if (feedData.embedType === "link" && feedData.embedPlayable === true){
-      tempItem.embedHtml = feedData.embedHtml;
-      tempItem.embedPlayable = true;
-    }
-    if (feedData.embedType === "media" || feedData.embedType === "link"){
-      tempItem.mediaType = feedData.embedMedia.mediaType;
-      tempItem.mediaUrl = feedData.embedMedia.mediaUrl;
-      tempItem.mediaThumbUrl = feedData.embedMedia.mediaThumbUrl;
-      tempItem.mediaAspectRatio = feedData.embedMedia.mediaAspectRatio;
-      tempItem.mediaAspectFeed = feedData.embedMedia.mediaAspectFeed;
-      tempItem.mediaAspectFull = feedData.embedMedia.mediaAspectFull;
-      tempItem.mediaOrientation = feedData.embedMedia.mediaOrientation;
-    }
-    return tempItem;
-  }
-
   return {
     socialArray: function(){
       return _socialArray;
@@ -153,22 +114,15 @@ angular.module('SocialModule')
     getSocialDataRequest: getSocialDataRequest,
     getSocialDataRequestAuto: getSocialDataRequestAuto,
     registerObserverCallback: registerObserverCallback,
-    formatSocial: formatSocial,
-    socialBacklog: function(id) {
-      if (_socialBacklog[id]){
-        console.log("$$$ID ALREADY IN SOCIAL BACKLOG");
-        return true;
-      }
-      if (!id){
-        return false;
-      }
-      console.log("$$$ADD ID TO SOCIAL BACKLOG");
-      _socialBacklog[id] = true;
-      return id;
+    socialArrayAutoLength: function(){
+      return _socialArrayAuto.length;
     },
-    socialBacklogLength: function(id) {
-      return Object.keys(_socialBacklog).length;
+    getPrevLength: function(){
+      return prevLength;
+    },
+    setPrevLength: function(length){
+      prevLength = length;
     }
   };
 
-}]);
+}]); 
