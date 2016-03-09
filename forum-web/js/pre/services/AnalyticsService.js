@@ -8,20 +8,24 @@ var userData = {};
   var isAnalyticsInitialized = false;
   var eventStack = []; 
 
-  var sesssionStack = [];
-  var sesssionStackInternal= [];
+  var sessionStackInternal= [];
   var sessionId = 0;
 
 
  function getBaseEvent(){
+  var tempData = userData;
+  var temp = getSessionStack();
+  tempData.sessionStack = temp;
   var baseEvent =  {
     "context": {
       "class": "user-engagement",
       "category": "discussion",
-     "data": userData
+     "data": tempData
     }
   };
-  return baseEvent;
+  var tempBaseEvent ={};
+  angular.copy(baseEvent, tempBaseEvent);
+  return tempBaseEvent;
  }
   function getNewSessionId(){
     sessionId = sessionId +1;
@@ -33,40 +37,25 @@ var userData = {};
     sessionObject.id = getNewSessionId();
     var d = new Date();
     sessionObject.timeStamp = d.getTime();
-    console.log("SESSION");
+    console.log("Analytics ****** getSession Object");
     console.log(sessionObject);
     return sessionObject;
   }
 
   function addSession(){
     var session = getSessionObject();
-    sesssionStack.push(session.id);
-    sesssionStackInternal.push(session);
-
+    sessionStackInternal.push(session);
+    console.log("Analytics ****** : sessionStackInterNAl length : "+ sessionStackInternal.length);
   }
   function getSessionTime(){
-    if(sesssionStackInternal != null && sesssionStackInternal.length > 0){
-    var temp = sesssionStackInternal[sesssionStackInternal.length-1];
+    if(sessionStackInternal != null && sessionStackInternal.length > 0){
+    var temp = sessionStackInternal[sessionStackInternal.length-1];
     return temp.timeStamp;
   }
   else
     return null;
   }
-  function browseSessionEvent(type){
-    var time = new Date();
-
-    var duration = time.getTime() - getSessionTime();
-      var mEvent = getBaseEvent();
-      mEvent.createdAt = new Date();
-      mEvent.context.type ="browse";
-      mEvent.context.data.sessionStack = sesssionStack;
-      var content = {"entity" : type, "duration" : duration}
-      mEvent.content = content;
-      eventStack.push(mEvent);
-      sesssionStack.pop();
-      sesssionStackInternal.pop();
-
-  }
+  
   function addSessionEvent(){
     //AddEvent and Pop  Session
 
@@ -78,8 +67,27 @@ var userData = {};
   function sendEventsToServer(){
     //Code to send events
   }
+  function getSessionStackId(index){
+      var temp = {};
+      temp = sessionStackInternal[index];
+      return temp.id;
+  }
 
-  
+  function getSessionStack(){
+    var sessionStack = [];
+    var tempStack = [];
+    var length = sessionStackInternal.length;
+    angular.copy(sessionStackInternal,tempStack);
+    tempStack[0].timeStamp = 0;
+    console.log(sessionStackInternal);
+    console.log(tempStack);
+    for(var j=0;j<tempStack.length;j++){
+      console.log("Analytics ****** "+ tempStack[j].id );
+      sessionStack.push(tempStack[j].id);
+    }
+    console.log(sessionStack);
+    return sessionStack;
+  }
   
   //JOIN SESSION EVENT
   function joinSessionEvent(channel, topicId){
@@ -88,11 +96,13 @@ var userData = {};
       var mEvent = getBaseEvent();
       mEvent.createdAt = new Date();
       mEvent.context.type ="join";
-      mEvent.context.data.sessionStack = sesssionStack;
+    //   var temp = getSessionStack().slice();
+    // mEvent.context.data.sessionStack = temp;
       var content = {"channelId" : channel, "topicId" : topicId}
       mEvent.content = content;
       eventStack.push(mEvent);
       isJoinedSession = true;
+      console.log("Analytics ****** joinSessionEvent");
     }
   }
   //LEAVE SESSION EVENT
@@ -100,11 +110,29 @@ var userData = {};
     var mEvent = getBaseEvent();
     mEvent.createdAt = new Date();
     mEvent.context.type ="leave";
-    mEvent.context.data.sessionStack = sesssionStack;
+    // var temp = getSessionStack().slice();
+    // mEvent.context.data.sessionStack = temp;
     var content = {"channelId" : channel, "topicId" :topicId}
       mEvent.content = content;
     eventStack.push(mEvent);
     printEventStack();
+  }
+
+  function browseSessionEvent(type){
+    var time = new Date();
+
+    var duration = time.getTime() - getSessionTime();
+      var mEvent = getBaseEvent();
+      mEvent.createdAt = new Date();
+      mEvent.context.type ="browse";
+      // var temp = getSessionStack().slice();
+      // mEvent.context.data.sessionStack = temp;
+      var content = {"entity" : type, "duration" : duration}
+      mEvent.content = content;
+      eventStack.push(mEvent);
+      sessionStackInternal.pop();
+      console.log("Analytics ****** browseEvent triggered");
+
   }
 
   function setLoginSessionId(loginId){
@@ -114,7 +142,7 @@ var userData = {};
      userData.sessionId = user.sessionId;
      userData.loginSessionId = loginId;
      isAnalyticsInitialized = true;
-     console.log("Analytics Base Event :"+ userData);
+     console.log("Analytics ****** Base Event :"+ userData);
   }
 
   function printEventStack(){

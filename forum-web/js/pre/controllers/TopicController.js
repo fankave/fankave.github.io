@@ -394,7 +394,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
      var t = (window.time - sessionTime);
       ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
       sessionTime = window.time;
-      AnalyticsService.printEventStack();
+      //AnalyticsService.printEventStack();
     if (GEN_DEBUG)
     console.log("peelClose()");
     window.location = "peel://home";

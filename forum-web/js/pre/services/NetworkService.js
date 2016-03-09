@@ -34,11 +34,13 @@ function ($websocket,$route,DataService,UserInfoService,AnalyticsService)
       if (NETWORK_DEBUG)
       console.log("Websocket Connected");
     if(ANALYTICS){
+      if(ws != null){
       var getLoginSessionRequest = {"rid": "loginId",
         "timestamp": new Date().getTime(),
         "method": "GET",
         "uri": encodeURI("/v1.0/user/session/show")};
         ws.send(getLoginSessionRequest);
+      }
     }
 
     });
