@@ -355,7 +355,9 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   }
 
   $scope.viewPost = function(e,id){
-    var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
+    if (window.location.href.indexOf('?') !== -1){
+      var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
+    }
     if ($(e.target).is('a')){
       return;
     }
