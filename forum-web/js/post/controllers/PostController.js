@@ -31,7 +31,9 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 	$scope.backToTopicButtonTapped = function()
 	{
 		var topicId = TopicService.getTopicId();
-    var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
+    if (window.location.href.indexOf('?') !== -1){
+      var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
+    }
     if(topicId == undefined)
       topicId = $scope.comment.topicId;
     if (urlQueryStr !== undefined){
@@ -450,7 +452,7 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 	 
 	ReplyService.registerObserverCallback(notifyNewReplies);
 	TopicService.registerObserverCallback(updateScore);
-	CommentService.registerObserverCallback(updateCommentInReply);
+	CommentService.registerObserverCallback(updateCommentInReply, true);
 
 	$scope.trustSrc = function(src)
 	{
