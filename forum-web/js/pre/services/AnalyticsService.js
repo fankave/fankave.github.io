@@ -1,37 +1,40 @@
 angular.module('ChannelModule')
-.service('AnalyticsService',["UserInfoService",
+.factory('AnalyticsService',["UserInfoService",
   function (UserInfoService) {
 
-  var baseEvent = {
-    "context": {
-      "class": "user-engagement",
-      "category": "discussion",
-     "data": {
-        "userId": "478",
-        "sessionId": "9fb29d49",
-        "loginSessionId": "478:9fb29d49:1456189956"
-      }
-    }
-  };
+ 
+var userData = {};
+  var isJoinedSession = false;
+  var isAnalyticsInitialized = false;
   var eventStack = []; 
 
   var sesssionStack = [];
   var sesssionStackInternal= [];
-  var sessionObject={};
   var sessionId = 0;
 
 
-
+ function getBaseEvent(){
+  var baseEvent =  {
+    "context": {
+      "class": "user-engagement",
+      "category": "discussion",
+     "data": userData
+    }
+  };
+  return baseEvent;
+ }
   function getNewSessionId(){
     sessionId = sessionId +1;
       return sessionId;
   }
 
   function getSessionObject(){
-    sessionObject = {};
+    var sessionObject = {};
     sessionObject.id = getNewSessionId();
     var d = new Date();
     sessionObject.timeStamp = d.getTime();
+    console.log("SESSION");
+    console.log(sessionObject);
     return sessionObject;
   }
 
@@ -39,6 +42,29 @@ angular.module('ChannelModule')
     var session = getSessionObject();
     sesssionStack.push(session.id);
     sesssionStackInternal.push(session);
+
+  }
+  function getSessionTime(){
+    if(sesssionStackInternal != null && sesssionStackInternal.length > 0){
+    var temp = sesssionStackInternal[sesssionStackInternal.length-1];
+    return temp.timeStamp;
+  }
+  else
+    return null;
+  }
+  function browseSessionEvent(type){
+    var time = new Date();
+
+    var duration = time.getTime() - getSessionTime();
+      var mEvent = getBaseEvent();
+      mEvent.createdAt = new Date();
+      mEvent.context.type ="browse";
+      mEvent.context.data.sessionStack = sesssionStack;
+      var content = {"entity" : type, "duration" : duration}
+      mEvent.content = content;
+      eventStack.push(mEvent);
+      sesssionStack.pop();
+      sesssionStackInternal.pop();
 
   }
   function addSessionEvent(){
@@ -55,29 +81,57 @@ angular.module('ChannelModule')
 
   
   
-  
-  function constructEvent(){
-    var mEvent = baseEvent;
-
+  //JOIN SESSION EVENT
+  function joinSessionEvent(channel, topicId){
+    if(!isJoinedSession){
+      addSession();
+      var mEvent = getBaseEvent();
+      mEvent.createdAt = new Date();
+      mEvent.context.type ="join";
+      mEvent.context.data.sessionStack = sesssionStack;
+      var content = {"channelId" : channel, "topicId" : topicId}
+      mEvent.content = content;
+      eventStack.push(mEvent);
+      isJoinedSession = true;
+    }
+  }
+  //LEAVE SESSION EVENT
+  function leaveSessionEvent(channel, topicId){
+    var mEvent = getBaseEvent();
+    mEvent.createdAt = new Date();
+    mEvent.context.type ="leave";
+    mEvent.context.data.sessionStack = sesssionStack;
+    var content = {"channelId" : channel, "topicId" :topicId}
+      mEvent.content = content;
+    eventStack.push(mEvent);
+    printEventStack();
   }
 
   function setLoginSessionId(loginId){
     var user = UserInfoService.getUserCredentials();
-    baseEvent.data.userId = user.userId;
-     baseEvent.data.sessionId = user.sessionId;
-     baseEvent.data.loginSessionId = loginId;
+    
+     userData.userId = user.userId;
+     userData.sessionId = user.sessionId;
+     userData.loginSessionId = loginId;
+     isAnalyticsInitialized = true;
+     console.log("Analytics Base Event :"+ userData);
   }
 
-  function initEventFormat(){
-
+  function printEventStack(){
+      console.log(eventStack);
   }
 
   return {
     sendEventsToServer:sendEventsToServer,
+    joinSessionEvent:joinSessionEvent,
+    leaveSessionEvent:leaveSessionEvent,
+    browseSessionEvent:browseSessionEvent,
     addEvent:addEvent,
     addSessionEvent:addSessionEvent,
     addSession:addSession,
-    setLoginSessionId:setLoginSessionId
+    setLoginSessionId:setLoginSessionId,
+    printEventStack:printEventStack,
+    isInitialized:function(){ return isAnalyticsInitialized;}
   };
 
 }]);

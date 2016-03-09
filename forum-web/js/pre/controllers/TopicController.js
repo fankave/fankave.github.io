@@ -134,6 +134,11 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
   $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
     var t = (window.time - sessionTime);
+    if($scope.activeTab  != tab ){
+      AnalyticsService.browseSessionEvent($scope.activeTab)
+    }
+    AnalyticsService.addSession();
+    console.log("ACTIVE TAB ********* " + $scope.activeTab + "TIME SPENT : "+ t );
       ga('send', 'event', 'Tabs','ActiveTab', $scope.activeTab);
       ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
     sessionTime = window.time ;
@@ -341,6 +346,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
   function init() {
     networkService.send(TopicService.getTopicRequest($routeParams.topicID));
     networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
+    AnalyticsService.joinSessionEvent(ChannelService.getChannel(),$routeParams.topicID);
   };
 
   $scope.hideLoading = function(){
@@ -482,6 +488,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
      var t = (window.time - sessionTime);
       ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
       sessionTime = window.time;
+      AnalyticsService.printEventStack();
     if (GEN_DEBUG)
     console.log("peelClose()");
     window.location = "peel://home";
@@ -650,6 +657,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
   $window.addEventListener("beforeunload", function(){
     if (GEN_DEBUG)
     console.log("Before Unload");
+    AnalyticsService.leaveSessionEvent(ChannelService.getChannel(),$routeParams.topicID);
     networkService.closeSocket();
     // ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
   });
