@@ -297,13 +297,15 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     this.showNewSocial = function(){
       $scope.$parent.newSocialAvailable = false;
       updateFeed('social');
-      $(document).scrollTop(0);
+      var body = $('body');
+      body.stop().animate({scrollTop:0}, '500', 'swing');
     }
 
     this.showNewVideo = function(){
       $scope.$parent.newVideoAvailable = false;
       updateFeed('video');
-      $(document).scrollTop(0);
+      var body = $('body');
+      body.stop().animate({scrollTop:0}, '500', 'swing');
     }
 
 
