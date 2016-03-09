@@ -31,11 +31,13 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     $scope.$on('videoActive', function (event, args){
       URIHelper.tabEntered();
+      $scope.$parent.activeTab = 'video';
       _this.initFeed('video');
     });
 
     $scope.$on('socialActive', function (event, args){
       URIHelper.tabEntered();
+      $scope.$parent.activeTab = 'social';
       _this.initFeed('social');
     });
 

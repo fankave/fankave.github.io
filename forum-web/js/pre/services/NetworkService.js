@@ -1,7 +1,7 @@
 angular.module("NetworkModule", ['ngWebSocket'])
-.factory("networkService",["$websocket","$route","DataService","UserInfoService",
+.factory("networkService",["$websocket","$route","DataService","UserInfoService","AnalyticsService",
 
-function ($websocket,$route,DataService,UserInfoService)
+function ($websocket,$route,DataService,UserInfoService,AnalyticsService)
 {
   var ws;
 
@@ -33,6 +33,14 @@ function ($websocket,$route,DataService,UserInfoService)
     ws.onOpen(function() {
       if (NETWORK_DEBUG)
       console.log("Websocket Connected");
+    if(ANALYTICS){
+      var getLoginSessionRequest = {"rid": "loginId",
+        "timestamp": new Date().getTime(),
+        "method": "GET",
+        "uri": encodeURI("/v1.0/user/session/show")};
+        ws.send(getLoginSessionRequest);
+    }
+
     });
 
     ws.onClose(function(evt) {
@@ -71,6 +79,14 @@ function ($websocket,$route,DataService,UserInfoService)
           //TODO handle Replies
           if(NETWORK_DEBUG) console.log("Processing Video");
           DataService.setVideo(responseJson);
+        }
+        else if(type === "loginId"){
+          //TODO handle Replies
+          if(NETWORK_DEBUG) console.log("Processing loginId");
+          if(responseJson.data != null && responseJson.data.id != null)
+            AnalyticsService.setLoginSessionId(responseJson.data.id);
+          else
+            console.log("Error : not LoginId from Server");
         }
       }
     });
