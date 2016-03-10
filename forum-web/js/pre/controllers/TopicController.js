@@ -614,7 +614,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       docVarsSet = true;
       if ($scope.isSmartStadiumUser){
         headerHeight = 54;
-      } else if ($scope.isPeelUser){
+      } else if ($scope.isPeelUser && $scope.peelShowId){
         headerHeight = 54;
       } else {
         headerHeight = 0;

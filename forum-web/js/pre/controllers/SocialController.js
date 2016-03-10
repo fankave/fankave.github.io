@@ -236,7 +236,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       }
 
       // If peel, position dialog below header
-      if ($scope.$parent.isPeelUser){
+      if ($scope.$parent.isPeelUser && $scope.$parent.peelShowId){
         var fullClient = document.documentElement.clientHeight - 54;
         if (GEN_DEBUG)
         console.log("fullClient Height: ", fullClient);
