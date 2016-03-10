@@ -76,6 +76,11 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   }
   else if(UserInfoService.isPeelUser()){
     $scope.isPeelUser = true;
+    if (!URIHelper.getPeelShowId()){
+      $scope.peelShowId = false;
+    } else {
+      $scope.peelShowId = true;
+    }
     // if (!UserInfoService.hasUserVisited()){
     //   if (GEN_DEBUG)
     //   console.log('PEEL USER HASNT VISITED');
@@ -118,7 +123,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   };
   function setScoreCardUI() {
     if ($scope.topicType === 'livegame'){
-      if ($scope.isPeelUser){
+      if ($scope.isPeelUser && $scope.peelShowId){
         $('#topicSection').css('padding-top','54px');
       } else if ($scope.isSmartStadiumUser){
         $('#topicSection').css('padding-top','54px');
@@ -609,7 +614,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       docVarsSet = true;
       if ($scope.isSmartStadiumUser){
         headerHeight = 54;
-      } else if ($scope.isPeelUser){
+      } else if ($scope.isPeelUser && $scope.peelShowId){
         headerHeight = 54;
       } else {
         headerHeight = 0;
