@@ -74,6 +74,11 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
   }
   else if(UserInfoService.isPeelUser()){
     $scope.isPeelUser = true;
+    if (!URIHelper.getPeelShowId()){
+      $scope.peelShowId = false;
+    } else {
+      $scope.peelShowId = true;
+    }
     // if (!UserInfoService.hasUserVisited()){
     //   console.log('PEEL USER HASNT VISITED');
     //   if (URIHelper.isSuperBowl()){
@@ -102,7 +107,7 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
   };
   function setScoreCardUI() {
     if ($scope.topicType === 'livegame'){
-      if ($scope.isPeelUser){
+      if ($scope.isPeelUser && $scope.peelShowId){
         $('#topicSection').css('padding-top','54px');
       } else if ($scope.isSmartStadiumUser){
         $('#topicSection').css('padding-top','54px');
@@ -355,7 +360,7 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     initPTR();
 
     // Comment/Uncomment to Disable/Enable Auto Refresh
-    initAutoRefresh();
+    // initAutoRefresh();
 
     $scope.newVideoAvailable = false;
     $scope.newSocialAvailable = false;
