@@ -2885,6 +2885,11 @@ iframe {
   padding-right: 15%;
 }
 
+.cricket-row-future {
+  padding-right: 0;
+  padding-left: 0;
+}
+
 .teamLogoCricket > img {
   height: 39px;
   width: 57px;
