@@ -198,10 +198,10 @@
       </div>
 
       <!-- Middle Row (Logo & Score) -->
-      <div class="cricket-row-45L">
+      <div class="cricket-row-45L" ng-class="{ 'cricket-row-future': gameStatus === 'future' }">
         <span class="teamLogoCricket" ng-class="{largeLogoCricket: gameStatus === 'future'}"><img ng-src="{{leftTeam.logo}}" /></span>
 
-        <span class="scoreC scoreC-left" ng-hide="gameStatus === 'future'">{{leftTeamScore}}</span>
+        <span class="scoreC scoreC-left" ng-if="gameStatus !== 'future'">{{leftTeamScore}}</span>
       </div>
 
       <!-- Bottom Row -->
@@ -250,9 +250,9 @@
       </div>
       
       <!-- Middle Row (Logo & Score) -->
-      <div class="cricket-row-45R">
+      <div class="cricket-row-45R" ng-class="{ 'cricket-row-future': gameStatus === 'future' }">
 
-        <span class="scoreC scoreC-right" ng-hide="gameStatus === 'future'">{{rightTeamScore}}</span>
+        <span class="scoreC scoreC-right" ng-if="gameStatus !== 'future'">{{rightTeamScore}}</span>
         
         <span class="teamLogoCricket" ng-class="{largeLogoCricket: gameStatus === 'future'}"><img ng-src="{{rightTeam.logo}}" /></span>
       </div>
