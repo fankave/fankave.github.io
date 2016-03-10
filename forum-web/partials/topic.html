@@ -56,7 +56,7 @@
 </section>
 
 <nav class="navbar navbar-fixed-top" id="header" ng-if="isPeelUser === true || isSmartStadiumUser === true">
-  <div id="peelNavBar" ng-if="isPeelUser === true">
+  <div id="peelNavBar" ng-if="isPeelUser === true && peelShowId">
     <button class="btn-link peelButton" id="closePeelButton" ng-click="peelClose()"><img ng-src="img/backButton-2x.png"/></button>
     <span id="peelText">Peel</span>
     <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()">Watch On TV</button>
@@ -196,10 +196,10 @@
       </div>
 
       <!-- Middle Row (Logo & Score) -->
-      <div class="cricket-row-45L">
+      <div class="cricket-row-45L" ng-class="{ 'cricket-row-future': gameStatus === 'future' }">
         <span class="teamLogoCricket" ng-class="{largeLogoCricket: gameStatus === 'future'}"><img ng-src="{{leftTeam.logo}}" /></span>
 
-        <span class="scoreC scoreC-left" ng-hide="gameStatus === 'future'">{{leftTeamScore}}</span>
+        <span class="scoreC scoreC-left" ng-if="gameStatus !== 'future'">{{leftTeamScore}}</span>
       </div>
 
       <!-- Bottom Row -->
@@ -248,9 +248,9 @@
       </div>
       
       <!-- Middle Row (Logo & Score) -->
-      <div class="cricket-row-45R">
+      <div class="cricket-row-45R" ng-class="{ 'cricket-row-future': gameStatus === 'future' }">
 
-        <span class="scoreC scoreC-right" ng-hide="gameStatus === 'future'">{{rightTeamScore}}</span>
+        <span class="scoreC scoreC-right" ng-if="gameStatus !== 'future'">{{rightTeamScore}}</span>
         
         <span class="teamLogoCricket" ng-class="{largeLogoCricket: gameStatus === 'future'}"><img ng-src="{{rightTeam.logo}}" /></span>
       </div>
@@ -301,14 +301,14 @@
           <img ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png"/> 
           <img ng-switch-when="false" ng-src="img/thumbsUp@2x.png"/> 
         </button>
-        <span class="socialButtonLabel fkFont">{{likesCount}} </span>
+        <span class="socialButtonLabel fkFont" ng-if="likesCount > 0">{{likesCount}} </span>
       </div>
     </div>
     <div class="grid-col-alt grid-col-50">
       <div id="headComment">
         <button class="btn-link topic-social-btn" secure-click="commentOnTopic()"><img ng-src="img/comment-3x.png"/> 
         </button>
-        <span class="socialButtonLabel fkFont">{{commentsCount}}</span>
+        <span class="socialButtonLabel fkFont" ng-if="commentsCount > 0">{{commentsCount}}</span>
       </div>
     </div>
   </div>
@@ -546,7 +546,7 @@
             <img class="social-like" ng-switch-when="true" ng-click="moreButtonTapped()" ng-src="img/thumbsUp_selectL@2x.png" /> 
             <img class="social-like" ng-switch-when="false" ng-click="moreButtonTapped()" ng-src="img/thumbsUpDarkL@2x.png" /> 
           </button>
-          <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
+          <span class="socialButtonLable" ng-if="thisPost.likeCount > 0">{{thisPost.likeCount}}  </span>
         </div>
         <div class="socialButtonsRow">  
           <button id="chatReply" class="btn-link social-btn" ng-click="moreButtonTapped()" secure-click="goToRepliesWithKeyboardTriggered(thisPost.id)">

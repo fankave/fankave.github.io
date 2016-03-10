@@ -72,7 +72,7 @@ angular.module('NetworkModule')
 		    minutes = "0" + minutes; 
 		}
 
-		time = time + ":" + minutes + ' ' + ext + ' '+timeZone; 
+		time = time + ":" + minutes + ' ' + ext; 
 		var date = month + "/" + day;
 		var dateExt = dayOfWeek + ", " + monthName + " " + day;
 		result = { "date": date, "time": time, "dateExt": dateExt };

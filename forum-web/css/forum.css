@@ -1130,6 +1130,7 @@ button:hover {
 /* - - - Scorecard Text Rework - - - */
 
 .scoreCardContent {
+  position: relative;
   width:100%;
   max-width: 768px;
   height:114px;
@@ -2897,6 +2898,11 @@ iframe {
   text-align: center;
   padding-top: 4px;
   padding-right: 15%;
+}
+
+.cricket-row-future {
+  padding-right: 0;
+  padding-left: 0;
 }
 
 .teamLogoCricket > img {
