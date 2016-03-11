@@ -699,7 +699,7 @@
     </div>
   </div>
 
-  <div id="moreCommentsBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length >= 10" ng-click="loadRemainingComments()">
+  <!-- <div id="moreCommentsBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length >= 10" ng-click="loadRemainingComments()">
     <span id="moreCommentsText">Load more...</span>
   </div>
   <div id="moreContentBar" ng-if="activeTab === 'social'" ng-click="social.loadContent('social',social.socialArray.length)">
@@ -707,7 +707,7 @@
   </div>
   <div id="moreContentBar" ng-if="activeTab === 'video'" ng-click="social.loadContent('video',social.videoArray.length)">
     <span id="moreContentText">Load more...</span>
-  </div>
+  </div> -->
 </div>
 
 <share-to-chat-dialog ng-if="social.showShareDialog" this-post="social.embedShareContent" trust-source="trustSrc(videoSrc)" share-submit="social.submitSharedPost(commentData,embedData)" exit-share="social.exitShare()" highlight="social.highlightPost()" unhighlight="social.unhighlightPost()"></share-to-chat-dialog>
