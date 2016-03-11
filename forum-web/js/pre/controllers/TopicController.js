@@ -322,7 +322,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
 
   }
 
-  $scope.loadRemainingComments = function() {
+  function loadRemainingComments () {
     if (GEN_DEBUG)
     console.log("LOADING REST OF COMMENTS...");
     if (!CommentService.loadedComments()){
@@ -516,12 +516,18 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
 
   $scope.goToRepliesWithKeyboardTriggered = function(id)
   {
-    // event.cancelBubble = true;
-    // if(event.stopPropagation) event.stopPropagation();
-
-    // console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
+    // Check for url query string
+    if (window.location.href.indexOf('?') !== -1){
+      var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
+    }
     TopicService.directComment = true;
-    $location.url("/post/" + id);
+    
+    // Pass along query string if present when navigating to post
+    if (urlQueryStr !== undefined){
+      $location.url("/post/" + id + urlQueryStr);
+    } else {
+      $location.url("/post/" + id);
+    }
   };
 
   $scope.secureLink = function(url, id) {
@@ -643,8 +649,17 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       }
   };
 
+  var watchForLoad = debounce(function() {
+    var clientHeight = document.documentElement.clientHeight || window.innerHeight;
+    var currentScroll = $(document).height() - clientHeight - 150;
+    if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
+      loadRemainingComments();
+    }
+  }, 100);
+
   $(document).off('scroll');
   $(document).on('scroll', watchScroll);
+  $(document).on('scroll', watchForLoad);
 
 
 }]);
