@@ -233,9 +233,11 @@ angular.module('TopicModule')
     getGameStatus: function() { 
       return _status;},
     getGamePeriod: function() { 
-      return _gameStats[0];},
+      if (!!_gameStats) return _gameStats[0];
+    },
     getGameClock: function() {  
-      return _gameStats[1];},
+      if (!!_gameStats) return _gameStats[1];
+    },
     getGameSummary: function() {
       return _summary;
     },
