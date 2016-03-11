@@ -305,7 +305,7 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
 
   }
 
-  $scope.loadRemainingComments = function() {
+  function loadRemainingComments () {
     console.log("LOADING REST OF COMMENTS...");
     if (!CommentService.loadedComments()){
       networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
@@ -330,9 +330,9 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
   }
 
-  $scope.showLoadMore = function(){
-    $('#moreContentBar').css('display','block');
-  }
+  // $scope.showLoadMore = function(){
+  //   $('#moreContentBar').css('display','block');
+  // }
 
   $scope.hideLoading = function(){
     console.log("HIDING LOAD");
@@ -738,8 +738,17 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
       }
   };
 
+  var watchForLoad = debounce(function() {
+    var clientHeight = document.documentElement.clientHeight || window.innerHeight;
+    var currentScroll = $(document).height() - clientHeight - 150;
+    if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
+      loadRemainingComments();
+    }
+  }, 100);
+
   $(document).off('scroll');
   $(document).on('scroll', watchScroll);
+  $(document).on('scroll', watchForLoad);
 
 
 }]);

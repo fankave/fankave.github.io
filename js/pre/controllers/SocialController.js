@@ -243,13 +243,9 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       var currentScroll = $(document).height() - clientHeight - 150;
       if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
         if ($scope.activeTab === 'social'){
-          // We are Loading More Content -->
-          // Base offset on Current Length of Scope Array
           _this.loadContent('social');
         }
         else if ($scope.activeTab === 'video'){
-          // We are Loading More Content -->
-          // Base offset on Current Length of Scope Array
           _this.loadContent('video');
         }
       }
