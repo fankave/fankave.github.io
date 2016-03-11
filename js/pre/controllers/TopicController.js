@@ -360,7 +360,7 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     initPTR();
 
     // Comment/Uncomment to Disable/Enable Auto Refresh
-    // initAutoRefresh();
+    initAutoRefresh();
 
     $scope.newVideoAvailable = false;
     $scope.newSocialAvailable = false;
