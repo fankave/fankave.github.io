@@ -277,13 +277,14 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           $('#sharePreviewContainer').css({ top: selectedHeight });
         }, 0);
       }
-      if ($scope.$parent.isPeelUser){
+      if ($scope.$parent.isPeelUser && $scope.$parent.peelShowId){
         var fullClient = document.documentElement.clientHeight - 54;
         console.log("fullClient Height: ", fullClient);
         setTimeout(function(){
           $('#sharePreviewContainer').css({top: '54px'}).height(fullClient);
         },25);
       }
+      setTimeout(function(){$('#shareEmbedComment').focus();},0);
     };
 
     this.submitSharedPost = function (commentData,embedData) {

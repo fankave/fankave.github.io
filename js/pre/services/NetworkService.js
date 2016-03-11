@@ -25,24 +25,24 @@ function ($websocket,$route,DataService,UserInfoService)
   //   });
 
   function initSocket() { 
-    if(ws != undefined)
+    if(!!ws)
       ws.close();
     ws = $websocket(getWebsocketUri());
     DataService.setWatchTopic(false);
     //Websocket callbacks below
     ws.onOpen(function() {
       if (NETWORK_DEBUG)
-      console.log("Websocket Connected");
+      console.log("Websocket Connected: ", ws.readyState, ws.OPEN);
     });
 
     ws.onClose(function(evt) {
       ws = undefined;
       if (NETWORK_DEBUG)
-      console.log("Websocket Closed :"+evt.data);
+      console.log("Websocket Closed: ", evt.data);
     });
 
     ws.onMessage(function(evt) {
-      if(NETWORK_DEBUG) console.log("Websocket Message Recieved :  " +evt.data);
+      if(NETWORK_DEBUG) console.log("Websocket Message Recieved:  ", evt.data, ws.OPEN);
       var responseJson = JSON.parse(evt.data);
       var type = responseJson.rid;
       if(type !== undefined){
@@ -93,29 +93,29 @@ function ($websocket,$route,DataService,UserInfoService)
   }
   return{
     isSocketConnected:function(){
-      if(NETWORK_DEBUG){
-        if(ws!= null){
+      if (NETWORK_DEBUG){
+        if (!!ws){
           if (NETWORK_DEBUG)
-          console.log("ws status : "+ ws.readyState +"ws.OPEN :"+ ws.OPEN);
+          console.log("WS Status: ", ws.readyState, " WS.OPEN: ", ws.OPEN);
         }
         else {
           if (NETWORK_DEBUG)
-          console.log("ws is null");
+          console.log("WS is null");
         }
       }
-      if(ws != undefined && ws.readyState == 1){
+      if (!!ws && ws.readyState === 1){
         return true;
       }
       return false;
     },
     send:function(message) { 
-      if(ws == undefined){ 
+      if(!ws){ 
         initSocket();
       }
       ws.send(JSON.stringify(message));
     },
     closeSocket:function(){
-      if(ws != undefined)
+      if(!!ws)
         ws.close();
     },
     init:initSocket
