@@ -56,7 +56,7 @@
 </section>
 
 <nav class="navbar navbar-fixed-top" id="header" ng-if="isPeelUser === true || isSmartStadiumUser === true">
-  <div id="peelNavBar" ng-if="isPeelUser === true">
+  <div id="peelNavBar" ng-if="isPeelUser === true && peelShowId">
     <button class="btn-link peelButton" id="closePeelButton" ng-click="peelClose()"><img ng-src="img/backButton-2x.png"/></button>
     <span id="peelText">Peel</span>
     <button class="btn-link peelButton" id="peelWatchOnTVButton" ng-click="peelWatchOnTV()">Watch On TV</button>
@@ -66,7 +66,7 @@
   </div>
 </nav>
 <section id="topicSection" ng-controller="SocialController as social">
-  <div class="scoreCardContent clearfix" ng-if="topicType === 'livegame' && !isMI16User && !isMWCUser">
+  <div class="scoreCardContent clearfix" ng-if="topicType === 'livegame' && !isCricket && !isMI16User && !isMWCUser">
 
     <div id="rightColor">
         <svg 
@@ -167,6 +167,102 @@
     </div>
 
   </div>
+
+  <!-- Cricket Scorecard -->
+  <div class="scoreCardContent scoreCricket clearfix" ng-if="topicType === 'livegame' && isCricket">
+    <div id="summary" ng-if="gameStatus === 'past'">{{gameSummary}}</div>
+    <div id="versus" ng-if="gameStatus === 'past'">VS</div>
+    <div id="rightColor">
+        <svg 
+        version="1.1"
+        class="svg-content"
+        x="0"
+        y="0"
+        width="100%"
+        height="100%"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none">
+        <polygon points="60,0 100,0 100,100 40,100"/>
+      </svg>
+    </div>
+
+    <!-- Left Column -->
+    <div id="L-40cricket" class="grid-col grid-col-50">
+      
+      <!-- Top Row (Name & Record) -->
+      <div class="grid-row-22">
+        <span id="teamName">{{leftTeam.name}}</span>
+        <span id="leftTeamRecord" ng-if="gameStatus === 'past' || gameStatus === 'future'"></span>
+      </div>
+
+      <!-- Middle Row (Logo & Score) -->
+      <div class="cricket-row-45L" ng-class="{ 'cricket-row-future': gameStatus === 'future' }">
+        <span class="teamLogoCricket" ng-class="{largeLogoCricket: gameStatus === 'future'}"><img ng-src="{{leftTeam.logo}}" /></span>
+
+        <span class="scoreC scoreC-left" ng-if="gameStatus !== 'future'">{{leftTeamScore}}</span>
+      </div>
+
+      <!-- Bottom Row -->
+      <div class="grid-row-33C" ng-if="gameStatus === 'live' && offenseTeam === 'leftTeam'">
+        <span id="subscore" class="subscoreL"><img id="bat" ng-src="https://storage.googleapis.com/forumus/static/icons/white/cricket.png" />{{offensePosition}}</span>
+      </div>
+
+    </div>
+
+    <!-- Center Column -->
+    <div class="grid-colC grid-col-20C">
+      
+      <!-- Top Row (Live OR VS) -->
+      <div id="liveGameCricket" class="grid-row-22">
+        <span ng-if="gameStatus === 'live'"><img ng-src="img/live-2x.png"/></span>
+      </div>
+      
+      <!-- Middle Row (Current/Future Game Info) -->
+      <div class="grid-row-45 time">
+        <div class="centerC" ng-if="gameStatus === 'live'">
+          <span>{{gamePeriod}}</span>
+          <span>{{gameClock}}</span>
+        </div>
+        <div class="centerCTime" ng-if="gameStatus === 'future'">
+          <span>{{gameScheduledTime.dateExt}}</span>
+          <span id="futureTime">{{gameScheduledTime.time}}</span>
+        </div>
+      </div>
+      
+      <!-- Bottom Row (All Scores Button) -->
+      <!-- <div class="grid-row-33">
+        <span ng-if="allScoresURL"><a id="allScoresLink" href="{{allScoresURL}}" target="_blank">
+          <span id="allScoresSpan">{{allScoresTitle}}</span>
+        </a></span>
+      </div> -->
+
+    </div>
+
+    <!-- Right Column -->
+    <div id="R-40cricket" class="grid-col grid-col-50">
+      
+      <!-- Top Row (Name & Record) -->
+      <div class="grid-row-22">
+        <span id="rightTeamRecord" ng-if="gameStatus === 'past' || gameStatus === 'future'"></span>
+        <span id="teamName">{{rightTeam.name}}</span>
+      </div>
+      
+      <!-- Middle Row (Logo & Score) -->
+      <div class="cricket-row-45R" ng-class="{ 'cricket-row-future': gameStatus === 'future' }">
+
+        <span class="scoreC scoreC-right" ng-if="gameStatus !== 'future'">{{rightTeamScore}}</span>
+        
+        <span class="teamLogoCricket" ng-class="{largeLogoCricket: gameStatus === 'future'}"><img ng-src="{{rightTeam.logo}}" /></span>
+      </div>
+      
+      <!-- Bottom Row -->
+      <div class="grid-row-33C" ng-if="gameStatus === 'live' && offenseTeam === 'rightTeam'">
+        <span id="subscore" class="subscoreR"><img id="bat" ng-src="https://storage.googleapis.com/forumus/static/icons/white/cricket.png" />{{offensePosition}}</span>
+      </div>
+    </div>
+
+  </div>
+
 <!-- MI16 Header -->
 <div ng-if="isMI16User">
   <img id="MI16Banner" ng-src="img/MI16/MI16banner@3x.png" />
@@ -205,14 +301,14 @@
           <img ng-switch-when="true" ng-src="img/thumbsUp_select@2x.png"/> 
           <img ng-switch-when="false" ng-src="img/thumbsUp@2x.png"/> 
         </button>
-        <span class="socialButtonLabel fkFont">{{likesCount}} </span>
+        <span class="socialButtonLabel fkFont" ng-if="likesCount > 0">{{likesCount}} </span>
       </div>
     </div>
     <div class="grid-col-alt grid-col-50">
       <div id="headComment">
         <button class="btn-link topic-social-btn" secure-click="commentOnTopic()"><img ng-src="img/comment-3x.png"/> 
         </button>
-        <span class="socialButtonLabel fkFont">{{commentsCount}}</span>
+        <span class="socialButtonLabel fkFont" ng-if="commentsCount > 0">{{commentsCount}}</span>
       </div>
     </div>
   </div>
@@ -428,7 +524,7 @@
             <img class="social-like" ng-switch-when="true" ng-click="moreButtonTapped()" ng-src="img/thumbsUp_selectL@2x.png" /> 
             <img class="social-like" ng-switch-when="false" ng-click="moreButtonTapped()" ng-src="img/thumbsUpDarkL@2x.png" /> 
           </button>
-          <span class="socialButtonLable">{{thisPost.likeCount}}  </span>
+          <span class="socialButtonLable" ng-if="thisPost.likeCount > 0">{{thisPost.likeCount}}  </span>
         </div>
         <div class="socialButtonsRow">  
           <button id="chatReply" class="btn-link social-btn" ng-click="moreButtonTapped()" secure-click="goToRepliesWithKeyboardTriggered(thisPost.id)">
@@ -603,7 +699,7 @@
     </div>
   </div>
 
-  <div id="moreCommentsBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length >= 10" ng-click="loadRemainingComments()">
+  <!-- <div id="moreCommentsBar" ng-if="activeTab === 'chat' && !loadedAllComments && commentsArray.length >= 10" ng-click="loadRemainingComments()">
     <span id="moreCommentsText">Load more...</span>
   </div>
   <div id="moreContentBar" ng-if="activeTab === 'social'" ng-click="social.loadContent('social',social.socialArray.length)">
@@ -611,7 +707,7 @@
   </div>
   <div id="moreContentBar" ng-if="activeTab === 'video'" ng-click="social.loadContent('video',social.videoArray.length)">
     <span id="moreContentText">Load more...</span>
-  </div>
+  </div> -->
 </div>
 
 <share-to-chat-dialog ng-if="social.showShareDialog" this-post="social.embedShareContent" trust-source="trustSrc(videoSrc)" share-submit="social.submitSharedPost(commentData,embedData)" exit-share="social.exitShare()" highlight="social.highlightPost()" unhighlight="social.unhighlightPost()"></share-to-chat-dialog>

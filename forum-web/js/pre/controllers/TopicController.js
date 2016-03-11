@@ -1,7 +1,7 @@
 angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"])
-.controller("TopicController", ["$scope", "$rootScope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
+.controller("TopicController", ["$scope", "$rootScope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService","AnalyticsService",
 
-function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
+function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService,AnalyticsService)
 {
   var sessionTime = window.time;
   var lastComment = false;
@@ -76,6 +76,11 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   }
   else if(UserInfoService.isPeelUser()){
     $scope.isPeelUser = true;
+    if (!URIHelper.getPeelShowId()){
+      $scope.peelShowId = false;
+    } else {
+      $scope.peelShowId = true;
+    }
     // if (!UserInfoService.hasUserVisited()){
     //   if (GEN_DEBUG)
     //   console.log('PEEL USER HASNT VISITED');
@@ -118,7 +123,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   };
   function setScoreCardUI() {
     if ($scope.topicType === 'livegame'){
-      if ($scope.isPeelUser){
+      if ($scope.isPeelUser && $scope.peelShowId){
         $('#topicSection').css('padding-top','54px');
       } else if ($scope.isSmartStadiumUser){
         $('#topicSection').css('padding-top','54px');
@@ -134,6 +139,11 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
     var t = (window.time - sessionTime);
+    if($scope.activeTab  != tab ){
+      AnalyticsService.browseSessionEvent($scope.activeTab)
+    }
+    AnalyticsService.addSession();
+    console.log("ACTIVE TAB ********* " + $scope.activeTab + "TIME SPENT : "+ t );
       ga('send', 'event', 'Tabs','ActiveTab', $scope.activeTab);
       ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
     sessionTime = window.time ;
@@ -168,6 +178,13 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       if($scope.topicType == "livegame"){
         if (GEN_DEBUG)
         console.log("Inside topic set :"+ TopicService.getTeamA());
+        
+        // Determine if game type is cricket
+        $scope.isCricket = TopicService.isGameCricket();
+        if ($scope.isCricket && !$scope.$$phase){
+          $scope.$apply();
+        }
+
         //Score API update
         $scope.leftTeam = TopicService.getTeamA();
         $scope.rightTeam = TopicService.getTeamB();
@@ -182,6 +199,13 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
         if($scope.gameStatus == "live") {
           $scope.gamePeriod = TopicService.getGamePeriod();
           $scope.gameClock = TopicService.getGameClock();
+          if ($scope.isCricket){
+            $scope.offenseTeam = TopicService.getOffense().team;
+            $scope.offensePosition = TopicService.getOffense().position;
+          }
+        }
+        if ($scope.gameStatus === "past" && $scope.isCricket){
+          $scope.gameSummary = TopicService.getGameSummary();
         }
 
         $scope.gameScheduledTime = TopicService.getGameTime();
@@ -298,7 +322,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
 
   }
 
-  $scope.loadRemainingComments = function() {
+  function loadRemainingComments () {
     if (GEN_DEBUG)
     console.log("LOADING REST OF COMMENTS...");
     if (!CommentService.loadedComments()){
@@ -323,6 +347,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   function init() {
     networkService.send(TopicService.getTopicRequest($routeParams.topicID));
     networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
+    AnalyticsService.joinSessionEvent(ChannelService.getChannel(),$routeParams.topicID);
   };
 
   $scope.hideLoading = function(){
@@ -374,6 +399,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
      var t = (window.time - sessionTime);
       ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
       sessionTime = window.time;
+      //AnalyticsService.printEventStack();
     if (GEN_DEBUG)
     console.log("peelClose()");
     window.location = "peel://home";
@@ -490,12 +516,18 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
 
   $scope.goToRepliesWithKeyboardTriggered = function(id)
   {
-    // event.cancelBubble = true;
-    // if(event.stopPropagation) event.stopPropagation();
-
-    // console.log("TopicController.goToRepliesWithKeyboardTriggered(" + id + ")");
+    // Check for url query string
+    if (window.location.href.indexOf('?') !== -1){
+      var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
+    }
     TopicService.directComment = true;
-    $location.url("/post/" + id);
+    
+    // Pass along query string if present when navigating to post
+    if (urlQueryStr !== undefined){
+      $location.url("/post/" + id + urlQueryStr);
+    } else {
+      $location.url("/post/" + id);
+    }
   };
 
   $scope.secureLink = function(url, id) {
@@ -542,6 +574,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   $window.addEventListener("beforeunload", function(){
     if (GEN_DEBUG)
     console.log("Before Unload");
+    AnalyticsService.leaveSessionEvent(ChannelService.getChannel(),$routeParams.topicID);
     networkService.closeSocket();
     // ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
   });
@@ -587,7 +620,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       docVarsSet = true;
       if ($scope.isSmartStadiumUser){
         headerHeight = 54;
-      } else if ($scope.isPeelUser){
+      } else if ($scope.isPeelUser && $scope.peelShowId){
         headerHeight = 54;
       } else {
         headerHeight = 0;
@@ -616,8 +649,17 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       }
   };
 
+  var watchForLoad = debounce(function() {
+    var clientHeight = document.documentElement.clientHeight || window.innerHeight;
+    var currentScroll = $(document).height() - clientHeight - 150;
+    if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
+      loadRemainingComments();
+    }
+  }, 100);
+
   $(document).off('scroll');
   $(document).on('scroll', watchScroll);
+  $(document).on('scroll', watchForLoad);
 
 
 }]);

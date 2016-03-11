@@ -54,6 +54,7 @@ networkModule.service('TopicService', function (DateUtilityService,Bant,FDSUtili
 
 	return {
 		getTweetsRequest:getTweetsRequest,
+		getAutoTweetsRequest:getAutoTweetsRequest,
 		setTweetsData:setTweetsData
 
 	};

@@ -43,8 +43,8 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
     }
 	}
 
-	$scope.setPeelUI = function(userType){
-		if (userType === 'peel') {
+	$scope.setPeelUI = function(userType, peelShowId){
+		if (userType === 'peel' && peelShowId) {
       $('#postSection').css('padding-top','104px');
       $('#backToChatContainer').css('margin-top','54px');
 		} else if (userType === 'email') {
@@ -58,8 +58,13 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 
   if (UserInfoService.isPeelUser()){
     $scope.isPeelUser = true;
+    if (!URIHelper.getPeelShowId()){
+      $scope.peelShowId = false;
+    } else {
+      $scope.peelShowId = true;
+    }
     SplashService.hidePeelSplash = true;
-    $scope.setPeelUI('peel');
+    $scope.setPeelUI('peel', $scope.peelShowId);
   }
   else if (UserInfoService.isSmartStadiumUser()){
     $scope.isSmartStadiumUser = true;
