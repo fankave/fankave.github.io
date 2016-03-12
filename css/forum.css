@@ -920,7 +920,7 @@ input:focus + button {
   border-radius: 15px;
   color: #fff;
   padding-top: 3px;
-  margin-top: 3px;
+  margin-top: 38px;
 }
 
 /* - - - disable scrolling (for use with magnific popup) - - - */
