@@ -650,10 +650,12 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   };
 
   var watchForLoad = debounce(function() {
-    var clientHeight = document.documentElement.clientHeight || window.innerHeight;
-    var currentScroll = $(document).height() - clientHeight - 150;
-    if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
-      loadRemainingComments();
+    if ($scope.activeTab === 'chat'){
+      var clientHeight = document.documentElement.clientHeight || window.innerHeight;
+      var currentScroll = $(document).height() - clientHeight - 150;
+      if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
+        loadRemainingComments();
+      }
     }
   }, 100);
 
