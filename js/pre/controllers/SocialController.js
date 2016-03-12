@@ -16,6 +16,9 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         updateTimestamps('social');
         $scope.$parent.switchTabs('social');
         // initPTR();
+        if (_this.socialFilter === undefined){
+          _this.socialFilter = false;
+        }
       } else {
         if (!_this.videoArray){
           $scope.$parent.loadingSocial = true;
@@ -26,6 +29,9 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         updateTimestamps('video');
         $scope.$parent.switchTabs('video');
         // initPTR();
+        if (_this.videoFilter === undefined){
+          _this.videoFilter = false;
+        }
       }
     };
 
@@ -358,6 +364,27 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       updateFeed('video');
       var body = $('body');
       body.stop().animate({scrollTop:0}, '500', 'swing');
+    }
+
+    this.reportSocialInteraction = function (post, button) {
+
+    }
+
+    this.filterContent = function (tab, filter) {
+      if (tab === 'social'){
+        if (filter === 'expert'){
+          _this.socialFilter = true;
+        } else {
+          _this.socialFilter = false;
+        }
+      } 
+      else if (tab === 'video'){
+        if (filter === 'expert'){
+          _this.videoFilter = true;
+        } else {
+          _this.videoFilter = false;
+        }
+      }
     }
 
 

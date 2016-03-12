@@ -3093,3 +3093,31 @@ iframe {
   -moz-animation: pulse 2s ease-in-out 2;
   animation: pulse 2s ease-in-out 2;
 }
+
+/* Expert Filter */
+#socialFilter,
+#videoFilter {
+  padding: 5px 4%;
+  text-align: right;
+  border-bottom: 1px solid #eee;
+  background-color: rgba(255,255,255,0.8);
+}
+
+#socialFilter span,
+#videoFilter span {
+  color: #1f2326;
+}
+
+.filterSelect {
+  color: #16bde7 !important;
+  font-weight: 500;
+}
+
+.filterOff {
+  color: #b3b8ba !important;
+}
+
+.filterSelect,
+.filterOff {
+  cursor: pointer;
+}

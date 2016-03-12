@@ -20,6 +20,7 @@ angular.module('SocialModule')
 		if (!!tempData && len > 0){
 			for (var i = 0; i < len; i++){
 				var _videoObject = Bant.bant(tempData[i]);
+        _videoObject.expert = tempData[i].source.type === "Twitter:Expert" ? true : false;
 				if (!!_videoObject.id){
     			var isNewObject = true;
     			for (var j = 0; j < _videoArrayAuto.length; j++){

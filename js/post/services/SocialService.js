@@ -20,6 +20,7 @@ angular.module('SocialModule')
     if (!!tempData && len > 0){
       for (var i = 0; i < len; i++){
         var _socialObject = Bant.bant(tempData[i]);
+        _socialObject.expert = tempData[i].source.type === "Twitter:Expert" ? true : false;
         if (!!_socialObject.id){
           var isNewObject = true;
           for (var j = 0; j < _socialArrayAuto.length; j++){
