@@ -389,6 +389,12 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       var body = $('body');
       body.stop().animate({scrollTop:0}, '500', 'swing');
     }
+    
+    this.reportSocialInteraction = function (post, button, activeTab) {
+      // post - the whole post the user just interacted with - Object
+      // button - type of social button - String - 'reply', 'retweet', or 'like'
+      // activeTab - String
+    }
 
 
 }]);
