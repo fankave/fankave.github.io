@@ -16,6 +16,9 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           updateFeed('social');
         }
         updateTimestamps('social');
+        if (_this.socialFilter === undefined){
+          _this.socialFilter = false;
+        }
         $scope.$parent.switchTabs('social');
       } else {
         if (_this.newVideoAvailable) _this.newVideoAvailable = false;
@@ -26,6 +29,9 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           updateFeed('video');
         }
         updateTimestamps('video');
+        if (_this.videoFilter === undefined){
+          _this.videoFilter = false;
+        }
         $scope.$parent.switchTabs('video');
       }
     };
@@ -77,7 +83,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           if ($scope.$parent.activeTab === 'social'){
             // If user is on tab during first interval, don't show indicator
             if (prevLength !== 0){
-              _this.newSocialAvailable = true;
+              if ((_this.socialFilter && SocialService.newExpertIn()) || !_this.socialFilter){
+                _this.newSocialAvailable = true;
+                SocialService.newExpertIn(false);
+              }
             }
           } else {
             pulseJewel('social');
@@ -94,7 +103,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           if ($scope.$parent.activeTab === 'video'){
             // If user is on tab during first interval, don't show indicator
             if (prevLength !== 0){
-              _this.newVideoAvailable = true;
+              if ((_this.videoFilter && VideoService.newExpertIn()) || !_this.videoFilter){
+                _this.newVideoAvailable = true;
+                VideoService.newExpertIn(false);
+              }
             }
           } else {
             pulseJewel('video');
@@ -269,10 +281,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     var watchContentScroll = debounce(function() {
       var currentScroll = $(document).height() - clientHeight - 150;
       if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
-        if ($scope.activeTab === 'social'){
+        if ($scope.activeTab === 'social' && !_this.preventLoad){
           _this.loadContent('social');
         }
-        else if ($scope.activeTab === 'video'){
+        else if ($scope.activeTab === 'video' && !_this.preventLoad){
           _this.loadContent('video');
         }
       }
@@ -394,6 +406,35 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       // post - the whole post the user just interacted with - Object
       // button - type of social button - String - 'reply', 'retweet', or 'like'
       // activeTab - String
+    }
+
+    function scrollUpAnimate(time) {
+      var body = $('body');
+      body.stop().animate({scrollTop:0}, time.toString(), 'swing');
+      if (_this.preventLoad) {
+        _this.preventLoad = false;
+      }
+    }
+
+    this.filterContent = function (tab, filter) {
+      if (tab === 'social'){
+        if (filter === 'expert'){
+          _this.preventLoad = true;
+          _this.socialFilter = true;
+          scrollUpAnimate(500);
+        } else {
+          _this.socialFilter = false;
+        }
+      } 
+      else if (tab === 'video'){
+        if (filter === 'expert'){
+          _this.preventLoad = true;
+          _this.videoFilter = true;
+          scrollUpAnimate(500);
+        } else {
+          _this.videoFilter = false;
+        }
+      }
     }
 
 
