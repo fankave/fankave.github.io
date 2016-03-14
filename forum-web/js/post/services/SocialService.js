@@ -130,9 +130,12 @@ angular.module('SocialModule')
       prevLength = length;
     },
     newExpertIn: function(val){
+      // Getter/Setter
+      // If no val provided, return current value of _newExpert
       if (val === undefined){
         return _newExpert;
       }
+      // else set (reset) _newExpert (reset to false after UI updated)
       else {
         _newExpert = val;
       }
