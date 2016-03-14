@@ -883,17 +883,17 @@ input:focus + button {
 #newCommentsAvailableIndicatorDiv,
 #newVideosAvailable,
 #newSocialAvailable {
-  position:fixed;
-  z-index: 10000;
+  position: absolute;
+  z-index: 23;
   width: 100%;
   max-width: 768px;
-  margin-top: 41px;
+  text-align: center;
 }
 
 #newRepliesAvailableIndicatorDiv {
   position:fixed;
   bottom:5em;
-  z-index: 10000;
+  z-index: 23;
   width: 100%;
   max-width: 768px;
   text-align: center;
@@ -908,8 +908,6 @@ input:focus + button {
   border: none;
   border-radius: 15px;
   color: #fff;
-  padding-top: 3px;
-  margin-top: 3px;
 }
 
 /* - - - disable scrolling (for use with magnific popup) - - - */
@@ -3009,4 +3007,32 @@ iframe {
   -webkit-animation: pulse 2s ease-in-out 2;
   -moz-animation: pulse 2s ease-in-out 2;
   animation: pulse 2s ease-in-out 2;
+}
+
+/* Expert Filter */
+#socialFilter,
+#videoFilter {
+  padding: 7px 4%;
+  text-align: right;
+  border-bottom: 1px solid #eee;
+  background-color: rgba(255,255,255,0.9);
+}
+
+#socialFilter span,
+#videoFilter span {
+  color: #1f2326;
+}
+
+.filterSelect {
+  color: #16bde7 !important;
+  font-weight: 500;
+}
+
+.filterOff {
+  color: #b3b8ba !important;
+}
+
+.filterSelect,
+.filterOff {
+  cursor: pointer;
 }
