@@ -447,8 +447,7 @@ body
 
 .topicPhoto
 {
-  width:auto;
-  height:50px;
+  width:100%;
   margin-top:0.2em;
   margin-bottom:0.3em;
 }
