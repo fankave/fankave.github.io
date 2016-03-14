@@ -16,7 +16,9 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         updateTimestamps('social');
         $scope.$parent.switchTabs('social');
         // initPTR();
-        if (_this.socialFilter === undefined){
+        if (_this.socialFilter === undefined && TopicService.getGameStatus() === 'live'){
+          _this.socialFilter = true;
+        } else if (_this.socialFilter === undefined){
           _this.socialFilter = false;
         }
       } else {
@@ -29,7 +31,9 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         updateTimestamps('video');
         $scope.$parent.switchTabs('video');
         // initPTR();
-        if (_this.videoFilter === undefined){
+        if (_this.videoFilter === undefined && TopicService.getGameStatus() === 'live'){
+          _this.videoFilter = true;
+        } else if (_this.videoFilter === undefined){
           _this.videoFilter = false;
         }
       }
@@ -176,6 +180,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
         for (var i = 0; i < len; i++){
           var tempItem = feedData[i];
+          // console.log("Social Array Item " + i + ": ", tempItem, len);
 
           // Check to See if Item Already Exists in Scope Array
           var itemExists = false;
@@ -247,11 +252,11 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     var clientHeight = document.documentElement.clientHeight || window.innerHeight;
     var watchContentScroll = debounce(function() {
       var currentScroll = $(document).height() - clientHeight - 150;
-      if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
-        if ($scope.activeTab === 'social'){
+      if ($(document).scrollTop() > currentScroll) {
+        if ($scope.activeTab === 'social' && !_this.preventLoad){
           _this.loadContent('social');
         }
-        else if ($scope.activeTab === 'video'){
+        else if ($scope.activeTab === 'video' && !_this.preventLoad){
           _this.loadContent('video');
         }
       }
@@ -370,9 +375,19 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     }
 
+    function scrollUpAnimate(time) {
+      var body = $('body');
+      body.stop().animate({scrollTop:0}, time.toString(), 'swing');
+      if (_this.preventLoad) {
+        _this.preventLoad = false;
+      }
+    }
+
     this.filterContent = function (tab, filter) {
       if (tab === 'social'){
         if (filter === 'expert'){
+          _this.preventLoad = true;
+          scrollUpAnimate(500);
           _this.socialFilter = true;
         } else {
           _this.socialFilter = false;
@@ -380,6 +395,8 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       } 
       else if (tab === 'video'){
         if (filter === 'expert'){
+          _this.preventLoad = true;
+          scrollUpAnimate(500);
           _this.videoFilter = true;
         } else {
           _this.videoFilter = false;

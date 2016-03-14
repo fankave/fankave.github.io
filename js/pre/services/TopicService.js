@@ -48,15 +48,18 @@ angular.module('TopicModule')
   //        Future game: live == false AND final == false.
   //        Live game: live == true.
   //        Past game: final == true.
-          if(_score.live == undefined && _score.final == undefined)
+          if (!_score.live && !_score.final && !_score.cancel)
             _status = "future";
-          else if(_score.live == true)
+          else if (_score.live === true)
             _status = "live";
-          else if(_score.final == true){
+          else if (_score.final === true){
             _status = "past";
             if (_game.score.summary){
               _summary = _game.score.summary;
             }
+          }
+          else if (_score.cancel === true){
+            _status = "canceled";
           }
           // console.log("GAME Status  :"+ _status );
   
