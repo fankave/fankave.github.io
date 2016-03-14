@@ -152,18 +152,14 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
       $scope.activeTab = 'chat';
       $(document).scrollTop(0);
       init();
-      $scope.newVideoAvailable = false;
-      $scope.newSocialAvailable = false;
     }
     if (tab === 'video'){
       $scope.activeTab = 'video';
       $(document).scrollTop(0);
-      $scope.newSocialAvailable = false;
     }
     if (tab === 'social'){
       $scope.activeTab = 'social';
       $(document).scrollTop(0);
-      $scope.newVideoAvailable = false;
     }
     if (GEN_DEBUG)
     console.log("Active Tab: ", $scope.activeTab);
@@ -378,93 +374,10 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
     $scope.topicID = $routeParams.topicID;
     init();
 
-    // Comment/Uncomment to Disable/Enable Auto Refresh
-    initAutoRefresh();
-
-    $scope.newVideoAvailable = false;
-    $scope.newSocialAvailable = false;
-
     if ($scope.mobileBrowser === true && !URIHelper.embedded()){
       document.getElementById('topicSection').style.paddingBottom = "42px";
     }
   }
-
-  // Auto Refresh
-  function initAutoRefresh () {
-    registerAutoCallbacks();
-    if (TopicService.currentTimer()){
-      $interval.cancel(TopicService.currentTimer(false));
-    }
-    var timer = $interval(function(){
-      if (GEN_DEBUG) console.log("$AUTO$ CHECK NEW SOCIAL/VIDEO");
-      networkService.send(SocialService.getSocialDataRequestAuto(TopicService.getChannelId()));
-      // Video tab does not exist for MWC/MI16 users
-      if (!URIHelper.isTechMUser() && !URIHelper.isMWCUser()){
-        networkService.send(VideoService.getVideoDataRequestAuto(TopicService.getChannelId()));
-      }
-    }, 15000);
-    TopicService.currentTimer(timer);
-  }
-
-  function registerAutoCallbacks () {
-    SocialService.registerObserverCallback(function(){updateJewels('social')}, true);
-    if (!URIHelper.isTechMUser() && !URIHelper.isMWCUser()){
-      VideoService.registerObserverCallback(function(){updateJewels('video')}, true);
-    }
-  }
-
-  function updateJewels (tab) {
-    if (tab === 'social'){
-      var length = SocialService.socialArrayAutoLength();
-      var prevLength = SocialService.getPrevLength();
-      if (GEN_DEBUG) console.log("$AUTO$ UPDATE JEWEL[S] - ", {prevLength:prevLength,newLength:length});
-      if (length > prevLength){
-        if (GEN_DEBUG) console.log("$AUTO$ PULSE SOCIAL JEWEL");
-        if ($scope.activeTab === 'social'){
-          // If user is on tab during first interval, don't show indicator
-          if (prevLength !== 0){
-            $scope.newSocialAvailable = true;
-          }
-        } else {
-          pulseJewel('social');
-        }
-        SocialService.setPrevLength(length);
-      }
-    }
-    if (tab === 'video'){
-      var length = VideoService.videoArrayAutoLength();
-      var prevLength = VideoService.getPrevLength();
-      if (GEN_DEBUG) console.log("$AUTO$ UPDATE JEWEL[V] - ", {prevLength:prevLength,newLength:length});
-      if (length > prevLength){
-        if (GEN_DEBUG) console.log("$AUTO$ PULSE VIDEO JEWEL");
-        if ($scope.activeTab === 'video'){
-          // If user is on tab during first interval, don't show indicator
-          if (prevLength !== 0){
-            $scope.newVideoAvailable = true;
-          }
-        } else {
-          pulseJewel('video');
-        }
-        VideoService.setPrevLength(length);
-      }
-    }
-  }
-
-  function pulseJewel (tab) {
-    var el;
-    if (tab === 'social'){
-      el = document.getElementById('socialJewel');
-    }
-    if (tab === 'video'){
-      el = document.getElementById('videoJewel');
-    }
-
-    // Trick to retrigger animation
-    el.classList.remove('pulse');
-    el.offsetWidth = el.offsetWidth;
-    el.classList.add('pulse');
-  }
-
 
   $scope.viewPost = function(e,id){
     // Check for url query string

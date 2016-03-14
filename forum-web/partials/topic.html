@@ -373,7 +373,7 @@
       </button>
     </div>
 
-    <div id="newSocialAvailable" ng-if="newSocialAvailable && activeTab === 'social'">
+    <div id="newSocialAvailable" ng-if="social.newSocialAvailable && activeTab === 'social'">
       <button id="newSocialButton" class="btn-link" ng-click="social.showNewSocial()">
         &uarr; New Social
       </button>
@@ -428,13 +428,13 @@
       </button>
     </div>
 
-    <div id="newVideosAvailable" ng-if="newVideoAvailable && activeTab === 'video'">
+    <div id="newVideosAvailable" ng-if="social.newVideoAvailable && activeTab === 'video'">
       <button id="newVideosButton" class="btn-link" ng-click="social.showNewVideo()">
         &uarr; New Videos
       </button>
     </div>
 
-    <div id="newSocialAvailable" ng-if="newSocialAvailable && activeTab === 'social'">
+    <div id="newSocialAvailable" ng-if="social.newSocialAvailable && activeTab === 'social'">
       <button id="newSocialButton" class="btn-link" ng-click="social.showNewSocial()">
         &uarr; New Social
       </button>
