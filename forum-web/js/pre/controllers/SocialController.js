@@ -1,6 +1,6 @@
 angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
-.controller("SocialController", ["$scope","$sce","$window","$routeParams","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper",
-  function ($scope,$sce,$window,$routeParams,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper){
+.controller("SocialController", ["$scope","$sce","$window","$routeParams","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper","AnalyticsService",
+  function ($scope,$sce,$window,$routeParams,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper,AnalyticsService){
     console.log("Social Control");
 
     var _this = this;
@@ -302,9 +302,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     };
 
     this.reportSocialInteraction = function (post, button, activeTab) {
-      // post - the whole post the user just interacted with - Object
-      // button - type of social button - String - 'reply', 'retweet', or 'like'
-      // activeTab - String
+      // console.log(post);
+      // console.log(button);
+      // console.log(activeTab);
+      AnalyticsService.exploreEvent(buttin, post.id, post.type, post.tweetId, post.providerName, activeTab);
     }
 
 

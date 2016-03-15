@@ -67,8 +67,8 @@ angular.module('TopicModule')
 }]);
 
 angular.module('TopicModule')
-.directive('mediaPlayer', ['$sce', 'UserAgentService',
-  function ($sce, UserAgentService) {
+.directive('mediaPlayer', ['$sce', 'UserAgentService','AnalyticsService',
+  function ($sce, UserAgentService,AnalyticsService) {
   return {
     restrict: 'E',
     scope: {
@@ -121,12 +121,20 @@ angular.module('TopicModule')
         if (GEN_DEBUG)
           console.log("Video play clicked" + scope.thisPost.id);
         ga('send', 'event', 'Video','Play', scope.thisPost.id);
+        if(ANALYTICS)
+        AnalyticsService.addSession();
       });
       $(video).on('pause', function() {
         var videoLengthPlayed = Math.round(video.currentTime);
         if (GEN_DEBUG)
         console.log("Video paused" + scope.thisPost.id + ": TimePlayed " + videoLengthPlayed);
         ga('send', 'event', 'Video','VideoLengthPlayed', scope.thisPost.id, videoLengthPlayed);
+        if(ANALYTICS)
+        AnalyticsService.exploreSessionEvent("Video", scope.thisPost.id, scope.thisPost.type, scope.thisPost.tweetId, scope.thisPost.providerName, "tab");
+        if(ANALYTICS_DEBUG){
+          console.log(scope.thisPost);
+          console.log("Video" +  "   " + scope.thisPost.id+  "   " +  scope.thisPost.type+  "   " +  scope.thisPost.tweetId+  "   " +  scope.thisPost.providerName+  "   " +  "tab");
+        }
       });
        $(video).on('ended', function() {
         var videoLengthPlayed = Math.round(video.currentTime);
