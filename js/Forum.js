@@ -1,4 +1,4 @@
-angular.module("Forum", ["ngRoute","ngSanitize","AuthModule","ChannelModule","TopicModule","PostModule","NetworkModule","MediaModule","SocialModule","UserInput","SmartStadiumModule"])
+angular.module("Forum", ["ngRoute","ngSanitize","ng.deviceDetector","AuthModule","ChannelModule","TopicModule","PostModule","NetworkModule","MediaModule","SocialModule","UserInput","SmartStadiumModule"])
 .config(["$routeProvider", "$locationProvider",
 
 function ($routeProvider, $locationProvider) {

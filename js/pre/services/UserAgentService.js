@@ -1,6 +1,6 @@
 angular.module('Forum')
-.factory("UserAgentService", ["ForumStorage","UserInfoService",
-  function (ForumStorage,UserInfoService){
+.factory("UserAgentService", ["ForumStorage","UserInfoService","deviceDetector",
+  function (ForumStorage, UserInfoService, deviceDetector){
 
     var _userAgent;
 
