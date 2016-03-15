@@ -336,6 +336,8 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     $scope.loadingSocial = false;
   };
   function initPage(){
+    var deviceInfo = UserAgentService.deviceDetect();
+    console.log("!! NEW DEVICE INFO: ", deviceInfo);
     if (URIHelper.getActiveTab() === 'video'){
       $rootScope.leftTab = 'video';
     }

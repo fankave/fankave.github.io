@@ -32,10 +32,20 @@ angular.module('Forum')
       return false;
     }
 
+    function deviceDetect() {
+      return {
+        raw: deviceDetector.raw,
+        os: deviceDetector.os,
+        browser: deviceDetector.browser,
+        device: deviceDetector.device
+      };
+    }
+
     return {
       getMobileUserAgent: getMobileUserAgent,
       isMobileUser: isMobileUser,
-      isUserAgent: isUserAgent
+      isUserAgent: isUserAgent,
+      deviceDetect: deviceDetect
     };
 
 }]);
