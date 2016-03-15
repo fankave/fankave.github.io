@@ -1,6 +1,6 @@
 angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
-.controller("SocialController", ["$scope","$sce","$window","$routeParams","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper",
-  function ($scope,$sce,$window,$routeParams,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper){
+.controller("SocialController", ["$scope","$sce","$window","$routeParams","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper","AnalyticsService",
+  function ($scope,$sce,$window,$routeParams,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper,AnalyticsService){
     console.log("Social Control");
 
     var _this = this;
@@ -300,6 +300,13 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     this.unhighlightPost = function(){
       $('#postShareContent').css('color','rgb(211,214,215)');
     };
+
+    this.reportSocialInteraction = function (post, button, activeTab) {
+      // console.log(post);
+      // console.log(button);
+      // console.log(activeTab);
+      AnalyticsService.exploreEvent(buttin, post.id, post.type, post.tweetId, post.providerName, activeTab);
+    }
 
 
 }]);

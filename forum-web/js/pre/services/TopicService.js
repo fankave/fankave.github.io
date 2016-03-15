@@ -111,8 +111,10 @@ angular.module('TopicModule')
       _gameStats = _score.status;
       if (NETWORK_DEBUG) {
         console.log("Game Points :" + _score.points[0] + " : : "+_score.points[1] );
+        if(_gameStats !== null){
         console.log("Game Period :" + _gameStats[0]);
         console.log("Game Period :" + _gameStats[1]);
+        }
       }
       notifyObservers();
     }
