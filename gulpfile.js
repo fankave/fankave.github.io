@@ -90,7 +90,8 @@ gulp.task('lib-pre', function() {
     './bower_components/angular-route/angular-route.min.js',
     './bower_components/angular-websocket/angular-websocket.min.js',
     './lib/angular-sanitize/angular-sanitize.min.js',
-    './bower_components/angular-file-upload/dist/angular-file-upload.min.js'
+    './bower_components/angular-file-upload/dist/angular-file-upload.min.js',
+    './bower_components/ng-device-detector/ng-device-detector.min.js'
   ])
   .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(concat('lib-pre.min.js'))

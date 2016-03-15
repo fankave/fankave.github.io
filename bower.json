@@ -18,7 +18,8 @@
     "angular-websocket": "~1.0.14",
     "angular-route": "~1.4.8",
     "bootstrap": "~3.3.6",
-    "AngularHammer": "ryanmullins-angular-hammer#~2.1.10"
+    "AngularHammer": "ryanmullins-angular-hammer#~2.1.10",
+    "ng-device-detector": "~3.0.1"
   },
   "resolutions": {
     "angular": "1.4.7"
