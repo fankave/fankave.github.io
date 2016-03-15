@@ -3086,6 +3086,7 @@ iframe {
   width: 7px;
   border-radius: 50%;
   left: 5px;
+  visibility: hidden;
 }
 
 .pulse {

@@ -1,12 +1,14 @@
 angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
-.controller("SocialController", ["$scope","$sce","$window","$location","$routeParams","$q","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper","UserAgentService",
-  function ($scope,$sce,$window,$location,$routeParams,$q,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper,UserAgentService){
+.controller("SocialController", ["$scope","$sce","$window","$location","$routeParams","$q","$interval","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper","UserAgentService",
+  function ($scope,$sce,$window,$location,$routeParams,$q,$interval,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper,UserAgentService){
     console.log("Social Control");
+    initAutoRefresh();
 
     var _this = this;
     this.initFeed = function(tab) {
       // Show Loading UI Once On Each Tab
       if (tab === 'social'){
+        if (_this.newSocialAvailable) _this.newSocialAvailable = false;
         if (!_this.socialArray){
           $scope.$parent.loadingSocial = true;
           _this.loadContent('social');
@@ -22,6 +24,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           _this.socialFilter = false;
         }
       } else {
+        if (_this.newVideoAvailable) _this.newVideoAvailable = false;
         if (!_this.videoArray){
           $scope.$parent.loadingSocial = true;
           _this.loadContent('video');
@@ -52,6 +55,89 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       URIHelper.tabEntered();
       _this.initFeed('social');
     });
+
+    // Auto Refresh
+    function initAutoRefresh () {
+      registerAutoCallbacks();
+      if (TopicService.currentTimer()){
+        $interval.cancel(TopicService.currentTimer(false));
+      }
+      var timer = $interval(function(){
+        if (GEN_DEBUG) console.log("$AUTO$ START INTERVAL");
+        networkService.send(SocialService.getSocialDataRequestAuto(TopicService.getChannelId()));
+        if (!URIHelper.isTechMUser() && !URIHelper.isMWCUser()){
+          networkService.send(VideoService.getVideoDataRequestAuto(TopicService.getChannelId()));
+        }
+      }, 15000);
+      TopicService.currentTimer(timer);
+    }
+
+    function registerAutoCallbacks () {
+      SocialService.registerObserverCallback(function(){updateJewels('social')}, true);
+      if (!URIHelper.isTechMUser() && !URIHelper.isMWCUser()){
+        VideoService.registerObserverCallback(function(){updateJewels('video')}, true);
+      }
+    }
+
+    function updateJewels (tab) {
+      if (tab === 'social'){
+        var length = SocialService.socialArrayAutoLength();
+        var prevLength = SocialService.getPrevLength();
+        if (GEN_DEBUG) console.log("$AUTO$ UPDATE JEWEL[S] - ", {prevLength:prevLength,newLength:length});
+        if (length > prevLength){
+          if (GEN_DEBUG) console.log("$AUTO$ PULSE SOCIAL JEWEL");
+          if ($scope.$parent.activeTab === 'social'){
+            // If user is on tab during first interval, don't show indicator
+            if (prevLength !== 0){
+              if ((_this.socialFilter && SocialService.newExpertIn()) || !_this.socialFilter){
+                _this.newSocialAvailable = true;
+                SocialService.newExpertIn(false);
+              }
+            }
+          } else {
+            pulseJewel('social');
+          }
+          SocialService.setPrevLength(length);
+        }
+      }
+      if (tab === 'video'){
+        var length = VideoService.videoArrayAutoLength();
+        var prevLength = VideoService.getPrevLength();
+        if (GEN_DEBUG) console.log("$AUTO$ UPDATE JEWEL[V] - ", {prevLength:prevLength,newLength:length});
+        if (length > prevLength){
+          if (GEN_DEBUG) console.log("$AUTO$ PULSE VIDEO JEWEL");
+          if ($scope.$parent.activeTab === 'video'){
+            // If user is on tab during first interval, don't show indicator
+            if (prevLength !== 0){
+              if ((_this.videoFilter && VideoService.newExpertIn()) || !_this.videoFilter){
+                _this.newVideoAvailable = true;
+                VideoService.newExpertIn(false);
+              }
+            }
+          } else {
+            pulseJewel('video');
+          }
+          VideoService.setPrevLength(length);
+        }
+      }
+    }
+
+    function pulseJewel (tab) {
+      var el;
+      if (tab === 'social'){
+        el = document.getElementById('socialJewel');
+      }
+      if (tab === 'video'){
+        el = document.getElementById('videoJewel');
+      }
+
+      // Trick to retrigger animation
+      el.style.visibility = 'visible';
+      el.classList.remove('pulse');
+      el.offsetWidth = el.offsetWidth;
+      el.classList.add('pulse');
+      setTimeout(function(){el.style.visibility = 'hidden';}, 2500);
+    }
 
     this.loadContent = function(type, offset) {
       var channelID = ChannelService.getChannel()||TopicService.getChannelId();
@@ -358,21 +444,21 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     };
 
     this.showNewSocial = function(){
-      $scope.$parent.newSocialAvailable = false;
+      _this.newSocialAvailable = false;
       updateFeed('social');
       var body = $('body');
       body.stop().animate({scrollTop:0}, '500', 'swing');
     }
 
     this.showNewVideo = function(){
-      $scope.$parent.newVideoAvailable = false;
+      _this.newVideoAvailable = false;
       updateFeed('video');
       var body = $('body');
       body.stop().animate({scrollTop:0}, '500', 'swing');
     }
 
-    this.reportSocialInteraction = function (post, button) {
-
+    this.reportSocialInteraction = function (post, button, tab) {
+      console.log("Social Button Clicked: ", post, button, tab);
     }
 
     function scrollUpAnimate(time) {

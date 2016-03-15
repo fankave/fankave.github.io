@@ -448,7 +448,7 @@
     <span ng-click="social.filterContent(activeTab, 'live')" ng-class="{ filterSelect: !social.socialFilter, filterOff: social.socialFilter }">Live &ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'expert')" ng-class="{ filterSelect: social.socialFilter, filterOff: !social.socialFilter }">Expert</span>
   </div>
-  <div id="newSocialAvailable" ng-if="newSocialAvailable && activeTab === 'social'">
+  <div id="newSocialAvailable" ng-if="social.newSocialAvailable && activeTab === 'social'">
     <button id="newSocialButton" class="btn-link" ng-click="social.showNewSocial()">
       &uarr; New Social
     </button>
@@ -459,7 +459,7 @@
     <span ng-click="social.filterContent(activeTab, 'live')" ng-class="{ filterSelect: !social.videoFilter, filterOff: social.videoFilter }">Live &ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'expert')" ng-class="{ filterSelect: social.videoFilter, filterOff: !social.videoFilter }">Expert</span>
   </div>
-  <div id="newVideosAvailable" ng-if="newVideoAvailable && activeTab === 'video'">
+  <div id="newVideosAvailable" ng-if="social.newVideoAvailable && activeTab === 'video'">
     <button id="newVideosButton" class="btn-link" ng-click="social.showNewVideo()">
       &uarr; New Videos
     </button>
@@ -573,7 +573,7 @@
   </div>
 
   <!-- Video Tab Content -->
-  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | orderBy: '-createdAtFull'" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | filter: (social.videoFilter || '') && { expert: true } | orderBy: '-createdAtFull'" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -686,7 +686,7 @@
 
     <div class="socialButtonsRow socialText">
       
-      <button class="btn-link social-btn" secure-click="">
+      <button class="btn-link social-btn" secure-click="social.reportSocialInteraction(thisPost, 'reply', activeTab)">
         <a href="{{secureLink('https://twitter.com/intent/tweet?via=FanKave&in_reply_to=',thisPost.tweetId)}}">
           <img class="social-metrics-reply" ng-src="img/reply@2x.png"/>
         </a>
