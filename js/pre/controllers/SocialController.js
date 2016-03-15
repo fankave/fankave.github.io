@@ -136,7 +136,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       el.classList.remove('pulse');
       el.offsetWidth = el.offsetWidth;
       el.classList.add('pulse');
-      // setTimeout(function(){el.style.visibility = 'hidden';}, 2500);
+      setTimeout(function(){el.style.visibility = 'hidden';}, 5000);
     }
 
     this.loadContent = function(type, offset) {
