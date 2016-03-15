@@ -132,11 +132,11 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       }
 
       // Trick to retrigger animation
-      el.style.visibility = 'visible';
+      // el.style.visibility = 'visible';
       el.classList.remove('pulse');
       el.offsetWidth = el.offsetWidth;
       el.classList.add('pulse');
-      setTimeout(function(){el.style.visibility = 'hidden';}, 2500);
+      // setTimeout(function(){el.style.visibility = 'hidden';}, 2500);
     }
 
     this.loadContent = function(type, offset) {
