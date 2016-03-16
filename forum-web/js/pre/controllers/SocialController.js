@@ -305,8 +305,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       // console.log(post);
       // console.log(button);
       // console.log(activeTab);
-      if(ANALYTICS)
-      AnalyticsService.exploreEvent(button, post.id, post.type, post.tweetId, post.providerName, activeTab);
+      AnalyticsService.exploreEvent(buttin, post.id, post.type, post.tweetId, post.providerName, activeTab);
     }
 
 
