@@ -19,7 +19,8 @@
     "angular-route": "~1.4.8",
     "bootstrap": "~3.3.6",
     "video.js": "~5.5.3",
-    "angular-file-upload": "~2.2.0"
+    "angular-file-upload": "~2.2.0",
+    "ng-device-detector": "^3.0.1"
   },
   "resolutions": {
     "angular": "1.4.7"
