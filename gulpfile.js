@@ -133,14 +133,12 @@ gulp.task('css', function() {
 })
 
 gulp.task('minifyFile', function() {
-  return gulp.src(['./lib/angular/angular-sanitize.js'])
-  .pipe(sourcemaps.init())
-    .pipe(uglify())
-    .pipe(rename({
-      suffix: '.min'
-    }))
-  .pipe(sourcemaps.write('.'))
-  .pipe(gulp.dest('./lib/angular-sanitize'));
+  return gulp.src(['./embedInline.js'])
+  .pipe(uglify())
+  .pipe(rename({
+    suffix: '.min'
+  }))
+  .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('watch', function() {

@@ -2,7 +2,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 .controller("SocialController", ["$scope","$sce","$window","$location","$routeParams","$q","$interval","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper","UserAgentService",
   function ($scope,$sce,$window,$location,$routeParams,$q,$interval,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper,UserAgentService){
     console.log("Social Control");
-    initAutoRefresh();
+    // initAutoRefresh();
 
     var _this = this;
     this.initFeed = function(tab) {
@@ -19,11 +19,14 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         updateTimestamps('social');
         $scope.$parent.switchTabs('social');
         // initPTR();
-        if (_this.socialFilter === undefined && TopicService.getGameStatus() === 'live'){
-          _this.socialFilter = true;
-        } else if (_this.socialFilter === undefined){
-          _this.socialFilter = false;
+        if (!window.twttr){
+          loadTwitter();
         }
+        // if (_this.socialFilter === undefined && TopicService.getGameStatus() === 'live'){
+        //   _this.socialFilter = true;
+        // } else if (_this.socialFilter === undefined){
+        //   _this.socialFilter = false;
+        // }
       } else {
         if (_this.newVideoAvailable) _this.newVideoAvailable = false;
         hideJewel('video');
@@ -36,13 +39,16 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         updateTimestamps('video');
         $scope.$parent.switchTabs('video');
         // initPTR();
-        if (_this.videoFilter === undefined && TopicService.getGameStatus() === 'live'){
-          _this.videoFilter = true;
-        } else if (_this.videoFilter === undefined){
-          _this.videoFilter = false;
+        if (!window.twttr){
+          loadTwitter();
         }
+        // if (_this.videoFilter === undefined && TopicService.getGameStatus() === 'live'){
+        //   _this.videoFilter = true;
+        // } else if (_this.videoFilter === undefined){
+        //   _this.videoFilter = false;
+        // }
       }
-    };
+    }
 
     $scope.$on('videoActive', function (event, args){
       console.log("Video Broadcast Received");
@@ -57,6 +63,25 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       URIHelper.tabEntered();
       _this.initFeed('social');
     });
+
+    function loadTwitter () {
+      window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+       
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+       
+        return t;
+      }(document, "script", "twitter-wjs"));
+    }
 
     // Auto Refresh
     function initAutoRefresh () {
