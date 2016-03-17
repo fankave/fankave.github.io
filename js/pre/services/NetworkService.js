@@ -32,7 +32,7 @@ function ($websocket,$route,DataService,UserInfoService)
     //Websocket callbacks below
     ws.onOpen(function() {
       if (NETWORK_DEBUG)
-      console.log("Websocket Connected: ", ws.readyState, ws.OPEN);
+      console.log("Websocket Connected");
     });
 
     ws.onClose(function(evt) {
