@@ -443,22 +443,22 @@
     </button>
   </div>
 
-  <div id="socialFilter" ng-if="activeTab === 'social'">
+  <!-- <div id="socialFilter" ng-if="activeTab === 'social'">
     <span>Filter: &ensp;&ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'live')" ng-class="{ filterSelect: !social.socialFilter, filterOff: social.socialFilter }">Live &ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'expert')" ng-class="{ filterSelect: social.socialFilter, filterOff: !social.socialFilter }">Expert</span>
-  </div>
+  </div> -->
   <div id="newSocialAvailable" ng-if="social.newSocialAvailable && activeTab === 'social'">
     <button id="newSocialButton" class="btn-link" ng-click="social.showNewSocial()">
       &uarr; New Social
     </button>
   </div>
 
-  <div id="videoFilter" ng-if="activeTab === 'video'">
+  <!-- <div id="videoFilter" ng-if="activeTab === 'video'">
     <span>Filter: &ensp;&ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'live')" ng-class="{ filterSelect: !social.videoFilter, filterOff: social.videoFilter }">Live &ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'expert')" ng-class="{ filterSelect: social.videoFilter, filterOff: !social.videoFilter }">Expert</span>
-  </div>
+  </div> -->
   <div id="newVideosAvailable" ng-if="social.newVideoAvailable && activeTab === 'video'">
     <button id="newVideosButton" class="btn-link" ng-click="social.showNewVideo()">
       &uarr; New Videos
