@@ -88,6 +88,7 @@ angular.module('Forum')
             type: 'resize',
             contentHeight: contentHeight
           };
+          parent.postMessage(message, 'http://www.collegespun.com');
           parent.postMessage(message, 'http://www.fankave.net');
         }
 
