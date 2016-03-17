@@ -90,7 +90,6 @@ angular.module('Forum')
           };
           parent.postMessage(message, 'http://www.collegespun.com');
           parent.postMessage(message, 'http://www.fankave.net');
-          parent.postMessage(message, 'http://www.collegespun.com');
         }
 
       }
