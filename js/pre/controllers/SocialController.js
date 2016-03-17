@@ -2,13 +2,14 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 .controller("SocialController", ["$scope","$sce","$window","$location","$routeParams","$q","$interval","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper","UserAgentService",
   function ($scope,$sce,$window,$location,$routeParams,$q,$interval,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper,UserAgentService){
     console.log("Social Control");
-    // initAutoRefresh();
+    initAutoRefresh();
 
     var _this = this;
     this.initFeed = function(tab) {
       // Show Loading UI Once On Each Tab
       if (tab === 'social'){
         if (_this.newSocialAvailable) _this.newSocialAvailable = false;
+        hideJewel('social');
         if (!_this.socialArray){
           $scope.$parent.loadingSocial = true;
           _this.loadContent('social');
@@ -25,6 +26,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         }
       } else {
         if (_this.newVideoAvailable) _this.newVideoAvailable = false;
+        hideJewel('video');
         if (!_this.videoArray){
           $scope.$parent.loadingSocial = true;
           _this.loadContent('video');
@@ -58,24 +60,41 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     // Auto Refresh
     function initAutoRefresh () {
-      registerAutoCallbacks();
+      registerNewCallbacks();
+      registerJewelCallbacks();
       if (TopicService.currentTimer()){
         $interval.cancel(TopicService.currentTimer(false));
       }
       var timer = $interval(function(){
         if (GEN_DEBUG) console.log("$AUTO$ START INTERVAL");
-        networkService.send(SocialService.getSocialDataRequestAuto(TopicService.getChannelId()));
+        networkService.send(SocialService.getSocialDataRequestAutoSingle(TopicService.getChannelId()));
         if (!URIHelper.isTechMUser() && !URIHelper.isMWCUser()){
-          networkService.send(VideoService.getVideoDataRequestAuto(TopicService.getChannelId()));
+          networkService.send(VideoService.getVideoDataRequestAutoSingle(TopicService.getChannelId()));
         }
       }, 15000);
       TopicService.currentTimer(timer);
     }
 
-    function registerAutoCallbacks () {
+    function registerNewCallbacks () {
+      SocialService.registerObserverCallback(function(){getNewContent('social')}, 'new');
+      VideoService.registerObserverCallback(function(){getNewContent('video')}, 'new');
+    }
+
+    function registerJewelCallbacks () {
       SocialService.registerObserverCallback(function(){updateJewels('social')}, true);
       if (!URIHelper.isTechMUser() && !URIHelper.isMWCUser()){
         VideoService.registerObserverCallback(function(){updateJewels('video')}, true);
+      }
+    }
+
+    function getNewContent (tab) {
+      if (tab === 'social'){
+        if (GEN_DEBUG) console.log("$AUTO$ NEW SOCIAL PRESENT - SEND FULL REQUEST");
+        networkService.send(SocialService.getSocialDataRequestAuto(TopicService.getChannelId()));
+      }
+      if (tab === 'video'){
+        if (GEN_DEBUG) console.log("$AUTO$ NEW VIDEO PRESENT - SEND FULL REQUEST");
+        networkService.send(VideoService.getVideoDataRequestAuto(TopicService.getChannelId()));
       }
     }
 
@@ -137,6 +156,17 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       el.offsetWidth = el.offsetWidth;
       el.classList.add('pulse');
       // setTimeout(function(){el.style.visibility = 'hidden';}, 2500);
+    }
+
+    function hideJewel (tab) {
+      var el;
+      if (tab === 'social'){
+        el = document.getElementById('socialJewel');
+      }
+      if (tab === 'video'){
+        el = document.getElementById('videoJewel');
+      }
+      el.classList.remove('pulse');
     }
 
     this.loadContent = function(type, offset) {
