@@ -25,7 +25,7 @@ function ($websocket,$route,DataService,UserInfoService)
   //   });
 
   function initSocket() { 
-    if(ws !== undefined)
+    if(ws != undefined)
       ws.close();
     ws = $websocket(getWebsocketUri());
     DataService.setWatchTopic(false);
@@ -94,7 +94,7 @@ function ($websocket,$route,DataService,UserInfoService)
   return{
     isSocketConnected:function(){
       if (NETWORK_DEBUG){
-        if (ws !== null){
+        if (ws != null){
           if (NETWORK_DEBUG)
           console.log("WS Status: ", ws.readyState);
         }
@@ -103,19 +103,19 @@ function ($websocket,$route,DataService,UserInfoService)
           console.log("WS is null");
         }
       }
-      if (ws !== undefined && ws.readyState === 1){
+      if (ws != undefined && ws.readyState == 1){
         return true;
       }
       return false;
     },
     send:function(message) { 
-      if(ws === undefined){ 
+      if(ws == undefined){ 
         initSocket();
       }
       ws.send(JSON.stringify(message));
     },
     closeSocket:function(){
-      if(ws !== undefined)
+      if(ws != undefined)
         ws.close();
     },
     init:initSocket
