@@ -16,6 +16,9 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         $scope.$parent.switchTabs('social');
         SocialService.resetSocialOffset();
         _this.loadContent('social');
+        if (!window.twttr){
+          loadTwitter();
+        }
       } else {
         if (!_this.videoArray){
           $scope.$parent.loadingSocial = true;
@@ -26,6 +29,9 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         $scope.$parent.switchTabs('video');
         VideoService.resetVideoOffset();
         _this.loadContent('video');
+        if (!window.twttr){
+          loadTwitter();
+        }
       }
     };
 
@@ -40,6 +46,25 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       $scope.$parent.activeTab = 'social';
       _this.initFeed('social');
     });
+
+    function loadTwitter () {
+      window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+       
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+       
+        return t;
+      }(document, "script", "twitter-wjs"));
+    }
 
     this.loadContent = function(type, offset) {
       var channelID = ChannelService.getChannel()||TopicService.getChannelId();
