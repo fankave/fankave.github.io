@@ -42,7 +42,7 @@ function ($websocket,$route,DataService,UserInfoService)
     });
 
     ws.onMessage(function(evt) {
-      if(NETWORK_DEBUG) console.log("Websocket Message Recieved:  ", evt.data, ws.OPEN);
+      if(NETWORK_DEBUG) console.log("Websocket Message Recieved:  ", evt.data);
       var responseJson = JSON.parse(evt.data);
       var type = responseJson.rid;
       if(type !== undefined){
@@ -96,7 +96,7 @@ function ($websocket,$route,DataService,UserInfoService)
       if (NETWORK_DEBUG){
         if (ws !== null){
           if (NETWORK_DEBUG)
-          console.log("WS Status: ", ws.readyState, " WS.OPEN: ", ws.OPEN);
+          console.log("WS Status: ", ws.readyState);
         }
         else {
           if (NETWORK_DEBUG)
