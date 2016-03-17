@@ -116,26 +116,26 @@ angular.module('ChannelModule')
 //         console.log('Analytics Error: ', error);
 // });
 
-var config = {
-                headers: {
-        "Content-Type": "application/json"
-                          }
-            };
-    $http.post("http://146.148.35.97:8088/v1.0/services/analytics/events", JSON.stringify(eventStack),config)
-      .then(function (response) {
-        if (response.status === 200) {
-          if (ANALYTICS_DEBUG)
-          console.log("Successfully Sent analytics events to server");
-        eventStack = [];
-        }
-      },
-      function (response) {
-        if (ANALYTICS_DEBUG)
-        console.log('Analytics Error: ', response);
-      }).then(function (response) {
-        if (ANALYTICS_DEBUG)
-        console.log('Analytics Resp: ', response);
-      });
+// var config = {
+//                 headers: {
+//         "Content-Type": "application/json"
+//                           }
+//             };
+//     $http.post("http://146.148.35.97:8088/v1.0/services/analytics/events", JSON.stringify(eventStack),config)
+//       .then(function (response) {
+//         if (response.status === 200) {
+//           if (ANALYTICS_DEBUG)
+//           console.log("Successfully Sent analytics events to server");
+//         eventStack = [];
+//         }
+//       },
+//       function (response) {
+//         if (ANALYTICS_DEBUG)
+//         console.log('Analytics Error: ', response);
+//       }).then(function (response) {
+//         if (ANALYTICS_DEBUG)
+//         console.log('Analytics Resp: ', response);
+//       });
         printEventStack();
         eventStack = [];
       }
