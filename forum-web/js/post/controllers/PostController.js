@@ -100,7 +100,9 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 
 	$scope.peelWatchOnTV = function()
 	{
+		if(GOOGLE_ANALYTICS === true){
 		ga('send', 'event', 'Peel', 'click', 'PeelWatchOnTV');
+	}
     if (GEN_DEBUG)
 		console.log("peelWatchOnTV()");
 		var showId = URIHelper.getPeelShowId();

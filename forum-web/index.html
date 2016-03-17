@@ -26,18 +26,29 @@
 
   <!-- App Javascript -->
   <script src="dist/js/app.min.js"></script>
+  <!-- Google Analytics -->
+<!--script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ //ga('create', 'UA-69086637-2', 'auto');
+ //ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script-->
+<!-- End Google Analytics -->
   
   <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  var GOOGLE_ANALYTICS = false;
+  // if(GOOGLE_ANALYTICS === true){
+  //   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  //   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  //   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  //   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  // }
 
   var NETWORK_DEBUG = true;
   var ANALYTICS = true;
   var ANALYTICS_DEBUG = true;
   var GEN_DEBUG = false;
-  var DEV_BUILD = false;
+  var DEV_BUILD = true;
   var HTML5_LOC = false;
   var HOST_NAME = window.location.host;
   var WEBSOCKET_BASE_URI = 'wss://cas.fankave.com:80/ws?';
@@ -48,13 +59,17 @@
     WEBSOCKET_BASE_URI = 'wss://dev.fankave.com/ws?';
     REGISTER_SERVER_URI = 'https://dev.fankave.com/v1.0/user/register';
     MUS_SERVER_URI = 'https://dev.fankave.com:8080';
+    if(GOOGLE_ANALYTICS === true){
     ga('create', 'UA-69086637-2', 'auto');
     console.log('Sending Reports to Dev');
     //ga('send', 'pageview');
+    }
   } else {
+    if(GOOGLE_ANALYTICS === true){
     ga('create', 'UA-69086637-1', 'auto');
     console.log('Sending Reports to Prod');
     ga('send', 'pageview');
+    }
   }
 
   </script>
@@ -75,24 +90,6 @@
   <!-- Libraries Post Load -->
   <script src="dist/lib/lib-post.min.js"></script>
 
-  <script>
-    window.twttr = (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0],
-        t = window.twttr || {};
-      if (d.getElementById(id)) return t;
-      js = d.createElement(s);
-      js.id = id;
-      js.src = "https://platform.twitter.com/widgets.js";
-      fjs.parentNode.insertBefore(js, fjs);
-     
-      t._e = [];
-      t.ready = function(f) {
-        t._e.push(f);
-      };
-     
-      return t;
-    }(document, "script", "twitter-wjs"));
-  </script>
 </body>
 
 </html>
