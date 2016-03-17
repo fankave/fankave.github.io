@@ -245,8 +245,12 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
         if (URIHelper.getActiveTab() === 'video'){
           $rootScope.$broadcast('videoActive');
         }
-        if (URIHelper.getActiveTab() === 'social'){
+        else if (URIHelper.getActiveTab() === 'social'){
           $rootScope.$broadcast('socialActive');
+        }
+        else{
+          if(ANALYTICS)
+            AnalyticsService.addSession();
         }
       }
     }
