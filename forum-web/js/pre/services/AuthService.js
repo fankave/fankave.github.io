@@ -88,6 +88,7 @@ angular.module('AuthModule')
   };
 
   var registerUser = function(registerParams, mUserType, callback) {
+    console.log("REGISTER");
     // Post request to our api to register/retrieve user
     var userType = registerParams.type;
     if (mUserType){
@@ -114,6 +115,7 @@ angular.module('AuthModule')
         if (NETWORK_DEBUG)
         console.log('Registration Error: ', response);
       }).then(function (response) {
+        console.log('Registration response: ');
         initializeContent(callback);
       });
   };

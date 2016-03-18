@@ -48,7 +48,9 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
 
   //Google Analytics code
   if((ChannelService.getChannel() == undefined ) && (TopicService.getChannel() == undefined)){
+    if(GOOGLE_ANALYTICS === true){
      ga('send', 'pageview', "/topic/"+$routeParams.topicID);
+   }
      if (GEN_DEBUG)
      console.log('Sent Pageview from /topic/' + $routeParams.topicID);
   }
@@ -144,8 +146,10 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
     }
     AnalyticsService.addSession();
     console.log("ACTIVE TAB ********* " + $scope.activeTab + "TIME SPENT : "+ t );
+    if(GOOGLE_ANALYTICS === true){
       ga('send', 'event', 'Tabs','ActiveTab', $scope.activeTab);
       ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
+    }
     sessionTime = window.time ;
 
     if (tab === 'chat'){
@@ -245,8 +249,12 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
         if (URIHelper.getActiveTab() === 'video'){
           $rootScope.$broadcast('videoActive');
         }
-        if (URIHelper.getActiveTab() === 'social'){
+        else if (URIHelper.getActiveTab() === 'social'){
           $rootScope.$broadcast('socialActive');
+        }
+        else{
+          if(ANALYTICS)
+            AnalyticsService.addSession();
         }
       }
     }
@@ -404,9 +412,13 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
 
   $scope.peelClose = function()
   {
+    if(GOOGLE_ANALYTICS === true){
     ga('send', 'event', 'Peel', 'click', 'BackToPeelHome');
+  }
      var t = (window.time - sessionTime);
+     if(GOOGLE_ANALYTICS === true){
       ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
+    }
       sessionTime = window.time;
       //AnalyticsService.printEventStack();
     if (GEN_DEBUG)
@@ -416,7 +428,9 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
 
   $scope.peelWatchOnTV = function()
   {
+    if(GOOGLE_ANALYTICS === true){
     ga('send', 'event', 'Peel', 'click', 'PeelWatchOnTV');
+  }
     if (GEN_DEBUG)
     console.log("peelWatchOnTV()");
     var showId = URIHelper.getPeelShowId();

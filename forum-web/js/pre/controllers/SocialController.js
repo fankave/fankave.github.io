@@ -18,6 +18,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         }
         updateTimestamps('social');
         $scope.$parent.switchTabs('social');
+        _this.loadContent('social');
+        if (!window.twttr){
+          loadTwitter();
+        }
       } else {
         if (_this.newVideoAvailable) _this.newVideoAvailable = false;
         hideJewel('video');
@@ -29,6 +33,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         }
         updateTimestamps('video');
         $scope.$parent.switchTabs('video');
+        _this.loadContent('video');
+        if (!window.twttr){
+          loadTwitter();
+        }
       }
     };
 
@@ -147,6 +155,25 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         el = document.getElementById('videoJewel');
       }
       el.classList.remove('pulse');
+    }
+    
+    function loadTwitter () {
+      window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+       
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+       
+        return t;
+      }(document, "script", "twitter-wjs"));
     }
 
     this.loadContent = function(type, offset) {
@@ -419,9 +446,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     }
     
     this.reportSocialInteraction = function (post, button, activeTab) {
-      // post - the whole post the user just interacted with - Object
-      // button - type of social button - String - 'reply', 'retweet', or 'like'
-      // activeTab - String
+      // console.log(post);
+      // console.log(button);
+      // console.log(activeTab);
+      AnalyticsService.exploreEvent(button, post.id, post.type, post.tweetId, post.providerName, activeTab);
     }
 
 
