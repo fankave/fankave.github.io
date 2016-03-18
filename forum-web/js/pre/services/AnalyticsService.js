@@ -1,6 +1,6 @@
 angular.module('ChannelModule')
-.factory('AnalyticsService',["$interval","$http","UserInfoService",
-  function ($interval,$http,UserInfoService) {
+.factory('AnalyticsService',["$interval","$http","UserInfoService","UserAgentService",
+  function ($interval,$http,UserInfoService,UserAgentService) {
     
   var userData = {};
   var isJoinedSession = false;
@@ -145,18 +145,21 @@ angular.module('ChannelModule')
   //JOIN SESSION EVENT
   function joinSessionEvent(channel, topicId){
     if(!isJoinedSession){
-      addSession();
+      addSession('start');
       var mEvent = getBaseEvent();
       mEvent.createdAt = new Date();
       mEvent.context.type ="engage";
     //   var temp = getSessionStack().slice();
     // mEvent.context.data.sessionStack = temp;
-      var content = {"channelId" : channel, "topicId" : topicId}
+    
+      var content = {"environment" : UserAgentService.getDeviceInfo(), "channelId" : channel, "topicId" : topicId}
       mEvent.content = content;
       eventStack.push(mEvent);
       isJoinedSession = true;
-      if(ANALYTICS_DEBUG)
+      if(ANALYTICS_DEBUG){
       console.log("Analytics ****** joinSessionEvent");
+      console.log(UserAgentService.getDeviceInfo());
+    }
     stop = $interval(sendEventsToServer,20000);
     }
   }
