@@ -144,7 +144,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
     if($scope.activeTab  != tab ){
       AnalyticsService.browseSessionEvent($scope.activeTab)
     }
-    AnalyticsService.addSession();
+    AnalyticsService.addSession(tab);
     console.log("ACTIVE TAB ********* " + $scope.activeTab + "TIME SPENT : "+ t );
     if(GOOGLE_ANALYTICS === true){
       ga('send', 'event', 'Tabs','ActiveTab', $scope.activeTab);
@@ -254,7 +254,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
         }
         else{
           if(ANALYTICS)
-            AnalyticsService.addSession();
+            AnalyticsService.addSession('chat');
         }
       }
     }

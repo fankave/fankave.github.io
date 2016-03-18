@@ -32,9 +32,9 @@ angular.module('ChannelModule')
       return sessionId;
   }
 
-  function getSessionObject(){
+  function getSessionObject(sessionType){
     var sessionObject = {};
-    sessionObject.id = getNewSessionId();
+    sessionObject.id = sessionType + '_' + getNewSessionId();
     var d = new Date();
     sessionObject.timeStamp = d.getTime();
     if(ANALYTICS_DEBUG){
@@ -76,8 +76,8 @@ angular.module('ChannelModule')
     return sessionStack;
   }
 
-  function addSession(){
-    var session = getSessionObject();
+  function addSession(type){
+    var session = getSessionObject(type);
     sessionStackInternal.push(session);
     if(ANALYTICS_DEBUG)
     console.log("Analytics ****** : sessionStackInterNAl length : "+ sessionStackInternal.length);
