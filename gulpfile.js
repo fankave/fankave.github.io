@@ -85,14 +85,9 @@ gulp.task('scripts-post', function() {
 
 gulp.task('lib-pre', function() {
   return gulp.src([
-    './bower_components/jquery/dist/jquery.min.js',
     './bower_components/angular/angular.min.js',
     './bower_components/angular-route/angular-route.min.js',
-    './bower_components/angular-websocket/angular-websocket.min.js',
-    './lib/angular-sanitize/angular-sanitize.min.js',
-    './bower_components/angular-file-upload/dist/angular-file-upload.min.js',
-    './bower_components/ng-device-detector/bower_components/re-tree/re-tree.min.js',
-    './bower_components/ng-device-detector/ng-device-detector.min.js'
+    './bower_components/angular-websocket/angular-websocket.min.js'
   ])
   .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(concat('lib-pre.min.js'))
@@ -102,7 +97,12 @@ gulp.task('lib-pre', function() {
 
 gulp.task('lib-post', function() {
   return gulp.src([
+    './bower_components/jquery/dist/jquery.min.js',
     './bower_components/bootstrap/dist/js/bootstrap.min.js',
+    './lib/angular-sanitize/angular-sanitize.min.js',
+    './bower_components/angular-file-upload/dist/angular-file-upload.min.js',
+    './bower_components/ng-device-detector/bower_components/re-tree/re-tree.min.js',
+    './bower_components/ng-device-detector/ng-device-detector.min.js',
     './lib/magnific/jQuery.magnific-popup.min.js',
     './lib/pullToRefresh/hammer.2.0.4.js',
     './lib/pullToRefresh/wptr.1.1.js'

@@ -336,6 +336,11 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           }
 
           var formattedItem = flattenProperties(tempItem, feedData[i]);
+          if (i === 0){
+            formattedItem.embedPlayable = true;
+            formattedItem.embedType = 'link';
+            formattedItem.embedHtml = '<blockquote class="twitter-video" data-lang="en"><a href="https://t.co/uZJcXAWlpo">https://t.co/uZJcXAWlpo</a></blockquote>';
+          }
 
           if (tab === 'social'){
             _this.socialArray.push(formattedItem);
