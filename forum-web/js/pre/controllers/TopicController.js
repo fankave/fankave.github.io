@@ -1,7 +1,7 @@
 angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"])
-.controller("TopicController", ["$scope", "$rootScope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService","AnalyticsService",
+.controller("TopicController", ["$scope", "$rootScope", "$sce", "$window", "$location","$sanitize", "$timeout", "$interval", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService",
 
-function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService,AnalyticsService)
+function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $interval, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService)
 {
   var sessionTime = window.time;
   var lastComment = false;
@@ -388,12 +388,21 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   }
 
   $scope.viewPost = function(e,id){
+    // Check for url query string
     if (window.location.href.indexOf('?') !== -1){
       var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
     }
+    // If target is an external link, do nothing
     if ($(e.target).is('a')){
       return;
     }
+    // If auto-refresh timer is running, clear it before navigating to post
+    if (TopicService.currentTimer()){
+      $interval.cancel(TopicService.currentTimer(false));
+    }
+    VideoService.resetVideoOffset();
+    SocialService.resetSocialOffset();
+    // Pass along query string if present when navigating to post
     if (urlQueryStr !== undefined){
       $location.url("/post/" + id + urlQueryStr);
     } else {
@@ -535,7 +544,8 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
       var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
     }
     TopicService.directComment = true;
-    
+    VideoService.resetVideoOffset();
+    SocialService.resetSocialOffset();
     // Pass along query string if present when navigating to post
     if (urlQueryStr !== undefined){
       $location.url("/post/" + id + urlQueryStr);

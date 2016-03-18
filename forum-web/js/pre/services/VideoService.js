@@ -6,71 +6,99 @@ angular.module('SocialModule')
 
 	var observerCallbacks = [];
 	var autoObserverCallbacks = [];
+  var newObserverCallbacks = [];
 	var _videoArray = [];
+	var _videoArrayAuto = [];
 	var _offset = 0;
 	var LIMIT = 10;
-
+	var prevLength = 0;
 
 	function setVideoData(videoData) {
 		_videoArray = [];
 		var tempData = videoData.data.results;
-		var len;
-    	tempData == undefined ? len = 0 : len = tempData.length ;
+		var len = !!tempData ? tempData.length : 0;
 
 		if (!!tempData && len > 0){
-			for (i = 0; i < len; i++){
+			for (var i = 0; i < len; i++){
 				var _videoObject = Bant.bant(tempData[i]);
 				if (!!_videoObject.id){
-          			var isNewObject = true;
-          			for(i=0;i<_videoArray.length;i++){
-			            if(_videoArray[i].id == _videoObject.id){
-			              isNewObject = false;
-			              break;
-			              }
-            			}
-         			 if(isNewObject)
-					_videoArray.push(_videoObject);
+    			var isNewObject = true;
+    			for (var j = 0; j < _videoArrayAuto.length; j++){
+            if (_videoArrayAuto[j].id === _videoObject.id){
+              isNewObject = false;
+              break;
+            }
+    			}
+    			_videoArray.push(_videoObject);
+          if (len === 1 && isNewObject && videoData.rid === "video_auto"){
+            if (GEN_DEBUG) console.log("$AUTO$ SINGLE REQUEST FOUND NEW VIDEO - NOTIFYING");
+            notifyObservers('new');
+            return;
+          }
+   			  if (isNewObject && videoData.rid === "video_auto"){
+						_videoArrayAuto.push(_videoObject);
+					}
 				}
 			}
-			_offset = videoData.data.nextOffset;
-			if(videoData.rid === "video")
-			notifyObservers();
-			else
-			notifyObservers(true)
+			if(videoData.rid === "video"){
+				_offset = videoData.data.nextOffset;
+				notifyObservers();
+			}
+			else {
+				notifyObservers(true);
+			}
 		}
 	}
 
 
 	//call this when you know 'comments' has been changed
   var notifyObservers = function(autoRequest){
-	    if (autoRequest){
-	      angular.forEach(autoObserverCallbacks, function(callback){
-	      	console.log("Notify observer in autoRequest");
-	        callback();
-	      });
-	    } else {
-			angular.forEach(observerCallbacks, function(callback){
-				callback();
-			});
-		}
+	  if (autoRequest === true){
+      angular.forEach(autoObserverCallbacks, function(callback){
+        console.log("Notify observer in autoRequest ", callback);
+        callback();
+      });
+    }
+    else if (autoRequest === 'new'){
+      angular.forEach(newObserverCallbacks, function(callback){
+        console.log("Notify observer in newRequest ", callback);
+        callback();
+      });
+    }
+    else {
+      angular.forEach(observerCallbacks, function(callback){
+        callback();
+      });
+    }
 	};
 
-	function registerObserverCallback(callback){
-		//register an observer
-      	var callbackLength = autoObserverCallbacks.length;
-      		while (callbackLength > 0){
-        		callbackLength = autoObserverCallbacks.length;
-        		autoObserverCallbacks.pop();
-      		}
-      		autoObserverCallbacks.push(callback);
-    	
-    	var callbackLength  = observerCallbacks.length;
-			while (callbackLength > 0){
-		  		callbackLength = observerCallbacks.length;
-		  		observerCallbacks.pop();
-			}
-			observerCallbacks.push(callback);
-	}
+  function registerObserverCallback(callback, auto){
+    //register an observer
+    if (auto === true){
+      var callbackLength = autoObserverCallbacks.length;
+      while (callbackLength > 0){
+        callbackLength = autoObserverCallbacks.length;
+        autoObserverCallbacks.pop();
+      }
+      autoObserverCallbacks.push(callback);
+    }
+    else if (auto === 'new'){
+      var callbackLength = newObserverCallbacks.length;
+      while (callbackLength > 0){
+        callbackLength = newObserverCallbacks.length;
+        newObserverCallbacks.pop();
+      }
+      newObserverCallbacks.push(callback);
+    }
+    else {
+      var callbackLength = observerCallbacks.length;
+      while (callbackLength > 0){
+        callbackLength = observerCallbacks.length;
+        observerCallbacks.pop();
+      }
+      observerCallbacks.push(callback);
+    }
+  }
 
 	function getVideoDataRequest(id, offset){
 		var reqOffset = _offset;
@@ -97,6 +125,18 @@ angular.module('SocialModule')
 		return request;
 	}
 
+  function getVideoDataRequestAutoSingle(id){
+    var request = {
+      "rid": "video_auto",
+      "timestamp": new Date().getTime(),
+      "method": "GET",
+      "uri": encodeURI(LIST_SOCIAL_URI+id+"?limit=1&offset=0&filter=video")
+    };
+    if (NETWORK_DEBUG)
+    console.log("Video Request Single Auto: ", request);
+    return request;
+  }
+
 	return {
 		videoArray: function(){
 			return _videoArray;
@@ -107,7 +147,17 @@ angular.module('SocialModule')
 		setVideoData:setVideoData,
 		getVideoDataRequest:getVideoDataRequest,
 		getVideoDataRequestAuto:getVideoDataRequestAuto,
-		registerObserverCallback:registerObserverCallback
+    getVideoDataRequestAutoSingle:getVideoDataRequestAutoSingle,
+		registerObserverCallback:registerObserverCallback,
+		videoArrayAutoLength: function(){
+      return _videoArrayAuto.length;
+    },
+    getPrevLength: function(){
+      return prevLength;
+    },
+    setPrevLength: function(length){
+      prevLength = length;
+    }
 	};
 
 }]);

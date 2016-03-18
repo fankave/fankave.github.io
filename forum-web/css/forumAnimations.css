@@ -123,3 +123,50 @@
 	-moz-animation:slideOutToRight 0.3s both ease-in;
 	animation:slideOutToRight 0.3s both ease-in;
 }
+
+/* - - - - Pulse Animation - - - - */
+
+@-webkit-keyframes pulse {
+	0% { 
+		-webkit-transform: scale(1,1);
+		opacity: 0;
+	}
+	50% { 
+		-webkit-transform: scale(1.1,1.1);
+		opacity: 1;
+	}
+	100% { 
+		-webkit-transform: scale(1,1);
+		opacity: 0;
+	}
+}
+
+@-moz-keyframes pulse {
+	0% { 
+		-moz-transform: scale(1,1);
+		opacity: 0;
+	}
+	50% { 
+		-moz-transform: scale(1.1,1.1);
+		opacity: 1;
+	}
+	100% { 
+		-moz-transform: scale(1,1);
+		opacity: 0;
+	}
+}
+
+@keyframes pulse {
+	0% { 
+		transform: scale(1,1);
+		opacity: 0;
+	}
+	50% { 
+		transform: scale(1.1,1.1);
+		opacity: 1;
+	}
+	100% { 
+		transform: scale(1,1);
+		opacity: 0;
+	}
+}

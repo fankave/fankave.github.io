@@ -344,11 +344,13 @@
       </div>
       <div id="socialTab" class="grid-col grid-col-50 tab" ng-class="{ selectedTab: activeTab === 'social' }" ng-click="social.initFeed('social')">
         <span class="tabName">Social</span>
+        <span id="socialJewel" class="tabJewel" ng-if="activeTab !== 'social'"></span>
       </div>
     </span>
     <span ng-if="leftTab === 'social'">
       <div id="socialTab" class="grid-col grid-col-50 tab leftTab" ng-class="{ selectedTab: activeTab === 'social' }" ng-click="social.initFeed('social')">
         <span class="tabName">Social</span>
+        <span id="socialJewel" class="tabJewel" ng-if="activeTab !== 'social'"></span>
       </div>
       <div id="chatTab" class="grid-col grid-col-50 tab" ng-class="{ selectedTab: activeTab === 'chat' }" ng-click="switchTabs('chat')">
         <span class="tabName">Chat</span>
@@ -356,10 +358,17 @@
     </span>
 
     <div id="newCommentsAvailableIndicatorDiv" ng-if="showNewCommentsIndicator && activeTab === 'chat'">
-      <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
-        <img ng-src="img/newCommentIndicator.png" />
+      <button id="newCommentsButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
+        &uarr; New Comments
       </button>
     </div>
+
+    <div id="newSocialAvailable" ng-if="social.newSocialAvailable && activeTab === 'social'">
+      <button id="newSocialButton" class="btn-link" ng-click="social.showNewSocial()">
+        &uarr; New Social
+      </button>
+    </div>
+    
   </div>
   <!-- All Other Tabs -->
   <div class="tabContainer clearfix" ng-if="!isMI16User && !isMWCUser">
@@ -369,21 +378,21 @@
       </div>
       <div id="videoTab" class="grid-col grid-col-34 tab" ng-class="{ selectedTab: activeTab === 'video' }" ng-click="social.initFeed('video')">
         <span class="tabName">Video</span>
-        <!-- <span class="tabJewel">({{newVideoCount}})</span> -->
+        <span id="videoJewel" class="tabJewel" ng-if="activeTab !== 'video'"></span>
       </div>
       <div id="socialTab" class="grid-col grid-col-33 tab rightTab" ng-class="{ selectedTab: activeTab === 'social' }" ng-click="social.initFeed('social')">
         <span class="tabName">Social</span>
-        <!-- <span class="tabJewel">({{newSocialCount}})</span> -->
+        <span id="socialJewel" class="tabJewel" ng-if="activeTab !== 'social'"></span>
       </div>
     </span>
     <span ng-if="leftTab === 'video'">
       <div id="videoTab" class="grid-col grid-col-34 tab leftTab" ng-class="{ selectedTab: activeTab === 'video' }" ng-click="social.initFeed('video')">
         <span class="tabName">Video</span>
-        <!-- <span class="tabJewel">({{newVideoCount}})</span> -->
+        <span id="videoJewel" class="tabJewel" ng-if="activeTab !== 'video'"></span>
       </div>
       <div id="socialTab" class="grid-col grid-col-33 tab" ng-class="{ selectedTab: activeTab === 'social' }" ng-click="social.initFeed('social')">
         <span class="tabName">Social</span>
-        <!-- <span class="tabJewel">({{newSocialCount}})</span> -->
+        <span id="socialJewel" class="tabJewel" ng-if="activeTab !== 'social'"></span>
       </div>
       <div id="chatTab" class="grid-col grid-col-33 tab rightTab" ng-class="{ selectedTab: activeTab === 'chat' }" ng-click="switchTabs('chat')">
         <span class="tabName">Chat</span>
@@ -392,11 +401,11 @@
     <span ng-if="leftTab === 'social'">
       <div id="socialTab" class="grid-col grid-col-33 tab leftTab" ng-class="{ selectedTab: activeTab === 'social' }" ng-click="social.initFeed('social')">
         <span class="tabName">Social</span>
-        <!-- <span class="tabJewel">({{newSocialCount}})</span> -->
+        <span id="socialJewel" class="tabJewel" ng-if="activeTab !== 'social'"></span>
       </div>
       <div id="videoTab" class="grid-col grid-col-34 tab" ng-class="{ selectedTab: activeTab === 'video' }" ng-click="social.initFeed('video')">
         <span class="tabName">Video</span>
-        <!-- <span class="tabJewel">({{newVideoCount}})</span> -->
+        <span id="videoJewel" class="tabJewel" ng-if="activeTab !== 'video'"></span>
       </div>
       <div id="chatTab" class="grid-col grid-col-33 tab rightTab" ng-class="{ selectedTab: activeTab === 'chat' }" ng-click="switchTabs('chat')">
         <span class="tabName">Chat</span>
@@ -404,10 +413,23 @@
     </span>
 
     <div id="newCommentsAvailableIndicatorDiv" ng-if="showNewCommentsIndicator && activeTab === 'chat'">
-      <button id="newCommentsAvailableIndicatorButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
-        <img ng-src="img/newCommentIndicator.png" />
+      <button id="newCommentsButton" class="btn-link" ng-click="newCommentsIndicatorTapped()">
+        &uarr; New Comments
       </button>
     </div>
+
+    <div id="newVideosAvailable" ng-if="social.newVideoAvailable && activeTab === 'video'">
+      <button id="newVideosButton" class="btn-link" ng-click="social.showNewVideo()">
+        &uarr; New Videos
+      </button>
+    </div>
+
+    <div id="newSocialAvailable" ng-if="social.newSocialAvailable && activeTab === 'social'">
+      <button id="newSocialButton" class="btn-link" ng-click="social.showNewSocial()">
+        &uarr; New Social
+      </button>
+    </div>
+
   </div>
 
   <div id="textInputFieldTopic" class="clearfix" ng-if="activeTab === 'chat' && (mobileBrowser === false || embed)" ng-controller="UserInputController as user">
