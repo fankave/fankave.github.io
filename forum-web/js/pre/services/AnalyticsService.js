@@ -93,7 +93,7 @@ angular.module('ChannelModule')
   }
   
   function sendEventsToServer(){
-
+  console.log("****************** send event to server triggered");
     //Code to send events
     if(eventStack.length > 0){
 
@@ -160,7 +160,7 @@ angular.module('ChannelModule')
       console.log("Analytics ****** joinSessionEvent");
       console.log(UserAgentService.getDeviceInfo());
     }
-    stop = $interval(sendEventsToServer,2000);
+    stop = $interval(sendEventsToServer,20000);
     }
   }
   //LEAVE SESSION EVENT
