@@ -52,11 +52,14 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
   var HTML5_LOC = false;
   var HOST_NAME = window.location.host;
   var WEBSOCKET_BASE_URI = 'wss://cas.fankave.com:80/ws?';
+  var WEBSOCKET_BASE_URI_PEEL = 'wss://cas.fankave.com:80/ws/peel?';
+
   var REGISTER_SERVER_URI = 'https://cas.fankave.com:80/v1.0/user/register';
   var MUS_SERVER_URI = 'https://mus.fankave.com';
 
   if(DEV_BUILD === true) {
     WEBSOCKET_BASE_URI = 'wss://dev.fankave.com/ws?';
+    WEBSOCKET_BASE_URI_PEEL = 'wss://dev.fankave.com/ws/peel?';
     REGISTER_SERVER_URI = 'https://dev.fankave.com/v1.0/user/register';
     MUS_SERVER_URI = 'https://dev.fankave.com:8080';
     if(GOOGLE_ANALYTICS === true){

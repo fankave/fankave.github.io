@@ -160,7 +160,7 @@ angular.module('ChannelModule')
       console.log("Analytics ****** joinSessionEvent");
       console.log(UserAgentService.getDeviceInfo());
     }
-    stop = $interval(sendEventsToServer,20000);
+    stop = $interval(sendEventsToServer,2000);
     }
   }
   //LEAVE SESSION EVENT
@@ -182,6 +182,7 @@ angular.module('ChannelModule')
     printEventStack();
     $interval.cancel(stop);
     sendEventsToServer();
+    isJoinedSession = false;
     sessionStackInternal = [];
   }
 
@@ -261,6 +262,7 @@ angular.module('ChannelModule')
   }
 
   function printEventStack(){
+    console.log("*********************  PrintEventSatck *********** ");
       console.log(eventStack);
   }
 

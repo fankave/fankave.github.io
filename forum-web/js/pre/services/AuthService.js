@@ -1,6 +1,6 @@
 angular.module('AuthModule')
-.factory("AuthService", ["$http","$window","$location","UserInfoService", "TopicService", "ReplyService", "networkService", "ForumDeviceInfo", "ChannelService", "URIHelper", 
-  function ($http, $window, $location, UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
+.factory("AuthService", ["$http","$window","$location","$routeParams","UserInfoService", "TopicService", "ReplyService", "networkService", "ForumDeviceInfo", "ChannelService", "URIHelper", 
+  function ($http, $window, $location, $routeParams,UserInfoService, TopicService, ReplyService, networkService, ForumDeviceInfo, ChannelService, URIHelper) {
 
   var userLoggedInToFacebook = false;
 
@@ -26,12 +26,13 @@ angular.module('AuthModule')
   };
 
   var loginWithPeel = function(callback) {
-    var userData = {};
-    userData.id = URIHelper.getPeelUserId();
-    userData.userName = URIHelper.getPeelUserName();
+    initializeContent(callback);
+    // var userData = {};
+    // userData.id = URIHelper.getPeelUserId();
+    // userData.userName = URIHelper.getPeelUserName();
 
-    var registerParams = setRegistrationParams("peel", -28800, userData);
-    registerUser(registerParams, null, callback);
+    // var registerParams = setRegistrationParams("peel", -28800, userData);
+    // registerUser(registerParams, null, callback);
   };
 
   var loginWithEmail = function(callback) {
@@ -127,7 +128,7 @@ angular.module('AuthModule')
     networkService.init();
 
     var initChannel = ChannelService.getChannel();
-    var initTopic = TopicService.getTopicId();
+    var initTopic = TopicService.getTopicId() || $routeParams.topicID;
 
     if (!!initChannel) {
       if (NETWORK_DEBUG)

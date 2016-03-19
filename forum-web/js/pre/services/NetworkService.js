@@ -1,7 +1,7 @@
 angular.module("NetworkModule", ['ngWebSocket'])
-.factory("networkService",["$websocket","$route","DataService","UserInfoService","AnalyticsService",
+.factory("networkService",["$websocket","$route","DataService","UserInfoService","AnalyticsService","URIHelper",
 
-function ($websocket,$route,DataService,UserInfoService,AnalyticsService)
+function ($websocket,$route,DataService,UserInfoService,AnalyticsService,URIHelper)
 {
   var ws;
 
@@ -33,7 +33,7 @@ function ($websocket,$route,DataService,UserInfoService,AnalyticsService)
     ws.onOpen(function() {
       if (NETWORK_DEBUG)
       console.log("Websocket Connected");
-    if(ANALYTICS){
+    if(ANALYTICS && !URIHelper.isPeelUser()){
       if(ws != null){
       var getLoginSessionRequest = {"rid": "loginId",
         "timestamp": new Date().getTime(),
@@ -56,6 +56,22 @@ function ($websocket,$route,DataService,UserInfoService,AnalyticsService)
       var responseJson = JSON.parse(evt.data);
       var type = responseJson.rid;
       if(type !== undefined){
+        if(type === "context"){
+          if(URIHelper.isPeelUser()){
+            if(NETWORK_DEBUG) console.log("Processing context");
+                if(ws != null){
+                  var getLoginSessionRequest = {"rid": "loginId",
+                    "timestamp": new Date().getTime(),
+                    "method": "GET",
+                    "uri": encodeURI("/v1.0/user/session/show")};
+                    ws.send(getLoginSessionRequest);
+            }
+            UserInfoService.setUserCredentials(
+              responseJson.data.userId, 
+              responseJson.data.sessionId,
+              "Peel");
+          }
+        }
         if(type === "channel"){
           if(NETWORK_DEBUG) console.log("Processing Channel");
           DataService.setChannel(responseJson);
@@ -99,11 +115,22 @@ function ($websocket,$route,DataService,UserInfoService,AnalyticsService)
     });
 
     function getWebsocketUri(){
+      if(URIHelper.isPeelUser())
+        return getPeelWebsocketUri();
       var user = UserInfoService.getUserCredentials();
       var socketUri = WEBSOCKET_BASE_URI+
       'userId='+user.userId+
       '&sessionId='+user.sessionId+
       '&accessToken='+user.accessToken+
+      '/';
+      if(NETWORK_DEBUG) console.log("socketUri: " + socketUri);
+      return socketUri;
+    }
+
+    function getPeelWebsocketUri(){
+      var socketUri = WEBSOCKET_BASE_URI_PEEL+
+      'userId='+URIHelper.getPeelUserId()+
+      '&userName=='+URIHelper.getPeelUserName()+
       '/';
       if(NETWORK_DEBUG) console.log("socketUri: " + socketUri);
       return socketUri;
