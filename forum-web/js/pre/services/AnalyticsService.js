@@ -121,7 +121,7 @@ var config = {
         "Content-Type": "application/json"
                           }
             };
-    $http.post("http://146.148.35.97:8088/v1.0/services/analytics/events", JSON.stringify(eventStack))
+    $http.post("http://146.148.35.97/v1.0/services/analytics/events", JSON.stringify(eventStack))
       .then(function (response) {
         if (response.status === 200) {
           if (ANALYTICS_DEBUG)
