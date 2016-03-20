@@ -355,7 +355,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
   function init() {
     networkService.send(TopicService.getTopicRequest($routeParams.topicID));
     networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
-    AnalyticsService.joinSessionEvent(ChannelService.getChannel(),$routeParams.topicID);
+    //AnalyticsService.joinSessionEvent(ChannelService.getChannel(),$routeParams.topicID);
   };
 
   $scope.hideLoading = function(){

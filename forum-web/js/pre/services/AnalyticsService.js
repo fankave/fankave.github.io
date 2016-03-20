@@ -250,15 +250,16 @@ var config = {
 
   }
 
-  function setLoginSessionId(loginId){
-    var user = UserInfoService.getUserCredentials();
-    
-     userData.userId = user.userId;
-     userData.sessionId = user.sessionId;
-     userData.loginSessionId = loginId;
+  function setLoginSessionId(loginId, userId, sessionId){
+    console.log("setting login session ID" ,loginId, userId, sessionId);
+     userData.userId = userId;
+     userData.sessionId = sessionId;
+     userData.engagementId = loginId;
      isAnalyticsInitialized = true;
      if(ANALYTICS_DEBUG)
-     console.log("Analytics ****** Base Event :"+ userData);
+     console.log("Analytics ****** Base Event :");
+      console.log(userData);
+      joinSessionEvent();
   }
 
   function printEventStack(){

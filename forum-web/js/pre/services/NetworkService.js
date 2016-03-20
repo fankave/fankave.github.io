@@ -33,15 +33,15 @@ function ($websocket,$route,DataService,UserInfoService,AnalyticsService,URIHelp
     ws.onOpen(function() {
       if (NETWORK_DEBUG)
       console.log("Websocket Connected");
-    if(ANALYTICS && !URIHelper.isPeelUser()){
-      if(ws != null){
-      var getLoginSessionRequest = {"rid": "loginId",
-        "timestamp": new Date().getTime(),
-        "method": "GET",
-        "uri": encodeURI("/v1.0/user/session/show")};
-        ws.send(getLoginSessionRequest);
-      }
-    }
+    // if(ANALYTICS && !URIHelper.isPeelUser()){
+    //   if(ws != null){
+    //   var getLoginSessionRequest = {"rid": "loginId",
+    //     "timestamp": new Date().getTime(),
+    //     "method": "GET",
+    //     "uri": encodeURI("/v1.0/user/session/show")};
+    //     ws.send(getLoginSessionRequest);
+    //   }
+    // }
 
     });
 
@@ -56,16 +56,16 @@ function ($websocket,$route,DataService,UserInfoService,AnalyticsService,URIHelp
       var responseJson = JSON.parse(evt.data);
       var type = responseJson.rid;
       if(type !== undefined){
-        if(type === "context"){
+        if(type === "context" || type === "hello"){
+          if(NETWORK_DEBUG) console.log("Processing context");
+          AnalyticsService.setLoginSessionId(responseJson.data.analytics.sessionId,responseJson.data.userId,responseJson.data.sessionId);
           if(URIHelper.isPeelUser()){
-            if(NETWORK_DEBUG) console.log("Processing context");
-                if(ws != null){
-                  var getLoginSessionRequest = {"rid": "loginId",
-                    "timestamp": new Date().getTime(),
-                    "method": "GET",
-                    "uri": encodeURI("/v1.0/user/session/show")};
-                    ws.send(getLoginSessionRequest);
-            }
+                  // var getLoginSessionRequest = {"rid": "loginId",
+                  //   "timestamp": new Date().getTime(),
+                  //   "method": "GET",
+                  //   "uri": encodeURI("/v1.0/user/session/show")};
+                  //   ws.send(getLoginSessionRequest);
+                  
             UserInfoService.setUserCredentials(
               responseJson.data.userId, 
               responseJson.data.sessionId,
@@ -101,10 +101,10 @@ function ($websocket,$route,DataService,UserInfoService,AnalyticsService,URIHelp
         else if(type === "loginId"){
           //TODO handle Replies
           if(NETWORK_DEBUG) console.log("Processing loginId");
-          if(responseJson.data != null && responseJson.data.id != null)
-            AnalyticsService.setLoginSessionId(responseJson.data.id);
-          else
-            console.log("Error : not LoginId from Server");
+          // if(responseJson.data != null && responseJson.data.id != null)
+          //   AnalyticsService.setLoginSessionId(responseJson.data.id);
+          // else
+          //   console.log("Error : not LoginId from Server");
         }
       }
     });
