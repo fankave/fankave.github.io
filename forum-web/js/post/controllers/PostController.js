@@ -12,6 +12,8 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
     $scope.mobileBrowser = false;
   }
 
+  TopicService.toggleFromPost();
+
   // Retain & Handle State when Returning From External Links
   if (ForumStorage.getFromLocalStorage('hasUserVisited') === true){
     $scope.initPage();
