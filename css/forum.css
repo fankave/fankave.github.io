@@ -14,30 +14,12 @@ html {
   background-color:#fff;
 }
 
-@font-face {
-  font-family: "Proxima-Nova";
-  font-weight: 200;
-  src: url('../../img/ProximaNovaLight.otf');
-}
-
-@font-face {
-  font-family: "Proxima-Nova";
-  font-weight: 400;
-  src: url('../../img/ProximaNovaReg.otf');
-}
-
-@font-face {
-  font-family: "Proxima-Nova";
-  font-weight: 500;
-  src: url('../../img/ProximaNovaSbold.otf');
-}
-
 body {
 max-width: 768px;
 min-width:320px;
 margin: 0 auto;
 position: relative; /* Fix for absolute positioning */
-font-family: "Proxima-Nova","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+font-family: "Roboto","SFUIDisplay","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 html, body {
@@ -1758,7 +1740,7 @@ textarea#postCommentField {
 }
 
 .fkFont {
-  font-family: "Proxima-Nova","HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: "Roboto","SFUIDisplay","Helvetica Neue",Helvetica,Arial,sans-serif;
   font-weight: 400;
   color: #a2b1b6;
 }

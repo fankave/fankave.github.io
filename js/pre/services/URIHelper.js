@@ -104,10 +104,11 @@ angular.module('NetworkModule')
 			var vars = getUrlVars();
 			if (vars["tab"]){
 				if (vars["tab"] === 'video'){
+					console.log("Video Active");
 					return 'video';
 				}
 				if (vars["tab"] === 'social'){
-
+					console.log("Social Active");
 					return 'social';
 				}
 			}

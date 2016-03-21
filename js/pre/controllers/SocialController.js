@@ -2,7 +2,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 .controller("SocialController", ["$scope","$sce","$window","$location","$routeParams","$q","$interval","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper","UserAgentService",
   function ($scope,$sce,$window,$location,$routeParams,$q,$interval,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper,UserAgentService){
     console.log("Social Control");
-    // initAutoRefresh();
+    setTimeout(initAutoRefresh, 1500);
 
     var _this = this;
     this.initFeed = function(tab) {
@@ -52,14 +52,14 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     $scope.$on('videoActive', function (event, args){
       console.log("Video Broadcast Received");
-      $scope.$parent.activeTab = 'video';
+      // $scope.$parent.activeTab = 'video';
       URIHelper.tabEntered();
       _this.initFeed('video');
     });
 
     $scope.$on('socialActive', function (event, args){
       console.log("Social Broadcast Received");
-      $scope.$parent.activeTab = 'social';
+      // $scope.$parent.activeTab = 'social';
       URIHelper.tabEntered();
       _this.initFeed('social');
     });
@@ -91,12 +91,11 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         $interval.cancel(TopicService.currentTimer(false));
       }
       var timer = $interval(function(){
-        if (GEN_DEBUG) console.log("$AUTO$ START INTERVAL");
         networkService.send(SocialService.getSocialDataRequestAutoSingle(TopicService.getChannelId()));
         if (!URIHelper.isTechMUser() && !URIHelper.isMWCUser()){
           networkService.send(VideoService.getVideoDataRequestAutoSingle(TopicService.getChannelId()));
         }
-      }, 15000);
+      }, 5000);
       TopicService.currentTimer(timer);
     }
 
@@ -133,10 +132,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           if ($scope.$parent.activeTab === 'social'){
             // If user is on tab during first interval, don't show indicator
             if (prevLength !== 0){
-              if ((_this.socialFilter && SocialService.newExpertIn()) || !_this.socialFilter){
+              // if ((_this.socialFilter && SocialService.newExpertIn()) || !_this.socialFilter){
                 _this.newSocialAvailable = true;
-                SocialService.newExpertIn(false);
-              }
+                // SocialService.newExpertIn(false);
+              // }
             }
           } else {
             pulseJewel('social');
@@ -153,10 +152,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           if ($scope.$parent.activeTab === 'video'){
             // If user is on tab during first interval, don't show indicator
             if (prevLength !== 0){
-              if ((_this.videoFilter && VideoService.newExpertIn()) || !_this.videoFilter){
+              // if ((_this.videoFilter && VideoService.newExpertIn()) || !_this.videoFilter){
                 _this.newVideoAvailable = true;
-                VideoService.newExpertIn(false);
-              }
+                // VideoService.newExpertIn(false);
+              // }
             }
           } else {
             pulseJewel('video');
@@ -191,7 +190,9 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       if (tab === 'video'){
         el = document.getElementById('videoJewel');
       }
-      el.classList.remove('pulse');
+      if (el){
+        el.classList.remove('pulse');
+      }
     }
 
     this.loadContent = function(type, offset) {
@@ -336,11 +337,11 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           }
 
           var formattedItem = flattenProperties(tempItem, feedData[i]);
-          if (i === 0){
-            formattedItem.embedPlayable = true;
-            formattedItem.embedType = 'link';
-            formattedItem.embedHtml = '<blockquote class="twitter-video" data-lang="en"><a href="https://t.co/uZJcXAWlpo">https://t.co/uZJcXAWlpo</a></blockquote>';
-          }
+          // if (i === 0){
+          //   formattedItem.embedPlayable = true;
+          //   formattedItem.embedType = 'link';
+          //   formattedItem.embedHtml = '<blockquote class="twitter-video" data-lang="en"><a href="https://t.co/uZJcXAWlpo">https://t.co/uZJcXAWlpo</a></blockquote>';
+          // }
 
           if (tab === 'social'){
             _this.socialArray.push(formattedItem);
@@ -459,27 +460,27 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       parent.postMessage(message, 'http://www.fankave.net');
     }
 
-    console.log("WAY BEFOREEEE");
-    if (!window.FB){
-      (function(d, s, id) {
-        console.log('loading FB SDK...');
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    }
+    // console.log("WAY BEFOREEEE");
+    // if (!window.FB){
+    //   (function(d, s, id) {
+    //     console.log('loading FB SDK...');
+    //     var js, fjs = d.getElementsByTagName(s)[0];
+    //     if (d.getElementById(id)) {return;}
+    //     js = d.createElement(s); js.id = id;
+    //     js.src = "//connect.facebook.net/en_US/sdk.js";
+    //     fjs.parentNode.insertBefore(js, fjs);
+    //   }(document, 'script', 'facebook-jssdk'));
+    // }
 
-    window.fbAsyncInit = function() {
-      console.log("BEFOREEEE");
-      FB.init({
-        appId      : '210324962465861',
-        xfbml      : true,
-        version    : 'v2.4'
-      });
-      console.log("AFTERRRRR");
-    };
+    // window.fbAsyncInit = function() {
+    //   console.log("BEFOREEEE");
+    //   FB.init({
+    //     appId      : '210324962465861',
+    //     xfbml      : true,
+    //     version    : 'v2.4'
+    //   });
+    //   console.log("AFTERRRRR");
+    // };
 
     this.shareToFacebook = function (id,embedUrl) {
       FB.ui({

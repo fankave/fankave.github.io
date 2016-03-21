@@ -3,8 +3,19 @@ angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "M
 
 function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout, $interval, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService,VideoService, ChannelService, UserAgentService)
 {
+  console.log("#$%TOPIC");
   var sessionTime = window.time;
   var lastComment = false;
+
+  var tab = URIHelper.getActiveTab();
+  if (tab === 'social'){
+    $rootScope.leftTab = 'social';
+  } else if (tab === 'video'){
+    $rootScope.leftTab = 'video';
+  } else {
+    $scope.activeTab = 'chat';
+    $rootScope.leftTab = 'chat';
+  }
 
   // Check For Mobile Browser
   if (UserAgentService.isMobileUser()){
@@ -122,7 +133,7 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
   }
 
   // CONTENT TABS
-  $scope.activeTab = 'chat';
+  // $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
     var t = (window.time - sessionTime);
       ga('send', 'event', 'Tabs','ActiveTab', $scope.activeTab);
@@ -132,9 +143,10 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     if (tab === 'chat'){
       $scope.activeTab = 'chat';
       $(document).scrollTop(0);
-      if (!networkService.isSocketConnected()){
-        init();
-      }
+      // if (!networkService.isSocketConnected()){
+      //   init();
+      // }
+      initPage();
     }
     if (tab === 'video'){
       $scope.activeTab = 'video';
@@ -325,7 +337,9 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
 
   function init() {
     networkService.send(TopicService.getTopicRequest($routeParams.topicID));
-    networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
+    if ($scope.activeTab === 'chat'){
+      networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
+    }
   }
 
   // $scope.showLoadMore = function(){
@@ -338,14 +352,9 @@ function ($scope, $rootScope, $q, $sce, $window, $location, $sanitize, $timeout,
     $scope.loadingSocial = false;
   };
   function initPage(){
-    if (URIHelper.getActiveTab() === 'video'){
-      $rootScope.leftTab = 'video';
-    }
-    else if (URIHelper.getActiveTab() === 'social'){
-      $rootScope.leftTab = 'social';
-    }
-    else {
-      $rootScope.leftTab = 'chat';
+    if (TopicService.fromPost()){
+      $scope.activeTab = 'chat';
+      TopicService.toggleFromPost();
     }
     updateTopic();
     updateComments();

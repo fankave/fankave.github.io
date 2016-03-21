@@ -85,9 +85,11 @@ gulp.task('scripts-post', function() {
 
 gulp.task('lib-pre', function() {
   return gulp.src([
+    './bower_components/jquery/dist/jquery.min.js',
     './bower_components/angular/angular.min.js',
     './bower_components/angular-route/angular-route.min.js',
-    './bower_components/angular-websocket/angular-websocket.min.js'
+    './bower_components/angular-websocket/angular-websocket.min.js',
+    './lib/angular-sanitize/angular-sanitize.min.js'
   ])
   .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(concat('lib-pre.min.js'))
@@ -97,9 +99,7 @@ gulp.task('lib-pre', function() {
 
 gulp.task('lib-post', function() {
   return gulp.src([
-    './bower_components/jquery/dist/jquery.min.js',
     './bower_components/bootstrap/dist/js/bootstrap.min.js',
-    './lib/angular-sanitize/angular-sanitize.min.js',
     './bower_components/angular-file-upload/dist/angular-file-upload.min.js',
     './bower_components/ng-device-detector/bower_components/re-tree/re-tree.min.js',
     './bower_components/ng-device-detector/ng-device-detector.min.js',
@@ -133,12 +133,12 @@ gulp.task('css', function() {
 })
 
 gulp.task('minifyFile', function() {
-  return gulp.src(['./embedInline.js'])
+  return gulp.src(['./js/pre/services/ForumAnalyticsService.js'])
   .pipe(uglify())
   .pipe(rename({
     suffix: '.min'
   }))
-  .pipe(gulp.dest('./dist'));
+  .pipe(gulp.dest('./dist/js'));
 });
 
 gulp.task('watch', function() {
@@ -151,3 +151,35 @@ gulp.task('watch', function() {
 gulp.task('build', ['css','scripts-pre','scripts-post']);
 gulp.task('build-lint', ['css','jshint-pre','scripts-pre','jshint-post','scripts-post']);
 gulp.task('build-full', ['css','lib-pre','lib-post','scripts-pre','scripts-post']);
+
+gulp.task('gzip-css', function() {
+  return gulp.src(['./dist/css/fankave.min.css'])
+  .pipe(gzip())
+  .pipe(gulp.dest('./dist/gzip'));
+});
+
+gulp.task('gzip-scripts-pre', function() {
+  return gulp.src(['./dist/js/app.min.js'])
+  .pipe(gzip())
+  .pipe(gulp.dest('./dist/gzip'));
+});
+
+gulp.task('gzip-scripts-post', function() {
+  return gulp.src(['./dist/js/app-post.min.js'])
+  .pipe(gzip())
+  .pipe(gulp.dest('./dist/gzip'));
+});
+
+gulp.task('gzip-lib-pre', function() {
+  return gulp.src(['./dist/lib/lib-pre.min.js'])
+  .pipe(gzip())
+  .pipe(gulp.dest('./dist/gzip'));
+});
+
+gulp.task('gzip-lib-post', function() {
+  return gulp.src(['./dist/lib/lib-post.min.js'])
+  .pipe(gzip())
+  .pipe(gulp.dest('./dist/gzip'));
+});
+
+gulp.task('gzip', ['gzip-css','gzip-scripts-pre','gzip-scripts-post','gzip-lib-pre','gzip-lib-post']);

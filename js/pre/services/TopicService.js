@@ -27,6 +27,7 @@ angular.module('TopicModule')
   var directComment; //bool flag to indicate whether user tapped on a comment's "comment" icon
 
   var _currentTimer;
+  var _fromPost = false;
 
   function setTopicData(topicData) 
   {
@@ -324,6 +325,18 @@ angular.module('TopicModule')
         _currentTimer = promise;
       }
       return _currentTimer;
+    },
+
+    fromPost: function(){
+      return _fromPost;
+    },
+
+    toggleFromPost: function(){
+      if (!_fromPost){
+        _fromPost = true;
+      } else if (_fromPost){
+        _fromPost = false;
+      }
     }
 
   };

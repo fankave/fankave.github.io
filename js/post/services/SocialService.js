@@ -158,9 +158,11 @@ angular.module('SocialModule')
       return _socialArrayAuto.length;
     },
     getPrevLength: function(){
+      console.log("PREV IN SERVICE GET: ", prevLength);
       return prevLength;
     },
     setPrevLength: function(length){
+      console.log("PREV IN SERVICE SET: ", prevLength);
       prevLength = length;
     },
     newExpertIn: function(val){
