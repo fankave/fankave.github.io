@@ -265,6 +265,8 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
         else{
           if(ANALYTICS)
             AnalyticsService.addSession('chat');
+            URIHelper.tabEntered();
+
         }
       }
     }
