@@ -1,7 +1,7 @@
 angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"])
-.controller("TopicController", ["$scope", "$rootScope", "$sce", "$window", "$location","$sanitize", "$timeout", "$interval", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService","AnalyticsService",
+.controller("TopicController", ["$scope", "$rootScope", "$sce", "$window", "$location","$sanitize", "$timeout", "$interval", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","VideoService","ChannelService","UserAgentService","AnalyticsService",
 
-function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $interval, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService,AnalyticsService)
+function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $interval, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, VideoService,ChannelService, UserAgentService,AnalyticsService)
 {
   var sessionTime = window.time;
   var lastComment = false;
