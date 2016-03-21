@@ -241,8 +241,10 @@ angular.module('ChannelModule')
   }
 
   function printEventStack(){
-    console.log("*********************  PrintEventSatck *********** ");
+    if(ANALYTICS_DEBUG){
+      console.log("*********************  PrintEventSatck *********** ");
       console.log(eventStack);
+    }
   }
 
 

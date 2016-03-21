@@ -1,7 +1,7 @@
 angular.module("NetworkModule", ['ngWebSocket'])
-.factory("networkService",["$websocket","$route","DataService","UserInfoService","AnalyticsService","URIHelper",
+.factory("networkService",["$websocket","$route","DataService","UserInfoService","URIHelper",
 
-function ($websocket,$route,DataService,UserInfoService,AnalyticsService,URIHelper)
+function ($websocket,$route,DataService,UserInfoService,URIHelper)
 {
   var ws;
 
@@ -58,14 +58,8 @@ function ($websocket,$route,DataService,UserInfoService,AnalyticsService,URIHelp
       if(type !== undefined){
         if(type === "context" || type === "hello"){
           if(NETWORK_DEBUG) console.log("Processing context");
-          AnalyticsService.setLoginSessionId(responseJson.data.analytics.sessionId,responseJson.data.userId,responseJson.data.sessionId);
+          DataService.setAnalytics(responseJson);
           if(URIHelper.isPeelUser()){
-                  // var getLoginSessionRequest = {"rid": "loginId",
-                  //   "timestamp": new Date().getTime(),
-                  //   "method": "GET",
-                  //   "uri": encodeURI("/v1.0/user/session/show")};
-                  //   ws.send(getLoginSessionRequest);
-                  
             UserInfoService.setUserCredentials(
               responseJson.data.userId, 
               responseJson.data.sessionId,
