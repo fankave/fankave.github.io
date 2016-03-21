@@ -552,6 +552,10 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
     if (window.location.href.indexOf('?') !== -1){
       var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
     }
+    // If auto-refresh timer is running, clear it before navigating to post
+    if (TopicService.currentTimer()){
+      $interval.cancel(TopicService.currentTimer(false));
+    }
     TopicService.directComment = true;
     VideoService.resetVideoOffset();
     SocialService.resetSocialOffset();
