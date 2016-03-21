@@ -137,7 +137,7 @@ angular.module('ChannelModule')
       console.log("Analytics ****** joinSessionEvent");
       console.log(UserAgentService.getDeviceInfo());
     }
-    stop = $interval(sendEventsToServer,20000);
+    stop = $interval(sendEventsToServer,60000);
     }
   }
   //LEAVE SESSION EVENT
@@ -147,6 +147,8 @@ angular.module('ChannelModule')
     mEvent.createdAt = d;
     mEvent.context.type ="disengage";
     mEvent.context.category = "access";
+    while(sessionStackInternal.length >1)
+      sessionStackInternal.pop();
     // var temp = getSessionStack().slice();
     // mEvent.context.data.sessionStack = temp;
     var duration = d.getTime() - getSessionTime();
