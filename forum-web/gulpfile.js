@@ -131,14 +131,14 @@ gulp.task('css', function() {
 })
 
 gulp.task('minifyFile', function() {
-  return gulp.src(['./lib/angular/angular-sanitize.js'])
+  return gulp.src(['./js/pre/services/ForumAnalyticsService.js'])
   .pipe(sourcemaps.init())
     .pipe(uglify())
     .pipe(rename({
       suffix: '.min'
     }))
   .pipe(sourcemaps.write('.'))
-  .pipe(gulp.dest('./lib/angular-sanitize'));
+  .pipe(gulp.dest('./dist/js'));
 });
 
 gulp.task('watch', function() {
@@ -184,3 +184,9 @@ gulp.task('gzip-lib-post', function() {
 
 gulp.task('gzip', ['gzip-css','gzip-scripts-pre','gzip-scripts-post','gzip-lib-pre','gzip-lib-post']);
 gulp.task('build-gzip', ['build-full','gzip']);
+
+gulp.task('gzipFile', function() {
+  return gulp.src(['./dist/js/ForumAnalyticsService.min.js'])
+  .pipe(gzip())
+  .pipe(gulp.dest('./dist/gzip'));
+});
