@@ -151,3 +151,36 @@ gulp.task('watch', function() {
 gulp.task('build', ['css','scripts-pre','scripts-post']);
 gulp.task('build-lint', ['css','jshint-pre','scripts-pre','jshint-post','scripts-post']);
 gulp.task('build-full', ['css','lib-pre','lib-post','scripts-pre','scripts-post']);
+
+gulp.task('gzip-css', function() {
+  return gulp.src(['./dist/css/fankave.min.css'])
+  .pipe(gzip())
+  .pipe(gulp.dest('./dist/gzip'));
+});
+
+gulp.task('gzip-scripts-pre', function() {
+  return gulp.src(['./dist/js/app.min.js'])
+  .pipe(gzip())
+  .pipe(gulp.dest('./dist/gzip'));
+});
+
+gulp.task('gzip-scripts-post', function() {
+  return gulp.src(['./dist/js/app-post.min.js'])
+  .pipe(gzip())
+  .pipe(gulp.dest('./dist/gzip'));
+});
+
+gulp.task('gzip-lib-pre', function() {
+  return gulp.src(['./dist/lib/lib-pre.min.js'])
+  .pipe(gzip())
+  .pipe(gulp.dest('./dist/gzip'));
+});
+
+gulp.task('gzip-lib-post', function() {
+  return gulp.src(['./dist/lib/lib-post.min.js'])
+  .pipe(gzip())
+  .pipe(gulp.dest('./dist/gzip'));
+});
+
+gulp.task('gzip', ['gzip-css','gzip-scripts-pre','gzip-scripts-post','gzip-lib-pre','gzip-lib-post']);
+gulp.task('build-gzip', ['build-full','gzip']);
