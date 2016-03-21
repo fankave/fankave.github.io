@@ -97,30 +97,6 @@ angular.module('ChannelModule')
     //Code to send events
     if(eventStack.length > 0){
 
-//       $http({
-//     url: 'http://146.148.35.97:8088/v1.0/services/analytics/events',
-//     dataType: 'json',
-//     method: 'POST',
-//     data: JSON.stringify(eventStack),
-//     headers: {
-//         "Content-Type": "application/json",
-//         "Access-Control-Allow-Origin": "*"
-//     }
-
-// }).success(function(response){
-//           if (ANALYTICS_DEBUG)
-//           console.log("Successfully Sent analytics events to server");
-//         eventStack = [];
-// }).error(function(error){
-//    if (ANALYTICS_DEBUG)
-//         console.log('Analytics Error: ', error);
-// });
-
-var config = {
-                headers: {
-        "Content-Type": "application/json"
-                          }
-            };
     $http.post("http://146.148.35.97/v1.0/services/log/events", JSON.stringify(eventStack))
       .then(function (response) {
         if (response.status === 200) {
@@ -170,6 +146,7 @@ var config = {
     var d = new Date();
     mEvent.createdAt = d;
     mEvent.context.type ="disengage";
+    mEvent.context.category = "access";
     // var temp = getSessionStack().slice();
     // mEvent.context.data.sessionStack = temp;
     var duration = d.getTime() - getSessionTime();

@@ -42,6 +42,8 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     $scope.$on('videoActive', function (event, args){
       $scope.$parent.activeTab = 'video';
+      if(ANALYTICS)
+        AnalyticsService.addSession('video');
       URIHelper.tabEntered();
       $scope.$parent.activeTab = 'video';
       _this.initFeed('video');
@@ -49,6 +51,8 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     $scope.$on('socialActive', function (event, args){
       $scope.$parent.activeTab = 'social';
+      if(ANALYTICS)
+        AnalyticsService.addSession('social');
       URIHelper.tabEntered();
       $scope.$parent.activeTab = 'social';
       _this.initFeed('social');
