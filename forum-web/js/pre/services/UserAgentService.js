@@ -40,6 +40,7 @@ angular.module('Forum')
 
       var os_version;
       var browser_version;
+      var platform = 'desktop_web';
 
       // Mac
       if (os === 'mac'){
@@ -89,11 +90,16 @@ angular.module('Forum')
       if (os === 'windows-phone'){
         // TO DO
       }
+      if(isMobileUser()){
+        platform = 'mobile_web';
+      }
 
       var deviceInfo = {
-        os: os,
+        platform: platform,
+        appVersion: '1.0',
+        osType: os,
         os_version: os_version,
-        browser: browser,
+        browserType: browser,
         browser_version: browser_version
       };
       if (device !== 'unknown') deviceInfo['device'] = device;

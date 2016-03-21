@@ -1,6 +1,6 @@
 angular.module('ChannelModule')
-.factory('AnalyticsService',["$interval","$http","UserInfoService",
-  function ($interval,$http,UserInfoService) {
+.factory('AnalyticsService',["$interval","$http","UserInfoService","UserAgentService",
+  function ($interval,$http,UserInfoService,UserAgentService) {
     
   var userData = {};
   var isJoinedSession = false;
@@ -32,9 +32,9 @@ angular.module('ChannelModule')
       return sessionId;
   }
 
-  function getSessionObject(){
+  function getSessionObject(sessionType){
     var sessionObject = {};
-    sessionObject.id = getNewSessionId();
+    sessionObject.id = sessionType + '_' + getNewSessionId();
     var d = new Date();
     sessionObject.timeStamp = d.getTime();
     if(ANALYTICS_DEBUG){
@@ -76,8 +76,8 @@ angular.module('ChannelModule')
     return sessionStack;
   }
 
-  function addSession(){
-    var session = getSessionObject();
+  function addSession(type){
+    var session = getSessionObject(type);
     sessionStackInternal.push(session);
     if(ANALYTICS_DEBUG)
     console.log("Analytics ****** : sessionStackInterNAl length : "+ sessionStackInternal.length);
@@ -93,49 +93,25 @@ angular.module('ChannelModule')
   }
   
   function sendEventsToServer(){
-
+  console.log("****************** send event to server triggered");
     //Code to send events
     if(eventStack.length > 0){
 
-//       $http({
-//     url: 'http://146.148.35.97:8088/v1.0/services/analytics/events',
-//     dataType: 'json',
-//     method: 'POST',
-//     data: JSON.stringify(eventStack),
-//     headers: {
-//         "Content-Type": "application/json",
-//         "Access-Control-Allow-Origin": "*"
-//     }
-
-// }).success(function(response){
-//           if (ANALYTICS_DEBUG)
-//           console.log("Successfully Sent analytics events to server");
-//         eventStack = [];
-// }).error(function(error){
-//    if (ANALYTICS_DEBUG)
-//         console.log('Analytics Error: ', error);
-// });
-
-// var config = {
-//                 headers: {
-//         "Content-Type": "application/json"
-//                           }
-//             };
-//     $http.post("http://146.148.35.97:8088/v1.0/services/analytics/events", JSON.stringify(eventStack),config)
-//       .then(function (response) {
-//         if (response.status === 200) {
-//           if (ANALYTICS_DEBUG)
-//           console.log("Successfully Sent analytics events to server");
-//         eventStack = [];
-//         }
-//       },
-//       function (response) {
-//         if (ANALYTICS_DEBUG)
-//         console.log('Analytics Error: ', response);
-//       }).then(function (response) {
-//         if (ANALYTICS_DEBUG)
-//         console.log('Analytics Resp: ', response);
-//       });
+    $http.post(ANALYTICS_SERVER, JSON.stringify(eventStack))
+      .then(function (response) {
+        if (response.status === 200) {
+          if (ANALYTICS_DEBUG)
+          console.log("Successfully Sent analytics events to server");
+        eventStack = [];
+        }
+      },
+      function (response) {
+        if (ANALYTICS_DEBUG)
+        console.log('Analytics Error: ', response);
+      }).then(function (response) {
+        if (ANALYTICS_DEBUG)
+        console.log('Analytics Resp: ', response);
+      });
         printEventStack();
         eventStack = [];
       }
@@ -145,19 +121,23 @@ angular.module('ChannelModule')
   //JOIN SESSION EVENT
   function joinSessionEvent(channel, topicId){
     if(!isJoinedSession){
-      addSession();
+      addSession('start');
       var mEvent = getBaseEvent();
       mEvent.createdAt = new Date();
       mEvent.context.type ="engage";
+      mEvent.context.category = "access";
     //   var temp = getSessionStack().slice();
     // mEvent.context.data.sessionStack = temp;
-      var content = {"channelId" : channel, "topicId" : topicId}
+    
+      var content = {"environment" : UserAgentService.getDeviceInfo(), "channelId" : channel, "topicId" : topicId}
       mEvent.content = content;
       eventStack.push(mEvent);
       isJoinedSession = true;
-      if(ANALYTICS_DEBUG)
+      if(ANALYTICS_DEBUG){
       console.log("Analytics ****** joinSessionEvent");
-    stop = $interval(sendEventsToServer,20000);
+      console.log(UserAgentService.getDeviceInfo());
+    }
+    stop = $interval(sendEventsToServer,60000);
     }
   }
   //LEAVE SESSION EVENT
@@ -166,6 +146,9 @@ angular.module('ChannelModule')
     var d = new Date();
     mEvent.createdAt = d;
     mEvent.context.type ="disengage";
+    mEvent.context.category = "access";
+    while(sessionStackInternal.length >1)
+      sessionStackInternal.pop();
     // var temp = getSessionStack().slice();
     // mEvent.context.data.sessionStack = temp;
     var duration = d.getTime() - getSessionTime();
@@ -179,6 +162,7 @@ angular.module('ChannelModule')
     printEventStack();
     $interval.cancel(stop);
     sendEventsToServer();
+    isJoinedSession = false;
     sessionStackInternal = [];
   }
 
@@ -246,19 +230,22 @@ angular.module('ChannelModule')
 
   }
 
-  function setLoginSessionId(loginId){
-    var user = UserInfoService.getUserCredentials();
-    
-     userData.userId = user.userId;
-     userData.sessionId = user.sessionId;
-     userData.loginSessionId = loginId;
+  function setLoginSessionId(loginId, userId, sessionId){
+    console.log("setting login session ID" ,loginId, userId, sessionId);
+     userData.userId = userId;
+     userData.sessionId = sessionId;
+     userData.engagementId = loginId;
      isAnalyticsInitialized = true;
      if(ANALYTICS_DEBUG)
-     console.log("Analytics ****** Base Event :"+ userData);
+     console.log("Analytics ****** Base Event :");
+      console.log(userData);
+      joinSessionEvent();
   }
 
   function printEventStack(){
+    if(ANALYTICS_DEBUG){
       console.log(eventStack);
+    }
   }
 
 

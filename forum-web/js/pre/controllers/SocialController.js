@@ -1,33 +1,38 @@
 angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
-.controller("SocialController", ["$scope","$sce","$window","$routeParams","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper","AnalyticsService",
-  function ($scope,$sce,$window,$routeParams,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper,AnalyticsService){
+.controller("SocialController", ["$scope","$sce","$window","$routeParams","$interval","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper","AnalyticsService",
+  function ($scope,$sce,$window,$routeParams,$interval,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper,AnalyticsService){
     console.log("Social Control");
+    setTimeout(initAutoRefresh, 6000);
 
     var _this = this;
     this.initFeed = function(tab) {
       // Show Loading UI Once On Each Tab
       if (tab === 'social'){
+        if (_this.newSocialAvailable) _this.newSocialAvailable = false;
+        hideJewel('social');
         if (!_this.socialArray){
           $scope.$parent.loadingSocial = true;
+          _this.loadContent('social');
+        } else {
+          updateFeed('social');
         }
-        if (!!_this.socialArray){
-          updateTimestamps('social');
-        }
+        updateTimestamps('social');
         $scope.$parent.switchTabs('social');
-        SocialService.resetSocialOffset();
         _this.loadContent('social');
         if (!window.twttr){
           loadTwitter();
         }
       } else {
+        if (_this.newVideoAvailable) _this.newVideoAvailable = false;
+        hideJewel('video');
         if (!_this.videoArray){
           $scope.$parent.loadingSocial = true;
+          _this.loadContent('video');
+        } else {
+          updateFeed('video');
         }
-        if (!!_this.videoArray){
-          updateTimestamps('video');
-        }
+        updateTimestamps('video');
         $scope.$parent.switchTabs('video');
-        VideoService.resetVideoOffset();
         _this.loadContent('video');
         if (!window.twttr){
           loadTwitter();
@@ -36,17 +41,126 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     };
 
     $scope.$on('videoActive', function (event, args){
+      $scope.$parent.activeTab = 'video';
+      if(ANALYTICS)
+        AnalyticsService.addSession('video');
       URIHelper.tabEntered();
       $scope.$parent.activeTab = 'video';
       _this.initFeed('video');
     });
 
     $scope.$on('socialActive', function (event, args){
+      $scope.$parent.activeTab = 'social';
+      if(ANALYTICS)
+        AnalyticsService.addSession('social');
       URIHelper.tabEntered();
       $scope.$parent.activeTab = 'social';
       _this.initFeed('social');
     });
 
+    // Auto Refresh
+    function initAutoRefresh () {
+      registerNewCallbacks();
+      registerJewelCallbacks();
+      if (TopicService.currentTimer()){
+        $interval.cancel(TopicService.currentTimer(false));
+      }
+      var timer = $interval(function(){
+        if (GEN_DEBUG) console.log("$AUTO$ START INTERVAL");
+        networkService.send(SocialService.getSocialDataRequestAutoSingle(TopicService.getChannelId()));
+        if (!URIHelper.isTechMUser() && !URIHelper.isMWCUser()){
+          networkService.send(VideoService.getVideoDataRequestAutoSingle(TopicService.getChannelId()));
+        }
+      }, 15000);
+      TopicService.currentTimer(timer);
+    }
+
+    function registerNewCallbacks () {
+      SocialService.registerObserverCallback(function(){getNewContent('social')}, 'new');
+      VideoService.registerObserverCallback(function(){getNewContent('video')}, 'new');
+    }
+
+    function registerJewelCallbacks () {
+      SocialService.registerObserverCallback(function(){updateJewels('social')}, true);
+      if (!URIHelper.isTechMUser() && !URIHelper.isMWCUser()){
+        VideoService.registerObserverCallback(function(){updateJewels('video')}, true);
+      }
+    }
+
+    function getNewContent (tab) {
+      if (tab === 'social'){
+        if (GEN_DEBUG) console.log("$AUTO$ NEW SOCIAL PRESENT - SEND FULL REQUEST");
+        networkService.send(SocialService.getSocialDataRequestAuto(TopicService.getChannelId()));
+      }
+      if (tab === 'video'){
+        if (GEN_DEBUG) console.log("$AUTO$ NEW VIDEO PRESENT - SEND FULL REQUEST");
+        networkService.send(VideoService.getVideoDataRequestAuto(TopicService.getChannelId()));
+      }
+    }
+
+    function updateJewels (tab) {
+      if (tab === 'social'){
+        var length = SocialService.socialArrayAutoLength();
+        var prevLength = SocialService.getPrevLength();
+        if (GEN_DEBUG) console.log("$AUTO$ UPDATE JEWEL[S] - ", {prevLength:prevLength,newLength:length});
+        if (length > prevLength){
+          if ($scope.$parent.activeTab === 'social'){
+            // If user is on tab during first interval, don't show indicator
+            if (prevLength !== 0){
+              _this.newSocialAvailable = true;
+            }
+          } else {
+            if (GEN_DEBUG) console.log("$AUTO$ PULSE SOCIAL JEWEL");
+            pulseJewel('social');
+          }
+          SocialService.setPrevLength(length);
+        }
+      }
+      if (tab === 'video'){
+        var length = VideoService.videoArrayAutoLength();
+        var prevLength = VideoService.getPrevLength();
+        if (GEN_DEBUG) console.log("$AUTO$ UPDATE JEWEL[V] - ", {prevLength:prevLength,newLength:length});
+        if (length > prevLength){
+          if ($scope.$parent.activeTab === 'video'){
+            // If user is on tab during first interval, don't show indicator
+            if (prevLength !== 0){
+              _this.newVideoAvailable = true;
+            }
+          } else {
+            if (GEN_DEBUG) console.log("$AUTO$ PULSE VIDEO JEWEL");
+            pulseJewel('video');
+          }
+          VideoService.setPrevLength(length);
+        }
+      }
+    }
+
+    function pulseJewel (tab) {
+      var el;
+      if (tab === 'social'){
+        el = document.getElementById('socialJewel');
+      }
+      if (tab === 'video'){
+        el = document.getElementById('videoJewel');
+      }
+
+      // Trick to retrigger animation
+      el.classList.remove('pulse');
+      el.offsetWidth = el.offsetWidth;
+      el.classList.add('pulse');
+    }
+
+    function hideJewel (tab) {
+      var el;
+      if (tab === 'social'){
+        el = document.getElementById('socialJewel');
+      }
+      if (tab === 'video'){
+        el = document.getElementById('videoJewel');
+      }
+      el.classList.remove('pulse');
+    }
+    
     function loadTwitter () {
       window.twttr = (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0],
@@ -68,7 +182,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     this.loadContent = function(type, offset) {
       var channelID = ChannelService.getChannel()||TopicService.getChannelId();
-      if ($scope.$parent.activeTab === 'social' || type === 'social'){
+      if (type === 'social'){
         if (NETWORK_DEBUG)
         console.log("LOADING SOCIAL: ", channelID);
         networkService.send(SocialService.getSocialDataRequest(channelID,offset));
@@ -179,10 +293,12 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     function updateTimestamps(tab){
       if (tab === 'social'){
+        if (!_this.socialArray) return;
         for (var i = 0; i < _this.socialArray.length; i++){
           _this.socialArray[i].postTimestamp = DateUtilityService.getTimeSince(_this.socialArray[i].createdAtFull);
         }
       } else {
+        if (!_this.videoArray) return;
         for (var i = 0; i < _this.videoArray.length; i++){
           _this.videoArray[i].postTimestamp = DateUtilityService.getTimeSince(_this.videoArray[i].createdAtFull);
         }
@@ -207,13 +323,6 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         if (callNow) func.apply(context, args);
       };
     };
-
-    function scrollAfterLoad(pos) {
-      setTimeout(function(){
-        $(document).scrollTop(pos);
-      }, 250);
-    };
-
 
     var clientHeight = document.documentElement.clientHeight || window.innerHeight;
     var watchContentScroll = debounce(function() {
@@ -285,23 +394,23 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       parent.postMessage(message, 'http://www.fankave.net');
     }
 
-    if (!window.FB){
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    }
+    // if (!window.FB){
+    //   (function(d, s, id) {
+    //     var js, fjs = d.getElementsByTagName(s)[0];
+    //     if (d.getElementById(id)) {return;}
+    //     js = d.createElement(s); js.id = id;
+    //     js.src = "//connect.facebook.net/en_US/sdk.js";
+    //     fjs.parentNode.insertBefore(js, fjs);
+    //   }(document, 'script', 'facebook-jssdk'));
+    // }
 
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '210324962465861',
-        xfbml      : true,
-        version    : 'v2.4'
-      });
-    };
+    // window.fbAsyncInit = function() {
+    //   FB.init({
+    //     appId      : '210324962465861',
+    //     xfbml      : true,
+    //     version    : 'v2.4'
+    //   });
+    // };
 
     this.shareToFacebook = function (id,embedUrl) {
       FB.ui({
@@ -326,6 +435,20 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       $('#postShareContent').css('color','rgb(211,214,215)');
     };
 
+    this.showNewSocial = function(){
+      _this.newSocialAvailable = false;
+      updateFeed('social');
+      var body = $('body');
+      body.stop().animate({scrollTop:0}, '500', 'swing');
+    }
+
+    this.showNewVideo = function(){
+      _this.newVideoAvailable = false;
+      updateFeed('video');
+      var body = $('body');
+      body.stop().animate({scrollTop:0}, '500', 'swing');
+    }
+    
     this.reportSocialInteraction = function (post, button, activeTab) {
       // console.log(post);
       // console.log(button);

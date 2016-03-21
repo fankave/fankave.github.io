@@ -1,10 +1,21 @@
 angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"])
-.controller("TopicController", ["$scope", "$rootScope", "$sce", "$window", "$location","$sanitize", "$timeout", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","ChannelService","UserAgentService","AnalyticsService",
+.controller("TopicController", ["$scope", "$rootScope", "$sce", "$window", "$location","$sanitize", "$timeout", "$interval", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","VideoService","ChannelService","UserAgentService","AnalyticsService",
 
-function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, ChannelService, UserAgentService,AnalyticsService)
+function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $interval, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, VideoService,ChannelService, UserAgentService,AnalyticsService)
 {
   var sessionTime = window.time;
   var lastComment = false;
+
+  var tab = URIHelper.getActiveTab();
+  if (tab === 'social'){
+    $rootScope.leftTab = 'social';
+  } else if (tab === 'video'){
+    $rootScope.leftTab = 'video';
+  } else {
+    $rootScope.leftTab = 'chat';
+    $scope.activeTab = 'chat';
+  }
+
   // Check For Mobile Browser
   if (UserAgentService.isMobileUser()){
     $scope.mobileBrowser = true;
@@ -138,13 +149,12 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   };
 
   // CONTENT TABS
-  $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
     var t = (window.time - sessionTime);
     if($scope.activeTab  != tab ){
       AnalyticsService.browseSessionEvent($scope.activeTab)
     }
-    AnalyticsService.addSession();
+    AnalyticsService.addSession(tab);
     console.log("ACTIVE TAB ********* " + $scope.activeTab + "TIME SPENT : "+ t );
     if(GOOGLE_ANALYTICS === true){
       ga('send', 'event', 'Tabs','ActiveTab', $scope.activeTab);
@@ -155,7 +165,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     if (tab === 'chat'){
       $scope.activeTab = 'chat';
       $(document).scrollTop(0);
-      init();
+      initPage();
     }
     if (tab === 'video'){
       $scope.activeTab = 'video';
@@ -254,7 +264,9 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
         }
         else{
           if(ANALYTICS)
-            AnalyticsService.addSession();
+            AnalyticsService.addSession('chat');
+            URIHelper.tabEntered();
+
         }
       }
     }
@@ -354,8 +366,10 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
 
   function init() {
     networkService.send(TopicService.getTopicRequest($routeParams.topicID));
-    networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
-    AnalyticsService.joinSessionEvent(ChannelService.getChannel(),$routeParams.topicID);
+    if ($scope.activeTab === 'chat'){
+      networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
+    }
+    //AnalyticsService.joinSessionEvent(ChannelService.getChannel(),$routeParams.topicID);
   };
 
   $scope.hideLoading = function(){
@@ -365,14 +379,9 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     $scope.loadingSocial = false;
   };
   function initPage(){
-    if (URIHelper.getActiveTab() === 'video'){
-      $rootScope.leftTab = 'video';
-    }
-    else if (URIHelper.getActiveTab() === 'social'){
-      $rootScope.leftTab = 'social';
-    }
-    else {
-      $rootScope.leftTab = 'chat';
+    if (TopicService.fromPost()){
+      $scope.activeTab = 'chat';
+      TopicService.toggleFromPost();
     }
     updateTopic();
     updateComments();
@@ -388,12 +397,21 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
   }
 
   $scope.viewPost = function(e,id){
+    // Check for url query string
     if (window.location.href.indexOf('?') !== -1){
       var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
     }
+    // If target is an external link, do nothing
     if ($(e.target).is('a')){
       return;
     }
+    // If auto-refresh timer is running, clear it before navigating to post
+    if (TopicService.currentTimer()){
+      $interval.cancel(TopicService.currentTimer(false));
+    }
+    VideoService.resetVideoOffset();
+    SocialService.resetSocialOffset();
+    // Pass along query string if present when navigating to post
     if (urlQueryStr !== undefined){
       $location.url("/post/" + id + urlQueryStr);
     } else {
@@ -534,8 +552,13 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $ro
     if (window.location.href.indexOf('?') !== -1){
       var urlQueryStr = window.location.href.slice(window.location.href.indexOf('?'));
     }
+    // If auto-refresh timer is running, clear it before navigating to post
+    if (TopicService.currentTimer()){
+      $interval.cancel(TopicService.currentTimer(false));
+    }
     TopicService.directComment = true;
-    
+    VideoService.resetVideoOffset();
+    SocialService.resetSocialOffset();
     // Pass along query string if present when navigating to post
     if (urlQueryStr !== undefined){
       $location.url("/post/" + id + urlQueryStr);
