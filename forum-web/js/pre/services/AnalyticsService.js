@@ -97,7 +97,7 @@ angular.module('ChannelModule')
     //Code to send events
     if(eventStack.length > 0){
 
-    $http.post("http://146.148.35.97/v1.0/services/log/events", JSON.stringify(eventStack))
+    $http.post(ANALYTICS_SERVER, JSON.stringify(eventStack))
       .then(function (response) {
         if (response.status === 200) {
           if (ANALYTICS_DEBUG)
@@ -242,7 +242,6 @@ angular.module('ChannelModule')
 
   function printEventStack(){
     if(ANALYTICS_DEBUG){
-      console.log("*********************  PrintEventSatck *********** ");
       console.log(eventStack);
     }
   }
