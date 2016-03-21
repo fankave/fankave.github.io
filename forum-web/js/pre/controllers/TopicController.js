@@ -5,6 +5,17 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
 {
   var sessionTime = window.time;
   var lastComment = false;
+
+  var tab = URIHelper.getActiveTab();
+  if (tab === 'social'){
+    $rootScope.leftTab = 'social';
+  } else if (tab === 'video'){
+    $rootScope.leftTab = 'video';
+  } else {
+    $rootScope.leftTab = 'chat';
+    $scope.activeTab = 'chat';
+  }
+
   // Check For Mobile Browser
   if (UserAgentService.isMobileUser()){
     $scope.mobileBrowser = true;
@@ -138,7 +149,6 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
   };
 
   // CONTENT TABS
-  $scope.activeTab = 'chat';
   $scope.switchTabs = function(tab) {
     var t = (window.time - sessionTime);
     if($scope.activeTab  != tab ){
@@ -155,7 +165,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
     if (tab === 'chat'){
       $scope.activeTab = 'chat';
       $(document).scrollTop(0);
-      init();
+      initPage();
     }
     if (tab === 'video'){
       $scope.activeTab = 'video';
@@ -354,7 +364,9 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
 
   function init() {
     networkService.send(TopicService.getTopicRequest($routeParams.topicID));
-    networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
+    if ($scope.activeTab === 'chat'){
+      networkService.send(CommentService.getCommentsRequest($routeParams.topicID));
+    }
     //AnalyticsService.joinSessionEvent(ChannelService.getChannel(),$routeParams.topicID);
   };
 
@@ -365,14 +377,9 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
     $scope.loadingSocial = false;
   };
   function initPage(){
-    if (URIHelper.getActiveTab() === 'video'){
-      $rootScope.leftTab = 'video';
-    }
-    else if (URIHelper.getActiveTab() === 'social'){
-      $rootScope.leftTab = 'social';
-    }
-    else {
-      $rootScope.leftTab = 'chat';
+    if (TopicService.fromPost()){
+      $scope.activeTab = 'chat';
+      TopicService.toggleFromPost();
     }
     updateTopic();
     updateComments();
