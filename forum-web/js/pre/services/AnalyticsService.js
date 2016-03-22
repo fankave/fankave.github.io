@@ -168,14 +168,16 @@ angular.module('ChannelModule')
 
   function browseSessionEvent(type){
     var time = new Date();
-
+    while(sessionStackInternal.length > 2)
+       sessionStackInternal.pop();
     var duration = time.getTime() - getSessionTime();
       var mEvent = getBaseEvent();
       mEvent.createdAt = new Date();
       mEvent.context.type ="browse";
       // var temp = getSessionStack().slice();
       // mEvent.context.data.sessionStack = temp;
-      var content = {"entity" : type, "duration" : duration };
+      var section = "topic-view." + type +"-section";
+      var content = {"entity" : section, "duration" : duration };
       mEvent.content = content;
       eventStack.push(mEvent);
       sessionStackInternal.pop();
