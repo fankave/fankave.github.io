@@ -145,8 +145,7 @@ angular.module('ChannelModule')
     var mEvent = getBaseEvent();
     var d = new Date();
     mEvent.createdAt = d;
-    mEvent.context.type ="disengage";
-    mEvent.context.category = "access";
+    mEvent.context.type ="leave";
     while(sessionStackInternal.length >1)
       sessionStackInternal.pop();
     // var temp = getSessionStack().slice();
