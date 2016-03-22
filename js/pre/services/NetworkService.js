@@ -124,7 +124,7 @@ function ($websocket,$route,DataService,UserInfoService,URIHelper)
     function getPeelWebsocketUri(){
       var socketUri = WEBSOCKET_BASE_URI_PEEL+
       'userId='+URIHelper.getPeelUserId()+
-      '&userName=='+URIHelper.getPeelUserName()+
+      '&userName='+URIHelper.getPeelUserName()+
       '/';
       if(NETWORK_DEBUG) console.log("socketUri: " + socketUri);
       return socketUri;

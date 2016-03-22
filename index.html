@@ -26,14 +26,6 @@
 
   <!-- App Javascript -->
   <script src="dist/js/app.min.js"></script>
-  <!-- Google Analytics -->
-<!--script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
- //ga('create', 'UA-69086637-2', 'auto');
- //ga('send', 'pageview');
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script-->
-<!-- End Google Analytics -->
   
   <script>
   var GOOGLE_ANALYTICS = false;
@@ -47,7 +39,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
   var NETWORK_DEBUG = true;
   var ANALYTICS = true;
   var ANALYTICS_DEBUG = true;
-  var GEN_DEBUG = false;
+  var GEN_DEBUG = true;
   var DEV_BUILD = true;
   var HTML5_LOC = false;
   var HOST_NAME = window.location.host;
@@ -92,7 +84,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 
   <!-- Libraries Post Load -->
   <script src="dist/lib/lib-post.min.js"></script>
-  <script src="dist/js/ForumAnalyticsService.min.js"></script>
+  <script async src="dist/js/ForumAnalyticsService.min.js"></script>
 
 </body>
 

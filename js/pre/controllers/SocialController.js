@@ -2,7 +2,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 .controller("SocialController", ["$scope","$sce","$window","$routeParams","$interval","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper","AnalyticsService",
   function ($scope,$sce,$window,$routeParams,$interval,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper,AnalyticsService){
     console.log("Social Control");
-    setTimeout(initAutoRefresh, 2000);
+    setTimeout(initAutoRefresh, 6000);
 
     var _this = this;
     this.initFeed = function(tab) {
