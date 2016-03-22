@@ -54,7 +54,9 @@ var timer = window.setInterval(timeAndReport, 1000);
 // Initial 1 second send
 if (GEN_DEBUG)
 console.log('TimeOnPage: 1 second');
+if(GOOGLE_ANALYTICS === true){
 ga('send', 'event', 'TimeOnPage', '0', '1 second', { 'nonInteraction': 1 });
+}
 
 function startTimer() {
   if (GEN_DEBUG)
@@ -81,7 +83,9 @@ function timeAndReport() {
   if (time === 10 || time === 30 || time === 60){
     if (GEN_DEBUG)
     console.log('TimeOnPage: ' + time + ' seconds | Count: ' + count);
+  if(GOOGLE_ANALYTICS === true){
     ga('send', 'event', 'TimeOnPage', count.toString(), (time + ' seconds'), { 'nonInteraction': 1 });
+  }
     count++;
   } 
   if (time > 60 && time % 60 === 0){
@@ -89,7 +93,9 @@ function timeAndReport() {
     if (minutes <= 5 || minutes === 10 || minutes === 20 || minutes === 30){
       if (GEN_DEBUG)
       console.log('TimeOnPage: ' + minutes + ' mins | Count: ' + count);
+    if(GOOGLE_ANALYTICS === true){
       ga('send', 'event', 'TimeOnPage', count.toString(), (minutes + ' mins'), { 'nonInteraction': 1 });
+    }
       count++;
     }
   }

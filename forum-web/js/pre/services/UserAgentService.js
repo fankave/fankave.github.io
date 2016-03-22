@@ -1,6 +1,6 @@
 angular.module('Forum')
-.factory("UserAgentService", ["ForumStorage","UserInfoService",
-  function (ForumStorage,UserInfoService){
+.factory("UserAgentService", ["ForumStorage","UserInfoService","deviceDetector",
+  function (ForumStorage, UserInfoService, deviceDetector){
 
     var _userAgent;
 
@@ -32,10 +32,149 @@ angular.module('Forum')
       return false;
     }
 
+    function getDeviceInfo() {
+      var raw = deviceDetector.raw;
+      var os = deviceDetector.os;
+      var browser = deviceDetector.browser;
+      var device = deviceDetector.device;
+
+      var os_version;
+      var browser_version;
+      var platform = 'desktop-web';
+
+      // Mac
+      if (os === 'mac'){
+        if (browser === 'chrome') {
+          os_version = extractOSXVersion(raw.userAgent);
+          browser_version = extractChromeVersion(raw.userAgent);
+        }
+        else if (browser === 'safari'){
+          os_version = extractOSXVersion(raw.userAgent);
+          browser_version = extractDesktopSafariVersion(raw.userAgent);
+        }
+        else if (browser === 'firefox'){
+          os_version = extractOSXVersionFirefox(raw.userAgent);
+          browser_version = extractDesktopFirefoxVersion(raw.userAgent);
+        }
+      }
+
+      // Windows
+      if (os === 'windows'){
+        // Windows Version
+        for (var key in raw.os_version){
+          if (raw.os_version.hasOwnProperty(key)){
+            if (raw.os_version[key] === true){
+              os_version = key;
+            }
+          }
+        }
+      }
+
+      // iOS
+      if (os === 'ios'){
+        os_version = extractIOSVersion(raw.userAgent);
+        if (browser === 'safari'){
+          browser_version = extractMobileSafariVersion(raw.userAgent);
+        }
+      }
+
+      // Android
+      if (os === 'android'){
+        os_version = extractAndroidVersion(raw.userAgent);
+        if (browser === 'chrome'){
+          browser_version = extractChromeVersion(raw.userAgent);
+        }
+      }
+
+      // Windows Phone
+      if (os === 'windows-phone'){
+        // TO DO
+      }
+      if(isMobileUser()){
+        platform = 'mobile-web';
+      }
+
+      var deviceInfo = {
+        platform: platform,
+        appVersion: '1.0',
+        osType: os,
+        osVersion: os_version,
+        browserType: browser,
+        browserVersion: browser_version
+      };
+      if (device !== 'unknown') deviceInfo['device'] = device;
+      return deviceInfo;
+    }
+
+    function extractOSXVersion(UA){
+      if ( UA.indexOf('Mac OS X') !== -1 ){
+        UA = UA.slice( UA.indexOf('Mac OS X') + 9 );
+        return UA.slice( 0, UA.indexOf(')') );
+      }
+      return null;
+    }
+
+    function extractOSXVersionFirefox(UA){
+      if ( UA.indexOf('Mac OS X') !== -1 ){
+        UA = UA.slice( UA.indexOf('Mac OS X') + 9 );
+        return UA.slice( 0, UA.indexOf(';') );
+      }
+      return null;
+    }
+
+    function extractChromeVersion(UA){
+      if ( UA.indexOf('Chrome/') !== -1 ){
+        UA = UA.slice( UA.indexOf('Chrome/') + 7 );
+        return UA.slice( 0, UA.indexOf(' ') );
+      }
+      return null;
+    }
+
+    function extractDesktopFirefoxVersion(UA){
+      if ( UA.indexOf('Firefox/') !== -1 ){
+        UA = UA.slice( UA.indexOf('Firefox/') + 8 );
+        return UA;
+      }
+      return null;
+    }
+
+    function extractDesktopSafariVersion(UA){
+      if ( UA.indexOf('Version/') !== -1 ){
+        UA = UA.slice( UA.indexOf('Version/') + 8 );
+        return UA.slice( 0, UA.indexOf(' ') );
+      }
+      return null;
+    }
+
+    function extractIOSVersion(UA){
+      if ( UA.indexOf('CPU iPhone OS') !== -1 ){
+        UA = UA.slice( UA.indexOf('CPU iPhone OS') + 14 );
+        return UA.slice( 0, UA.indexOf(' ') );
+      }
+      return null;
+    }
+
+    function extractAndroidVersion(UA){
+      if ( UA.indexOf('Linux; Android') !== -1 ){
+        UA = UA.slice( UA.indexOf('Linux; Android') + 15 );
+        return UA.slice( 0, UA.indexOf(';') );
+      }
+      return null;
+    }
+
+    function extractMobileSafariVersion(UA){
+      if ( UA.indexOf('Version/') !== -1 ){
+        UA = UA.slice( UA.indexOf('Version/') + 8 );
+        return UA.slice( 0, UA.indexOf('/') );
+      }
+      return null;
+    }
+
     return {
       getMobileUserAgent: getMobileUserAgent,
       isMobileUser: isMobileUser,
-      isUserAgent: isUserAgent
+      isUserAgent: isUserAgent,
+      getDeviceInfo: getDeviceInfo
     };
 
 }]);

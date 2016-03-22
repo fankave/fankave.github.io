@@ -12,6 +12,8 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
     $scope.mobileBrowser = false;
   }
 
+  TopicService.toggleFromPost();
+
   // Retain & Handle State when Returning From External Links
   if (ForumStorage.getFromLocalStorage('hasUserVisited') === true){
     $scope.initPage();
@@ -100,7 +102,9 @@ function ($scope, $sce, $timeout, $window, $location, $sanitize, $routeParams, n
 
 	$scope.peelWatchOnTV = function()
 	{
+		if(GOOGLE_ANALYTICS === true){
 		ga('send', 'event', 'Peel', 'click', 'PeelWatchOnTV');
+	}
     if (GEN_DEBUG)
 		console.log("peelWatchOnTV()");
 		var showId = URIHelper.getPeelShowId();

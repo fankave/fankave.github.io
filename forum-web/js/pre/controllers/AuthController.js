@@ -29,10 +29,14 @@ angular.module("AuthModule", ["NetworkModule", "TopicModule"])
         js.src = "//connect.facebook.net/en_US/sdk.js";
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
-      ga('send', 'pageview', 'Facebook Landing');
+      if (GOOGLE_ANALYTICS === true){
+        ga('send', 'pageview', 'Facebook Landing');
+      }
     }
     else {
-      ga('send', 'pageview', 'Tech MI16 Landing');
+      if (GOOGLE_ANALYTICS === true){
+        ga('send', 'pageview', 'Tech MI16 Landing');
+      }
     }
     // FACEBOOK AUTH SECTION
     $scope.showFacebookButton = true;

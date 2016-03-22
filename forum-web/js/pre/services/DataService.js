@@ -1,6 +1,6 @@
 angular.module('NetworkModule')
-.service('DataService', ["TopicService","CommentService","ReplyService","ChannelService","SocialService","VideoService",
-  function (TopicService, CommentService, ReplyService, ChannelService, SocialService, VideoService) {
+.service('DataService', ["TopicService","CommentService","ReplyService","ChannelService","SocialService","VideoService","AnalyticsService",
+  function (TopicService, CommentService, ReplyService, ChannelService, SocialService, VideoService,AnalyticsService) {
   
   var DATA_TYPE_TOPIC = "topic";
   var DATA_TYPE_COMMENT = "comment";
@@ -143,6 +143,20 @@ angular.module('NetworkModule')
     }
   }
 
+
+   function delegateSetAnalytics(data) {
+    if(data.error){
+      if (NETWORK_DEBUG)
+      console.log("Video Error message from network: ", data.error);
+    }
+    else {
+      if (NETWORK_DEBUG)
+      console.log("VIDEO GET");
+      AnalyticsService.setLoginSessionId(data.data.analytics.sessionId,data.data.userId,data.data.sessionId, ChannelService.getChannel(), TopicService.getTopicId());
+          
+    }
+  }
+
   return {
     setVideo:delegateSetVideo,
     setSocial:delegateSetSocial,
@@ -150,6 +164,7 @@ angular.module('NetworkModule')
     setTopic:delegateSetTopic,
     setComments:delegateSetComments,
     setReplies:delegateSetReplies,
+    setAnalytics:delegateSetAnalytics,
     setWatchTopic:function(watched){
       TopicService.setWatchTopic(watched);
     }

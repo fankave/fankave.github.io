@@ -6,6 +6,7 @@ angular.module('SocialModule')
 
   var observerCallbacks = [];
   var autoObserverCallbacks = [];
+  var newObserverCallbacks = [];
   var _socialArray = [];
   var _socialArrayAuto = [];
   var _offset = 0;
@@ -34,6 +35,11 @@ angular.module('SocialModule')
             }
           }
           _socialArray.push(_socialObject);
+          if (len === 1 && isNewObject && socialData.rid === "social_auto"){
+            if (GEN_DEBUG) console.log("$AUTO$ SINGLE REQUEST FOUND NEW SOCIAL - NOTIFYING");
+            notifyObservers('new');
+            return;
+          }
           if (isNewObject && socialData.rid === "social_auto"){
             _socialArrayAuto.push(_socialObject);
           }
@@ -51,12 +57,19 @@ angular.module('SocialModule')
   }
 
   var notifyObservers = function(autoRequest){
-   if (autoRequest){
-        angular.forEach(autoObserverCallbacks, function(callback){
-          console.log("Notify observer in autoRequest");
-          callback();
-        });
-      } else {
+   if (autoRequest === true){
+      angular.forEach(autoObserverCallbacks, function(callback){
+        console.log("Notify observer in autoRequest ", callback);
+        callback();
+      });
+    }
+    else if (autoRequest === 'new'){
+      angular.forEach(newObserverCallbacks, function(callback){
+        console.log("Notify observer in newRequest ", callback);
+        callback();
+      });
+    }
+    else {
       angular.forEach(observerCallbacks, function(callback){
         callback();
       });
@@ -64,14 +77,22 @@ angular.module('SocialModule')
   };
 
   function registerObserverCallback(callback, auto){
-   //register an observer
-    if (auto){
+    //register an observer
+    if (auto === true){
       var callbackLength = autoObserverCallbacks.length;
       while (callbackLength > 0){
         callbackLength = autoObserverCallbacks.length;
         autoObserverCallbacks.pop();
       }
       autoObserverCallbacks.push(callback);
+    }
+    else if (auto === 'new'){
+      var callbackLength = newObserverCallbacks.length;
+      while (callbackLength > 0){
+        callbackLength = newObserverCallbacks.length;
+        newObserverCallbacks.pop();
+      }
+      newObserverCallbacks.push(callback);
     }
     else {
       var callbackLength = observerCallbacks.length;
@@ -109,6 +130,18 @@ angular.module('SocialModule')
     return request;
   }
 
+  function getSocialDataRequestAutoSingle(id){
+    var request = {
+      "rid": "social_auto",
+      "timestamp": new Date().getTime(),
+      "method": "GET",
+      "uri": encodeURI(LIST_SOCIAL_URI+id+"?limit=1&offset=0")
+    };
+    if (NETWORK_DEBUG)
+    console.log("Social Request Single Auto: ", request);
+    return request;
+  }
+
   return {
     socialArray: function(){
       return _socialArray;
@@ -119,6 +152,7 @@ angular.module('SocialModule')
     setSocialData: setSocialData,
     getSocialDataRequest: getSocialDataRequest,
     getSocialDataRequestAuto: getSocialDataRequestAuto,
+    getSocialDataRequestAutoSingle: getSocialDataRequestAutoSingle,
     registerObserverCallback: registerObserverCallback,
     socialArrayAutoLength: function(){
       return _socialArrayAuto.length;

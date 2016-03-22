@@ -27,6 +27,7 @@ angular.module('TopicModule')
   var directComment; //bool flag to indicate whether user tapped on a comment's "comment" icon
 
   var _currentTimer;
+  var _fromPost = false;
 
   function setTopicData(topicData) 
   {
@@ -112,9 +113,11 @@ angular.module('TopicModule')
       }
       _gameStats = _score.status;
       if (NETWORK_DEBUG) {
-        console.log("Game Points :" + _score.points[0] + " : : "+_score.points[1] );
-        console.log("Game Period :" + _gameStats[0]);
-        console.log("Game Period :" + _gameStats[1]);
+        // console.log("Game Points :" + _score.points[0] + " : : "+_score.points[1] );
+        // if(_gameStats !== null){
+        // console.log("Game Period :" + _gameStats[0]);
+        // console.log("Game Period :" + _gameStats[1]);
+        // }
       }
       notifyObservers();
     }
@@ -328,6 +331,18 @@ angular.module('TopicModule')
         _currentTimer = promise;
       }
       return _currentTimer;
+    },
+
+    fromPost: function(){
+      return _fromPost;
+    },
+
+    toggleFromPost: function(){
+      if (!_fromPost){
+        _fromPost = true;
+      } else if (_fromPost){
+        _fromPost = false;
+      }
     }
 
   };

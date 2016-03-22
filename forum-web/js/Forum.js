@@ -1,4 +1,4 @@
-angular.module("Forum", ["ngRoute","ngSanitize","AuthModule","ChannelModule","TopicModule","PostModule","NetworkModule","MediaModule","SocialModule","UserInput","SmartStadiumModule"])
+angular.module("Forum", ["ngRoute","ngSanitize","ng.deviceDetector","AuthModule","ChannelModule","TopicModule","PostModule","NetworkModule","MediaModule","SocialModule","UserInput","SmartStadiumModule"])
 .config(["$routeProvider", "$locationProvider",
 
 function ($routeProvider, $locationProvider) {
@@ -88,6 +88,7 @@ angular.module('Forum')
             type: 'resize',
             contentHeight: contentHeight
           };
+          parent.postMessage(message, 'http://www.collegespun.com');
           parent.postMessage(message, 'http://www.fankave.net');
         }
 
