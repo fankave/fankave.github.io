@@ -7,7 +7,8 @@ angular.module('NetworkModule')
   'networkService',
   'AnalyticsService',
   'ChannelService',
-function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsService, ChannelService) {
+  'TopicService',
+function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsService, ChannelService, TopicService) {
   var visProp;
   var timer;
   var time = 0;
@@ -64,7 +65,7 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
 
   function endSession() {
     if (NETWORK_DEBUG) console.log("Disconnect & End Session");
-    AnalyticsService.leaveSessionEvent(ChannelService.getChannel(), $routeParams.topicID);
+    AnalyticsService.leaveSessionEvent(ChannelService.getChannel() || TopicService.getChannelId(), $routeParams.topicID);
     networkService.closeSocket();
     _timeout = undefined;
     _restartSession = true;
