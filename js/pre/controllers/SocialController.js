@@ -2,7 +2,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 .controller("SocialController", ["$scope","$sce","$window","$location","$routeParams","$q","$interval","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper","UserAgentService",
   function ($scope,$sce,$window,$location,$routeParams,$q,$interval,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper,UserAgentService){
     console.log("Social Control");
-    setTimeout(initAutoRefresh, 1500);
+    // setTimeout(initAutoRefresh, 1500);
 
     var _this = this;
     this.initFeed = function(tab) {
@@ -22,11 +22,9 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         if (!window.twttr){
           loadTwitter();
         }
-        // if (_this.socialFilter === undefined && TopicService.getGameStatus() === 'live'){
-        //   _this.socialFilter = true;
-        // } else if (_this.socialFilter === undefined){
-        //   _this.socialFilter = false;
-        // }
+        if (_this.socialFilter === undefined){
+          _this.socialFilter = false;
+        }
       } else {
         if (_this.newVideoAvailable) _this.newVideoAvailable = false;
         hideJewel('video');
@@ -41,12 +39,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         // initPTR();
         if (!window.twttr){
           loadTwitter();
+        }  
+        if (_this.videoFilter === undefined){
+          _this.videoFilter = false;
         }
-        // if (_this.videoFilter === undefined && TopicService.getGameStatus() === 'live'){
-        //   _this.videoFilter = true;
-        // } else if (_this.videoFilter === undefined){
-        //   _this.videoFilter = false;
-        // }
       }
     }
 
@@ -132,10 +128,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           if ($scope.$parent.activeTab === 'social'){
             // If user is on tab during first interval, don't show indicator
             if (prevLength !== 0){
-              // if ((_this.socialFilter && SocialService.newExpertIn()) || !_this.socialFilter){
+              if ((_this.socialFilter && SocialService.newExpertIn()) || !_this.socialFilter){
                 _this.newSocialAvailable = true;
-                // SocialService.newExpertIn(false);
-              // }
+                SocialService.newExpertIn(false);
+              }
             }
           } else {
             pulseJewel('social');
@@ -152,10 +148,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           if ($scope.$parent.activeTab === 'video'){
             // If user is on tab during first interval, don't show indicator
             if (prevLength !== 0){
-              // if ((_this.videoFilter && VideoService.newExpertIn()) || !_this.videoFilter){
+              if ((_this.videoFilter && VideoService.newExpertIn()) || !_this.videoFilter){
                 _this.newVideoAvailable = true;
-                // VideoService.newExpertIn(false);
-              // }
+                VideoService.newExpertIn(false);
+              }
             }
           } else {
             pulseJewel('video');
@@ -337,11 +333,11 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           }
 
           var formattedItem = flattenProperties(tempItem, feedData[i]);
-          // if (i === 0){
-          //   formattedItem.embedPlayable = true;
-          //   formattedItem.embedType = 'link';
-          //   formattedItem.embedHtml = '<blockquote class="twitter-video" data-lang="en"><a href="https://t.co/uZJcXAWlpo">https://t.co/uZJcXAWlpo</a></blockquote>';
-          // }
+          if (i === 0){
+            formattedItem.embedPlayable = true;
+            formattedItem.embedType = 'link';
+            formattedItem.embedHtml = '<blockquote class="twitter-video" data-lang="en"><a href="https://t.co/uZJcXAWlpo">https://t.co/uZJcXAWlpo</a></blockquote>';
+          }
 
           if (tab === 'social'){
             _this.socialArray.push(formattedItem);
@@ -531,11 +527,16 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     }
 
     this.filterContent = function (tab, filter) {
+      console.log('Filter Content: ', tab, filter);
       if (tab === 'social'){
         if (filter === 'expert'){
           _this.preventLoad = true;
           scrollUpAnimate(500);
-          _this.socialFilter = true;
+          _this.socialFilter = 'expert';
+        } else if (filter === 'media') {
+          _this.preventLoad = true;
+          scrollUpAnimate(500);
+          _this.socialFilter = 'media';
         } else {
           _this.socialFilter = false;
         }
@@ -544,7 +545,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         if (filter === 'expert'){
           _this.preventLoad = true;
           scrollUpAnimate(500);
-          _this.videoFilter = true;
+          _this.videoFilter = 'expert';
         } else {
           _this.videoFilter = false;
         }

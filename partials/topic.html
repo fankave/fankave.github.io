@@ -433,22 +433,23 @@
     </button>
   </div>
 
-  <!-- <div id="socialFilter" ng-if="activeTab === 'social'">
+  <div id="socialFilter" ng-if="activeTab === 'social'">
     <span>Filter: &ensp;&ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'live')" ng-class="{ filterSelect: !social.socialFilter, filterOff: social.socialFilter }">Live &ensp;</span>
-    <span ng-click="social.filterContent(activeTab, 'expert')" ng-class="{ filterSelect: social.socialFilter, filterOff: !social.socialFilter }">Expert</span>
-  </div> -->
+    <span ng-click="social.filterContent(activeTab, 'expert')" ng-class="{ filterSelect: social.socialFilter === 'expert', filterOff: social.socialFilter !== 'expert' }">Expert &ensp;</span>
+    <span ng-click="social.filterContent(activeTab, 'media')" ng-class="{ filterSelect: social.socialFilter === 'media', filterOff: social.socialFilter !== 'media' }">Media</span>
+  </div>
   <div id="newSocialAvailable" ng-if="social.newSocialAvailable && activeTab === 'social'">
     <button id="newSocialButton" class="btn-link" ng-click="social.showNewSocial()">
       &uarr; New Social
     </button>
   </div>
 
-  <!-- <div id="videoFilter" ng-if="activeTab === 'video'">
+  <div id="videoFilter" ng-if="activeTab === 'video'">
     <span>Filter: &ensp;&ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'live')" ng-class="{ filterSelect: !social.videoFilter, filterOff: social.videoFilter }">Live &ensp;</span>
-    <span ng-click="social.filterContent(activeTab, 'expert')" ng-class="{ filterSelect: social.videoFilter, filterOff: !social.videoFilter }">Expert</span>
-  </div> -->
+    <span ng-click="social.filterContent(activeTab, 'expert')" ng-class="{ filterSelect: social.videoFilter === 'expert', filterOff: social.videoFilter !== 'expert' }">Expert &ensp;</span>
+  </div>
   <div id="newVideosAvailable" ng-if="social.newVideoAvailable && activeTab === 'video'">
     <button id="newVideosButton" class="btn-link" ng-click="social.showNewVideo()">
       &uarr; New Videos
@@ -467,8 +468,8 @@
     <span ng-if="activeTab !== 'chat'" id="ptrTextEnd">&uarr; Release to refresh</span>
   </div>
 </div> -->
-<!-- <blockquote class="twitter-video" data-lang="en"><p lang="en" dir="ltr">Everyone at work right now <a href="https://twitter.com/hashtag/MarchMadness?src=hash">#MarchMadness</a><a href="https://t.co/uZJcXAWlpo">https://t.co/uZJcXAWlpo</a></p>— Bleacher Report (@BleacherReport) <a href="https://twitter.com/BleacherReport/status/710499927860731904">March 17, 2016</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script> -->
+<blockquote class="twitter-video" data-lang="en"><p lang="en" dir="ltr">Everyone at work right now <a href="https://twitter.com/hashtag/MarchMadness?src=hash">#MarchMadness</a><a href="https://t.co/uZJcXAWlpo">https://t.co/uZJcXAWlpo</a></p>— Bleacher Report (@BleacherReport) <a href="https://twitter.com/BleacherReport/status/710499927860731904">March 17, 2016</a></blockquote>
+<!-- <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script> -->
 <div id="commentsContainer" ng-switch="activeTab">
   
   <div id="loadChatFill" ng-repeat="item in [1,2,3,4,5]" ng-if="loadingChat">
@@ -565,7 +566,7 @@
   </div>
 
   <!-- Video Tab Content -->
-  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | filter: (social.videoFilter || '') && { expert: true } | orderBy: '-createdAtFull'" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | filter: (social.videoFilter === 'expert' || '') && { expert: true } | orderBy: '-createdAtFull'" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -640,7 +641,7 @@
   </div>
 
   <!-- Social Tab Content -->
-  <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray | filter: (social.socialFilter || '') && { expert: true } | orderBy: '-createdAtFull'" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray | filter: (social.socialFilter === 'expert' || '') && { expert: true } | filter: (social.socialFilter === 'media' || '') && { mediaFilter: true } | orderBy: '-createdAtFull'" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>

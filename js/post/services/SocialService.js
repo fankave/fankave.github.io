@@ -14,6 +14,7 @@ angular.module('SocialModule')
   var prevLength = 0;
 
   var _newExpert = false;
+  var _newMedia = false;
 
   function setSocialData(socialData) {
     _socialArray = [];
@@ -22,10 +23,17 @@ angular.module('SocialModule')
 
     if (!!tempData && len > 0){
       var newExpert = false;
+      var newMedia = false;
       for (var i = 0; i < len; i++){
         var _socialObject = Bant.bant(tempData[i]);
         _socialObject.expert = tempData[i].source.type === "Twitter:Expert" ? true : false;
+        if (!!_socialObject.embed){
+          if (!!_socialObject.embed.media){
+            _socialObject.mediaFilter = true;
+          }
+        }
         if (!newExpert && _socialObject.expert) newExpert = true;
+        if (!newMedia && _socialObject.mediaFilter) newMedia = true;
         if (!!_socialObject.id){
           var isNewObject = true;
           for (var j = 0; j < _socialArrayAuto.length; j++){
@@ -51,6 +59,7 @@ angular.module('SocialModule')
       }
       else {
         if (newExpert) _newExpert = true;
+        if (newMedia) _newMedia = true;
         notifyObservers(true);
       }
     }
@@ -173,6 +182,14 @@ angular.module('SocialModule')
       else {
         _newExpert = val;
         console.log("$AUTO$ EXPERT SET: ", _newExpert);
+      }
+    },
+    newMediaIn: function(val){
+      if (val === undefined){
+        return _newMedia;
+      }
+      else {
+        _newMedia = val;
       }
     }
   };
