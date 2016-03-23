@@ -134,7 +134,7 @@ angular.module('TopicModule')
         ga('send', 'event', 'Video','VideoLengthPlayed', scope.thisPost.id, videoLengthPlayed);
       }
         if(ANALYTICS)
-        AnalyticsService.exploreSessionEvent("Video", scope.thisPost.id, scope.thisPost.type, scope.thisPost.tweetId, scope.thisPost.providerName, "tab");
+        AnalyticsService.exploreSessionEvent("Video", scope.thisPost.id, scope.thisPost.type, scope.thisPost.tweetId, scope.thisPost.providerName, "tab", videoLengthPlayed);
         if(ANALYTICS_DEBUG){
           console.log(scope.thisPost);
           console.log("Video" +  "   " + scope.thisPost.id+  "   " +  scope.thisPost.type+  "   " +  scope.thisPost.tweetId+  "   " +  scope.thisPost.providerName+  "   " +  "tab");

@@ -185,10 +185,12 @@ angular.module('ChannelModule')
 
   }
 
-   function exploreSessionEvent(type, id, provider, providerId, source, site){
+   function exploreSessionEvent(type, id, provider, providerId, source, site, dur){
     var time = new Date();
 
     var duration = time.getTime() - getSessionTime();
+    if(dur != undefined)
+      duration = dur *1000;
       var mEvent = getBaseEvent();
       mEvent.createdAt = new Date();
       mEvent.context.type ="explore";
