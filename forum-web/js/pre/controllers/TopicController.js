@@ -570,8 +570,9 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
     }
   };
 
+  var guest = UserInfoService.isGuestUser();
   $scope.secureLink = function(url, id) {
-    if (UserInfoService.isGuestUser()){
+    if (guest){
       return "";
     } else {
       return url + id;
