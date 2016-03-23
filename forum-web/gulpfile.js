@@ -70,6 +70,7 @@ gulp.task('scripts-post', function() {
     './js/post/controllers/SmartStadiumController.js',
     './js/post/directives/SocialDirectives.js',
     './js/post/directives/PostDirectives.js',
+    './js/post/services/TimerService.js',
     './js/post/services/ReplyService.js',
     './js/post/services/SocialService.js'
   ])
