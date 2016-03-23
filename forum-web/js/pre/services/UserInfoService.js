@@ -139,11 +139,11 @@ angular.module('NetworkModule')
 			return false;
 		},
 		getUserType:function(){
-			if (NETWORK_DEBUG) console.log("Get User Type: ", _userInfo.userType);
+			if (GEN_DEBUG) console.log("Get User Type: ", _userInfo.userType);
 			return _userInfo.userType;
 		},
 		isGuestUser:function(){
-			if (NETWORK_DEBUG) console.log("Guest User?");
+			if (GEN_DEBUG) console.log("Guest User?");
 			if(_userInfo.userType === "guest" || ForumStorage.getFromLocalStorage("forumUserType") === "guest"){
 				return true;
 			}
