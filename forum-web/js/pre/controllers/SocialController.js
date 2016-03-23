@@ -113,9 +113,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           if ($scope.$parent.activeTab === 'social'){
             // If user is on tab during first interval, don't show indicator
             if (prevLength !== 0){
-              if ((_this.socialFilter && SocialService.newExpertIn()) || !_this.socialFilter){
+              if (!_this.socialFilter || (_this.socialFilter === 'expert' && SocialService.newExpertIn()) || (_this.socialFilter === 'media' && SocialService.newMediaIn())){
                 _this.newSocialAvailable = true;
                 SocialService.newExpertIn(false);
+                SocialService.newMediaIn(false);
               }
             }
           } else {
@@ -480,7 +481,11 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       if (tab === 'social'){
         if (filter === 'expert'){
           _this.preventLoad = true;
-          _this.socialFilter = true;
+          _this.socialFilter = 'expert';
+          scrollUpAnimate(500);
+        } else if (filter === 'media') {
+          _this.preventLoad = true;
+          _this.socialFilter = 'media';
           scrollUpAnimate(500);
         } else {
           _this.socialFilter = false;

@@ -431,7 +431,8 @@
   <div id="socialFilter" ng-if="activeTab === 'social'">
     <span>Filter: &ensp;&ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'live')" ng-class="{ filterSelect: !social.socialFilter, filterOff: social.socialFilter }">Live &ensp;</span>
-    <span ng-click="social.filterContent(activeTab, 'expert')" ng-class="{ filterSelect: social.socialFilter, filterOff: !social.socialFilter }">Expert</span>
+    <span ng-click="social.filterContent(activeTab, 'expert')" ng-class="{ filterSelect: social.socialFilter === 'expert', filterOff: social.socialFilter !== 'expert' }">Expert &ensp;</span>
+    <span ng-click="social.filterContent(activeTab, 'media')" ng-class="{ filterSelect: social.socialFilter === 'media', filterOff: social.socialFilter !== 'media' }">Media</span>
   </div>
   <div id="newSocialAvailable" ng-if="social.newSocialAvailable && activeTab === 'social'">
     <button id="newSocialButton" class="btn-link" ng-click="social.showNewSocial()">
@@ -623,7 +624,7 @@
   </div>
 
   <!-- Social Tab Content -->
-  <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray | filter: (social.socialFilter || '') && { expert: true } | orderBy: '-createdAtFull'" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray | filter: (social.socialFilter === 'expert' || '') && { expert: true } | filter: (social.socialFilter === 'media' || '') && { mediaFilter: true } | orderBy: '-createdAtFull'" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
