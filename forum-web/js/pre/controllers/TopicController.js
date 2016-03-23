@@ -611,7 +611,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
   $window.addEventListener("beforeunload", function(){
     if (GEN_DEBUG)
     console.log("Before Unload");
-    AnalyticsService.leaveSessionEvent(ChannelService.getChannel(),$routeParams.topicID);
+    AnalyticsService.leaveSessionEvent(ChannelService.getChannel() || TopicService.getChannelId(),$routeParams.topicID);
     networkService.closeSocket();
     // ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
   });

@@ -124,7 +124,7 @@ angular.module('TopicModule')
         ga('send', 'event', 'Video','Play', scope.thisPost.id);
       }
         if(ANALYTICS)
-        AnalyticsService.addSession('video');
+        AnalyticsService.addSession('explore_video');
       });
       $(video).on('pause', function() {
         var videoLengthPlayed = Math.round(video.currentTime);
