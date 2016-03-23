@@ -253,6 +253,26 @@ angular.module('ChannelModule')
 
   }
 
+    function expressSocialEvent(type, id, provider, providerId, source, site){
+    var time = new Date();
+      var mEvent = getBaseEvent();
+      mEvent.createdAt = new Date();
+      mEvent.context.type ="express";
+      var content = {
+      "entity" : "social-post", 
+      "entityId" : id, 
+      "provider" : provider,
+      "providerId" : providerId,
+      "source" : source,
+      "action": "twitter-"+type,
+      "site" : "topic-view."+site+"-section.social-post" };
+      mEvent.content = content;
+      eventStack.push(mEvent);
+      if(ANALYTICS_DEBUG)
+      console.log("Analytics ****** exploreEvent triggered");
+
+  }
+
   function setLoginSessionId(loginId, userId, sessionId){
     console.log("setting login session ID" ,loginId, userId, sessionId);
      userData.userId = userId;
@@ -279,6 +299,7 @@ angular.module('ChannelModule')
     browseSessionEvent:browseSessionEvent,
     exploreSessionEvent:exploreSessionEvent,
     exploreEvent:exploreEvent,
+    expressSocialEvent:expressSocialEvent,
     addEvent:addEvent,
     addSessionEvent:addSessionEvent,
     addSession:addSession,
