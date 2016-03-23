@@ -44,7 +44,6 @@ gulp.task('scripts-pre', function() {
     './js/pre/services/TopicService.js',
     './js/pre/services/SplashService.js',
     './js/pre/services/CommentService.js',
-    './js/pre/services/VideoService.js',
     './js/pre/services/DateUtilityService.js',
     './js/pre/services/Bant.js',
     './js/pre/services/UserInfoService.js',
@@ -70,7 +69,9 @@ gulp.task('scripts-post', function() {
     './js/post/controllers/SmartStadiumController.js',
     './js/post/directives/SocialDirectives.js',
     './js/post/directives/PostDirectives.js',
+    './js/post/services/TimerService.js',
     './js/post/services/ReplyService.js',
+    './js/post/services/VideoService.js',
     './js/post/services/SocialService.js'
   ])
   .pipe(sourcemaps.init())

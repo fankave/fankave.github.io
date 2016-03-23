@@ -5,25 +5,6 @@ function ($websocket,$route,DataService,UserInfoService,URIHelper)
 {
   var ws;
 
-  disconnectSocket = function(){
-    if (NETWORK_DEBUG)
-    console.log("Disconnect Callback triggered");
-    if(ws !== undefined) {
-      ws.close();
-      ws = undefined;
-    }
-  }
-
-  reconnectSocket = function(){
-    if (NETWORK_DEBUG)
-    console.log("Reconnect Callback triggered");
-    $route.reload();
-  }
-  
-  // window.document.addEventListener(visEvent, function(){
-  //     visChange(reconnectSocket, disconnectSocket);
-  //   });
-
   function initSocket() { 
     if(ws != undefined)
       ws.close();

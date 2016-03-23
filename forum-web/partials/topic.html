@@ -481,7 +481,7 @@
   </div>
 
   <!-- Chat Tab Content -->
-  <div ng-switch-when="chat" ng-repeat="thisPost in commentsArray | orderBy: $index" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="chat" ng-repeat="thisPost in commentsArray | orderBy: $index track by thisPost.id" ng-switch="thisPost.mediaType" class="row postRow" id="{{$index}}" repeat-finished-notify>
 
     <span class="postAuthorPhoto" ng-click="viewPost($event,thisPost.id)">
       <div>
@@ -550,7 +550,7 @@
   </div>
 
   <!-- Video Tab Content -->
-  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | orderBy: '-createdAtFull'" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | orderBy: '-createdAtFull' track by thisPost.id" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -625,7 +625,7 @@
   </div>
 
   <!-- Social Tab Content -->
-  <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray | orderBy: '-createdAtFull'" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray | orderBy: '-createdAtFull' track by thisPost.id" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>

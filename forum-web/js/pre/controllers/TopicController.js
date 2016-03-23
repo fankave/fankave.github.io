@@ -1,9 +1,36 @@
 angular.module("TopicModule", ["NetworkModule", "SplashModule", "AuthModule", "MediaModule", "angularFileUpload","SocialModule"])
-.controller("TopicController", ["$scope", "$rootScope", "$sce", "$window", "$location","$sanitize", "$timeout", "$interval", "$routeParams","networkService", "TopicService","CommentService", "UserInfoService","URIHelper","AuthService","SplashService","MUService","ForumStorage","FileUploader","SocialService","VideoService","ChannelService","UserAgentService","AnalyticsService",
-
-function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $interval, $routeParams,networkService,TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService,MUService,ForumStorage,FileUploader,SocialService, VideoService,ChannelService, UserAgentService,AnalyticsService)
+.controller("TopicController",
+  ["$scope",
+  "$rootScope",
+  "$sce",
+  "$window",
+  "$location",
+  "$sanitize",
+  "$timeout",
+  "$interval",
+  "$routeParams",
+  "networkService",
+  "TopicService",
+  "CommentService",
+  "UserInfoService",
+  "URIHelper",
+  "AuthService",
+  "SplashService",
+  "MUService",
+  "ForumStorage",
+  "FileUploader",
+  "SocialService",
+  "VideoService",
+  "ChannelService",
+  "UserAgentService",
+  "AnalyticsService",
+  "TimerService",
+function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $interval, $routeParams, networkService, TopicService, CommentService, UserInfoService, URIHelper, AuthService, SplashService, MUService, ForumStorage, FileUploader, SocialService, VideoService, ChannelService, UserAgentService, AnalyticsService, TimerService)
 {
-  var sessionTime = window.time;
+  var sessionTime = TimerService.globalTime();
+  if (!TimerService.globalTimerStarted()){
+    TimerService.initTimer();
+  }
   var lastComment = false;
 
   var tab = URIHelper.getActiveTab();
@@ -150,7 +177,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
 
   // CONTENT TABS
   $scope.switchTabs = function(tab) {
-    var t = (window.time - sessionTime);
+    var t = (TimerService.globalTime() - sessionTime);
     if($scope.activeTab  != tab ){
       AnalyticsService.browseSessionEvent($scope.activeTab)
     }
@@ -160,7 +187,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
       ga('send', 'event', 'Tabs','ActiveTab', $scope.activeTab);
       ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
     }
-    sessionTime = window.time ;
+    sessionTime = TimerService.globalTime();
 
     if (tab === 'chat'){
       $scope.activeTab = 'chat';
@@ -424,11 +451,11 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
     if(GOOGLE_ANALYTICS === true){
     ga('send', 'event', 'Peel', 'click', 'BackToPeelHome');
   }
-     var t = (window.time - sessionTime);
+     var t = (TimerService.globalTime() - sessionTime);
      if(GOOGLE_ANALYTICS === true){
       ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
     }
-      sessionTime = window.time;
+      sessionTime = TimerService.globalTime();
       //AnalyticsService.printEventStack();
     if (GEN_DEBUG)
     console.log("peelClose()");
@@ -443,9 +470,9 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
     if (GEN_DEBUG)
     console.log("peelWatchOnTV()");
     var showId = URIHelper.getPeelShowId();
-    // var t = (window.time - sessionTime);
+    // var t = (TimerService.globalTime() - sessionTime);
     //   ga('send', 'event', 'Tabs','TabSessionLength', $scope.activeTab, t);
-    //   sessionTime = window.time;
+    //   sessionTime = TimerService.globalTime();
     if (GEN_DEBUG)
     console.log("Peel show on TV uri :  "+ "peel://tunein/"+showId+ "?action=SendIRorReminder&post_action=None");
     if(showId != undefined)
@@ -567,8 +594,9 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
     }
   };
 
+  var guest = UserInfoService.isGuestUser();
   $scope.secureLink = function(url, id) {
-    if (UserInfoService.isGuestUser()){
+    if (guest){
       return "";
     } else {
       return url + id;
@@ -609,11 +637,11 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
   }
 
   $window.addEventListener("beforeunload", function(){
-    if (GEN_DEBUG)
-    console.log("Before Unload");
-    AnalyticsService.leaveSessionEvent(ChannelService.getChannel(),$routeParams.topicID);
-    networkService.closeSocket();
-    // ForumStorage.setToLocalStorage("lastTabActive", $scope.activeTab);
+    if (GEN_DEBUG) console.log("Before Unload");
+    if (!TimerService.sessionReset()){
+      AnalyticsService.leaveSessionEvent(ChannelService.getChannel(), $routeParams.topicID);
+      networkService.closeSocket();
+    }
   });
 
   $scope.xLinkActivated = false;
