@@ -137,7 +137,7 @@ angular.module('ChannelModule')
       console.log("Analytics ****** joinSessionEvent");
       console.log(UserAgentService.getDeviceInfo());
     }
-    stop = $interval(sendEventsToServer,60000);
+    stop = $interval(sendEventsToServer,20000);
     }
   }
   //LEAVE SESSION EVENT
