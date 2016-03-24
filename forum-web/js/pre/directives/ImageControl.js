@@ -7,8 +7,11 @@ angular.module('TopicModule')
       thisPost: '='
     },
     link: function(scope,elem,attr) {
-      console.log("THIS POST: ", scope.thisPost);
       var $el = elem[0];
+
+      var post = scope.thisPost;
+      scope.aspectRatio = setAspectRatio(post.mediaAspectRatio, post.mediaOrientation);
+      scope.dimensions = setDimensions(post.mediaAspectRatio, post.mediaOrientation, post);
 
       scope.imageClick = function(imageURL) {
 
@@ -36,7 +39,7 @@ angular.module('TopicModule')
         });
       }
 
-      scope.setAspectRatio = function (aspectRatio, orientation) {
+      function setAspectRatio (aspectRatio, orientation) {
         if (GEN_DEBUG){
           console.log("setAspectRatio: ", aspectRatio, orientation);
         }
@@ -60,7 +63,7 @@ angular.module('TopicModule')
         return classStrings;
       }
 
-      scope.setDimensions = function (aspectRatio, orientation, image) {
+      function setDimensions (aspectRatio, orientation, image) {
         var thisImage = elem[0].childNodes[0];
         var thisWidth = $(thisImage).width();
         if (GEN_DEBUG){
