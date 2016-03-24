@@ -113,7 +113,7 @@ angular.module('ChannelModule')
         console.log('Analytics Resp: ', response);
       });
         printEventStack();
-        eventStack = [];
+        //eventStack = [];
       }
   }
   
@@ -129,7 +129,7 @@ angular.module('ChannelModule')
     
       var content = {"channelId" : channel, "topicId" : topicId };
       mEvent.content = content;
-      eventStack.push(mEvent);
+      //eventStack.push(mEvent);
       isJoinedSession = true;
       if(ANALYTICS_DEBUG){
       console.log("Analytics ****** joinSessionEvent");
@@ -155,9 +155,6 @@ angular.module('ChannelModule')
       mEvent.createdAt = new Date();
       mEvent.context.type ="disengage";
       mEvent.context.category = "access";
-    
-      var content = {"environment" : UserAgentService.getDeviceInfo()}
-      mEvent.content = content;
       eventStack.push(mEvent);
       
   }
@@ -177,12 +174,14 @@ angular.module('ChannelModule')
   };
     mEvent.content = content;
     eventStack.push(mEvent);
-    disengageEvent();
+    
     printEventStack();
     $interval.cancel(stop);
+    sessionStackInternal = [];
+    disengageEvent();
     sendEventsToServer();
     isJoinedSession = false;
-    sessionStackInternal = [];
+    
   }
 
   function browseSessionEvent(type){
