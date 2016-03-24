@@ -509,7 +509,7 @@
         {{thisPost.html}} 
       </div>
 
-      <image-control this-post="thisPost" ng-switch-when="image" class="media-parent"></image-control>
+      <image-control this-post="thisPost" ng-if="thisPost.mediaType === 'image'" class="media-parent"></image-control>
 
       <media-player this-post="thisPost" vid-index="{{$index}}" ng-switch-when="video" ng-click="moreButtonTapped()" class="media-parent"></media-player>
 

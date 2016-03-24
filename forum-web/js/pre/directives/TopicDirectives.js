@@ -178,7 +178,7 @@ angular.module('TopicModule')
 
       scope.setAspectRatio = function (aspectRatio, orientation) {
         if (GEN_DEBUG){
-          console.log("setAspectRatio: ", aspectRatio, orientation);
+          // console.log("setAspectRatio: ", aspectRatio, orientation);
         }
         var classStrings = [];
 
@@ -205,10 +205,10 @@ angular.module('TopicModule')
         var thisVideo = thesePlayerNodes[1];
         var thisWidth = $(thisVideo).width();
         if (GEN_DEBUG){
-          console.log("Elem in setD: ", elem);
-          console.log("PlayerNodes in setD: ", thesePlayerNodes);
-          console.log("Video in setD: ", thisVideo);
-          console.log("Width in setD: ", thisWidth);
+          // console.log("Elem in setD: ", elem);
+          // console.log("PlayerNodes in setD: ", thesePlayerNodes);
+          // console.log("Video in setD: ", thisVideo);
+          // console.log("Width in setD: ", thisWidth);
         }
 
         // Width Contingencies (landscape)
@@ -240,7 +240,7 @@ angular.module('TopicModule')
           styleObj['background-position-x'] = setXOffset(video);
         }
         if (GEN_DEBUG){
-          console.log("Set Dimensions Object: ", styleObj);
+          // console.log("Set Dimensions Object: ", styleObj);
         }
         return styleObj;
       }
