@@ -18,6 +18,7 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
 
   var _timeout;
   var _restartSession = false;
+  var _lastActiveTab;
 
   function initTimer() {
     visProp = getPrefix();
@@ -65,7 +66,10 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
 
   function endSession() {
     if (NETWORK_DEBUG) console.log("Disconnect & End Session");
-    AnalyticsService.leaveSessionEvent(ChannelService.getChannel() || TopicService.getChannelId(), $routeParams.topicID);
+    AnalyticsService.leaveSessionEvent(ChannelService.getChannel() || TopicService.getChannelId(), $routeParams.topicID, _lastActiveTab);
+    if (TopicService.currentTimer()){
+      $interval.cancel(TopicService.currentTimer(false));
+    }
     networkService.closeSocket();
     _timeout = undefined;
     _restartSession = true;
@@ -137,6 +141,7 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
 
   return {
     initTimer: initTimer,
+    endSession: endSession,
     globalTime: function() {
       return time;
     },
@@ -145,6 +150,9 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
     },
     sessionReset: function() {
       return _restartSession;
+    },
+    setLastActiveTab: function (tab) {
+      _lastActiveTab = tab;
     }
   };
 
