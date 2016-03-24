@@ -155,7 +155,6 @@ angular.module('ChannelModule')
       mEvent.createdAt = new Date();
       mEvent.context.type ="disengage";
       mEvent.context.category = "access";
-      mEvent.content = content;
       eventStack.push(mEvent);
       
   }
@@ -175,6 +174,7 @@ angular.module('ChannelModule')
   };
     mEvent.content = content;
     eventStack.push(mEvent);
+    
     printEventStack();
     $interval.cancel(stop);
     sessionStackInternal = [];
