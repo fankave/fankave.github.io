@@ -136,6 +136,7 @@ angular.module('ChannelModule')
       console.log(UserAgentService.getDeviceInfo());
     }
     stop = $interval(sendEventsToServer,60000);
+    sendEventsToServer();
     }
   }
 
