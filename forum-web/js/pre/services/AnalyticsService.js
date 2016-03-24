@@ -129,7 +129,7 @@ angular.module('ChannelModule')
     
       var content = {"channelId" : channel, "topicId" : topicId };
       mEvent.content = content;
-      eventStack.push(mEvent);
+      //eventStack.push(mEvent);
       isJoinedSession = true;
       if(ANALYTICS_DEBUG){
       console.log("Analytics ****** joinSessionEvent");
