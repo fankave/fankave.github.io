@@ -7,7 +7,7 @@ angular.module('TopicModule')
       thisPost: '='
     },
     link: function(scope,elem,attr) {
-
+      console.log("THIS POST: ", scope.thisPost);
       var $el = elem[0];
 
       scope.imageClick = function(imageURL) {
