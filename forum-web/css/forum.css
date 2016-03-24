@@ -2998,6 +2998,7 @@ iframe {
   text-align: right;
   border-bottom: 1px solid #eee;
   background-color: rgba(255,255,255,0.9);
+  font-size: 16px;
 }
 
 #socialFilter span,

@@ -429,7 +429,6 @@
   </div>
 
   <div id="socialFilter" ng-if="activeTab === 'social'">
-    <span>Filter: &ensp;&ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'live')" ng-class="{ filterSelect: !social.socialFilter, filterOff: social.socialFilter }">Live &ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'expert')" ng-class="{ filterSelect: social.socialFilter === 'expert', filterOff: social.socialFilter !== 'expert' }">Expert &ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'media')" ng-class="{ filterSelect: social.socialFilter === 'media', filterOff: social.socialFilter !== 'media' }">Media</span>
@@ -441,7 +440,6 @@
   </div>
 
   <div id="videoFilter" ng-if="activeTab === 'video'">
-    <span>Filter: &ensp;&ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'live')" ng-class="{ filterSelect: !social.videoFilter, filterOff: social.videoFilter }">Live &ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'expert')" ng-class="{ filterSelect: social.videoFilter, filterOff: !social.videoFilter }">Expert</span>
   </div>
