@@ -1,6 +1,6 @@
 angular.module('ChannelModule')
-.factory('AnalyticsService',["$interval","$http","UserInfoService","UserAgentService",
-  function ($interval,$http,UserInfoService,UserAgentService) {
+.factory('AnalyticsService',["$interval","$http","UserInfoService","UserAgentService","$routeParams",
+  function ($interval,$http,UserInfoService,UserAgentService,$routeParams) {
     
   var userData = {};
   var isJoinedSession = false;
@@ -113,7 +113,7 @@ angular.module('ChannelModule')
         console.log('Analytics Resp: ', response);
       });
         printEventStack();
-        eventStack = [];
+        //eventStack = [];
       }
   }
   
@@ -121,17 +121,15 @@ angular.module('ChannelModule')
   //JOIN SESSION EVENT
   function joinSessionEvent(channel, topicId){
     if(!isJoinedSession){
+      engageEvent();
       addSession('start');
       var mEvent = getBaseEvent();
       mEvent.createdAt = new Date();
-      mEvent.context.type ="engage";
-      mEvent.context.category = "access";
-    //   var temp = getSessionStack().slice();
-    // mEvent.context.data.sessionStack = temp;
+      mEvent.context.type ="join";
     
-      var content = {"environment" : UserAgentService.getDeviceInfo(), "channelId" : channel, "topicId" : topicId}
+      var content = {"channelId" : channel, "topicId" : topicId };
       mEvent.content = content;
-      eventStack.push(mEvent);
+      //eventStack.push(mEvent);
       isJoinedSession = true;
       if(ANALYTICS_DEBUG){
       console.log("Analytics ****** joinSessionEvent");
@@ -139,6 +137,28 @@ angular.module('ChannelModule')
     }
     stop = $interval(sendEventsToServer,60000);
     }
+  }
+
+  function engageEvent(){
+      var mEvent = getBaseEvent();
+      mEvent.createdAt = new Date();
+      mEvent.context.type ="engage";
+      mEvent.context.category = "access";
+    
+      var content = {"environment" : UserAgentService.getDeviceInfo()}
+      mEvent.content = content;
+      eventStack.push(mEvent);
+      
+  }
+  function disengageEvent(duration){
+      var mEvent = getBaseEvent();
+      mEvent.createdAt = new Date();
+      mEvent.context.type ="disengage";
+      mEvent.context.category = "access";
+      var content = {"duration" : duration};
+      mEvent.content = content;
+      eventStack.push(mEvent);
+      
   }
   //LEAVE SESSION EVENT
   function leaveSessionEvent(channel, topicId){
@@ -148,21 +168,22 @@ angular.module('ChannelModule')
     mEvent.context.type ="leave";
     while(sessionStackInternal.length >1)
       sessionStackInternal.pop();
-    // var temp = getSessionStack().slice();
-    // mEvent.context.data.sessionStack = temp;
     var duration = d.getTime() - getSessionTime();
     var content = {
-      "channelId" : channel, 
+    "channelId" : channel, 
     "topicId" :topicId,
     "duration" : duration
   };
     mEvent.content = content;
     eventStack.push(mEvent);
+    
     printEventStack();
     $interval.cancel(stop);
+    sessionStackInternal = [];
+    disengageEvent(duration);
     sendEventsToServer();
     isJoinedSession = false;
-    sessionStackInternal = [];
+    
   }
 
   function browseSessionEvent(type){
@@ -233,6 +254,26 @@ angular.module('ChannelModule')
 
   }
 
+    function expressSocialEvent(type, id, provider, providerId, source, site){
+    var time = new Date();
+      var mEvent = getBaseEvent();
+      mEvent.createdAt = new Date();
+      mEvent.context.type ="express";
+      var content = {
+      "entity" : "social-post", 
+      "entityId" : id, 
+      "provider" : provider,
+      "providerId" : providerId,
+      "source" : source,
+      "action": "twitter-"+type,
+      "site" : "topic-view."+site+"-section.social-post" };
+      mEvent.content = content;
+      eventStack.push(mEvent);
+      if(ANALYTICS_DEBUG)
+      console.log("Analytics ****** exploreEvent triggered");
+
+  }
+
   function setLoginSessionId(loginId, userId, sessionId){
     console.log("setting login session ID" ,loginId, userId, sessionId);
      userData.userId = userId;
@@ -242,7 +283,7 @@ angular.module('ChannelModule')
      if(ANALYTICS_DEBUG)
      console.log("Analytics ****** Base Event :");
       console.log(userData);
-      joinSessionEvent();
+      joinSessionEvent($routeParams.channelID, $routeParams.topicID);
   }
 
   function printEventStack(){
@@ -259,6 +300,7 @@ angular.module('ChannelModule')
     browseSessionEvent:browseSessionEvent,
     exploreSessionEvent:exploreSessionEvent,
     exploreEvent:exploreEvent,
+    expressSocialEvent:expressSocialEvent,
     addEvent:addEvent,
     addSessionEvent:addSessionEvent,
     addSession:addSession,
