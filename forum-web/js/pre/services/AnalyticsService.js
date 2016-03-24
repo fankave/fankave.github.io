@@ -121,8 +121,8 @@ angular.module('ChannelModule')
   //JOIN SESSION EVENT
   function joinSessionEvent(channel, topicId){
     if(!isJoinedSession){
-      addSession('start');
       engageEvent();
+      addSession('start');
       var mEvent = getBaseEvent();
       mEvent.createdAt = new Date();
       mEvent.context.type ="join";
@@ -150,11 +150,13 @@ angular.module('ChannelModule')
       eventStack.push(mEvent);
       
   }
-  function disengageEvent(){
+  function disengageEvent(duration){
       var mEvent = getBaseEvent();
       mEvent.createdAt = new Date();
       mEvent.context.type ="disengage";
       mEvent.context.category = "access";
+      var content = {"duration" : duration};
+      mEvent.content = content;
       eventStack.push(mEvent);
       
   }
@@ -178,7 +180,7 @@ angular.module('ChannelModule')
     printEventStack();
     $interval.cancel(stop);
     sessionStackInternal = [];
-    disengageEvent();
+    disengageEvent(duration);
     sendEventsToServer();
     isJoinedSession = false;
     
