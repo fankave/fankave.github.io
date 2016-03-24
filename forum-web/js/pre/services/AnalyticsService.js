@@ -113,7 +113,7 @@ angular.module('ChannelModule')
         console.log('Analytics Resp: ', response);
       });
         printEventStack();
-        eventStack = [];
+        //eventStack = [];
       }
   }
   
