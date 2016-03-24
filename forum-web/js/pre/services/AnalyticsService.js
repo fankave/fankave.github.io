@@ -155,8 +155,6 @@ angular.module('ChannelModule')
       mEvent.createdAt = new Date();
       mEvent.context.type ="disengage";
       mEvent.context.category = "access";
-    
-      var content = {"environment" : UserAgentService.getDeviceInfo()}
       mEvent.content = content;
       eventStack.push(mEvent);
       
@@ -177,12 +175,13 @@ angular.module('ChannelModule')
   };
     mEvent.content = content;
     eventStack.push(mEvent);
-    disengageEvent();
     printEventStack();
     $interval.cancel(stop);
+    sessionStackInternal = [];
+    disengageEvent();
     sendEventsToServer();
     isJoinedSession = false;
-    sessionStackInternal = [];
+    
   }
 
   function browseSessionEvent(type){
