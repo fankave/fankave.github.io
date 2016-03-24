@@ -79,8 +79,14 @@ angular.module('TopicModule')
 
       scope.isMobileUser = UserAgentService.isMobileUser();
       var isIOS = (UserAgentService.getMobileUserAgent() === 'iOS');
+      var post = scope.thisPost;
 
-      scope.trustSrc = function(src){
+      scope.videoSource = trustSrc(post.mediaUrl);
+      scope.aspectRatio = setAspectRatio(post.mediaAspectRatio, post.mediaOrientation);
+      scope.dimensions = setDimensions(post.mediaAspectRatio, post.mediaOrientation);
+      scope.posterDimensions = setDimensions(post.mediaAspectRatio, post.mediaOrientation, post);
+
+      function trustSrc (src){
         return $sce.trustAsResourceUrl(src);
       }
 
@@ -176,9 +182,9 @@ angular.module('TopicModule')
         }
       }
 
-      scope.setAspectRatio = function (aspectRatio, orientation) {
+      function setAspectRatio (aspectRatio, orientation) {
         if (GEN_DEBUG){
-          // console.log("setAspectRatio: ", aspectRatio, orientation);
+          console.log("setAspectRatio: ", aspectRatio, orientation);
         }
         var classStrings = [];
 
@@ -200,7 +206,7 @@ angular.module('TopicModule')
         return classStrings;
       }
 
-      scope.setDimensions = function (aspectRatio, orientation, video) {
+      function setDimensions (aspectRatio, orientation, video) {
         var thesePlayerNodes = elem[0].firstElementChild.childNodes;
         var thisVideo = thesePlayerNodes[1];
         var thisWidth = $(thisVideo).width();

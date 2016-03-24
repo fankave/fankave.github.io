@@ -1,1 +1,1 @@
-<div ng-bind-html="trustSrcHtml(thisPost.embedHtml)" class="embed-player" ng-class="{{setAspectRatio(thisPost.mediaAspectRatio,thisPost.mediaOrientation)}}" ng-style="setDimensions(thisPost.mediaAspectRatio, thisPost.mediaOrientation)" ng-click="togglePlayPause($event)"></div>
+<div ng-bind-html="embedHtml" class="embed-player" ng-class="aspectRatio" ng-style="dimensions" ng-click="togglePlayPause($event)"></div>
