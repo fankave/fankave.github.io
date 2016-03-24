@@ -466,7 +466,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       // console.log(post);
       // console.log(button);
       // console.log(activeTab);
-      //AnalyticsService.exploreEvent(button, post.id, post.type, post.tweetId, post.providerName, activeTab);
+      AnalyticsService.expressSocialEvent(button, post.id, post.type, post.tweetId, post.providerName, activeTab);
     }
 
     function scrollUpAnimate(time) {

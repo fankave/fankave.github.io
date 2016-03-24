@@ -93,6 +93,8 @@ angular.module('Forum')
       if(isMobileUser()){
         platform = 'mobile-web';
       }
+      if(os_version == undefined)
+        os_version = "";
 
       var deviceInfo = {
         platform: platform,
