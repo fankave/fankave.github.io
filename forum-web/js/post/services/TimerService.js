@@ -83,7 +83,7 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
     if (isHidden()) {
       if (GEN_DEBUG) console.log('hidden callback fired');
       hidCallback();
-      _timeout = $timeout(endSession, 300000);
+      _timeout = $timeout(endSession, 120000);
     } else {
       if (GEN_DEBUG) console.log('visible callback fired');
       if (_timeout){
