@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     dateObj.secs + "." +
     dateObj.milli + "Z";
 
-  var analytics = {
+  var analytics = [{
     "createdAt": _createdAt,
     "context": {
       "category": "access",
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       "channelId": _channelId,
       "userAgent": _userAgent
     }
-  }
+  }]
 
   function sendAnalytics (analytics) {
     var jsonObj = JSON.stringify(analytics);
