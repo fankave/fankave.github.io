@@ -129,17 +129,25 @@ gulp.task('css', function() {
     }))
   .pipe(sourcemaps.write('.'))
   .pipe(gulp.dest('./dist/css'));
-})
+});
+
+gulp.task('minifyCss', function() {
+  return gulp.src(['./css/banner.css'])
+  .pipe(autoprefix())
+  .pipe(cssnano())
+  .pipe(rename({
+    suffix: '.min'
+  }))
+  .pipe(gulp.dest('./dist/banner'));
+});
 
 gulp.task('minifyFile', function() {
-  return gulp.src(['./lib/angular/angular-sanitize.js'])
-  .pipe(sourcemaps.init())
-    .pipe(uglify())
-    .pipe(rename({
-      suffix: '.min'
-    }))
-  .pipe(sourcemaps.write('.'))
-  .pipe(gulp.dest('./lib/angular-sanitize'));
+  return gulp.src(['./dist/banner/banner.js'])
+  .pipe(uglify())
+  .pipe(rename({
+    suffix: '.min'
+  }))
+  .pipe(gulp.dest('./dist/banner'));
 });
 
 gulp.task('watch', function() {
