@@ -17,6 +17,10 @@ angular.module('TopicModule')
       scope.aspectRatio = DimensionService.setAspectRatio(post.mediaAspectRatio, post.mediaOrientation, 'video');
       scope.dimensions = setDimensions(post.mediaAspectRatio, post.mediaOrientation);
 
+      function trustSrcHtml (src){
+        return $sce.trustAsHtml(src);
+      }
+
       function setDimensions (aspectRatio, orientation) {
         var thesePlayerNodes = elem[0].childNodes;
         var thisVideo = thesePlayerNodes[0];
