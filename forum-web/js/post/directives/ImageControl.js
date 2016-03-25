@@ -1,6 +1,9 @@
 angular.module('TopicModule')
-.directive('imageControl', ['$sce','URIHelper',
-  function ($sce, URIHelper) {
+.directive('imageControl',
+  ['$sce',
+  'URIHelper',
+  'DimensionService',
+  function ($sce, URIHelper, DimensionService) {
   return {
     restrict: 'E',
     scope: {
@@ -10,7 +13,7 @@ angular.module('TopicModule')
       var $el = elem[0];
 
       var post = scope.thisPost;
-      scope.aspectRatio = setAspectRatio(post.mediaAspectRatio, post.mediaOrientation);
+      scope.aspectRatio = DimensionService.setAspectRatio(post.mediaAspectRatio, post.mediaOrientation, 'image');
       scope.dimensions = setDimensions(post.mediaAspectRatio, post.mediaOrientation, post);
 
       scope.imageClick = function(imageURL) {
@@ -37,30 +40,6 @@ angular.module('TopicModule')
             }
           }
         });
-      }
-
-      function setAspectRatio (aspectRatio, orientation) {
-        if (GEN_DEBUG){
-          console.log("setAspectRatio: ", aspectRatio, orientation);
-        }
-        var classStrings = [];
-
-        if (orientation === "portrait"){
-          if (aspectRatio === 1.778){
-            classStrings.push("image-portrait-9x16");
-          } else {
-            classStrings.push("image-portrait-1x2")
-          }
-        } else if (orientation === "square"){
-          classStrings.push("image-square");
-        } else {
-          if (aspectRatio === 1.778){
-            classStrings.push("image-landscape-16x9");
-          } else {
-            classStrings.push("image-landscape-2x1")
-          }
-        }
-        return classStrings;
       }
 
       function setDimensions (aspectRatio, orientation, image) {

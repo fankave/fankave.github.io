@@ -1,6 +1,9 @@
 angular.module('TopicModule')
-.directive('embedPlayer', ['$sce', 'UserAgentService',
-  function ($sce, UserAgentService) {
+.directive('embedPlayer',
+  ['$sce',
+  'UserAgentService',
+  'DimensionService',
+  function ($sce, UserAgentService, DimensionService) {
   return {
     restrict: 'E',
     scope: {
@@ -11,38 +14,8 @@ angular.module('TopicModule')
       var isMobileUser = UserAgentService.isMobileUser();
       var post = scope.thisPost;
       scope.embedHtml = trustSrcHtml(post.embedHtml);
-      scope.aspectRatio = setAspectRatio(post.mediaAspectRatio, post.mediaOrientation);
+      scope.aspectRatio = DimensionService.setAspectRatio(post.mediaAspectRatio, post.mediaOrientation, 'video');
       scope.dimensions = setDimensions(post.mediaAspectRatio, post.mediaOrientation);
-
-      // setTimeout(function(){twttr.widgets.load();},30);
-
-      function trustSrcHtml (src){
-        return $sce.trustAsHtml(src);
-      }
-
-      function setAspectRatio (aspectRatio, orientation) {
-        if (NETWORK_DEBUG){
-          console.log("setAspectRatio: ", aspectRatio, orientation);
-        }
-        var classStrings = [];
-
-        if (orientation === "portrait"){
-          if (aspectRatio === 1.778){
-            classStrings.push("video-portrait-9x16");
-          } else {
-            classStrings.push("video-portrait-1x2")
-          }
-        } else if (orientation === "square"){
-          classStrings.push("video-square");
-        } else {
-          if (aspectRatio === 1.778){
-            classStrings.push("video-landscape-16x9");
-          } else {
-            classStrings.push("video-landscape-2x1")
-          }
-        }
-        return classStrings;
-      }
 
       function setDimensions (aspectRatio, orientation) {
         var thesePlayerNodes = elem[0].childNodes;

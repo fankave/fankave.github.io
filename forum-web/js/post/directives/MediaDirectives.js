@@ -1,6 +1,10 @@
 angular.module('TopicModule')
-.directive('mediaPlayer', ['$sce', 'UserAgentService','AnalyticsService',
-  function ($sce, UserAgentService,AnalyticsService) {
+.directive('mediaPlayer',
+  ['$sce',
+  'UserAgentService',
+  'AnalyticsService',
+  'DimensionService',
+  function ($sce, UserAgentService, AnalyticsService, DimensionService) {
   return {
     restrict: 'E',
     scope: {
@@ -14,7 +18,7 @@ angular.module('TopicModule')
       var post = scope.thisPost;
 
       scope.videoSource = trustSrc(post.mediaUrl);
-      scope.aspectRatio = setAspectRatio(post.mediaAspectRatio, post.mediaOrientation);
+      scope.aspectRatio = DimensionService.setAspectRatio(post.mediaAspectRatio, post.mediaOrientation, 'video');
       scope.dimensions = setDimensions(post.mediaAspectRatio, post.mediaOrientation);
       scope.posterDimensions = setDimensions(post.mediaAspectRatio, post.mediaOrientation, post);
 
@@ -112,30 +116,6 @@ angular.module('TopicModule')
           thisThumbnail.className = 'media-thumbnail';
           thisVideo.pause();
         }
-      }
-
-      function setAspectRatio (aspectRatio, orientation) {
-        if (GEN_DEBUG){
-          console.log("setAspectRatio: ", aspectRatio, orientation);
-        }
-        var classStrings = [];
-
-        if (orientation === "portrait"){
-          if (aspectRatio === 1.778){
-            classStrings.push("video-portrait-9x16");
-          } else {
-            classStrings.push("video-portrait-1x2")
-          }
-        } else if (orientation === "square"){
-          classStrings.push("video-square");
-        } else {
-          if (aspectRatio === 1.778){
-            classStrings.push("video-landscape-16x9");
-          } else {
-            classStrings.push("video-landscape-2x1")
-          }
-        }
-        return classStrings;
       }
 
       function setDimensions (aspectRatio, orientation, video) {

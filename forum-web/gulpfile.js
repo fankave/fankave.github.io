@@ -70,6 +70,7 @@ gulp.task('scripts-post', function() {
     './js/post/directives/ImageControl.js',
     './js/post/directives/SocialDirectives.js',
     './js/post/directives/PostDirectives.js',
+    './js/post/services/DimensionService.js',
     './js/post/services/TimerService.js',
     './js/post/services/ReplyService.js',
     './js/post/services/VideoService.js',
