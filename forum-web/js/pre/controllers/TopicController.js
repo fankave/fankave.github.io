@@ -17,7 +17,6 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
   } else {
     $rootScope.leftTab = 'chat';
     $scope.activeTab = 'chat';
-    TimerService.setLastActiveTab('chat');
   }
 
   // Check For Mobile Browser
@@ -170,17 +169,14 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
       $scope.activeTab = 'chat';
       $(document).scrollTop(0);
       initPage();
-      TimerService.setLastActiveTab('chat');
     }
     if (tab === 'video'){
       $scope.activeTab = 'video';
       $(document).scrollTop(0);
-      TimerService.setLastActiveTab('video');
     }
     if (tab === 'social'){
       $scope.activeTab = 'social';
       $(document).scrollTop(0);
-      TimerService.setLastActiveTab('social');
     }
     if (GEN_DEBUG)
     console.log("Active Tab: ", $scope.activeTab);
@@ -389,7 +385,6 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
     if (TopicService.fromPost()){
       $scope.activeTab = 'chat';
       TopicService.toggleFromPost();
-      TimerService.setLastActiveTab('chat');
     }
     updateTopic();
     updateComments();
@@ -620,7 +615,8 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
   $window.addEventListener("beforeunload", function(){
     if (GEN_DEBUG) console.log("Before Unload");
     if (!TimerService.sessionReset()){
-      TimerService.endSession();
+      AnalyticsService.leaveSessionEvent(ChannelService.getChannel() || TopicService.getChannelId(), $routeParams.topicID);
+      networkService.closeSocket();
     }
   });
 

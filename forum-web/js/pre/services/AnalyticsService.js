@@ -129,14 +129,13 @@ angular.module('ChannelModule')
     
       var content = {"channelId" : channel, "topicId" : topicId };
       mEvent.content = content;
-      eventStack.push(mEvent);
+      //eventStack.push(mEvent);
       isJoinedSession = true;
       if(ANALYTICS_DEBUG){
       console.log("Analytics ****** joinSessionEvent");
       console.log(UserAgentService.getDeviceInfo());
     }
     stop = $interval(sendEventsToServer,60000);
-    sendEventsToServer();
     }
   }
 
@@ -162,8 +161,7 @@ angular.module('ChannelModule')
       
   }
   //LEAVE SESSION EVENT
-  function leaveSessionEvent(channel, topicId, tab){
-    browseSessionEvent(tab);
+  function leaveSessionEvent(channel, topicId){
     var mEvent = getBaseEvent();
     var d = new Date();
     mEvent.createdAt = d;
