@@ -90,14 +90,13 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
       _timeout = $timeout(endSession, 120000);
     } else {
       if (GEN_DEBUG) console.log('visible callback fired');
+      visCallback();
       if (_timeout){
         $timeout.cancel(_timeout);
       }
       if (_restartSession){
         restartSession();
-        return;
       }
-      visCallback();
     }
   }
 

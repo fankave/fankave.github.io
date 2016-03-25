@@ -58,14 +58,13 @@ function ($websocket,$route,DataService,UserInfoService,URIHelper)
       if(type !== undefined){
         if(type === "context" || type === "hello"){
           if(NETWORK_DEBUG) console.log("Processing context");
+          DataService.setAnalytics(responseJson);
           if(URIHelper.isPeelUser()){
             UserInfoService.setUserCredentials(
               responseJson.data.userId, 
               responseJson.data.sessionId,
               "Peel");
           }
-          DataService.setAnalytics(responseJson);
-          
         }
         if(type === "channel"){
           if(NETWORK_DEBUG) console.log("Processing Channel");
