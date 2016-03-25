@@ -615,7 +615,7 @@ function ($scope, $rootScope, $sce, $window, $location, $sanitize, $timeout, $in
   $window.addEventListener("beforeunload", function(){
     if (GEN_DEBUG) console.log("Before Unload");
     if (!TimerService.sessionReset()){
-      AnalyticsService.leaveSessionEvent(ChannelService.getChannel() || TopicService.getChannelId(), $routeParams.topicID);
+      AnalyticsService.leaveSessionEvent(ChannelService.getChannel() || TopicService.getChannelId(), $routeParams.topicID, $scope.activeTab);
       networkService.closeSocket();
     }
   });
