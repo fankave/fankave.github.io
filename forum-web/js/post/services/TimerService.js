@@ -7,7 +7,8 @@ angular.module('NetworkModule')
   'networkService',
   'AnalyticsService',
   'ChannelService',
-function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsService, ChannelService) {
+  'TopicService',
+function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsService, ChannelService, TopicService) {
   var visProp;
   var timer;
   var time = 0;
@@ -17,6 +18,7 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
 
   var _timeout;
   var _restartSession = false;
+  var _lastActiveTab;
 
   function initTimer() {
     visProp = getPrefix();
@@ -64,7 +66,11 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
 
   function endSession() {
     if (NETWORK_DEBUG) console.log("Disconnect & End Session");
-    AnalyticsService.leaveSessionEvent(ChannelService.getChannel(), $routeParams.topicID);
+    AnalyticsService.leaveSessionEvent(ChannelService.getChannel() || TopicService.getChannelId(), $routeParams.topicID, _lastActiveTab);
+    if (TopicService.currentTimer()){
+      console.log("$AUTO$ Timer Service Canceling Timer");
+      $interval.cancel(TopicService.currentTimer(false));
+    }
     networkService.closeSocket();
     _timeout = undefined;
     _restartSession = true;
@@ -82,17 +88,16 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
     if (isHidden()) {
       if (GEN_DEBUG) console.log('hidden callback fired');
       hidCallback();
-      _timeout = $timeout(endSession, 300000);
+      _timeout = $timeout(endSession, 20000);
     } else {
       if (GEN_DEBUG) console.log('visible callback fired');
+      visCallback();
       if (_timeout){
         $timeout.cancel(_timeout);
       }
       if (_restartSession){
         restartSession();
-        return;
       }
-      visCallback();
     }
   }
 
@@ -136,6 +141,7 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
 
   return {
     initTimer: initTimer,
+    endSession: endSession,
     globalTime: function() {
       return time;
     },
@@ -144,6 +150,9 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
     },
     sessionReset: function() {
       return _restartSession;
+    },
+    setLastActiveTab: function (tab) {
+      _lastActiveTab = tab;
     }
   };
 

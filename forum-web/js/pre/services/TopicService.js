@@ -321,15 +321,16 @@ angular.module('TopicModule')
 
     currentTimer: function(promise){
       if (promise === false){
-        console.log("$AUTO$ PREV TIMER FOUND");
+        console.log("$AUTO$ CANCEL TIMER");
         var prevTimer = _currentTimer;
         _currentTimer = undefined;
         return prevTimer;
       }
       if (promise){
-        console.log("$AUTO$ STORE TIMER PROMISE");
+        console.log("$AUTO$ STORE TIMER");
         _currentTimer = promise;
       }
+      console.log("$AUTO$ CURRENT TIMER ", _currentTimer);
       return _currentTimer;
     },
 
