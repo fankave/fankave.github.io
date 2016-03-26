@@ -26,7 +26,7 @@ angular.module('TopicModule')
   var observerCallbacks = []; 
   var directComment; //bool flag to indicate whether user tapped on a comment's "comment" icon
 
-  var _currentTimer;
+  var _currentTimers = [undefined, undefined];
   var _fromPost = false;
 
   function setTopicData(topicData) 
@@ -319,18 +319,20 @@ angular.module('TopicModule')
     
     directComment:directComment,
 
-    currentTimer: function(promise){
+    currentTimer: function(promise, timeout){
+      var idx = timeout ? 1 : 0;
       if (promise === false){
-        console.log("$AUTO$ PREV TIMER FOUND");
-        var prevTimer = _currentTimer;
-        _currentTimer = undefined;
+        console.log("$AUTO$ CANCEL TIMER");
+        var prevTimer = _currentTimers[idx];
+        _currentTimers[idx] = undefined;
         return prevTimer;
       }
       if (promise){
-        console.log("$AUTO$ STORE TIMER PROMISE");
-        _currentTimer = promise;
+        console.log("$AUTO$ STORE TIMER");
+        _currentTimers[idx] = promise;
       }
-      return _currentTimer;
+      console.log("$AUTO$ CURRENT TIMER ", _currentTimers[idx]);
+      return _currentTimers[idx];
     },
 
     fromPost: function(){
