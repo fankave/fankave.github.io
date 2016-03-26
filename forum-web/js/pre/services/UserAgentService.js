@@ -99,6 +99,7 @@ angular.module('Forum')
       var deviceInfo = {
         platform: platform,
         appVersion: '1.0',
+        userAgent : navigator.userAgent,
         osType: os,
         osVersion: os_version,
         browserType: browser,
