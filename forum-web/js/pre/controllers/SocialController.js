@@ -2,8 +2,8 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 .controller("SocialController", ["$scope","$sce","$window","$routeParams","$interval","$timeout","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper","AnalyticsService",
   function ($scope,$sce,$window,$routeParams,$interval,$timeout,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper,AnalyticsService){
     console.log("Social Control");
-    var autoTimeout = $timeout(initAutoRefresh, 6000);
-    TopicService.currentTimer(autoTimeout, true);
+    // var autoTimeout = $timeout(initAutoRefresh, 6000);
+    // TopicService.currentTimer(autoTimeout, true);
 
     var _this = this;
     this.initFeed = function(tab) {
