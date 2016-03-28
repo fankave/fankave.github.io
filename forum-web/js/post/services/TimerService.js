@@ -16,6 +16,7 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
   var minutes = 1;
   var _globalTimerStarted = false;
 
+  var _currentTimers = [undefined, undefined];
   var _timeout;
   var _restartSession = false;
   var _lastActiveTab;
@@ -67,8 +68,11 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
   function endSession() {
     if (NETWORK_DEBUG) console.log("Disconnect & End Session");
     AnalyticsService.leaveSessionEvent(ChannelService.getChannel() || TopicService.getChannelId(), $routeParams.topicID, _lastActiveTab);
-    if (TopicService.currentTimer()){
-      $interval.cancel(TopicService.currentTimer(false));
+    if (currentTimer(null, true)){
+      $timeout.cancel(currentTimer(false, true));
+    }
+    if (currentTimer()){
+      $interval.cancel(currentTimer(false));
     }
     networkService.closeSocket();
     _timeout = undefined;
@@ -138,6 +142,22 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
     }
   }
 
+  function currentTimer (promise, timeout){
+    var idx = timeout ? 1 : 0;
+    if (promise === false){
+      console.log("$AUTO$ CANCEL TIMER");
+      var prevTimer = _currentTimers[idx];
+      _currentTimers[idx] = undefined;
+      return prevTimer;
+    }
+    if (promise){
+      console.log("$AUTO$ STORE TIMER");
+      _currentTimers[idx] = promise;
+    }
+    console.log("$AUTO$ CURRENT TIMER ", _currentTimers[idx]);
+    return _currentTimers[idx];
+  }
+
   return {
     initTimer: initTimer,
     endSession: endSession,
@@ -152,7 +172,8 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
     },
     setLastActiveTab: function (tab) {
       _lastActiveTab = tab;
-    }
+    },
+    currentTimer: currentTimer
   };
 
 }]);
