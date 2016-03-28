@@ -3,7 +3,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
   function ($scope,$sce,$window,$routeParams,$interval,$timeout,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper,AnalyticsService){
     console.log("Social Control");
     var autoTimeout = $timeout(initAutoRefresh, 6000);
-    TopicService.currentTimer(autoTimeout, true);
+    TimerService.currentTimer(autoTimeout, true);
 
     var _this = this;
     this.initFeed = function(tab) {
@@ -63,8 +63,8 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     function initAutoRefresh () {
       registerNewCallbacks();
       registerJewelCallbacks();
-      if (TopicService.currentTimer()){
-        $interval.cancel(TopicService.currentTimer(false));
+      if (TimerService.currentTimer()){
+        $interval.cancel(TimerService.currentTimer(false));
       }
       var timer = $interval(function(){
         if (GEN_DEBUG) console.log("$AUTO$ START INTERVAL");
@@ -73,7 +73,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           networkService.send(VideoService.getVideoDataRequestAutoSingle(TopicService.getChannelId()));
         }
       }, 15000);
-      TopicService.currentTimer(timer);
+      TimerService.currentTimer(timer);
     }
 
     function registerNewCallbacks () {
