@@ -67,8 +67,10 @@ function ($routeParams, $window, $timeout, $interval, networkService, AnalyticsS
   function endSession() {
     if (NETWORK_DEBUG) console.log("Disconnect & End Session");
     AnalyticsService.leaveSessionEvent(ChannelService.getChannel() || TopicService.getChannelId(), $routeParams.topicID, _lastActiveTab);
+    if (TopicService.currentTimer(null, true)){
+      $timeout.cancel(TopicService.currentTimer(false, true));
+    }
     if (TopicService.currentTimer()){
-      console.log("$AUTO$ Timer Service Canceling Timer");
       $interval.cancel(TopicService.currentTimer(false));
     }
     networkService.closeSocket();
