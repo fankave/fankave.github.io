@@ -18,6 +18,9 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           updateFeed('social');
         }
         updateTimestamps('social');
+        if (_this.socialFilter === undefined){
+          _this.socialFilter = false;
+        }
         $scope.$parent.switchTabs('social');
         _this.loadContent('social');
         if (!window.twttr){
@@ -33,6 +36,9 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           updateFeed('video');
         }
         updateTimestamps('video');
+        if (_this.videoFilter === undefined){
+          _this.videoFilter = false;
+        }
         $scope.$parent.switchTabs('video');
         _this.loadContent('video');
         if (!window.twttr){
@@ -108,7 +114,11 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           if ($scope.$parent.activeTab === 'social'){
             // If user is on tab during first interval, don't show indicator
             if (prevLength !== 0){
-              _this.newSocialAvailable = true;
+              if (!_this.socialFilter || (_this.socialFilter === 'expert' && SocialService.newExpertIn()) || (_this.socialFilter === 'media' && SocialService.newMediaIn())){
+                _this.newSocialAvailable = true;
+                SocialService.newExpertIn(false);
+                SocialService.newMediaIn(false);
+              }
             }
           } else {
             if (GEN_DEBUG) console.log("$AUTO$ PULSE SOCIAL JEWEL");
@@ -125,7 +135,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           if ($scope.$parent.activeTab === 'video'){
             // If user is on tab during first interval, don't show indicator
             if (prevLength !== 0){
-              _this.newVideoAvailable = true;
+              if ((_this.videoFilter && VideoService.newExpertIn()) || !_this.videoFilter){
+                _this.newVideoAvailable = true;
+                VideoService.newExpertIn(false);
+              }
             }
           } else {
             if (GEN_DEBUG) console.log("$AUTO$ PULSE VIDEO JEWEL");
@@ -329,10 +342,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     var watchContentScroll = debounce(function() {
       var currentScroll = $(document).height() - clientHeight - 150;
       if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
-        if ($scope.activeTab === 'social'){
+        if ($scope.activeTab === 'social' && !_this.preventLoad){
           _this.loadContent('social');
         }
-        else if ($scope.activeTab === 'video'){
+        else if ($scope.activeTab === 'video' && !_this.preventLoad){
           _this.loadContent('video');
         }
       }
@@ -455,6 +468,39 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       // console.log(button);
       // console.log(activeTab);
       AnalyticsService.expressSocialEvent(button, post.id, post.type, post.tweetId, post.providerName, activeTab);
+    }
+
+    function scrollUpAnimate(time) {
+      var body = $('body');
+      body.stop().animate({scrollTop:0}, time.toString(), 'swing');
+      if (_this.preventLoad) {
+        _this.preventLoad = false;
+      }
+    }
+
+    this.filterContent = function (tab, filter) {
+      if (tab === 'social'){
+        if (filter === 'expert'){
+          _this.preventLoad = true;
+          _this.socialFilter = 'expert';
+          scrollUpAnimate(500);
+        } else if (filter === 'media') {
+          _this.preventLoad = true;
+          _this.socialFilter = 'media';
+          scrollUpAnimate(500);
+        } else {
+          _this.socialFilter = false;
+        }
+      } 
+      else if (tab === 'video'){
+        if (filter === 'expert'){
+          _this.preventLoad = true;
+          _this.videoFilter = true;
+          scrollUpAnimate(500);
+        } else {
+          _this.videoFilter = false;
+        }
+      }
     }
 
 

@@ -13,14 +13,27 @@ angular.module('SocialModule')
   var LIMIT = 20;
   var prevLength = 0;
 
+  var _newExpert = false;
+  var _newMedia = false;
+
   function setSocialData(socialData) {
     _socialArray = [];
     var tempData = socialData.data.results;
     var len = !!tempData ? tempData.length : 0;
 
     if (!!tempData && len > 0){
+      var newExpert = false;
+      var newMedia = false;
       for (var i = 0; i < len; i++){
         var _socialObject = Bant.bant(tempData[i]);
+        _socialObject.expert = tempData[i].source.type === "Twitter:Expert" ? true : false;
+        if (!!_socialObject.embed){
+          if (!!_socialObject.embed.media){
+            _socialObject.mediaFilter = true;
+          }
+        }
+        if (!newExpert && _socialObject.expert) newExpert = true;
+        if (!newMedia && _socialObject.mediaFilter) newMedia = true;
         if (!!_socialObject.id){
           var isNewObject = true;
           for (var j = 0; j < _socialArrayAuto.length; j++){
@@ -45,6 +58,8 @@ angular.module('SocialModule')
         notifyObservers();
       }
       else {
+        if (newExpert) _newExpert = true;
+        if (newMedia) _newMedia = true;
         notifyObservers(true);
       }
     }
@@ -156,6 +171,25 @@ angular.module('SocialModule')
     },
     setPrevLength: function(length){
       prevLength = length;
+    },
+    newExpertIn: function(val){
+      // Getter/Setter
+      // If no val provided, return current value of _newExpert
+      if (val === undefined){
+        return _newExpert;
+      }
+      // else set (reset) _newExpert (reset to false after UI updated)
+      else {
+        _newExpert = val;
+      }
+    },
+    newMediaIn: function(val){
+      if (val === undefined){
+        return _newMedia;
+      }
+      else {
+        _newMedia = val;
+      }
     }
   };
 
