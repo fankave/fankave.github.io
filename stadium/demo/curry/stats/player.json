@@ -1,0 +1,72 @@
+{
+  "style": {
+    "bgColor": "",
+    "fgColor": "",
+    "fontColor": "",
+    "bgImage": "/demo/image/bg1.jpg"
+  },
+  "sponsor": {
+    "name": "Under Armor",
+    "caption": "SILKY MOMENTS",
+    "logo": "/demo/curry/image/ua.png"
+  },
+  "entity": {
+    "type": "player",
+    "prefix": "Steph",
+    "name": "Curry",
+    "photo": "/demo/curry/image/curry1.jpg"
+  },
+  "body": [
+    {
+      "type": "barchart",
+      "style": {
+        "bgColor": "",
+        "fgColor": "",
+        "fontColor": ""
+      },
+      "data": [
+        {
+          "name": "POINTS PER GAME",
+          "value": 31.2,
+          "valueStr": "31.2"
+        },
+        {
+          "name": "FIELD GOALS PER GAME",
+          "value": 12.1,
+          "valueStr": "12.1"
+        },
+        {
+          "name": "3-POINTERS PER GAME",
+          "value": 5.0,
+          "valueStr": "5.0"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "PER GAME AVERAGE"
+      "style": {
+        "bgColor": "",
+        "fgColor": "",
+        "fontColor": ""
+      },
+      "data": [
+        {
+          "name": "assists",
+          "value": 6.5,
+          "valueStr": "6.5"
+        },
+        {
+          "name": "steals",
+          "value": 2.2,
+          "valueStr": "2.2"
+        },
+        {
+          "name": "rebounds",
+          "value": 5.4,
+          "valueStr": "5.4"
+        }
+      ]
+    }
+  ]
+}

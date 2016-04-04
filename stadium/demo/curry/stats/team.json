@@ -1,0 +1,60 @@
+{
+  "style": {
+    "bgColor": "",
+    "fgColor": "",
+    "fontColor": "",
+    "bgImage": "/demo/image/bg1.jpg"
+  },
+  "sponsor": {
+    "name": "Under Armor"
+    "caption": "SILKY MOMENTS",
+    "logo": "/demo/curry/image/ua.png"
+  },
+  "entity": {
+    "type": "team",
+    "prefix": "Golden State",
+    "name": "Warriors",
+    "photo": "/demo/curry/image/gsw1.jpg"
+  },
+  "body": [
+    {
+      "type": "table",
+      "title": "SEASON STATISTICS"
+      "style": {
+        "bgColor": "",
+        "fgColor": "",
+        "fontColor": ""
+      },
+      "data": [
+        {
+          "name": "win/loss record",
+          "valueStr": "68-7"
+        },
+        {
+          "name": "win percentage",
+          "valueStr": "90.7"
+        },
+        {
+          "name": "field goal percentage",
+          "valueStr": "32.5"
+        },
+        {
+          "name": "3 point percentage",
+          "valueStr": "28.8"
+        },
+        {
+          "name": "assists per game",
+          "valueStr": "29.0"
+        },
+        {
+          "name": "steals per game",
+          "valueStr": "8.5"
+        },
+        {
+          "name": "blocks per game",
+          "valueStr": "6.1"
+        }
+      ]
+    }
+  ]
+}

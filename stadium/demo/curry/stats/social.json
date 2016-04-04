@@ -1,0 +1,57 @@
+{
+  "style": {
+    "bgColor": "",
+    "fgColor": "",
+    "fontColor": "",
+    "bgImage": "/demo/image/bg2.jpg"
+  },
+  "entity": {
+    "type": "player",
+    "prefix": "Steph",
+    "name": "Curry",
+    "photo": "/demo/curry/image/curry3.jpg"
+  },
+  "body": [
+    {
+      "type": "bubblechart",
+      "title": "SOCIAL STATISTICS"
+      "style": {
+        "bgColor": "",
+        "fgColor": "",
+        "fontColor": ""
+      },
+      "data": [
+        {
+          "name": "TWEETS PER MINUTE",
+          "value": 40,
+          "valueStr": "40"
+        },
+        {
+          "name": "MENTIONS PER HOUR",
+          "value": 619,
+          "valueStr": "619"
+        },
+        {
+          "name": "SOCIAL RANK",
+          "value": 9,
+          "valueStr": "9"
+        }
+      ]
+    }
+  ],
+  "footer": {
+    "style": {
+      "bgColor": "",
+      "fgColor": "",
+      "fontColor": ""
+    },
+    "data": [
+      {
+        "icon": "/demo/image/twitter.jpg",
+        "name": "TOTAL MENTIONS",
+        "value": 5128234,
+        "valueStr": "5,128,234"
+      }
+    ]
+  }
+}
