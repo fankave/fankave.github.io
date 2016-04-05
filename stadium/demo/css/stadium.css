@@ -345,6 +345,36 @@ button {
   box-shadow: 0 15px 10px #ca7629;
 }
 
+.meter-back {
+  position: absolute;
+  display: inline-block;
+  width: 450px;
+  height: 60px;
+  background-color: #314566;
+  top: 20px;
+  right: 0;
+}
+
+.meter-pos {
+  position: absolute;
+  display: inline-block;
+  width: 315px;
+  height: 60px;
+  background-color: #e4e4e4;
+  background: linear-gradient(rgba(255,255,255,1) 0%, rgba(253,253,253,1) 35%, rgba(165,165,165,1) 100%);
+  left: 0;
+}
+
+.meter-neg {
+  position: absolute;
+  display: inline-block;
+  width: 135px;
+  height: 60px;
+  background-color: #e4e4e4;
+  background: linear-gradient(rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0) 100%);
+  left: 315px;
+}
+
 .fan-desc {
   color: #ca7629;
 }
