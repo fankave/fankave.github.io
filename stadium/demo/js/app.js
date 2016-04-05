@@ -53,7 +53,7 @@ $(function() {
     var elem = '#circle' + id;
     var dur = dur || 2000;
     $(elem)
-    .css({ 'z-index': 3 })
+    .css({ 'z-index': 6 })
     .animate({
       width: '1920px',
       height: '1080px',
