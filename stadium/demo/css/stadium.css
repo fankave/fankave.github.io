@@ -48,6 +48,53 @@ body {
   position: absolute;
   left: 25px;
   bottom: 0;
+  z-index: 4;
+}
+
+#ring-filter {
+  position: absolute;
+  width: 800px;
+  height: 796px;
+  left: 108px;
+  top: 200px;
+  background: linear-gradient(to left, rgba(249,158,36,0.2), rgba(249,158,36,1));
+  border-radius: 50%;
+  z-index: 3;
+}
+
+#ring1 {
+  position: absolute;
+  width: 696px;
+  height: 696px;
+  left: 161px;
+  top: 252px;
+  background-color: #fff;
+  /*background: linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,0.8));*/
+  border-radius: 50%;
+  border: 1px solid rgb(249,158,36);
+  z-index: 1;
+}
+
+#ring2 {
+  position: absolute;
+  width: 796px;
+  height: 796px;
+  left: 110px;
+  top: 200px;
+  background-color: #fff;
+  /*background: linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,0.8));*/
+  border-radius: 50%;
+}
+
+#ring-center {
+  position: absolute;
+  width: 584px;
+  height: 584px;
+  left: 216px;
+  top: 306px;
+  background-color: rgb(249,158,36);
+  border-radius: 50%;
+  z-index: 2;
 }
 
 #circle1,
@@ -65,7 +112,7 @@ body {
   background-repeat: no-repeat;
   border-radius: 50%;
   background-size: cover;
-  z-index: 1;
+  z-index: 5;
 }
 
 #circle1a {
@@ -76,8 +123,9 @@ body {
   border-radius: 50%;
   left: 700px;
   top: 360px;
-  clip: rect(0px, 180px, 490px, 0px);
+  clip: rect(0px, 164px, 490px, 0px);
   transform: rotate(0deg);
+  z-index: 4;
 }
 
 #circle1b {
@@ -88,8 +136,9 @@ body {
   border-radius: 50%;
   left: 700px;
   top: 360px;
-  clip: rect(0px, 490px, 490px, 180px);
+  clip: rect(0px, 490px, 490px, 164px);
   transform: rotate(0deg);
+  z-index: 4;
 }
 
 #circle2,
@@ -371,14 +420,14 @@ button {
 }
 
 #line3 {
-  width: 1130px;
-  left: 790px;
+  width: 1137px;
+  left: 783px;
   top: 885px;
 }
 
 #line4 {
-  width: 1155px;
-  left: 765px;
+  width: 1160px;
+  left: 760px;
   top: 905px;
 }
 

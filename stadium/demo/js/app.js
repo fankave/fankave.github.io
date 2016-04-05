@@ -19,8 +19,8 @@ $(function() {
 
   $('#btn1').on('click', function (event) {
     console.log('Trigger Circle 1 Animation');
-    $('#circle1a').animateRotate(0, 720, 2000);
-    $('#circle1b').animateRotate(0, 720, 2000, 'swing', function(){expand(1)});
+    $('#ring-filter').animateRotate(0, 1440, 12000);
+    // $('#circle1b').animateRotate(0, 720, 2000, 'swing', function(){expand(1)});
   });
 
   $('#btn2').on('click', function (event) {
