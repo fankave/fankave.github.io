@@ -16,7 +16,15 @@ body {
   margin: 0 auto;
   position: relative;
   font-family: "Roboto","SFUIDisplay","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.bubble-stats {
   background-image: url('../assets/images/bubble-stats-bg.png');
+  background-size: cover;
+}
+
+.bar-stats {
+  background-image: url('../assets/images/bar-stats-bg.png');
   background-size: cover;
 }
 

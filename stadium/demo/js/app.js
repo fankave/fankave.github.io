@@ -43,6 +43,7 @@ $(function() {
     var elem = '#circle' + id;
     var dur = dur || 1000;
     $(elem)
+    .css({ 'z-index': 6 })
     .animate({
       top: (540 - size / 2) + 'px',
       left: (960 - size / 2) + 'px'
