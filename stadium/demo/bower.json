@@ -1,0 +1,30 @@
+{
+  "name": "smart-stadium",
+  "authors": [
+    "Robby Hays rob@fankave.com"
+  ],
+  "description": "A collection of dynamic screens for in-stadium experiences",
+  "main": "index.html",
+  "moduleType": [
+    "es6",
+    "globals"
+  ],
+  "keywords": [
+    "FanKave"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.3",
+    "angular-ui-router": "^0.2.18",
+    "jquery": "^2.2.2"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "smart-stadium",
+  "version": "1.0.0",
+  "description": "A collection of dynamic screens for in-stadium experiences",
+  "main": "social.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "FanKave"
+  ],
+  "author": "Robby Hays <rob@fankave.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-cssnano": "^2.1.0",
+    "gulp-gzip": "^1.2.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.1",
+    "gulp-util": "^3.0.7",
+    "jshint": "^2.9.1",
+    "jshint-stylish": "^2.1.0"
+  }
+}
