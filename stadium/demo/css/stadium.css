@@ -690,6 +690,12 @@ button {
   font-weight: 100;
 }
 
+#bar-sponsor {
+  position: absolute;
+  top: 26px;
+  left: 1660px;
+}
+
 
 /* * * Social Wall * * */
 #header {
