@@ -79,12 +79,22 @@ $(function() {
 });
 
 $(window).load(function() {
-  barUp(1, 1500, 614);
-  barUp(2, 1500, 730);
-  barUp(3, 1500, 540);
+  barUp(1, 1500, 592);
+  barUp(2, 1500, 720);
+  barUp(3, 1500, 520);
   function barUp (id, dur, height) {
     var $elem = $('#bar' + id);
+    var $player = $('#player' + id);
+    var heights = ['-32px','-64px','-120px'];
     var dur = dur || 1500;
-    $elem.animate({ height: height + 'px' }, dur);
+    $elem.animate({ height: height + 'px' }, dur, 'swing', function(){
+      $player.animate({ top: heights[id-1] }, 200);
+      if (id === 1){
+        $('#trail1').animate({ top: '130px' }, 200);
+      }
+      else if (id === 3){
+        $('#trail3').animate({ top: '-20px' }, 200);
+      }
+    });
   }
 });

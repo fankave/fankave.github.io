@@ -471,6 +471,11 @@ button {
 
 
 /* * * Bar Stat Screen * * */
+#curry-bg-1 {
+  position: absolute;
+  z-index: 1;
+}
+
 .bar {
   position: absolute;
   width: 160px;
@@ -508,11 +513,33 @@ button {
 #trail1 {
   position: relative;
   width: 50px;
-  height: 250px;
-  top: 160px;
+  height: 200px;
+  top: 150px;
   left: 55px;
   background-color: rgba(255,255,255,0.8);
   background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0));
+}
+
+#player1,
+#player2,
+#player3 {
+  position: absolute;
+  z-index: 1;
+}
+
+#player1 {
+  top: -12px;
+  left: 32px;
+}
+
+#player2 {
+  top: -10px;
+  left: 5px;
+}
+
+#player3 {
+  top: -20px;
+  left: 26px;
 }
 
 #trail2 {
@@ -528,8 +555,8 @@ button {
 #trail3 {
   position: relative;
   width: 40px;
-  height: 390px;
-  top: 0;
+  height: 400px;
+  top: 70px;
   left: 60px;
   background-color: rgba(255,255,255,0.8);
   background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0));
@@ -544,7 +571,7 @@ button {
 }
 
 .label1 {
-  top: 15%;
+  top: 60px;
 }
 
 .label2 {
@@ -552,7 +579,7 @@ button {
 }
 
 .label3 {
-  top: -25%;
+  top: -200px;
 }
 
 .bar-value {
