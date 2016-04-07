@@ -24,7 +24,7 @@ body {
 }
 
 .bar-stats {
-  background-image: url('../assets/images/bar-stats-bg.png');
+  background-image: url('../assets/images/player-stats-prog.jpg');
   background-size: cover;
 }
 
@@ -113,7 +113,7 @@ body {
   background-color: rgb(249,158,36);
   background: radial-gradient(circle, rgb(249,158,36) 60%, rgb(255,255,255) 100%);
   border-radius: 50%;
-  left: 740px;
+  left: 742px;
   top: 400px;
   /*background-image: url('../assets/images/curry.jpg');*/
   background-position: 50%;
@@ -129,25 +129,89 @@ body {
   height: 490px;
   background-color: #fff;
   border-radius: 50%;
-  left: 700px;
+  left: 702px;
   top: 360px;
   clip: rect(0px, 164px, 490px, 0px);
   transform: rotate(0deg);
   z-index: 4;
 }
 
-#circle1b {
-  position: absolute;
-  width: 490px;
-  height: 490px;
-  background-color: #ca7629;
-  border-radius: 50%;
-  left: 700px;
-  top: 360px;
-  clip: rect(0px, 490px, 490px, 164px);
-  transform: rotate(0deg);
-  z-index: 4;
+/* * * Unique Ring Type * * */
+.pie {
+  position:absolute;
+  width:245px;
+  height:490px;
+  overflow:hidden;
+  left:367.5px;
+  z-index: 4; 
+  -moz-transform-origin:left center;
+  -ms-transform-origin:left center;
+  -o-transform-origin:left center;
+  -webkit-transform-origin:left center;
+  transform-origin:left center;
 }
+
+.pie:BEFORE {
+  content:"";
+  position:absolute;
+  width:245px;
+  height:490px;
+  left:-245px;
+  border-radius:245px 0 0 245px;
+  -moz-transform-origin:right center;
+  -ms-transform-origin:right center;
+  -o-transform-origin:right center;
+  -webkit-transform-origin:right center;
+  transform-origin:right center;
+  
+}
+
+.pie.big {
+  width:490px;
+  height:490px;
+  top: 360px;
+  left:702px;
+  -moz-transform-origin:center center;
+  -ms-transform-origin:center center;
+  -o-transform-origin:center center;
+  -webkit-transform-origin:center center;
+  transform-origin:center center;
+}
+
+.pie.big:BEFORE {
+  left:0px;
+}
+
+.pie.big:AFTER {
+  content:"";
+  position:absolute;
+  width:245px;
+  height:490px;
+  left:245px;
+  border-radius:0 245px 245px 0;
+}
+
+.pie:BEFORE,
+.pie:AFTER {
+  background-color: #ca7629;  
+}
+
+.pie[data-start="-25"] {
+  -moz-transform: rotate(-25deg);
+  -ms-transform: rotate(-25deg);
+  -webkit-transform: rotate(-25deg);
+  -o-transform: rotate(-25deg);
+  transform:rotate(-25deg);
+}
+
+.pie[data-value="232"]:BEFORE {
+  -moz-transform: rotate(232deg); /* Firefox */
+  -ms-transform: rotate(232deg); /* IE */
+  -webkit-transform: rotate(232deg); /* Safari and Chrome */
+  -o-transform: rotate(232deg); /* Opera */
+  transform:rotate(232deg);
+}
+/* * * End Unique Ring Type * * */
 
 #circle2,
 #circle2fixed {
@@ -366,7 +430,7 @@ button {
 .meter-pos {
   position: absolute;
   display: inline-block;
-  width: 315px;
+  width: 5px;
   height: 60px;
   background-color: #e4e4e4;
   background: linear-gradient(rgba(255,255,255,1) 0%, rgba(253,253,253,1) 35%, rgba(165,165,165,1) 100%);
@@ -376,11 +440,11 @@ button {
 .meter-neg {
   position: absolute;
   display: inline-block;
-  width: 135px;
+  width: 450px;
   height: 60px;
   background-color: #e4e4e4;
   background: linear-gradient(rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0) 100%);
-  left: 315px;
+  left: 0px;
 }
 
 .fan-desc {
@@ -490,6 +554,7 @@ button {
   left: 600px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  visibility: hidden;
 }
 
 #bar2 {
@@ -499,6 +564,7 @@ button {
   left: 795px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  visibility: hidden;
 }
 
 #bar3 {
@@ -508,6 +574,7 @@ button {
   left: 990px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  visibility: hidden;
 }
 
 #trail1 {

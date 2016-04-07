@@ -13,7 +13,7 @@
   <script src="js/PlayerStats.js"></script>
 </head>
 
-<body class="{{bodyClass}}" ui-view>
+<body ng-class="{ 'bar-stats': $state.includes('pstats'), 'bubble-stats': $state.includes('psocial') }" ui-view>
   
 </body>
 </html>
