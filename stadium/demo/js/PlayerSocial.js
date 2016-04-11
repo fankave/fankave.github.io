@@ -1,16 +1,23 @@
 angular.module('player.social', [])
-.controller('ctrl.player-social', ['$http',
-function ($http) {
+.controller('ctrl.player-social', [
+  '$http',
+  'ContentService',
+function ($http, ContentService) {
 
   var _this = this;
   this.showExpandedTweet = false;
 
-  var socialContent;
-  $http.get('http://dev.fankave.com/stadium/demo/curry/social/tweets.json')
-  .then(function (response) {
-    socialContent = response;
-    console.log("Social Content Response: ", response);
-  });
+  var _socialContent;
+  if (!ContentService.getSocialContent()) {
+    ContentService.initContent()
+    .then(function (response) {
+      ContentService.setSocialContent(response.data);
+      _socialContent = response.data;
+      console.log("Content in Controller: ", _socialContent, response);
+    });
+  } else {
+    _socialContent = ContentService.getSocialContent();
+  }
 
   $.fn.animateRotate = function (initial, angle, duration, easing, complete) {
     return this.each(function() {
