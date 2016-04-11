@@ -1,0 +1,206 @@
+[
+{
+    "embed": {
+        "author": {
+            "alias": "warriors",
+            "name": "GoldenStateWarriors",
+            "photo": "http://pbs.twimg.com/profile_images/719069657978671104/XAG8pgPG_normal.jpg"
+        },
+        "createdAt": "2016-04-11T00:58:47Z",
+        "media": [
+            {
+                "auto": true,
+                "mediaType": "video/mp4",
+                "sizes": {
+                    "16:9": {
+                        "h": 336,
+                        "w": 599
+                    },
+                    "full": {
+                        "h": 337,
+                        "w": 599
+                    }
+                },
+                "thumbUrl": "http://pbs.twimg.com/ext_tw_video_thumb/719328798735380480/pu/img/UCKxUCjCtL9rZrf1.jpg",
+                "url": "https://video.twimg.com/ext_tw_video/719328798735380480/pu/vid/640x360/GWAYw2MLKoEyfazR.mp4"
+            }
+        ],
+        "metrics": {
+            "likes": 1087,
+            "shares": 496
+        },
+        "provider": {
+            "logo": "https://twitter.com/favicon.ico",
+            "name": "Twitter"
+        },
+        "text": "Part of a 16-point third quarter for @StephenCurry30! Catch the end of the game on @CSNAuthentic. https://t.co/15IHgZNqF9",
+        "type": "media",
+        "url": "https://twitter.com/warriors/status/719328809879601153"
+    },
+    "type": "embed"
+},
+{
+    "embed": {
+        "author": {
+            "alias": "warriors",
+            "name": "GoldenStateWarriors",
+            "photo": "http://pbs.twimg.com/profile_images/719069657978671104/XAG8pgPG_normal.jpg"
+        },
+        "createdAt": "2016-04-10T01:35:34Z",
+        "media": [
+            {
+                "auto": true,
+                "mediaType": "video/mp4",
+                "sizes": {
+                    "16:9": {
+                        "h": 336,
+                        "w": 599
+                    },
+                    "full": {
+                        "h": 337,
+                        "w": 599
+                    }
+                },
+                "thumbUrl": "http://pbs.twimg.com/ext_tw_video_thumb/718975659570139137/pu/img/xRF5Ejs6sfhunO8F.jpg",
+                "url": "https://video.twimg.com/ext_tw_video/718975659570139137/pu/vid/1280x720/suUmEXETWzVTiHAd.mp4"
+            }
+        ],
+        "metrics": {
+            "likes": 914,
+            "shares": 574
+        },
+        "provider": {
+            "logo": "https://twitter.com/favicon.ico",
+            "name": "Twitter"
+        },
+        "text": "And the @StephenCurry30 3ptr streak continues ... 150 straight games w/ at least one #SPLASH . https://t.co/RdB0eyGC6J",
+        "type": "media",
+        "url": "https://twitter.com/warriors/status/718975677463040001"
+    },
+    "type": "embed"
+},
+{
+    "embed": {
+        "author": {
+            "alias": "SLAMonline",
+            "name": "SLAM Magazine",
+            "photo": "http://pbs.twimg.com/profile_images/463781191397552128/fYYMv2c2_normal.jpeg"
+        },
+        "createdAt": "2016-04-11T01:24:07Z",
+        "media": [
+            {
+                "mediaType": "image/jpeg",
+                "sizes": {
+                    "16:9": {
+                        "h": 334,
+                        "w": 594,
+                        "y": 15
+                    },
+                    "full": {
+                        "h": 396,
+                        "w": 594
+                    }
+                },
+                "thumbUrl": "http://pbs.twimg.com/media/CfuXiluWcAEreOs.jpg",
+                "url": "http://pbs.twimg.com/media/CfuXiluWcAEreOs.jpg"
+            }
+        ],
+        "metrics": {
+            "likes": 253,
+            "shares": 238
+        },
+        "provider": {
+            "logo": "https://twitter.com/favicon.ico",
+            "name": "Twitter"
+        },
+        "text": "72 wins. The Warriors tie the Bulls' single-season wins record with a win in San Antonio. Stephen Curry: 37 points https://t.co/f7FNYHuTXr",
+        "type": "media",
+        "url": "https://twitter.com/SLAMonline/status/719335186845057024"
+    },
+    "type": "embed"
+},
+{
+    "embed": {
+        "author": {
+            "alias": "LouSeal01",
+            "name": "Lou Seal",
+            "photo": "http://pbs.twimg.com/profile_images/657626040575983616/rgEf4e9f_normal.jpg"
+        },
+        "createdAt": "2016-04-11T01:44:29Z",
+        "media": [
+            {
+                "mediaType": "image/jpeg",
+                "sizes": {
+                    "1:1": {
+                        "h": 600,
+                        "w": 600,
+                        "y": 49
+                    },
+                    "full": {
+                        "h": 799,
+                        "w": 600
+                    }
+                },
+                "thumbUrl": "http://pbs.twimg.com/media/CfucMnEVIAA6SX4.jpg",
+                "url": "http://pbs.twimg.com/media/CfucMnEVIAA6SX4.jpg"
+            }
+        ],
+        "metrics": {
+            "likes": 1876,
+            "shares": 555
+        },
+        "provider": {
+            "logo": "https://twitter.com/favicon.ico",
+            "name": "Twitter"
+        },
+        "text": "Congrats #DubNation!! Amazing job by @StephenCurry30 &amp; Co.\n#SeventyTwoWins #BayAreaUnite https://t.co/7IJPlxikEM",
+        "type": "media",
+        "url": "https://twitter.com/LouSeal01/status/719340312024354817"
+    },
+    "type": "embed"
+},
+{
+    "embed": {
+        "author": {
+            "alias": "gswstats",
+            "name": "GSWStats",
+            "photo": "http://pbs.twimg.com/profile_images/2722907797/7ebe61e3ecdb0e2ea0ec4b04808a5e7a_normal.jpeg"
+        },
+        "createdAt": "2016-04-11T01:13:36Z",
+        "metrics": {
+            "likes": 2172,
+            "shares": 1126
+        },
+        "provider": {
+            "logo": "https://twitter.com/favicon.ico",
+            "name": "Twitter"
+        },
+        "text": "Stephen Curry's 33 points are the most he has scored on the road against San Antonio in the regular-season in his career.",
+        "type": "link",
+        "url": "https://twitter.com/gswstats/status/719332540931125248"
+    },
+    "type": "embed"
+},
+{
+    "embed": {
+        "author": {
+            "alias": "ScottiePippen",
+            "name": "Scottie Pippen",
+            "photo": "http://pbs.twimg.com/profile_images/472644273771270144/DKyCaxQF_normal.jpeg"
+        },
+        "createdAt": "2016-04-11T01:49:03Z",
+        "metrics": {
+            "likes": 4867,
+            "shares": 3376
+        },
+        "provider": {
+            "logo": "https://twitter.com/favicon.ico",
+            "name": "Twitter"
+        },
+        "text": ".@StephenCurry30 showed why he's the MVP. As cold blooded shooter as I've ever seen and a basketball IQ that is off the charts.",
+        "type": "link",
+        "url": "https://twitter.com/ScottiePippen/status/719341461813088256"
+    },
+    "type": "embed"
+}
+]
