@@ -5,8 +5,12 @@ function ($http) {
   var _this = this;
   this.showExpandedTweet = false;
 
-  var socialContent = $http.get('http://dev.fankave.com/stadium/demo/curry/social/tweets.json');
-  console.log("Social Content: ", socialContent);
+  var socialContent;
+  $http.get('http://dev.fankave.com/stadium/demo/curry/social/tweets.json')
+  .then(function (response) {
+    socialContent = response;
+    console.log("Social Content Response: ", response);
+  });
 
   $.fn.animateRotate = function (initial, angle, duration, easing, complete) {
     return this.each(function() {
