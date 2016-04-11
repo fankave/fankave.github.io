@@ -1,0 +1,21 @@
+<div id="tweet-container">
+  <div class="tweet-header clearfix">
+    <img ng-src="{{authorPhoto}}" class="tweet-profile" />
+    <div class="tweet-user">
+      <span class="tweet-name">{{authorName}}</span>
+      <img ng-src="assets/images/twitter-verified.jpg" class="verified-icon" />
+      <span class="tweet-handle">{{authorAlias}}</span>
+    </div>
+  </div>
+  <div class="tweet-body">
+    <div ng-bind-html="tweetHtml" class="tweet-text" ng-if="tweetType === 'text'">{{tweetHtml}}</div>
+    <img ng-src="{{tweetMediaUrl}}" class="tweet-media" ng-if="tweetType === 'image'" />
+    <span class="tweet-timestamp">{{createdAt}}</span>
+  </div>
+  <div class="tweet-metrics">
+    <span class="metrics-value">{{retweetCount}}</span>
+    <span class="metrics-label">RETWEETS</span>
+    <span class="metrics-value">{{likeCount}}</span>
+    <span class="metrics-label">LIKES</span>
+  </div>
+</div>
