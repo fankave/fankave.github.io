@@ -3,6 +3,10 @@ angular.module('player.social', [])
 function ($http) {
 
   var _this = this;
+  this.showExpandedTweet = false;
+
+  var socialContent = $http.get('http://dev.fankave.com/stadium/demo/curry/social/tweets.json');
+  console.log("Social Content: ", socialContent);
 
   $.fn.animateRotate = function (initial, angle, duration, easing, complete) {
     return this.each(function() {
@@ -14,6 +18,23 @@ function ($http) {
         step: function(now) {
           $elem.css({
              transform: 'rotate(' + now + 'deg)'
+           });
+        },
+        complete: complete || $.noop
+      });
+    });
+  };
+
+  $.fn.rotateReverse = function (initial, angle, duration, easing, complete) {
+    return this.each(function() {
+      var $elem = $(this);
+
+      $({deg: initial || 0}).animate({deg: angle}, {
+        duration: duration,
+        easing: easing,
+        step: function(now) {
+          $elem.css({
+             transform: 'rotate(-' + now + 'deg)'
            });
         },
         complete: complete || $.noop
@@ -70,3 +91,91 @@ function ($http) {
   }
 
 }]);
+
+angular.module('player.social')
+.directive('playerEnter', ['$compile', function ($compile) {
+  return {
+    restrict: 'A',
+    link: function (scope, elem, attrs) {
+      $(elem).animate({ left: '25px' }, 2000, function (){
+        $('#circle1a')
+        .animateRotate(0, 720, 2000)
+        .animate({ opacity: '1' }, {
+          duration: 1000,
+          start: function () {
+            $('#circle1').animate({ opacity: '1' }, 2000);
+            $('.meter-pos').animate({ width: '265px' }, {
+              duration: 3500,
+              start: function () {
+                $('#thumbsUp').addClass('pulse');
+              }
+            });
+          },
+          complete: function () {
+            $('#circle2a')
+            .animateRotate(60, 780, 2000)
+            .animate({ opacity: '1' }, {
+              duration: 1000,
+              start: function () {
+                $('#circle2').animate({ opacity: '1' }, 2000);
+              },
+              complete: function () {
+                $('#circle3a')
+                .animateRotate(330, 1050, 2000)
+                .animate({ opacity: '1' }, {
+                  duration: 1000,
+                  start: function () {
+                    $('#circle3').animate({ opacity: '1' }, 2000);
+                  },
+                  complete: function () {
+                    console.log("Circles A Complete");
+                    // scope.showExpandedTweet = true;
+                    // scope.$apply();
+                  }
+                });
+              }
+            });
+          }
+        });
+        $('#circle1b')
+        .rotateReverse(-25, 385, 3000)
+        // .animateRotate(-25, 695, 2000)
+        .animate({ opacity: '1' }, 1000, function() {
+          $('#circle2b')
+          // .animateRotate(60, 780, 2000)
+          .rotateReverse(60, 300, 3000)
+          .animate({ opacity: '1' }, 1000, function() {
+            $('#circle3b')
+            // .animateRotate(330, 1050, 2000)
+            .rotateReverse(330, 390, 2000)
+            .animate({ opacity: '1' }, 1000, function() {
+              console.log("Circles B Complete");
+            });
+          });
+        });
+      });
+    }
+  };
+}])
+.directive('fadeInShift', ['$sce', function ($sce) {
+  return {
+    restrict: 'A',
+    link: function (scope, elem, attrs) {
+      if (attrs.fadeInShift === 'top'){  
+        $(elem).animate({ top: attrs.fadeEnd, opacity: '1' }, 1000);
+      }
+    }
+  };
+}])
+.directive('rotateFadeIn', ['$timeout', function ($timeout) {
+  return {
+    restrict: 'A',
+    link: function (scope, elem, attrs) {
+      console.log('Attr Added ', attrs.rotateFadeIn, attrs.fadeDur);
+      $(elem)
+      .animateRotate(0, parseInt(attrs.rotateFadeIn), parseInt(attrs.fadeDur))
+      .animate({ opacity: '1' }, 2000);
+    }
+  };
+}]);
+

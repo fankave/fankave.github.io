@@ -1,26 +1,24 @@
 <div id="bubble-container">
-  <img id="curry-bg-2" src="assets/images/curry-bg2.png" />
+  <img id="curry-bg-2" ng-src="assets/images/curry-bg2.png" player-enter />
 
-  <div id="player-header">
+  <div id="player-header" fade-in-shift="top" fade-end="45px">
     <span class="player-name">STEPH CURRY</span>
     <span class="player-title">SOCIAL STATISTICS</span>
   </div>
 
-  <div id="ring-filter"></div>
+  <div id="ring-filter" rotate-fade-in="1080" fade-dur="6000"></div>
   <div id="ring-center"></div>
-  <div id="ring1"></div>
-  <div id="ring2"></div>
+  <div id="ring1" rotate-fade-in="720" fade-dur="6000"></div>
+  <div id="ring2" rotate-fade-in="720" fade-dur="6000"></div>
 
   <div id="line1" class="line"></div>
   <div id="line2" class="line"></div>
   <div id="line3" class="line"></div>
   <div id="line4" class="line"></div>
 
-  <!-- <div id="sponsor">
-    <span class="sponsor-text">PRESENTED BY</span>
-  </div> -->
-
   <!-- Bubble Stats -->
+  <div id="circle1fixedback"></div>
+  <div id="circle1fixed"></div>
   <div id="circle1">
     <div class="stat1">
       <span class="stat-num1">40</span>
@@ -29,6 +27,7 @@
   </div>
   <div id="circle1a"></div>
   <div id="circle1b" class="pie big" data-start="-25" data-value="232"></div>
+  <!-- <div id="circle1bscreen" class="pie big screen" data-start="27" data-value="1" anim-class="special"></div> -->
   <div id="circle2">
     <div class="stat2">
       <span class="stat-num2">619</span>
@@ -51,6 +50,8 @@
 
   <div id="fan-sentiment">
     <span class="fan-desc">FAN SENTIMENT</span>
+    <img ng-src="assets/images/thumbsUp.png" id="thumbsUp" />
+    <img ng-src="assets/images/thumbsDown.png" id="thumbsDown" />
     <div class="meter-back">
       <div class="meter-pos"></div>
       <div class="meter-neg"></div>
@@ -63,8 +64,18 @@
   </div>
 </div>
 
-<div id="controls">
-  <button id="btn1"></button>
-  <button id="btn2"></button>
-  <button id="btn3"></button>
+<div id="tweet-bubble" ng-if="showExpandedTweet">
+  <div class="tweet-ring tweet-ring5">
+    <div class="tweet-ring tweet-ring4">
+      <div class="tweet-ring tweet-ring3">
+      <div class="tweet-ring tweet-ring3filter">
+        <div class="tweet-ring tweet-ring2">
+          <div class="tweet-ring tweet-ring1">
+            <expanded-tweet></expanded-tweet>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
 </div>
