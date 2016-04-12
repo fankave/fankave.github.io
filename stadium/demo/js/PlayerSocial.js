@@ -235,9 +235,11 @@ angular.module('player.social')
       $timeout(function(){
         $(elem).animate({ opacity: 0 }, 1000);
         var trueScope = $('#curry-bg-2').scope();
-        trueScope.$apply(function(){
-          trueScope.showExpandedTweetT = false;
-        });
+        $timeout(function(){
+          trueScope.$apply(function(){
+            trueScope.showExpandedTweetT = false;
+          });
+        }, 1100);
       }, parseInt(attrs.expires));
     }
   };
