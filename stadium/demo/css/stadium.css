@@ -790,7 +790,7 @@ button {
   height: 745px;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  /*transform: translate(-50%,-50%);*/
   /*border: 1px dashed #aaa;*/
   padding: 36px;
   opacity: 0;
