@@ -59,6 +59,22 @@ function ($http, ContentService) {
     });
   };
 
+  $.fn.animateTranslate = function (start, end, unit, duration, easing, complete) {
+    return this.each(function() {
+      var $elem = $(this);
+
+      $({'transform': 'translate('+start+unit+','+start+unit+')'})
+      .animate({'transform': 'translate('+end+unit+','+end+unit+')'}, {
+        duration: duration,
+        easing: easing || 'swing',
+        step: function (now) {
+          $elem.css({'transform': 'translate('+now+unit+','+now+unit+')'});
+        },
+        complete: complete || $.noop
+      });
+    });
+  };
+
   function moveToCenter (id, size, dur) {
     var elem = '#circle' + id;
     var dur = dur || 1000;
@@ -202,6 +218,7 @@ angular.module('player.social')
         left: attrs.sLeft
       });
       // $timeout(function(){
+      $(elem).animateTranslate('0', '-1100', 'px', 3000);
       $(elem).animate({
         width: '2220px',
         height: '2220px',
