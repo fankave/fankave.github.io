@@ -814,7 +814,7 @@ button {
   border-radius: 50%;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  /*transform: translate(-50%,-50%);*/
 }
 
 .tweet-ring5 {
@@ -824,6 +824,7 @@ button {
   /*background: linear-gradient(#ca7629 0%, #ca7629 30%, #fff 70%);*/
   /*background: linear-gradient(#f99d23 0%, #f99d23 30%, #fff 70%);*/
   background: linear-gradient(rgb(249,157,35) 0%, rgb(249,157,35) 30%, #fff 70%);
+  transform: translate(-50%,-50%);
 }
 
 .tweet-ring4 {
@@ -832,6 +833,7 @@ button {
   /*background-color: #ca7629;*/
   /*background-color: rgb(249,158,36);*/
   background-color: rgb(249,157,35);
+  transform: translate(-50%,-50%);
 }
 
 .tweet-ring3 {
@@ -839,6 +841,7 @@ button {
   height: 1508px;
   /*background-color: rgb(249,158,36);*/
   background-color: rgb(249,157,35);
+  transform: translate(-50%,-50%);
 }
 
 .tweet-ring3filter {
@@ -846,6 +849,7 @@ button {
   height: 1508px;
   background-color: #fff;
   background: linear-gradient(rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.2) 100%);
+  transform: translate(-50%,-50%);
 }
 
 .tweet-ring2 {
@@ -854,12 +858,15 @@ button {
   height: 1368px;
   background-color: #fff;
   background: linear-gradient(rgba(255,255,255,1) 0%, rgba(255,255,255,1) 65%, rgba(255,255,255,0.6) 75%, rgba(255,255,255,0.2) 100%);
+  top: 70px;
+  left: 70px;
 }
 
 .tweet-ring1 {
   width: 1156px;
   height: 1156px;
   background-color: #fff;
+  transform: translate(-50%,-50%);
 }
 
 .tweet-profile {
