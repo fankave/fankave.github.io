@@ -199,16 +199,14 @@ angular.module('player.social')
         width: attrs.sSize,
         height: attrs.sSize,
         top: attrs.sTop,
-        left: attrs.sLeft,
-        transform: 'translate(0%,0%)'
+        left: attrs.sLeft
       });
       // $timeout(function(){
       $(elem).animate({
         width: '2220px',
         height: '2220px',
         top: '50%',
-        left: '50%',
-        transform: 'translate(-50%,-50%)'
+        left: '50%'
       },{
         duration: 3000,
         complete: function () {
