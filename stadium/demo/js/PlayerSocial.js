@@ -11,7 +11,7 @@ function ($http, ContentService) {
   this.textContent;
   this.imageContent;
   this.videoContent;
-  if (!ContentService.getSocialContent()) {
+  // if (!ContentService.getSocialContent()) {
     ContentService.initContent()
     .then(function (response) {
       ContentService.setSocialContent(response.data);
@@ -21,9 +21,9 @@ function ($http, ContentService) {
       _this.videoContent = response.data[0];
       console.log("Content in Controller: ", _socialContent);
     });
-  } else {
-    _socialContent = ContentService.getSocialContent();
-  }
+  // } else {
+  //   _socialContent = ContentService.getSocialContent();
+  // }
 
   $.fn.animateRotate = function (initial, angle, duration, easing, complete) {
     return this.each(function() {
