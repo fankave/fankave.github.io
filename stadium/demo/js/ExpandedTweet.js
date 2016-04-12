@@ -4,7 +4,7 @@ angular.module('player.social')
     restrict: 'E',
     replace: true,
     scope: {
-      thisTweet: '&'
+      thisTweet: '='
     },
     link: function (scope, elem, attrs) {
       scope.whitelistHtml = $sce.trustAsHtml(scope.thisTweet.text);
