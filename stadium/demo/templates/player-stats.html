@@ -1,4 +1,4 @@
-<img id="curry-bg-1" src="assets/images/curry-bg1.png" />
+<img id="curry-bg-1" src="assets/images/curry-bg1.png" trigger-start="stepA" />
 
 <div id="player-page-title">
   <span class="player-title-2">SILKY MOMENTS</span>
@@ -12,7 +12,7 @@
 </div>
 
 <!-- Bar Graph Stats -->
-<div id="bar1" class="bar" bar-up="592px" player-end="-32px" trail-end="130px">
+<div id="bar1" class="bar" bar-up="592px" player-end="-32px" trail-end="130px" ng-if="stepA" trigger-next="stepB">
   <img id="player1" src="assets/images/player1.png" />
   <div id="trail1" class="trail"></div>
   <div class="bar-label label1">
@@ -21,7 +21,7 @@
   </div>
 </div>
 
-<div id="bar2" class="bar" bar-up="720px" player-end="-64px">
+<div id="bar2" class="bar" bar-up="720px" player-end="-64px" ng-if="stepB" trigger-next="stepC">
   <img id="player2" src="assets/images/player2.png" />
   <div id="trail2" class="trail"></div>
   <div class="bar-label label2">
@@ -30,7 +30,7 @@
   </div>
 </div>
 
-<div id="bar3" class="bar" bar-up="520px" player-end="-120px" trail-end="-20px">
+<div id="bar3" class="bar" bar-up="520px" player-end="-120px" trail-end="-20px" ng-if="stepC">
   <img id="player3" src="assets/images/player3.png" />
   <div id="trail3" class="trail"></div>
   <div class="bar-label label3">
