@@ -105,7 +105,10 @@ function ($http, $interval, ContentService) {
 }]);
 
 angular.module('player.social')
-.directive('playerEnter', ['$compile', function ($compile) {
+.directive('playerEnter', [
+  '$compile',
+  '$interval',
+function ($compile, $interval) {
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
