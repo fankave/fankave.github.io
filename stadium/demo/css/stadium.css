@@ -852,6 +852,11 @@ button {
   transform: translate(-50%,-50%);
 }
 
+@keyframes slowRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .tweet-ring2 {
   position: absolute;
   width: 1368px;
@@ -860,7 +865,11 @@ button {
   background: linear-gradient(rgba(255,255,255,1) 0%, rgba(255,255,255,1) 65%, rgba(255,255,255,0.6) 75%, rgba(255,255,255,0.2) 100%);
   top: 70px;
   left: 70px;
+  -webkit-animation: slowRotate 10s linear infinite;
+  -moz-animation: slowRotate 10s linear infinite;
+  animation: slowRotate 10s linear infinite;
 }
+
 
 .tweet-ring1 {
   width: 1156px;
