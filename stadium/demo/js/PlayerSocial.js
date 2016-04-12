@@ -117,60 +117,62 @@ function ($compile, $rootScope) {
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
-      $(elem).animate({ left: '25px' }, 2000, function (){
-        $('#circle1a')
-        .animateRotate(0, 720, 2000)
-        .animate({ opacity: '1' }, {
-          duration: 1000,
-          start: function () {
-            $('#circle1').animate({ opacity: '1' }, 2000);
-            $('.meter-pos').animate({ width: '265px' }, {
-              duration: 3500,
-              start: function () {
-                $('#thumbsUp').addClass('pulse');
-              }
-            });
-          },
-          complete: function () {
-            $('#circle2a')
-            .animateRotate(60, 780, 2000)
-            .animate({ opacity: '1' }, {
-              duration: 1000,
-              start: function () {
-                $('#circle2').animate({ opacity: '1' }, 2000);
-              },
-              complete: function () {
-                $('#circle3a')
-                .animateRotate(330, 1050, 2000)
-                .animate({ opacity: '1' }, {
-                  duration: 1000,
-                  start: function () {
-                    $('#circle3').animate({ opacity: '1' }, 2000);
-                  },
-                  complete: function () {
-                    console.log("Circles A Complete");
-                    // scope.showExpandedTweet = true;
-                    // scope.$apply();
-                    $rootScope.$broadcast('playerSocialEntry');
-                  }
-                });
-              }
-            });
-          }
-        });
-        $('#circle1b')
-        .rotateReverse(-25, 385, 3000)
-        // .animateRotate(-25, 695, 2000)
-        .animate({ opacity: '1' }, 1000, function() {
-          $('#circle2b')
-          // .animateRotate(60, 780, 2000)
-          .rotateReverse(60, 300, 3000)
+      elem.bind('load', function (e) {
+        $(elem).animate({ left: '25px' }, 2000, function (){
+          $('#circle1a')
+          .animateRotate(0, 720, 2000)
+          .animate({ opacity: '1' }, {
+            duration: 1000,
+            start: function () {
+              $('#circle1').animate({ opacity: '1' }, 2000);
+              $('.meter-pos').animate({ width: '265px' }, {
+                duration: 3500,
+                start: function () {
+                  $('#thumbsUp').addClass('pulse');
+                }
+              });
+            },
+            complete: function () {
+              $('#circle2a')
+              .animateRotate(60, 780, 2000)
+              .animate({ opacity: '1' }, {
+                duration: 1000,
+                start: function () {
+                  $('#circle2').animate({ opacity: '1' }, 2000);
+                },
+                complete: function () {
+                  $('#circle3a')
+                  .animateRotate(330, 1050, 2000)
+                  .animate({ opacity: '1' }, {
+                    duration: 1000,
+                    start: function () {
+                      $('#circle3').animate({ opacity: '1' }, 2000);
+                    },
+                    complete: function () {
+                      console.log("Circles A Complete");
+                      // scope.showExpandedTweet = true;
+                      // scope.$apply();
+                      $rootScope.$broadcast('playerSocialEntry');
+                    }
+                  });
+                }
+              });
+            }
+          });
+          $('#circle1b')
+          .rotateReverse(-25, 385, 3000)
+          // .animateRotate(-25, 695, 2000)
           .animate({ opacity: '1' }, 1000, function() {
-            $('#circle3b')
-            // .animateRotate(330, 1050, 2000)
-            .rotateReverse(330, 390, 2000)
+            $('#circle2b')
+            // .animateRotate(60, 780, 2000)
+            .rotateReverse(60, 300, 3000)
             .animate({ opacity: '1' }, 1000, function() {
-              console.log("Circles B Complete");
+              $('#circle3b')
+              // .animateRotate(330, 1050, 2000)
+              .rotateReverse(330, 390, 2000)
+              .animate({ opacity: '1' }, 1000, function() {
+                console.log("Circles B Complete");
+              });
             });
           });
         });

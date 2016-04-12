@@ -39,7 +39,7 @@ angular.module('player.stats')
       $(elem)
       .css({ visibility: 'visible' })
       .animate({ height: attrs.barUp }, {
-        duration: 1900,
+        duration: 1500,
         easing: 'swing',
         complete: function () {
           $player.animate({ top: attrs.playerEnd }, {
@@ -66,7 +66,7 @@ angular.module('player.stats')
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
-      $(elem).countUp(1900);
+      $(elem).countUp(1500);
     }
   }
 });
@@ -75,7 +75,11 @@ angular.module('player.stats')
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
-      scope[attrs.triggerStart] = true;
+      elem.bind('load', function(e) {
+        scope.$apply(function(){
+          scope[attrs.triggerStart] = true;
+        });
+      });
     }
   }
 });
