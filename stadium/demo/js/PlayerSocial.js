@@ -2,8 +2,9 @@ angular.module('player.social', [])
 .controller('ctrl.player-social', [
   '$http',
   '$interval',
+  '$scope',
   'ContentService',
-function ($http, $interval, ContentService) {
+function ($http, $interval, $scope, ContentService) {
 
   var _this = this;
   this.showExpandedTweet = false;
@@ -19,6 +20,10 @@ function ($http, $interval, ContentService) {
   } else {
     _socialContent = ContentService.getSocialContent();
   }
+
+  $scope.$on('playerSocialEntry', function (event, args) {
+    $interval(function(){console.log(ContentService.getRandomSocial())}, 5000);
+  });
 
   $.fn.animateRotate = function (initial, angle, duration, easing, complete) {
     return this.each(function() {
@@ -107,8 +112,8 @@ function ($http, $interval, ContentService) {
 angular.module('player.social')
 .directive('playerEnter', [
   '$compile',
-  '$interval',
-function ($compile, $interval) {
+  '$rootScope',
+function ($compile, $rootScope) {
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
@@ -146,7 +151,7 @@ function ($compile, $interval) {
                     console.log("Circles A Complete");
                     // scope.showExpandedTweet = true;
                     // scope.$apply();
-                    $interval(function(){console.log(ContentService.getRandomSocial())}, 3000);
+                    $rootScope.$broadcast('playerSocialEntry');
                   }
                 });
               }
