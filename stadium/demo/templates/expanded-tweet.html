@@ -9,10 +9,10 @@
   </div>
   <div class="tweet-body">
     <div ng-bind-html="whitelistHtml" class="tweet-text">{{whitelistHtml}}</div>
-    <img ng-src="{{thisTweet.media[0].thumbUrl}}" class="tweet-media" ng-if="thisTweet.type === 'media' && thisTweet.media[0].mediaType === 'image/jpeg'" />
-    <video preload ng-if="thisTweet.type === 'media' && thisTweet.media[0].mediaType === 'video/mp4'" poster="{{thisTweet.media[0].thumbUrl}}">
+    <!-- <img ng-src="{{thisTweet.media[0].thumbUrl}}" class="tweet-media" ng-if="thisTweet.type === 'media' && thisTweet.media[0].mediaType === 'image/jpeg'" /> -->
+    <!-- <video preload ng-if="thisTweet.type === 'media' && thisTweet.media[0].mediaType === 'video/mp4'" poster="{{thisTweet.media[0].thumbUrl}}">
       <source ng-src="{{trustSrc(thisPost.media[0].url)}}" type="video/mp4">
-    </video>
+    </video> -->
     <span class="tweet-timestamp">04/11/16, 1:49 PM</span>
   </div>
   <div class="tweet-metrics">
