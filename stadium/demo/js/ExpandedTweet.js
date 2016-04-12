@@ -7,7 +7,7 @@ angular.module('player.social')
       thisTweet: '&'
     },
     link: function (scope, elem, attrs) {
-      scope.whitelistHtml = $sce.trustAsHtml(thisTweet.text);
+      scope.whitelistHtml = $sce.trustAsHtml(scope.thisTweet.text);
       scope.trustSrc = function(src){
         return $sce.trustAsResourceUrl(src);
       }
