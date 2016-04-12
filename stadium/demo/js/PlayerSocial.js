@@ -134,7 +134,7 @@ angular.module('player.social')
                         scope.$apply(function(){
                           scope.showExpandedTweetT = true;
                         });
-                      }, 2000);
+                      }, 7000);
                     }
                   });
                 }
@@ -200,15 +200,15 @@ angular.module('player.social')
         height: attrs.sSize,
         top: attrs.sTop,
         left: attrs.sLeft,
-        'border-radius': '50%'
+        transform: 'translate(0%,0%)'
       });
       // $timeout(function(){
       $(elem).animate({
-        'border-radius':'0%',
-        width: '1920px',
-        height: '1080px',
-        top: '0px',
-        left: '0px'
+        width: '2220px',
+        height: '2220px',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%,-50%)'
       },{
         duration: 3000,
         complete: function () {

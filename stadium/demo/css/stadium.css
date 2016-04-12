@@ -16,6 +16,7 @@ body {
   margin: 0 auto;
   position: relative;
   font-family: "Questrial","Roboto","SFUIDisplay","Helvetica Neue",Helvetica,Arial,sans-serif;
+  overflow: hidden;
 }
 
 .bubble-stats {
@@ -797,11 +798,12 @@ button {
 
 #tweet-bubble {
   position: absolute;
-  width: 1920px;
-  height: 1080px;
+  /*width: 1920px;*/
+  /*height: 1080px;*/
   top: 0px;
   left: 0px;
   z-index: 30;
+  border-radius: 50%;
   background-color: #314566;
   overflow: hidden; 
 }
