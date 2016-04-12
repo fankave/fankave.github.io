@@ -865,11 +865,13 @@ button {
   background: linear-gradient(rgba(255,255,255,1) 0%, rgba(255,255,255,1) 65%, rgba(255,255,255,0.6) 75%, rgba(255,255,255,0.2) 100%);
   top: 70px;
   left: 70px;
+}
+
+.slow-rotate {
   -webkit-animation: slowRotate 10s linear infinite;
   -moz-animation: slowRotate 10s linear infinite;
   animation: slowRotate 10s linear infinite;
 }
-
 
 .tweet-ring1 {
   width: 1156px;
