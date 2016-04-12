@@ -35,7 +35,7 @@ function ($http, ContentService) {
         easing: easing,
         step: function(now) {
           $elem.css({
-             transform: 'rotate(' + now + 'deg)' + translation;
+             transform: 'rotate(' + now + 'deg)' + translation
            });
         },
         complete: complete || $.noop
