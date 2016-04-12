@@ -130,9 +130,11 @@ angular.module('player.social')
                     },
                     complete: function () {
                       console.log("Circles A Complete");
-                      scope.$apply(function(){
-                        scope.showExpandedTweetT = true;
-                      });
+                      setTimeout(function(){
+                        scope.$apply(function(){
+                          scope.showExpandedTweetT = true;
+                        });
+                      }, 2000);
                     }
                   });
                 }
