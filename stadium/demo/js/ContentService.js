@@ -35,13 +35,19 @@ function ($http) {
     return _teamStats;
   }
 
+  function getRandomSocial () {
+    var idx = Math.floor(Math.random() * 6);
+    return _socialContent[idx];
+  }
+
   return {
     initContent: initContent,
     setSocialContent: setSocialContent,
     getSocialContent: getSocialContent,
     getSocialStats: getSocialStats,
     getPlayerStats: getPlayerStats,
-    getTeamStats: getTeamStats
+    getTeamStats: getTeamStats,
+    getRandomSocial: getRandomSocial
   };
 
 }]);

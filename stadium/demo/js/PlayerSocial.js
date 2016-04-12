@@ -1,8 +1,9 @@
 angular.module('player.social', [])
 .controller('ctrl.player-social', [
   '$http',
+  '$interval',
   'ContentService',
-function ($http, ContentService) {
+function ($http, $interval, ContentService) {
 
   var _this = this;
   this.showExpandedTweet = false;
@@ -142,6 +143,7 @@ angular.module('player.social')
                     console.log("Circles A Complete");
                     // scope.showExpandedTweet = true;
                     // scope.$apply();
+                    $interval(function(){console.log(ContentService.getRandomSocial())}, 3000);
                   }
                 });
               }
