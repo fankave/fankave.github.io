@@ -63,8 +63,8 @@ function ($http, ContentService) {
     return this.each(function() {
       var $elem = $(this);
 
-      $({'transform': 'translate('+start+unit+','+start+unit+')'})
-      .animate({'transform': 'translate('+end+unit+','+end+unit+')'}, {
+      $({ transform: start })
+      .animate({ transform: end }, {
         duration: duration,
         easing: easing || 'swing',
         step: function (now) {
@@ -217,8 +217,7 @@ angular.module('player.social')
         top: attrs.sTop,
         left: attrs.sLeft
       });
-      // $timeout(function(){
-      $(elem).animateTranslate('0', '-1100', 'px', 3000);
+      $(elem).animateTranslate(0, -1100, 'px', 3000);
       $(elem).animate({
         width: '2220px',
         height: '2220px',
@@ -232,7 +231,6 @@ angular.module('player.social')
           });
         }
       });
-      // }, 1000);
     }
   };
 }]);
