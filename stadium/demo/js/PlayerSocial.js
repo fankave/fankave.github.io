@@ -21,10 +21,6 @@ function ($http, $interval, $scope, ContentService) {
     _socialContent = ContentService.getSocialContent();
   }
 
-  $scope.$on('playerSocialEntry', function (event, args) {
-    $interval(function(){console.log(ContentService.getRandomSocial())}, 5000);
-  });
-
   $.fn.animateRotate = function (initial, angle, duration, easing, complete) {
     return this.each(function() {
       var $elem = $(this);
