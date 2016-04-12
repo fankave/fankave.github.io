@@ -25,7 +25,8 @@ function ($http, ContentService) {
   //   _socialContent = ContentService.getSocialContent();
   // }
 
-  $.fn.animateRotate = function (initial, angle, duration, easing, complete) {
+  $.fn.animateRotate = function (initial, angle, duration, easing, complete, translation) {
+    translation = translation || '';
     return this.each(function() {
       var $elem = $(this);
 
@@ -34,7 +35,7 @@ function ($http, ContentService) {
         easing: easing,
         step: function(now) {
           $elem.css({
-             transform: 'rotate(' + now + 'deg)'
+             transform: 'rotate(' + now + 'deg)' + translation;
            });
         },
         complete: complete || $.noop
@@ -203,13 +204,6 @@ angular.module('player.social')
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
-      var elements = {
-        '.tweet-ring-5': '1870px',
-        '.tweet-ring-4': '1836px',
-        '.tweet-ring-3,.tweet-ring-3filter': '1508px',
-        '.tweet-ring-2': '1368px',
-        '.tweet-ring-1': '1156px'
-      };
       var loadString = attrs.showTweetContent + 'Loaded';
       $('#tweet-bubble').css({
         width: attrs.sSize,

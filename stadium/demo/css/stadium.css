@@ -849,6 +849,7 @@ button {
 }
 
 .tweet-ring2 {
+  position: absolute;
   width: 1368px;
   height: 1368px;
   background-color: #fff;
