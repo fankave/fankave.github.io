@@ -239,7 +239,7 @@ angular.module('player.social')
           trueScope.$apply(function(){
             trueScope.showExpandedTweetT = false;
           });
-        }, 1100);
+        }, 2500);
       }, parseInt(attrs.expires));
     }
   };
