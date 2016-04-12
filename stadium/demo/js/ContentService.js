@@ -9,8 +9,9 @@ function ($http) {
     return $http.get('http://dev.fankave.com/stadium/demo/curry/social/tweets.json');
   }
 
-  function getSocialContent () {
-    return _socialContent;
+  function getSocialContent (idx) {
+    idx = idx || 0;
+    return _socialContent[idx];
   }
 
   function setSocialContent (content) {

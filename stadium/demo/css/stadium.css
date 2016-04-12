@@ -792,6 +792,7 @@ button {
   transform: translate(-50%,-50%);
   /*border: 1px dashed #aaa;*/
   padding: 36px;
+  opacity: 0;
 }
 
 #tweet-bubble {

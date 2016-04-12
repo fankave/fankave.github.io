@@ -1,21 +1,24 @@
 <div id="tweet-container">
   <div class="tweet-header clearfix">
-    <img ng-src="{{authorPhoto}}" class="tweet-profile" />
+    <img ng-src="{{thisTweet.author.photo}}" class="tweet-profile" />
     <div class="tweet-user">
-      <span class="tweet-name">{{authorName}}</span>
+      <span class="tweet-name">{{thisTweet.author.name}}</span>
       <img ng-src="assets/images/twitter-verified.jpg" class="verified-icon" />
-      <span class="tweet-handle">{{authorAlias}}</span>
+      <span class="tweet-handle">{{thisTweet.author.alias}}</span>
     </div>
   </div>
   <div class="tweet-body">
-    <div ng-bind-html="tweetHtml" class="tweet-text" ng-if="tweetType === 'text'">{{tweetHtml}}</div>
-    <img ng-src="{{tweetMediaUrl}}" class="tweet-media" ng-if="tweetType === 'image'" />
-    <span class="tweet-timestamp">{{createdAt}}</span>
+    <div ng-bind-html="whitelistHtml" class="tweet-text">{{whitelistHtml}}</div>
+    <img ng-src="{{thisTweet.media[0].thumbUrl}}" class="tweet-media" ng-if="thisTweet.type === 'media' && thisTweet.media[0].mediaType === 'image/jpeg'" />
+    <video preload ng-if="thisTweet.type === 'media' && thisTweet.media[0].mediaType === 'video/mp4'" poster="{{thisTweet.media[0].thumbUrl}}">
+      <source ng-src="{{trustSrc(thisPost.media[0].url)}}" type="video/mp4">
+    </video>
+    <span class="tweet-timestamp">04/11/16, 1:49 PM</span>
   </div>
   <div class="tweet-metrics">
-    <span class="metrics-value">{{retweetCount}}</span>
+    <span class="metrics-value">{{thisTweet.metrics.shares}}</span>
     <span class="metrics-label">RETWEETS</span>
-    <span class="metrics-value">{{likeCount}}</span>
+    <span class="metrics-value">{{thisTweet.metrics.likes}}</span>
     <span class="metrics-label">LIKES</span>
   </div>
 </div>

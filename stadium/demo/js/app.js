@@ -25,8 +25,8 @@ $(function() {
 
   $('#btn2').on('click', function (event) {
     console.log('Trigger Circle 2 Animation');
-    $('#circle2a').animateRotate(60, 780, 2000);
-    $('#circle2b').animateRotate(60, 780, 2000, 'swing', function(){moveToCenter(2, 310)});
+    $('#circle1a').animateRotate(0, 720, 2000);
+    $('#circle1b').animateRotate(-25, 695, 2000);
   });
 
   $('#btn3').on('click', function (event) {
@@ -43,7 +43,6 @@ $(function() {
     var elem = '#circle' + id;
     var dur = dur || 1000;
     $(elem)
-    .css({ 'z-index': 6 })
     .animate({
       top: (540 - size / 2) + 'px',
       left: (960 - size / 2) + 'px'
@@ -54,7 +53,7 @@ $(function() {
     var elem = '#circle' + id;
     var dur = dur || 2000;
     $(elem)
-    .css({ 'z-index': 6 })
+    .css({ 'z-index': 3 })
     .animate({
       width: '1920px',
       height: '1080px',

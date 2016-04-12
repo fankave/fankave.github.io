@@ -1,21 +1,25 @@
 angular.module('player.social', [])
 .controller('ctrl.player-social', [
   '$http',
-  '$interval',
-  '$scope',
   'ContentService',
-function ($http, $interval, $scope, ContentService) {
+function ($http, ContentService) {
 
   var _this = this;
   this.showExpandedTweet = false;
 
   var _socialContent;
+  this.textContent;
+  this.imageContent;
+  this.videoContent;
   if (!ContentService.getSocialContent()) {
     ContentService.initContent()
     .then(function (response) {
       ContentService.setSocialContent(response.data);
       _socialContent = response.data;
-      console.log("Content in Controller: ", _socialContent, response);
+      _this.textContent = response.data[5];
+      _this.imageContent = response.data[2];
+      _this.videoContent = response.data[0];
+      console.log("Content in Controller: ", _socialContent);
     });
   } else {
     _socialContent = ContentService.getSocialContent();
@@ -55,23 +59,6 @@ function ($http, $interval, $scope, ContentService) {
     });
   };
 
-  $('#btn1').on('click', function (event) {
-    console.log('Trigger Circle 1 Animation');
-    $('#ring-filter').animateRotate(0, 1440, 12000);
-  });
-
-  $('#btn2').on('click', function (event) {
-    console.log('Trigger Circle 2 Animation');
-    $('#circle1a').animateRotate(0, 720, 2000);
-    $('#circle1b').animateRotate(-25, 695, 2000);
-  });
-
-  $('#btn3').on('click', function (event) {
-    console.log('Trigger Circle 3 Animation');
-    $('#circle3a').animateRotate(330, 1050, 2000);
-    $('#circle3b').animateRotate(330, 1050, 2000, 'swing', function(){moveToCenter(3, 244)});
-  });
-
   function moveToCenter (id, size, dur) {
     var elem = '#circle' + id;
     var dur = dur || 1000;
@@ -106,10 +93,7 @@ function ($http, $interval, $scope, ContentService) {
 }]);
 
 angular.module('player.social')
-.directive('playerEnter', [
-  '$compile',
-  '$rootScope',
-function ($compile, $rootScope) {
+.directive('playerEnter', ['$compile', function ($compile) {
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
@@ -146,9 +130,9 @@ function ($compile, $rootScope) {
                     },
                     complete: function () {
                       console.log("Circles A Complete");
-                      // scope.showExpandedTweet = true;
-                      // scope.$apply();
-                      $rootScope.$broadcast('playerSocialEntry');
+                      scope.$apply(function(){
+                        scope.showExpandedTweetT = true;
+                      });
                     }
                   });
                 }
@@ -194,6 +178,44 @@ function ($compile, $rootScope) {
       $(elem)
       .animateRotate(0, parseInt(attrs.rotateFadeIn), parseInt(attrs.fadeDur))
       .animate({ opacity: '1' }, 2000);
+    }
+  };
+}])
+.directive('showTweetContent', ['$timeout', function ($timeout) {
+  return {
+    restrict: 'A',
+    link: function (scope, elem, attrs) {
+      var elements = {
+        '.tweet-ring-5': '1870px',
+        '.tweet-ring-4': '1836px',
+        '.tweet-ring-3,.tweet-ring-3filter': '1508px',
+        '.tweet-ring-2': '1368px',
+        '.tweet-ring-1': '1156px'
+      };
+      var loadString = attrs.showTweetContent + 'Loaded';
+      $('#tweet-bubble').css({
+        width: attrs.sSize,
+        height: attrs.sSize,
+        top: attrs.sTop,
+        left: attrs.sLeft,
+        'border-radius': '50%'
+      });
+      // $timeout(function(){
+      $(elem).animate({
+        'border-radius':'0%',
+        width: '1920px',
+        height: '1080px',
+        top: '0px',
+        left: '0px'
+      },{
+        duration: 3000,
+        complete: function () {
+          scope.$apply(function(){
+            scope[loadString] = true;
+          });
+        }
+      });
+      // }, 1000);
     }
   };
 }]);
