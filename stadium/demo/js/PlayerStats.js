@@ -83,3 +83,15 @@ angular.module('player.stats')
     }
   }
 });
+angular.module('player.stats')
+.directive('enterFromRight', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, elem, attrs) {
+      $(elem).animate({
+        opacity: '1',
+        left: '1315px'
+      }, 1500);
+    }
+  }
+});

@@ -30,7 +30,7 @@
   </div>
 </div>
 
-<div id="bar3" class="bar" bar-up="520px" player-end="-120px" trail-end="-20px" ng-if="stepC">
+<div id="bar3" class="bar" bar-up="520px" player-end="-120px" trail-end="-20px" ng-if="stepC" trigger-next="stepD">
   <img id="player3" src="assets/images/player3.png" />
   <div id="trail3" class="trail"></div>
   <div class="bar-label label3">
@@ -41,10 +41,10 @@
 <!-- End Bar Graph Stats -->
 
 <!-- Secondary Stats -->
-<div id="stat-2nd-label">
+<div id="stat-2nd-label" enter-from-right ng-if="stepD">
   <span class="pg-average">PER GAME AVERAGE</span>
 </div>
-<div id="stat-2nd-container">
+<div id="stat-2nd-container" enter-from-right ng-if="stepD">
   <div class="stat-2nd">
     <span class="stat-2nd-value">6.5</span>
     <span class="stat-2nd-desc">assists</span>

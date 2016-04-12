@@ -1064,7 +1064,9 @@ button {
   width: 605px;
   height: 407px;
   top: 500px;
-  left: 1315px;
+  /*left: 1315px;*/
+  left: 1930px;
+  opacity: 0;
 }
 
 .stat-2nd {
@@ -1110,10 +1112,12 @@ button {
   width: 605px;
   height: 30px;
   top: 460px;
-  left: 1315px;
+  /*left: 1315px;*/
+  left: 1930px;
   color: #fcb03c;
   font-size: 40px;
   font-weight: 100;
+  opacity: 0;
 }
 
 #player-header-2 {
