@@ -229,15 +229,17 @@ angular.module('player.social')
   };
 }])
 .directive('expires', ['$timeout', function ($timeout) {
-  restrict: 'A',
-  link: function (scope, elem, attrs) {
-    $timeout(function(){
-      $(elem).animate({ opacity: 0 }, 1000);
-      var trueScope = $('#curry-bg-2').scope();
-      trueScope.$apply(function(){
-        trueScope.showExpandedTweetT = false;
-      });
-    }, parseInt(attrs.expires));
-  }
+  return {
+    restrict: 'A',
+    link: function (scope, elem, attrs) {
+      $timeout(function(){
+        $(elem).animate({ opacity: 0 }, 1000);
+        var trueScope = $('#curry-bg-2').scope();
+        trueScope.$apply(function(){
+          trueScope.showExpandedTweetT = false;
+        });
+      }, parseInt(attrs.expires));
+    }
+  };
 }]);
 
