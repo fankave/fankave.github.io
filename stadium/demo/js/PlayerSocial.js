@@ -233,13 +233,13 @@ angular.module('player.social')
     restrict: 'A',
     link: function (scope, elem, attrs) {
       $timeout(function(){
-        $(elem).animate({ opacity: 0 }, 1000);
+        $(elem).animate({ opacity: 0 }, 2000);
         var trueScope = $('#curry-bg-2').scope();
         $timeout(function(){
           trueScope.$apply(function(){
             trueScope.showExpandedTweetT = false;
           });
-        }, 2500);
+        }, 3500);
       }, parseInt(attrs.expires));
     }
   };
