@@ -15,7 +15,7 @@ body {
   width: 1920px;
   margin: 0 auto;
   position: relative;
-  font-family: "Questrial","Roboto","SFUIDisplay","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: "Roboto","SFUIDisplay","Helvetica Neue",Helvetica,Arial,sans-serif;
   overflow: hidden;
 }
 
@@ -39,9 +39,7 @@ body {
 /* * * Fonts * * */
 @font-face {
   font-family: BuiltTitlingReg;
-  /*src: url("../assets/fonts/EUROSTI3.ttf") format('truetype');*/
   src: url("../assets/fonts/builtTitling.ttf") format('truetype');
-  /*src: url("../assets/fonts/BureauAgencyBold.t1");*/
 }
 
 
@@ -53,9 +51,12 @@ body {
   font-family: BuiltTitlingReg;
 }
 
+#stats-container {
+  font-family: 'Coda';
+}
+
 #curry-bg-2 {
   position: absolute;
-  /*left: 25px;*/
   left: -700px;
   bottom: 0;
   z-index: 4;
@@ -116,7 +117,6 @@ body {
   border-radius: 50%;
   left: 742px;
   top: 400px;
-  /*background-image: url('../assets/images/curry.jpg');*/
   background-position: 50%;
   background-repeat: no-repeat;
   border-radius: 50%;
@@ -791,22 +791,18 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  /*border: 1px dashed #aaa;*/
   padding: 36px;
   opacity: 0;
 }
 
 #tweet-bubble {
   position: absolute;
-  /*width: 1920px;*/
-  /*height: 1080px;*/
   top: 0px;
   left: 0px;
   z-index: 30;
   border-radius: 50%;
   background-color: #314566;
   overflow: hidden;
-  /*transform: translate(-50%,-50%); */
 }
 
 .tweet-ring {
@@ -814,15 +810,12 @@ button {
   border-radius: 50%;
   top: 50%;
   left: 50%;
-  /*transform: translate(-50%,-50%);*/
 }
 
 .tweet-ring5 {
   width: 1870px;
   height: 1870px;
   background-color: rgb(249,157,35);
-  /*background: linear-gradient(#ca7629 0%, #ca7629 30%, #fff 70%);*/
-  /*background: linear-gradient(#f99d23 0%, #f99d23 30%, #fff 70%);*/
   background: linear-gradient(rgb(249,157,35) 0%, rgb(249,157,35) 30%, #fff 70%);
   transform: translate(-50%,-50%);
 }
@@ -830,8 +823,6 @@ button {
 .tweet-ring4 {
   width: 1836px;
   height: 1836px;
-  /*background-color: #ca7629;*/
-  /*background-color: rgb(249,158,36);*/
   background-color: rgb(249,157,35);
   transform: translate(-50%,-50%);
 }
@@ -839,7 +830,6 @@ button {
 .tweet-ring3 {
   width: 1508px;
   height: 1508px;
-  /*background-color: rgb(249,158,36);*/
   background-color: rgb(249,157,35);
   transform: translate(-50%,-50%);
 }
@@ -1000,7 +990,7 @@ button {
   position: relative;
   width: 50px;
   height: 200px;
-  top: 150px;
+  top: 440px;
   left: 55px;
   background-color: rgba(255,255,255,0.8);
   background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0));
@@ -1014,17 +1004,17 @@ button {
 }
 
 #player1 {
-  top: -12px;
+  top: 350px;
   left: 32px;
 }
 
 #player2 {
-  top: -10px;
+  top: 500px;
   left: 5px;
 }
 
 #player3 {
-  top: -20px;
+  top: 270px;
   left: 26px;
 }
 
@@ -1032,7 +1022,7 @@ button {
   position: relative;
   width: 55px;
   height: 320px;
-  top: 0;
+  top: 565px;
   left: 35px;
   background-color: rgba(255,255,255,0.8);
   background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0));
@@ -1042,7 +1032,7 @@ button {
   position: relative;
   width: 40px;
   height: 400px;
-  top: 70px;
+  top: 370px;
   left: 60px;
   background-color: rgba(255,255,255,0.8);
   background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0));
@@ -1057,36 +1047,63 @@ button {
 }
 
 .label1 {
-  top: 60px;
+  top: 450px;
 }
 
 .label2 {
-  top: -10%;
+  top: 520px;
 }
 
 .label3 {
-  /*top: -200px;*/
-  top: -180px;
+  top: 210px;
+}
+
+#bar1assets {
+  position: absolute;
+  width: 160px;
+  top: 875px;
+  left: 600px;
+  z-index: 1;
+  visibility: hidden;
+}
+
+#bar2assets {
+  position: absolute;
+  width: 160px;
+  top: 740px;
+  left: 795px;
+  z-index: 1;
+  visibility: hidden;
+}
+
+#bar3assets {
+  position: absolute;
+  width: 160px;
+  top: 940px;
+  left: 990px;
+  z-index: 1;
+  visibility: hidden;
 }
 
 .bar-value {
   display: block;
-  font-family: "Roboto","SFUIDisplay","Helvetica Neue",Helvetica,Arial,sans-serif;
-  font-weight: 900;
-  font-size: 82px;
-  line-height: 1.1;
+  font-family: 'Khand';
+  font-weight: 400;
+  font-size: 120px;
+  line-height: 0.9;
 }
 
 .bar-desc {
-  font-weight: 300;
-  font-size: 18px;
+  font-family: 'Khand';
+  font-weight: 400;
+  font-size: 30px;
 }
 
 #stat-2nd-container {
   position: absolute;
   width: 605px;
   height: 407px;
-  top: 500px;
+  top: 540px;
   /*left: 1315px;*/
   left: 1930px;
   opacity: 0;
@@ -1113,9 +1130,9 @@ button {
   position: relative;
   display: inline-block;
   color: #fcb03c;
-  font-size: 70px;
+  font-size: 80px;
   font-weight: 100;
-  line-height: 120px;
+  line-height: 137px;
 }
 
 .stat-2nd-desc {
@@ -1123,9 +1140,9 @@ button {
   display: inline-block;
   float: right;
   color: #fff;
-  font-size: 40px;
+  font-size: 48px;
   font-weight: 100;
-  line-height: 120px;
+  line-height: 136px;
   top: 10px;
   right: 100px;
 }
@@ -1134,12 +1151,12 @@ button {
   position: absolute;
   width: 605px;
   height: 30px;
-  top: 460px;
+  top: 470px;
   /*left: 1315px;*/
   left: 1930px;
   color: #fcb03c;
-  font-size: 40px;
-  font-weight: 100;
+  font-size: 54px;
+  font-weight: 400;
   opacity: 0;
 }
 
@@ -1148,23 +1165,24 @@ button {
   width: 710px;
   height: 190px;
   top: 155px;
-  left: 1000px;
-  line-height: 0.9;
+  left: 1030px;
+  line-height: 0.75;
+  font-family: 'Play';
 }
 
 .player-first-name {
   position: relative;
   display: block;
   color: rgb(255,153,51);
-  font-size: 90px;
-  font-weight: 100;
+  font-size: 110px;
+  font-weight: 400;
 }
 
 .player-last-name {
   position: relative;
   color: #fff;
-  font-size: 140px;
-  font-weight: 200;
+  font-size: 190px;
+  font-weight: 400;
 }
 
 /*.player-first-name {
@@ -1186,14 +1204,14 @@ button {
   position: absolute;
   width: 720px;
   height: 72px;
-  top: 58px;
+  top: 48px;
   left: 930px;
 }
 
 .player-title-2 {
   position: relative;
   color: #808282;
-  font-size: 72px;
+  font-size: 92px;
   line-height: 72px;
 }
 
@@ -1216,6 +1234,14 @@ button {
   position: absolute;
   top: 26px;
   left: 1660px;
+}
+
+#sponsor-text {
+  position: absolute;
+  color: #808282;
+  font-size: 22px;
+  right: 318px;
+  top: 120px;
 }
 
 

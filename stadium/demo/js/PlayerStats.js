@@ -34,28 +34,24 @@ angular.module('player.stats')
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
-      var $player = elem.find('img');
-      var $trail = elem.find('.trail');
       $(elem)
       .css({ visibility: 'visible' })
       .animate({ height: attrs.barUp }, {
-        duration: 1500,
+        duration: 800,
         easing: 'swing',
-        complete: function () {
-          $player.animate({ top: attrs.playerEnd }, {
-            duration: 200,
-            complete: function () {
-              if (attrs.triggerNext) {
-                var trueScope = $('#curry-bg-1').scope();
-                scope.$apply(function(){
-                  trueScope[attrs.triggerNext] = true;
-                });
-              }
-            }
+        start: function () {
+          $('#'+attrs.assetId)
+          .css({ visibility: 'visible' })
+          .animate({ top: attrs.playerEnd }, {
+            duration: 900,
+            easing: 'swing'
           });
-          if (!!attrs.trailEnd) {
-            $trail.animate({ top: attrs.trailEnd }, 200);
-          }
+        },
+        complete: function () {
+          var trueScope = $('#curry-bg-1').scope();
+          scope.$apply(function(){
+            trueScope[attrs.triggerNext] = true;
+          });
         }
       });
     }
@@ -66,7 +62,7 @@ angular.module('player.stats')
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
-      $(elem).countUp(1500);
+      $(elem).countUp(parseInt(attrs.countUp));
     }
   }
 });

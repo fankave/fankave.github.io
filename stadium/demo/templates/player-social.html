@@ -6,10 +6,10 @@
     <span class="player-title">SOCIAL STATISTICS</span>
   </div>
 
-  <div id="ring-filter" rotate-fade-in="1080" fade-dur="6000"></div>
+  <div id="ring-filter" rotate-fade-in="1080" fade-dur="8000" ng-if="startRing"></div>
   <div id="ring-center"></div>
-  <div id="ring1" rotate-fade-in="720" fade-dur="6000"></div>
-  <div id="ring2" rotate-fade-in="720" fade-dur="6000"></div>
+  <div id="ring1" rotate-fade-in="720" fade-dur="6000" ng-if="startRing"></div>
+  <div id="ring2" rotate-fade-in="720" fade-dur="6000" ng-if="startRing"></div>
 
   <div id="line1" class="line"></div>
   <div id="line2" class="line"></div>
@@ -48,7 +48,7 @@
   <div id="circle3b"></div>
   <!-- End Bubble Stats -->
 
-  <div id="fan-sentiment">
+  <div id="fan-sentiment" ng-if="startRing">
     <span class="fan-desc">FAN SENTIMENT</span>
     <img ng-src="assets/images/thumbsUp.png" id="thumbsUp" />
     <img ng-src="assets/images/thumbsDown.png" id="thumbsDown" />
@@ -58,7 +58,7 @@
     </div>
   </div>
 
-  <div id="pace-year">
+  <div id="pace-year" ng-if="startRing">
     <span class="pace-desc">TOTAL MENTIONS&nbsp;</span>
     <span class="pace-value">5,128,234</span>
   </div>

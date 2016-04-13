@@ -76,37 +76,6 @@ function ($http, ContentService) {
     });
   };
 
-  function moveToCenter (id, size, dur) {
-    var elem = '#circle' + id;
-    var dur = dur || 1000;
-    $(elem)
-    .css({ 'z-index': 10 })
-    .animate({
-      top: (540 - size / 2) + 'px',
-      left: (960 - size / 2) + 'px'
-    }, dur, 'swing', function(){expand(id)});
-  }
-
-  function expand (id, dur) {
-    var elem = '#circle' + id;
-    var dur = dur || 2000;
-    $(elem)
-    .css({ 'z-index': 10 })
-    .animate({
-      width: '1920px',
-      height: '1080px',
-      'border-radius': '0%',
-      top: '0px',
-      left: '0px'
-    }, dur, 'swing', function(){animComplete(id)});
-  }
-
-  function animComplete (circle) {
-    console.log('Animation Complete For Circle: ' + circle);
-    var elem = '#circle' + circle;
-    setTimeout(function(){$(elem).removeAttr('style')}, 1500);
-  }
-
 }]);
 
 angular.module('player.social')
@@ -115,7 +84,10 @@ angular.module('player.social')
     restrict: 'A',
     link: function (scope, elem, attrs) {
       elem.bind('load', function (e) {
-        $(elem).animate({ left: '25px' }, 2000, function (){
+        $(elem).animate({ left: '25px' }, 1000, function (){
+          scope.$apply(function(){
+            scope.startRing = true;
+          });
           $('#circle1a')
           .animateRotate(0, 720, 2000)
           .animate({ opacity: '1' }, {
@@ -244,4 +216,3 @@ angular.module('player.social')
     }
   };
 }]);
-
