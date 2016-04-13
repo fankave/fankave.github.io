@@ -62,9 +62,10 @@
     <span class="pace-desc">TOTAL MENTIONS&nbsp;</span>
     <span class="pace-value">5,128,234</span>
   </div>
+  
 </div>
 
-<div id="tweet-bubble" ng-if="showExpandedTweetT" show-tweet-content="text" s-size="410px" s-top="400px" s-left="742px" expires="13000">
+<div id="tweet-bubble" ng-if="psocial.showExpandedTweet" show-tweet-content="text" s-size="410px" s-top="400px" s-left="742px" expires="13000">
   <div class="tweet-ring tweet-ring5">
     <div class="tweet-ring tweet-ring4">
       <div class="tweet-ring tweet-ring3">
@@ -72,7 +73,7 @@
         <div class="tweet-ring tweet-ring2" ng-class="{ 'slow-rotate': textLoaded }">
         </div>
         <div class="tweet-ring tweet-ring1">
-          <expanded-tweet this-tweet="psocial.textContent.embed" ng-if="textLoaded"></expanded-tweet>
+          <expanded-tweet this-tweet="psocial.currentContent" ng-if="textLoaded"></expanded-tweet>
         </div>
       </div>
       </div>
@@ -80,15 +81,15 @@
   </div>
 </div>
 
-<div id="tweet-bubble" ng-if="showExpandedTweetI" show-tweet-content="image" s-size="290px" s-top="285px" s-left="1235px">
+<div id="tweet-bubble" ng-if="psocial.showExpandedImage" show-tweet-content="text" s-size="290px" s-top="285px" s-left="1235px" expires="13000">
   <div class="tweet-ring tweet-ring5">
     <div class="tweet-ring tweet-ring4">
       <div class="tweet-ring tweet-ring3">
       <div class="tweet-ring tweet-ring3filter">
-        <div class="tweet-ring tweet-ring2">
-          <div class="tweet-ring tweet-ring1">
-            <expanded-tweet this-tweet="psocial.imageContent" ng-if="imageLoaded"></expanded-tweet>
-          </div>
+        <div class="tweet-ring tweet-ring2" ng-class="{ 'slow-rotate': textLoaded }">
+        </div>
+        <div class="tweet-ring tweet-ring1">
+          <expanded-tweet this-tweet="psocial.currentContent" ng-if="textLoaded"></expanded-tweet>
         </div>
       </div>
       </div>
@@ -96,15 +97,15 @@
   </div>
 </div>
 
-<div id="tweet-bubble" ng-if="showExpandedTweetV" show-tweet-content="video" s-size="230px" s-top="400px" s-left="1630px">
+<div id="tweet-bubble" ng-if="psocial.showExpandedVideo" show-tweet-content="text" s-size="230px" s-top="400px" s-left="1630px" expires="13000">
   <div class="tweet-ring tweet-ring5">
     <div class="tweet-ring tweet-ring4">
       <div class="tweet-ring tweet-ring3">
       <div class="tweet-ring tweet-ring3filter">
-        <div class="tweet-ring tweet-ring2">
-          <div class="tweet-ring tweet-ring1">
-            <expanded-tweet this-tweet="psocial.videoContent" ng-if="videoLoaded"></expanded-tweet>
-          </div>
+        <div class="tweet-ring tweet-ring2" ng-class="{ 'slow-rotate': textLoaded }">
+        </div>
+        <div class="tweet-ring tweet-ring1">
+          <expanded-tweet this-tweet="psocial.currentContent" ng-if="textLoaded"></expanded-tweet>
         </div>
       </div>
       </div>

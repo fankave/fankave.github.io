@@ -1,29 +1,48 @@
 angular.module('player.social', [])
 .controller('ctrl.player-social', [
   '$http',
+  '$timeout',
   'ContentService',
-function ($http, ContentService) {
+function ($http, $timeout, ContentService) {
 
   var _this = this;
   this.showExpandedTweet = false;
 
-  var _socialContent;
   this.textContent;
   this.imageContent;
   this.videoContent;
+  this.currentContent;
   // if (!ContentService.getSocialContent()) {
     ContentService.initContent()
     .then(function (response) {
       ContentService.setSocialContent(response.data);
-      _socialContent = response.data;
       _this.textContent = response.data[5];
       _this.imageContent = response.data[2];
       _this.videoContent = response.data[0];
+      _this.currentContent = _this.textContent.embed;
       console.log("Content in Controller: ", _socialContent);
     });
   // } else {
   //   _socialContent = ContentService.getSocialContent();
   // }
+  
+
+  this.cycleCount = 0;
+  this.scheduleNextContent = function (delay) {
+    _this.cycleCount++;
+    if (_this.cycleCount === 1){
+      _this.currentContent = _this.imageContent.embed;
+    } else if (_this.cycleCount === 2){
+      _this.currentContent = _this.videoContent.embed;
+    }
+    $timeout(function(){
+      if (_this.cycleCount === 1){
+        _this.showExpandedImage = true;
+      } else if (_this.cycleCount === 2){
+        _this.showExpandedVideo = true;
+      }
+    }, delay);
+  };
 
   $.fn.animateRotate = function (initial, angle, duration, easing, complete, translation) {
     translation = translation || '';
@@ -118,10 +137,10 @@ angular.module('player.social')
                       $('#circle3').animate({ opacity: '1' }, 2000);
                     },
                     complete: function () {
-                      console.log("Circles A Complete");
+                      var trueScope = $('#curry-bg-2').scope();
                       setTimeout(function(){
-                        scope.$apply(function(){
-                          scope.showExpandedTweetT = true;
+                        trueScope.$apply(function(){
+                          trueScope.psocial.showExpandedTweet = true;
                         });
                       }, 7000);
                     }
@@ -142,7 +161,6 @@ angular.module('player.social')
               // .animateRotate(330, 1050, 2000)
               .rotateReverse(330, 390, 2000)
               .animate({ opacity: '1' }, 1000, function() {
-                console.log("Circles B Complete");
               });
             });
           });
@@ -165,14 +183,13 @@ angular.module('player.social')
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
-      console.log('Attr Added ', attrs.rotateFadeIn, attrs.fadeDur);
       $(elem)
       .animateRotate(0, parseInt(attrs.rotateFadeIn), parseInt(attrs.fadeDur))
       .animate({ opacity: '1' }, 2000);
     }
   };
 }])
-.directive('showTweetContent', ['$timeout', function ($timeout) {
+.directive('showTweetContent', ['$compile', function ($compile) {
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
@@ -209,8 +226,11 @@ angular.module('player.social')
         var trueScope = $('#curry-bg-2').scope();
         $timeout(function(){
           trueScope.$apply(function(){
-            trueScope.showExpandedTweetT = false;
+            trueScope.psocial.showExpandedTweet = false;
           });
+          if (trueScope.psocial.cycleCount < 1){
+            trueScope.psocial.scheduleNextContent(5000);
+          }
         }, 3500);
       }, parseInt(attrs.expires));
     }
