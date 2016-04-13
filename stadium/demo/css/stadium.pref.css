@@ -68,6 +68,7 @@ body {
   height: 796px;
   left: 108px;
   top: 200px;
+  background: -webkit-linear-gradient(right, rgba(249,158,36,0.2), rgba(249,158,36,1));
   background: linear-gradient(to left, rgba(249,158,36,0.2), rgba(249,158,36,1));
   border-radius: 50%;
   z-index: 3;
@@ -113,6 +114,7 @@ body {
   width: 410px;
   height: 410px;
   background-color: rgb(249,158,36);
+  background: -webkit-radial-gradient(circle, rgb(249,158,36) 60%, rgb(255,255,255) 100%);
   background: radial-gradient(circle, rgb(249,158,36) 60%, rgb(255,255,255) 100%);
   border-radius: 50%;
   left: 742px;
@@ -155,7 +157,8 @@ body {
   left: 702px;
   top: 360px;
   clip: rect(0px, 164px, 490px, 0px);
-  transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
   z-index: 4;
 }
 
@@ -172,21 +175,6 @@ body {
 #circle3a,
 #circle3b {
   opacity: 0;
-}
-
-@-moz-keyframes pulse {
-  0% {
-    -moz-transform: scale(1,1);
-  }
-  25% {
-    -moz-transform: scale(1.1,1.1);
-  }
-  50% {
-    -moz-transform: scale(1,1);
-  }
-  100% {
-    -moz-transform: scale(1,1);
-  }
 }
 
 @-webkit-keyframes pulse {
@@ -206,22 +194,25 @@ body {
 
 @keyframes pulse {
   0% {
-    transform: scale(1,1);
+    -webkit-transform: scale(1,1);
+            transform: scale(1,1);
   }
   25% {
-    transform: scale(1.1,1.1);
+    -webkit-transform: scale(1.1,1.1);
+            transform: scale(1.1,1.1);
   }
   50% {
-    transform: scale(1,1);
+    -webkit-transform: scale(1,1);
+            transform: scale(1,1);
   }
   100% {
-    transform: scale(1,1);
+    -webkit-transform: scale(1,1);
+            transform: scale(1,1);
   }
 }
 
 .pulse {
   -webkit-animation: pulse 1s ease-in-out 4;
-  -moz-animation: pulse 1s ease-in-out 4;
   animation: pulse 1s ease-in-out 4;
 }
 
@@ -234,10 +225,7 @@ body {
   overflow:hidden;
   top: 360px;
   left:947px;
-  z-index: 4; 
-  -moz-transform-origin:left center;
-  -ms-transform-origin:left center;
-  -o-transform-origin:left center;
+  z-index: 4;
   -webkit-transform-origin:left center;
   transform-origin:left center;
 }
@@ -249,9 +237,6 @@ body {
   height:490px;
   left:-245px;
   border-radius:245px 0 0 245px;
-  -moz-transform-origin:right center;
-  -ms-transform-origin:right center;
-  -o-transform-origin:right center;
   -webkit-transform-origin:right center;
   transform-origin:right center;
   
@@ -262,9 +247,6 @@ body {
   height:490px;
   top: 360px;
   left:702px;
-  -moz-transform-origin:center center;
-  -ms-transform-origin:center center;
-  -o-transform-origin:center center;
   -webkit-transform-origin:center center;
   transform-origin:center center;
 }
@@ -280,9 +262,6 @@ body {
   height:490px;
   left:245px;
   border-radius:0 245px 245px 0;
-  -moz-transform-origin:left center;
-  -ms-transform-origin:left center;
-  -o-transform-origin:left center;
   -webkit-transform-origin:left center;
   transform-origin:left center;
 }
@@ -293,64 +272,47 @@ body {
 }
 
 .pie[data-start="-25"] {
-  -moz-transform: rotate(-25deg);
-  -ms-transform: rotate(-25deg);
   -webkit-transform: rotate(-25deg);
-  -o-transform: rotate(-25deg);
   transform:rotate(-25deg);
 }
 
 .pie[data-start="-25"].unique {
   -webkit-animation: spinB 1s linear 1;
-  -moz-animation: spinB 1s linear 1;
   animation: spinB 1s linear 1;
 }
 
 .pie[data-start="-25"].uniqueTwo {
   -webkit-animation: spinD 2s linear 1;
-  -moz-animation: spinD 2s linear 1;
   animation: spinD 2s linear 1;
 }
 
-.pie[data-value="232"]:BEFORE {
-  -moz-transform: rotate(232deg); /* Firefox */
-  -ms-transform: rotate(232deg); /* IE */
-  -webkit-transform: rotate(232deg); /* Safari and Chrome */
-  -o-transform: rotate(232deg); /* Opera */
+.pie[data-value="232"]:BEFORE { /* Firefox */ /* IE */
+  -webkit-transform: rotate(232deg); /* Safari and Chrome */ /* Opera */
   transform:rotate(232deg);
 }
 
 .pie[data-start="27"] {
-  -moz-transform: rotate(27deg);
-  -ms-transform: rotate(27deg);
   -webkit-transform: rotate(27deg);
-  -o-transform: rotate(27deg);
   transform:rotate(27deg);
 }
 
 .pie[data-start="27"].special {
   -webkit-animation: spinC 2s linear 1;
-  -moz-animation: spinC 2s linear 1;
   animation: spinC 2s linear 1;
 }
 
-.pie[data-value="1"]:BEFORE {
-  -moz-transform: rotate(0deg); /* Firefox */
-  -ms-transform: rotate(0deg); /* IE */
-  -webkit-transform: rotate(0deg); /* Safari and Chrome */
-  -o-transform: rotate(0deg); /* Opera */
+.pie[data-value="1"]:BEFORE { /* Firefox */ /* IE */
+  -webkit-transform: rotate(0deg); /* Safari and Chrome */ /* Opera */
   transform:rotate(0deg);
 }
 
 .pie[data-value="1"].special:BEFORE {
   -webkit-animation: spin 2s linear 1;
-  -moz-animation: spin 2s linear 1;
   animation: spin 2s linear 1;
 }
 
 .pie[data-value="1"].specialTwo:BEFORE {
   -webkit-animation: spinD 1s linear 1;
-  -moz-animation: spinD 1s linear 1;
   animation: spinD 1s linear 1;
 }
 
@@ -368,10 +330,7 @@ body {
   height:490px;
   overflow:hidden;
   left:367.5px;
-  z-index: 12; 
-  -moz-transform-origin:left center;
-  -ms-transform-origin:left center;
-  -o-transform-origin:left center;
+  z-index: 12;
   -webkit-transform-origin:left center;
   transform-origin:left center;
 }
@@ -383,9 +342,6 @@ body {
   height:490px;
   left:-245px;
   border-radius:245px 0 0 245px;
-  -moz-transform-origin:right center;
-  -ms-transform-origin:right center;
-  -o-transform-origin:right center;
   -webkit-transform-origin:right center;
   transform-origin:right center;
   
@@ -396,9 +352,6 @@ body {
   height:490px;
   top: 360px;
   left:702px;
-  -moz-transform-origin:center center;
-  -ms-transform-origin:center center;
-  -o-transform-origin:center center;
   -webkit-transform-origin:center center;
   transform-origin:center center;
 }
@@ -422,18 +375,12 @@ body {
 }
 
 .ring-filter-screen[data-start="-25"] {
-  -moz-transform: rotate(-25deg);
-  -ms-transform: rotate(-25deg);
   -webkit-transform: rotate(-25deg);
-  -o-transform: rotate(-25deg);
   transform:rotate(-25deg);
 }
 
-.ring-filter-screen[data-value="232"]:BEFORE {
-  -moz-transform: rotate(232deg); /* Firefox */
-  -ms-transform: rotate(232deg); /* IE */
-  -webkit-transform: rotate(232deg); /* Safari and Chrome */
-  -o-transform: rotate(232deg); /* Opera */
+.ring-filter-screen[data-value="232"]:BEFORE { /* Firefox */ /* IE */
+  -webkit-transform: rotate(232deg); /* Safari and Chrome */ /* Opera */
   transform:rotate(232deg);
 }
 /* * * End Animation Filter * * */
@@ -459,7 +406,8 @@ body {
   left: 1200px;
   top: 250px;
   clip: rect(0px, 220px, 360px, 0px);
-  transform: rotate(60deg);
+  -webkit-transform: rotate(60deg);
+          transform: rotate(60deg);
 }
 
 #circle2b {
@@ -471,7 +419,8 @@ body {
   left: 1200px;
   top: 250px;
   clip: rect(0px, 360px, 360px, 220px);
-  transform: rotate(60deg);
+  -webkit-transform: rotate(60deg);
+          transform: rotate(60deg);
 }
 
 #circle3,
@@ -487,6 +436,7 @@ body {
 
 #circle2,
 #circle3 {
+  background: -webkit-radial-gradient(circle, rgb(249,158,36) 60%, rgb(255,255,255) 100%);
   background: radial-gradient(circle, rgb(249,158,36) 60%, rgb(255,255,255) 100%);
 }
 
@@ -514,7 +464,8 @@ body {
   left: 1600px;
   top: 370px;
   clip: rect(0px, 145px, 290px, 0px);
-  transform: rotate(330deg);
+  -webkit-transform: rotate(330deg);
+          transform: rotate(330deg);
 }
 
 #circle3b {
@@ -526,7 +477,8 @@ body {
   left: 1600px;
   top: 370px;
   clip: rect(0px, 290px, 290px, 145px);
-  transform: rotate(330deg);
+  -webkit-transform: rotate(330deg);
+          transform: rotate(330deg);
 }
 
 #controls {
@@ -684,6 +636,7 @@ button {
   width: 0px;
   height: 60px;
   background-color: #e4e4e4;
+  background: -webkit-linear-gradient(rgba(255,255,255,1) 0%, rgba(253,253,253,1) 35%, rgba(165,165,165,1) 100%);
   background: linear-gradient(rgba(255,255,255,1) 0%, rgba(253,253,253,1) 35%, rgba(165,165,165,1) 100%);
   left: 0;
 }
@@ -694,6 +647,7 @@ button {
   width: 450px;
   height: 60px;
   background-color: #e4e4e4;
+  background: -webkit-linear-gradient(rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0) 100%);
   background: linear-gradient(rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0) 100%);
   left: 0px;
 }
@@ -790,7 +744,8 @@ button {
   height: 745px;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
   padding: 36px;
   opacity: 0;
 }
@@ -816,35 +771,46 @@ button {
   width: 1870px;
   height: 1870px;
   background-color: rgb(249,157,35);
+  background: -webkit-linear-gradient(rgb(249,157,35) 0%, rgb(249,157,35) 30%, #fff 70%);
   background: linear-gradient(rgb(249,157,35) 0%, rgb(249,157,35) 30%, #fff 70%);
-  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
 }
 
 .tweet-ring4 {
   width: 1836px;
   height: 1836px;
   background-color: rgb(249,157,35);
-  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
 }
 
 .tweet-ring3 {
   width: 1508px;
   height: 1508px;
   background-color: rgb(249,157,35);
-  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
 }
 
 .tweet-ring3filter {
   width: 1508px;
   height: 1508px;
   background-color: #fff;
+  background: -webkit-linear-gradient(rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.2) 100%);
   background: linear-gradient(rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.2) 100%);
-  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
+
+@-webkit-keyframes slowRotate {
+  from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
 }
 
 @keyframes slowRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
 }
 
 .tweet-ring2 {
@@ -852,6 +818,7 @@ button {
   width: 1368px;
   height: 1368px;
   background-color: #fff;
+  background: -webkit-linear-gradient(rgba(255,255,255,1) 0%, rgba(255,255,255,1) 65%, rgba(255,255,255,0.6) 75%, rgba(255,255,255,0.2) 100%);
   background: linear-gradient(rgba(255,255,255,1) 0%, rgba(255,255,255,1) 65%, rgba(255,255,255,0.6) 75%, rgba(255,255,255,0.2) 100%);
   top: 70px;
   left: 70px;
@@ -859,7 +826,6 @@ button {
 
 .slow-rotate {
   -webkit-animation: slowRotate 10s linear infinite;
-  -moz-animation: slowRotate 10s linear infinite;
   animation: slowRotate 10s linear infinite;
 }
 
@@ -867,7 +833,8 @@ button {
   width: 1156px;
   height: 1156px;
   background-color: #fff;
-  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
 }
 
 .tweet-profile {
@@ -958,6 +925,7 @@ button {
 
 #bar1 {
   background-color: rgb(0,102,204);
+  background: -webkit-linear-gradient(left, rgba(0,102,204,0.8) 0%, rgba(0,102,204,0.8) 5%,  rgba(255,255,255,0.5) 15%, rgba(0,102,204,0.8) 25%, rgba(0,102,204,0.8) 100%);
   background: linear-gradient(to right, rgba(0,102,204,0.8) 0%, rgba(0,102,204,0.8) 5%,  rgba(255,255,255,0.5) 15%, rgba(0,102,204,0.8) 25%, rgba(0,102,204,0.8) 100%);
   height: 0px;
   left: 600px;
@@ -968,6 +936,7 @@ button {
 
 #bar2 {
   background-color: rgb(255,153,51);
+  background: -webkit-linear-gradient(left, rgba(255,153,51,1) 0%, rgba(204,102,0,1) 5%, rgba(204,102,0,1) 10%, rgba(255,153,102,1) 15%, rgba(204,102,0,1) 20%, rgba(255,153,51,1) 100%);
   background: linear-gradient(to right, rgba(255,153,51,1) 0%, rgba(204,102,0,1) 5%, rgba(204,102,0,1) 10%, rgba(255,153,102,1) 15%, rgba(204,102,0,1) 20%, rgba(255,153,51,1) 100%);
   height: 0px;
   left: 795px;
@@ -978,6 +947,7 @@ button {
 
 #bar3 {
   background-color: rgba(0,102,204,1);
+  background: -webkit-linear-gradient(left, rgba(0,102,204,0.7) 0%, rgba(0,102,204,0.7) 5%,  rgba(255,255,255,0.5) 15%, rgba(0,102,204,0.7) 25%, rgba(0,102,204,0.7) 100%);
   background: linear-gradient(to right, rgba(0,102,204,0.7) 0%, rgba(0,102,204,0.7) 5%,  rgba(255,255,255,0.5) 15%, rgba(0,102,204,0.7) 25%, rgba(0,102,204,0.7) 100%);
   height: 0px;
   left: 990px;
@@ -993,6 +963,7 @@ button {
   top: 440px;
   left: 55px;
   background-color: rgba(255,255,255,0.8);
+  background: -webkit-linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0));
   background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0));
 }
 
@@ -1025,6 +996,7 @@ button {
   top: 565px;
   left: 35px;
   background-color: rgba(255,255,255,0.8);
+  background: -webkit-linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0));
   background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0));
 }
 
@@ -1035,6 +1007,7 @@ button {
   top: 370px;
   left: 60px;
   background-color: rgba(255,255,255,0.8);
+  background: -webkit-linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0));
   background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0));
 }
 
