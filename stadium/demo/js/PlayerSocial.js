@@ -182,7 +182,8 @@ angular.module('player.social')
       });
     }
   };
-}])
+}]);
+angular.module('player.social')
 .directive('fadeInShift', ['$sce', function ($sce) {
   return {
     restrict: 'A',
@@ -192,7 +193,8 @@ angular.module('player.social')
       }
     }
   };
-}])
+}]);
+angular.module('player.social')
 .directive('rotateFadeIn', ['$timeout', function ($timeout) {
   return {
     restrict: 'A',
@@ -202,7 +204,17 @@ angular.module('player.social')
       .animate({ opacity: '1' }, 2000);
     }
   };
-}])
+}]);
+angular.module('player.social')
+.directive('rotate', ['$timeout', function ($timeout) {
+  return {
+    restrict: 'A',
+    link: function (scope, elem, attrs) {
+      $(elem).animateRotate(0, 720, 20000, 'linear');
+    }
+  };
+}]);
+angular.module('player.social')
 .directive('showTweetContent', ['$timeout', function ($timeout) {
   return {
     restrict: 'A',
@@ -226,16 +238,12 @@ angular.module('player.social')
           scope.$apply(function(){
             scope[loadString] = true;
           });
-          $timeout(function(){
-            scope.$apply(function(){
-              scope.triggerRotate = true;
-            });
-          }, 1500);
         }
       });
     }
   };
-}])
+}]);
+angular.module('player.social')
 .directive('expires', ['$timeout', function ($timeout) {
   return {
     restrict: 'A',
