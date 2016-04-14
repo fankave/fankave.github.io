@@ -918,6 +918,14 @@ button {
           transform: translate(-50%,0%);
 }
 
+#tweetVideo {
+  position: relative;
+  width: 800px;
+  top: 50%;
+  -webkit-transform: translate(0%,-50%);
+          transform: translate(0%,-50%);
+}
+
 #tweetImage {
   width: 800px;
   margin-top: 20px;
@@ -939,8 +947,8 @@ button {
 .image-tweet-text {
   word-wrap: break-word;
   color: #1d1d1d;
-  font-weight: 300;
-  font-size: 38px;
+  font-weight: 400;
+  font-size: 40px;
 }
 
 #videoContainer {

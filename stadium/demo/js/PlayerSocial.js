@@ -44,6 +44,14 @@ function ($http, $timeout, ContentService) {
     }, delay);
   };
 
+  this.hidePrevContent = function () {
+    if (_this.cycleCount === 0) {
+      _this.showExpandedTweet = false;
+    } else if (_this.cycleCount === 1) {
+      _this.showExpandedImage = false;
+    }
+  };
+
   $.fn.animateRotate = function (initial, angle, duration, easing, complete, translation) {
     translation = translation || '';
     return this.each(function() {
@@ -189,12 +197,12 @@ angular.module('player.social')
     }
   };
 }])
-.directive('showTweetContent', ['$compile', function ($compile) {
+.directive('showTweetContent', ['$timeout', function ($timeout) {
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
       var loadString = attrs.showTweetContent + 'Loaded';
-      $('#tweet-bubble').css({
+      $(elem).css({
         width: attrs.sSize,
         height: attrs.sSize,
         top: attrs.sTop,
@@ -212,6 +220,11 @@ angular.module('player.social')
           scope.$apply(function(){
             scope[loadString] = true;
           });
+          $timeout(function(){
+            scope.$apply(function(){
+              scope.triggerRotate = true;
+            });
+          }, 1000);
         }
       });
     }
@@ -226,10 +239,10 @@ angular.module('player.social')
         var trueScope = $('#curry-bg-2').scope();
         $timeout(function(){
           trueScope.$apply(function(){
-            trueScope.psocial.showExpandedTweet = false;
+            trueScope.psocial.hidePrevContent();
           });
-          if (trueScope.psocial.cycleCount < 1){
-            trueScope.psocial.scheduleNextContent(5000);
+          if (trueScope.psocial.cycleCount < 2){
+            trueScope.psocial.scheduleNextContent(2000);
           }
         }, 3500);
       }, parseInt(attrs.expires));

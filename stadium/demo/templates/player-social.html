@@ -70,7 +70,7 @@
     <div class="tweet-ring tweet-ring4">
       <div class="tweet-ring tweet-ring3">
       <div class="tweet-ring tweet-ring3filter">
-        <div class="tweet-ring tweet-ring2" ng-class="{ 'slow-rotate': textLoaded }">
+        <div class="tweet-ring tweet-ring2" ng-class="{ 'slow-rotate': triggerRotate }">
         </div>
         <div class="tweet-ring tweet-ring1">
           <expanded-tweet this-tweet="psocial.currentContent" ng-if="textLoaded"></expanded-tweet>
@@ -86,7 +86,7 @@
     <div class="tweet-ring tweet-ring4">
       <div class="tweet-ring tweet-ring3">
       <div class="tweet-ring tweet-ring3filter">
-        <div class="tweet-ring tweet-ring2" ng-class="{ 'slow-rotate': textLoaded }">
+        <div class="tweet-ring tweet-ring2" ng-class="{ 'slow-rotate': triggerRotate }">
         </div>
         <div class="tweet-ring tweet-ring1">
           <expanded-tweet this-tweet="psocial.currentContent" ng-if="textLoaded"></expanded-tweet>
@@ -97,15 +97,15 @@
   </div>
 </div>
 
-<div id="tweet-bubble" ng-if="psocial.showExpandedVideo" show-tweet-content="text" s-size="230px" s-top="400px" s-left="1630px" expires="13000">
+<div id="tweet-bubble" ng-if="psocial.showExpandedVideo" show-tweet-content="text" s-size="230px" s-top="400px" s-left="1630px">
   <div class="tweet-ring tweet-ring5">
     <div class="tweet-ring tweet-ring4">
       <div class="tweet-ring tweet-ring3">
       <div class="tweet-ring tweet-ring3filter">
-        <div class="tweet-ring tweet-ring2" ng-class="{ 'slow-rotate': textLoaded }">
+        <div class="tweet-ring tweet-ring2" ng-class="{ 'slow-rotate': triggerRotate }">
         </div>
         <div class="tweet-ring tweet-ring1">
-          <expanded-tweet this-tweet="psocial.currentContent" ng-if="textLoaded"></expanded-tweet>
+          <expanded-tweet this-tweet="psocial.currentContent" video-tweet="true" ng-if="textLoaded"></expanded-tweet>
         </div>
       </div>
       </div>
