@@ -32,7 +32,7 @@
   </div>
 
   <div id="videoContainer" ng-switch-when="video/mp4">
-    <video id="tweetVideo" preload poster="{{thisTweet.media[0].thumbUrl}}" expand-and-play>
+    <video id="tweetVideo" preload ng-poster="{{thisTweet.media[0].thumbUrl}}" expand-and-play>
       <source ng-src="{{trustSrc(thisTweet.media[0].url)}}" type="video/mp4">
     </video>
   </div>
