@@ -49,6 +49,8 @@ function ($http, $timeout, ContentService) {
       _this.showExpandedTweet = false;
     } else if (_this.cycleCount === 1) {
       _this.showExpandedImage = false;
+    } else if (_this.cycleCount === 2) {
+      _this.showExpandedVideo = false;
     }
   };
 
@@ -62,7 +64,8 @@ function ($http, $timeout, ContentService) {
         easing: easing,
         step: function(now) {
           $elem.css({
-             transform: 'rotate(' + now + 'deg)' + translation
+             '-webkit-transform': 'rotate(' + now + 'deg)',
+             'transform': 'rotate(' + now + 'deg)'
            });
         },
         complete: complete || $.noop
@@ -79,7 +82,8 @@ function ($http, $timeout, ContentService) {
         easing: easing,
         step: function(now) {
           $elem.css({
-             transform: 'rotate(-' + now + 'deg)'
+             '-webkit-transform': 'rotate(-' + now + 'deg)',
+             'transform': 'rotate(-' + now + 'deg)'
            });
         },
         complete: complete || $.noop
@@ -96,7 +100,10 @@ function ($http, $timeout, ContentService) {
         duration: duration,
         easing: easing || 'swing',
         step: function (now) {
-          $elem.css({'transform': 'translate('+now+unit+','+now+unit+')'});
+          $elem.css({
+            '-webkit-transform': 'translate('+now+unit+','+now+unit+')',
+            'transform': 'translate('+now+unit+','+now+unit+')'
+          });
         },
         complete: complete || $.noop
       });
@@ -224,7 +231,7 @@ angular.module('player.social')
             scope.$apply(function(){
               scope.triggerRotate = true;
             });
-          }, 1000);
+          }, 1500);
         }
       });
     }
@@ -242,7 +249,7 @@ angular.module('player.social')
             trueScope.psocial.hidePrevContent();
           });
           if (trueScope.psocial.cycleCount < 2){
-            trueScope.psocial.scheduleNextContent(2000);
+            trueScope.psocial.scheduleNextContent(4000);
           }
         }, 3500);
       }, parseInt(attrs.expires));

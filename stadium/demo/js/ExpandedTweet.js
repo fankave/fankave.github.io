@@ -31,22 +31,22 @@ angular.module('player.social')
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
-      console.log(elem[0]);
-      $(elem).animate({
+      $(elem[0]).animate({
         width: '1130px'
       },{
         duration: 1500,
         complete: function () {
           $(elem[0]).on('ended', function (e) {
             $timeout(function(){
-              $(elem).animate({ width: '800px' },{
+              $(elem[0]).animate({ width: '800px' },{
                 duration: 1500,
                 complete: function () {
-                  $('#tweet-bubble').animate({ opacity: 0 }, 2000);
+                  var $selector = $('#tweet-bubble') || $(elem.context.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement);
+                  $selector.animate({ opacity: 0 }, 2000);
                   var trueScope = $('#curry-bg-2').scope();
                   $timeout(function(){
                     trueScope.$apply(function(){
-                      trueScope.psocial.showExpandedVideo = false;
+                      trueScope.psocial.hidePrevContent();
                     });
                   }, 3500);
                 }
