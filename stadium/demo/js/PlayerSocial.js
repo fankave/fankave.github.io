@@ -18,7 +18,7 @@ function ($http, $timeout, ContentService) {
       ContentService.setSocialContent(response.data);
       _this.textContent = response.data[5];
       _this.imageContent = response.data[2];
-      _this.videoContent = response.data[0];
+      _this.videoContent = response.data[1];
       _this.currentContent = _this.textContent.embed;
       console.log("Content in Controller: ", _socialContent);
     });
