@@ -35,7 +35,7 @@ angular.module('player.social')
       $(elem[0]).animate({
         width: '1130px'
       },{
-        duration: 1500,
+        duration: 2000,
         start: function() {
           var trueScope = $('#curry-bg-2').scope();
           trueScope.psocial.videoReady = true;
