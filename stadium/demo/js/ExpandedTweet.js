@@ -32,7 +32,7 @@ angular.module('player.social')
     restrict: 'A',
     link: function (scope, elem, attrs) {
       console.log(elem);
-      $(elem[0]).animate({
+      $(elem).animate({
         width: '1130px'
       },{
         duration: 2000,
@@ -44,7 +44,7 @@ angular.module('player.social')
           var trueScope = $('#curry-bg-2').scope();
           $(elem[0]).on('ended', function (e) {
             $timeout(function(){
-              $(elem[0]).animate({ width: '800px' },{
+              $(elem).animate({ width: '800px' },{
                 duration: 1500,
                 start: function () {
                   $('#video-bg').animate({ opacity: '0' },{
@@ -68,7 +68,7 @@ angular.module('player.social')
               });
             }, 1000);
           });
-          $timeout(function(){elem[0].play()}, 500);
+          elem[0].play();
         }
       });
     }
