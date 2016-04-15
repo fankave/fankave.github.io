@@ -58,10 +58,16 @@
     </div>
   </div>
 
-  <div id="pace-year" ng-if="startRing">
+  <img id="twitter" class="social-logo" ng-src="assets/images/twitter.png" ng-if="startRing" fade-in-shift/>
+  <img id="facebook" class="social-logo" ng-src="assets/images/facebook.png" ng-if="startRing" fade-in-shift />
+  
+  <div id="pace-year" ng-if="startRing" fade-in-shift>
     <span class="pace-desc">TOTAL MENTIONS&nbsp;</span>
     <span class="pace-value">5,128,234</span>
   </div>
+
+  <div id="sponsor" fade-in-shift>BROUGHT TO YOU BY</div>
+  <img id="sponsor-image" ng-src="assets/images/chase-logo.png" fade-in-shift />
   
 </div>
 

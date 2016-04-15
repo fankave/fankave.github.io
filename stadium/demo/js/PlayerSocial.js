@@ -190,6 +190,8 @@ angular.module('player.social')
     link: function (scope, elem, attrs) {
       if (attrs.fadeInShift === 'top'){  
         $(elem).animate({ top: attrs.fadeEnd, opacity: '1' }, 1000);
+      } else {
+        $(elem).animate({ opacity: '1' }, 1000);
       }
     }
   };
