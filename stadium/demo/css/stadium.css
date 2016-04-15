@@ -1217,24 +1217,23 @@ button {
   position: absolute;
   width: 710px;
   height: 190px;
-  top: 155px;
-  left: 1030px;
+  top: 150px;
+  left: 850px;
   line-height: 0.75;
   font-family: 'Play';
 }
 
 .player-first-name {
   position: relative;
-  display: block;
   color: rgb(255,153,51);
-  font-size: 110px;
+  font-size: 100px;
   font-weight: 400;
 }
 
 .player-last-name {
   position: relative;
   color: #fff;
-  font-size: 190px;
+  font-size: 100px;
   font-weight: 400;
 }
 
@@ -1257,14 +1256,14 @@ button {
   position: absolute;
   width: 720px;
   height: 72px;
-  top: 48px;
-  left: 930px;
+  top: 230px;
+  left: 850px;
 }
 
 .player-title-2 {
   position: relative;
-  color: #808282;
-  font-size: 92px;
+  color: #27aae1;
+  font-size: 50px;
   line-height: 72px;
 }
 
@@ -1285,16 +1284,17 @@ button {
 
 #bar-sponsor {
   position: absolute;
-  top: 26px;
-  left: 1660px;
+  top: 157px;
+  left: 1510px;
+  width: 320px;
 }
 
 #sponsor-text {
   position: absolute;
   color: #808282;
-  font-size: 22px;
-  right: 318px;
-  top: 120px;
+  font-size: 36px;
+  right: 480px;
+  top: 300px;
 }
 
 
