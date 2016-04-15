@@ -776,6 +776,7 @@ button {
   -webkit-transform: translate(-50%,-50%);
           transform: translate(-50%,-50%);
   opacity: 0;
+  z-index: 2;
 }
 .tweet-pad {
   padding: 36px;
@@ -987,6 +988,16 @@ button {
   width: 100%;
   height: 100%;
   text-align: center;
+}
+
+#video-bg {
+  position: absolute;
+  width: 2200px;
+  height: 100%;
+  left: -400px;
+  background-color: #000;
+  opacity: 0;
+  z-index: 1;
 }
 
 

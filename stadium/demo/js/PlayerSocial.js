@@ -191,7 +191,7 @@ angular.module('player.social')
       if (attrs.fadeInShift === 'top'){  
         $(elem).animate({ top: attrs.fadeEnd, opacity: '1' }, 1000);
       } else {
-        $(elem).animate({ opacity: '1' }, 1000);
+        $(elem).animate({ opacity: '1' }, parseInt(attrs.fadeInShift));
       }
     }
   };

@@ -58,16 +58,16 @@
     </div>
   </div>
 
-  <img id="twitter" class="social-logo" ng-src="assets/images/twitter.png" ng-if="startRing" fade-in-shift/>
-  <img id="facebook" class="social-logo" ng-src="assets/images/facebook.png" ng-if="startRing" fade-in-shift />
+  <img id="twitter" class="social-logo" ng-src="assets/images/twitter.png" ng-if="startRing" fade-in-shift="1000" />
+  <img id="facebook" class="social-logo" ng-src="assets/images/facebook.png" ng-if="startRing" fade-in-shift="1000" />
   
-  <div id="pace-year" ng-if="startRing" fade-in-shift>
+  <div id="pace-year" ng-if="startRing" fade-in-shift="1000">
     <span class="pace-desc">TOTAL MENTIONS&nbsp;</span>
     <span class="pace-value">5,128,234</span>
   </div>
 
-  <div id="sponsor" fade-in-shift>BROUGHT TO YOU BY</div>
-  <img id="sponsor-image" ng-src="assets/images/chase-logo.png" fade-in-shift />
+  <div id="sponsor" fade-in-shift="1000">BROUGHT TO YOU BY</div>
+  <img id="sponsor-image" ng-src="assets/images/chase-logo.png" fade-in-shift="1000" />
   
 </div>
 
@@ -108,9 +108,10 @@
     <div class="tweet-ring tweet-ring4">
       <div class="tweet-ring tweet-ring3">
       <div class="tweet-ring tweet-ring3filter">
-        <div class="tweet-ring2" rotate>
+        <div class="tweet-ring2">
         </div>
         <div class="tweet-ring tweet-ring1">
+          <div id="video-bg" ng-if="psocial.videoReady" fade-in-shift="1000"></div>
           <expanded-tweet this-tweet="psocial.currentContent" video-tweet="true" ng-if="textLoaded"></expanded-tweet>
         </div>
       </div>
