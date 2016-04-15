@@ -31,14 +31,14 @@ angular.module('player.social')
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
-      $(elem[0]).animate({
+      $(elem).animate({
         width: '1130px'
       },{
         duration: 1500,
         complete: function () {
           $(elem[0]).on('ended', function (e) {
             $timeout(function(){
-              $(elem[0]).animate({ width: '800px' },{
+              $(elem).animate({ width: '800px' },{
                 duration: 1500,
                 complete: function () {
                   var $selector = $('#tweet-bubble') || $(elem.context.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement);
