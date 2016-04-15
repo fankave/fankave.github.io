@@ -34,7 +34,7 @@ angular.module('player.social')
       $(elem).animate({
         width: '1130px'
       },{
-        duration: 1500,
+        duration: 2500,
         complete: function () {
           $(elem[0]).on('ended', function (e) {
             $timeout(function(){
@@ -51,7 +51,7 @@ angular.module('player.social')
                   }, 3500);
                 }
               });
-            }, 1000);
+            }, 1500);
           });
           elem[0].play();
         }
