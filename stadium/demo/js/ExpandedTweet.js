@@ -68,7 +68,7 @@ angular.module('player.social')
               });
             }, 1000);
           });
-          elem[0].play();
+          $timeout(function(){elem[0].play()}, 500);
         }
       });
     }
