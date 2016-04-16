@@ -20,12 +20,12 @@ body {
 }
 
 .bubble-stats {
-  background-image: url('assets/images/bubble-stats-bg.png');
+  background-image: url('../../../assets/images/bubble-stats-bg.png');
   background-size: cover;
 }
 
 .bar-stats {
-  background-image: url('assets/images/player-stats-prog.jpg');
+  background-image: url('../../../assets/images/player-stats-prog.jpg');
   background-size: cover;
 }
 
@@ -39,7 +39,7 @@ body {
 /* * * Fonts * * */
 @font-face {
   font-family: BuiltTitlingReg;
-  src: url("assets/fonts/builtTitling.ttf") format('truetype');
+  src: url("../../../assets/fonts/builtTitling.ttf") format('truetype');
 }
 
 
