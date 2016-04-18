@@ -8,6 +8,16 @@ angular.module('player.social')
     },
     link: function (scope, elem, attrs) {
 
+      if (attrs.videoB){
+        scope.videoB = true;
+      }
+
+      if (attrs.videoC){
+        scope.alternate = true;
+      } else {
+        scope.alternate = false;
+      }
+
       scope.whitelistHtml = $sce.trustAsHtml(scope.thisTweet.text);
 
       scope.trustSrc = function (src) {
@@ -31,30 +41,50 @@ angular.module('player.social')
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
-      console.log(elem);
-      $(elem).animate({
+      $(elem[0]).animate({
         width: '1130px'
       },{
         duration: 2000,
         start: function() {
           var trueScope = $('#curry-bg-2').scope();
-          trueScope.psocial.videoReady = true;
+          if (trueScope.psocial.cycleCount === 2){
+            trueScope.psocial.videoReady = true;
+          } else if (trueScope.psocial.cycleCount === 3){
+            trueScope.psocial.videoBReady = true;
+          }
         },
         complete: function () {
           var trueScope = $('#curry-bg-2').scope();
+          trueScope.$apply(function(){
+            if (trueScope.psocial.cycleCount === 3){
+              trueScope.psocial.hidePrevContent();
+            }
+          });
           $(elem[0]).on('ended', function (e) {
             $timeout(function(){
-              $(elem).animate({ width: '800px' },{
+              $(elem[0]).animate({ width: '800px', opacity: '0' },{
                 duration: 1500,
                 start: function () {
-                  $('#video-bg').animate({ opacity: '0' },{
-                    duration: 1500,
-                    complete: function () {
-                      trueScope.$apply(function(){
-                        trueScope.psocial.videoReady = false;
-                      });
-                    }
-                  });
+                  if (trueScope.psocial.cycleCount === 2){
+                    $('#video-bg').animate({ opacity: '0' },{
+                      duration: 1500,
+                      complete: function () {
+                        trueScope.$apply(function(){
+                          trueScope.psocial.videoReady = false;
+                        });
+                      }
+                    });
+                  } else if (trueScope.psocial.cycleCount === 3){
+                    $('#video-bgB').animate({ opacity: '0' },{
+                      duration: 1500,
+                      complete: function () {
+                        trueScope.$apply(function(){
+                          trueScope.psocial.videoBReady = false;
+                          trueScope.psocial.videoBLoaded = false;
+                        });
+                      }
+                    });
+                  }
                 },
                 complete: function () {
                   var $selector = $('#tweet-bubble') || $(elem.context.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement);
@@ -62,6 +92,9 @@ angular.module('player.social')
                   $timeout(function(){
                     trueScope.$apply(function(){
                       trueScope.psocial.hidePrevContent();
+                      if (trueScope.psocial.cycleCount < 4){
+                        trueScope.psocial.scheduleNextContent(4000);
+                      }
                     });
                   }, 3500);
                 }
@@ -71,6 +104,39 @@ angular.module('player.social')
           elem[0].play();
         }
       });
+    }
+  };
+}]);
+angular.module('player.social')
+.directive('playFull', ['$timeout', function ($timeout) {
+  return {
+    restrict: 'A',
+    link: function (scope, elem, attrs) {
+      $(elem).css({ width: '1130px' });
+      var trueScope = $('#curry-bg-2').scope();
+      trueScope.psocial.videoCReady = true;
+      // trueScope.$apply(function(){
+        // if (trueScope.psocial.cycleCount === 3){
+          trueScope.psocial.hidePrevContent();
+        // }
+      // });
+      $(elem[0]).on('ended', function (e) {
+        $(elem[0]).animate({ opacity: '0' },{
+          duration: 1500,
+          start: function () {
+            $('#video-bgC').animate({ opacity: '0' },{
+              duration: 1500,
+              complete: function () {
+                trueScope.$apply(function(){
+                  trueScope.psocial.videoCReady = false;
+                  trueScope.psocial.videoCLoaded = false;
+                });
+              }
+            });
+          }
+        });
+      });
+      elem[0].play();
     }
   };
 }]);

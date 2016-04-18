@@ -782,6 +782,11 @@ button {
   padding: 36px;
 }
 
+.tweet-B {
+  position: absolute !important;
+  z-index: 32 !important;
+}
+
 #tweet-bubble {
   position: absolute;
   top: 0px;
@@ -998,6 +1003,18 @@ button {
   background-color: #000;
   opacity: 0;
   z-index: 1;
+}
+
+#video-bgB,
+#video-bgC {
+  position: absolute;
+  width: 1920px;
+  height: 1080px;
+  top: 0px;
+  left: 0px;
+  background-color: #000;
+  opacity: 0;
+  z-index: 31;
 }
 
 

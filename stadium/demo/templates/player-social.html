@@ -103,7 +103,7 @@
   </div>
 </div>
 
-<div id="tweet-bubble" ng-if="psocial.showExpandedVideo" show-tweet-content="text" s-size="230px" s-top="400px" s-left="1630px" expires="20000">
+<div id="tweet-bubble" ng-if="psocial.showExpandedVideo" show-tweet-content="text" s-size="230px" s-top="400px" s-left="1630px">
   <div class="tweet-ring tweet-ring5">
     <div class="tweet-ring tweet-ring4">
       <div class="tweet-ring tweet-ring3">
@@ -119,3 +119,37 @@
     </div>
   </div>
 </div>
+
+<div id="tweet-bubble" ng-if="psocial.showExpandedVideoB" show-tweet-content="videoB" s-size="230px" s-top="400px" s-left="1630px" video-b="true">
+  <div class="tweet-ring tweet-ring5">
+    <div class="tweet-ring tweet-ring4">
+      <div class="tweet-ring tweet-ring3">
+      <div class="tweet-ring tweet-ring3filter">
+        <div class="tweet-ring2">
+        </div>
+        <div class="tweet-ring tweet-ring1">
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="video-bgB" ng-if="psocial.videoBReady" fade-in-shift="1500"></div>
+<expanded-tweet this-tweet="psocial.currentContent" video-tweet="true" video-b="true" ng-if="psocial.videoBLoaded"></expanded-tweet>
+
+<div id="tweet-bubble" ng-if="psocial.showExpandedVideoC" show-tweet-content="videoC" s-size="230px" s-top="400px" s-left="1630px" video-c="true">
+  <div class="tweet-ring tweet-ring5">
+    <div class="tweet-ring tweet-ring4">
+      <div class="tweet-ring tweet-ring3">
+      <div class="tweet-ring tweet-ring3filter">
+        <div class="tweet-ring2">
+        </div>
+        <div class="tweet-ring tweet-ring1">
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="video-bgC" ng-if="psocial.videoCReady" fade-in-shift="0"></div>
+<expanded-tweet this-tweet="psocial.currentContent" video-tweet="true" video-b="true" video-c="true" ng-if="psocial.videoCLoaded"></expanded-tweet>

@@ -34,22 +34,33 @@ function ($http, $timeout, ContentService) {
     } else if (_this.cycleCount === 2){
       _this.currentContent = _this.videoContent.embed;
     }
+    console.log("Scheduling Next In: ", delay);
     $timeout(function(){
+      console.log("Begin Next");
       if (_this.cycleCount === 1){
         _this.showExpandedImage = true;
       } else if (_this.cycleCount === 2){
         _this.showExpandedVideo = true;
+      } else if (_this.cycleCount === 3){
+        _this.showExpandedVideoB = true;
+      } else if (_this.cycleCount === 4){
+        _this.showExpandedVideoC = true;
       }
     }, delay);
   };
 
   this.hidePrevContent = function () {
+    console.log("Hiding Previous");
     if (_this.cycleCount === 0) {
       _this.showExpandedTweet = false;
     } else if (_this.cycleCount === 1) {
       _this.showExpandedImage = false;
     } else if (_this.cycleCount === 2) {
       _this.showExpandedVideo = false;
+    } else if (_this.cycleCount === 3) {
+      _this.showExpandedVideoB = false;
+    } else if (_this.cycleCount === 4) {
+      _this.showExpandedVideoC = false;
     }
   };
 
@@ -237,9 +248,20 @@ angular.module('player.social')
       },{
         duration: 3000,
         complete: function () {
-          scope.$apply(function(){
-            scope[loadString] = true;
-          });
+          var trueScope = $('#curry-bg-2').scope();
+          if (attrs.videoB) {
+            trueScope.$apply(function(){
+              trueScope.psocial.videoBLoaded = true;
+            });
+          } else if (attrs.videoC) {
+            trueScope.$apply(function(){
+              trueScope.psocial.videoCLoaded = true;
+            });
+          } else {
+            scope.$apply(function(){
+              scope[loadString] = true;
+            });
+          }
         }
       });
     }
@@ -257,7 +279,7 @@ angular.module('player.social')
           trueScope.$apply(function(){
             trueScope.psocial.hidePrevContent();
           });
-          if (trueScope.psocial.cycleCount < 2){
+          if (trueScope.psocial.cycleCount < 3){
             trueScope.psocial.scheduleNextContent(4000);
           }
         }, 3500);

@@ -1,4 +1,4 @@
-<div id="tweet-container" ng-class="{ 'tweet-pad': mediaType === 'text' }" ng-style="{ top: mediaType !== 'image/jpeg' ? '50%' : '45%' }" ng-switch="mediaType">
+<div id="tweet-container" ng-class="{ 'tweet-pad': mediaType === 'text', 'tweet-B': videoB }" ng-style="{ top: mediaType !== 'image/jpeg' ? '50%' : '45%' }" ng-switch="mediaType">
   <div class="tweet-header clearfix" ng-switch-when="text">
     <img ng-src="{{thisTweet.author.photo}}" class="tweet-profile" />
     <div class="tweet-user">
@@ -32,7 +32,10 @@
   </div>
 
   <div id="videoContainer" ng-switch-when="video/mp4">
-    <video id="tweetVideo" preload ng-poster="{{thisTweet.media[0].thumbUrl}}" expand-and-play>
+    <video id="tweetVideo" ng-if="!alternate" preload ng-poster="{{thisTweet.media[0].thumbUrl}}" expand-and-play>
+      <source ng-src="{{trustSrc(thisTweet.media[0].url)}}" type="video/mp4">
+    </video>
+    <video id="tweetVideo" ng-if="alternate" preload ng-poster="{{thisTweet.media[0].thumbUrl}}" play-full>
       <source ng-src="{{trustSrc(thisTweet.media[0].url)}}" type="video/mp4">
     </video>
   </div>
