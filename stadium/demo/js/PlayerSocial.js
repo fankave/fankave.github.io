@@ -120,10 +120,26 @@ function ($http, $timeout, ContentService) {
     });
   };
 
+  $.fn.countUp = function (duration, initial, final, easing, complete) {
+    return this.each(function () {
+      var $this = $(this);
+      var stepFn = function(num){return Math.floor(num);};
+      $({ Counter: initial || 0 }).animate({ Counter: final || $this.text() }, {
+        duration: duration,
+        easing: easing || 'swing',
+        step: function () {
+          $this.text(stepFn(this.Counter));
+        },
+        complete: complete || $.noop
+      });
+    });
+  };
+
 }]);
 
 angular.module('player.social')
-.directive('playerEnter', ['$compile', function ($compile) {
+.directive('playerEnter', ['$compile', '$timeout',
+function ($compile, $timeout) {
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
@@ -168,6 +184,7 @@ angular.module('player.social')
                           trueScope.psocial.showExpandedTweet = true;
                         });
                       }, 7000);
+                      $timeout(function(){fillSpace();}, 500);
                     }
                   });
                 }
@@ -176,14 +193,11 @@ angular.module('player.social')
           });
           $('#circle1b')
           .rotateReverse(-25, 385, 3000)
-          // .animateRotate(-25, 695, 2000)
           .animate({ opacity: '1' }, 1000, function() {
             $('#circle2b')
-            // .animateRotate(60, 780, 2000)
             .rotateReverse(60, 300, 3000)
             .animate({ opacity: '1' }, 1000, function() {
               $('#circle3b')
-              // .animateRotate(330, 1050, 2000)
               .rotateReverse(330, 390, 2000)
               .animate({ opacity: '1' }, 1000, function() {
               });
@@ -191,6 +205,22 @@ angular.module('player.social')
           });
         });
       });
+
+      function fillSpace () {
+        $('.pace-value-hundreds').countUp(7000, 234, 243, 'linear');
+        $('.stat-num1').countUp(4000, 40, 43, 'linear');
+        $('#circle1a').animateRotate(0, 40, 4000);
+        $('#circle1b').animateRotate(-25, 15, 4000);
+
+        $('.stat-num2').countUp(5000, 619, 625, 'linear', function () {
+          $('.stat-num3').countUp(1000, 9, 8);
+          $('#circle3a').rotateReverse(390, 365, 1000);
+          $('#circle3b').rotateReverse(390, 365, 1000);
+        });
+        $('#circle2a').animateRotate(60, 110, 5000);
+        $('#circle2b').animateRotate(60, 110, 5000);
+      }
+
     }
   };
 }]);
