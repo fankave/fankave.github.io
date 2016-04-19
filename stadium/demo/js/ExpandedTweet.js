@@ -93,7 +93,7 @@ angular.module('player.social')
                     trueScope.$apply(function(){
                       trueScope.psocial.hidePrevContent();
                       if (trueScope.psocial.cycleCount < 4){
-                        trueScope.psocial.scheduleNextContent(4000);
+                        trueScope.psocial.scheduleNextContent(2500);
                       }
                     });
                   }, 3500);

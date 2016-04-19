@@ -310,7 +310,7 @@ angular.module('player.social')
             trueScope.psocial.hidePrevContent();
           });
           if (trueScope.psocial.cycleCount < 3){
-            trueScope.psocial.scheduleNextContent(4000);
+            trueScope.psocial.scheduleNextContent(2500);
           }
         }, 3500);
       }, parseInt(attrs.expires));
