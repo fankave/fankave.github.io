@@ -36,15 +36,10 @@ function ($http, $timeout, ContentService) {
     }
     console.log("Scheduling Next In: ", delay);
     $timeout(function(){
-      console.log("Begin Next");
       if (_this.cycleCount === 1){
         _this.showExpandedImage = true;
       } else if (_this.cycleCount === 2){
         _this.showExpandedVideo = true;
-      } else if (_this.cycleCount === 3){
-        _this.showExpandedVideoB = true;
-      } else if (_this.cycleCount === 4){
-        _this.showExpandedVideoC = true;
       }
     }, delay);
   };
@@ -57,10 +52,6 @@ function ($http, $timeout, ContentService) {
       _this.showExpandedImage = false;
     } else if (_this.cycleCount === 2) {
       _this.showExpandedVideo = false;
-    } else if (_this.cycleCount === 3) {
-      _this.showExpandedVideoB = false;
-    } else if (_this.cycleCount === 4) {
-      _this.showExpandedVideoC = false;
     }
   };
 
@@ -138,8 +129,7 @@ function ($http, $timeout, ContentService) {
 }]);
 
 angular.module('player.social')
-.directive('playerEnter', ['$compile', '$timeout',
-function ($compile, $timeout) {
+.directive('playerEnter', ['$compile', '$timeout', function ($compile, $timeout) {
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
@@ -149,7 +139,7 @@ function ($compile, $timeout) {
             scope.startRing = true;
           });
           $('#circle1a')
-          .animateRotate(0, 720, 2000)
+          .animateRotate(0, 720, 3000)
           .animate({ opacity: '1' }, {
             duration: 1000,
             start: function () {
@@ -163,7 +153,7 @@ function ($compile, $timeout) {
             },
             complete: function () {
               $('#circle2a')
-              .animateRotate(60, 780, 2000)
+              .animateRotate(60, 780, 3000)
               .animate({ opacity: '1' }, {
                 duration: 1000,
                 start: function () {
@@ -171,7 +161,7 @@ function ($compile, $timeout) {
                 },
                 complete: function () {
                   $('#circle3a')
-                  .animateRotate(330, 1050, 2000)
+                  .animateRotate(330, 1050, 3000)
                   .animate({ opacity: '1' }, {
                     duration: 1000,
                     start: function () {
@@ -183,8 +173,8 @@ function ($compile, $timeout) {
                         trueScope.$apply(function(){
                           trueScope.psocial.showExpandedTweet = true;
                         });
-                      }, 7000);
-                      $timeout(function(){fillSpace();}, 500);
+                      }, 7500);
+                      $timeout(function(){fillSpace();}, 1500);
                     }
                   });
                 }
@@ -192,20 +182,20 @@ function ($compile, $timeout) {
             }
           });
           $('#circle1b')
-          .rotateReverse(-25, 385, 3000)
+          .animateRotate(-25, 695, 3000)
           .animate({ opacity: '1' }, 1000, function() {
             $('#circle2b')
-            .rotateReverse(60, 300, 3000)
+            .animateRotate(60, 780, 3000)
             .animate({ opacity: '1' }, 1000, function() {
               $('#circle3b')
-              .rotateReverse(330, 390, 2000)
+              .animateRotate(330, 1050, 3000)
               .animate({ opacity: '1' }, 1000, function() {
               });
             });
           });
         });
       });
-
+      
       function fillSpace () {
         $('.pace-value-hundreds').countUp(7000, 234, 243, 'linear');
         $('.stat-num1').countUp(4000, 40, 43, 'linear');
@@ -220,7 +210,6 @@ function ($compile, $timeout) {
         $('#circle2a').animateRotate(60, 110, 5000);
         $('#circle2b').animateRotate(60, 110, 5000);
       }
-
     }
   };
 }]);
@@ -253,7 +242,8 @@ angular.module('player.social')
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
-      $(elem).animateRotate(0, 720, 20000, 'linear');
+      $(elem)
+      .animateRotate(0, 720, 20000, 'linear');
     }
   };
 }]);
@@ -279,11 +269,7 @@ angular.module('player.social')
         duration: 3000,
         complete: function () {
           var trueScope = $('#curry-bg-2').scope();
-          if (attrs.videoB) {
-            trueScope.$apply(function(){
-              trueScope.psocial.videoBLoaded = true;
-            });
-          } else if (attrs.videoC) {
+          if (attrs.videoC) {
             trueScope.$apply(function(){
               trueScope.psocial.videoCLoaded = true;
             });

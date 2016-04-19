@@ -113,20 +113,23 @@ function ($timeout, $state) {
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
-      $(elem).css({ width: '1130px' });
       var trueScope = $('#curry-bg-2').scope();
       trueScope.psocial.videoCReady = true;
       trueScope.psocial.hidePrevContent();
       $(elem[0]).on('ended', function (e) {
         $(elem[0]).animate({ opacity: '0' },{
-          duration: 1500,
+          duration: 1000,
           start: function () {
             $('#video-bgC').animate({ opacity: '0' },{
-              duration: 1500,
+              duration: 3000,
+              start: function () {
+                trueScope.$apply(function(){
+                  trueScope.psocial.videoCLoaded = false;
+                });
+              },
               complete: function () {
                 trueScope.$apply(function(){
                   trueScope.psocial.videoCReady = false;
-                  trueScope.psocial.videoCLoaded = false;
                 });
                 $timeout(function(){
                   $state.go($state.current, {}, {reload: true});
