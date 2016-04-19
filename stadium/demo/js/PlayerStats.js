@@ -80,14 +80,22 @@ angular.module('player.stats')
   }
 });
 angular.module('player.stats')
-.directive('enterFromRight', function () {
+.directive('enterFromRight', ['$timeout', '$state',
+function ($timeout, $state) {
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
       $(elem).animate({
         opacity: '1',
         left: '1315px'
-      }, 1500);
+      }, {
+        duration: 1500,
+        complete: function () {
+          $timeout(function(){
+            $state.go($state.current, {}, {reload: true});
+          }, 10000);
+        }
+      });
     }
   }
-});
+}]);

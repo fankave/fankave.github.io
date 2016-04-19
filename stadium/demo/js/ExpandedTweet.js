@@ -108,18 +108,15 @@ angular.module('player.social')
   };
 }]);
 angular.module('player.social')
-.directive('playFull', ['$timeout', function ($timeout) {
+.directive('playFull', ['$timeout', '$state',
+function ($timeout, $state) {
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
       $(elem).css({ width: '1130px' });
       var trueScope = $('#curry-bg-2').scope();
       trueScope.psocial.videoCReady = true;
-      // trueScope.$apply(function(){
-        // if (trueScope.psocial.cycleCount === 3){
-          trueScope.psocial.hidePrevContent();
-        // }
-      // });
+      trueScope.psocial.hidePrevContent();
       $(elem[0]).on('ended', function (e) {
         $(elem[0]).animate({ opacity: '0' },{
           duration: 1500,
@@ -131,6 +128,9 @@ angular.module('player.social')
                   trueScope.psocial.videoCReady = false;
                   trueScope.psocial.videoCLoaded = false;
                 });
+                $timeout(function(){
+                  $state.go($state.current, {}, {reload: true});
+                }, 1000);
               }
             });
           }
