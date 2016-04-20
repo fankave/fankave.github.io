@@ -48,12 +48,44 @@ function ($http, $timeout, ContentService) {
     console.log("Hiding Previous");
     if (_this.cycleCount === 0) {
       _this.showExpandedTweet = false;
+      fillSpaceB();
     } else if (_this.cycleCount === 1) {
       _this.showExpandedImage = false;
+      fillSpaceC();
     } else if (_this.cycleCount === 2) {
       _this.showExpandedVideo = false;
     }
   };
+
+  function fillSpaceB () {
+    $('.pace-value-hundreds').countUp(3000, 243, 247, 'linear');
+    $('.stat-num1').countUp(2500, 42, 41, 'linear');
+    $('#circle1a').animateRotate(40, 0, 2500);
+    $('#circle1b').animateRotate(15, -25, 2500);
+
+    $('.stat-num2').countUp(2500, 624, 620, 'linear', function () {
+      $('.stat-num3').countUp(1000, 8, 10);
+      $('#circle3a').animateRotate(355, 335, 1000);
+      $('#circle3b').animateRotate(355, 335, 1000);
+    });
+    $('#circle2a').animateRotate(110, 90, 2500);
+    $('#circle2b').animateRotate(110, 90, 2500);
+  }
+
+  function fillSpaceC () {
+    $('.pace-value-hundreds').countUp(3000, 246, 261, 'linear');
+    $('.stat-num1').countUp(2500, 41, 44, 'linear');
+    $('#circle1a').animateRotate(0, 50, 2500);
+    $('#circle1b').animateRotate(-25, 25, 2500);
+
+    $('.stat-num2').countUp(2500, 620, 626, 'linear', function () {
+      $('.stat-num3').countUp(1000, 9, 8);
+      $('#circle3a').animateRotate(335, 312, 1000);
+      $('#circle3b').animateRotate(335, 312, 1000);
+    });
+    $('#circle2a').animateRotate(90, 125, 2500);
+    $('#circle2b').animateRotate(90, 125, 2500);
+  }
 
   $.fn.animateRotate = function (initial, angle, duration, easing, complete, translation) {
     translation = translation || '';
@@ -298,7 +330,7 @@ angular.module('player.social')
           if (trueScope.psocial.cycleCount < 3){
             trueScope.psocial.scheduleNextContent(2500);
           }
-        }, 3500);
+        }, 2100);
       }, parseInt(attrs.expires));
     }
   };
