@@ -15,9 +15,6 @@ angular.module('TopicModule')
       }
 
       scope.setAspectRatio = function (aspectRatio, orientation) {
-        if (NETWORK_DEBUG){
-          // console.log("setAspectRatio: ", aspectRatio, orientation);
-        }
         var classStrings = [];
 
         if (orientation === "portrait"){
@@ -42,11 +39,6 @@ angular.module('TopicModule')
         var thesePlayerNodes = elem[0].childNodes;
         var thisVideo = thesePlayerNodes[0];
         var thisWidth = $(thisVideo).width();
-        if (GEN_DEBUG){
-          console.log("PlayerNodes in setD: ", thesePlayerNodes);
-          console.log("Video in setD: ", thisVideo);
-          console.log("Width in setD: ", thisWidth);
-        }
 
         // Width Contingencies (landscape)
         if (scope.isMobileUser && aspectRatio === 1 && thisWidth > 380){
@@ -68,11 +60,12 @@ angular.module('TopicModule')
           height = 300;
         }
 
-        var iframePlayer = thisVideo.childNodes[0];
-        $(iframePlayer).css('height',height);
-        if (GEN_DEBUG){
-          console.log("Setting Height On: ", iframePlayer, height);
-        }
+        var iframePlayer;
+        setTimeout(function(){
+          iframePlayer = thisVideo.childNodes[0];
+          $(iframePlayer).css('height', height);
+          twttr.widgets.load();
+        }, 0);
       }
 
     },
