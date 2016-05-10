@@ -293,12 +293,6 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           tempItem.postTimestamp = feedData[i].createdAt;
           tempItem.providerName = feedData[i].embedProvider.name;
           tempItem.html = feedData[i].embedText;
-          // if (i === 0){
-          //   tempItem.html = 'Some text plus an html link to <a href="https://www.google.com">Google</a>';
-          // }
-          // if (tempItem.providerName === 'SnappyTV'){
-          //   tempItem.html += '<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>';
-          // }
           tempItem.retweetCount = feedData[i].tweet.metrics.retweetCount;
           tempItem.likeCount = feedData[i].tweet.metrics.likeCount;
           tempItem.replyCount = feedData[i].tweet.metrics.replyCount;
@@ -320,10 +314,6 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           tempItem.embedUrl = feedData[i].embedUrl;
           if (feedData[i].embedType === "link" && feedData[i].embedPlayable === true){
             tempItem.embedHtml = feedData[i].embedHtml;
-            // if (i === 0){
-              // tempItem.embedHtml = '<blockquote class="twitter-video" data-lang="en"><a href="https://twitter.com/NHLonNBCSports/status/728470793839988736"></a></blockquote>';
-              // tempItem.embedHtml = '<blockquote class="twitter-video" data-lang="en"><a href="https://twitter.com/i/videos/727981716854419458?embed_source=facebook"></a></blockquote>';
-            // }
             tempItem.embedPlayable = true;
           }
           if (feedData[i].embedType === "media" || feedData[i].embedType === "link"){
