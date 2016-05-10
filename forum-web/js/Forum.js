@@ -95,3 +95,16 @@ angular.module('Forum')
       }
     }
 }]);
+
+angular.module('Forum')
+.directive('imageErrSrc', function() {
+  return {
+    restrict: 'EA',
+    link: function (scope, elem, attrs) {
+      elem.bind('error', function() {
+        console.log('Image Error On: ', elem, elem.parent());
+        elem.parent().css('display','none');
+      });
+    }
+  }
+});

@@ -1,2 +1,3 @@
 <div class="image-div" ng-class="{{setAspectRatio(thisPost.mediaAspectRatio,thisPost.mediaOrientation)}}" ng-style="setDimensions(thisPost.mediaAspectRatio, thisPost.mediaOrientation, thisPost)" ng-click="imageClick(thisPost.mediaUrl)">
-  </div>
+  <img ng-src="{{thisPost.mediaUrl}}" image-err-src style="display:none;">
+</div>

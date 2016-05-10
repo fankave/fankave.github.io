@@ -146,6 +146,23 @@ angular.module('TopicModule')
         
 
       scope.togglePlayPause = function(e) {
+        if (scope.thisPost.embed.media[0].mediaType === 'image/gif'){
+          if (scope.isMobileUser){
+            var thesePlayerNodes = elem[0].firstElementChild.childNodes;
+            var thisVideo = thesePlayerNodes[10];
+            if (thisVideo.requestFullscreen){
+              thisVideo.requestFullscreen();
+            } else if (thisVideo.webkitRequestFullscreen){
+              thisVideo.webkitRequestFullscreen();
+            } else if (thisVideo.mozRequestFullScreen){
+              thisVideo.mozRequestFullScreen();
+            } else if (thisVideo.msRequestFullscreen){
+              thisVideo.msRequestFullscreen();
+            }
+          }
+          return;
+        }
+
         var thesePlayerNodes = elem[0].firstElementChild.childNodes;
         var thisVideo = thesePlayerNodes[1];
         var thisThumbnail = thesePlayerNodes[3];
@@ -176,7 +193,7 @@ angular.module('TopicModule')
         }
       }
 
-      scope.setAspectRatio = function (aspectRatio, orientation) {
+      scope.setAspectRatio = function (aspectRatio, orientation, video) {
         if (GEN_DEBUG){
           console.log("setAspectRatio: ", aspectRatio, orientation);
         }
@@ -197,12 +214,18 @@ angular.module('TopicModule')
             classStrings.push("video-landscape-2x1")
           }
         }
+        if (video && video.embed.media[0].mediaType === 'image/gif'){
+          classStrings.push("gif-hide");
+        }
         return classStrings;
       }
 
       scope.setDimensions = function (aspectRatio, orientation, video) {
         var thesePlayerNodes = elem[0].firstElementChild.childNodes;
         var thisVideo = thesePlayerNodes[1];
+        if (scope.thisPost.embed.media[0].mediaType === 'image/gif'){
+          thisVideo = thesePlayerNodes[10];
+        }
         var thisWidth = $(thisVideo).width();
         if (GEN_DEBUG){
           console.log("Elem in setD: ", elem);

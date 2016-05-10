@@ -1,6 +1,15 @@
 angular.module('NetworkModule')
-.service('DataService', ["TopicService","CommentService","ReplyService","ChannelService","SocialService","VideoService","AnalyticsService",
-  function (TopicService, CommentService, ReplyService, ChannelService, SocialService, VideoService,AnalyticsService) {
+.service('DataService', [
+  "TopicService",
+  "CommentService",
+  "ReplyService",
+  "ChannelService",
+  "SocialService",
+  "VideoService",
+  "AnalyticsService",
+  "ExpertService",
+  "MediaService",
+  function (TopicService, CommentService, ReplyService, ChannelService, SocialService, VideoService, AnalyticsService, ExpertService, MediaService) {
   
   var DATA_TYPE_TOPIC = "topic";
   var DATA_TYPE_COMMENT = "comment";
@@ -11,8 +20,7 @@ angular.module('NetworkModule')
   function delegateSetComments(commentsData) 
   { 
     if(commentsData.error){
-      if (NETWORK_DEBUG)
-      console.log("Comments Error message from network: ", commentsData.error);
+      if (NETWORK_DEBUG) console.log("Comments Error message from network: ", commentsData.error);
     }
     else if(commentsData.push){
       if(commentsData.method == "UPSERT")
@@ -50,8 +58,7 @@ angular.module('NetworkModule')
   function delegateSetTopic(topicData)
   {
     if(topicData.error){
-      if (NETWORK_DEBUG)
-      console.log("Topic Error message from network: ", topicData.error);
+      if (NETWORK_DEBUG) console.log("Topic Error message from network: ", topicData.error);
     }
     else if(topicData.push){
       if(topicData.method == "UPSERT")
@@ -66,12 +73,10 @@ angular.module('NetworkModule')
   function delegateSetReplies(replyData)
   {
     if(replyData.error){
-      if (NETWORK_DEBUG)
-      console.log("Topic Error message from network: ", replyData.error);
+      if (NETWORK_DEBUG) console.log("Topic Error message from network: ", replyData.error);
     }
     else if(replyData.push){
-      if (NETWORK_DEBUG)
-      console.log("reply pushed ");
+      if (NETWORK_DEBUG) console.log("reply pushed ");
       if(replyData.method == "UPSERT")
         if(ReplyService.updateReply(replyData) === 0){
           if(replyData.data != undefined)
@@ -109,36 +114,50 @@ angular.module('NetworkModule')
   
   function delegateSetChannel(data) {
     if(data.error){
-      if (NETWORK_DEBUG)
-      console.log("Topic Error message from network: ", data.error);
+      if (NETWORK_DEBUG) console.log("Topic Error message from network: ", data.error);
     }
     else {
-      if (NETWORK_DEBUG)
-      console.log("delegateSetChannel: ", data);
+      if (NETWORK_DEBUG) console.log("delegateSetChannel: ", data);
       ChannelService.setTopicData(data);
     }
   }
   
   function delegateSetSocial(data) {
     if(data.error){
-      if (NETWORK_DEBUG)
-      console.log("Social Error message from network: ", data.error);
+      if (NETWORK_DEBUG) console.log("Social Error message from network: ", data.error);
     }
     else {
-      if (NETWORK_DEBUG)
-      console.log("SOCIAL GET");
+      if (NETWORK_DEBUG) console.log("SOCIAL GET");
       SocialService.setSocialData(data);
+    }
+  }
+
+  function delegateSetExpert(data) {
+    if(data.error){
+      if (NETWORK_DEBUG) console.log("Expert Error message from network: ", data.error);
+    }
+    else {
+      if (NETWORK_DEBUG) console.log("EXPERT GET");
+      ExpertService.setExpertData(data);
+    }
+  }
+
+  function delegateSetMedia(data) {
+    if(data.error){
+      if (NETWORK_DEBUG) console.log("Media Error message from network: ", data.error);
+    }
+    else {
+      if (NETWORK_DEBUG) console.log("MEDIA GET");
+      MediaService.setMediaData(data);
     }
   }
 
   function delegateSetVideo(data) {
     if(data.error){
-      if (NETWORK_DEBUG)
-      console.log("Video Error message from network: ", data.error);
+      if (NETWORK_DEBUG) console.log("Video Error message from network: ", data.error);
     }
     else {
-      if (NETWORK_DEBUG)
-      console.log("VIDEO GET");
+      if (NETWORK_DEBUG) console.log("VIDEO GET");
       VideoService.setVideoData(data);
     }
   }
@@ -146,12 +165,10 @@ angular.module('NetworkModule')
 
    function delegateSetAnalytics(data) {
     if(data.error){
-      if (NETWORK_DEBUG)
-      console.log("Video Error message from network: ", data.error);
+      if (NETWORK_DEBUG) console.log("Video Error message from network: ", data.error);
     }
     else {
-      if (NETWORK_DEBUG)
-      console.log("VIDEO GET");
+      if (NETWORK_DEBUG) console.log("VIDEO GET");
       AnalyticsService.setLoginSessionId(data.data.analytics.sessionId,data.data.userId,data.data.sessionId, ChannelService.getChannel(), TopicService.getTopicId());
           
     }
@@ -160,6 +177,8 @@ angular.module('NetworkModule')
   return {
     setVideo:delegateSetVideo,
     setSocial:delegateSetSocial,
+    setExpert:delegateSetExpert,
+    setMedia:delegateSetMedia,
     setChannel:delegateSetChannel,
     setTopic:delegateSetTopic,
     setComments:delegateSetComments,

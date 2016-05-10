@@ -4,13 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no" />
   <title>FanKave Smart Stadium</title>
-  <link rel="stylesheet" href="dist/css/stadium.min.css">
+  <link rel="stylesheet" href="css/stadium.css">
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Play|Coda|Khand' type='text/css'>
   <link rel="prefetch" href="assets/fonts/builtTitling.ttf">
   <link rel="prefetch" href="assets/images/curry-bg1.png">
   <link rel="prefetch" href="assets/images/curry-bg2.png">
   <script src="dist/lib/lib.min.js"></script>
-  <script src="dist/js/app.min.js"></script>
+  <script src="js/Stadium.js"></script>
+  <script src="js/PlayerSocial.js"></script>
+  <script src="js/PlayerStats.js"></script>
+  <script src="js/ExpandedTweet.js"></script>
+  <script src="js/ContentService.js"></script>
 </head>
 
 <body ng-class="{ 'bar-stats': $state.includes('pstats'), 'bubble-stats': $state.includes('psocial') }" ui-view>

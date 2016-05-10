@@ -6,8 +6,7 @@ function ($websocket,$route,DataService,UserInfoService,URIHelper)
   var ws;
 
   disconnectSocket = function(){
-    if (NETWORK_DEBUG)
-    console.log("Disconnect Callback triggered");
+    if (NETWORK_DEBUG) console.log("Disconnect Callback triggered");
     if(ws !== undefined) {
       ws.close();
       ws = undefined;
@@ -15,8 +14,7 @@ function ($websocket,$route,DataService,UserInfoService,URIHelper)
   }
 
   reconnectSocket = function(){
-    if (NETWORK_DEBUG)
-    console.log("Reconnect Callback triggered");
+    if (NETWORK_DEBUG) console.log("Reconnect Callback triggered");
     $route.reload();
   }
   
@@ -31,8 +29,7 @@ function ($websocket,$route,DataService,UserInfoService,URIHelper)
     DataService.setWatchTopic(false);
     //Websocket callbacks below
     ws.onOpen(function() {
-      if (NETWORK_DEBUG)
-      console.log("Websocket Connected");
+      if (NETWORK_DEBUG) console.log("Websocket Connected");
     // if(ANALYTICS && !URIHelper.isPeelUser()){
     //   if(ws != null){
     //   var getLoginSessionRequest = {"rid": "loginId",
@@ -47,54 +44,58 @@ function ($websocket,$route,DataService,UserInfoService,URIHelper)
 
     ws.onClose(function(evt) {
       ws = undefined;
-      if (NETWORK_DEBUG)
-      console.log("Websocket Closed :"+evt.data);
+      if (NETWORK_DEBUG) console.log("Websocket Closed :"+evt.data);
     });
 
     ws.onMessage(function(evt) {
-      if(NETWORK_DEBUG) console.log("Websocket Message Recieved :  " +evt.data);
+      if (NETWORK_DEBUG) console.log("Websocket Message Recieved :  " +evt.data);
       var responseJson = JSON.parse(evt.data);
       var type = responseJson.rid;
-      if(type !== undefined){
-        if(type === "context" || type === "hello"){
-          if(NETWORK_DEBUG) console.log("Processing context");
+      if (type !== undefined){
+        if (type === "context" || type === "hello"){
+          if (NETWORK_DEBUG) console.log("Processing context");
           DataService.setAnalytics(responseJson);
-          if(URIHelper.isPeelUser()){
+          if (URIHelper.isPeelUser()){
             UserInfoService.setUserCredentials(
               responseJson.data.userId, 
               responseJson.data.sessionId,
               "Peel");
           }
         }
-        if(type === "channel"){
-          if(NETWORK_DEBUG) console.log("Processing Channel");
+        if (type === "channel"){
+          if (NETWORK_DEBUG) console.log("Processing Channel");
           DataService.setChannel(responseJson);
         }
-        if(type === "topic" || type === "score"){
-          if(NETWORK_DEBUG) console.log("Processing Topic");
+        if (type === "topic" || type === "score"){
+          if (NETWORK_DEBUG) console.log("Processing Topic");
           DataService.setTopic(responseJson);
-        }else if(type === "comment"){
-          if(NETWORK_DEBUG) console.log("Processing Comments");
+        } else if (type === "comment"){
+          if (NETWORK_DEBUG) console.log("Processing Comments");
           DataService.setComments(responseJson);
         }
-        else if(type === "reply"){
+        else if (type === "reply"){
           //TODO handle Replies
-          if(NETWORK_DEBUG) console.log("Processing Reply");
+          if (NETWORK_DEBUG) console.log("Processing Reply");
           DataService.setReplies(responseJson);
         }
-        else if(type === "social" || type ==="social_auto"){
-          //TODO handle Replies
-          if(NETWORK_DEBUG) console.log("Processing Social");
+        else if (type === "social" || type ==="social_auto"){
+          if (NETWORK_DEBUG) console.log("Processing Social");
           DataService.setSocial(responseJson);
         }
-        else if(type === "video" || type ==="video_auto"){
-          //TODO handle Replies
-          if(NETWORK_DEBUG) console.log("Processing Video");
+        else if (type === "expert" || type ==="expert_auto"){
+          if (NETWORK_DEBUG) console.log("Processing Expert");
+          DataService.setExpert(responseJson);
+        }
+        else if (type === "media" || type ==="media_auto"){
+          if (NETWORK_DEBUG) console.log("Processing Media");
+          DataService.setMedia(responseJson);
+        }
+        else if (type === "video" || type ==="video_auto"){
+          if (NETWORK_DEBUG) console.log("Processing Video");
           DataService.setVideo(responseJson);
         }
-        else if(type === "loginId"){
-          //TODO handle Replies
-          if(NETWORK_DEBUG) console.log("Processing loginId");
+        else if (type === "loginId"){
+          if (NETWORK_DEBUG) console.log("Processing loginId");
           // if(responseJson.data != null && responseJson.data.id != null)
           //   AnalyticsService.setLoginSessionId(responseJson.data.id);
           // else

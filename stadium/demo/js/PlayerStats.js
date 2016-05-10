@@ -91,9 +91,9 @@ function ($timeout, $state) {
       }, {
         duration: 1500,
         complete: function () {
-          $timeout(function(){
-            $state.go($state.current, {}, {reload: true});
-          }, 10000);
+          // $timeout(function(){
+          //   $state.go($state.current, {}, {reload: true});
+          // }, 10000);
         }
       });
     }

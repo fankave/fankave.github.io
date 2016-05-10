@@ -1,6 +1,6 @@
 angular.module('TopicModule')
-.directive('embedPlayer', ['$sce', 'UserAgentService',
-  function ($sce, UserAgentService) {
+.directive('embedPlayer', ['$sce', '$window', 'UserAgentService',
+  function ($sce, $window, UserAgentService) {
   return {
     restrict: 'E',
     scope: {
@@ -9,6 +9,11 @@ angular.module('TopicModule')
     link: function(scope,elem,attr) {
 
       scope.isMobileUser = UserAgentService.isMobileUser();
+
+      if (scope.thisPost.embedHtml.indexOf('blockquote') !== -1) {
+        console.log("Snappy Detected: ", scope.thisPost);
+        setTimeout(function(){$window.twttr.widgets.load(elem);},1000);
+      }
 
       scope.trustSrcHtml = function(src){
         return $sce.trustAsHtml(src);
@@ -64,7 +69,7 @@ angular.module('TopicModule')
         setTimeout(function(){
           iframePlayer = thisVideo.childNodes[0];
           $(iframePlayer).css('height', height);
-          twttr.widgets.load();
+          // window.twttr.widgets.load();
         }, 0);
       }
 

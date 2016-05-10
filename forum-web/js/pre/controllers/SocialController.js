@@ -1,11 +1,34 @@
 angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
-.controller("SocialController", ["$scope","$sce","$window","$routeParams","$interval","$timeout","$http","SocialService","VideoService","networkService","ChannelService","TopicService","DateUtilityService","CommentService","URIHelper","AnalyticsService","TimerService",
-  function ($scope,$sce,$window,$routeParams,$interval,$timeout,$http,SocialService,VideoService,networkService,ChannelService,TopicService,DateUtilityService,CommentService,URIHelper,AnalyticsService,TimerService){
+.controller("SocialController", [
+  "$scope",
+  "$sce",
+  "$window",
+  "$routeParams",
+  "$interval",
+  "$timeout",
+  "$http",
+  "SocialService",
+  "VideoService",
+  "networkService",
+  "ChannelService",
+  "TopicService",
+  "DateUtilityService",
+  "CommentService",
+  "URIHelper",
+  "AnalyticsService",
+  "TimerService",
+  "ExpertService",
+  "MediaService",
+  function ($scope, $sce, $window, $routeParams, $interval, $timeout, $http, SocialService, VideoService, networkService, ChannelService, TopicService, DateUtilityService, CommentService, URIHelper, AnalyticsService, TimerService, ExpertService, MediaService){
     console.log("Social Control");
     var autoTimeout = $timeout(initAutoRefresh, 6000);
     TimerService.currentTimer(autoTimeout, true);
 
     var _this = this;
+    var _socialArchive;
+    var _expertArchive;
+    var _mediaArchive;
+
     this.initFeed = function(tab) {
       // Show Loading UI Once On Each Tab
       if (tab === 'social'){
@@ -22,7 +45,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           _this.socialFilter = false;
         }
         $scope.$parent.switchTabs('social');
-        _this.loadContent('social');
+        // _this.loadContent('social');
         if (!window.twttr){
           loadTwitter();
         }
@@ -40,7 +63,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           _this.videoFilter = false;
         }
         $scope.$parent.switchTabs('video');
-        _this.loadContent('video');
+        // _this.loadContent('video');
         if (!window.twttr){
           loadTwitter();
         }
@@ -197,15 +220,23 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     this.loadContent = function(type, offset) {
       var channelID = ChannelService.getChannel()||TopicService.getChannelId();
       if (type === 'social'){
-        if (NETWORK_DEBUG)
-        console.log("LOADING SOCIAL: ", channelID);
+        if (NETWORK_DEBUG) console.log("LOADING SOCIAL: ", channelID);
         networkService.send(SocialService.getSocialDataRequest(channelID,offset));
-      } else {
-        if (NETWORK_DEBUG)
-        console.log("LOADING VIDEO: ", channelID);
+      } else if (type === 'video'){
+        if (NETWORK_DEBUG) console.log("LOADING VIDEO: ", channelID);
         networkService.send(VideoService.getVideoDataRequest(channelID,offset));
+      } else if (type === 'expert'){
+        if (NETWORK_DEBUG) console.log("LOADING EXPERT: ", channelID);
+        networkService.send(ExpertService.getExpertDataRequest(channelID));
+      } else if (type === 'media'){
+        if (NETWORK_DEBUG) console.log("LOADING MEDIA: ", channelID);
+        networkService.send(MediaService.getMediaDataRequest(channelID));
       }
     };
+
+    this.trustHtml = function (src) {
+      return $sce.trustAsHtml(src);
+    }
 
     function updateFeed(tab) {
 
@@ -218,11 +249,21 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         _this.socialArray = _this.socialArray || [];
         existingLength = _this.socialArray.length;
         tabArray = _this.socialArray;
-      } else {
+      } else if (tab === 'video'){
         feedData = VideoService.videoArray();
         _this.videoArray = _this.videoArray || [];
         existingLength = _this.videoArray.length;
         tabArray = _this.videoArray;
+      } else if (tab === 'expert'){
+        feedData = ExpertService.expertArray();
+        _this.socialArray = _this.socialArray || [];
+        existingLength = _this.socialArray.length;
+        tabArray = _this.socialArray;
+      } else if (tab === 'media'){
+        feedData = MediaService.mediaArray();
+        _this.socialArray = _this.socialArray || [];
+        existingLength = _this.socialArray.length;
+        tabArray = _this.socialArray;
       }
 
       var len = feedData.length;
@@ -252,6 +293,12 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           tempItem.postTimestamp = feedData[i].createdAt;
           tempItem.providerName = feedData[i].embedProvider.name;
           tempItem.html = feedData[i].embedText;
+          // if (i === 0){
+          //   tempItem.html = 'Some text plus an html link to <a href="https://www.google.com">Google</a>';
+          // }
+          // if (tempItem.providerName === 'SnappyTV'){
+          //   tempItem.html += '<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>';
+          // }
           tempItem.retweetCount = feedData[i].tweet.metrics.retweetCount;
           tempItem.likeCount = feedData[i].tweet.metrics.likeCount;
           tempItem.replyCount = feedData[i].tweet.metrics.replyCount;
@@ -273,6 +320,10 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
           tempItem.embedUrl = feedData[i].embedUrl;
           if (feedData[i].embedType === "link" && feedData[i].embedPlayable === true){
             tempItem.embedHtml = feedData[i].embedHtml;
+            // if (i === 0){
+              // tempItem.embedHtml = '<blockquote class="twitter-video" data-lang="en"><a href="https://twitter.com/NHLonNBCSports/status/728470793839988736"></a></blockquote>';
+              // tempItem.embedHtml = '<blockquote class="twitter-video" data-lang="en"><a href="https://twitter.com/i/videos/727981716854419458?embed_source=facebook"></a></blockquote>';
+            // }
             tempItem.embedPlayable = true;
           }
           if (feedData[i].embedType === "media" || feedData[i].embedType === "link"){
@@ -285,13 +336,13 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
             tempItem.mediaOrientation = feedData[i].embedMedia.mediaOrientation;
           }
 
-          if (tab === 'social'){
+          if (tab === 'social' || tab === 'expert' || tab === 'media'){
             _this.socialArray.push(tempItem);
           } else {
             _this.videoArray.push(tempItem);
           }
           if (NETWORK_DEBUG && i === len - 1){
-            if (tab === 'social'){
+            if (tab === 'social' || tab === 'expert' || tab === 'media'){
               console.log("Social Array: ", _this.socialArray);
             } else {
               console.log("Video Array: ", _this.videoArray);
@@ -320,6 +371,8 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     };
 
     SocialService.registerObserverCallback(function(){updateFeed('social');});
+    ExpertService.registerObserverCallback(function(){updateFeed('expert');});
+    MediaService.registerObserverCallback(function(){updateFeed('media');});
     VideoService.registerObserverCallback(function(){updateFeed('video');});
     
     // Limit Rate that Function Can be Called
@@ -343,7 +396,13 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
       var currentScroll = $(document).height() - clientHeight - 150;
       if ($(document).scrollTop() > currentScroll && currentScroll > 500) {
         if ($scope.activeTab === 'social' && !_this.preventLoad){
-          _this.loadContent('social');
+          if (_this.socialFilter === false){
+            _this.loadContent('social');
+          } else if (_this.socialFilter === 'expert'){
+            _this.loadContent('expert');
+          } else if (_this.socialFilter === 'media'){
+            _this.loadContent('media');
+          }
         }
         else if ($scope.activeTab === 'video' && !_this.preventLoad){
           _this.loadContent('video');
@@ -432,8 +491,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
         href: embedUrl
       }, function (response){
         // Keep Track of User Shares to Facebook?
-        if (GEN_DEBUG)
-        console.log("FB Response Post-Share: ", response);
+        if (GEN_DEBUG) console.log("FB Response Post-Share: ", response);
       });
     };
 
@@ -471,8 +529,7 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     }
 
     function scrollUpAnimate(time) {
-      var body = $('body');
-      body.stop().animate({scrollTop:0}, time.toString(), 'swing');
+      $('body').stop().animate({scrollTop:0}, time.toString(), 'swing');
       if (_this.preventLoad) {
         _this.preventLoad = false;
       }
@@ -480,29 +537,49 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
 
     this.filterContent = function (tab, filter) {
       if (tab === 'social'){
-        if (filter === 'expert'){
+        if (filter === 'expert') {
+
           _this.preventLoad = true;
+          if (_this.socialFilter === false){
+            _socialArchive = _this.socialArray;
+          }
+          if (_this.socialFilter === 'media'){
+            _mediaArchive = _this.socialArray;
+          }
+          _this.socialArray = [];
           _this.socialFilter = 'expert';
-          scrollUpAnimate(500);
+          _this.loadContent('expert');
+          scrollUpAnimate(1000);
+        
         } else if (filter === 'media') {
+
           _this.preventLoad = true;
+          if (_this.socialFilter === false){
+            _socialArchive = _this.socialArray;
+          }
+          if (_this.socialFilter === 'expert'){
+            _expertArchive = _this.socialArray;
+          }
+          _this.socialArray = [];
           _this.socialFilter = 'media';
-          scrollUpAnimate(500);
-        } else {
+          _this.loadContent('media');
+          scrollUpAnimate(1000);
+
+        } else if (filter === 'live') {
+          _this.preventLoad = true;
+          if (_this.socialFilter === 'media'){
+            _mediaArchive = _this.socialArray;
+          }
+          if (_this.socialFilter === 'expert'){
+            _expertArchive = _this.socialArray;
+          }
           _this.socialFilter = false;
+          _this.socialArray = _socialArchive;
+          _this.loadContent('social');
+          scrollUpAnimate(1000);
         }
       } 
-      else if (tab === 'video'){
-        if (filter === 'expert'){
-          _this.preventLoad = true;
-          _this.videoFilter = true;
-          scrollUpAnimate(500);
-        } else {
-          _this.videoFilter = false;
-        }
-      }
     }
 
 
 }]);
-

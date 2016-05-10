@@ -429,20 +429,20 @@
   </div>
 
   <div id="socialFilter" ng-if="activeTab === 'social'">
-    <span ng-click="social.filterContent(activeTab, 'live')" ng-class="{ filterSelect: !social.socialFilter, filterOff: social.socialFilter }">Live &ensp;</span>
+    <span ng-click="social.filterContent(activeTab, 'live')" ng-class="{ filterSelect: !social.socialFilter, filterOff: social.socialFilter }">All &ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'expert')" ng-class="{ filterSelect: social.socialFilter === 'expert', filterOff: social.socialFilter !== 'expert' }">Expert &ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'media')" ng-class="{ filterSelect: social.socialFilter === 'media', filterOff: social.socialFilter !== 'media' }">Media</span>
   </div>
-  <div id="newSocialAvailable" ng-if="social.newSocialAvailable && activeTab === 'social'">
+  <div id="newSocialAvailable" ng-if="social.newSocialAvailable && activeTab === 'social' && !social.socialFilter">
     <button id="newSocialButton" class="btn-link" ng-click="social.showNewSocial()">
       &uarr; New Social
     </button>
   </div>
 
-  <div id="videoFilter" ng-if="activeTab === 'video'">
+  <!-- <div id="videoFilter" ng-if="activeTab === 'video'">
     <span ng-click="social.filterContent(activeTab, 'live')" ng-class="{ filterSelect: !social.videoFilter, filterOff: social.videoFilter }">Live &ensp;</span>
     <span ng-click="social.filterContent(activeTab, 'expert')" ng-class="{ filterSelect: social.videoFilter, filterOff: !social.videoFilter }">Expert</span>
-  </div>
+  </div> -->
   <div id="newVideosAvailable" ng-if="social.newVideoAvailable && activeTab === 'video'">
     <button id="newVideosButton" class="btn-link" ng-click="social.showNewVideo()">
       &uarr; New Videos
@@ -547,7 +547,7 @@
   </div>
 
   <!-- Video Tab Content -->
-  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | filter: (social.videoFilter || '') && { expert: true } | orderBy: '-createdAtFull'" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | orderBy: '-createdAtFull'" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -578,7 +578,7 @@
 
       <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
 
-      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-if="thisPost.mediaType === 'video'" class="media-parent"></media-player>
+      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-if="thisPost.mediaType === 'video' || thisPost.embed.media[0].mediaType === 'image/gif'" class="media-parent"></media-player>
 
     </div> 
 
@@ -622,7 +622,7 @@
   </div>
 
   <!-- Social Tab Content -->
-  <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray | filter: (social.socialFilter === 'expert' || '') && { expert: true } | filter: (social.socialFilter === 'media' || '') && { mediaFilter: true } | orderBy: '-createdAtFull'" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray | orderBy: '-createdAtFull'" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -650,12 +650,15 @@
       <div ng-bind-html="thisPost.html | linky" class="postContent socialContent">
         <p>{{thisPost.html}}</p><br> 
       </div>
+      <!-- <div ng-bind-html="social.trustHtml(thisPost.html)" class="postContent socialContent">
+        <p>{{thisPost.html}}</p><br> 
+      </div> -->
 
-      <image-control this-post="thisPost" ng-switch-when="image" ng-if="!thisPost.embedPlayable" class="media-parent"></image-control>
+      <image-control this-post="thisPost" ng-switch-when="image" ng-if="!thisPost.embedPlayable && thisPost.embed.media[0].mediaType !== 'image/gif'" class="media-parent"></image-control>
 
       <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
 
-      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-if="thisPost.mediaType === 'video'" class="media-parent"></media-player>
+      <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-if="thisPost.mediaType === 'video' || thisPost.embed.media[0].mediaType === 'image/gif'" class="media-parent"></media-player>
     </div> 
 
     <div class="socialButtonsRow socialText">

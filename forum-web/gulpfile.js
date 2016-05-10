@@ -72,7 +72,9 @@ gulp.task('scripts-post', function() {
     './js/post/directives/PostDirectives.js',
     './js/post/services/TimerService.js',
     './js/post/services/ReplyService.js',
-    './js/post/services/SocialService.js'
+    './js/post/services/SocialService.js',
+    './js/post/services/ExpertService.js',
+    './js/post/services/MediaService.js'
   ])
   .pipe(sourcemaps.init())
     .pipe(concat('app-post.js'))
