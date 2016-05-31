@@ -69,7 +69,7 @@ angular.module('TopicModule')
         setTimeout(function(){
           iframePlayer = thisVideo.childNodes[0];
           $(iframePlayer).css('height', height);
-          // window.twttr.widgets.load();
+          // $window.twttr.widgets.load();
         }, 0);
       }
 

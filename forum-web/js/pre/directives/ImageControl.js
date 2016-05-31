@@ -9,9 +9,10 @@ angular.module('TopicModule')
     link: function(scope,elem,attr) {
 
       var $el = elem[0];
+      if ( attr.preventZoom ) scope.preventZoom = true;
 
       scope.imageClick = function(imageURL) {
-
+        if ( attr.preventZoom ) return;
         $.magnificPopup.open({
           items: {
             type:'image',

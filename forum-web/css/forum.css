@@ -2733,6 +2733,13 @@ img-crop canvas {
   outline: none;
 }
 
+.center-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
 .pause {
   visibility: hidden;
 }

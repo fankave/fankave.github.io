@@ -547,7 +547,7 @@
   </div>
 
   <!-- Video Tab Content -->
-  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray | orderBy: '-createdAtFull'" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="video" ng-repeat="thisPost in social.videoArray" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -564,7 +564,7 @@
           {{thisPost.postAuthorName}}
         </span>
         <span class="timestamp">
-          <img id="providerLogo" ng-src="{{thisPost.providerLogo}}" />{{thisPost.postTimestamp}}
+          <img id="providerLogo" ng-src="{{thisPost.providerLogo}}" />{{thisPost.embedCreatedAt}}
         </span>
       </div>
       <div class="socialAlias">
@@ -576,7 +576,11 @@
         <p>{{thisPost.html}}</p><br> 
       </div>
 
-      <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
+      <a ng-href="{{thisPost.embedUrl}}" target="blank">
+        <image-control prevent-zoom="true" this-post="thisPost" ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link' && !thisPost.embedHtml" class="media-parent"></image-control>
+      </a>
+
+      <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link' && thisPost.embedHtml" this-post="thisPost" class="media-parent"></embed-player>
 
       <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-if="thisPost.mediaType === 'video' || thisPost.embed.media[0].mediaType === 'image/gif'" class="media-parent"></media-player>
 
@@ -622,7 +626,7 @@
   </div>
 
   <!-- Social Tab Content -->
-  <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray | orderBy: '-createdAtFull'" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
+  <div ng-switch-when="social" ng-repeat="thisPost in social.socialArray" ng-switch="thisPost.mediaType" class="row postRowAlt" id="{{$index}}" repeat-finished-notify>
     <div id="socialHeaderContainer">
       <span class="postAuthorPhoto">
         <span>
@@ -639,7 +643,7 @@
           {{thisPost.postAuthorName}}
         </span>
         <span class="timestamp">
-          <img id="providerLogo" ng-src="{{thisPost.providerLogo}}" />{{thisPost.postTimestamp}}
+          <img id="providerLogo" ng-src="{{thisPost.providerLogo}}" />{{thisPost.embedCreatedAt}}
         </span>
       </div>
       <div class="socialAlias">
@@ -656,7 +660,11 @@
 
       <image-control this-post="thisPost" ng-switch-when="image" ng-if="!thisPost.embedPlayable && thisPost.embed.media[0].mediaType !== 'image/gif'" class="media-parent"></image-control>
 
-      <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
+      <a ng-href="{{thisPost.embedUrl}}" target="blank" ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link' && !thisPost.embedHtml">
+        <image-control prevent-zoom="true" this-post="thisPost" class="media-parent"></image-control>
+      </a>
+
+      <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link' && thisPost.embedHtml" this-post="thisPost" class="media-parent"></embed-player>
 
       <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-if="thisPost.mediaType === 'video' || thisPost.embed.media[0].mediaType === 'image/gif'" class="media-parent"></media-player>
     </div> 

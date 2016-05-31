@@ -21,8 +21,8 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
   "MediaService",
   function ($scope, $sce, $window, $routeParams, $interval, $timeout, $http, SocialService, VideoService, networkService, ChannelService, TopicService, DateUtilityService, CommentService, URIHelper, AnalyticsService, TimerService, ExpertService, MediaService){
     console.log("Social Control");
-    var autoTimeout = $timeout(initAutoRefresh, 6000);
-    TimerService.currentTimer(autoTimeout, true);
+    // var autoTimeout = $timeout(initAutoRefresh, 6000);
+    // TimerService.currentTimer(autoTimeout, true);
 
     var _this = this;
     var _socialArchive;
@@ -467,15 +467,26 @@ angular.module("SocialModule", ["NetworkModule","ChannelModule","TopicModule"])
     //   }(document, 'script', 'facebook-jssdk'));
     // }
 
-    // window.fbAsyncInit = function() {
-    //   FB.init({
-    //     appId      : '210324962465861',
-    //     xfbml      : true,
-    //     version    : 'v2.4'
-    //   });
-    // };
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '210324962465861',
+        xfbml      : true,
+        version    : 'v2.4'
+      });
+    };
 
     this.shareToFacebook = function (id,embedUrl) {
+
+      if (!window.FB){
+        (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) {return;}
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+      }
+      
       FB.ui({
         method: 'share',
         href: embedUrl

@@ -27,15 +27,16 @@
       <p>{{thisPost.embed.text}}</p><br> 
     </div>
 
-    <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link'" this-post="thisPost" class="media-parent"></embed-player>
+    <image-control this-post="thisPost" ng-switch-when="image" ng-if="!thisPost.embedPlayable && thisPost.embed.media[0].mediaType !== 'image/gif'" class="media-parent"></image-control>
 
-    <!-- <div class="imageContainer" ng-switch-when="image" ng-if="!thisPost.embedPlayable">
-      <img ng-src="{{thisPost.embed.media[0].url}}" class="cropView" ng-click="imageZoom({imgSrc: thisPost.embed.media[0].url})" onerror="this.style.display='none';" />
-    </div> -->
+    <a ng-href="{{thisPost.embedUrl}}" target="blank" ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link' && !thisPost.embedHtml">
+      <image-control prevent-zoom="true" this-post="thisPost" class="media-parent"></image-control>
+    </a>
 
-    <image-control this-post="thisPost" ng-switch-when="image" ng-if="!thisPost.embedPlayable" class="media-parent"></image-control>
- 
-    <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-switch-when="video" class="media-parent" ng-click="preventNav()"></media-player>
+    <embed-player ng-if="thisPost.embedPlayable === true && thisPost.embedType === 'link' && thisPost.embedHtml" this-post="thisPost" class="media-parent"></embed-player>
+
+    <media-player this-post="thisPost" vid-source="" vid-index="{{$index}}" ng-if="thisPost.mediaType === 'video' || thisPost.embed.media[0].mediaType === 'image/gif'" class="media-parent" ng-click="preventNav()"></media-player>
+
   </div>
 
   <!-- Embed Metrics -->

@@ -1,3 +1,6 @@
 <div class="image-div" ng-class="{{setAspectRatio(thisPost.mediaAspectRatio,thisPost.mediaOrientation)}}" ng-style="setDimensions(thisPost.mediaAspectRatio, thisPost.mediaOrientation, thisPost)" ng-click="imageClick(thisPost.mediaUrl)">
   <img ng-src="{{thisPost.mediaUrl}}" image-err-src style="display:none;">
+  <button class="btn btn-default play-pause-button center-play" title="play" ng-if="preventZoom">
+    <div class="triangle play-triangle"></div>
+  </button>
 </div>
